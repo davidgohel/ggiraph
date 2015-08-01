@@ -65,4 +65,25 @@ dist_euclidean <- function(x, y) {
 	
 	sqrt((x[-n] - x[-1]) ^ 2 + (y[-n] - y[-1]) ^ 2)
 }
-
+is.discrete <- function(x) {
+	is.factor(x) || is.character(x) || is.logical(x)
+}
+#' @importFrom plyr id
+add_group <- function(data) {
+	if (nrow(data)<1 || ncol(data)<1) return(data)
+	
+	if (is.null(data$group)) {
+		disc <- vapply(data, is.discrete, logical(1))
+		disc[names(disc) == "label"] <- FALSE
+		
+		if (any(disc)) {
+			data$group <- plyr::id(data[disc], drop = TRUE)
+		} else {
+			data$group <- -1L
+		}
+	} else {
+		data$group <- plyr::id(data["group"], drop = TRUE)
+	}
+	
+	data
+}

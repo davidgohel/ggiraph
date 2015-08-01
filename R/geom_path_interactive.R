@@ -15,11 +15,12 @@
 #' # add interactive paths to a ggplot -------
 #' @example examples/geom_path_interactive.R
 #' @export 
+#' @importFrom ggplot2 layer
 geom_path_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", lineend = "butt",
 		linejoin = "round", linemitre = 1, na.rm = FALSE,
 		arrow = NULL, show.legend = NA, inherit.aes = TRUE, ...) {
-	layer(
+	ggplot2::layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,

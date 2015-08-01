@@ -14,7 +14,7 @@
 geom_polygon_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", show.legend = NA,
 		inherit.aes = TRUE, ...) {
-		layer(
+	ggplot2::layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,

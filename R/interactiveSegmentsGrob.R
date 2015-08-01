@@ -2,7 +2,7 @@
 #' @description This function can be used to generate interactive grob 
 #' segments.
 #' 
-#' @inheritParams grid::rectGrob
+#' @inheritParams grid::segmentsGrob
 #' @param tooltips tooltips associated with segments
 #' @param clicks javascript action to execute when segment is clicked
 #' @param dbclicks javascript action to execute when segment is double clicked

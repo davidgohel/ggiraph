@@ -17,7 +17,7 @@ geom_segment_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 		position = "identity", arrow = NULL, lineend = "butt",
 		na.rm = FALSE, show.legend = NA, inherit.aes = TRUE,
 		...) {
-	layer(
+	ggplot2::layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,

@@ -10,21 +10,30 @@ interactiveSegmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
+\item{x0}{ Numeric indicating the starting x-values of the line segments. }
+
+\item{y0}{ Numeric indicating the starting y-values of the line
+    segments. }
+
+\item{x1}{ Numeric indicating the stopping x-values of the line
+    segments. }
+
+\item{y1}{ Numeric indicating the stopping y-values of the line segments.}
+
 \item{tooltips}{tooltips associated with segments}
 
 \item{clicks}{javascript action to execute when segment is clicked}
 
 \item{dbclicks}{javascript action to execute when segment is double clicked}
 
-\item{default.units}{A string indicating the default units to use
-    if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}
+\item{default.units}{ A string. }
+
+\item{arrow}{A list describing arrow heads to place at either end
+    of the line segments, as produced by the \code{arrow} function.}
 
 \item{name}{ A character identifier. }
 
-\item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
-    a list of graphical parameter settings.}
+\item{gp}{ An object of class \code{gpar}. }
 
 \item{vp}{A Grid viewport object (or NULL).}
 }

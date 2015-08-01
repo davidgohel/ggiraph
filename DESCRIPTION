@@ -1,4 +1,4 @@
-Package: ggplotwidget
+Package: ggiraph
 Type: Package
 Title: Create Interactive "ggplot" Objets 
 Description: Provides graphical reporting functionalities to work with 'ReporteRs'.
