@@ -1,0 +1,14 @@
+Package: ggplotwidget
+Type: Package
+Title: Create Interactive "ggplot" Objets 
+Description: Provides graphical reporting functionalities to work with 'ReporteRs'.
+Version: 0.0.1
+Date: 2015-07-27
+Authors@R: c(
+    person("David", "Gohel", role = c("aut", "cre"),
+    email = "david.gohel@ardata.fr") )
+Author: David Gohel [aut, cre]
+Maintainer: David Gohel <david.gohel@ardata.fr>
+License: GPL-3
+Depends: ggplot2 (>= 1.0.1.9002)
+Imports: grid, htmlwidgets, htmltools, ReporteRs (>= 0.8.2), stats, plyr
