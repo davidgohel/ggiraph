@@ -16,5 +16,5 @@ gg_segment_2 = ggplot() +
 				size=2, color="blue") + 
 		geom_point(data=dataset, mapping=aes(x=x, y=y), size=4, shape=21, fill="white") 
 
-ggplotwidget(fun=print, x = gg_segment_1)
-ggplotwidget(fun=print, x = gg_segment_2)
+ggiraph(fun=print, x = gg_segment_1)
+ggiraph(fun=print, x = gg_segment_2)

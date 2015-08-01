@@ -1,0 +1,52 @@
+---
+title: "Untitled"
+author: "Gohel"
+date: "1 août 2015"
+output: html_document
+---
+
+
+```{r echo=FALSE, warning=FALSE,error=FALSE, message=FALSE, prompt=FALSE}
+library(ggiraph)
+example("geom_polygon_interactive", ask = F, echo = FALSE)
+example("geom_rect_interactive", ask = F, echo = FALSE)
+example("geom_point_interactive", ask = F, echo = FALSE)
+example("geom_segment_interactive", ask = F, echo = FALSE)
+example("geom_path_interactive", ask = F, echo = FALSE)
+```
+
+# Polygons 
+```{r}
+ggiraph(fun=print, x = gg_poly_1)
+```
+
+# Rectangle 
+
+```{r}
+ggiraph(fun=print, x = gg_rect_1)
+ggiraph(fun=print, x = gg_rect_2)
+```
+
+# Points 
+
+```{r}
+ggiraph(fun=print, x = gg_point_1)
+ggiraph(fun=print, x = gg_point_2)
+```
+
+# Segments 
+
+```{r}
+ggiraph(fun=print, x = gg_segment_1)
+ggiraph(fun=print, x = gg_segment_2)
+```
+
+# Lines 
+
+```{r}
+ggiraph(fun=print, x = gg_path_1)
+ggiraph(fun=print, x = gg_path_2)
+ggiraph(fun=print, x = gg_path_3)
+
+```
+

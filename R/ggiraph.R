@@ -1,4 +1,4 @@
-#' ggplotwidget
+#' ggiraph
 #'
 #' <Add Description>
 #'
@@ -15,7 +15,7 @@
 #' @import ReporteRs
 #' @import grid
 #' @export
-ggplotwidget <- function(fun, pointsize=12, 
+ggiraph <- function(fun, pointsize=12, 
 		graph.width=6, graph.height=6, fontname = "Verdana", 
 		width = NULL, height = NULL, ...) {
 	
@@ -35,11 +35,11 @@ ggplotwidget <- function(fun, pointsize=12,
 
 	# create widget
   htmlwidgets::createWidget(
-    name = 'ggplotwidget',
+    name = 'ggiraph',
     x,
     width = width,
     height = height,
-    package = 'ggplotwidget'
+    package = 'ggiraph'
   )
 }
 
@@ -47,8 +47,8 @@ ggplotwidget <- function(fun, pointsize=12,
 #'
 #' @param outputId outputId
 #' @export
-ggplotwidgetOutput <- function(outputId){
-  shinyWidgetOutput(outputId, 'ggplotwidget', package = 'ggplotwidget')
+ggiraphOutput <- function(outputId){
+  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph')
 }
 
 #' Widget render function for use in Shiny
@@ -57,7 +57,7 @@ ggplotwidgetOutput <- function(outputId){
 #' @param env env
 #' @param quoted quoted
 #' @export
-renderggplotwidget <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, ggplotwidgetOutput, env, quoted = TRUE)
+  shinyRenderWidget(expr, ggiraphOutput, env, quoted = TRUE)
 }

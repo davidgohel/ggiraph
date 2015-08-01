@@ -495,9 +495,9 @@ gg_path_3 = ggplot(dataset2) +
 		color = color, tooltips = label) )
 
 
-ggplotwidget(fun=print, x = gg_path_1)
-ggplotwidget(fun=print, x = gg_path_2)
-ggplotwidget(fun=print, x = gg_path_3)
+ggiraph(fun=print, x = gg_path_1)
+ggiraph(fun=print, x = gg_path_2)
+ggiraph(fun=print, x = gg_path_3)
 }
 \seealso{
 \code{\link{geom_polygon_interactive}},

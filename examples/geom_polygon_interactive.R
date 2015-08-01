@@ -21,5 +21,5 @@ datapoly$tooltips = as.character( datapoly$value )
 gg_poly_1 <- ggplot(datapoly, aes( x = x, y = y ) ) + 
 	geom_polygon_interactive(aes(fill = value, group = id, tooltips = tooltips))
 
-ggplotwidget(fun=print, x = gg_poly_1)
+ggiraph(fun=print, x = gg_poly_1)
 

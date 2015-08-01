@@ -12,5 +12,5 @@ gg_point_2 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 		tooltips = tooltip, clicks=clickjs) ) + 
 	geom_point_interactive() + facet_wrap( ~ Species )
 
-ggplotwidget(fun=print, x = gg_point_1)
-ggplotwidget(fun=print, x = gg_point_2)
+ggiraph(fun=print, x = gg_point_1)
+ggiraph(fun=print, x = gg_point_2)

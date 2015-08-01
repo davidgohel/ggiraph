@@ -24,5 +24,5 @@ gg_rect_2 = ggplot() +
 	geom_text(data=dataset, aes(x = x1 + ( x2 - x1 ) / 2, y = y1 + ( y2 - y1 ) / 2, label = r ), 
 		size = 4 ) 
 
-ggplotwidget(fun=print, x = gg_rect_1)
-ggplotwidget(fun=print, x = gg_rect_2)
+ggiraph(fun=print, x = gg_rect_1)
+ggiraph(fun=print, x = gg_rect_2)
