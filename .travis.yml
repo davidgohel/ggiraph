@@ -25,11 +25,11 @@ r_packages:
  - gtable
  
 r_github_packages:
+  - davidgohel/ReporteRs
   - hadley/scales
   - hadley/ggplot2movies
   - jimhester/covr
   - hadley/ggplot2
-  - davidgohel/ReporteRs
 
 
 os:
