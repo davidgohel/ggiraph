@@ -1,0 +1,39 @@
+language: r
+
+sudo: required
+
+warnings_are_errors: true
+
+env:
+ global:
+   - CRAN: http://cran.rstudio.com
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+apt_packages:
+ - r-cran-rjava
+
+r_binary_packages:
+ - MASS
+ - digest
+ - rJava
+ - ReporteRsjars
+ - grid
+ - plyr
+ - reshape2
+ - gtable
+ 
+r_github_packages:
+  - hadley/scales
+  - hadley/ggplot2movies
+  - jimhester/covr
+  - hadley/ggplot2
+  - davidgohel/ReporteRs
+
+
+os:
+ - linux
+ - osx
