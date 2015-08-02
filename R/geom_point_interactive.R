@@ -45,7 +45,7 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 			inter.vars = intersect(c("tooltips", "clicks", "dbclicks"), names(data))
 			
 			data <- rm.na(data, c("x", "y", inter.vars, "size", "shape", "tt") )
-			if (nrow(data) < 1 || ncol(data) < 2 ) return(zeroGrob())
+			if (nrow(data) < 1 || ncol(data) < 2 ) return(nullGrob())
 
 			coords <- coordinates$transform(data, scales)
 			
@@ -54,12 +54,12 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 					gp = gpar(
 						col = alpha(coords$colour, coords$alpha),
 						fill = alpha(coords$fill, coords$alpha),
-						fontsize = coords$size * .pt + coords$stroke * .stroke / 2,
-						lwd = coords$stroke * .stroke / 2
+						fontsize = coords$size * ggplot2.pt + coords$stroke * ggplot2.stroke / 2,
+						lwd = coords$stroke * ggplot2.stroke / 2
 					))
 			grob.args[inter.vars] = as.list( data[inter.vars] )
 			
-			ggname("geom_point_interactive", do.call(interactivePointsGrob, grob.args ) )
+			setGrobName("geom_point_interactive", do.call(interactivePointsGrob, grob.args ) )
 		},
 		
 		guide_geom = draw_key_point,

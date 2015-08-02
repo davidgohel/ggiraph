@@ -49,7 +49,7 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			first_idx <- !duplicated(munched$group)
 			first_rows <- munched[first_idx, ]
 
-			ggname("geom_polygon_interactive", gTree(children = gList(
+			setGrobName("geom_polygon_interactive", gTree(children = gList(
 									interactivePolygonGrob(munched$x, munched$y, default.units = "native",
 											id = munched$group,
 											tooltips = munched$tooltips,
@@ -58,7 +58,7 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 											gp = gpar(
 													col = first_rows$colour,
 													fill = alpha(first_rows$fill, first_rows$alpha),
-													lwd = first_rows$size * .pt,
+													lwd = first_rows$size * ggplot2.pt,
 													lty = first_rows$linetype
 											)
 									)

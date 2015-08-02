@@ -1,3 +1,4 @@
+#' @author Hadley Wickham 
 coord_munch <- function(coord, data, range, segment_length = 0.01) {
 	if (coord$is_linear()) return(coord$transform(data, range))
 	
@@ -26,6 +27,7 @@ coord_munch <- function(coord, data, range, segment_length = 0.01) {
 #
 # @param dist distance, scaled from 0 to 1 (maximum distance on plot)
 # @keyword internal
+#' @author Hadley Wickham 
 munch_data <- function(data, dist = NULL, segment_length = 0.01) {
 	n <- nrow(data)
 	
@@ -53,6 +55,7 @@ munch_data <- function(data, dist = NULL, segment_length = 0.01) {
 # Interpolate.
 # Interpolate n-1 evenly spaced steps (n points) from start to
 # (end - (end - start) / n). end is never included in sequence.
+#' @author Hadley Wickham 
 interp <- function(start, end, n) {
 	if (n == 1) return(start)
 	start + seq(0, 1, length.out = n + 1)[-(n + 1)] * (end - start)
@@ -60,6 +63,7 @@ interp <- function(start, end, n) {
 
 # Euclidean distance between points.
 # NA indicates a break / terminal points
+#' @author Hadley Wickham 
 dist_euclidean <- function(x, y) {
 	n <- length(x)
 	
@@ -68,6 +72,7 @@ dist_euclidean <- function(x, y) {
 is.discrete <- function(x) {
 	is.factor(x) || is.character(x) || is.logical(x)
 }
+#' @author Hadley Wickham 
 #' @importFrom plyr id
 add_group <- function(data) {
 	if (nrow(data)<1 || ncol(data)<1) return(data)

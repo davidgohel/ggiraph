@@ -46,10 +46,10 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 							GeomInteractivePolygon$draw(cbind(poly, aes), scales, coordinates)
 						})
 				
-				ggname("bar", do.call("grobTree", polys))
+				setGrobName("bar", do.call("grobTree", polys))
 			} else {
 				coords <- coordinates$transform(data, scales)
-				ggname("geom_rect_interactive", interactiveRectGrob(
+				setGrobName("geom_rect_interactive", interactiveRectGrob(
 								coords$xmin, coords$ymax,
 								width = coords$xmax - coords$xmin,
 								height = coords$ymax - coords$ymin,
@@ -61,7 +61,7 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 								gp = gpar(
 									col = coords$colour,
 									fill = alpha(coords$fill, coords$alpha),
-									lwd = coords$size * .pt,
+									lwd = coords$size * ggplot2.pt,
 									lty = coords$linetype,
 									lineend = "butt"
 								)

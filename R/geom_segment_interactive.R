@@ -42,7 +42,7 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 			
 			data <- rm.na(data, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
 
-			if (nrow(data) < 1 || ncol(data) < 1 ) return(zeroGrob())
+			if (nrow(data) < 1 || ncol(data) < 1 ) return(nullGrob())
 			
 			if (coordinates$is_linear()) {
 				coord <- coordinates$transform(data, scales)
@@ -54,7 +54,7 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 								gp = gpar(
 										col = alpha(coord$colour, coord$alpha),
 										fill = alpha(coord$colour, coord$alpha),
-										lwd = coord$size * .pt,
+										lwd = coord$size * ggplot2.pt,
 										lty = coord$linetype,
 										lineend = lineend
 								),
