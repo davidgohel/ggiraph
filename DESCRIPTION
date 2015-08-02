@@ -13,3 +13,5 @@ Maintainer: David Gohel <david.gohel@ardata.fr>
 License: GPL-3
 Depends: ggplot2 (>= 1.0.1.9002)
 Imports: grid, htmlwidgets, htmltools, ReporteRs (>= 0.8.2), stats, plyr
+Suggests: knitr
+VignetteBuilder: knitr
