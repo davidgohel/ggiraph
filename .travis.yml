@@ -17,11 +17,9 @@ apt_packages:
  - r-cran-rjava
 
 r_packages:
- - MASS
  - digest
  - rJava
  - ReporteRsjars
- - grid
  - plyr
  - reshape2
  - gtable
