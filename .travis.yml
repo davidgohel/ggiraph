@@ -16,7 +16,7 @@ notifications:
 apt_packages:
  - r-cran-rjava
 
-r_binary_packages:
+r_packages:
  - MASS
  - digest
  - rJava
