@@ -3,12 +3,12 @@ dependencies:
     version: 0.0.1
     src: "htmlwidgets/lib/raphael"
     script: raphael-min.js
+  - name: jquery
+    version: 2.1.1
+    src: "htmlwidgets/lib"
+    script: jquery.min.js
   - name: tooltip
     version: 0.0.1
     src: "htmlwidgets/lib/tooltip"
     script: tooltip.js
     stylesheet: tooltip.css
-  - name: jquery
-    version: 2.1.1
-    src: "htmlwidgets/lib"
-    script: jquery.min.js

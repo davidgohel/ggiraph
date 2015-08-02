@@ -1,5 +1,5 @@
 #gtooltip {
-
+	
 }
 .gtt0 {
 	display:none;
@@ -14,7 +14,7 @@
 	display:block;
 	position: absolute;
 	border: 1px #f1f2f4;
-	border-radius: 15px 50px 30px 5px;
+	border-radius: 0px;
 	background-color: #d9dadc;
 	z-index: 1000;
 	max-width: 400px;

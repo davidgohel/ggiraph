@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: 'ggplotwidget',
+  name: 'ggiraph',
 
   type: 'output',
 
