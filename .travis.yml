@@ -17,7 +17,6 @@ notifications:
 
 apt_packages:
  - r-cran-rjava
- - pandoc
 
 r_packages:
  - digest
