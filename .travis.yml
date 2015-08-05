@@ -7,8 +7,8 @@ warnings_are_errors: true
 env:
  global:
    - CRAN: http://cran.rstudio.com
-   - R_BUILD_ARGS="--no-build-vignettes --no-manual"
-   - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
+   - r_build_args: --no-build-vignettes --no-manual
+   - r_check_args: --no-build-vignettes --no-manual --as-cran
 
 notifications:
   email:
