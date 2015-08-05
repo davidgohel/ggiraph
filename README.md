@@ -7,10 +7,13 @@
     
 # Installation 
 
-You will need the latest ggplot2 version (>= 1.0.1.9002) and the lastes version of 
+You will need the latest ggplot2 version (>= 1.0.1.9002) and the latest version of 
 ReporteRs (>= 0.8.2).
 
-    devtools::install_github('davidgohel/ReporteRsjars')
-    devtools::install_github('davidgohel/ReporteRs')
-    devtools::install_github('hadley/ggplot2')
+    install.packages('ReporteRs')
+    
+    devtools::install_github("hadley/scales")
+	devtools::install_github("hadley/ggplot2movies")
+	devtools::install_github("hadley/ggplot2")
+	
     devtools::install_github('davidgohel/ggiraph')
