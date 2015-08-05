@@ -61,7 +61,7 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 								gp = gpar(
 									col = coords$colour,
 									fill = alpha(coords$fill, coords$alpha),
-									lwd = coords$size * ggplot2.pt,
+									lwd = coords$size * .pt,
 									lty = coords$linetype,
 									lineend = "butt"
 								)

@@ -7,10 +7,8 @@ Version: 0.0.1
 Date: 2015-08-02
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
-    email = "david.gohel@ardata.fr"), 
-    person("Hadley", "Wickham", role = c("cph") ) )
-Author: David Gohel [aut, cre],
-    Hadley Wickham [cph]
+    email = "david.gohel@ardata.fr") )
+Author: David Gohel [aut, cre]
 Maintainer: David Gohel <david.gohel@ardata.fr>
 License: GPL-3
 Depends: ggplot2 (>= 1.0.1.9002)

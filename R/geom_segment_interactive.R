@@ -40,9 +40,9 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 			
 			inter.vars = intersect(c("tooltips", "clicks", "dbclicks"), names(data))
 			
-			data <- rm.na(data, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
+			data <- remove_missing(data, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
 
-			if (nrow(data) < 1 || ncol(data) < 1 ) return(nullGrob())
+			if (nrow(data) < 1 || ncol(data) < 1 ) return(zeroGrob())
 			
 			if (coordinates$is_linear()) {
 				coord <- coordinates$transform(data, scales)
@@ -54,7 +54,7 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 								gp = gpar(
 										col = alpha(coord$colour, coord$alpha),
 										fill = alpha(coord$colour, coord$alpha),
-										lwd = coord$size * ggplot2.pt,
+										lwd = coord$size * .pt,
 										lty = coord$linetype,
 										lineend = lineend
 								),

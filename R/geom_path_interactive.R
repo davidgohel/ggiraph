@@ -80,7 +80,7 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 			# Silently drop lines with less than two points, preserving order
 			rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
 			munched <- munched[rows >= 2, ]
-			if (nrow(munched) < 2) return(nullGrob())
+			if (nrow(munched) < 2) return(zeroGrob())
 			
 			# Work out whether we should use lines or segments
 			attr <- plyr::ddply(munched, "group", function(df) {
@@ -113,7 +113,7 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 						gp = gpar(
 								col = alpha(munched$colour, munched$alpha)[!end],
 								fill = alpha(munched$colour, munched$alpha)[!end],
-								lwd = munched$size[!end] * ggplot2.pt,
+								lwd = munched$size[!end] * .pt,
 								lty = munched$linetype[!end],
 								lineend = lineend,
 								linejoin = linejoin,
@@ -131,7 +131,7 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 						gp = gpar(
 								col = alpha(munched$colour, munched$alpha)[start],
 								fill = alpha(munched$colour, munched$alpha)[start],
-								lwd = munched$size[start] * ggplot2.pt,
+								lwd = munched$size[start] * .pt,
 								lty = munched$linetype[start],
 								lineend = lineend,
 								linejoin = linejoin,
