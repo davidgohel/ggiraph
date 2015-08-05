@@ -23,6 +23,7 @@ r_packages:
  - plyr
  - reshape2
  - gtable
+ - rmarkdown
  
 r_github_packages:
   - hadley/scales
