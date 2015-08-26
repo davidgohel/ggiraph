@@ -18,6 +18,7 @@ notifications:
 r_packages:
  - digest
  - plyr
+ - xml2
  - reshape2
  - gtable
  - rmarkdown

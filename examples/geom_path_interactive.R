@@ -6,7 +6,7 @@ data = expand.grid(list(
 	id = id
 	)
 )
-groups = sample(LETTERS[1:3], size = length(id), replace = T)
+groups = sample(LETTERS[1:3], size = length(id), replace = TRUE)
 data$group = groups[match(data$id, id)]
 data$value = runif(n = nrow(data))
 data$tooltips = paste0('id ', data$id )

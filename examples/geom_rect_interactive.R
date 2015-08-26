@@ -3,7 +3,8 @@ dataset <- data.frame(
 	y = sample(10, 20, replace = TRUE), 
 	id = letters[1:20]
 )
-gg_rect_1 = ggplot(dataset, aes(xmin = x, xmax = x + 1, ymin = y, ymax = y + 2, tooltips = id)) +
+gg_rect_1 = ggplot(dataset, aes(xmin = x, xmax = x + 1, 
+		ymin = y, ymax = y + 2, tooltips = id)) +
 	geom_rect_interactive()
 
 dataset = data.frame( x1 = c(1, 3, 1, 5, 4), 
@@ -21,7 +22,9 @@ gg_rect_2 = ggplot() +
 	geom_rect_interactive(data=dataset, mapping = aes(xmin = x1, xmax = x2, 
 			ymin = y1, ymax = y2, fill = t, tooltips = tooltips ), 
 		color="black", alpha=0.5) +
-	geom_text(data=dataset, aes(x = x1 + ( x2 - x1 ) / 2, y = y1 + ( y2 - y1 ) / 2, label = r ), 
+	geom_text(data=dataset, 
+			aes(x = x1 + ( x2 - x1 ) / 2, y = y1 + ( y2 - y1 ) / 2, 
+					label = r ), 
 		size = 4 ) 
 
 ggiraph(fun=print, x = gg_rect_1)
