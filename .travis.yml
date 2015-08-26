@@ -15,19 +15,15 @@ notifications:
     on_success: change
     on_failure: change
 
-apt_packages:
- - r-cran-rjava
-
 r_packages:
  - digest
- - rJava
- - ReporteRs
  - plyr
  - reshape2
  - gtable
  - rmarkdown
 
 r_github_packages:
+  - davidgohel/rvg
   - hadley/scales
   - hadley/ggplot2movies
   - hadley/ggplot2
