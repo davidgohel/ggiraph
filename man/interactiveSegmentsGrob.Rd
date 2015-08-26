@@ -6,7 +6,7 @@
 \usage{
 interactiveSegmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   x1 = unit(1, "npc"), y1 = unit(1, "npc"), tooltips = NULL,
-  clicks = NULL, dbclicks = NULL, default.units = "npc", arrow = NULL,
+  clicks = NULL, id = NULL, default.units = "npc", arrow = NULL,
   name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -24,7 +24,7 @@ interactiveSegmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 
 \item{clicks}{javascript action to execute when segment is clicked}
 
-\item{dbclicks}{javascript action to execute when segment is double clicked}
+\item{id}{identifiers to associate with segments}
 
 \item{default.units}{ A string. }
 

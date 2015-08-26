@@ -1,7 +1,7 @@
 # create dataset 
 dataset = iris
 dataset$tooltip = paste0( "Species <br/>", dataset$Species )
-dataset$clickjs = paste0("alert('",dataset$Species, "');" )
+dataset$clickjs = paste0("function() {alert('",dataset$Species, "')}" )
 
 # plots
 gg_point_1 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width, 

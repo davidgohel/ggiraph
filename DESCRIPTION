@@ -11,7 +11,7 @@ Authors@R: c(
 Author: David Gohel [aut, cre]
 Maintainer: David Gohel <david.gohel@ardata.fr>
 License: GPL-3
-Depends: ggplot2 (>= 1.0.1.9002)
-Imports: grid, htmlwidgets, htmltools, ReporteRs (>= 0.8.2), stats, plyr
+Depends: ggplot2 (>= 1.0.1.9003)
+Imports: grid, htmlwidgets, htmltools, stats, plyr, rvg, xml2
 Suggests: knitr
 VignetteBuilder: knitr

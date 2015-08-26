@@ -6,7 +6,7 @@
 \usage{
 interactivePolylineGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
   id = NULL, id.lengths = NULL, tooltips = NULL, clicks = NULL,
-  dbclicks = NULL, default.units = "npc", arrow = NULL, name = NULL,
+  datid = NULL, default.units = "npc", arrow = NULL, name = NULL,
   gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -26,7 +26,7 @@ interactivePolylineGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
 
 \item{clicks}{javascript action to execute when polyline is clicked}
 
-\item{dbclicks}{javascript action to execute when polyline is double clicked}
+\item{datid}{identifiers to associate with polylines}
 
 \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}

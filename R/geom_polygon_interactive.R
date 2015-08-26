@@ -37,7 +37,7 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			# but is.numeric() will report FALSE because it actually checks something else)
 			if (mode(data$group) != "numeric")
 				data$group <- factor(data$group)
-			inter.vars = intersect(c("tooltips", "clicks", "dbclicks"), names(data))
+			inter.vars = intersect(c("tooltips", "clicks", "id"), names(data))
 			
 			munched <- coord_munch(coordinates, data, scales)
 			# Sort by group to make sure that colors, fill, etc. come in same order
@@ -48,13 +48,13 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			# are the same within each group.
 			first_idx <- !duplicated(munched$group)
 			first_rows <- munched[first_idx, ]
-
+			
 			setGrobName("geom_polygon_interactive", gTree(children = gList(
 									interactivePolygonGrob(munched$x, munched$y, default.units = "native",
 											id = munched$group,
 											tooltips = munched$tooltips,
 											clicks = munched$clicks,
-											dbclicks = munched$dbclicks,
+											datid = munched$id,
 											gp = gpar(
 													col = first_rows$colour,
 													fill = alpha(first_rows$fill, first_rows$alpha),

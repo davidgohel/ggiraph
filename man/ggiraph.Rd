@@ -4,7 +4,7 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(fun, pointsize = 12, graph.width = 6, graph.height = 6,
+ggiraph(fun, pointsize = 12, graph.width = 504, graph.height = 504,
   fontname = "Verdana", width = NULL, height = NULL, ...)
 }
 \arguments{

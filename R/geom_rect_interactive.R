@@ -55,7 +55,7 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 								height = coords$ymax - coords$ymin,
 								tooltips = coords$tooltips,
 								clicks = coords$clicks,
-								dbclicks = coords$dbclicks,
+								id = coords$id,
 								default.units = "native",
 								just = c("left", "top"),
 								gp = gpar(

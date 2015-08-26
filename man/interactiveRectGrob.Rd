@@ -6,7 +6,7 @@
 \usage{
 interactiveRectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   width = unit(1, "npc"), height = unit(1, "npc"), tooltips = NULL,
-  clicks = NULL, dbclicks = NULL, just = "centre", hjust = NULL,
+  clicks = NULL, id = NULL, just = "centre", hjust = NULL,
   vjust = NULL, default.units = "npc", name = NULL, gp = gpar(),
   vp = NULL)
 }
@@ -23,7 +23,7 @@ interactiveRectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 
 \item{clicks}{javascript action to execute when rectangle is clicked}
 
-\item{dbclicks}{javascript action to execute when rectangle is double clicked}
+\item{id}{identifiers to associate with rectangles}
 
 \item{just}{The justification of the rectangle
     relative to its (x, y) location.  If there are two values, the first

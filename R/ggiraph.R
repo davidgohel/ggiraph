@@ -12,35 +12,57 @@
 #' @param ... sddf sf
 #' @import htmlwidgets
 #' @import htmltools
-#' @import ReporteRs
+#' @import rvg
 #' @import grid
+#' @importFrom xml2 read_xml
+#' @importFrom xml2 xml_find_all
+#' @importFrom xml2 xml_text
 #' @export
 ggiraph <- function(fun, pointsize=12, 
-		graph.width=6, graph.height=6, fontname = "Verdana", 
+		graph.width=504, graph.height=504, fontname = "Verdana", 
 		width = NULL, height = NULL, ...) {
 	
-	ggiwid.options = getOption("ggiwid")	
+	ggiwid.options = getOption("ggiwid")
+	tmpdir = tempdir()
+	base_name = tempfile(tmpdir = "", fileext = "", pattern = "")
 	
-	plotelts = raphael.html(fun = fun, pointsize=pointsize, 
-		width=graph.width, height=graph.height, fontname = fontname, 
-		canvas_id = ggiwid.options$id, ... )
-	ggiwid.options$id = length(plotelts$js.id) + ggiwid.options$id
-	options("ggiwid"=ggiwid.options)
-	x = list(
-		html = HTML(plotelts$html),
-		js = plotelts$js,
-		divid = plotelts$div.id, 
-		jsid = plotelts$js.id
+	rvg(rootname = file.path(tmpdir, base_name), 
+			ps = pointsize, 
+			width = graph.width, height = graph.height, 
+			fontname = fontname, 
+			plot_id = ggiwid.options$id
 	)
+	fun(...)
+	dev.off()
+	file.l = list.files(path = tmpdir, pattern = "\\.svg$", full.names = TRUE )
+	
+	ggiwid.options$id = length(file.l) + ggiwid.options$id
+	options("ggiwid"=ggiwid.options)
+	
+	svg_containers = sapply(file.l, 
+			function(x) 
+				paste( scan(x, what = "character", sep = "\n"), collapse = "\n") 
+	)
+	js = sapply( svg_containers, function(x){
+		data <- read_xml( x )
+		scr = xml_find_all(data, ".//script")
+		paste( sapply( scr, xml_text ), collapse = "\n")
+	})
 
+	unlink(file.l)
+	x = list(
+			html = HTML(paste(svg_containers, collapse = "\n")), 
+			js = paste(js, collapse = "\n")
+	)
+	
 	# create widget
-  htmlwidgets::createWidget(
-    name = 'ggiraph',
-    x,
-    width = width,
-    height = height,
-    package = 'ggiraph'
-  )
+	htmlwidgets::createWidget(
+			name = 'ggiraph',
+			x,
+			width = width,
+			height = height,
+			package = 'ggiraph'
+	)
 }
 
 #' Widget output function for use in Shiny
@@ -48,7 +70,7 @@ ggiraph <- function(fun, pointsize=12,
 #' @param outputId outputId
 #' @export
 ggiraphOutput <- function(outputId){
-  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph')
+	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph')
 }
 
 #' Widget render function for use in Shiny
@@ -58,6 +80,6 @@ ggiraphOutput <- function(outputId){
 #' @param quoted quoted
 #' @export
 renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, ggiraphOutput, env, quoted = TRUE)
+	if (!quoted) { expr <- substitute(expr) } # force quoted
+	shinyRenderWidget(expr, ggiraphOutput, env, quoted = TRUE)
 }

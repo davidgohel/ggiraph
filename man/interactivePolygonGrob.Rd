@@ -6,7 +6,7 @@
 \usage{
 interactivePolygonGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
   id = NULL, id.lengths = NULL, tooltips = NULL, clicks = NULL,
-  dbclicks = NULL, default.units = "npc", name = NULL, gp = gpar(),
+  datid = NULL, default.units = "npc", name = NULL, gp = gpar(),
   vp = NULL)
 }
 \arguments{
@@ -26,7 +26,7 @@ interactivePolygonGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
 
 \item{clicks}{javascript action to execute when polygon is clicked}
 
-\item{dbclicks}{javascript action to execute when polygon is double clicked}
+\item{datid}{identifiers to associate with polygons}
 
 \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}

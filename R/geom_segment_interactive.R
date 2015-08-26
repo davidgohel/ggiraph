@@ -34,13 +34,14 @@ geom_segment_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 	)
 }
 
+#' @importFrom ggplot2 remove_missing
 GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 		draw = function(data, scales, coordinates, arrow = NULL,
 				lineend = "butt", na.rm = FALSE, ...) {
 			
-			inter.vars = intersect(c("tooltips", "clicks", "dbclicks"), names(data))
+			inter.vars = intersect(c("tooltips", "clicks", "id"), names(data))
 			
-			data <- remove_missing(data, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
+			data <- remove_missing(data, na.rm, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
 
 			if (nrow(data) < 1 || ncol(data) < 1 ) return(zeroGrob())
 			
@@ -49,7 +50,7 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 				return(interactiveSegmentsGrob(coord$x, coord$y, coord$xend, coord$yend,
 								tooltips = coord$tooltips,
 								clicks = coord$clicks,
-								dbclicks = coord$dbclicks,
+								id = coord$id,
 								default.units = "native",
 								gp = gpar(
 										col = alpha(coord$colour, coord$alpha),

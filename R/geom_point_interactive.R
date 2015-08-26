@@ -37,36 +37,39 @@ geom_point_interactive <- function(mapping = NULL, data = NULL, stat = "identity
 }
 
 
-GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
-		draw_groups = function(self, ...) self$draw(...),
-		
+#' @importFrom ggplot2 remove_missing
+GeomInteractivePoint <- ggproto("GeomPoint", Geom,
 		draw = function(self, data, scales, coordinates, na.rm = FALSE, ...) {
-			
-			inter.vars = intersect(c("tooltips", "clicks", "dbclicks"), names(data))
-			
-			data <- remove_missing(data, c("x", "y", inter.vars, "size", "shape", "tt") )
+			data <- remove_missing(data, na.rm, c("x", "y", "size", "shape", "tooltips", "clicks", "id"),
+					name = "geom_point_interactive")
 			if (nrow(data) < 1 || ncol(data) < 2 ) return(zeroGrob())
-
+			
 			coords <- coordinates$transform(data, scales)
-			
-			grob.args = list(x = coords$x, y = coords$y, 
-					pch = coords$shape,
-					gp = gpar(
-						col = alpha(coords$colour, coords$alpha),
-						fill = alpha(coords$fill, coords$alpha),
-						fontsize = coords$size * .pt + coords$stroke * .stroke / 2,
-						lwd = coords$stroke * .stroke / 2
-					))
-			grob.args[inter.vars] = as.list( data[inter.vars] )
-			
-			setGrobName("geom_point_interactive", do.call(interactivePointsGrob, grob.args ) )
+			setGrobName("geom_point_interactive",
+					interactivePointsGrob(
+							coords$x, coords$y,
+							pch = coords$shape,
+							tooltips = coords$tooltips,
+							clicks = coords$clicks,
+							id = coords$id, 
+							gp = gpar(
+									col = alpha(coords$colour, coords$alpha),
+									fill = alpha(coords$fill, coords$alpha),
+									# Stroke is added around the outside of the point
+									fontsize = coords$size * .pt + coords$stroke * .stroke / 2,
+									lwd = coords$stroke * .stroke / 2
+							)
+					)
+			)
 		},
 		
-		guide_geom = draw_key_point,
+		draw_key = draw_key_point,
 		
 		required_aes = c("x", "y"),
-		default_aes = aes(shape = 19, colour = "black", size = 2, fill = NA, alpha = NA, stroke = 1)
+		default_aes = aes(shape = 19, colour = "black", size = 1.5, fill = NA,
+				alpha = NA, stroke = 0.5)
 )
+
 
 
 
