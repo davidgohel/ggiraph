@@ -15,7 +15,7 @@ notifications:
     on_success: change
     on_failure: change
 
-r_packages:
+r_binary_packages:
  - digest
  - plyr
  - xml2
