@@ -1,6 +1,6 @@
 Package: ggiraph
 Type: Package
-Title: Make 'ggplot' Graphics Interactive Using 'htmlwidgets'. 
+Title: Make 'ggplot' Graphics Interactive Using 'htmlwidgets'
 Description: Create interactive ggplot graphics that are usable in the 'RStudio' viewer pane, 
     in 'R Markdown' documents, and in 'Shiny' apps. 
 Version: 0.0.1

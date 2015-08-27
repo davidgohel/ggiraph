@@ -52,8 +52,10 @@ dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
 gg_rect_2 = ggplot() + 
 	scale_x_continuous(name="x") + 
 	scale_y_continuous(name="y") +
-	geom_rect_interactive(data=dataset, mapping = aes(xmin = x1, xmax = x2, 
-			ymin = y1, ymax = y2, fill = t, tooltip = tooltip, onclick = oc, data_id = uid ), 
+	geom_rect_interactive(data=dataset, 
+		mapping = aes(xmin = x1, xmax = x2, 
+			ymin = y1, ymax = y2, fill = t, 
+			tooltip = tooltip, onclick = oc, data_id = uid ), 
 		color="black", alpha=0.5) +
 	geom_text(data=dataset, 
 			aes(x = x1 + ( x2 - x1 ) / 2, y = y1 + ( y2 - y1 ) / 2, 
