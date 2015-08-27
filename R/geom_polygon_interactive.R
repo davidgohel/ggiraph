@@ -1,7 +1,7 @@
 #' @title add polygons with tooltips or click actions or double click actions 
 #' 
 #' @description 
-#' Tooltips can be displayed when mouse is over polygons, on click actions and 
+#' tooltips can be displayed when mouse is over polygons, on click actions and 
 #' double click actions can be set with javascript instructions.
 #'
 #' @seealso
@@ -37,7 +37,7 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			# but is.numeric() will report FALSE because it actually checks something else)
 			if (mode(data$group) != "numeric")
 				data$group <- factor(data$group)
-			inter.vars = intersect(c("tooltips", "clicks", "id"), names(data))
+			inter.vars = intersect(c("tooltip", "onclick", "data_id"), names(data))
 			
 			munched <- coord_munch(coordinates, data, scales)
 			# Sort by group to make sure that colors, fill, etc. come in same order
@@ -52,9 +52,9 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			setGrobName("geom_polygon_interactive", gTree(children = gList(
 									interactivePolygonGrob(munched$x, munched$y, default.units = "native",
 											id = munched$group,
-											tooltips = munched$tooltips,
-											clicks = munched$clicks,
-											datid = munched$id,
+											tooltip = munched$tooltip,
+											onclick = munched$onclick,
+											data_id = munched$data_id,
 											gp = gpar(
 													col = first_rows$colour,
 													fill = alpha(first_rows$fill, first_rows$alpha),

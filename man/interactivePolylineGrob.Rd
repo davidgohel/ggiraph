@@ -5,8 +5,8 @@
 \title{Generate an Interactive Grob Path}
 \usage{
 interactivePolylineGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
-  id = NULL, id.lengths = NULL, tooltips = NULL, clicks = NULL,
-  datid = NULL, default.units = "npc", arrow = NULL, name = NULL,
+  id = NULL, id.lengths = NULL, tooltip = NULL, onclick = NULL,
+  data_id = NULL, default.units = "npc", arrow = NULL, name = NULL,
   gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -22,11 +22,11 @@ interactivePolylineGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
     \code{y} into multiple lines.  Specifies consecutive blocks of
     locations which make up separate lines.}
 
-\item{tooltips}{tooltips associated with polylines}
+\item{tooltip}{tooltip associated with polylines}
 
-\item{clicks}{javascript action to execute when polyline is clicked}
+\item{onclick}{javascript action to execute when polyline is clicked}
 
-\item{datid}{identifiers to associate with polylines}
+\item{data_id}{identifiers to associate with polylines}
 
 \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}

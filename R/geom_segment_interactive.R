@@ -1,7 +1,7 @@
 #' @title add segments with tooltips or click actions or double click actions 
 #' 
 #' @description 
-#' Tooltips can be displayed when mouse is over segments, on click actions and 
+#' tooltips can be displayed when mouse is over segments, on click actions and 
 #' double click actions can be set with javascript instructions.
 #'
 #' @seealso
@@ -39,7 +39,7 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 		draw = function(data, scales, coordinates, arrow = NULL,
 				lineend = "butt", na.rm = FALSE, ...) {
 			
-			inter.vars = intersect(c("tooltips", "clicks", "id"), names(data))
+			inter.vars = intersect(c("tooltip", "onclick", "data_id"), names(data))
 			
 			data <- remove_missing(data, na.rm, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
 
@@ -48,9 +48,9 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 			if (coordinates$is_linear()) {
 				coord <- coordinates$transform(data, scales)
 				return(interactiveSegmentsGrob(coord$x, coord$y, coord$xend, coord$yend,
-								tooltips = coord$tooltips,
-								clicks = coord$clicks,
-								id = coord$id,
+								tooltip = coord$tooltip,
+								onclick = coord$onclick,
+								data_id = coord$data_id,
 								default.units = "native",
 								gp = gpar(
 										col = alpha(coord$colour, coord$alpha),

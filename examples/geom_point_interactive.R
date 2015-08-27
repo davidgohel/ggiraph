@@ -5,11 +5,11 @@ dataset$clickjs = paste0("function() {alert('",dataset$Species, "')}" )
 
 # plots
 gg_point_1 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width, 
-		color = Species, tooltips = tooltip, clicks=clickjs) ) + 
+		color = Species, tooltip = tooltip, onclick=clickjs) ) + 
 	geom_point_interactive()
 
 gg_point_2 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width, 
-		tooltips = tooltip, clicks=clickjs) ) + 
+		tooltip = tooltip, onclick=clickjs) ) + 
 	geom_point_interactive() + facet_wrap( ~ Species )
 
 ggiraph(fun=print, x = gg_point_1)

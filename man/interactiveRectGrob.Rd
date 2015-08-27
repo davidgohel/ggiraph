@@ -5,8 +5,8 @@
 \title{Generate interactive grob rectangles}
 \usage{
 interactiveRectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-  width = unit(1, "npc"), height = unit(1, "npc"), tooltips = NULL,
-  clicks = NULL, id = NULL, just = "centre", hjust = NULL,
+  width = unit(1, "npc"), height = unit(1, "npc"), tooltip = NULL,
+  onclick = NULL, data_id = NULL, just = "centre", hjust = NULL,
   vjust = NULL, default.units = "npc", name = NULL, gp = gpar(),
   vp = NULL)
 }
@@ -19,11 +19,11 @@ interactiveRectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 
 \item{height}{A numeric vector or unit object specifying height.}
 
-\item{tooltips}{tooltips associated with rectangles}
+\item{tooltip}{tooltip associated with rectangles}
 
-\item{clicks}{javascript action to execute when rectangle is clicked}
+\item{onclick}{javascript action to execute when rectangle is clicked}
 
-\item{id}{identifiers to associate with rectangles}
+\item{data_id}{identifiers to associate with rectangles}
 
 \item{just}{The justification of the rectangle
     relative to its (x, y) location.  If there are two values, the first

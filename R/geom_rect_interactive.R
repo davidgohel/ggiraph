@@ -1,7 +1,7 @@
 #' @title add rectangles with tooltips or click actions or double click actions 
 #' 
 #' @description 
-#' Tooltips can be displayed when mouse is over rectangles, on click actions and 
+#' tooltips can be displayed when mouse is over rectangles, on click actions and 
 #' double click actions can be set with javascript instructions.
 #'
 #' @seealso
@@ -53,9 +53,9 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 								coords$xmin, coords$ymax,
 								width = coords$xmax - coords$xmin,
 								height = coords$ymax - coords$ymin,
-								tooltips = coords$tooltips,
-								clicks = coords$clicks,
-								id = coords$id,
+								tooltip = coords$tooltip,
+								onclick = coords$onclick,
+								data_id = coords$data_id,
 								default.units = "native",
 								just = c("left", "top"),
 								gp = gpar(

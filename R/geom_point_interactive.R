@@ -40,7 +40,7 @@ geom_point_interactive <- function(mapping = NULL, data = NULL, stat = "identity
 #' @importFrom ggplot2 remove_missing
 GeomInteractivePoint <- ggproto("GeomPoint", Geom,
 		draw = function(self, data, scales, coordinates, na.rm = FALSE, ...) {
-			data <- remove_missing(data, na.rm, c("x", "y", "size", "shape", "tooltips", "clicks", "id"),
+			data <- remove_missing(data, na.rm, c("x", "y", "size", "shape", "tooltip", "onclick", "data_id"),
 					name = "geom_point_interactive")
 			if (nrow(data) < 1 || ncol(data) < 2 ) return(zeroGrob())
 			coords <- coordinates$transform(data, scales)
@@ -48,9 +48,9 @@ GeomInteractivePoint <- ggproto("GeomPoint", Geom,
 					interactivePointsGrob(
 							coords$x, coords$y,
 							pch = coords$shape,
-							tooltips = coords$tooltips,
-							clicks = coords$clicks,
-							id = coords$id, 
+							tooltip = coords$tooltip,
+							onclick = coords$onclick,
+							data_id = coords$data_id, 
 							gp = gpar(
 									col = alpha(coords$colour, coords$alpha),
 									fill = alpha(coords$fill, coords$alpha),

@@ -5,8 +5,8 @@
 \title{Generate interactive grob polygons}
 \usage{
 interactivePolygonGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
-  id = NULL, id.lengths = NULL, tooltips = NULL, clicks = NULL,
-  datid = NULL, default.units = "npc", name = NULL, gp = gpar(),
+  id = NULL, id.lengths = NULL, tooltip = NULL, onclick = NULL,
+  data_id = NULL, default.units = "npc", name = NULL, gp = gpar(),
   vp = NULL)
 }
 \arguments{
@@ -22,11 +22,11 @@ interactivePolygonGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
     \code{y} into multiple polygons.  Specifies consecutive blocks of
     locations which make up separate polygons.}
 
-\item{tooltips}{tooltips associated with polygons}
+\item{tooltip}{tooltip associated with polygons}
 
-\item{clicks}{javascript action to execute when polygon is clicked}
+\item{onclick}{javascript action to execute when polygon is clicked}
 
-\item{datid}{identifiers to associate with polygons}
+\item{data_id}{identifiers to associate with polygons}
 
 \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}

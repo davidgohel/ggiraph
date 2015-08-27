@@ -9,8 +9,8 @@ data = expand.grid(list(
 groups = sample(LETTERS[1:3], size = length(id), replace = TRUE)
 data$group = groups[match(data$id, id)]
 data$value = runif(n = nrow(data))
-data$tooltips = paste0('id ', data$id )
-data$clicks = paste0("function() {alert('", data$id, "')}" )
+data$tooltip = paste0('id ', data$id )
+data$onclick = paste0("function() {alert('", data$id, "')}" )
 
 cols = c("orange", "orange1", "orange2", "navajowhite4", "navy")
 dataset2 <- data.frame(x = rep(1:20, 5), 
@@ -24,17 +24,17 @@ dataset2 <- data.frame(x = rep(1:20, 5),
 
 # plots ---
 gg_path_1 = ggplot(data, aes(variable, value, group = id, 
-		colour = group, tooltips = tooltips, clicks = clicks)) +
+		colour = group, tooltip = tooltip, onclick = onclick)) +
 	geom_path_interactive(alpha = 0.5)
 
 gg_path_2 = ggplot(data, aes(variable, value, group = id, 
-		tooltips = tooltips)) +
+		tooltip = tooltip)) +
 	geom_path_interactive(alpha = 0.5) + 
 	facet_wrap( ~ group )
 
 gg_path_3 = ggplot(dataset2) +
 	geom_path_interactive(aes(x, y, group=grp, 
-		color = color, tooltips = label) )
+		color = color, tooltip = label) )
 
 # ggiraph widgets ---
 ggiraph(fun=print, x = gg_path_1)

@@ -3,16 +3,16 @@
 #' polygons.
 #' 
 #' @inheritParams grid::polygonGrob
-#' @param tooltips tooltips associated with polygons
-#' @param clicks javascript action to execute when polygon is clicked
-#' @param datid identifiers to associate with polygons
+#' @param tooltip tooltip associated with polygons
+#' @param onclick javascript action to execute when polygon is clicked
+#' @param data_id identifiers to associate with polygons
 #' @export 
 interactivePolygonGrob <- function(x=unit(c(0, 1), "npc"),
 		y=unit(c(0, 1), "npc"),
 		id=NULL, id.lengths=NULL,
-		tooltips = NULL, 
-		clicks = NULL, 
-		datid = NULL, 
+		tooltip = NULL, 
+		onclick = NULL, 
+		data_id = NULL, 
 		default.units="npc",
 		name=NULL, gp=gpar(), vp=NULL) {
 	# Allow user to specify unitless vector;  add default units
@@ -20,7 +20,7 @@ interactivePolygonGrob <- function(x=unit(c(0, 1), "npc"),
 		x <- unit(x, default.units)
 	if (!is.unit(y))
 		y <- unit(y, default.units)
-	grob(tooltips = tooltips, clicks = clicks, datid = datid, 
+	grob(tooltip = tooltip, onclick = onclick, data_id = data_id, 
 			x=x, y=y, id=id, id.lengths=id.lengths,
 			name=name, gp=gp, vp=vp, cl="interactivePolygonGrob")
 }
@@ -30,18 +30,18 @@ interactivePolygonGrob <- function(x=unit(c(0, 1), "npc"),
 #' @inheritParams grid::drawDetails
 drawDetails.interactivePolygonGrob <- function(x,recording) {
 	rvg_tracer_on()
-	argnames = setdiff( names(x), c("tooltips", "clicks", "datid") )
+	argnames = setdiff( names(x), c("tooltip", "onclick", "data_id") )
 	do.call( grid.polygon, x[argnames] )
 	
 	ids = rvg_tracer_off()
 	if( length( ids ) > 0 ) {
 		posid = which(!duplicated(x$id))
-		if( !is.null( x$tooltips ))
-			send_tooltip(ids, x$tooltips[posid])
-		if( !is.null( x$clicks ))
-			send_click(ids, x$clicks[posid])
-		if( !is.null( x$datid ))
-			set_data_id(ids, x$datid)
+		if( !is.null( x$tooltip ))
+			send_tooltip(ids, x$tooltip[posid])
+		if( !is.null( x$onclick ))
+			send_click(ids, x$onclick[posid])
+		if( !is.null( x$data_id ))
+			set_data_id(ids, x$data_id[posid])
 		
 	}
 	

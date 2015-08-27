@@ -1,6 +1,6 @@
 .onLoad= function(libname, pkgname){
 	
-	options( "ggiwid" = list( id = 0 ) )
+	options( "ggiwid" = list( svgid = 0 ) )
 	invisible()
 }
 

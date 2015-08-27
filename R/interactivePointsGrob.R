@@ -3,15 +3,15 @@
 #' points.
 #' 
 #' @inheritParams grid::pointsGrob
-#' @param tooltips tooltips associated with points
-#' @param clicks javascript action to execute when point is clicked
-#' @param id identifiers to associate with points
+#' @param tooltip tooltip associated with points
+#' @param onclick javascript action to execute when point is clicked
+#' @param data_id identifiers to associate with points
 #' @export 
 interactivePointsGrob <- function( x = unit(0.5, "npc"), 
 		y = unit(0.5, "npc"), 
-		tooltips = NULL, 
-		clicks = NULL, 
-		id = NULL, 
+		tooltip = NULL, 
+		onclick = NULL, 
+		data_id = NULL, 
 		pch=1, size=unit(1, "char"),
 		default.units="native",
 		name=NULL, gp=gpar(), vp=NULL) {
@@ -19,7 +19,7 @@ interactivePointsGrob <- function( x = unit(0.5, "npc"),
 		x <- unit(x, default.units)
 	if (!is.unit(y))
 		y <- unit(y, default.units)
-	grob(tooltips = tooltips, clicks = clicks, id = id, 
+	grob(tooltip = tooltip, onclick = onclick, data_id = data_id, 
 			x = x, y = y, pch = pch, size=size,
 			name=name, gp=gp, vp=vp, cl="interactivePointsGrob")
 }
@@ -33,12 +33,12 @@ drawDetails.interactivePointsGrob <- function(x,recording) {
 	ids = rvg_tracer_off()
 
 	if( length( ids ) > 0 ) {
-		if( !is.null( x$tooltips ))
-			send_tooltip(ids, x$tooltips)
-		if( !is.null( x$clicks ))
-			send_click(ids, x$clicks)
-		if( !is.null( x$id ))
-			set_data_id(ids, x$id)
+		if( !is.null( x$tooltip ))
+			send_tooltip(ids, x$tooltip)
+		if( !is.null( x$onclick ))
+			send_click(ids, x$onclick)
+		if( !is.null( x$data_id ))
+			set_data_id(ids, x$data_id)
 	}
 
 	

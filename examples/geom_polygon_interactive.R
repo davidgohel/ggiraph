@@ -16,10 +16,13 @@ positions <- data.frame(
 datapoly <- merge(values, positions, by=c("id"))
 
 datapoly$value = as.character( datapoly$value )
-datapoly$tooltips = as.character( datapoly$value )
+datapoly$tooltip = as.character( datapoly$value )
+datapoly$uid = as.character(datapoly$id)
+datapoly$oc = "function() {alert(this.getAttribute('data-id'))}"
 
 gg_poly_1 <- ggplot(datapoly, aes( x = x, y = y ) ) + 
-	geom_polygon_interactive(aes(fill = value, group = id, tooltips = tooltips))
+	geom_polygon_interactive(aes(fill = value, group = id, 
+		tooltip = tooltip, data_id = uid, onclick = oc))
 
 ggiraph(fun=print, x = gg_poly_1)
 

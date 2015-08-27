@@ -5,20 +5,20 @@
 \title{Generate interactive grob points}
 \usage{
 interactivePointsGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-  tooltips = NULL, clicks = NULL, id = NULL, pch = 1, size = unit(1,
-  "char"), default.units = "native", name = NULL, gp = gpar(),
-  vp = NULL)
+  tooltip = NULL, onclick = NULL, data_id = NULL, pch = 1,
+  size = unit(1, "char"), default.units = "native", name = NULL,
+  gp = gpar(), vp = NULL)
 }
 \arguments{
 \item{x}{numeric vector or unit object specifying x-values.}
 
 \item{y}{numeric vector or unit object specifying y-values.}
 
-\item{tooltips}{tooltips associated with points}
+\item{tooltip}{tooltip associated with points}
 
-\item{clicks}{javascript action to execute when point is clicked}
+\item{onclick}{javascript action to execute when point is clicked}
 
-\item{id}{identifiers to associate with points}
+\item{data_id}{identifiers to associate with points}
 
 \item{pch}{numeric or character vector indicating what sort of
     plotting symbol to use.  See \code{\link{points}} for the

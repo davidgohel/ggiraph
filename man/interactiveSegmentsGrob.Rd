@@ -5,8 +5,8 @@
 \title{Generate interactive grob segments}
 \usage{
 interactiveSegmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
-  x1 = unit(1, "npc"), y1 = unit(1, "npc"), tooltips = NULL,
-  clicks = NULL, id = NULL, default.units = "npc", arrow = NULL,
+  x1 = unit(1, "npc"), y1 = unit(1, "npc"), tooltip = NULL,
+  onclick = NULL, data_id = NULL, default.units = "npc", arrow = NULL,
   name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -20,11 +20,11 @@ interactiveSegmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 
 \item{y1}{ Numeric indicating the stopping y-values of the line segments.}
 
-\item{tooltips}{tooltips associated with segments}
+\item{tooltip}{tooltip associated with segments}
 
-\item{clicks}{javascript action to execute when segment is clicked}
+\item{onclick}{javascript action to execute when segment is clicked}
 
-\item{id}{identifiers to associate with segments}
+\item{data_id}{identifiers to associate with segments}
 
 \item{default.units}{ A string. }
 

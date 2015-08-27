@@ -34,13 +34,13 @@ ggiraph <- function(fun, graph.width=504, graph.height=504,
 			ps = pointsize,
 			width = graph.width, height = graph.height,
 			fontname = fontname,
-			plot_id = ggiwid.options$id
+			plot_id = ggiwid.options$svgid
 	)
 	fun(...)
 	dev.off()
 	file.l = list.files(path = tmpdir, pattern = "\\.svg$", full.names = TRUE )
 
-	ggiwid.options$id = length(file.l) + ggiwid.options$id
+	ggiwid.options$svgid = length(file.l) + ggiwid.options$svgid
 	options("ggiwid"=ggiwid.options)
 
 	svg_containers = lapply(file.l,

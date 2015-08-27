@@ -92,7 +92,7 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 			solid_lines <- all(attr$solid)
 			constant <- all(attr$constant)
 			if (!solid_lines && !constant) {
-				stop("geom_path: If you are using dotted or dashed lines",
+				stop("geom_path_interactive: If you are using dotted or dashed lines",
 						", colour, size and linetype must be constant over the line",
 						call. = FALSE)
 			}
@@ -106,9 +106,9 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 			if (!constant) {
 				interactiveSegmentsGrob(
 						munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
-						tooltips = munched$tooltips[!end],
-						clicks = munched$clicks[!end],
-						datid = munched$id[!end],
+						tooltip = munched$tooltip[!end],
+						onclick = munched$onclick[!end],
+						data_id = munched$data_id[!end],
 						default.units = "native", arrow = arrow,
 						gp = gpar(
 								col = alpha(munched$colour, munched$alpha)[!end],
@@ -124,9 +124,9 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 				id <- match(munched$group, unique(munched$group))
 				interactivePolylineGrob(
 						munched$x, munched$y, id = id,
-						tooltips = munched$tooltips,
-						clicks = munched$clicks,
-						datid = munched$id,
+						tooltip = munched$tooltip,
+						onclick = munched$onclick,
+						data_id = munched$data_id,
 						default.units = "native", arrow = arrow,
 						gp = gpar(
 								col = alpha(munched$colour, munched$alpha)[start],
