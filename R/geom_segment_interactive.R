@@ -71,7 +71,7 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 			
 			pieces <- rbind(starts, ends)
 			pieces <- pieces[order(pieces$group),]
-			GeomPathInteractive$draw_groups(pieces, scales, coordinates, arrow = arrow, ...)
+			GeomPathInteractive$draw(pieces, scales, coordinates, arrow = arrow, ...)
 		},
 		
 		required_aes = c("x", "y", "xend", "yend"),

@@ -44,7 +44,6 @@ geom_path_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 #' @importFrom stats ave
 #' @importFrom plyr ddply
 GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
-		draw_groups = function(self, ...) self$draw(...),
 		
 		draw = function(data, scales, coordinates, arrow = NULL, lineend = "butt",
 				linejoin = "round", linemitre = 1, ..., na.rm = FALSE)
