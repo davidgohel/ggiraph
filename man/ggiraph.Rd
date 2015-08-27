@@ -4,27 +4,31 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(fun, pointsize = 12, graph.width = 504, graph.height = 504,
+ggiraph(fun, graph.width = 504, graph.height = 504, pointsize = 12,
   fontname = "Verdana", width = NULL, height = NULL, ...)
 }
 \arguments{
-\item{fun}{fun}
+\item{fun}{plot function. The function will be executed to produce graphics.
+For \code{lattice} or \code{ggplot} object, the function should be \code{print}
+and at least an extra argument \code{x} should specify the object
+to plot. For traditionnal plots, the function should contain plot instructions. See examples.}
 
-\item{pointsize}{default to 12}
+\item{graph.width}{plot width in pixels (default value is 504).}
 
-\item{graph.width}{gra w}
+\item{graph.height}{plot height in pixels (default value is 504).}
 
-\item{graph.height}{graph h}
+\item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{fontname}{fn}
+\item{fontname}{the default font family to use, default to "Verdana".}
 
-\item{width}{w}
+\item{width}{widget width}
 
-\item{height}{h}
+\item{height}{widget height}
 
-\item{...}{sddf sf}
+\item{...}{arguments for \code{fun}.}
 }
 \description{
-<Add Description>
+Create an interactive graphic
+to be used in a web browser.
 }
 

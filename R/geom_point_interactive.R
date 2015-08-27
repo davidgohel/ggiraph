@@ -43,7 +43,6 @@ GeomInteractivePoint <- ggproto("GeomPoint", Geom,
 			data <- remove_missing(data, na.rm, c("x", "y", "size", "shape", "tooltips", "clicks", "id"),
 					name = "geom_point_interactive")
 			if (nrow(data) < 1 || ncol(data) < 2 ) return(zeroGrob())
-			
 			coords <- coordinates$transform(data, scales)
 			setGrobName("geom_point_interactive",
 					interactivePointsGrob(
