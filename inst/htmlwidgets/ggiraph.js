@@ -16,8 +16,9 @@ HTMLWidgets.widget({
 	  
       for (var i = 0; i < x.length; i++) {
     	  el.innerHTML += x.html[i];
+    	  eval(x.code[i]);
       }
-      eval(x.code);
+      
 	  
   },
 

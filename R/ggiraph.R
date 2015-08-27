@@ -43,11 +43,11 @@ ggiraph <- function(fun, graph.width=504, graph.height=504,
 	ggiwid.options$id = length(file.l) + ggiwid.options$id
 	options("ggiwid"=ggiwid.options)
 
-	svg_containers = sapply(file.l,
+	svg_containers = lapply(file.l,
 			function(x)
 				paste( scan(x, what = "character", sep = "\n", quiet = TRUE), collapse = "")
 	)
-	js = sapply( svg_containers, function(x){
+	js = lapply( svg_containers, function(x){
 		data <- read_xml( x )
 		scr = xml_find_all(data, ".//script")
 		paste( sapply( scr, xml_text ), collapse = "\n")
