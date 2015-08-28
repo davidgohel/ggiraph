@@ -14,7 +14,7 @@
 geom_rect_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", show.legend = NA,
 		inherit.aes = TRUE, ...) {
-	ggplot2::layer(
+	layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,
@@ -32,8 +32,8 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 		
 		required_aes = c("xmin", "xmax", "ymin", "ymax"),
 		
-		draw = function(self, data, scales, coordinates, ...) {
-			if (!coordinates$is_linear()) {
+		draw_panel = function(self, data, panel_scales, coord) {
+			if (!coord$is_linear()) {
 				aesthetics <- setdiff(
 						names(data), c("x", "y", "xmin", "xmax", "ymin", "ymax")
 				)
@@ -43,33 +43,39 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 							aes <- as.data.frame(row[aesthetics],
 									stringsAsFactors = FALSE)[rep(1,5), ]
 							
-							GeomInteractivePolygon$draw(cbind(poly, aes), scales, coordinates)
+							GeomInteractivePolygon$draw_panel(cbind(poly, aes), panel_scales, coord)
 						})
 				
 				setGrobName("bar", do.call("grobTree", polys))
 			} else {
-				coords <- coordinates$transform(data, scales)
+				coords <- coord$transform(data, panel_scales)
 				setGrobName("geom_rect_interactive", interactiveRectGrob(
 								coords$xmin, coords$ymax,
-								width = coords$xmax - coords$xmin,
-								height = coords$ymax - coords$ymin,
 								tooltip = coords$tooltip,
 								onclick = coords$onclick,
-								data_id = coords$data_id,
+								data_id = coords$data_id, 
+								width = coords$xmax - coords$xmin,
+								height = coords$ymax - coords$ymin,
 								default.units = "native",
 								just = c("left", "top"),
 								gp = gpar(
-									col = coords$colour,
-									fill = alpha(coords$fill, coords$alpha),
-									lwd = coords$size * .pt,
-									lty = coords$linetype,
-									lineend = "butt"
+										col = coords$colour,
+										fill = alpha(coords$fill, coords$alpha),
+										lwd = coords$size * .pt,
+										lty = coords$linetype,
+										lineend = "butt"
 								)
 						))
 			}
 		},
-				
+		
 		draw_key = draw_key_polygon
 )
 
 
+rect_to_poly <- function(xmin, xmax, ymin, ymax) {
+	data.frame(
+			y = c(ymax, ymax, ymin, ymin, ymax),
+			x = c(xmin, xmax, xmax, xmin, xmin)
+	)
+}

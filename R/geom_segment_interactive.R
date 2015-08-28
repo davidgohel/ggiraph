@@ -17,7 +17,7 @@ geom_segment_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 		position = "identity", arrow = NULL, lineend = "butt",
 		na.rm = FALSE, show.legend = NA, inherit.aes = TRUE,
 		...) {
-	ggplot2::layer(
+	layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,
@@ -25,32 +25,31 @@ geom_segment_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 			position = position,
 			show.legend = show.legend,
 			inherit.aes = inherit.aes,
-			geom_params = list(
+			params = list(
 					arrow = arrow,
 					lineend = lineend,
-					na.rm = na.rm
-			),
-			params = list(...)
+					na.rm = na.rm,
+					...
+			)
 	)
 }
 
 #' @importFrom ggplot2 remove_missing
-GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
-		draw = function(data, scales, coordinates, arrow = NULL,
-				lineend = "butt", na.rm = FALSE, ...) {
+GeomInteractiveSegment <- ggproto("GeomSegment", Geom,
+		draw_panel = function(data, panel_scales, coord, arrow = NULL,
+				lineend = "butt", na.rm = FALSE) {
 			
-			inter.vars = intersect(c("tooltip", "onclick", "data_id"), names(data))
-			
-			data <- remove_missing(data, na.rm, c("x", "y", "xend", "yend", "linetype", "size", "shape", inter.vars) )
-
+			data <- remove_missing(data, na.rm = na.rm,
+					c("x", "y", "xend", "yend", "linetype", "size", "shape", "tooltip", "onclick", "data_id"),
+					name = "geom_segment_interactive")
 			if (nrow(data) < 1 || ncol(data) < 1 ) return(zeroGrob())
 			
-			if (coordinates$is_linear()) {
-				coord <- coordinates$transform(data, scales)
+			if (coord$is_linear()) {
+				coord <- coord$transform(data, panel_scales)
 				return(interactiveSegmentsGrob(coord$x, coord$y, coord$xend, coord$yend,
 								tooltip = coord$tooltip,
 								onclick = coord$onclick,
-								data_id = coord$data_id,
+								data_id = coord$data_id, 
 								default.units = "native",
 								gp = gpar(
 										col = alpha(coord$colour, coord$alpha),
@@ -60,9 +59,8 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 										lineend = lineend
 								),
 								arrow = arrow
-						))				
+						))
 			}
-
 			
 			data$group <- 1:nrow(data)
 			starts <- subset(data, select = c(-xend, -yend))
@@ -71,7 +69,9 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 			
 			pieces <- rbind(starts, ends)
 			pieces <- pieces[order(pieces$group),]
-			GeomPathInteractive$draw(pieces, scales, coordinates, arrow = arrow, ...)
+			
+			GeomInteractivePath$draw_panel(pieces, panel_scales, coord, arrow = arrow,
+					lineend = lineend)
 		},
 		
 		required_aes = c("x", "y", "xend", "yend"),
@@ -79,3 +79,4 @@ GeomInteractiveSegment <- ggproto("GeomInteractiveSegment", Geom,
 		
 		draw_key = draw_key_path
 )
+

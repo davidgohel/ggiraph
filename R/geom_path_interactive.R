@@ -20,7 +20,7 @@ geom_path_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 		position = "identity", lineend = "butt",
 		linejoin = "round", linemitre = 1, na.rm = FALSE,
 		arrow = NULL, show.legend = NA, inherit.aes = TRUE, ...) {
-	ggplot2::layer(
+	layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,
@@ -28,28 +28,29 @@ geom_path_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 			position = position,
 			show.legend = show.legend,
 			inherit.aes = inherit.aes,
-			geom_params = list(
+			params = list(
 					lineend = lineend,
 					linejoin = linejoin,
 					linemitre = linemitre,
 					arrow = arrow,
-					na.rm = na.rm
-			),
-			params = list(...)
+					na.rm = na.rm,
+					...
+			)
 	)
 }
+
 
 
 #' @importFrom stats complete.cases
 #' @importFrom stats ave
 #' @importFrom plyr ddply
-GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
-		
-		draw = function(data, scales, coordinates, arrow = NULL, lineend = "butt",
-				linejoin = "round", linemitre = 1, ..., na.rm = FALSE)
-		{
+GeomPathInteractive <- ggproto("GeomPath", Geom,
+		draw_panel = function(data, panel_scales, coord, arrow = NULL,
+				lineend = "butt", linejoin = "round", linemitre = 1,
+				na.rm = FALSE) {
 			if (!anyDuplicated(data$group)) {
-				message("geom_path_interactive: Each group consist of only one observation. Do you need to adjust the group aesthetic?")
+				message_wrap("geom_path_interactive: Each group consists of only one observation. ",
+						"Do you need to adjust the group aesthetic?")
 			}
 			
 			keep <- function(x) {
@@ -74,7 +75,8 @@ GeomPathInteractive <- ggproto("GeomPathInteractive", Geom,
 				warning("Removed ", sum(!kept), " rows containing missing values",
 						" (geom_path_interactive).", call. = FALSE)
 			}
-			munched <- coord_munch(coordinates, data, scales)
+			
+			munched <- coord_munch(coord, data, panel_scales)
 			
 			# Silently drop lines with less than two points, preserving order
 			rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)

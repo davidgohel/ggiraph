@@ -14,7 +14,7 @@
 geom_polygon_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", show.legend = NA,
 		inherit.aes = TRUE, ...) {
-	ggplot2::layer(
+	layer(
 			data = data,
 			mapping = mapping,
 			stat = stat,
@@ -26,20 +26,13 @@ geom_polygon_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 	)
 }
 
+
 GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
-		draw_groups = function(self, ...) self$draw(...),
-		
-		draw = function(self, data, scales, coordinates, ...) {
+		draw_panel = function(data, panel_scales, coord) {
 			n <- nrow(data)
-			if (n == 1) return()
+			if (n == 1) return(zeroGrob())
 			
-			# Check if group is numeric, to make polygonGrob happy (factors are numeric,
-			# but is.numeric() will report FALSE because it actually checks something else)
-			if (mode(data$group) != "numeric")
-				data$group <- factor(data$group)
-			inter.vars = intersect(c("tooltip", "onclick", "data_id"), names(data))
-			
-			munched <- coord_munch(coordinates, data, scales)
+			munched <- coord_munch(coord, data, panel_scales)
 			# Sort by group to make sure that colors, fill, etc. come in same order
 			munched <- munched[order(munched$group), ]
 			
@@ -49,20 +42,20 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			first_idx <- !duplicated(munched$group)
 			first_rows <- munched[first_idx, ]
 			
-			setGrobName("geom_polygon_interactive", gTree(children = gList(
-									interactivePolygonGrob(munched$x, munched$y, default.units = "native",
-											id = munched$group,
-											tooltip = munched$tooltip,
-											onclick = munched$onclick,
-											data_id = munched$data_id,
-											gp = gpar(
-													col = first_rows$colour,
-													fill = alpha(first_rows$fill, first_rows$alpha),
-													lwd = first_rows$size * .pt,
-													lty = first_rows$linetype
-											)
-									)
-							)))
+			setGrobName("geom_polygon_interactive",
+					interactivePolygonGrob(munched$x, munched$y, default.units = "native",
+							id = munched$group,
+							tooltip = munched$tooltip,
+							onclick = munched$onclick,
+							data_id = munched$data_id, 
+							gp = gpar(
+									col = first_rows$colour,
+									fill = alpha(first_rows$fill, first_rows$alpha),
+									lwd = first_rows$size * .pt,
+									lty = first_rows$linetype
+							)
+					)
+			)
 		},
 		
 		default_aes = aes(colour = "NA", fill = "grey20", size = 0.5, linetype = 1,
@@ -72,4 +65,3 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 		
 		draw_key = draw_key_polygon
 )
-
