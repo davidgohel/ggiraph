@@ -1,0 +1,44 @@
+---
+title: "ggiraph"
+author: "David Gohel"
+date: "2015/08/29"
+output: html_document
+---
+
+The **ggiraph** package let R users to make **ggplot interactive**. The format used is SVG. 
+The package is an [htmlwidget](https://cran.r-project.org/web/packages/htmlwidgets/index.html). 
+For now, there are three arguments to let you add interactivity:
+
+* `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
+* `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
+* `data_id`: column of dataset that contains id to be set to elements.
+
+```{r echo=FALSE, warning=FALSE,error=FALSE, message=FALSE, prompt=FALSE}
+library(ggiraph)
+```
+
+# Simple example 
+```{r}
+dataset = iris
+dataset$tooltip = paste0( "Species <br/>", dataset$Species )
+dataset$clickjs = paste0("function() {alert('",dataset$Species, "')}" )
+
+# plots
+gg_point_1 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width, 
+		color = Species, tooltip = tooltip, onclick=clickjs) ) + 
+	geom_point_interactive(size=3)
+
+ggiraph(fun=print, x = gg_point_1)
+```
+
+# Installation
+
+
+You will need the latest ggplot2 version (>= 1.0.1.9003) and the latest version of rvg.
+
+    devtools::install_github("hadley/scales")
+    devtools::install_github("hadley/ggplot2movies")
+    devtools::install_github("hadley/ggplot2")
+    
+    devtools::install_github('davidgohel/rvg')
+    devtools::install_github('davidgohel/ggiraph')
