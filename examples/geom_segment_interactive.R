@@ -11,12 +11,15 @@ dataset = data.frame(x=c(1,2,5,6,8),
 		vx=c(1,1.5,0.8,0.5,1.3), 
 		vy=c(0.2,1.3,1.7,0.8,1.4), 
 		labs = paste0("Lab", 1:5))
+dataset$clickjs = paste0("function() {alert('",dataset$labs, "')}" )
+
 gg_segment_2 = ggplot() + 
-		geom_segment_interactive(data=dataset, mapping=aes(x=x, y=y, 
-					xend=x+vx, yend=y+vy, tooltip = labs), 
-				arrow=grid::arrow(length = grid::unit(0.03, "npc")), 
-				size=2, color="blue") + 
-		geom_point(data=dataset, mapping=aes(x=x, y=y), size=4, shape=21, fill="white") 
+	geom_segment_interactive(data=dataset, mapping=aes(x=x, y=y, 
+			xend=x+vx, yend=y+vy, tooltip = labs, onclick=clickjs ), 
+		arrow=grid::arrow(length = grid::unit(0.03, "npc")), 
+		size=2, color="blue") + 
+	geom_point(data=dataset, mapping=aes(x=x, y=y), 
+		size=4, shape=21, fill="white") 
 
 ggiraph(fun=print, x = gg_segment_1)
 ggiraph(fun=print, x = gg_segment_2)

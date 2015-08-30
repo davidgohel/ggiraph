@@ -22,6 +22,9 @@
 #' @param width widget width
 #' @param height widget height
 #' @param ... arguments for \code{fun}.
+#' @examples
+#' # ggiraph simple example -------
+#' @example examples/ggiraph.R
 #' @export
 ggiraph <- function(fun, graph.width=504, graph.height=504,
 	pointsize = 12, fontname = "Verdana", width = NULL, height = NULL, ...) {

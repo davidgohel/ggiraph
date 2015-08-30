@@ -11,7 +11,7 @@ For now, there are three arguments to let you add interactivity:
 
 * `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
 * `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
-* `data_id`: column of dataset that contains id to be set to elements.
+* `data_id`: column of dataset that contains id to be associated with elements. 
 
 ```{r echo=FALSE, warning=FALSE,error=FALSE, message=FALSE, prompt=FALSE}
 library(ggiraph)
