@@ -69,6 +69,7 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 		draw_key = draw_key_point,
 		
 		required_aes = c("x", "y"),
+		non_missing_aes = c("size", "shape"),
 		default_aes = aes(shape = 19, colour = "black", size = 1.5, fill = NA,
 				alpha = NA, stroke = 0.5)
 )
