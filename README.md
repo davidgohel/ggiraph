@@ -12,9 +12,9 @@ rvg.
 
     
     devtools::install_github("hadley/scales")
-	devtools::install_github("hadley/ggplot2movies")
-	devtools::install_github("hadley/ggplot2")
-	
+    devtools::install_github("hadley/ggplot2movies")
+    devtools::install_github("hadley/ggplot2")
+    
     devtools::install_github('davidgohel/rvg')
     devtools::install_github('davidgohel/ggiraph')
 

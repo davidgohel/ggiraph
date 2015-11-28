@@ -5,6 +5,7 @@
 #' @importFrom xml2 read_xml
 #' @importFrom xml2 xml_find_all
 #' @importFrom xml2 xml_text
+#' @importFrom xml2 xml_ns
 
 #' @title ggiraph
 #'
@@ -15,10 +16,9 @@
 #' For \code{lattice} or \code{ggplot} object, the function should be \code{print}
 #' and at least an extra argument \code{x} should specify the object
 #' to plot. For traditionnal plots, the function should contain plot instructions. See examples.
-#' @param graph.width plot width in pixels (default value is 504).
-#' @param graph.height plot height in pixels (default value is 504).
+#' @param graph.width plot width in inches (default value is 7).
+#' @param graph.height plot height in inches (default value is 7).
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
-#' @param fontname the default font family to use, default to "Verdana".
 #' @param width widget width
 #' @param height widget height
 #' @param ... arguments for \code{fun}.
@@ -26,43 +26,31 @@
 #' # ggiraph simple example -------
 #' @example examples/ggiraph.R
 #' @export
-ggiraph <- function(fun, graph.width=504, graph.height=504,
-	pointsize = 12, fontname = "Verdana", width = NULL, height = NULL, ...) {
+ggiraph <- function(fun, graph.width=7, graph.height=7,
+	pointsize = 12, width = NULL, height = NULL, ...) {
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
 	base_name = tempfile(tmpdir = "", fileext = "", pattern = "")
-
-	rvg(rootname = file.path(tmpdir, base_name),
-			ps = pointsize,
+	path = tempfile()
+	dsvg(file = path, pointsize = pointsize, standalone = TRUE,
 			width = graph.width, height = graph.height,
-			fontname = fontname,
-			plot_id = ggiwid.options$svgid
-	)
+			canvas_id = ggiwid.options$svgid
+		)
 	fun(...)
 	dev.off()
-	file.l = list.files(path = tmpdir, pattern = "\\.svg$", full.names = TRUE )
 
-	ggiwid.options$svgid = length(file.l) + ggiwid.options$svgid
+	ggiwid.options$svgid = 1 + ggiwid.options$svgid
 	options("ggiwid"=ggiwid.options)
 
-	svg_containers = lapply(file.l,
-			function(x)
-				paste( scan(x, what = "character", sep = "\n", quiet = TRUE), collapse = "")
-	)
-	js = lapply( svg_containers, function(x){
-		data <- read_xml( x )
-		scr = xml_find_all(data, ".//script")
-		paste( sapply( scr, xml_text ), collapse = "\n")
-	})
-	
-	unlink(file.l)
-	
-	svg_containers = lapply( svg_containers, HTML )
-	names(svg_containers) = NULL#basename( names(svg_containers) )
-	names(js) = NULL#basename( names(js) )
-	
-	x = list( html = svg_containers, code = js, length = length(svg_containers) )
+	svg_container <- paste( scan(path, what = "character", sep = "\n", quiet = TRUE), collapse = "")
+
+	data <- read_xml( path )
+	scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
+	js <- paste( sapply( scr, xml_text ), collapse = ";")
+
+	unlink(path)
+	x = list( html = HTML( svg_container ), code = js )
 
 	# create widget
 	htmlwidgets::createWidget(

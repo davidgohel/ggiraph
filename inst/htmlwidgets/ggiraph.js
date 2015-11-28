@@ -7,19 +7,14 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     return {
-    	
+
     }
 
   },
 
   renderValue: function(el, x, instance) {
-	  
-      for (var i = 0; i < x.length; i++) {
-    	  el.innerHTML += x.html[i];
-    	  eval(x.code[i]);
-      }
-      
-	  
+	  el.innerHTML += x.html;
+	  eval(x.code);
   },
 
   resize: function(el, width, height, instance) {

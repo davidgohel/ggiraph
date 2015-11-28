@@ -1,2 +1,5 @@
-
 .Rbuildignore
+.Rproj.user
+.Rhistory
+*.Rmd
+*.html
