@@ -29,6 +29,11 @@ r_github_packages:
   - hadley/ggplot2movies
   - hadley/ggplot2
 
+env:
+  matrix:
+    - RVERSION=oldrel
+    - RVERSION=release
+    - RVERSION=devel
 
 os:
  - linux

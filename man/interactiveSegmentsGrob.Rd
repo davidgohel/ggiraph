@@ -38,7 +38,7 @@ interactiveSegmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 \item{vp}{A Grid viewport object (or NULL).}
 }
 \description{
-This function can be used to generate interactive grob 
+This function can be used to generate interactive grob
 segments.
 }
 

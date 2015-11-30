@@ -1,17 +1,17 @@
 #' @title Generate interactive grob segments
-#' @description This function can be used to generate interactive grob 
+#' @description This function can be used to generate interactive grob
 #' segments.
-#' 
+#'
 #' @inheritParams grid::segmentsGrob
 #' @param tooltip tooltip associated with segments
 #' @param onclick javascript action to execute when segment is clicked
 #' @param data_id identifiers to associate with segments
-#' @export 
+#' @export
 interactiveSegmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 		x1=unit(1, "npc"), y1=unit(1, "npc"),
-		tooltip = NULL, 
-		onclick = NULL, 
-		data_id = NULL, 
+		tooltip = NULL,
+		onclick = NULL,
+		data_id = NULL,
 		default.units="npc",
 		arrow=NULL,
 		name=NULL, gp=gpar(), vp=NULL) {
@@ -24,19 +24,20 @@ interactiveSegmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 		y0 <- unit(y0, default.units)
 	if (!is.unit(y1))
 		y1 <- unit(y1, default.units)
-	grob(tooltip = tooltip, onclick = onclick, data_id = data_id, 
+	grob(tooltip = tooltip, onclick = onclick, data_id = data_id,
 			x0=x0, y0=y0, x1=x1, y1=y1, arrow=arrow, name=name, gp=gp, vp=vp,
 			cl="interactiveSegmentsGrob")
 }
 
-#' @export 
+#' @export
 #' @title interactiveSegmentsGrob drawing
+#' @description draw an interactiveSegmentsGrob
 #' @inheritParams grid::drawDetails
 drawDetails.interactiveSegmentsGrob <- function(x,recording) {
 	rvg_tracer_on()
 	argnames = setdiff( names(x), c("tooltip", "onclick", "data_id") )
 	do.call( grid.segments, x[argnames] )
-	
+
 	ids = rvg_tracer_off()
 	if( length( ids ) > 0 ) {
 
@@ -48,7 +49,7 @@ drawDetails.interactiveSegmentsGrob <- function(x,recording) {
 			}
 			send_tooltip(ids, x$tooltip)
 		}
-			
+
 		if( !is.null( x$onclick )){
 			if( length( x$onclick ) == 1 && length(ids)>1 )
 				x$onclick = rep(x$onclick, length(ids) )
@@ -64,7 +65,7 @@ drawDetails.interactiveSegmentsGrob <- function(x,recording) {
 				x$data_id = rep( x$data_id, each = length(ids) %/% length(x$data_id) )
 			}
 			set_data_id(ids, x$data_id)
-		}		
+		}
 	}
 	invisible()
 }

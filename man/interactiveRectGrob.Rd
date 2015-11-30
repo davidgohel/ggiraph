@@ -53,7 +53,7 @@ interactiveRectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 \item{vp}{A Grid viewport object (or NULL).}
 }
 \description{
-This function can be used to generate interactive grob 
+This function can be used to generate interactive grob
 rectangles.
 }
 

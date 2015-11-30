@@ -41,7 +41,7 @@ interactivePolygonGrob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
 \item{vp}{A Grid viewport object (or NULL).}
 }
 \description{
-This function can be used to generate interactive grob 
+This function can be used to generate interactive grob
 polygons.
 }
 

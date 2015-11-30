@@ -5,7 +5,8 @@
 \title{add polygons with tooltips or click actions or double click actions}
 \usage{
 geom_polygon_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", show.legend = NA, inherit.aes = TRUE, ...)
+  position = "identity", na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
@@ -17,6 +18,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 
 \item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
 
+\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
+
 \item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
 
 \item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
@@ -24,7 +27,7 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over polygons, on click actions and 
+tooltips can be displayed when mouse is over polygons, on click actions and
 double click actions can be set with javascript instructions.
 }
 \examples{

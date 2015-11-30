@@ -7,7 +7,7 @@
     
 # Installation 
 
-You will need the latest ggplot2 version (>= 1.0.1.9003) and the latest version of 
+You will need the latest ggplot2 version and the latest version of 
 rvg.
 
     

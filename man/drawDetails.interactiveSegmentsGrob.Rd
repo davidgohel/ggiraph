@@ -12,4 +12,7 @@
 \item{recording}{ A logical value indicating whether a grob
   is being added to the display list or redrawn from the display list. }
 }
+\description{
+draw an interactiveSegmentsGrob
+}
 
