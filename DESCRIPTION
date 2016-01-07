@@ -12,7 +12,7 @@ Author: David Gohel [aut, cre]
 Maintainer: David Gohel <david.gohel@ardata.fr>
 License: GPL-3
 Depends:
-    ggplot2 (>= 1.0.1.9003)
+    ggplot2 (>= 2.0.0)
 Imports:
     grid,
     htmlwidgets,

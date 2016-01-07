@@ -1,0 +1,10 @@
+^\.project$
+^\.settings$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^appveyor\.yml$
+^ggiraph\.Rproj$
+^src/Makevars$
+^README\.md$
+^examples$

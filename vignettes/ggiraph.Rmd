@@ -20,7 +20,7 @@ library(ggiraph)
 # Simple example 
 ```{r}
 dataset = iris
-dataset$tooltip = paste0( "Species <br/>", dataset$Species )
+dataset$tooltip = paste0( "Species: ", dataset$Species )
 dataset$clickjs = paste0("function() {alert('",dataset$Species, "')}" )
 
 # plots
@@ -34,11 +34,7 @@ ggiraph(fun=print, x = gg_point_1)
 # Installation
 
 
-You will need the latest ggplot2 version (>= 1.0.1.9003) and the latest version of rvg.
+You will need the latest `ggplot2` version (>= 2.0.0) and package `rvg`.
 
-    devtools::install_github("hadley/scales")
-    devtools::install_github("hadley/ggplot2movies")
-    devtools::install_github("hadley/ggplot2")
-    
-    devtools::install_github('davidgohel/rvg')
+    install.packages(c("ggplot2", "rvg"))
     devtools::install_github('davidgohel/ggiraph')
