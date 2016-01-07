@@ -2,7 +2,7 @@ language: r
 
 sudo: required
 
-warnings_are_errors: true
+warnings_are_errors: false
 
 env:
  global:
@@ -14,20 +14,6 @@ notifications:
   email:
     on_success: change
     on_failure: change
-
-r_binary_packages:
- - digest
- - plyr
- - xml2
- - reshape2
- - gtable
- - rmarkdown
-
-r_github_packages:
-  - davidgohel/rvg
-  - hadley/scales
-  - hadley/ggplot2movies
-  - hadley/ggplot2
 
 env:
   matrix:

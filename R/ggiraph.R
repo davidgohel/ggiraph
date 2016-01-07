@@ -16,8 +16,6 @@
 #' For \code{lattice} or \code{ggplot} object, the function should be \code{print}
 #' and at least an extra argument \code{x} should specify the object
 #' to plot. For traditionnal plots, the function should contain plot instructions. See examples.
-#' @param graph.width plot width in inches (default value is 7).
-#' @param graph.height plot height in inches (default value is 7).
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param width widget width
 #' @param height widget height
@@ -26,15 +24,15 @@
 #' # ggiraph simple example -------
 #' @example examples/ggiraph.R
 #' @export
-ggiraph <- function(fun, graph.width=7, graph.height=7,
-	pointsize = 12, width = NULL, height = NULL, ...) {
+ggiraph <- function(fun,
+	pointsize = 12, width = 6, height = 6, ...) {
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
 	base_name = tempfile(tmpdir = "", fileext = "", pattern = "")
 	path = tempfile()
 	dsvg(file = path, pointsize = pointsize, standalone = TRUE,
-			width = graph.width, height = graph.height,
+			width = width, height = height,
 			canvas_id = ggiwid.options$svgid
 		)
 	fun(...)
@@ -56,9 +54,10 @@ ggiraph <- function(fun, graph.width=7, graph.height=7,
 	htmlwidgets::createWidget(
 			name = 'ggiraph',
 			x,
-			width = width,
-			height = height,
-			package = 'ggiraph'
+			width = width*72,
+			height = height*72,
+			package = 'ggiraph',
+			sizingPolicy = sizingPolicy(padding = 0, browser.fill = TRUE)
 	)
 }
 
@@ -67,7 +66,7 @@ ggiraph <- function(fun, graph.width=7, graph.height=7,
 #' @param outputId outputId
 #' @export
 ggiraphOutput <- function(outputId){
-	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph')
+	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = "100%",height = "100%")
 }
 
 #' Widget render function for use in Shiny

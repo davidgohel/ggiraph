@@ -4,18 +4,13 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(fun, graph.width = 7, graph.height = 7, pointsize = 12,
-  width = NULL, height = NULL, ...)
+ggiraph(fun, pointsize = 12, width = 6, height = 6, ...)
 }
 \arguments{
 \item{fun}{plot function. The function will be executed to produce graphics.
 For \code{lattice} or \code{ggplot} object, the function should be \code{print}
 and at least an extra argument \code{x} should specify the object
 to plot. For traditionnal plots, the function should contain plot instructions. See examples.}
-
-\item{graph.width}{plot width in inches (default value is 7).}
-
-\item{graph.height}{plot height in inches (default value is 7).}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
