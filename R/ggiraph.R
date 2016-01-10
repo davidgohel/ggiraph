@@ -2,6 +2,7 @@
 #' @import htmltools
 #' @import rvg
 #' @import grid
+#' @importFrom grDevices dev.off
 #' @importFrom xml2 read_xml
 #' @importFrom xml2 xml_find_all
 #' @importFrom xml2 xml_text
