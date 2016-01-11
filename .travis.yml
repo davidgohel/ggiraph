@@ -15,9 +15,6 @@ notifications:
     on_success: change
     on_failure: change
 
-r_github_packages:
-  - davidgohel/rvg
-
 env:
   matrix:
     - RVERSION=oldrel
