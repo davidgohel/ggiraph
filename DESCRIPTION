@@ -4,7 +4,6 @@ Title: Make 'ggplot' Graphics Interactive Using 'htmlwidgets'
 Description: Create interactive ggplot graphics that are usable in the 'RStudio'
     viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
 Version: 0.0.1
-Date: 2015-08-02
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr") )

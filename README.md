@@ -12,12 +12,7 @@ rvg.
 
 
     install.packages("ggplot2")
-    install.packages("rvg")
+    devtools::install_github('davidgohel/rvg')
     devtools::install_github('davidgohel/ggiraph')
 
-# Notes
-
-The project is in development and is highly dependent of the new extension mechanism 
-of `ggplot2`. `ggiraph` is using `rvg` that should also evolve and been improved soon.
-So patience...
 

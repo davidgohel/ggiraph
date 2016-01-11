@@ -1,7 +1,7 @@
 ---
 title: "ggiraph"
 author: "David Gohel"
-date: "2015/08/29"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -31,10 +31,14 @@ gg_point_1 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 ggiraph(fun=print, x = gg_point_1)
 ```
 
-# Installation
+# Installation 
+
+You will need the latest `ggplot2` version and the latest version of 
+rvg.
 
 
-You will need the latest `ggplot2` version (>= 2.0.0) and package `rvg`.
-
-    install.packages(c("ggplot2", "rvg"))
+    install.packages("ggplot2")
+    devtools::install_github('davidgohel/rvg')
     devtools::install_github('davidgohel/ggiraph')
+
+
