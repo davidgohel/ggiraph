@@ -31,7 +31,7 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over segments, on click actions and 
+tooltips can be displayed when mouse is over segments, on click actions and
 double click actions can be set with javascript instructions.
 }
 \examples{
@@ -63,6 +63,6 @@ ggiraph(fun=print, x = gg_segment_1)
 ggiraph(fun=print, x = gg_segment_2)
 }
 \seealso{
-\code{\link{geom_path_interactive}}, \code{\link{geom_point_interactive}}
+\code{\link{ggiraph}}
 }
 

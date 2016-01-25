@@ -4,8 +4,7 @@
 #' tooltips can be displayed when mouse is over rectangles, on click actions and
 #' double click actions can be set with javascript instructions.
 #'
-#' @seealso
-#'  \code{\link{geom_path_interactive}}, \code{\link{geom_point_interactive}}
+#' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive
 #' @examples
 #' # add interactive polygons to a ggplot -------

@@ -1,20 +1,19 @@
 #' @title draw paths with tooltips or click actions or double click actions
 #'
-#' @description 
-#' The path_interactive geom is used to create interactive lines, tooltips 
-#' can be displayed when mouse is over lines, on click actions and double click actions can be 
+#' @description
+#' The path_interactive geom is used to create interactive lines, tooltips
+#' can be displayed when mouse is over lines, on click actions and double click actions can be
 #' set with javascript instructions.
 #' @inheritParams geom_point_interactive
 #' @param lineend Line end style (round, butt, square)
 #' @param linejoin Line join style (round, mitre, bevel)
 #' @param linemitre Line mitre limit (number greater than 1)
 #' @param arrow Arrow specification, as created by \link[grid]{arrow}
-#' @seealso \code{\link{geom_polygon_interactive}},  
-#' \code{\link{geom_segment_interactive}}
+#' @seealso \code{\link{ggiraph}}
 #' @examples
 #' # add interactive paths to a ggplot -------
 #' @example examples/geom_path_interactive.R
-#' @export 
+#' @export
 #' @importFrom ggplot2 layer
 geom_path_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", lineend = "butt",
@@ -52,7 +51,7 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 				message_wrap("geom_path_interactive: Each group consists of only one observation. ",
 						"Do you need to adjust the group aesthetic?")
 			}
-			
+
 			keep <- function(x) {
 				# from first non-missing to last non-missing
 				first <- match(FALSE, x, nomatch = 1) - 1
@@ -70,19 +69,19 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 			data <- data[kept, ]
 			# must be sorted on group
 			data <- plyr::arrange(data, group)
-			
+
 			if (!all(kept) && !na.rm) {
 				warning("Removed ", sum(!kept), " rows containing missing values",
 						" (geom_path_interactive).", call. = FALSE)
 			}
-			
+
 			munched <- coord_munch(coord, data, panel_scales)
-			
+
 			# Silently drop lines with less than two points, preserving order
 			rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
 			munched <- munched[rows >= 2, ]
 			if (nrow(munched) < 2) return(zeroGrob())
-			
+
 			# Work out whether we should use lines or segments
 			attr <- plyr::ddply(munched, "group", function(df) {
 						data.frame(
@@ -97,13 +96,13 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 						", colour, size and linetype must be constant over the line",
 						call. = FALSE)
 			}
-			
+
 			# Work out grouping variables for grobs
 			n <- nrow(munched)
 			group_diff <- munched$group[-1] != munched$group[-n]
 			start <- c(TRUE, group_diff)
 			end <-   c(group_diff, TRUE)
-			
+
 			if (!constant) {
 				interactiveSegmentsGrob(
 						munched$x[!end], munched$y[!end], munched$x[!start], munched$y[!start],
@@ -141,10 +140,10 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 				)
 			}
 		},
-		
+
 		required_aes = c("x", "y"),
-		
+
 		default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
-		
+
 		draw_key = draw_key_path
 )

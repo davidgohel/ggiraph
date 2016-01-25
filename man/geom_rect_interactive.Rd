@@ -69,6 +69,6 @@ ggiraph(fun=print, x = gg_rect_1)
 ggiraph(fun=print, x = gg_rect_2)
 }
 \seealso{
-\code{\link{geom_path_interactive}}, \code{\link{geom_point_interactive}}
+\code{\link{ggiraph}}
 }
 

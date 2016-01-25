@@ -1,12 +1,11 @@
-#' @title add points with tooltips or click actions or double click actions 
+#' @title add points with tooltips or click actions or double click actions
 #' for a scatterplot
 #'
-#' @description 
-#' The point_interactive geom is used to create interactive scatterplots, tooltips 
-#' can be displayed when mouse is over points, on click actions and double click actions can be 
+#' @description
+#' The point_interactive geom is used to create interactive scatterplots, tooltips
+#' can be displayed when mouse is over points, on click actions and double click actions can be
 #' set with javascript instructions.
-#' 
-#' @seealso \code{\link[ggplot2]{geom_point}}
+#'
 #' @param mapping The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.
 #' @param data A data frame, see \code{\link[ggplot2]{geom_point}}.
 #' @param position Postion adjustment, see \code{\link[ggplot2]{geom_point}}.
@@ -19,7 +18,8 @@
 #' @examples
 #' # add interactive points to a ggplot -------
 #' @example examples/geom_point_interactive.R
-#' @export 
+#' @seealso \code{\link{ggiraph}}
+#' @export
 geom_point_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", na.rm = FALSE,
 		show.legend = NA, inherit.aes = TRUE, ...) {
@@ -46,14 +46,14 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 			data <- remove_missing(data, na.rm, c("x", "y", "size", "shape", "tooltip", "onclick", "data_id"),
 					name = "geom_point_interactive")
 			if (nrow(data) < 1 || ncol(data) < 1 ) return(zeroGrob())
-			
+
 			coords <- coord$transform(data, panel_scales)
 			setGrobName("geom_point_interactive",
 					interactivePointsGrob(
 							coords$x, coords$y,
 							tooltip = coords$tooltip,
 							onclick = coords$onclick,
-							data_id = coords$data_id, 
+							data_id = coords$data_id,
 							pch = coords$shape,
 							gp = gpar(
 									col = alpha(coords$colour, coords$alpha),
@@ -65,9 +65,9 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 					)
 			)
 		},
-		
+
 		draw_key = draw_key_point,
-		
+
 		required_aes = c("x", "y"),
 		non_missing_aes = c("size", "shape"),
 		default_aes = aes(shape = 19, colour = "black", size = 1.5, fill = NA,

@@ -36,8 +36,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-The path_interactive geom is used to create interactive lines, tooltips 
-can be displayed when mouse is over lines, on click actions and double click actions can be 
+The path_interactive geom is used to create interactive lines, tooltips
+can be displayed when mouse is over lines, on click actions and double click actions can be
 set with javascript instructions.
 }
 \examples{
@@ -86,7 +86,6 @@ ggiraph(fun=print, x = gg_path_2)
 ggiraph(fun=print, x = gg_path_3)
 }
 \seealso{
-\code{\link{geom_polygon_interactive}},  
-\code{\link{geom_segment_interactive}}
+\code{\link{ggiraph}}
 }
 

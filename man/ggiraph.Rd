@@ -37,4 +37,11 @@ gg_point_1 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 
 ggiraph(fun=print, x = gg_point_1)
 }
+\seealso{
+\code{\link{geom_path_interactive}},
+\code{\link{geom_point_interactive}},
+\code{\link{geom_polygon_interactive}},
+\code{\link{geom_rect_interactive}},
+\code{\link{geom_segment_interactive}},
+}
 
