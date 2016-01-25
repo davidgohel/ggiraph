@@ -21,6 +21,6 @@ Imports:
     rvg,
     xml2
 Suggests:
-    knitr
+    knitr, maps
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
