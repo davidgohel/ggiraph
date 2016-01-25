@@ -21,6 +21,11 @@
 #' @param width widget width
 #' @param height widget height
 #' @param ... arguments for \code{fun}.
+#' @seealso \code{\link{geom_path_interactive}},
+#' \code{\link{geom_point_interactive}},
+#' \code{\link{geom_polygon_interactive}},
+#' \code{\link{geom_rect_interactive}},
+#' \code{\link{geom_segment_interactive}}
 #' @examples
 #' # ggiraph simple example -------
 #' @example examples/ggiraph.R
