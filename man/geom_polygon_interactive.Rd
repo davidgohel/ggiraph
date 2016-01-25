@@ -62,6 +62,6 @@ ggiraph(fun=print, x = gg_poly_1)
 
 }
 \seealso{
-\code{\link{geom_path_interactive}}, \code{\link{geom_point_interactive}}
+\code{\link{ggiraph}}
 }
 
