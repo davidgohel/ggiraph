@@ -21,6 +21,9 @@ env:
     - RVERSION=release
     - RVERSION=devel
 
+r_github_packages:
+ - davidgohel/rvg
+
 os:
 - linux
 - osx
