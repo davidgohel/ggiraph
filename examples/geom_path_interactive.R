@@ -19,8 +19,10 @@ dataset2 <- data.frame(x = rep(1:20, 5),
 		grp = factor(rep(1:5, each=20)),
 		color = factor(rep(1:5, each=20)),
 		label = paste0( "id ", round( runif(100)*10^8 ) ),
-		onclick = paste0("function() {alert('", sample(letters, 100, replace = T), "')}" )
-
+		onclick = paste0(
+		  "function() {alert('",
+		  sample(letters, 100, replace = TRUE),
+		  "')}" )
 )
 
 

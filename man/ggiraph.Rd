@@ -42,6 +42,6 @@ ggiraph(fun=print, x = gg_point_1)
 \code{\link{geom_point_interactive}},
 \code{\link{geom_polygon_interactive}},
 \code{\link{geom_rect_interactive}},
-\code{\link{geom_segment_interactive}},
+\code{\link{geom_segment_interactive}}
 }
 
