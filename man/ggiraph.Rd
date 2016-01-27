@@ -4,7 +4,8 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(fun, pointsize = 12, width = 6, height = 6, ...)
+ggiraph(fun, pointsize = 12, width = 6, height = 6,
+  hover_css = "{fill:orange;}", ...)
 }
 \arguments{
 \item{fun}{plot function. The function will be executed to produce graphics.
@@ -17,6 +18,8 @@ to plot. For traditionnal plots, the function should contain plot instructions. 
 \item{width}{widget width}
 
 \item{height}{widget height}
+
+\item{hover_css}{css to apply when mouse is hover and element with a data-id attribute}
 
 \item{...}{arguments for \code{fun}.}
 }

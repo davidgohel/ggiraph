@@ -20,6 +20,7 @@
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param width widget width
 #' @param height widget height
+#' @param hover_css css to apply when mouse is hover and element with a data-id attribute
 #' @param ... arguments for \code{fun}.
 #' @seealso \code{\link{geom_path_interactive}},
 #' \code{\link{geom_point_interactive}},
@@ -31,15 +32,15 @@
 #' @example examples/ggiraph.R
 #' @export
 ggiraph <- function(fun,
-	pointsize = 12, width = 6, height = 6, ...) {
+	pointsize = 12, width = 6, height = 6, hover_css = "{fill:orange;}", ...) {
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
-	base_name = tempfile(tmpdir = "", fileext = "", pattern = "")
 	path = tempfile()
+	canvas_id <- ggiwid.options$svgid
 	dsvg(file = path, pointsize = pointsize, standalone = TRUE,
 			width = width, height = height,
-			canvas_id = ggiwid.options$svgid
+			canvas_id = canvas_id
 		)
 	fun(...)
 	dev.off()
@@ -54,7 +55,11 @@ ggiraph <- function(fun,
 	js <- paste( sapply( scr, xml_text ), collapse = ";")
 
 	unlink(path)
-	x = list( html = HTML( svg_container ), code = js )
+
+	data_id_class <- basename(tempfile(tmpdir = "", fileext = "", pattern = "cl"))
+
+	x = list( html = HTML( svg_container ), code = js, canvas_id = ggiwid.options$svgid,
+	          data_id_class = data_id_class, hover_css = hover_css)
 
 	# create widget
 	htmlwidgets::createWidget(
