@@ -63,8 +63,7 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 			}
 			# Drop missing values at the start or end of a line - can't drop in the
 			# middle since you expect those to be shown by a break in the line
-			missing <- !stats::complete.cases(data[c("x", "y", "size", "colour",
-									"linetype")])
+			missing <- !stats::complete.cases(data[c("x", "y", "size", "colour", "linetype")])
 			kept <- stats::ave(missing, data$group, FUN = keep)
 			data <- data[kept, ]
 			# must be sorted on group
@@ -102,6 +101,13 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 			group_diff <- munched$group[-1] != munched$group[-n]
 			start <- c(TRUE, group_diff)
 			end <-   c(group_diff, TRUE)
+
+			if( !is.null(munched$tooltip) && !is.character(munched$tooltip) )
+			  munched$tooltip <- as.character(munched$tooltip)
+			if( !is.null(munched$onclick) && !is.character(munched$onclick) )
+			  munched$onclick <- as.character(munched$onclick)
+			if( !is.null(munched$data_id) && !is.character(munched$data_id) )
+			  munched$data_id <- as.character(munched$data_id)
 
 			if (!constant) {
 				interactiveSegmentsGrob(

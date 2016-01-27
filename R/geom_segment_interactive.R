@@ -45,6 +45,14 @@ GeomInteractiveSegment <- ggproto("GeomSegment", Geom,
 
 			if (coord$is_linear()) {
 				coord <- coord$transform(data, panel_scales)
+				if( !is.null(coord$tooltip) && !is.character(coord$tooltip) )
+				  coord$tooltip <- as.character(coord$tooltip)
+				if( !is.null(coord$onclick) && !is.character(coord$onclick) )
+				  coord$onclick <- as.character(coord$onclick)
+				if( !is.null(coord$data_id) && !is.character(coord$data_id) )
+				  coord$data_id <- as.character(coord$data_id)
+
+
 				return(interactiveSegmentsGrob(coord$x, coord$y, coord$xend, coord$yend,
 								tooltip = coord$tooltip,
 								onclick = coord$onclick,

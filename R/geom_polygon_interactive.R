@@ -141,12 +141,21 @@ GeomInteractiveMap <- ggproto(
       )
     )
 
+    if( !is.null(data$tooltip) && !is.character(data$tooltip) )
+      data$tooltip <- as.character(data$tooltip)
+    if( !is.null(data$onclick) && !is.character(data$onclick) )
+      data$onclick <- as.character(data$onclick)
+    if( !is.null(data$data_id) && !is.character(data$data_id) )
+      data$data_id <- as.character(data$data_id)
+
     if (!is.null(data$tooltip))
       args$tooltip <- unlist(mapply(rep, data$tooltip, run_l$lengths))
     if (!is.null(data$onclick))
       args$onclick <- unlist(mapply(rep, data$onclick, run_l$lengths))
     if (!is.null(data$data_id))
       args$data_id <- unlist(mapply(rep, data$data_id, run_l$lengths))
+
+
     do.call(interactivePolygonGrob, args)
   },
 

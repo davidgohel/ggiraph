@@ -81,6 +81,13 @@ GeomInteractiveText <- ggproto(
       data$hjust <- compute_just(data$hjust, data$x)
     }
 
+    if( !is.null(data$tooltip) && !is.character(data$tooltip) )
+      data$tooltip <- as.character(data$tooltip)
+    if( !is.null(data$onclick) && !is.character(data$onclick) )
+      data$onclick <- as.character(data$onclick)
+    if( !is.null(data$data_id) && !is.character(data$data_id) )
+      data$data_id <- as.character(data$data_id)
+
     interactiveTextGrob(
       lab,
       data$x,

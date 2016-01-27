@@ -51,6 +51,15 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 				setGrobName("bar", do.call("grobTree", polys))
 			} else {
 				coords <- coord$transform(data, panel_scales)
+
+				if( !is.null(coord$tooltip) && !is.character(coord$tooltip) )
+				  coord$tooltip <- as.character(coord$tooltip)
+				if( !is.null(coord$onclick) && !is.character(coord$onclick) )
+				  coord$onclick <- as.character(coord$onclick)
+				if( !is.null(coord$data_id) && !is.character(coord$data_id) )
+				  coord$data_id <- as.character(coord$data_id)
+
+
 				setGrobName("geom_rect_interactive", interactiveRectGrob(
 								coords$xmin, coords$ymax,
 								tooltip = coords$tooltip,

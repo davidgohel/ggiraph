@@ -48,6 +48,14 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 			if (nrow(data) < 1 || ncol(data) < 1 ) return(zeroGrob())
 
 			coords <- coord$transform(data, panel_scales)
+
+			if( !is.null(coords$tooltip) && !is.character(coords$tooltip) )
+			  coords$tooltip <- as.character(coords$tooltip)
+			if( !is.null(coords$onclick) && !is.character(coords$onclick) )
+			  coords$onclick <- as.character(coords$onclick)
+			if( !is.null(coords$data_id) && !is.character(coords$data_id) )
+			  coords$data_id <- as.character(coords$data_id)
+
 			setGrobName("geom_point_interactive",
 					interactivePointsGrob(
 							coords$x, coords$y,
@@ -58,7 +66,6 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 							gp = gpar(
 									col = alpha(coords$colour, coords$alpha),
 									fill = alpha(coords$fill, coords$alpha),
-									# Stroke is added around the outside of the point
 									fontsize = coords$size * .pt + coords$stroke * .stroke / 2,
 									lwd = coords$stroke * .stroke / 2
 							)
