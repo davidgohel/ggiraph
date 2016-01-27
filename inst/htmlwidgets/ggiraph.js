@@ -13,7 +13,7 @@ HTMLWidgets.widget({
   },
 
   renderValue: function(el, x, instance) {
-	  el.innerHTML += x.html;
+	  el.innerHTML = x.html;
 	  eval(x.code);
   },
 
