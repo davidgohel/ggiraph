@@ -1,20 +1,18 @@
 HTMLWidgets.widget({
 
   name: 'ggiraph',
-
   type: 'output',
 
   initialize: function(el, width, height) {
 
     return {
-
     }
-
   },
 
   renderValue: function(el, x, instance) {
 	  el.innerHTML = x.html;
 	  eval(x.code);
+
 	  var sheet = document.createElement('style');
 	  var css = "." + x.data_id_class +  ":{}." + x.data_id_class +  ":hover " + x.hover_css;
     sheet.innerHTML = css;
@@ -25,8 +23,6 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, instance) {
-
   }
 
 });
-

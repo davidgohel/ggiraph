@@ -4,7 +4,8 @@ dependencies:
     src: "htmlwidgets/lib"
     script: jquery.min.js
   - name: bootstrap
-    version: 0.0.1
+    version: 3.3.5
     src: "htmlwidgets/lib"
     script: bootstrap.min.js
     stylesheet: bootstrap.css
+
