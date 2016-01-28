@@ -1,7 +1,6 @@
 ---
 title: "ggiraph presentation"
 author: "David Gohel"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
@@ -9,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](https://cran.r-project.org/web/packages/htmlwidgets/index.html). 
+The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](http://cran.r-project.org/web/packages/htmlwidgets). 
 
 It extends ggplot2 with new `geom` functions:
 
