@@ -29,7 +29,7 @@
 #' \code{\link{geom_segment_interactive}}
 #' @examples
 #' # ggiraph simple example -------
-#' @example examples/ggiraph.R
+#' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(fun,
 	pointsize = 12, width = 6, height = 6, hover_css = "{fill:orange;}", ...) {
