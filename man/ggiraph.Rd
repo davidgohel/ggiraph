@@ -4,14 +4,11 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(fun, pointsize = 12, width = 6, height = 6,
+ggiraph(code, pointsize = 12, width = 6, height = 6,
   hover_css = "{fill:orange;}", ...)
 }
 \arguments{
-\item{fun}{plot function. The function will be executed to produce graphics.
-For \code{lattice} or \code{ggplot} object, the function should be \code{print}
-and at least an extra argument \code{x} should specify the object
-to plot. For traditionnal plots, the function should contain plot instructions. See examples.}
+\item{code}{Plotting code to execute}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
@@ -21,7 +18,7 @@ to plot. For traditionnal plots, the function should contain plot instructions. 
 
 \item{hover_css}{css to apply when mouse is hover and element with a data-id attribute}
 
-\item{...}{arguments for \code{fun}.}
+\item{...}{arguments passed on to \code{dsvg}}
 }
 \description{
 Create an interactive graphic
@@ -39,7 +36,7 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 		color = Species, tooltip = tooltip, onclick = clickjs) ) +
 	geom_point_interactive()
 
-ggiraph(fun=print, x = gg_point)
+ggiraph(code = {print(gg_point)})
 }
 \seealso{
 \code{\link{geom_path_interactive}},

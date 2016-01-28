@@ -21,5 +21,5 @@ gg_segment_2 = ggplot() +
 	geom_point(data=dataset, mapping=aes(x=x, y=y),
 		size=4, shape=21, fill="white")
 
-ggiraph(fun=print, x = gg_segment_1)
-ggiraph(fun=print, x = gg_segment_2)
+ggiraph(code = {print(gg_segment_1)})
+ggiraph(code = {print(gg_segment_2)})

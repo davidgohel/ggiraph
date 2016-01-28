@@ -13,15 +13,12 @@
 #' @description Create an interactive graphic
 #' to be used in a web browser.
 #'
-#' @param fun plot function. The function will be executed to produce graphics.
-#' For \code{lattice} or \code{ggplot} object, the function should be \code{print}
-#' and at least an extra argument \code{x} should specify the object
-#' to plot. For traditionnal plots, the function should contain plot instructions. See examples.
+#' @param code Plotting code to execute
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param width widget width
 #' @param height widget height
 #' @param hover_css css to apply when mouse is hover and element with a data-id attribute
-#' @param ... arguments for \code{fun}.
+#' @param ... arguments passed on to \code{dsvg}
 #' @seealso \code{\link{geom_path_interactive}},
 #' \code{\link{geom_point_interactive}},
 #' \code{\link{geom_polygon_interactive}},
@@ -31,7 +28,7 @@
 #' # ggiraph simple example -------
 #' @example examples/geom_point_interactive.R
 #' @export
-ggiraph <- function(fun,
+ggiraph <- function(code,
 	pointsize = 12, width = 6, height = 6, hover_css = "{fill:orange;}", ...) {
 
 	ggiwid.options = getOption("ggiwid")
@@ -40,10 +37,9 @@ ggiraph <- function(fun,
 	canvas_id <- ggiwid.options$svgid
 	dsvg(file = path, pointsize = pointsize, standalone = TRUE,
 			width = width, height = height,
-			canvas_id = canvas_id
+			canvas_id = canvas_id, ...
 		)
-	fun(...)
-	dev.off()
+	tryCatch(code, finally = dev.off() )
 
 	ggiwid.options$svgid = 1 + ggiwid.options$svgid
 	options("ggiwid"=ggiwid.options)

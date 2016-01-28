@@ -17,7 +17,6 @@ shinyUI(fluidPage(
     ),
     column(5,
            wellPanel(
-           div(a("David Gohel", href = "http://www.ardata.fr", target = "_blank")),
            h4("Details", class = "section-title"),
            h5("ui.R", class = "section-title"),
            p(span("Declare a javascript variable"),

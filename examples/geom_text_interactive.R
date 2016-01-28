@@ -15,4 +15,4 @@ gg_text = ggplot(dataset,
   coord_cartesian(xlim = c(0,50))
 
 ## display the plot
-ggiraph(fun=print, x = gg_text, hover_css = "{fill:#FF4C3B;font-style:italic;}")
+ggiraph(code = {print(gg_text)}, hover_css = "{fill:#FF4C3B;font-style:italic;}")

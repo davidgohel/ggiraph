@@ -56,7 +56,8 @@ gg_rect = ggplot() +
 					label = r ),
 		size = 4 )
 
-ggiraph(fun=print, x = gg_rect)
+
+ggiraph(code = {print(gg_rect)})
 }
 \seealso{
 \code{\link{ggiraph}}

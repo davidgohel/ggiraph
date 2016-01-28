@@ -53,7 +53,7 @@ gg_point_1 <- ggplot(dataset, aes(x = disp, y = qsec,
 	geom_point_interactive(size=3)
 
 # htmlwidget call
-ggiraph(fun=print, x = gg_point_1 + mytheme_main, width = 7, height = 6)
+ggiraph(code = {print(gg_point_1 + mytheme_main)}, width = 7, height = 6)
 ```
 
 ## animate elements with `data-id`
@@ -70,7 +70,7 @@ gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec,
 	geom_point_interactive(size=4)
 
 # htmlwidget call
-ggiraph(fun=print, x = gg_point_2 + mytheme_main, 
+ggiraph(code = {print(gg_point_1 + mytheme_main)}, 
         width = 7, height = 6, 
         hover_css = "{fill:orange;r:6px;}")
 ```
@@ -99,6 +99,6 @@ if (require("maps") ) {
     expand_limits(x = states_map$long, y = states_map$lat)
 }
 
-ggiraph(fun=print, x = gg_map + mytheme_map, width = 7, height = 5)
+ggiraph(code = {print(gg_map + mytheme_map)}, width = 7, height = 5)
 ```
 

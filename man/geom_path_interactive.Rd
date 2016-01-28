@@ -85,9 +85,9 @@ gg_path_3 = ggplot(dataset2) +
 		color = color, tooltip = label, onclick = onclick), size = 1 )
 
 # ggiraph widgets ---
-ggiraph(fun=print, x = gg_path_1, hover_css = "{stroke-width:3px;}")
-ggiraph(fun=print, x = gg_path_2, hover_css = "{stroke:orange;stroke-width:3px;}")
-ggiraph(fun=print, x = gg_path_3, hover_css = "{stroke-width:10px;}")
+ggiraph(code = {print(gg_path_1)}, hover_css = "{stroke-width:3px;}")
+ggiraph(code = {print(gg_path_2)}, hover_css = "{stroke:orange;stroke-width:3px;}")
+ggiraph(code = {print(gg_path_3)}, hover_css = "{stroke-width:10px;}")
 }
 \seealso{
 \code{\link{ggiraph}}

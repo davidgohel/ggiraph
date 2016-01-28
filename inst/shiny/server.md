@@ -6,7 +6,7 @@
       })
     
       output$plot <- renderggiraph({
-        ggiraph(fun=print, x = gg_map, width = 8, height = 6)
+        ggiraph(code = {print(gg_map)}, width = 8, height = 6)
       })
     
       output$datatab <- renderDataTable({

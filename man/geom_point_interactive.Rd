@@ -44,7 +44,7 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 		color = Species, tooltip = tooltip, onclick = clickjs) ) +
 	geom_point_interactive()
 
-ggiraph(fun=print, x = gg_point)
+ggiraph(code = {print(gg_point)})
 }
 \seealso{
 \code{\link{ggiraph}}

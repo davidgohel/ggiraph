@@ -21,5 +21,5 @@ gg_poly_1 <- ggplot(datapoly, aes( x = x, y = y ) ) +
 		tooltip = value, data_id = value, onclick = oc))
 
 # display ------
-ggiraph(fun=print, x = gg_poly_1)
+ggiraph(code = {print(gg_poly_1)})
 
