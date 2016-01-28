@@ -62,7 +62,7 @@ dataset2 <- data.frame(x = rep(1:20, 5),
 		z = rep(1:20, 5),
 		grp = factor(rep(1:5, each=20)),
 		color = factor(rep(1:5, each=20)),
-		label = paste0( "id ", round( runif(100)*10^8 ) ),
+		label = rep(paste0( "id ", 1:5 ), each=20),
 		onclick = paste0(
 		  "function() {alert('",
 		  sample(letters, 100, replace = TRUE),
@@ -72,22 +72,22 @@ dataset2 <- data.frame(x = rep(1:20, 5),
 
 # plots ---
 gg_path_1 = ggplot(data, aes(variable, value, group = id,
-		colour = group, tooltip = tooltip, onclick = onclick)) +
+		colour = group, tooltip = tooltip, onclick = onclick, data_id = id)) +
 	geom_path_interactive(alpha = 0.5)
 
-gg_path_2 = ggplot(data, aes(variable, value, group = id,
+gg_path_2 = ggplot(data, aes(variable, value, group = id, data_id = id,
 		tooltip = tooltip)) +
 	geom_path_interactive(alpha = 0.5) +
 	facet_wrap( ~ group )
 
 gg_path_3 = ggplot(dataset2) +
-	geom_path_interactive(aes(x, y, group=grp,
-		color = color, tooltip = label, onclick = onclick), size = 3 )
+	geom_path_interactive(aes(x, y, group=grp, data_id = label,
+		color = color, tooltip = label, onclick = onclick), size = 1 )
 
 # ggiraph widgets ---
-ggiraph(fun=print, x = gg_path_1)
-ggiraph(fun=print, x = gg_path_2)
-ggiraph(fun=print, x = gg_path_3)
+ggiraph(fun=print, x = gg_path_1, hover_css = "{stroke-width:3px;}")
+ggiraph(fun=print, x = gg_path_2, hover_css = "{stroke:orange;stroke-width:3px;}")
+ggiraph(fun=print, x = gg_path_3, hover_css = "{stroke-width:10px;}")
 }
 \seealso{
 \code{\link{ggiraph}}
