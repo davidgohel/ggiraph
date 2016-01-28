@@ -70,12 +70,12 @@ gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec,
 	geom_point_interactive(size=4)
 
 # htmlwidget call
-ggiraph(code = {print(gg_point_1 + mytheme_main)}, 
+ggiraph(code = {print(gg_point_2 + mytheme_main)}, 
         width = 7, height = 6, 
         hover_css = "{fill:orange;r:6px;}")
 ```
 
-`data-id` can also be reused within a shiny application. See vignettes *shiny*.
+`data-id` can also be reused within a shiny application. 
 
 ## Click actions
 
