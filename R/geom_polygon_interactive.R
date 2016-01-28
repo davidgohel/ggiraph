@@ -44,6 +44,13 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			first_idx <- !duplicated(munched$group)
 			first_rows <- munched[first_idx, ]
 
+			if( !is.null(munched$tooltip) && !is.character(munched$tooltip) )
+			  munched$tooltip <- as.character(munched$tooltip)
+			if( !is.null(munched$onclick) && !is.character(munched$onclick) )
+			  munched$onclick <- as.character(munched$onclick)
+			if( !is.null(munched$data_id) && !is.character(munched$data_id) )
+			  munched$data_id <- as.character(munched$data_id)
+
 			setGrobName("geom_polygon_interactive",
 					interactivePolygonGrob(munched$x, munched$y, default.units = "native",
 							id = munched$group,
