@@ -17,14 +17,16 @@ Depends:
     ggplot2 (>= 2.0.0)
 Imports:
     grid,
-    htmlwidgets,
+    htmlwidgets (>= 0.5),
     htmltools,
     stats,
     plyr,
     rvg (>= 0.0.6),
     xml2
-Enhances: shiny
 Suggests:
-    knitr, rmarkdown, maps
+    knitr,
+    rmarkdown,
+    maps,
+    shiny
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

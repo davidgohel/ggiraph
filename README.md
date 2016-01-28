@@ -7,6 +7,8 @@
 
 > Make 'ggplot' Graphics Interactive
 
+![ggiraph](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Teulogo.svg/200px-Teulogo.svg.png)
+
 # Installation 
 
 You will need the latest ggplot2 version and the latest version of 
