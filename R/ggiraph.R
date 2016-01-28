@@ -72,19 +72,32 @@ ggiraph <- function(fun,
 	)
 }
 
-#' Widget output function for use in Shiny
+#' @title Create a ggiraph output element
+#' @description Render a ggiraph within an application page.
 #'
-#' @param outputId outputId
+#' @param outputId output variable to read the ggiraph from.
+#' @examples
+#' if( require(shiny) && interactive() ){
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+#'   shinyAppDir(appDir = app_dir )
+#' }
 #' @export
 ggiraphOutput <- function(outputId){
 	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = "100%",height = "100%")
 }
 
-#' Widget render function for use in Shiny
+#' @title Reactive version of ggiraph object
 #'
-#' @param expr expr
-#' @param env env
-#' @param quoted quoted
+#' @description Makes a reactive version of a ggiraph object for use in Shiny.
+#'
+#' @param expr An expression that returns a \code{\link{ggiraph}} object.
+#' @param env The environment in which to evaluate expr.
+#' @param quoted Is \code{expr} a quoted expression
+#' @examples
+#' if( require(shiny) && interactive() ){
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+#'   shinyAppDir(appDir = app_dir )
+#' }
 #' @export
 renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
 	if (!quoted) { expr <- substitute(expr) } # force quoted

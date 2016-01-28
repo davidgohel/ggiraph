@@ -2,18 +2,24 @@
 % Please edit documentation in R/ggiraph.R
 \name{renderggiraph}
 \alias{renderggiraph}
-\title{Widget render function for use in Shiny}
+\title{Reactive version of ggiraph object}
 \usage{
 renderggiraph(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{expr}{expr}
+\item{expr}{An expression that returns a \code{\link{ggiraph}} object.}
 
-\item{env}{env}
+\item{env}{The environment in which to evaluate expr.}
 
-\item{quoted}{quoted}
+\item{quoted}{Is \code{expr} a quoted expression}
 }
 \description{
-Widget render function for use in Shiny
+Makes a reactive version of a ggiraph object for use in Shiny.
+}
+\examples{
+if( require(shiny) && interactive() ){
+  app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+  shinyAppDir(appDir = app_dir )
+}
 }
 

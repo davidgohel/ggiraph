@@ -2,14 +2,20 @@
 % Please edit documentation in R/ggiraph.R
 \name{ggiraphOutput}
 \alias{ggiraphOutput}
-\title{Widget output function for use in Shiny}
+\title{Create a ggiraph output element}
 \usage{
 ggiraphOutput(outputId)
 }
 \arguments{
-\item{outputId}{outputId}
+\item{outputId}{output variable to read the ggiraph from.}
 }
 \description{
-Widget output function for use in Shiny
+Render a ggiraph within an application page.
+}
+\examples{
+if( require(shiny) && interactive() ){
+  app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+  shinyAppDir(appDir = app_dir )
+}
 }
 

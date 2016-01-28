@@ -102,14 +102,3 @@ if (require("maps") ) {
 ggiraph(fun=print, x = gg_map + mytheme_map, width = 7, height = 5)
 ```
 
-## Installation 
-
-You will need the latest `ggplot2` version and the latest version of 
-`rvg`.
-
-
-    install.packages("ggplot2")
-    install.packages("rvg")
-    devtools::install_github('davidgohel/ggiraph')
-
-

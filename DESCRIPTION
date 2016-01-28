@@ -6,10 +6,14 @@ Description: Create interactive ggplot graphics that are usable in the 'RStudio'
 Version: 0.1.0.9000
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
-    email = "david.gohel@ardata.fr") )
+    email = "david.gohel@ardata.fr"),
+    person("Bootstrap", role = c("ctb", "cph"),
+    comment = "Bootstrap development team"),
+    person("jQuery", role = c("ctb", "cph"),
+    comment = "The jQuery Foundation") )
 Author: David Gohel [aut, cre]
-Maintainer: David Gohel <david.gohel@ardata.fr>
 License: GPL-3
+Copyright: See file COPYRIGHTS.
 Depends:
     ggplot2 (>= 2.0.0)
 Imports:
@@ -20,6 +24,7 @@ Imports:
     plyr,
     rvg (>= 0.0.6),
     xml2
+Enhances: shiny
 Suggests:
     knitr, rmarkdown, maps
 VignetteBuilder: knitr
