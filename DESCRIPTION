@@ -29,4 +29,5 @@ Suggests:
     maps,
     shiny
 VignetteBuilder: knitr
+BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 5.0.1
