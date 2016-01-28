@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](http://cran.r-project.org/web/packages/htmlwidgets). 
+The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](http://cran.r-project.org/package=htmlwidgets). 
 
 It extends ggplot2 with new `geom` functions:
 
