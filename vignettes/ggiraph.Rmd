@@ -1,44 +1,116 @@
 ---
-title: "ggiraph"
+title: "ggiraph presentation"
 author: "David Gohel"
 date: "`r Sys.Date()`"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-The **ggiraph** package let R users to make **ggplot interactive**. The format used is SVG. 
-The package is an [htmlwidget](https://cran.r-project.org/web/packages/htmlwidgets/index.html). 
-For now, there are three arguments to let you add interactivity:
+The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](https://cran.r-project.org/web/packages/htmlwidgets/index.html). 
+
+It extends ggplot2 with new `geom` functions:
+
+* geom_point_interactive
+* geom_polygon_interactive
+* geom_map_interactive
+* geom_path_interactive
+* geom_rect_interactive
+* geom_segment_interactive
+* geom_text_interactive
+
+
+Three arguments let you add interactivity:
 
 * `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
 * `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
 * `data_id`: column of dataset that contains id to be associated with elements. 
 
-```{r echo=FALSE, warning=FALSE,error=FALSE, message=FALSE, prompt=FALSE}
+```{r message=FALSE}
 library(ggiraph)
+mytheme_main <- theme( panel.background = element_blank(), 
+  panel.grid.major = element_line(colour = "#dddddd"), 
+  axis.ticks = element_line(colour = "#dddddd") )
+
+mytheme_map <- theme(
+  panel.background = element_blank(), axis.title.x = element_blank(),
+  axis.text = element_blank(), axis.line.x = element_blank(),
+  axis.line.y = element_blank(), axis.title.y = element_blank(),
+  axis.ticks.x = element_blank(), axis.ticks.y = element_blank() )
 ```
 
-# Simple example 
-```{r}
-dataset = iris
-dataset$tooltip = paste0( "Species: ", dataset$Species )
-dataset$clickjs = paste0("function() {alert('",dataset$Species, "')}" )
+## Simple example 
 
-# plots
-gg_point_1 = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width, 
-		color = Species, tooltip = tooltip, onclick=clickjs) ) + 
+```{r message=FALSE}
+dataset <- mtcars
+head(dataset)
+dataset$tooltip <- row.names(dataset)
+
+# geom_point_interactive example
+gg_point_1 <- ggplot(dataset, aes(x = disp, y = qsec, 
+		color = wt, tooltip = tooltip ) ) + 
 	geom_point_interactive(size=3)
 
-ggiraph(fun=print, x = gg_point_1)
+# htmlwidget call
+ggiraph(fun=print, x = gg_point_1 + mytheme_main, width = 7, height = 6)
 ```
 
-# Installation 
+## animate elements with `data-id`
+
+When graphical elements are associated with `data_id` attributes, a css string modifies 
+rendering when mouse is over. Default value is `hover_css = "{fill:orange;}"`. 
+
+```{r}
+dataset$data_id <- tolower(row.names(dataset))
+
+# geom_point_interactive example
+gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec, 
+		color = wt, tooltip = tooltip, data_id = data_id ) ) + 
+	geom_point_interactive(size=4)
+
+# htmlwidget call
+ggiraph(fun=print, x = gg_point_2 + mytheme_main, 
+        width = 7, height = 6, 
+        hover_css = "{fill:orange;r:6px;}")
+```
+
+`data-id` can also be reused within a shiny application. See vignettes *shiny*.
+
+## Click actions
+
+```{r message=FALSE, warning=FALSE}
+crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
+
+crimes$onclick <- sprintf(
+  "function() {window.open('%s%s')}",
+  "http://en.wikipedia.org/wiki/",
+  as.character(crimes$state)
+)
+
+if (require("maps") ) {
+  states_map <- map_data("state")
+  gg_map <- ggplot(crimes, aes(map_id = state))
+  gg_map <- gg_map + 
+    geom_map_interactive(
+      aes( fill = Murder, tooltip = state, 
+           onclick = onclick, data_id = state), 
+      map = states_map) + 
+    expand_limits(x = states_map$long, y = states_map$lat)
+}
+
+ggiraph(fun=print, x = gg_map + mytheme_map, width = 7, height = 5)
+```
+
+## Installation 
 
 You will need the latest `ggplot2` version and the latest version of 
-rvg.
+`rvg`.
 
 
     install.packages("ggplot2")
-    devtools::install_github('davidgohel/rvg')
+    install.packages("rvg")
     devtools::install_github('davidgohel/ggiraph')
 
 
