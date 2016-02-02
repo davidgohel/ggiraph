@@ -18,7 +18,7 @@ ggiraph(code, pointsize = 12, width = 6, height = 6,
 
 \item{hover_css}{css to apply when mouse is hover and element with a data-id attribute}
 
-\item{...}{arguments passed on to \code{dsvg}}
+\item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
 \description{
 Create an interactive graphic

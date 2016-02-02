@@ -18,7 +18,7 @@
 #' @param width widget width
 #' @param height widget height
 #' @param hover_css css to apply when mouse is hover and element with a data-id attribute
-#' @param ... arguments passed on to \code{\link{dsvg}}
+#' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @seealso \code{\link{geom_path_interactive}},
 #' \code{\link{geom_point_interactive}},
 #' \code{\link{geom_polygon_interactive}},
