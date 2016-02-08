@@ -5,7 +5,7 @@
 \title{ggiraph}
 \usage{
 ggiraph(code, pointsize = 12, width = 6, height = 6,
-  hover_css = "{fill:orange;}", ...)
+  tooltip_extra_css = "", hover_css = "fill:orange;", ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -16,7 +16,10 @@ ggiraph(code, pointsize = 12, width = 6, height = 6,
 
 \item{height}{widget height}
 
-\item{hover_css}{css to apply when mouse is hover and element with a data-id attribute}
+\item{tooltip_extra_css}{extra css (added to \code{position: absolute;pointer-events: none;})
+used to customize tooltip area.}
+
+\item{hover_css}{css to apply when mouse is hover and element with a data-id attribute.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }

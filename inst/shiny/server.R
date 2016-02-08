@@ -3,8 +3,7 @@ library(ggiraph)
 
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
-onclick <- "function() {var dataid = jQuery(this).attr(\"data-id\");\
-Shiny.onInputChange(\"state\", dataid);}"
+onclick <- "{var dataid = d3.select(this).attr(\"data-id\");Shiny.onInputChange(\"state\", dataid);}"
 
 dataset <- crimes
 dataset$onclick = onclick
@@ -15,7 +14,8 @@ if (require("maps") ) {
   gg_map <- gg_map + geom_map_interactive(aes(
     fill = Murder,
     tooltip = state,
-    onclick = onclick, data_id = state
+    onclick = onclick,
+    data_id = state
   ),
   map = states_map) +
     expand_limits(x = states_map$long, y = states_map$lat)
