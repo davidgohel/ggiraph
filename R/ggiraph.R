@@ -31,7 +31,9 @@
 #' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(code,
-	pointsize = 12, width = 6, height = 6, tooltip_extra_css = "", hover_css = "fill:orange;", ...) {
+	pointsize = 12, width = 6, height = 6,
+	tooltip_extra_css = "padding:2px;background:black;color:white;",
+	hover_css = "fill:orange;", ...) {
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
@@ -55,6 +57,11 @@ ggiraph <- function(code,
 	unlink(path)
 
 	data_id_class <- basename(tempfile(tmpdir = "", fileext = "", pattern = "cl"))
+
+	if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
+	  stop("please, do not specify position in tooltip_extra_css, this parameter is managed by ggiraph.")
+	if( grepl(x = tooltip_extra_css, pattern = "pointer-events[ ]*:") )
+	  stop("please, do not specify pointer-events in tooltip_extra_css, this parameter is managed by ggiraph.")
 
 	x = list( html = HTML( svg_container ), code = js, canvas_id = ggiwid.options$svgid,
 	          data_id_class = data_id_class,

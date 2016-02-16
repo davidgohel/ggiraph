@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   })
 
   output$plot <- renderggiraph({
-    ggiraph(code = {print(gg_map)}, width = 8, height = 6)
+    ggiraph(code = print(gg_map), width = 8, height = 6, hover_css = "fill:orange;stroke-width:1px;stroke:wheat;cursor:pointer;")
   })
 
   output$datatab <- renderDataTable({

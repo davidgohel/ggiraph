@@ -31,8 +31,7 @@ shinyUI(fluidPage(
               tags$ul(
                   tags$strong("onclick"),
                   tags$i("the javascript function to execute on click"),
-                        tags$code("function() {var dataid = jQuery(this).attr(\"data-id\");\
-Shiny.onInputChange(\"state\", dataid);}") ),
+                        tags$code("{var dataid = d3.select(this).attr(\"data-id\");Shiny.onInputChange(\"state\", dataid);}") ),
               tags$ul(
                 tags$strong("data_id"),
                 tags$i("assign data id to elements."), tags$span("Elements with a data id attribute will be animated when mouse will be over.") )

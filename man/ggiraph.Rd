@@ -5,7 +5,8 @@
 \title{ggiraph}
 \usage{
 ggiraph(code, pointsize = 12, width = 6, height = 6,
-  tooltip_extra_css = "", hover_css = "fill:orange;", ...)
+  tooltip_extra_css = "padding:2px;background:black;color:white;",
+  hover_css = "fill:orange;", ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}

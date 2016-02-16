@@ -61,11 +61,12 @@ if (require("maps") ) {
   gg_map <- gg_map + geom_map_interactive(aes(
                   fill = Murder,
                   tooltip = labs,
+                  data_id = state,
                   onclick = onclick
                 ),
                 map = states_map) +
     expand_limits(x = states_map$long, y = states_map$lat)
-  ggiraph(code = {print(gg_map)}, width = 8, height = 6)
+  ggiraph(code = print(gg_map), width = 8, height = 6)
 }
 
 }
