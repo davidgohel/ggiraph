@@ -72,7 +72,7 @@ gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec,
 # htmlwidget call
 ggiraph(code = {print(gg_point_2 + mytheme_main)}, 
         width = 7, height = 6, 
-        hover_css = "{fill:orange;r:6px;}")
+        hover_css = "fill:orange;r:6px;")
 ```
 
 `data-id` can also be reused within a shiny application. 
@@ -83,7 +83,7 @@ ggiraph(code = {print(gg_point_2 + mytheme_main)},
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
 crimes$onclick <- sprintf(
-  "function() {window.open('%s%s')}",
+  "window.open(\"%s%s\")",
   "http://en.wikipedia.org/wiki/",
   as.character(crimes$state)
 )
@@ -93,12 +93,14 @@ if (require("maps") ) {
   gg_map <- ggplot(crimes, aes(map_id = state))
   gg_map <- gg_map + 
     geom_map_interactive(
-      aes( fill = Murder, tooltip = state, 
-           onclick = onclick, data_id = state), 
+      aes( fill = Murder, data_id = state, tooltip = state, onclick = onclick ), 
       map = states_map) + 
     expand_limits(x = states_map$long, y = states_map$lat)
 }
 
-ggiraph(code = {print(gg_map + mytheme_map)}, width = 7, height = 5)
+ggiraph(code = {print(gg_map)}, 
+        width = 7, height = 5, 
+        hover_css = "fill:orange;",
+        tooltip_extra_css = "text-align:center;padding:2px;font:2em;background:black;border:0px;border-radius:8px;color:red;")
 ```
 
