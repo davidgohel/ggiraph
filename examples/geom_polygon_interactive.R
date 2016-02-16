@@ -13,7 +13,7 @@ positions <- data.frame(
 
 datapoly <- merge(values, positions, by=c("id"))
 
-datapoly$oc = "function() {alert(this.getAttribute('data-id'))}"
+datapoly$oc = "alert(this.getAttribute(\"data-id\"))"
 
 # create a ggplot -----
 gg_poly_1 <- ggplot(datapoly, aes( x = x, y = y ) ) +

@@ -13,7 +13,7 @@ table_ <- paste0(
 )
 
 onclick <- sprintf(
-  "function() {window.open('%s%s')}",
+  "window.open(\"%s%s\")",
   "http://en.wikipedia.org/wiki/",
   as.character(crimes$state)
 )

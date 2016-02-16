@@ -6,7 +6,7 @@ dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
 	r = c( 1, 2, 3, 4, 5),
 	tooltip = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
 	uid = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
-	oc = rep("function() {alert(this.getAttribute('data-id'))}", 5)
+	oc = rep("alert(this.getAttribute(\"data-id\"))", 5)
 )
 
 gg_rect = ggplot() +
