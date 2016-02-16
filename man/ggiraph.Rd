@@ -32,7 +32,7 @@ to be used in a web browser.
 # create dataset
 dataset = iris
 dataset$tooltip = dataset$Species
-dataset$clickjs = paste0("function() {alert('",dataset$Species, "')}" )
+dataset$clickjs = paste0("alert(\\"",dataset$Species, "\\")" )
 
 # plots
 gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
