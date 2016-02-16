@@ -88,7 +88,7 @@ GeomInteractiveText <- ggproto(
     if( !is.null(data$data_id) && !is.character(data$data_id) )
       data$data_id <- as.character(data$data_id)
 
-    interactiveTextGrob(
+    interactive_text_grob(
       lab,
       data$x,
       data$y,

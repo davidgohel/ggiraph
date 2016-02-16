@@ -56,20 +56,22 @@ GeomInteractivePoint <- ggproto("GeomInteractivePoint", Geom,
 			if( !is.null(coords$data_id) && !is.character(coords$data_id) )
 			  coords$data_id <- as.character(coords$data_id)
 
-			setGrobName("geom_point_interactive",
-					interactivePointsGrob(
-							coords$x, coords$y,
-							tooltip = coords$tooltip,
-							onclick = coords$onclick,
-							data_id = coords$data_id,
-							pch = coords$shape,
-							gp = gpar(
-									col = alpha(coords$colour, coords$alpha),
-									fill = alpha(coords$fill, coords$alpha),
-									fontsize = coords$size * .pt + coords$stroke * .stroke / 2,
-									lwd = coords$stroke * .stroke / 2
-							)
-					)
+			setGrobName(
+			  "geom_point_interactive",
+			  interactive_points_grob(
+			    coords$x,
+			    coords$y,
+			    tooltip = coords$tooltip,
+			    onclick = coords$onclick,
+			    data_id = coords$data_id,
+			    pch = coords$shape,
+			    gp = gpar(
+			      col = alpha(coords$colour, coords$alpha),
+			      fill = alpha(coords$fill, coords$alpha),
+			      fontsize = coords$size * .pt + coords$stroke * .stroke / 2,
+			      lwd = coords$stroke * .stroke / 2
+			    )
+			  )
 			)
 		},
 

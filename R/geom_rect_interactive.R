@@ -60,7 +60,7 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 				  coord$data_id <- as.character(coord$data_id)
 
 
-				setGrobName("geom_rect_interactive", interactiveRectGrob(
+				setGrobName("geom_rect_interactive", interactive_rect_grob(
 								coords$xmin, coords$ymax,
 								tooltip = coords$tooltip,
 								onclick = coords$onclick,

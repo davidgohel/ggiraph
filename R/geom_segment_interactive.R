@@ -53,7 +53,7 @@ GeomInteractiveSegment <- ggproto("GeomSegment", Geom,
 				  coord$data_id <- as.character(coord$data_id)
 
 
-				return(interactiveSegmentsGrob(coord$x, coord$y, coord$xend, coord$yend,
+				return(interactive_segments_grob(coord$x, coord$y, coord$xend, coord$yend,
 								tooltip = coord$tooltip,
 								onclick = coord$onclick,
 								data_id = coord$data_id,
