@@ -16,7 +16,7 @@ rvg.
 
 
     install.packages("ggplot2")
-    install.packages("rvg")
+    devtools::install_github('davidgohel/rvg')
     devtools::install_github('davidgohel/ggiraph')
 
 
