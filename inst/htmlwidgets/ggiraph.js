@@ -2,8 +2,6 @@ function zoom_h() {
   d3.select(this).attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
 
-var zoom_l = d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_h);
-
 function d3_set_attr(selection, name, value) {
   selection.attr(name, value);
 }
@@ -52,17 +50,17 @@ HTMLWidgets.widget({
     sel_tooltiped.on("mouseover", function(d) {
             div.transition()
                 .duration(200)
-                .style("opacity", 0.9);
+                .style("opacity", x.tooltip_opacity);
             div.html(d3.select(this).attr("title"))
-                .style("left", (d3.event.pageX + 10 ) + "px")
-                .style("top", (d3.event.pageY ) + "px");
+                .style("left", (d3.event.pageX + x.tooltip_offx ) + "px")
+                .style("top", (d3.event.pageY + x.tooltip_offy ) + "px");
             })
         .on("mouseout", function(d) {
             div.transition()
                 .duration(500)
                 .style("opacity", 0);
         });
-
+      var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
       zoom_l(d3.select('#svg_' + x.canvas_id + ' g'));
 
   },

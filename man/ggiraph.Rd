@@ -6,7 +6,8 @@
 \usage{
 ggiraph(code, pointsize = 12, width = 6, height = 6,
   tooltip_extra_css = "padding:2px;background:black;color:white;",
-  hover_css = "fill:orange;", ...)
+  hover_css = "fill:orange;", tooltip_opacity = 0.9, tooltip_offx = 10,
+  tooltip_offy = 0, zoom_max = 10, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -21,6 +22,14 @@ ggiraph(code, pointsize = 12, width = 6, height = 6,
 used to customize tooltip area.}
 
 \item{hover_css}{css to apply when mouse is hover and element with a data-id attribute.}
+
+\item{tooltip_opacity}{tooltip opacity}
+
+\item{tooltip_offx}{tooltip x offset}
+
+\item{tooltip_offy}{tooltip y offset}
+
+\item{zoom_max}{maximum zoom factor}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }

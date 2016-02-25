@@ -20,6 +20,10 @@
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
 #' @param hover_css css to apply when mouse is hover and element with a data-id attribute.
+#' @param tooltip_opacity tooltip opacity
+#' @param tooltip_offx tooltip x offset
+#' @param tooltip_offy tooltip y offset
+#' @param zoom_max maximum zoom factor
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @seealso \code{\link{geom_path_interactive}},
 #' \code{\link{geom_point_interactive}},
@@ -33,7 +37,20 @@
 ggiraph <- function(code,
 	pointsize = 12, width = 6, height = 6,
 	tooltip_extra_css = "padding:2px;background:black;color:white;",
-	hover_css = "fill:orange;", ...) {
+	hover_css = "fill:orange;",
+	tooltip_opacity = .9,
+	tooltip_offx = 10,
+	tooltip_offy = 0,
+	zoom_max = 10,
+	...) {
+
+  stopifnot(is.numeric(tooltip_offx))
+  stopifnot(is.numeric(tooltip_offy))
+  stopifnot(is.numeric(tooltip_opacity))
+  stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
+  stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
+  stopifnot(is.numeric(zoom_max))
+  stopifnot( zoom_max > 1 )
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
@@ -66,7 +83,12 @@ ggiraph <- function(code,
 	x = list( html = HTML( svg_container ), code = js, canvas_id = ggiwid.options$svgid,
 	          data_id_class = data_id_class,
 	          tooltip_extra_css = tooltip_extra_css,
-	          hover_css = hover_css)
+	          hover_css = hover_css,
+	          tooltip_opacity = tooltip_opacity,
+	          tooltip_offx = tooltip_offx,
+	          tooltip_offy = tooltip_offy,
+	          zoom_max = zoom_max
+	          )
 
 	# create widget
 	htmlwidgets::createWidget(
