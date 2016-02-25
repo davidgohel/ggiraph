@@ -1,7 +1,8 @@
 [![Travis-CI Build Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/davidgohel/ggiraph?branch=master)](https://ci.appveyor.com/project/davidgohel/ggiraph/branch/master)
 [![version](http://www.r-pkg.org/badges/version/ggiraph)](http://www.r-pkg.org/pkg/ggiraph)
-
+![cranlogs](http://cranlogs.r-pkg.org./badges/ggiraph)
+![Active](http://www.repostatus.org/badges/latest/active.svg)
 
 # ggiraph
 
