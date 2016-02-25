@@ -3,7 +3,7 @@ Type: Package
 Title: Make 'ggplot2' Graphics Interactive Using 'htmlwidgets'
 Description: Create interactive 'ggplot2' graphics that are usable in the 'RStudio'
     viewer pane, in 'R Markdown' documents and in 'Shiny' apps.
-Version: 0.2.0.9000
+Version: 0.2.0
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
