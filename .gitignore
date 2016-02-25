@@ -1,6 +1,5 @@
 .Rproj.user
 .Rhistory
-*.Rmd
 *.html
 .RData
 todo.md
