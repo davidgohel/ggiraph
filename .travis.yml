@@ -3,6 +3,3 @@ language: r
 sudo: required
 
 warnings_are_errors: false
-
-r_github_packages:
-  - davidgohel/rvg
