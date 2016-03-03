@@ -90,6 +90,6 @@ ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;" )
 To fill svg elements in red and increase radius:
 
 ```{r}
-ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;r:6pt", zoom_max = 2 )
+ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;r:6pt" )
 ```
 
