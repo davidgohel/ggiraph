@@ -103,7 +103,6 @@ geom_map_interactive <- function(mapping = NULL, data = NULL, map, stat = "ident
   if (!is.null(map$long)) map$x <- map$long
   if (!is.null(map$region)) map$id <- map$region
   stopifnot(all(c("x", "y", "id") %in% names(map)))
-
   layer(
     data = data,
     mapping = mapping,

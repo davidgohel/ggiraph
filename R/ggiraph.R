@@ -41,7 +41,7 @@ ggiraph <- function(code,
 	tooltip_opacity = .9,
 	tooltip_offx = 10,
 	tooltip_offy = 0,
-	zoom_max = 10,
+	zoom_max = 6,
 	...) {
 
   stopifnot(is.numeric(tooltip_offx))
@@ -94,10 +94,10 @@ ggiraph <- function(code,
 	htmlwidgets::createWidget(
 			name = 'ggiraph',
 			x,
-			width = width*72,
-			height = height*72,
+			width = NULL,
+			height = NULL,
 			package = 'ggiraph',
-			sizingPolicy = sizingPolicy(padding = 0, browser.fill = TRUE)
+			sizingPolicy = sizingPolicy(padding = 0, browser.fill = TRUE )
 	)
 }
 
@@ -111,8 +111,8 @@ ggiraph <- function(code,
 #'   shinyAppDir(appDir = app_dir )
 #' }
 #' @export
-ggiraphOutput <- function(outputId){
-	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = "100%",height = "100%")
+ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
+	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
 }
 
 #' @title Reactive version of ggiraph object
