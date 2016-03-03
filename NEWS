@@ -1,0 +1,6 @@
+# ggiraph 0.2.0
+
+## Enhancement
+
+* Migration to d3.js
+* Update to htmlwidgets 0.6
