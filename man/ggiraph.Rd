@@ -4,10 +4,9 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(code, pointsize = 12, width = 6, height = 6,
-  tooltip_extra_css = "padding:2px;background:black;color:white;",
-  hover_css = "fill:orange;", tooltip_opacity = 0.9, tooltip_offx = 10,
-  tooltip_offy = 0, zoom_max = 6, ...)
+ggiraph(code, pointsize = 12, width = 6, height = 6, tooltip_extra_css,
+  hover_css, tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
+  zoom_max = 6, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}

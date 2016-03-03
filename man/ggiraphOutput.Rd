@@ -8,6 +8,10 @@ ggiraphOutput(outputId, width = "100\%", height = "500px")
 }
 \arguments{
 \item{outputId}{output variable to read the ggiraph from.}
+
+\item{width}{widget width}
+
+\item{height}{widget height}
 }
 \description{
 Render a ggiraph within an application page.

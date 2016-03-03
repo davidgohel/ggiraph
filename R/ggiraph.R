@@ -36,13 +36,18 @@
 #' @export
 ggiraph <- function(code,
 	pointsize = 12, width = 6, height = 6,
-	tooltip_extra_css = "padding:2px;background:black;color:white;",
-	hover_css = "fill:orange;",
+	tooltip_extra_css,
+	hover_css,
 	tooltip_opacity = .9,
 	tooltip_offx = 10,
 	tooltip_offy = 0,
 	zoom_max = 6,
 	...) {
+
+  if( missing( tooltip_extra_css ))
+    tooltip_extra_css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
+  if( missing( hover_css ))
+    hover_css <- "fill:orange;"
 
   stopifnot(is.numeric(tooltip_offx))
   stopifnot(is.numeric(tooltip_offy))
@@ -105,6 +110,8 @@ ggiraph <- function(code,
 #' @description Render a ggiraph within an application page.
 #'
 #' @param outputId output variable to read the ggiraph from.
+#' @param width widget width
+#' @param height widget height
 #' @examples
 #' if( require(shiny) && interactive() ){
 #'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
