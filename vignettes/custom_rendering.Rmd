@@ -3,7 +3,7 @@ title: "Custom tooltip and hover effect rendering"
 author: "David Gohel"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{custom_rendering}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
