@@ -55,7 +55,7 @@ ggiraph <- function(code,
   stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
   stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
   stopifnot(is.numeric(zoom_max))
-  stopifnot( zoom_max > 1 )
+  stopifnot( zoom_max >= 1 )
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
