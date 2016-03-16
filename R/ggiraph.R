@@ -24,6 +24,7 @@
 #' @param tooltip_offx tooltip x offset
 #' @param tooltip_offy tooltip y offset
 #' @param zoom_max maximum zoom factor
+#' @param zoompan should chart zoom and pan?
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @seealso \code{\link{geom_path_interactive}},
 #' \code{\link{geom_point_interactive}},
@@ -42,12 +43,15 @@ ggiraph <- function(code,
 	tooltip_offx = 10,
 	tooltip_offy = 0,
 	zoom_max = 6,
+	zoompan = T,
 	...) {
 
   if( missing( tooltip_extra_css ))
     tooltip_extra_css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
   if( missing( hover_css ))
     hover_css <- "fill:orange;"
+  if(zoompan==F & !missing(zoom_max))
+    warning("zoom_max has no effect when zoompan == F")
 
   stopifnot(is.numeric(tooltip_offx))
   stopifnot(is.numeric(tooltip_offy))
@@ -92,7 +96,8 @@ ggiraph <- function(code,
 	          tooltip_opacity = tooltip_opacity,
 	          tooltip_offx = tooltip_offx,
 	          tooltip_offy = tooltip_offy,
-	          zoom_max = zoom_max
+	          zoom_max = zoom_max,
+	          zoompan = zoompan
 	          )
 
 	# create widget
