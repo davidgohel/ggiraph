@@ -1,6 +1,15 @@
 library(shiny)
 library(ggiraph)
 
+
+mytheme <- theme(axis.line = element_line(colour = NA),
+        axis.ticks = element_line(colour = NA),
+        panel.grid.major = element_line(linetype = "blank"),
+        panel.grid.minor = element_line(linetype = "blank"),
+        axis.title = element_text(colour = NA),
+        axis.text = element_text(colour = NA),
+        panel.background = element_rect(fill = NA))
+
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
 onclick <- "{var dataid = d3.select(this).attr(\"data-id\");Shiny.onInputChange(\"state\", dataid);}"
@@ -18,8 +27,9 @@ if (require("maps") ) {
     data_id = state
   ),
   map = states_map) +
-    expand_limits(x = states_map$long, y = states_map$lat)
-
+    expand_limits(x = states_map$long, y = states_map$lat) +
+    labs(subtitle = "interactive ggplot2 map",
+         caption = "made with ggiraph") + mytheme
 }
 
 
