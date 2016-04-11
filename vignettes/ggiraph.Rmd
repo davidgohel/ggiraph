@@ -8,7 +8,28 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](http://cran.r-project.org/package=htmlwidgets). 
+The **ggiraph** package let R users to make **ggplot interactive**. The package is an [htmlwidget](http://cran.r-project.org/package=htmlwidgets). Below an example:
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggiraph)
+
+# geom_point_interactive example
+gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec, 
+		color = wt, tooltip = row.names(mtcars), data_id = row.names(mtcars) ) ) + 
+	geom_point_interactive(size=3) + 
+  scale_color_gradient(low = "#F3C899", high = "#8C120A") 
+
+gg_point_1 <- gg_point_1 + theme(axis.ticks = element_line(colour = "gray90"), 
+    panel.grid.major = element_line(colour = "gray90"), 
+    panel.grid.minor = element_line(colour = "transparent"), 
+    panel.background = element_rect(fill = "transparent"))
+# htmlwidget call
+ggiraph(code = {print(gg_point_1)}, 
+        tooltip_extra_css = "padding:2px;background:rgba(70,70,70,0.1);color:black;border-radius:2px 2px 2px 2px;",
+        hover_css = "fill:#1279BF;stroke:#999999;stroke-width:1pt;r:6pt;cursor:pointer;")
+
+```
+
 
 It extends ggplot2 with new `geom` functions:
 
@@ -69,26 +90,29 @@ ggiraph(code = {print(gg_point_2)},
 ## Click actions
 
 ```{r message=FALSE, warning=FALSE}
-crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
+library(maps)
+states_map <- map_data("state")
 
+crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 crimes$onclick <- sprintf(
   "window.open(\"%s%s\")",
   "http://en.wikipedia.org/wiki/",
   as.character(crimes$state)
 )
 
-if (require("maps") ) {
-  states_map <- map_data("state")
-  gg_map <- ggplot(crimes, aes(map_id = state))
-  gg_map <- gg_map + 
-    geom_map_interactive(
-      aes( fill = Murder, data_id = state, tooltip = state, onclick = onclick ), 
-      map = states_map) + 
-    expand_limits(x = states_map$long, y = states_map$lat)
-}
+gg_map <- ggplot(crimes, aes(map_id = state)) + 
+  geom_map_interactive(
+    aes( fill = Murder, data_id = state, 
+         tooltip = state, onclick = onclick ), 
+    map = states_map) + 
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  coord_map() + 
+  scale_fill_gradient(low = "#F3C899", high = "#8C120A") 
 
-ggiraph(code = print(gg_map), 
-        width = 7, height = 5, 
-        hover_css = "fill:orange;stroke-width:1px;stroke:wheat;cursor:pointer;")
+gg_map <- gg_map + labs(x = "", y = "", title = "Crimes map", 
+     subtitle = "made with ggiraph", 
+     caption = "ggiraph is based on ggplot2")
+
+ggiraph(code = print(gg_map), width = 7, height = 5, 
+        hover_css = "fill:orange;cursor:pointer;")
 ```
-
