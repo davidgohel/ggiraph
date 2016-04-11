@@ -132,10 +132,13 @@ HTMLWidgets.widget({
       },
 
       resize: function(width, height) {
-        d3.select(el).select("svg")
-          .attr("width", width)
-          .attr("height", height);
-        force.size([width, height]).resume();
+        if( HTMLWidgets.viewerMode ){
+          d3.select(el).select("svg")
+            .attr("width", width)
+            .attr("height", height);
+          force.size([width, height]).resume();
+        }
+
       },
 
     };
