@@ -24,6 +24,9 @@
 #' @param tooltip_offx tooltip x offset
 #' @param tooltip_offy tooltip y offset
 #' @param zoom_max maximum zoom factor
+#' @param selection_type row selection mode ("single", "multiple", "none")
+#'  when widget is in a Shiny application.
+#' @param selected_css css to apply when element is selected (shiny only).
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @seealso \code{\link{geom_path_interactive}},
 #' \code{\link{geom_point_interactive}},
@@ -42,13 +45,20 @@ ggiraph <- function(code,
 	tooltip_offx = 10,
 	tooltip_offy = 0,
 	zoom_max = 1,
+	selection_type = "multiple",
+	selected_css,
 	...) {
 
   if( missing( tooltip_extra_css ))
     tooltip_extra_css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
   if( missing( hover_css ))
     hover_css <- "fill:orange;"
+  if( missing( selected_css ))
+    selected_css = "fill:orange;"
 
+
+
+  stopifnot(selection_type %in% c("single", "multiple", "none"))
   stopifnot(is.numeric(tooltip_offx))
   stopifnot(is.numeric(tooltip_offy))
   stopifnot(is.numeric(tooltip_opacity))
@@ -98,7 +108,9 @@ ggiraph <- function(code,
 	          tooltip_offx = tooltip_offx,
 	          tooltip_offy = tooltip_offy,
 	          zoom_max = zoom_max,
-	          zoompan = zoompan
+	          zoompan = zoompan,
+	          selection_type = selection_type,
+	          selected_css = selected_css
 	          )
 
 	# create widget

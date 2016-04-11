@@ -6,7 +6,7 @@
 \usage{
 ggiraph(code, pointsize = 12, width = 6, height = 6, tooltip_extra_css,
   hover_css, tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
-  zoom_max = 1, ...)
+  zoom_max = 1, selection_type = "multiple", selected_css, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -29,6 +29,11 @@ used to customize tooltip area.}
 \item{tooltip_offy}{tooltip y offset}
 
 \item{zoom_max}{maximum zoom factor}
+
+\item{selection_type}{row selection mode ("single", "multiple", "none")
+when widget is in a Shiny application.}
+
+\item{selected_css}{css to apply when element is selected (shiny only).}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
