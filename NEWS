@@ -3,6 +3,7 @@
 ## Enhancement
 
 * Allow zooming & panning to be turned off
+* clicked elements can now be tracked from shiny
 
 # ggiraph 0.2.0
 
