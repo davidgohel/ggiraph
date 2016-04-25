@@ -15,8 +15,8 @@
 #'
 #' @param code Plotting code to execute
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
-#' @param width widget width
-#' @param height widget height
+#' @param width,height widget width and height in css unit
+#' @param width_svg,height_svg svg viewbox width and height in inches
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
 #' @param hover_css css to apply when mouse is hover and element with a data-id attribute.
@@ -38,7 +38,9 @@
 #' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(code,
-	pointsize = 12, width = 6, height = 6,
+	pointsize = 12,
+	width = "70%", height = "400px",
+	width_svg = 6, height_svg = 6,
 	tooltip_extra_css,
 	hover_css,
 	tooltip_opacity = .9,
@@ -77,7 +79,7 @@ ggiraph <- function(code,
 	path = tempfile()
 	canvas_id <- ggiwid.options$svgid
 	dsvg(file = path, pointsize = pointsize, standalone = TRUE,
-			width = width, height = height,
+			width = width_svg, height = height_svg,
 			canvas_id = canvas_id, ...
 		)
 	tryCatch(code, finally = dev.off() )
@@ -86,7 +88,6 @@ ggiraph <- function(code,
 	options("ggiwid"=ggiwid.options)
 
 	svg_container <- paste( scan(path, what = "character", sep = "\n", quiet = TRUE), collapse = "")
-
 	data <- read_xml( path )
 	scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
 	js <- paste( sapply( scr, xml_text ), collapse = ";")
@@ -117,10 +118,11 @@ ggiraph <- function(code,
 	htmlwidgets::createWidget(
 			name = 'ggiraph',
 			x,
-			width = NULL,
-			height = NULL,
+			width = width,
+			height = height,
 			package = 'ggiraph',
-			sizingPolicy = sizingPolicy(padding = 0, browser.fill = TRUE )
+			sizingPolicy = sizingPolicy(defaultWidth = 600, defaultHeight = 400, padding = 5,
+			             browser.fill = TRUE, knitr.figure = FALSE)
 	)
 }
 

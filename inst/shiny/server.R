@@ -18,7 +18,7 @@ if (require("maps") ) {
     tooltip = state,
     data_id = state
   ),
-  map = states_map) +
+  map = states_map) + coord_map() +
     expand_limits(x = states_map$long, y = states_map$lat) +
     labs(subtitle = "interactive ggplot2 map",
          caption = "made with ggiraph") + mytheme
@@ -32,9 +32,9 @@ shinyServer(function(input, output, session) {
   })
 
   output$plot <- renderggiraph({
-    ggiraph(code = print(gg_map), width = 8, height = 6,
+    ggiraph(code = print(gg_map), width = 8, height = 6, zoom_max = 4,
             hover_css = "stroke:#ffd700;cursor:pointer;",
-            selected_css = "fill:#fe4902;")
+            selected_css = "fill:#fe4902;stroke:#ffd700;")
   })
 
   observeEvent(input$reset, {

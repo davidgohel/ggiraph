@@ -63,7 +63,7 @@ gg_point_1 <- ggplot(dataset, aes(x = disp, y = qsec,
 	geom_point_interactive(size=3)
 
 # htmlwidget call
-ggiraph(code = {print(gg_point_1)}, width = 7, height = 6)
+ggiraph(code = {print(gg_point_1)}, width = "400px", height = "400px")
 ```
 
 ## animate elements with `data-id`
@@ -81,7 +81,6 @@ gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec,
 
 # htmlwidget call
 ggiraph(code = {print(gg_point_2)}, 
-        width = 7, height = 6, 
         hover_css = "fill:orange;r:6px;cursor:pointer;")
 ```
 
@@ -113,6 +112,6 @@ gg_map <- gg_map + labs(x = "", y = "", title = "Crimes map",
      subtitle = "made with ggiraph", 
      caption = "ggiraph is based on ggplot2")
 
-ggiraph(code = print(gg_map), width = 7, height = 5, 
+ggiraph(code = print(gg_map), 
         hover_css = "fill:orange;cursor:pointer;")
 ```

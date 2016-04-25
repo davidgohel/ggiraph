@@ -47,7 +47,6 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
 
     // create our sigma object and bind it to the element
-    var force = d3.layout.force();
 
     return {
       renderValue: function(x) {
@@ -123,23 +122,38 @@ HTMLWidgets.widget({
                     .duration(500)
                     .style("opacity", 0);
             });
-          if(x.zoompan===true) {
-            var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
-            zoom_l(d3.select('#svg_' + x.canvas_id + ' g'));
-            d3.select('#svg_' + x.canvas_id).attr("width", width).attr("height", height);
-            force.size([width, height]).resume();
-          }
+
+        window[el.id + "_maxwidth"] = width;
+        window[el.id + "_maxheight"] = height;
+        d3.select('#svg_' + x.canvas_id)
+          .attr("preserveAspectRatio", "xMidYMid meet")
+          .attr("width", width).attr("height", height);
+
+        if(x.zoompan===true) {
+          var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
+          zoom_l(d3.select('#svg_' + x.canvas_id + ' g'));
+        }
       },
 
       resize: function(width, height) {
-        if( HTMLWidgets.viewerMode ){
-          d3.select(el).select("svg")
-            .attr("width", width)
-            .attr("height", height);
-          force.size([width, height]).resume();
+        var svg_elt = d3.select(el).select("svg");
+        var maxw = window[el.id + "_maxwidth"];
+        var maxh = window[el.id + "_maxheight"];
+
+        if( !HTMLWidgets.viewerMode && maxw < width ){
+          width = maxw;
         }
 
-      },
+        if( !HTMLWidgets.viewerMode && maxh < height ){
+          height = maxh;
+        } else if( HTMLWidgets.viewerMode ){
+          height = null;
+        }
+
+        svg_elt
+          .attr("width", width)
+          .attr("height", null);
+      }
 
     };
   }

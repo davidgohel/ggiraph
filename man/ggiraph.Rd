@@ -4,8 +4,9 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(code, pointsize = 12, width = 6, height = 6, tooltip_extra_css,
-  hover_css, tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
+ggiraph(code, pointsize = 12, width = "70\%", height = "400px",
+  width_svg = 6, height_svg = 6, tooltip_extra_css, hover_css,
+  tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
   zoom_max = 1, selection_type = "multiple", selected_css, ...)
 }
 \arguments{
@@ -13,9 +14,9 @@ ggiraph(code, pointsize = 12, width = 6, height = 6, tooltip_extra_css,
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{width}{widget width}
+\item{width, height}{widget width and height in css unit}
 
-\item{height}{widget height}
+\item{width_svg, height_svg}{svg viewbox width and height in inches}
 
 \item{tooltip_extra_css}{extra css (added to \code{position: absolute;pointer-events: none;})
 used to customize tooltip area.}
