@@ -127,7 +127,7 @@ HTMLWidgets.widget({
         window[el.id + "_maxheight"] = height;
         d3.select('#svg_' + x.canvas_id)
           .attr("preserveAspectRatio", "xMidYMid meet")
-          .attr("width", width).attr("height", height);
+          .attr("width", width).attr("height", null);
 
         if(x.zoompan===true) {
           var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
