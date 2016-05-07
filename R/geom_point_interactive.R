@@ -1,9 +1,9 @@
-#' @title add points with tooltips or click actions or double click actions
+#' @title add points with tooltips or click actions
 #' for a scatterplot
 #'
 #' @description
 #' The point_interactive geom is used to create interactive scatterplots, tooltips
-#' can be displayed when mouse is over points, on click actions and double click actions can be
+#' can be displayed when mouse is over points, on click actions can be
 #' set with javascript instructions.
 #'
 #' @param mapping The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.

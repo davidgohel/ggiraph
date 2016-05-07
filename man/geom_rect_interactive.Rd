@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_rect_interactive.R
 \name{geom_rect_interactive}
 \alias{geom_rect_interactive}
-\title{add rectangles with tooltips or click actions or double click actions}
+\title{add rectangles with tooltips or click actions}
 \usage{
 geom_rect_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -27,8 +27,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over rectangles, on click actions and
-double click actions can be set with javascript instructions.
+tooltips can be displayed when mouse is over rectangles, on click actions
+can be set with javascript instructions.
 }
 \examples{
 # add interactive polygons to a ggplot -------

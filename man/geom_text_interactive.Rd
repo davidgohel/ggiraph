@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_text_interactive.R
 \name{geom_text_interactive}
 \alias{geom_text_interactive}
-\title{add text with tooltips or click actions or double click actions}
+\title{add text with tooltips or click actions}
 \usage{
 geom_text_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", parse = FALSE, ..., nudge_x = 0, nudge_y = 0,
@@ -34,8 +34,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over polygons, on click actions and
-double click actions can be set with javascript instructions.
+tooltips can be displayed when mouse is over polygons, on click actions
+can be set with javascript instructions.
 }
 \examples{
 # add interactive polygons to a ggplot -------

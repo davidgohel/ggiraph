@@ -26,8 +26,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over segments, on click actions and
-double click actions can be set with javascript instructions.
+tooltips can be displayed when mouse is over segments, on click actions
+can be set with javascript instructions.
 }
 \examples{
 # add interactive maps to a ggplot -------

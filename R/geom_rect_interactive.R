@@ -1,8 +1,8 @@
-#' @title add rectangles with tooltips or click actions or double click actions
+#' @title add rectangles with tooltips or click actions
 #'
 #' @description
-#' tooltips can be displayed when mouse is over rectangles, on click actions and
-#' double click actions can be set with javascript instructions.
+#' tooltips can be displayed when mouse is over rectangles, on click actions
+#' can be set with javascript instructions.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive
@@ -90,3 +90,4 @@ rect_to_poly <- function(xmin, xmax, ymin, ymax) {
 			x = c(xmin, xmax, xmax, xmin, xmin)
 	)
 }
+

@@ -1,8 +1,8 @@
-#' @title add polygons with tooltips or click actions or double click actions
+#' @title add polygons with tooltips or click actions
 #'
 #' @description
-#' tooltips can be displayed when mouse is over polygons, on click actions and
-#' double click actions can be set with javascript instructions.
+#' tooltips can be displayed when mouse is over polygons, on click actions
+#' can be set with javascript instructions.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive
@@ -85,8 +85,8 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 #' @title interactive polygons from a reference map.
 #'
 #' @description
-#' tooltips can be displayed when mouse is over segments, on click actions and
-#' double click actions can be set with javascript instructions.
+#' tooltips can be displayed when mouse is over segments, on click actions
+#' can be set with javascript instructions.
 #'
 #' @param map Data frame that contains the map coordinates. See \code{\link[ggplot2]{geom_map}}.
 #' @inheritParams geom_point_interactive

@@ -1,9 +1,9 @@
 #' @importFrom ggplot2 position_nudge
-#' @title add text with tooltips or click actions or double click actions
+#' @title add text with tooltips or click actions
 #'
 #' @description
-#' tooltips can be displayed when mouse is over polygons, on click actions and
-#' double click actions can be set with javascript instructions.
+#' tooltips can be displayed when mouse is over polygons, on click actions
+#' can be set with javascript instructions.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive

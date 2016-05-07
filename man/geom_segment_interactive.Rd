@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_segment_interactive.R
 \name{geom_segment_interactive}
 \alias{geom_segment_interactive}
-\title{add segments with tooltips or click actions or double click actions}
+\title{add segments with tooltips or click actions}
 \usage{
 geom_segment_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", arrow = NULL, lineend = "butt", na.rm = FALSE,
@@ -31,8 +31,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over segments, on click actions and
-double click actions can be set with javascript instructions.
+tooltips can be displayed when mouse is over segments, on click actions
+can be set with javascript instructions.
 }
 \examples{
 # add interactive segments to a ggplot -------

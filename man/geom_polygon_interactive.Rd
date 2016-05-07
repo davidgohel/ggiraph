@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_polygon_interactive.R
 \name{geom_polygon_interactive}
 \alias{geom_polygon_interactive}
-\title{add polygons with tooltips or click actions or double click actions}
+\title{add polygons with tooltips or click actions}
 \usage{
 geom_polygon_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -27,8 +27,8 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over polygons, on click actions and
-double click actions can be set with javascript instructions.
+tooltips can be displayed when mouse is over polygons, on click actions
+can be set with javascript instructions.
 }
 \examples{
 # add interactive polygons to a ggplot -------

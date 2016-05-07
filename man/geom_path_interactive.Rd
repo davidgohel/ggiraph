@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_path_interactive.R
 \name{geom_path_interactive}
 \alias{geom_path_interactive}
-\title{draw paths with tooltips or click actions or double click actions}
+\title{draw interactive paths}
 \usage{
 geom_path_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", lineend = "butt", linejoin = "round",
@@ -37,7 +37,7 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
 The path_interactive geom is used to create interactive lines, tooltips
-can be displayed when mouse is over lines, on click actions and double click actions can be
+can be displayed when mouse is over lines, on click actions can be
 set with javascript instructions.
 }
 \examples{

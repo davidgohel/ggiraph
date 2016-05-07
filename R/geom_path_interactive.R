@@ -1,8 +1,8 @@
-#' @title draw paths with tooltips or click actions or double click actions
+#' @title draw interactive paths
 #'
 #' @description
 #' The path_interactive geom is used to create interactive lines, tooltips
-#' can be displayed when mouse is over lines, on click actions and double click actions can be
+#' can be displayed when mouse is over lines, on click actions can be
 #' set with javascript instructions.
 #' @inheritParams geom_point_interactive
 #' @param lineend Line end style (round, butt, square)

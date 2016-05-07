@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_point_interactive.R
 \name{geom_point_interactive}
 \alias{geom_point_interactive}
-\title{add points with tooltips or click actions or double click actions
+\title{add points with tooltips or click actions
 for a scatterplot}
 \usage{
 geom_point_interactive(mapping = NULL, data = NULL, stat = "identity",
@@ -29,7 +29,7 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
 The point_interactive geom is used to create interactive scatterplots, tooltips
-can be displayed when mouse is over points, on click actions and double click actions can be
+can be displayed when mouse is over points, on click actions can be
 set with javascript instructions.
 }
 \examples{
