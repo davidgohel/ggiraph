@@ -56,9 +56,9 @@ HTMLWidgets.widget({
 
         var svg_id = '#svg_' + x.canvas_id;
         var selected_id = el.id + '_selected';
-
+        window[el.id + '_canvas'] = '#svg_' + x.canvas_id;
         d3.select(el).attr("style", "text-align:center;");
-
+        window[el.id + '_id'] = svg_id;
         var tooltip_class = "tooltip" + x.data_id_class;
 
         // generate css elements
@@ -85,27 +85,18 @@ HTMLWidgets.widget({
         sel_data_id.call(d3_set_attr, "class", x.data_id_class);
 
         if( HTMLWidgets.shinyMode ){
-          window[el.id + "_selected"] = [];
+
+          if( !( el.id + "_selected" in window ) )
+            window[el.id + "_selected"] = [];
           if( x.selection_type == "single")
             sel_data_id.call(select_data_id_single, selected_id);
           else if( x.selection_type == "multiple")
             sel_data_id.call(select_data_id_multiple, selected_id);
 
-          if( x.selection_type != "none" ){
-            Shiny.addCustomMessageHandler(el.id + "_set",
-              function(message) {
-                var varname = el.id + "_selected";
-                var variable_ = window[varname];
-                d3.selectAll(variable_)
-                  .each(function(d, i) {
-                    d3.selectAll('#svg_' + x.canvas_id + ' *[data-id="'+ variable_[i] + '"]')
-                      .classed('selected_', false);
-                  });
-                window[varname] = message;
-                Shiny.onInputChange(varname, window[varname]);
-              }
-            );
-          }
+          d3.selectAll(window[el.id + "_selected"]).each(function(d, i) {
+            d3.selectAll(svg_id + ' *[data-id=\"'+ window[el.id + "_selected"][i] + '\"]').classed('selected_', true);
+            });
+
         }
 
         var sel_tooltiped = d3.selectAll(svg_id + ' *[title]');
@@ -140,6 +131,13 @@ HTMLWidgets.widget({
         var maxw = window[el.id + "_maxwidth"];
         var maxh = window[el.id + "_maxheight"];
 
+        if( HTMLWidgets.shinyMode ){
+                  svg_elt
+          .attr("width", width)
+          .attr("height", null);
+          return;
+        }
+
         if( !HTMLWidgets.viewerMode && maxw < width ){
           width = maxw;
         }
@@ -152,7 +150,8 @@ HTMLWidgets.widget({
 
         svg_elt
           .attr("width", width)
-          .attr("height", null);
+          .attr("height", height);
+
       }
 
     };

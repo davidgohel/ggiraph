@@ -4,6 +4,8 @@ shinyUI(fluidPage(
 
     sidebarPanel(
       actionButton("reset", label = "Reset selection"),
+      textInput("title", label = "Title", placeholder = "type graph title"),
+
       tags$hr(),
       tags$p(tags$code("data_id"), " values of the selected elements are available through ",
              tags$code("input$ggiraphId_selected"), "."), tags$br(),

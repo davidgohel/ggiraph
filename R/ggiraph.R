@@ -139,7 +139,17 @@ ggiraph <- function(code,
 #' }
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
-	shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
+
+  msger <- sprintf(
+    "Shiny.addCustomMessageHandler('%s',function(message) {var varname = '%s';d3.selectAll(window['%s'] + ' *[data-id]').classed('selected_', false);d3.selectAll(message).each(function(d, i) {d3.selectAll(window['%s'] + ' *[data-id=\"'+ message[i] + '\"]').classed('selected_', true);});window[varname] = message;Shiny.onInputChange(varname, window[varname]);});",
+    paste0(outputId, "_set"),
+    paste0(outputId, "_selected"),
+    paste0(outputId, "_canvas"), paste0(outputId, "_canvas") )
+
+  div(
+    singleton( tags$head(tags$script(msger)) ),
+	  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
+  )
 }
 
 #' @title Reactive version of ggiraph object
