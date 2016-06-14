@@ -91,20 +91,22 @@ HTMLWidgets.widget({
           else if( x.selection_type == "multiple")
             sel_data_id.call(select_data_id_multiple, selected_id);
 
+          var varname = el.id + "_selected";
           if( x.selection_type != "none" ){
-            Shiny.addCustomMessageHandler(el.id + "_set",
-              function(message) {
-                var varname = el.id + "_selected";
-                var variable_ = window[varname];
-                d3.selectAll(variable_)
-                  .each(function(d, i) {
-                    d3.selectAll('#svg_' + x.canvas_id + ' *[data-id="'+ variable_[i] + '"]')
-                      .classed('selected_', false);
-                  });
-                window[varname] = message;
-                Shiny.onInputChange(varname, window[varname]);
-              }
-            );
+            var variable_ = window[varname];
+            if (!(varname in window) ) { //make sure addCustomMessageHandler is call once with el.id + "_set"
+              Shiny.addCustomMessageHandler(el.id + "_set",
+                function(message) {
+                  d3.selectAll(variable_)
+                    .each(function(d, i) {
+                      d3.selectAll('#svg_' + x.canvas_id + ' *[data-id="'+ variable_[i] + '"]')
+                        .classed('selected_', false);
+                    });
+                  window[varname] = message;
+                  Shiny.onInputChange(varname, window[varname]);
+                }
+              );
+            }
           }
         }
 
@@ -152,7 +154,7 @@ HTMLWidgets.widget({
 
         svg_elt
           .attr("width", width)
-          .attr("height", null);
+          .attr("height", height);
       }
 
     };
