@@ -66,7 +66,7 @@ gg_point_1 <- ggplot(dataset, aes(x = disp, y = qsec,
 	geom_point_interactive(size=3) + gg_th
 
 # htmlwidget call
-ggiraph(code = {print(gg_point_1)}, width = "400px", height = "400px")
+ggiraph(code = {print(gg_point_1)}, width = "300px", height = "300px")
 ```
 
 ## animate elements with `data-id`
@@ -83,7 +83,7 @@ gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec,
 	geom_point_interactive(size=4) + gg_th
 
 # htmlwidget call
-ggiraph(code = {print(gg_point_2)}, 
+ggiraph(code = {print(gg_point_2)}, width = "60%", height_svg = 8,
         hover_css = "fill:orange;r:6px;cursor:pointer;")
 ```
 

@@ -6,16 +6,16 @@ function d3_set_attr(selection, name, value) {
   selection.attr(name, value);
 }
 
-function select_data_id_single(selection, js_varname) {
+function select_data_id_single(selection, js_varname, svg_id) {
   selection.on("click", function(d,i) {
+    d3.selectAll(svg_id + ' *[data-id]').classed('selected_', false);
     var dataid = d3.select(this).attr("data-id");
     if( window[js_varname][0] == dataid ){
       window[js_varname] = [];
-      d3.select(this).classed('selected_', true);
     }
     else {
       window[js_varname] = [dataid];
-      d3.select(this).classed('selected_', false);
+      d3.select(this).classed('selected_', true);
     }
     Shiny.onInputChange(js_varname, window[js_varname]);
   });
@@ -50,7 +50,7 @@ HTMLWidgets.widget({
 
     return {
       renderValue: function(x) {
-        el.innerHTML = x.html ;
+        el.innerHTML = x.html;
         var fn = Function(x.code);
         fn();
 
@@ -89,7 +89,7 @@ HTMLWidgets.widget({
           if( !( el.id + "_selected" in window ) )
             window[el.id + "_selected"] = [];
           if( x.selection_type == "single")
-            sel_data_id.call(select_data_id_single, selected_id);
+            sel_data_id.call(select_data_id_single, selected_id, svg_id);
           else if( x.selection_type == "multiple")
             sel_data_id.call(select_data_id_multiple, selected_id);
 
@@ -116,42 +116,28 @@ HTMLWidgets.widget({
 
         window[el.id + "_maxwidth"] = width;
         window[el.id + "_maxheight"] = height;
-        d3.select('#svg_' + x.canvas_id)
-          .attr("preserveAspectRatio", "xMidYMid meet")
-          .attr("width", width).attr("height", null);
+
+        d3.select('#svg_' + x.canvas_id).attr("preserveAspectRatio", "xMinYMin meet");
 
         if(x.zoompan===true) {
           var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
           zoom_l(d3.select('#svg_' + x.canvas_id + ' g'));
         }
+        d3.select(el).select("svg")
+          .attr("width", width)
+          .attr("height", null);
+
+
       },
 
       resize: function(width, height) {
-        var svg_elt = d3.select(el).select("svg");
         var maxw = window[el.id + "_maxwidth"];
-        var maxh = window[el.id + "_maxheight"];
-
-        if( HTMLWidgets.shinyMode ){
-                  svg_elt
-          .attr("width", width)
-          .attr("height", null);
-          return;
-        }
-
-        if( !HTMLWidgets.viewerMode && maxw < width ){
+        if( maxw < width ){
           width = maxw;
         }
-
-        if( !HTMLWidgets.viewerMode && maxh < height ){
-          height = maxh;
-        } else if( HTMLWidgets.viewerMode ){
-          height = null;
-        }
-
-        svg_elt
+        d3.select(el).select("svg")
           .attr("width", width)
-          .attr("height", height);
-
+          .attr("height", null);
       }
 
     };

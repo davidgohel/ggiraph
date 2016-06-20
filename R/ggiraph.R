@@ -39,7 +39,7 @@
 #' @export
 ggiraph <- function(code,
 	pointsize = 12,
-	width = "70%", height = "400px",
+	width = "400px", height = NULL,
 	width_svg = 6, height_svg = 6,
 	tooltip_extra_css,
 	hover_css,
@@ -113,7 +113,6 @@ ggiraph <- function(code,
 	          selection_type = selection_type,
 	          selected_css = selected_css
 	          )
-
 	# create widget
 	htmlwidgets::createWidget(
 			name = 'ggiraph',
@@ -121,8 +120,19 @@ ggiraph <- function(code,
 			width = width,
 			height = height,
 			package = 'ggiraph',
-			sizingPolicy = sizingPolicy(defaultWidth = 600, defaultHeight = 400, padding = 5,
-			             browser.fill = TRUE, knitr.figure = FALSE)
+			sizingPolicy = sizingPolicy(defaultWidth = 600,
+			                            defaultHeight = 400,
+			                            padding = 5,
+			                            viewer.defaultWidth = "600px%",
+			                            viewer.defaultHeight = "400px%",
+			                            viewer.paneHeight = 400,
+			                            browser.defaultWidth = "600px",
+			                            browser.defaultHeight = "400px",
+			                            knitr.defaultWidth = "600px",
+			                            knitr.defaultHeight = "400px",
+			                            browser.fill = FALSE,
+			                            viewer.fill	= TRUE,
+			                            knitr.figure = FALSE)
 	)
 }
 
