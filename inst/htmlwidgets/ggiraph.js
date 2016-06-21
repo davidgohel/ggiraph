@@ -126,8 +126,6 @@ HTMLWidgets.widget({
         d3.select(el).select("svg")
           .attr("width", width)
           .attr("height", null);
-
-
       },
 
       resize: function(width, height) {
