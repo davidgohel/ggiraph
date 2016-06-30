@@ -38,6 +38,7 @@ It extends ggplot2 with new `geom` functions:
 * geom_rect_interactive
 * geom_segment_interactive
 * geom_text_interactive
+* geom_boxplot_interactive
 
 
 Three arguments let you add interactivity:
