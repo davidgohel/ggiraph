@@ -3,7 +3,7 @@ shinyUI(fluidPage(
   sidebarLayout(
 
     sidebarPanel(
-      textInput("title", label = "Title", placeholder = "type graph title"),
+      textInput("title", label = "Title"),
       div(id = "log")
     ),
 

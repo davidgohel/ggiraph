@@ -7,7 +7,7 @@ shinyUI(fluidPage(
            tableOutput("datatab")
     ),
     column(width = 6,
-           textInput("title", label = "Title", placeholder = "type graph title"),
+           textInput("title", label = "Title"),
            ggiraph::ggiraphOutput("plot"),
            actionButton("reset", label = "Reset selection", width = "100%")
     ) )
