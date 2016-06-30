@@ -66,7 +66,7 @@ HTMLWidgets.widget({
           x.data_id_class +  ":hover{" + x.hover_css + "}";
 
         var tooltip_css = "div." + tooltip_class +
-          " {position:absolute;pointer-events:none;";
+          " {position:absolute;pointer-events:none;z-index:999;";
         tooltip_css += x.tooltip_extra_css;
         tooltip_css += "}";
 
