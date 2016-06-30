@@ -1,8 +1,5 @@
 language: r
 
-r_packages:
-- gtable
-
 sudo: required
 
 warnings_are_errors: false
