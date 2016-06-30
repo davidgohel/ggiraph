@@ -1,24 +1,14 @@
 library(ggiraph)
 library(maps)
 
-mytheme <- theme(axis.line = element_line(colour = NA),
-                 axis.ticks = element_line(colour = NA),
-                 axis.title = element_text(colour = NA),
-                 axis.text = element_text(colour = NA))
-
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
-states_map <- map_data("state")
-gg_map <- ggplot(crimes, aes(map_id = state))
-gg_map <- gg_map + geom_map_interactive(aes(
-    fill = Murder,
-    tooltip = state,
-    data_id = state
-  ),
-  map = states_map) + coord_map() +
-    expand_limits(x = states_map$long, y = states_map$lat) +
-    labs(title = "interactive ggplot2 map") +
-    theme_minimal() + mytheme
+gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault, color = UrbanPop )) +
+  geom_point_interactive(
+    aes( data_id = state, tooltip = state), size = 3 ) +
+  scale_colour_gradient(low = "#999999", high = "orange") +
+  theme_minimal()
+
 
 shinyServer(function(input, output, session) {
 
@@ -27,18 +17,21 @@ shinyServer(function(input, output, session) {
   })
 
   output$plot <- renderggiraph({
-    ggiraph(code = print(gg_map + labs(title = input$title)),
-            zoom_max = 1,
-            hover_css = "stroke:#ffd700;cursor:pointer;",
-            selected_css = "fill:#fe4902;stroke:#ffd700;")
+    ggiraph(code = print(gg_crime + labs(title = input$title)),
+            width = 1,
+            hover_css = "fill:#FF3333;stroke:black;cursor:pointer;",
+            selected_css = "fill:#FF3333;stroke:black;")
   })
 
   observeEvent(input$reset, {
     session$sendCustomMessage(type = 'plot_set', message = character(0))
   })
 
-  output$datatab <- renderDataTable({
-    crimes[crimes$state %in% selected_state(), c("state", "Murder")]
+  output$datatab <- renderTable({
+    out <- crimes[crimes$state %in% selected_state(), ]
+    if( nrow(out) < 1 ) return(NULL)
+    row.names(out) <- NULL
+    out
   })
 
 })
