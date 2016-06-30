@@ -1,5 +1,8 @@
 language: r
 
+r_packages:
+- ggplot2
+
 sudo: required
 
 warnings_are_errors: false
