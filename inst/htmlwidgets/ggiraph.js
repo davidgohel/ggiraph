@@ -114,28 +114,23 @@ HTMLWidgets.widget({
                     .style("opacity", 0);
             });
 
-        window[el.id + "_maxwidth"] = width;
-        window[el.id + "_maxheight"] = height;
-
-        d3.select('#svg_' + x.canvas_id).attr("preserveAspectRatio", "xMinYMin meet");
+        d3.select('#svg_' + x.canvas_id).attr("preserveAspectRatio", "xMinYMin meet").classed("svg-content-responsive", true).attr("width", null).attr("height", null);
 
         if(x.zoompan===true) {
           var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
           zoom_l(d3.select('#svg_' + x.canvas_id + ' g'));
         }
-        d3.select(el).select("svg")
-          .attr("width", width)
-          .attr("height", null);
+        d3.select(el)
+            .style( "position", "relative")
+            .style( "padding-bottom", x.padding_bottom)
+            .style( "vertical-align", "top")
+            .style( "margin", "auto")
+            .style( "overflow", "hidden")
+            .style( "width", x.width);
       },
 
       resize: function(width, height) {
-        var maxw = window[el.id + "_maxwidth"];
-        if( maxw < width ){
-          width = maxw;
-        }
-        d3.select(el).select("svg")
-          .attr("width", width)
-          .attr("height", null);
+
       }
 
     };

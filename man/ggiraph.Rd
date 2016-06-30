@@ -4,17 +4,17 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(code, pointsize = 12, width = "400px", height = NULL,
-  width_svg = 6, height_svg = 6, tooltip_extra_css, hover_css,
-  tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
-  zoom_max = 1, selection_type = "multiple", selected_css, ...)
+ggiraph(code, pointsize = 12, width = 0.7, width_svg = 6,
+  height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
+  tooltip_offx = 10, tooltip_offy = 0, zoom_max = 1,
+  selection_type = "multiple", selected_css, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{width, height}{widget width and height in css unit}
+\item{width}{widget width ratio (0 > width >= 1)}
 
 \item{width_svg, height_svg}{svg viewbox width and height in inches}
 

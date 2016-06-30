@@ -11,14 +11,14 @@ crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 states_map <- map_data("state")
 gg_map <- ggplot(crimes, aes(map_id = state))
 gg_map <- gg_map + geom_map_interactive(aes(
-  fill = Murder,
-  tooltip = state,
-  data_id = state
-),
-map = states_map) + coord_map() +
-  expand_limits(x = states_map$long, y = states_map$lat) +
-  labs(title = "interactive ggplot2 map") +
-  theme_minimal() + mytheme
+    fill = Murder,
+    tooltip = state,
+    data_id = state
+  ),
+  map = states_map) + coord_map() +
+    expand_limits(x = states_map$long, y = states_map$lat) +
+    labs(title = "interactive ggplot2 map") +
+    theme_minimal() + mytheme
 
 shinyServer(function(input, output, session) {
 
@@ -38,7 +38,7 @@ shinyServer(function(input, output, session) {
   })
 
   output$datatab <- renderDataTable({
-    crimes[crimes$state %in% selected_state(),]
+    crimes[crimes$state %in% selected_state(), c("state", "Murder")]
   })
 
 })

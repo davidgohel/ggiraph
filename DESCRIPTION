@@ -3,7 +3,7 @@ Type: Package
 Title: Make 'ggplot2' Graphics Interactive Using 'htmlwidgets'
 Description: Create interactive 'ggplot2' graphics that are usable in the 'RStudio'
     viewer pane, in 'R Markdown' documents and in 'Shiny' apps.
-Version: 0.3.0.9000
+Version: 0.3.1
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -19,13 +19,14 @@ Imports:
     htmltools,
     stats,
     plyr,
-    rvg (>= 0.0.9),
-    xml2
+    rvg (>= 0.1.0),
+    xml2 (>= 1.0.0)
 Suggests:
     knitr,
     rmarkdown,
     maps,
     shiny
 VignetteBuilder: knitr
+URL: https://github.com/davidgohel/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 5.0.1

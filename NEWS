@@ -1,3 +1,13 @@
+# ggiraph 0.3.1
+
+## New features
+
+* size management has been improved
+
+## Bug fixes
+
+* addCustomMessageHandler has to be called once to avoid a javascript exception
+
 # ggiraph 0.3.0
 
 ## Enhancement

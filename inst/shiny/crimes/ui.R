@@ -11,11 +11,12 @@ shinyUI(fluidPage(
              tags$code("input$ggiraphId_selected"), "."), tags$br(),
       tags$p(tags$code("input$ggiraphId_selected"), " values can be modified with ",
              tags$code("session$sendCustomMessage(type = 'ggiraphId_set', message = character(0))"), "."), tags$br(),
-      ggiraph::ggiraphOutput("plot")
+      dataTableOutput("datatab")
     ),
 
     mainPanel(
-      dataTableOutput("datatab")
+
+      ggiraph::ggiraphOutput("plot")
     )
   )
 ))

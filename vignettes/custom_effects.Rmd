@@ -1,9 +1,9 @@
 ---
-title: "Custom tooltip and hover effect rendering"
+title: "Custom effects"
 author: "David Gohel"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{custom_rendering}
+  %\VignetteIndexEntry{custom_effects}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -78,18 +78,11 @@ css here is relative to SVG elements. SVG attributes are listed [here](https://d
 * fill: background color 
 * stroke: color
 * stroke-width: border width
-* r: circle radius
-
+* r: circle radius (**no effect if Firefox is used**).
 
 To fill elements in red:
 
 ```{r}
 ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;" )
-```
-
-To fill svg elements in red and increase radius:
-
-```{r}
-ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;r:6pt" )
 ```
 
