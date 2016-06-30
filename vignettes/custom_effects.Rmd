@@ -4,7 +4,7 @@ author: "David Gohel"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{custom_effects}
+  %\VignetteIndexEntry{Custom effects}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

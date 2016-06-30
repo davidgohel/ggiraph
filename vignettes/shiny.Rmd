@@ -1,0 +1,63 @@
+---
+title: "ggiraph and Shiny"
+author: "David Gohel"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ggiraph and Shiny}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`ggiraph` is an htmlwidget. It can be used within a Shiny application. The package contains two Shiny examples. You can run them and see the code by running:
+
+```{r eval=FALSE}
+shiny::runApp(appDir = system.file("shiny/crimes", package = "ggiraph"), display.mode = "showcase")
+shiny::runApp(appDir = system.file("shiny/cars", package = "ggiraph"), display.mode = "showcase")
+```
+
+
+## The client `ui.R`
+
+Instead of a `plotOutput`, use function `ggiraphOutput`. 
+
+```{r eval=FALSE}
+ggiraphOutput("plot")
+```
+
+## The server `server.R`
+
+Use function `ggiraphOutput`.
+
+```{r eval=FALSE}
+output$plot <- renderggiraph({
+    ggiraph(code = print(gg_blahblah) )
+  })
+```
+
+## Selections
+
+It is possible to work with selecteds point on a *ggiraph* plot within a Shiny application.
+
+Selection can be of two types: `single` or `multiple`. The ggiraph's parameter `selection_type` will let you specify that. 
+
+```{r eval=FALSE}
+output$myplot <- renderggiraph({
+    ggiraph(code = print(gg_blahblah), selection_type = "multiple" )
+  })
+```
+
+The selected points will be captured in the input reactive value `myplot_selected` (name of the input id of the reactive output value + `_selected`):
+
+```{r eval=FALSE}
+input$myplot_selected
+```
+
+
+You can also modify theses values by using the `session$sendCustomMessage` method with type `myplot_set` (name of the input id of the reactive output value + `_set`).
+
+```{r eval=FALSE}
+# delete selection
+session$sendCustomMessage(type = 'myplot_set', message = character(0))
+```
+
