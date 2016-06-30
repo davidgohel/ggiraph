@@ -1,7 +1,7 @@
 language: r
 
 r_packages:
-- ggplot2
+- gtable
 
 sudo: required
 
