@@ -15,8 +15,7 @@ You will need the latest ggplot2 version and the latest version of
 rvg.
 
 
-    install.packages("ggplot2")
-    devtools::install_github('davidgohel/rvg')
+    install.packages(c("ggplot2", "rvg"))
     devtools::install_github('davidgohel/ggiraph')
 
 
