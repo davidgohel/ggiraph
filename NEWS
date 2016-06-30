@@ -3,10 +3,13 @@
 ## New features
 
 * size management has been improved
+* there are 3 new geometries: geom_boxplot_interactive, geom_line_interactive
+  and geom_bar_interactive.
 
 ## Bug fixes
 
 * addCustomMessageHandler has to be called once to avoid a javascript exception
+* fix display issue in RStudio viewer for Windows
 
 # ggiraph 0.3.0
 
