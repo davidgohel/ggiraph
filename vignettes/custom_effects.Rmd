@@ -1,6 +1,7 @@
 ---
 title: "Custom effects"
 author: "David Gohel"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{custom_effects}

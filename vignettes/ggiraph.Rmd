@@ -1,6 +1,7 @@
 ---
 title: "ggiraph presentation"
 author: "David Gohel"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
@@ -45,8 +46,6 @@ Three arguments let you add interactivity:
 * `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
 * `data_id`: column of dataset that contains id to be associated with elements. 
 
-## Simple examples
-
 Let's prepare a ggplot object with `mpg` dataset. 
 
 ```{r}
@@ -56,6 +55,7 @@ head(mpg)
 g <- ggplot(mpg, aes( x = displ, y = cty, color = drv) ) + theme_minimal()
 ```
 
+## tooltips
 
 The first example show how to add tooltip:
 
@@ -64,57 +64,48 @@ my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 2)
 ggiraph(code = print(my_gg), width = .7)
 ```
 
-Now let's add an hover effect.
+## hover effects
 
-> elements associated with a `data_id` will be animated when mouse will be hover.
+Now let's add an hover effect. **Elements associated with a `data_id` will be animated when mouse will be hover.**
 
 ```{r message=FALSE}
-my_gg <- g + 
-  geom_point_interactive(
+my_gg <- g + geom_point_interactive(
     aes(tooltip = model, data_id = model), size = 2) 
 ggiraph(code = print(my_gg), width = .7)
 ```
 
+Default value of hover css is `hover_css = "fill:orange;"`. To see how to change that, read the *custome_effects* vignette.
 
-## animate elements with `data-id`
-
-When graphical elements are associated with `data_id` attributes, a css string modifies 
-rendering when mouse is over. Default value is `hover_css = "fill:orange;"`. 
-
-```{r}
-dataset <- mtcars
-head(dataset)
-dataset$tooltip <- row.names(dataset)
-dataset$data_id <- tolower(row.names(dataset))
-
-# geom_point_interactive example
-gg_point_2 <- ggplot(dataset, aes(x = disp, y = qsec, 
-		color = wt, tooltip = tooltip, data_id = data_id ) ) + 
-	geom_point_interactive(size=4) + theme_minimal()
-
-# htmlwidget call
-ggiraph(code = {print(gg_point_2)}, width = 1, width_svg = 10, height_svg = 6,
-        hover_css = "fill:orange;cursor:pointer;")
-```
-
-`data-id` can also be reused within a shiny application. 
+> Note that `data-id` can also be reused within a shiny application. 
 
 ## Click actions
 
+Click actions must be a string column in the dataset containing valid javascript instructions. 
+
 ```{r message=FALSE, warning=FALSE}
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
-crimes$onclick <- sprintf(
-  "window.open(\"%s%s\")",
-  "http://en.wikipedia.org/wiki/",
-  as.character(crimes$state)
-)
+head(crimes)
 
-gg_point_3 <- ggplot(crimes, aes(x = Murder, y = Assault, size = UrbanPop, colour = Rape )) + 
+# create an 'onclick' column
+crimes$onclick <- sprintf("window.open(\"%s%s\")",
+  "http://en.wikipedia.org/wiki/", as.character(crimes$state) )
+
+gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault, color = UrbanPop )) + 
   geom_point_interactive(
-    aes( data_id = state, tooltip = state, onclick = onclick ) ) + 
+    aes( data_id = state, tooltip = state, onclick = onclick ), size = 3 ) + 
   scale_colour_gradient(low = "#999999", high = "#FF3333") + 
   theme_minimal()
 
-ggiraph(code = print(gg_point_3), 
+ggiraph(code = print(gg_crime),
         hover_css = "fill-opacity:.3;cursor:pointer;")
 ```
+
+
+## Zoom 
+
+You can activate zoom; set `zoom_max` (maximum zoom factor) to a value greater than 1. 
+
+```{r}
+ggiraph(code = print(my_gg + theme_linedraw()), zoom_max = 5)
+```
+
