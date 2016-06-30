@@ -114,8 +114,10 @@ HTMLWidgets.widget({
                     .style("opacity", 0);
             });
 
-        d3.select('#svg_' + x.canvas_id).attr("preserveAspectRatio", "xMinYMin meet").classed("svg-content-responsive", true).attr("width", null).attr("height", null);
-
+        d3.select('#svg_' + x.canvas_id)
+          .attr("preserveAspectRatio", "xMinYMin meet")
+          .classed("svg-content-responsive", true)
+          .attr("width", "100%").attr("height", "100%");
         if(x.zoompan===true) {
           var zoom_l = d3.behavior.zoom().scaleExtent([1, x.zoom_max]).on("zoom", zoom_h);
           zoom_l(d3.select('#svg_' + x.canvas_id + ' g'));
