@@ -1,3 +1,10 @@
+# geom_line_interactive example -----
+
+gg <- ggplot(economics_long,
+    aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
+  geom_line_interactive(size = .75)
+ggiraph(code = {print(gg)}, hover_css = "stroke:red;")
+
 
 # create datasets -----
 id = paste0("id", 1:10)
@@ -44,3 +51,4 @@ gg_path_3 = ggplot(dataset2) +
 ggiraph(code = {print(gg_path_1)}, hover_css = "stroke-width:3px;")
 ggiraph(code = {print(gg_path_2)}, hover_css = "stroke:orange;stroke-width:3px;")
 ggiraph(code = {print(gg_path_3)}, hover_css = "stroke-width:10px;")
+
