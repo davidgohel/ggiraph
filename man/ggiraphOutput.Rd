@@ -18,7 +18,9 @@ Render a ggiraph within an application page.
 }
 \examples{
 if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+  app_dir <- file.path( system.file(package = "ggiraph"), "shiny/cars" )
+  shinyAppDir(appDir = app_dir )
+  app_dir <- file.path( system.file(package = "ggiraph"), "shiny/crimes" )
   shinyAppDir(appDir = app_dir )
 }
 }

@@ -15,7 +15,7 @@
 #'
 #' @param code Plotting code to execute
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
-#' @param width widget width ratio (0 > width >= 1)
+#' @param width widget width ratio (0 < width <= 1)
 #' @param width_svg,height_svg svg viewbox width and height in inches
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
@@ -140,7 +140,9 @@ ggiraph <- function(code,
 #' @param height widget height
 #' @examples
 #' if( require(shiny) && interactive() ){
-#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/cars" )
+#'   shinyAppDir(appDir = app_dir )
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/crimes" )
 #'   shinyAppDir(appDir = app_dir )
 #' }
 #' @export
