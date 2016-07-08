@@ -142,6 +142,8 @@ ggiraph <- function(code,
 #' if( require(shiny) && interactive() ){
 #'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/cars" )
 #'   shinyAppDir(appDir = app_dir )
+#'  }
+#' if( require(shiny) && interactive() ){
 #'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/crimes" )
 #'   shinyAppDir(appDir = app_dir )
 #' }
