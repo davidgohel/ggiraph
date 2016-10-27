@@ -1,9 +1,10 @@
 dependencies:
   - name: d3
-    version: 3.5.14
-    src: "htmlwidgets/lib"
+    version: 4.3.0
+    src: "htmlwidgets/lib/d3-4.3.0"
     script: d3.min.js
-  - name: customcss
+  - name: styles
     version: 0.0.1
-    src: "htmlwidgets/lib"
-    stylesheet: html_ggiraph.css
+    src: "htmlwidgets/lib/styles-0.0.1"
+    script: styles.js
+    stylesheet: styles.css

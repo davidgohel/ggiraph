@@ -50,7 +50,7 @@ geom_bar_interactive <- function(mapping = NULL, data = NULL,
 }
 
 GeomInteractiveBar <- ggproto("GeomInteractiveBar", GeomRect,
-  required_aes = "x",
+          required_aes = c("x", "y"),
 
   setup_data = function(data, params) {
     data$width <- data$width %||%

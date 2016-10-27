@@ -3,4 +3,4 @@
 *.html
 .RData
 todo.md
-introduction.Rmd
+inst/doc

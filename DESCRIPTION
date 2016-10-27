@@ -12,14 +12,14 @@ Authors@R: c(
 License: GPL-3
 Copyright: See file COPYRIGHTS.
 Depends:
-    ggplot2 (>= 2.0.0)
+    ggplot2 (>= 2.1.0.9001)
 Imports:
     grid,
     htmlwidgets (>= 0.6),
     htmltools,
     stats,
     plyr,
-    rvg (>= 0.1.0),
+    rvg (>= 0.1.0.9000),
     xml2 (>= 1.0.0)
 Suggests:
     knitr,
@@ -30,3 +30,6 @@ VignetteBuilder: knitr
 URL: https://github.com/davidgohel/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 5.0.1
+Remotes:
+    davidgohel/gdtools,
+    davidgohel/rvg
