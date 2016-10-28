@@ -91,3 +91,95 @@ rect_to_poly <- function(xmin, xmax, ymin, ymax) {
 	)
 }
 
+
+
+
+
+
+
+
+
+#' @title add tiles with tooltips or click actions
+#'
+#' @description
+#' tooltips can be displayed when mouse is over (tiles) rectangles, on click actions
+#' can be set with javascript instructions.
+#'
+#'
+#' @inheritParams geom_point_interactive
+#' @export
+#' @examples
+#' df <- data.frame(
+#'   id = rep(c("a", "b", "c", "d", "e"), 2),
+#'   x = rep(c(2, 5, 7, 9, 12), 2),
+#'   y = rep(c(1, 2), each = 5),
+#'   z = factor(rep(1:5, each = 2)),
+#'   w = rep(diff(c(0, 4, 6, 8, 10, 14)), 2)
+#' )
+#' ggiraph( code = {
+#'   print(
+#'     ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
+#'   )
+#' })
+#'
+#'
+#' # correlation dataset ----
+#' cor_mat <- cor(mtcars)
+#' diag( cor_mat ) <- NA
+#' var1 <- rep( row.names(cor_mat), ncol(cor_mat) )
+#' var2 <- rep( colnames(cor_mat), each = nrow(cor_mat) )
+#' cor <- as.numeric(cor_mat)
+#' cor_mat <- data.frame( var1 = var1, var2 = var2,
+#'   cor = cor, stringsAsFactors = FALSE )
+#' cor_mat[["tooltip"]] <-
+#'   sprintf("<i>`%s`</i> vs <i>`%s`</i>:</br><code>%.03f</code>",
+#'   var1, var2, cor)
+#'
+#' # ggplot creation and ggiraph printing ----
+#' p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
+#'   geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
+#'   scale_fill_gradient2(low = "#BC120A", mid = "white", high = "#BC120A", limits = c(-1, 1)) +
+#'   coord_equal()
+#'
+#' ggiraph( ggobj = p )
+geom_tile_interactive <- function(mapping = NULL, data = NULL,
+                                  stat = "identity", position = "identity",
+                                  ...,
+                                  na.rm = FALSE,
+                                  show.legend = NA,
+                                  inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomInteractiveTile,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      na.rm = na.rm,
+      ...
+    )
+  )
+}
+
+GeomInteractiveTile <- ggproto("GeomInteractiveTile", GeomInteractiveRect,
+                               extra_params = c("na.rm", "width", "height"),
+
+                               setup_data = function(data, params) {
+                                 data$width <- data$width %||% params$width %||% resolution(data$x, FALSE)
+                                 data$height <- data$height %||% params$height %||% resolution(data$y, FALSE)
+
+                                 transform(data,
+                                           xmin = x - width / 2,  xmax = x + width / 2,  width = NULL,
+                                           ymin = y - height / 2, ymax = y + height / 2, height = NULL
+                                 )
+                               },
+
+                               default_aes = aes(fill = "grey20", colour = NA, size = 0.1, linetype = 1,
+                                                 alpha = NA),
+
+                               required_aes = c("x", "y"),
+
+                               draw_key = draw_key_polygon
+)

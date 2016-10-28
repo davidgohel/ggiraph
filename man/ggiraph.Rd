@@ -4,13 +4,16 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(code, pointsize = 12, width = 0.7, width_svg = 6,
+ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.7, width_svg = 6,
   height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, zoom_max = 1,
   selection_type = "multiple", selected_css, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
+
+\item{ggobj}{ggplot objet to print. argument \code{code} will
+be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 

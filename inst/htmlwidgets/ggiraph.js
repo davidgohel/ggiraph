@@ -10,28 +10,29 @@ function select_data_id_single(selection, js_varname, svg_id) {
   selection.on("click", function(d,i) {
     d3.selectAll(svg_id + ' *[data-id]').classed('selected_', false);
     var dataid = d3.select(this).attr("data-id");
+
     if( window[js_varname][0] == dataid ){
       window[js_varname] = [];
     }
     else {
       window[js_varname] = [dataid];
-      d3.select(this).classed('selected_', true);
+      d3.selectAll(svg_id + ' *[data-id="' + dataid + '"]').classed('selected_', true);
     }
     Shiny.onInputChange(js_varname, window[js_varname]);
   });
 }
 
-function select_data_id_multiple(selection, js_varname) {
+function select_data_id_multiple(selection, js_varname, svg_id) {
   selection.on("click", function(d,i) {
 
     var dataid = d3.select(this).attr("data-id");
     var index = window[js_varname].indexOf(dataid);
     if( index < 0 ){
       window[js_varname].push( dataid );
-      d3.select(this).classed('selected_', true);
+      d3.selectAll(svg_id + ' *[data-id="' + dataid + '"]').classed('selected_', true);
     } else {
       window[js_varname].splice(index,1);
-      d3.select(this).classed('selected_', false);
+      d3.selectAll(svg_id + ' *[data-id="' + dataid + '"]').classed('selected_', false);
     }
 
     Shiny.onInputChange(js_varname, window[js_varname]);
@@ -91,7 +92,7 @@ HTMLWidgets.widget({
           if( x.selection_type == "single")
             sel_data_id.call(select_data_id_single, selected_id, svg_id);
           else if( x.selection_type == "multiple")
-            sel_data_id.call(select_data_id_multiple, selected_id);
+            sel_data_id.call(select_data_id_multiple, selected_id, svg_id);
 
           d3.selectAll(window[el.id + "_selected"]).each(function(d, i) {
             d3.selectAll(svg_id + ' *[data-id=\"'+ window[el.id + "_selected"][i] + '\"]').classed('selected_', true);

@@ -14,6 +14,8 @@
 #' to be used in a web browser.
 #'
 #' @param code Plotting code to execute
+#' @param ggobj ggplot objet to print. argument \code{code} will
+#' be ignored if this argument is supplied.
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param width widget width ratio (0 < width <= 1)
 #' @param width_svg,height_svg svg viewbox width and height in inches
@@ -37,7 +39,7 @@
 #' # ggiraph simple example -------
 #' @example examples/geom_point_interactive.R
 #' @export
-ggiraph <- function(code,
+ggiraph <- function(code, ggobj = NULL,
 	pointsize = 12,
 	width = 0.7,
 	width_svg = 6, height_svg = 6,
@@ -84,7 +86,13 @@ ggiraph <- function(code,
 			width = width_svg, height = height_svg,
 			canvas_id = canvas_id, ...
 		)
-	tryCatch(code, finally = dev.off() )
+	tryCatch({
+	  if( !is.null(ggobj) ){
+	    stopifnot(inherits(ggobj, "ggplot"))
+	    print(ggobj)
+	  } else
+	    code
+	  }, finally = dev.off() )
 
 	ggiwid.options$svgid = 1 + ggiwid.options$svgid
 	options("ggiwid"=ggiwid.options)

@@ -19,7 +19,7 @@ Imports:
     htmltools,
     stats,
     plyr,
-    rvg (>= 0.1.0.9000),
+    rvg (>= 0.1.1),
     xml2 (>= 1.0.0)
 Suggests:
     knitr,

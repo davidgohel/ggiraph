@@ -1,3 +1,14 @@
+# ggiraph 0.3.2
+
+## New features
+
+* new geometry: geom_tile_interactive
+
+## Bug fixes
+
+* fix for element selection: svg elements with same id were not all selected
+  but the only element that was clicked
+
 # ggiraph 0.3.1
 
 ## New features
