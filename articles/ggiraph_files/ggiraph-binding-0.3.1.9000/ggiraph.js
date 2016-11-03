@@ -2,6 +2,10 @@ function d3_set_attr(selection, name, value) {
   selection.attr(name, value);
 }
 
+function zoomed() {
+    d3.select(this).attr("transform", d3.event.transform);
+}
+
 function select_data_id_single(selection, js_varname, svg_id) {
   selection.on("click", function(d,i) {
     d3.selectAll(svg_id + ' *[data-id]').classed('selected_', false);
@@ -116,7 +120,9 @@ HTMLWidgets.widget({
           .classed("svg-content-responsive", true)
           .attr("width", "100%").attr("height", "100%");
         if(x.zoompan===true) {
-
+          d3.select('#svg_' + x.canvas_id + ' g').call(d3.zoom()
+                .scaleExtent([1, x.zoom_max])
+                .on("zoom", zoomed));
         }
         d3.select(el)
             .style( "position", "relative")
