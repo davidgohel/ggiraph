@@ -21,7 +21,7 @@ shinyServer(function(input, output, session) {
 
   observe( {
     value <- selected_car()
-    updateTextInput(session = session, "title", value = paste0(value, collapse = ",") )
+    updateTextInput(session = session, "selpoint", value = paste0(value, collapse = ",") )
   })
 
 })

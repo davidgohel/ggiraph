@@ -3,8 +3,7 @@ shinyUI(fluidPage(
   sidebarLayout(
 
     sidebarPanel(
-      textInput("title", label = "Title"),
-      div(id = "log")
+      textInput("selpoint", label = "Selected point")
     ),
 
     mainPanel(
