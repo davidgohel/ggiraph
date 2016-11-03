@@ -108,7 +108,7 @@ ggiraph <- function(code, ggobj = NULL,
 
 	unlink(path)
 
-	data_id_class <- basename(tempfile(tmpdir = "", fileext = "", pattern = "cl"))
+	data_id_class <- paste0("cl_data_id_", ggiwid.options$svgid)
 
 	if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
 	  stop("please, do not specify position in tooltip_extra_css, this parameter is managed by ggiraph.")
