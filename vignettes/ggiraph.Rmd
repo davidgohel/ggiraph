@@ -65,7 +65,7 @@ Now let's add an hover effect. **Elements associated with a `data_id` will be an
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(
     aes(tooltip = model, data_id = model), size = 2) 
-ggiraph(code = print(my_gg), width = .7, hover_css = "cursor:pointer;fill:gray;stroke:red;")
+ggiraph(code = print(my_gg), width = .7, hover_css = "cursor:pointer;fill:red;stroke:red;")
 ```
 
 Default value of hover css is `hover_css = "fill:orange;"`. To see how to change that, read the *custome_effects* vignette.
@@ -94,13 +94,5 @@ ggiraph(code = print(gg_crime),
         hover_css = "fill-opacity:.3;cursor:pointer;")
 ```
 
-
-## Zoom 
-
-You can activate zoom; set `zoom_max` (maximum zoom factor) to a value greater than 1. 
-
-```{r}
-ggiraph(code = print(my_gg + theme_linedraw()), zoom_max = 5)
-```
 
 
