@@ -1,7 +1,5 @@
 ---
 title: "Custom effects"
-author: "David Gohel"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Custom effects}
@@ -84,6 +82,6 @@ css here is relative to SVG elements. SVG attributes are listed [here](https://d
 To fill elements in red:
 
 ```{r}
-ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;" )
+ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;", zoom_max = 4 )
 ```
 

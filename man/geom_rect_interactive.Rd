@@ -2,11 +2,16 @@
 % Please edit documentation in R/geom_rect_interactive.R
 \name{geom_rect_interactive}
 \alias{geom_rect_interactive}
-\title{add rectangles with tooltips or click actions}
+\alias{geom_tile_interactive}
+\title{interactive rectangles}
 \usage{
 geom_rect_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
   inherit.aes = TRUE, ...)
+
+geom_tile_interactive(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", ..., na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
@@ -27,8 +32,12 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over rectangles, on click actions
-can be set with javascript instructions.
+These geometries are based on \code{\link[ggplot2]{geom_rect}} and
+\code{\link[ggplot2]{geom_tile}}.
+See the documentation for those functions for more details.
+Difference from the original functions is that the following
+aesthetics are understood: \code{tooltip}, \code{onclick}
+and \code{tooltip}.
 }
 \examples{
 # add interactive polygons to a ggplot -------
@@ -58,6 +67,38 @@ gg_rect = ggplot() +
 
 
 ggiraph(code = {print(gg_rect)})
+df <- data.frame(
+  id = rep(c("a", "b", "c", "d", "e"), 2),
+  x = rep(c(2, 5, 7, 9, 12), 2),
+  y = rep(c(1, 2), each = 5),
+  z = factor(rep(1:5, each = 2)),
+  w = rep(diff(c(0, 4, 6, 8, 10, 14)), 2)
+)
+ggiraph( code = {
+  print(
+    ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
+  )
+})
+
+
+# correlation dataset ----
+cor_mat <- cor(mtcars)
+diag( cor_mat ) <- NA
+var1 <- rep( row.names(cor_mat), ncol(cor_mat) )
+var2 <- rep( colnames(cor_mat), each = nrow(cor_mat) )
+cor <- as.numeric(cor_mat)
+cor_mat <- data.frame( var1 = var1, var2 = var2,
+  cor = cor, stringsAsFactors = FALSE )
+cor_mat[["tooltip"]] <-
+  sprintf("<i>`\%s`</i> vs <i>`\%s`</i>:</br><code>\%.03f</code>",
+  var1, var2, cor)
+
+# ggplot creation and ggiraph printing ----
+p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
+  geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
+  scale_fill_gradient2(low = "#BC120A", mid = "white", high = "#BC120A", limits = c(-1, 1)) +
+  coord_equal()
+ggiraph( code = print(p))
 }
 \seealso{
 \code{\link{ggiraph}}

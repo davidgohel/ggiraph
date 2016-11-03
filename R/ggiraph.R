@@ -12,6 +12,10 @@
 #'
 #' @description Create an interactive graphic
 #' to be used in a web browser.
+#' Use \code{geom_zzz_interactive} to create interactive graphical elements.
+#' Tooltips can be displayed when mouse is over graphical elements, on click
+#' actions can be set with javascript instructions. If id are associated with points,
+#' they get animated when mouse is over and can be selected when used from shiny.
 #'
 #' @param code Plotting code to execute
 #' @param ggobj ggplot objet to print. argument \code{code} will
@@ -147,6 +151,7 @@ ggiraph <- function(code, ggobj = NULL,
 #' @param width widget width
 #' @param height widget height
 #' @examples
+#' \dontrun{
 #' if( require(shiny) && interactive() ){
 #'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/cars" )
 #'   shinyAppDir(appDir = app_dir )
@@ -154,6 +159,7 @@ ggiraph <- function(code, ggobj = NULL,
 #' if( require(shiny) && interactive() ){
 #'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/crimes" )
 #'   shinyAppDir(appDir = app_dir )
+#' }
 #' }
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
@@ -178,9 +184,11 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #' @param env The environment in which to evaluate expr.
 #' @param quoted Is \code{expr} a quoted expression
 #' @examples
+#' \dontrun{
 #' if( require(shiny) && interactive() ){
 #'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
 #'   shinyAppDir(appDir = app_dir )
+#' }
 #' }
 #' @export
 renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {

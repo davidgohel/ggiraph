@@ -1,7 +1,5 @@
 ---
 title: "ggiraph and Shiny"
-author: "David Gohel"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ggiraph and Shiny}
