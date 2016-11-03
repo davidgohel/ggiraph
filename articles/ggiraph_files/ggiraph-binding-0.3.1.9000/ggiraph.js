@@ -60,7 +60,7 @@ HTMLWidgets.widget({
         window[el.id + '_canvas'] = '#svg_' + x.canvas_id;
         d3.select(el).attr("style", "text-align:center;");
         window[el.id + '_id'] = svg_id;
-        var tooltip_class = "tooltip" + x.data_id_class;
+        var tooltip_class = "tooltip" + x.canvas_id;
 
         // generate css elements
         var data_id_css = "." + x.data_id_class +  ":{}." +
