@@ -1,8 +1,12 @@
-#' @title add rectangles with tooltips or click actions
+#' @title interactive rectangles
 #'
 #' @description
-#' tooltips can be displayed when mouse is over rectangles, on click actions
-#' can be set with javascript instructions.
+#' These geometries are based on \code{\link[ggplot2]{geom_rect}} and
+#' \code{\link[ggplot2]{geom_tile}}.
+#' See the documentation for those functions for more details.
+#' Difference from the original functions is that the following
+#' aesthetics are understood: \code{tooltip}, \code{onclick}
+#' and \code{tooltip}.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive
@@ -95,18 +99,7 @@ rect_to_poly <- function(xmin, xmax, ymin, ymax) {
 
 
 
-
-
-
-
-#' @title add tiles with tooltips or click actions
-#'
-#' @description
-#' tooltips can be displayed when mouse is over (tiles) rectangles, on click actions
-#' can be set with javascript instructions.
-#'
-#'
-#' @inheritParams geom_point_interactive
+#' @rdname geom_rect_interactive
 #' @export
 #' @examples
 #' df <- data.frame(
@@ -140,8 +133,7 @@ rect_to_poly <- function(xmin, xmax, ymin, ymax) {
 #'   geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
 #'   scale_fill_gradient2(low = "#BC120A", mid = "white", high = "#BC120A", limits = c(-1, 1)) +
 #'   coord_equal()
-#'
-#' ggiraph( ggobj = p )
+#' ggiraph( code = print(p))
 geom_tile_interactive <- function(mapping = NULL, data = NULL,
                                   stat = "identity", position = "identity",
                                   ...,
@@ -163,23 +155,24 @@ geom_tile_interactive <- function(mapping = NULL, data = NULL,
   )
 }
 
-GeomInteractiveTile <- ggproto("GeomInteractiveTile", GeomInteractiveRect,
-                               extra_params = c("na.rm", "width", "height"),
+GeomInteractiveTile <- ggproto(
+  "GeomInteractiveTile", GeomInteractiveRect,
+  extra_params = c("na.rm", "width", "height"),
 
-                               setup_data = function(data, params) {
-                                 data$width <- data$width %||% params$width %||% resolution(data$x, FALSE)
-                                 data$height <- data$height %||% params$height %||% resolution(data$y, FALSE)
+  setup_data = function(data, params) {
+     data$width <- data$width %||% params$width %||% resolution(data$x, FALSE)
+     data$height <- data$height %||% params$height %||% resolution(data$y, FALSE)
 
-                                 transform(data,
-                                           xmin = x - width / 2,  xmax = x + width / 2,  width = NULL,
-                                           ymin = y - height / 2, ymax = y + height / 2, height = NULL
-                                 )
-                               },
+     transform(data,
+               xmin = x - width / 2,  xmax = x + width / 2,  width = NULL,
+               ymin = y - height / 2, ymax = y + height / 2, height = NULL
+     )
+   },
 
-                               default_aes = aes(fill = "grey20", colour = NA, size = 0.1, linetype = 1,
-                                                 alpha = NA),
+   default_aes = aes(fill = "grey20", colour = NA, size = 0.1, linetype = 1,
+                     alpha = NA),
 
-                               required_aes = c("x", "y"),
+   required_aes = c("x", "y"),
 
-                               draw_key = draw_key_polygon
+   draw_key = draw_key_polygon
 )

@@ -44,6 +44,10 @@ when widget is in a Shiny application.}
 \description{
 Create an interactive graphic
 to be used in a web browser.
+Use \code{geom_zzz_interactive} to create interactive graphical elements.
+Tooltips can be displayed when mouse is over graphical elements, on click
+actions can be set with javascript instructions. If id are associated with points,
+they get animated when mouse is over and can be selected when used from shiny.
 }
 \examples{
 # ggiraph simple example -------

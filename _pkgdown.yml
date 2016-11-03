@@ -1,0 +1,32 @@
+title: ggiraph package
+
+template:
+  bootswatch: simplex
+
+reference:
+  - title: Make ggplot2 Graphics Interactive
+    contents:
+    - ggiraph
+  - title: Interactive geometries
+    contents:
+    - ends_with("_interactive")
+  - title: Working with shiny
+    contents:
+    - renderggiraph
+    - ggiraphOutput
+
+navbar:
+  title: ggiraph
+  type: default
+  left:
+  - text: ggiraph
+    href: articles/ggiraph.html
+  - text: custom effects
+    href: articles/custom_effects.html
+  - text: shiny
+    href: articles/shiny.html
+  right:
+  - text: Function reference
+    href: reference/index.html
+  - icon: fa-github fa-lg
+    href: https://github.com/davidgohel/ggiraph

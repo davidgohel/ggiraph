@@ -9,3 +9,7 @@
 ^README\.md$
 ^examples$
 ^todo\.md$
+^docs$
+^_pkgdown\.yml$
+^_README\.Rmd$
+^inst/ggiraph\.gif$

@@ -1,10 +1,8 @@
 ---
-title: "ggiraph presentation"
-author: "David Gohel"
-date: "`r Sys.Date()`"
+title: "Introduction"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to ggiraph}
+  %\VignetteIndexEntry{introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,22 +28,17 @@ ggiraph(code = {print(gg_point_1)}, width = .6,
 
 It extends ggplot2 with new `geom` functions:
 
-* geom_bar_interactive
-* geom_point_interactive
-* geom_polygon_interactive
-* geom_map_interactive
-* geom_path_interactive
-* geom_rect_interactive
-* geom_segment_interactive
-* geom_text_interactive
-* geom_boxplot_interactive
+```{r echo=FALSE, results='asis'}
+geoms_ <- objects(envir = as.environment("package:ggiraph"), pattern = "^geom_([a-zA-Z0-9]*)_interactive$")
+htmltools::tags$ul( lapply( geoms_, htmltools::tags$li ) )
+```
 
-
-Three arguments let you add interactivity:
+These understand three aesthetics to let you add interactivity:
 
 * `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
 * `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
-* `data_id`: column of dataset that contains id to be associated with elements. 
+* `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic is mandatory 
+  when you want to use an hover effect or when you want to enable selection of points in shiny applications.**
 
 Let's prepare a ggplot object with `mpg` dataset. 
 
@@ -53,7 +46,7 @@ Let's prepare a ggplot object with `mpg` dataset.
 library(ggiraph)
 
 head(mpg)
-g <- ggplot(mpg, aes( x = displ, y = cty, color = drv) ) + theme_minimal()
+g <- ggplot(mpg, aes( x = displ, y = cty, color = hwy) ) + theme_minimal()
 ```
 
 ## tooltips
@@ -72,7 +65,7 @@ Now let's add an hover effect. **Elements associated with a `data_id` will be an
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(
     aes(tooltip = model, data_id = model), size = 2) 
-ggiraph(code = print(my_gg), width = .7)
+ggiraph(code = print(my_gg), width = .7, hover_css = "cursor:pointer;fill:gray;stroke:red;")
 ```
 
 Default value of hover css is `hover_css = "fill:orange;"`. To see how to change that, read the *custome_effects* vignette.
@@ -109,4 +102,5 @@ You can activate zoom; set `zoom_max` (maximum zoom factor) to a value greater t
 ```{r}
 ggiraph(code = print(my_gg + theme_linedraw()), zoom_max = 5)
 ```
+
 

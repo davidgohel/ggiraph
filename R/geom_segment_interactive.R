@@ -1,8 +1,11 @@
-#' @title add segments with tooltips or click actions
+#' @title Line interactive segments
 #'
 #' @description
-#' tooltips can be displayed when mouse is over segments, on click actions
-#' can be set with javascript instructions.
+#' The geometry is based on \code{\link[ggplot2]{geom_segment}}.
+#' See the documentation for those functions for more details.
+#' Difference from the original function is that the following
+#' aesthetics are understood: \code{tooltip}, \code{onclick}
+#' and \code{tooltip}.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive

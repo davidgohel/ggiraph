@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_bar_interactive.r
 \name{geom_bar_interactive}
 \alias{geom_bar_interactive}
-\title{add bars with tooltips or click actions}
+\title{interactive bars}
 \usage{
 geom_bar_interactive(mapping = NULL, data = NULL, stat = "count",
   position = "stack", ..., width = NULL, na.rm = FALSE,
@@ -29,8 +29,11 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
-tooltips can be displayed when mouse is over bars, on click actions
-can be set with javascript instructions.
+The geometry is based on \code{\link[ggplot2]{geom_bar}}.
+See the documentation for those functions for more details.
+Difference from the original function is that the following
+aesthetics are understood: \code{tooltip}, \code{onclick}
+and \code{tooltip}.
 }
 \examples{
 g <- ggplot(mpg, aes( x = class, tooltip = class,
