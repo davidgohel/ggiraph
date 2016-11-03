@@ -19,14 +19,14 @@ navbar:
   title: ggiraph
   type: default
   left:
-  - text: ggiraph
+  - text: Introduction
     href: articles/ggiraph.html
-  - text: custom effects
+  - text: Custom effects
     href: articles/custom_effects.html
   - text: shiny
     href: articles/shiny.html
-  right:
   - text: Function reference
     href: reference/index.html
+  right:
   - icon: fa-github fa-lg
     href: https://github.com/davidgohel/ggiraph
