@@ -47,7 +47,7 @@ drawDetails.interactive_segments_grob <- function(x,recording) {
 		  if( length(ids) %% length(x$tooltip) < 1 ){
 		    x$tooltip = rep( x$tooltip, each = length(ids) %/% length(x$tooltip) )
 		  }
-		  set_attr( ids = as.integer( ids ), str = x$tooltip, attribute = "title" )
+		  set_attr( ids = as.integer( ids ), str = encode_cr(x$tooltip), attribute = "title" )
 		}
 
 		if( !is.null( x$onclick )){

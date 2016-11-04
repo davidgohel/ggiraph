@@ -33,7 +33,7 @@ drawDetails.interactive_points_grob <- function(x,recording) {
 	ids = rvg_tracer_off()
 	if( length( ids ) > 0 ) {
 		if( !is.null( x$tooltip ))
-		  set_attr( ids = as.integer( ids ), str = x$tooltip, attribute = "title" )
+		  set_attr( ids = as.integer( ids ), str = encode_cr(x$tooltip), attribute = "title" )
 		if( !is.null( x$onclick ))
 		  set_attr( ids = as.integer( ids ), str = x$onclick, attribute = "onclick" )
 		if( !is.null( x$data_id ))
@@ -43,4 +43,6 @@ drawDetails.interactive_points_grob <- function(x,recording) {
 
 	invisible()
 }
+
+
 

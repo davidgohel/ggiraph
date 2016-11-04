@@ -52,7 +52,7 @@ drawDetails.interactive_polyline_grob <- function(x,recording) {
 		      length(ids) != length(tooltip) ){
 		    tooltip <- rep( tooltip, each = length(ids) %/% length(tooltip) )
 		  }
-		  set_attr( ids = ids, str = tooltip, attribute = "title" )
+		  set_attr( ids = ids, str = encode_cr(tooltip), attribute = "title" )
 		}
 
 		if( !is.null( x$onclick )){
