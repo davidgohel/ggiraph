@@ -1,9 +1,6 @@
 ---
 title: "ggiraph R package"
-output:
-  github_document:
-    toc: true 
-    toc_depth: 2
+output: github_document
 ---
 
 ```{r, echo = FALSE}
@@ -16,13 +13,14 @@ knitr::opts_chunk$set(
 > Make 'ggplot' Graphics Interactive
 
 [![Travis-CI Build Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/davidgohel/ggiraph?branch=master)](https://ci.appveyor.com/project/davidgohel/ggiraph/branch/master)
 [![version](http://www.r-pkg.org/badges/version/ggiraph)](http://www.r-pkg.org/pkg/ggiraph)
-![cranlogs](http://cranlogs.r-pkg.org./badges/ggiraph) 
+![cranlogs](http://cranlogs.r-pkg.org./badges/ggiraph)
 ![Active](http://www.repostatus.org/badges/latest/active.svg)
 
 ## Overview
 
-`ggiraph` is an [htmlwidget](http://cran.r-project.org/package=htmlwidgets) and a ggplot2 extension. It lets ggplot graphics being animated. 
+`ggiraph` is an htmlwidget and a ggplot2 extension. It lets ggplot graphics being animated. 
 
 Animation is made with ggplot geometries that can understand three arguments:
 
@@ -33,10 +31,9 @@ Animation is made with ggplot geometries that can understand three arguments:
 If used within a shiny application, elements associated with an id (`data_id`) can be selected and manipulated on client and server sides.
 
 ```{r results='asis', echo=FALSE}
-htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>', 
+htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
         gdtools:::base64_file_encode(filename = "/Users/davidgohel/Github/ggiraph/inst/ggiraph.gif")
         ))
-
 ```
 
 ## Installation 
