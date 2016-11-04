@@ -1,12 +1,9 @@
 library(ggiraph)
 shinyUI(fluidPage(
-  sidebarLayout(
-
-    sidebarPanel(
-      textInput("selpoint", label = "Selected point")
-    ),
-
-    mainPanel(
+  fluidRow(
+    column(
+      width=12,
+      textInput("selpoint", label = "Selected species"),
       ggiraphOutput("plot")
     )
   )

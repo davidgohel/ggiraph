@@ -20,11 +20,11 @@ navbar:
   type: default
   left:
   - text: Introduction
-    href: articles/ggiraph.html
-  - text: Custom effects
-    href: articles/custom_effects.html
+    href: articles/an_introduction.html
+  - text: Animation effects
+    href: articles/custom_animation_effects.html
   - text: shiny
-    href: articles/shiny.html
+    href: articles/shiny_usage.html
   - text: Function reference
     href: reference/index.html
   right:

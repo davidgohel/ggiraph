@@ -1,8 +1,8 @@
 ---
-title: "Custom effects"
+title: "Custom animation effects"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Custom effects}
+  %\VignetteIndexEntry{Custom animation effects}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,6 +1,4 @@
 library(ggiraph)
-library(maps)
-
 
 shinyServer(function(input, output, session) {
 
