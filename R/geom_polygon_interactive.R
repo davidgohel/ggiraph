@@ -3,9 +3,6 @@
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_polygon}}.
 #' See the documentation for those functions for more details.
-#' Difference from the original function is that the following
-#' aesthetics are understood: \code{tooltip}, \code{onclick}
-#' and \code{tooltip}.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive
@@ -90,9 +87,6 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_map}}.
 #' See the documentation for those functions for more details.
-#' Difference from the original function is that the following
-#' aesthetics are understood: \code{tooltip}, \code{onclick}
-#' and \code{tooltip}.
 #'
 #' @param map Data frame that contains the map coordinates. See \code{\link[ggplot2]{geom_map}}.
 #' @inheritParams geom_point_interactive
