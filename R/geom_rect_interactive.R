@@ -4,9 +4,12 @@
 #' These geometries are based on \code{\link[ggplot2]{geom_rect}} and
 #' \code{\link[ggplot2]{geom_tile}}.
 #' See the documentation for those functions for more details.
-#' Difference from the original functions is that the following
-#' aesthetics are understood: \code{tooltip}, \code{onclick}
-#' and \code{tooltip}.
+#'
+#' @note
+#' Converting a raster to svg elements could inflate dramatically the size of the
+#' svg and make it unreadable in a browser.
+#' Function \code{geom_tile_interactive} should be used with caution, total number of
+#' rectangles should be small.
 #'
 #' @seealso \code{\link{ggiraph}}
 #' @inheritParams geom_point_interactive
