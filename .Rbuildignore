@@ -6,7 +6,6 @@
 ^appveyor\.yml$
 ^ggiraph\.Rproj$
 ^src/Makevars$
-^README\.md$
 ^examples$
 ^todo\.md$
 ^docs$
