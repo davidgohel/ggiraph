@@ -49,13 +49,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/ggiraph.html">Introduction</a>
+  <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
-  <a href="../articles/shiny.html">shiny</a>
+  <a href="../articles/shiny_usage.html">shiny</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -85,10 +85,7 @@
 
     
     <p>The geometry is based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment'>geom_segment</a></code>.
-See the documentation for those functions for more details.
-Difference from the original function is that the following
-aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
-and <code>tooltip</code>.</p>
+See the documentation for those functions for more details.</p>
     
 
     <pre><span class='fu'>geom_segment_interactive</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
@@ -126,7 +123,7 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># add interactive segments to a ggplot -------</span>
+    <pre class="examples"><span class='co'># add interactive segments to a ggplot -------</span>
 <span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='fu'>table</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>rpois</span>(<span class='fl'>100</span>,<span class='fl'>5</span>)))
 <span class='no'>counts</span>$<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as.numeric</span>( <span class='fu'>as.character</span>(<span class='no'>counts</span>$<span class='no'>x</span>) )
 <span class='no'>counts</span>$<span class='no'>xlab</span> <span class='kw'>&lt;-</span> <span class='fu'>paste0</span>(<span class='st'>"bar"</span>,<span class='fu'>as.character</span>(<span class='no'>counts</span>$<span class='no'>x</span>) )
@@ -148,8 +145,10 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
                 <span class='kw'>arrow</span><span class='kw'>=</span><span class='kw'>grid</span><span class='kw'>::</span><span class='fu'>arrow</span>(<span class='kw'>length</span> <span class='kw'>=</span> <span class='kw'>grid</span><span class='kw'>::</span><span class='fu'>unit</span>(<span class='fl'>0.03</span>, <span class='st'>"npc"</span>)),
                 <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>color</span><span class='kw'>=</span><span class='st'>"blue"</span>) +
         <span class='fu'>geom_point</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>dataset</span>, <span class='kw'>mapping</span><span class='kw'>=</span><span class='fu'>aes</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>x</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>),
-                <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>shape</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='kw'>fill</span><span class='kw'>=</span><span class='st'>"white"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: tooltip, onclick</span></div><div class='input'>
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_1</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'><span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_2</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
+                <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>shape</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='kw'>fill</span><span class='kw'>=</span><span class='st'>"white"</span>)
+
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_1</span>)})
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_2</span>)})</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

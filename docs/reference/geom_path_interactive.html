@@ -49,13 +49,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/ggiraph.html">Introduction</a>
+  <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
-  <a href="../articles/shiny.html">shiny</a>
+  <a href="../articles/shiny_usage.html">shiny</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -86,10 +86,7 @@
     
     <p>These geometries are based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_path</a></code> and
 <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></code>.
-See the documentation for those functions for more details.
-Difference from the original functions is that the following
-aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
-and <code>tooltip</code>.</p>
+See the documentation for those functions for more details.</p>
     
 
     <pre><span class='fu'>geom_path_interactive</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
@@ -136,13 +133,14 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># add interactive paths to a ggplot -------</span>
+    <pre class="examples"><span class='co'># add interactive paths to a ggplot -------</span>
 <span class='co'># geom_line_interactive example -----</span>
 
 <span class='no'>gg</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>economics_long</span>,
     <span class='fu'>aes</span>(<span class='no'>date</span>, <span class='no'>value01</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>variable</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>variable</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>variable</span>)) +
   <span class='fu'>geom_line_interactive</span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>.75</span>)
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:red;"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'>
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:red;"</span>)
+
 
 <span class='co'># create datasets -----</span>
 <span class='no'>id</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"id"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
@@ -183,10 +181,12 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
 
 <span class='no'>gg_path_3</span> <span class='kw'>=</span> <span class='fu'>ggplot</span>(<span class='no'>dataset2</span>) +
         <span class='fu'>geom_path_interactive</span>(<span class='fu'>aes</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>group</span><span class='kw'>=</span><span class='no'>grp</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>label</span>,
-                <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>color</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>label</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>onclick</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: data_id, tooltip, onclick</span></div><div class='input'>
+                <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>color</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>label</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>onclick</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span> )
+
 <span class='co'># ggiraph widgets ---</span>
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_path_1</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke-width:3px;"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'><span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_path_2</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:orange;stroke-width:3px;"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'><span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_path_3</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke-width:10px;"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'>
-</div></pre>
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_path_1</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke-width:3px;"</span>)
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_path_2</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:orange;stroke-width:3px;"</span>)
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_path_3</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke-width:10px;"</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
