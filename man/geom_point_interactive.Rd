@@ -29,9 +29,6 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_point}}.
 See the documentation for those functions for more details.
-Difference from the original function is that the following
-aesthetics are understood: \code{tooltip}, \code{onclick}
-and \code{tooltip}.
 }
 \note{
 The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be used.

@@ -46,9 +46,6 @@ geom_boxplot_interactive(mapping = NULL, data = NULL, stat = "boxplot",
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_boxplot}}.
 See the documentation for those functions for more details.
-Difference from the original function is that the following
-aesthetics are understood: \code{tooltip}, \code{onclick}
-and \code{tooltip}.
 }
 \examples{
 # add interactive boxplot -------

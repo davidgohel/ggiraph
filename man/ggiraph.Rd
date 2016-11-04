@@ -42,12 +42,17 @@ when widget is in a Shiny application.}
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
 \description{
-Create an interactive graphic
-to be used in a web browser.
+Create an interactive graphic to be used in a web browser.
+
 Use \code{geom_zzz_interactive} to create interactive graphical elements.
-Tooltips can be displayed when mouse is over graphical elements, on click
+
+Difference from original functions is that the following
+aesthetics are understood: \code{tooltip}, \code{onclick}
+and \code{data_id}.
+
+Tooltips can be displayed when mouse is over graphical elements. On click
 actions can be set with javascript instructions. If id are associated with points,
-they get animated when mouse is over and can be selected when used from shiny.
+they get animated when mouse is over and can be selected when used in shiny apps.
 }
 \examples{
 # ggiraph simple example -------
@@ -62,12 +67,5 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 	geom_point_interactive()
 
 ggiraph(code = {print(gg_point)})
-}
-\seealso{
-\code{\link{geom_path_interactive}},
-\code{\link{geom_point_interactive}},
-\code{\link{geom_polygon_interactive}},
-\code{\link{geom_rect_interactive}},
-\code{\link{geom_segment_interactive}}
 }
 
