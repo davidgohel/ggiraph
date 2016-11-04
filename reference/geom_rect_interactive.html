@@ -52,7 +52,7 @@
   <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_animation_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
   <a href="../articles/shiny_usage.html">shiny</a>
@@ -86,10 +86,7 @@
     
     <p>These geometries are based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>geom_rect</a></code> and
 <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_tile'>geom_tile</a></code>.
-See the documentation for those functions for more details.
-Difference from the original functions is that the following
-aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
-and <code>tooltip</code>.</p>
+See the documentation for those functions for more details.</p>
     
 
     <pre><span class='fu'>geom_rect_interactive</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
@@ -121,13 +118,20 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
       <dd>other arguments passed on to layer. See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Converting a raster to svg elements could inflate dramatically the size of the
+svg and make it unreadable in a browser.
+Function <code>geom_tile_interactive</code> should be used with caution, total number of
+rectangles should be small.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='ggiraph.html'>ggiraph</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># add interactive polygons to a ggplot -------</span>
+    <pre class="examples"><span class='co'># add interactive polygons to a ggplot -------</span>
 <span class='no'>dataset</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>( <span class='kw'>x1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>4</span>),
         <span class='kw'>x2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>6</span>),
         <span class='kw'>y1</span> <span class='kw'>=</span> <span class='fu'>c</span>( <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>3</span>),
@@ -150,9 +154,11 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
         <span class='fu'>geom_text</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>dataset</span>,
                         <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x1</span> + ( <span class='no'>x2</span> - <span class='no'>x1</span> ) / <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y1</span> + ( <span class='no'>y2</span> - <span class='no'>y1</span> ) / <span class='fl'>2</span>,
                                         <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>r</span> ),
-                <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span> )</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: tooltip, onclick, data_id</span></div><div class='input'>
+                <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>4</span> )
 
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_rect</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
+
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_rect</span>)})
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span>, <span class='st'>"e"</span>), <span class='fl'>2</span>),
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>9</span>, <span class='fl'>12</span>), <span class='fl'>2</span>),
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>5</span>),
@@ -163,7 +169,8 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
   <span class='fu'>print</span>(
     <span class='fu'>ggplot</span>(<span class='no'>df</span>, <span class='fu'>aes</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>id</span>)) + <span class='fu'>geom_tile_interactive</span>(<span class='fu'>aes</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>z</span>))
   )
-})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'>
+})
+
 
 <span class='co'># correlation dataset ----</span>
 <span class='no'>cor_mat</span> <span class='kw'>&lt;-</span> <span class='fu'>cor</span>(<span class='no'>mtcars</span>)
@@ -181,13 +188,16 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>cor_mat</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>var1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>var2</span>) ) +
   <span class='fu'>geom_tile_interactive</span>(<span class='fu'>aes</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>cor</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>tooltip</span>), <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"white"</span>) +
   <span class='fu'>scale_fill_gradient2</span>(<span class='kw'>low</span> <span class='kw'>=</span> <span class='st'>"#BC120A"</span>, <span class='kw'>mid</span> <span class='kw'>=</span> <span class='st'>"white"</span>, <span class='kw'>high</span> <span class='kw'>=</span> <span class='st'>"#BC120A"</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>1</span>, <span class='fl'>1</span>)) +
-  <span class='fu'>coord_equal</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Ignoring unknown aesthetics: tooltip</span></div><div class='input'><span class='fu'><a href='ggiraph.html'>ggiraph</a></span>( <span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>p</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
+  <span class='fu'>coord_equal</span>()
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>( <span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>p</span>))</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#note">Note</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

@@ -49,13 +49,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/ggiraph.html">Introduction</a>
+  <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
-  <a href="../articles/shiny.html">shiny</a>
+  <a href="../articles/shiny_usage.html">shiny</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -84,12 +84,17 @@
     </div>
 
     
-    <p>Create an interactive graphic
-to be used in a web browser.
-Use <code>geom_zzz_interactive</code> to create interactive graphical elements.
-Tooltips can be displayed when mouse is over graphical elements, on click
+    <p>Create an interactive graphic to be used in a web browser.</p>
+
+    <p>Use <code>geom_zzz_interactive</code> to create interactive graphical elements.</p>
+
+    <p>Difference from original functions is that the following
+aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
+and <code>data_id</code>.</p>
+
+    <p>Tooltips can be displayed when mouse is over graphical elements. On click
 actions can be set with javascript instructions. If id are associated with points,
-they get animated when mouse is over and can be selected when used from shiny.</p>
+they get animated when mouse is over and can be selected when used in shiny apps.</p>
     
 
     <pre><span class='fu'>ggiraph</span>(<span class='no'>code</span>, <span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>width_svg</span> <span class='kw'>=</span> <span class='fl'>6</span>,
@@ -132,17 +137,9 @@ when widget is in a Shiny application.</dd>
       <dd>arguments passed on to <code><a href='http://www.rdocumentation.org/packages/rvg/topics/dsvg'>dsvg</a></code></dd>
     </dl>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p><code><a href='geom_path_interactive.html'>geom_path_interactive</a></code>,
-<code><a href='geom_point_interactive.html'>geom_point_interactive</a></code>,
-<code><a href='geom_polygon_interactive.html'>geom_polygon_interactive</a></code>,
-<code><a href='geom_rect_interactive.html'>geom_rect_interactive</a></code>,
-<code><a href='geom_segment_interactive.html'>geom_segment_interactive</a></code></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># ggiraph simple example -------</span>
+    <pre class="examples"><span class='co'># ggiraph simple example -------</span>
 <span class='co'># create dataset</span>
 <span class='no'>dataset</span> <span class='kw'>=</span> <span class='no'>iris</span>
 <span class='no'>dataset</span>$<span class='no'>tooltip</span> <span class='kw'>=</span> <span class='no'>dataset</span>$<span class='no'>Species</span>
@@ -153,15 +150,13 @@ when widget is in a Shiny application.</dd>
                 <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>Species</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>tooltip</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>clickjs</span>) ) +
         <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span>()
 
-<span class='fu'>ggiraph</span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_point</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
+<span class='fu'>ggiraph</span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_point</span>)})</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

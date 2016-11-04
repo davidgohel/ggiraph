@@ -49,13 +49,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/ggiraph.html">Introduction</a>
+  <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
-  <a href="../articles/shiny.html">shiny</a>
+  <a href="../articles/shiny_usage.html">shiny</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -85,10 +85,7 @@
 
     
     <p>The geometry is based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_text'>geom_text</a></code>.
-See the documentation for those functions for more details.
-Difference from the original function is that the following
-aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
-and <code>tooltip</code>.</p>
+See the documentation for those functions for more details.</p>
     
 
     <pre><span class='fu'>geom_text_interactive</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
@@ -129,7 +126,7 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># add interactive polygons to a ggplot -------</span>
+    <pre class="examples"><span class='co'># add interactive polygons to a ggplot -------</span>
 <span class='co'>## the data</span>
 <span class='no'>dataset</span> <span class='kw'>=</span> <span class='no'>mtcars</span>
 <span class='no'>dataset</span>$<span class='no'>label</span> <span class='kw'>=</span> <span class='fu'>row.names</span>(<span class='no'>mtcars</span>)
@@ -147,7 +144,7 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
   <span class='fu'>coord_cartesian</span>(<span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>50</span>))
 
 <span class='co'>## display the plot</span>
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_text</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:#FF4C3B;font-style:italic;"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_text</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:#FF4C3B;font-style:italic;"</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
