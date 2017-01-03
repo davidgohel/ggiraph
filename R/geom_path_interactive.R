@@ -49,8 +49,7 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 				lineend = "butt", linejoin = "round", linemitre = 1,
 				na.rm = FALSE) {
 			if (!anyDuplicated(data$group)) {
-				message_wrap("geom_path_interactive: Each group consists of only one observation. ",
-						"Do you need to adjust the group aesthetic?")
+				message("geom_path_interactive: Each group consists of only one observation. Do you need to adjust the group aesthetic?")
 			}
 
 			keep <- function(x) {
