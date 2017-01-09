@@ -163,7 +163,8 @@ GeomInteractiveBoxplot <- ggproto(
   draw_key = draw_key_boxplot,
 
   default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
-                    alpha = NA, shape = 19, linetype = "solid"),
+                    alpha = NA, shape = 19, linetype = "solid",
+                    tooltip = NULL, onclick = NULL, data_id = NULL),
 
   required_aes = c("x", "lower", "upper", "middle", "ymin", "ymax")
 )
@@ -177,7 +178,7 @@ GeomInteractiveCrossbar <- ggproto("GeomInteractiveCrossbar", Geom,
   },
 
   default_aes = aes(colour = "black", fill = NA, size = 0.5, linetype = 1,
-                    alpha = NA),
+                    alpha = NA, tooltip = NULL, onclick = NULL, data_id = NULL),
 
   required_aes = c("x", "y", "ymin", "ymax"),
 

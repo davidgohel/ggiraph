@@ -149,7 +149,8 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 
 		required_aes = c("x", "y"),
 
-		default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
+		default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA,
+		                  tooltip = NULL, onclick = NULL, data_id = NULL),
 
 		draw_key = draw_key_path
 )

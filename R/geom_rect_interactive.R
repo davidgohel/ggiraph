@@ -36,8 +36,9 @@ geom_rect_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 }
 
 GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
-		default_aes = aes(colour = NA, fill = "grey20", size = 0.5, linetype = 1,
-				alpha = NA),
+		default_aes = aes(colour = NA, fill = "grey20",
+		                  size = 0.5, linetype = 1, alpha = NA,
+		                  tooltip = NULL, onclick = NULL, data_id = NULL),
 
 		required_aes = c("xmin", "xmax", "ymin", "ymax"),
 
@@ -173,7 +174,7 @@ GeomInteractiveTile <- ggproto(
    },
 
    default_aes = aes(fill = "grey20", colour = NA, size = 0.1, linetype = 1,
-                     alpha = NA),
+                     alpha = NA, tooltip = NULL, onclick = NULL, data_id = NULL),
 
    required_aes = c("x", "y"),
 

@@ -71,8 +71,10 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 			)
 		},
 
-		default_aes = aes(colour = "NA", fill = "grey20", size = 0.5, linetype = 1,
-				alpha = NA),
+		default_aes = aes(
+		  colour = "NA", fill = "grey20",
+      size = 0.5, linetype = 1, alpha = NA,
+    	tooltip = NULL, onclick = NULL, data_id = NULL),
 
 		required_aes = c("x", "y"),
 
