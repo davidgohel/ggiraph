@@ -1,6 +1,9 @@
 ---
 title: "ggiraph in shiny"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true 
+    toc_depth: 2
 vignette: >
   %\VignetteIndexEntry{ggiraph in shiny}
   %\VignetteEngine{knitr::rmarkdown}

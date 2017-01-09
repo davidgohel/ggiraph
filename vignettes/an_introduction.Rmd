@@ -1,6 +1,9 @@
 ---
 title: "A quick introduction"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true 
+    toc_depth: 2
 vignette: >
   %\VignetteIndexEntry{A quick introduction}
   %\VignetteEngine{knitr::rmarkdown}
