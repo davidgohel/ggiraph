@@ -11,7 +11,7 @@ Authors@R: c(
 License: GPL-3
 Copyright: See file COPYRIGHTS.
 Depends:
-    ggplot2 (>= 2.1.0)
+    ggplot2 (>= 2.2.0)
 Imports:
     grid,
     htmlwidgets (>= 0.6),
