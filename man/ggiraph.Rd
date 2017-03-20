@@ -68,4 +68,3 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
 
 ggiraph(code = {print(gg_point)})
 }
-

@@ -106,4 +106,3 @@ ggiraph( code = print(p))
 \seealso{
 \code{\link{ggiraph}}
 }
-

@@ -46,4 +46,3 @@ interactive_polyline_grob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1),
 This function can be used to generate an interactive grob
 path.
 }
-

@@ -44,4 +44,3 @@ interactive_points_grob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 This function can be used to generate interactive grob
 points.
 }
-

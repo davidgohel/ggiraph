@@ -73,4 +73,3 @@ if (require("maps") ) {
 \seealso{
 \code{\link{ggiraph}}
 }
-

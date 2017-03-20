@@ -61,4 +61,3 @@ ggiraph(code = {print(gg_poly_1)})
 \seealso{
 \code{\link{ggiraph}}
 }
-

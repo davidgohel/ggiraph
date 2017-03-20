@@ -50,4 +50,3 @@ ggiraph(code = {print(gg_point)})
 \seealso{
 \code{\link{ggiraph}}
 }
-

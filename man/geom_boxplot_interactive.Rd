@@ -65,4 +65,3 @@ ggiraph(code = print(p), width = .5)
 \seealso{
 \code{\link{ggiraph}}
 }
-

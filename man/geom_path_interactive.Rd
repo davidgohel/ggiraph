@@ -105,4 +105,3 @@ ggiraph(code = {print(gg_path_3)}, hover_css = "stroke-width:10px;")
 \seealso{
 \code{\link{ggiraph}}
 }
-

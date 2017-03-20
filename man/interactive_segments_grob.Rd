@@ -41,4 +41,3 @@ interactive_segments_grob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 This function can be used to generate interactive grob
 segments.
 }
-

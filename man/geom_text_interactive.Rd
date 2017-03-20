@@ -61,4 +61,3 @@ ggiraph(code = {print(gg_text)}, hover_css = "fill:#FF4C3B;font-style:italic;")
 \seealso{
 \code{\link{ggiraph}}
 }
-

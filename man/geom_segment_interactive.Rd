@@ -65,4 +65,3 @@ ggiraph(code = {print(gg_segment_2)})
 \seealso{
 \code{\link{ggiraph}}
 }
-

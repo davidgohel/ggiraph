@@ -44,4 +44,3 @@ interactive_polygon_grob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1), "npc"),
 This function can be used to generate interactive grob
 polygons.
 }
-

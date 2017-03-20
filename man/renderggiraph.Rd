@@ -24,4 +24,3 @@ if( require(shiny) && interactive() ){
 }
 }
 }
-

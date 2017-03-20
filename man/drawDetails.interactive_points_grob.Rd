@@ -15,4 +15,3 @@
 \description{
 draw an interactive_points_grob
 }
-
