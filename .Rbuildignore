@@ -12,3 +12,4 @@
 ^_pkgdown\.yml$
 ^_README\.Rmd$
 ^inst/ggiraph\.gif$
+^inst/tools$
