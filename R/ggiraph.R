@@ -24,7 +24,6 @@
 #' @param ggobj ggplot objet to print. argument \code{code} will
 #' be ignored if this argument is supplied.
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
-#' @param width widget width ratio (0 < width <= 1)
 #' @param width_svg,height_svg svg viewbox width and height in inches
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
@@ -43,7 +42,6 @@
 #' @export
 ggiraph <- function(code, ggobj = NULL,
 	pointsize = 12,
-	width = 0.7,
 	width_svg = 6, height_svg = 6,
 	tooltip_extra_css,
 	hover_css,
@@ -71,8 +69,6 @@ ggiraph <- function(code, ggobj = NULL,
   stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
   stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
   stopifnot(is.numeric(zoom_max))
-  stopifnot(is.numeric(width))
-  stopifnot( 0 < width && width <= 1.0)
 
   if( zoom_max < 1 )
     stop("zoom_max should be >= 1")
@@ -111,9 +107,6 @@ ggiraph <- function(code, ggobj = NULL,
 	  stop("please, do not specify pointer-events in tooltip_extra_css, this parameter is managed by ggiraph.")
 
 
-	padding_bottom <- width * (height_svg / width_svg)
-	width <- sprintf("%.0f%%", width * 100 )
-	padding_bottom <- sprintf("%.0f%%", padding_bottom * 100 )
 	x = list( html = HTML( as.character(data) ), code = js,
 	          tooltip_extra_css = tooltip_extra_css,
 	          hover_css = hover_css,
@@ -123,19 +116,15 @@ ggiraph <- function(code, ggobj = NULL,
 	          zoom_max = zoom_max,
 	          selection_type = selection_type,
 	          selected_css = selected_css,
-	          width = width,
-	          padding_bottom = padding_bottom
+	          ratio = width_svg / height_svg
 	          )
 	unlink(path)
 
 	# create widget
 	htmlwidgets::createWidget(
-			name = 'ggiraph',
-			x,
-			width = NULL,
-			height = NULL,
-			package = 'ggiraph',
-			sizingPolicy = sizingPolicy(knitr.figure = FALSE)
+			name = 'ggiraph', x = x, package = 'ggiraph',
+			sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "100%", defaultHeight = "500px",
+			                            knitr.defaultWidth = "100%", knitr.defaultHeight = "500px")
 	)
 }
 

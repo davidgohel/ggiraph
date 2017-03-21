@@ -22,6 +22,9 @@ HTMLWidgets.widget({
         var tooltip_css = css_tooltip(el.id, x.tooltip_extra_css);
         var selected_css = css_selected(el.id, x.selected_css);
 
+
+        window[el.id + '_ratio'] = x.ratio;
+
         // add css to page
         var sheet = document.createElement('style');
         sheet.innerHTML = data_id_css + tooltip_css + selected_css;
@@ -43,12 +46,6 @@ HTMLWidgets.widget({
                             })));
         }
 
-        d3.select(el)
-            .style( "position", "relative")
-            .style( "vertical-align", "top")
-            .style( "margin", "auto")
-            .style( "width", x.width)
-            .style( "overflow", "hidden");
       },
 
       resize: function(width, height) {
