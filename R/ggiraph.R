@@ -3,10 +3,8 @@
 #' @import rvg
 #' @import grid
 #' @importFrom grDevices dev.off
-#' @importFrom xml2 read_xml
-#' @importFrom xml2 xml_find_all
-#' @importFrom xml2 xml_text
-#' @importFrom xml2 xml_ns
+#' @importFrom xml2 read_xml xml_find_all xml_text xml_ns
+#' @importFrom xml2 xml_remove xml_attr xml_attr<-
 
 #' @title ggiraph
 #'
@@ -78,9 +76,6 @@ ggiraph <- function(code, ggobj = NULL,
 
   if( zoom_max < 1 )
     stop("zoom_max should be >= 1")
-  if( zoom_max == 1 )
-    zoompan = FALSE
-  else zoompan = TRUE
 
 	ggiwid.options = getOption("ggiwid")
 	tmpdir = tempdir()
@@ -101,14 +96,14 @@ ggiraph <- function(code, ggobj = NULL,
 	ggiwid.options$svgid = 1 + ggiwid.options$svgid
 	options("ggiwid"=ggiwid.options)
 
-	svg_container <- paste( scan(path, what = "character", sep = "\n", quiet = TRUE), collapse = "")
 	data <- read_xml( path )
 	scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
 	js <- paste( sapply( scr, xml_text ), collapse = ";")
 
-	unlink(path)
+	xml_remove(scr)
+  xml_attr(data, "width") <- NULL
+  xml_attr(data, "height") <- NULL
 
-	data_id_class <- paste0("cl_data_id_", ggiwid.options$svgid)
 
 	if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
 	  stop("please, do not specify position in tooltip_extra_css, this parameter is managed by ggiraph.")
@@ -119,20 +114,20 @@ ggiraph <- function(code, ggobj = NULL,
 	padding_bottom <- width * (height_svg / width_svg)
 	width <- sprintf("%.0f%%", width * 100 )
 	padding_bottom <- sprintf("%.0f%%", padding_bottom * 100 )
-	x = list( html = HTML( svg_container ), code = js, canvas_id = ggiwid.options$svgid,
-	          data_id_class = data_id_class,
+	x = list( html = HTML( as.character(data) ), code = js,
 	          tooltip_extra_css = tooltip_extra_css,
 	          hover_css = hover_css,
 	          tooltip_opacity = tooltip_opacity,
 	          tooltip_offx = tooltip_offx,
 	          tooltip_offy = tooltip_offy,
 	          zoom_max = zoom_max,
-	          zoompan = zoompan,
 	          selection_type = selection_type,
 	          selected_css = selected_css,
 	          width = width,
 	          padding_bottom = padding_bottom
 	          )
+	unlink(path)
+
 	# create widget
 	htmlwidgets::createWidget(
 			name = 'ggiraph',
@@ -165,10 +160,10 @@ ggiraph <- function(code, ggobj = NULL,
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 
   msger <- sprintf(
-    "Shiny.addCustomMessageHandler('%s',function(message) {var varname = '%s';d3.selectAll(window['%s'] + ' *[data-id]').classed('selected_', false);d3.selectAll(message).each(function(d, i) {d3.selectAll(window['%s'] + ' *[data-id=\"'+ message[i] + '\"]').classed('selected_', true);});window[varname] = message;Shiny.onInputChange(varname, window[varname]);});",
+    "Shiny.addCustomMessageHandler('%s',function(message) {var varname = '%s';d3.selectAll('#%s *[data-id]').classed('selected_%s', false);d3.selectAll(message).each(function(d, i) {d3.selectAll('#%s *[data-id=\"'+ message[i] + '\"]').classed('selected_%s', true);});window[varname] = message;Shiny.onInputChange(varname, window[varname]);});",
     paste0(outputId, "_set"),
     paste0(outputId, "_selected"),
-    paste0(outputId, "_canvas"), paste0(outputId, "_canvas") )
+    outputId, outputId, outputId, outputId)
 
   div(
     singleton( tags$head(tags$script(msger)) ),
