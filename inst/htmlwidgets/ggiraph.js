@@ -45,7 +45,6 @@ HTMLWidgets.widget({
 
         d3.select(el)
             .style( "position", "relative")
-            .style( "padding-bottom", x.padding_bottom)
             .style( "vertical-align", "top")
             .style( "margin", "auto")
             .style( "width", x.width)
