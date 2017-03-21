@@ -7,7 +7,7 @@
 ggiraph(code, ggobj = NULL, pointsize = 12, width_svg = 6,
   height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, zoom_max = 1,
-  selection_type = "multiple", selected_css, ...)
+  selection_type = "multiple", selected_css, flexdashboard = FALSE, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -36,6 +36,9 @@ used to customize tooltip area.}
 when widget is in a Shiny application.}
 
 \item{selected_css}{css to apply when element is selected (shiny only).}
+
+\item{flexdashboard}{should be TRUE when used within a flexdashboard to
+ensure svg will fit in boxes.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }

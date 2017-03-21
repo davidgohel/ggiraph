@@ -104,3 +104,38 @@ function css_selected(id_str, selected_css) {
   var selected_css_ = ".selected_" + id_str + "{" + selected_css + "}";
   return selected_css_;
 }
+
+function set_svg(id_str, x ){
+  d3.select("#" + id_str ).html("<div class=\"container\">" + x.html + "</div>")
+    .style("width", null).style("height", null);
+
+  var ct_obj = d3.select("#" + id_str + " div" );
+  ct_obj.style("width", "100%").style("height", "0")
+    .style("position", "relative")
+    .style("padding-top", Math.round(1 / x.ratio * 100) + "%" );
+
+  var svg_obj = d3.select("#" + id_str + " svg");
+  svg_obj.classed("svg-inline-container", true);
+
+
+}
+
+function resize_(id_str, width, height) {
+
+  if( !window[id_str + '_flexdashboard'] ) return ;
+
+  var svg_elt = d3.select('#' + id_str + " svg");
+  var ratio = window[id_str + '_ratio'];
+  var h_max = width / ratio;
+  if( h_max > height ){
+    var width_ = width * (height / h_max );
+    svg_elt.style("width", width_ ).style("height", height );
+  } else {
+    svg_elt.style("width", width ).style("height", height );
+  }
+
+}
+
+
+
+

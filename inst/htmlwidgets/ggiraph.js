@@ -7,23 +7,18 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // create our sigma object and bind it to the element
-
     return {
       renderValue: function(x) {
-        el.innerHTML = x.html;
+        //el.innerHTML = x.html;
+        set_svg(el.id, x );
         var fn = Function(x.code);
         fn();
-
-        d3.select(el).attr("style", "text-align:center;");
-
+        window[el.id + '_ratio'] = x.ratio;
+        window[el.id + '_flexdashboard'] = x.flexdashboard || HTMLWidgets.viewerMode;
         // generate css elements
         var data_id_css = css_highlight(el.id, x.hover_css);
         var tooltip_css = css_tooltip(el.id, x.tooltip_extra_css);
         var selected_css = css_selected(el.id, x.selected_css);
-
-
-        window[el.id + '_ratio'] = x.ratio;
 
         // add css to page
         var sheet = document.createElement('style');
@@ -46,10 +41,12 @@ HTMLWidgets.widget({
                             })));
         }
 
+        resize_(el.id, width, height);
+
       },
 
       resize: function(width, height) {
-
+        resize_(el.id, width, height);
       }
 
     };

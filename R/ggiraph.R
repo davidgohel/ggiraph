@@ -35,6 +35,8 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
+#' @param flexdashboard should be TRUE when used within a flexdashboard to
+#' ensure svg will fit in boxes.
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @examples
 #' # ggiraph simple example -------
@@ -50,7 +52,7 @@ ggiraph <- function(code, ggobj = NULL,
 	tooltip_offy = 0,
 	zoom_max = 1,
 	selection_type = "multiple",
-	selected_css,
+	selected_css, flexdashboard = FALSE,
 	...) {
 
   if( missing( tooltip_extra_css ))
@@ -108,23 +110,18 @@ ggiraph <- function(code, ggobj = NULL,
 
 
 	x = list( html = HTML( as.character(data) ), code = js,
-	          tooltip_extra_css = tooltip_extra_css,
-	          hover_css = hover_css,
-	          tooltip_opacity = tooltip_opacity,
-	          tooltip_offx = tooltip_offx,
-	          tooltip_offy = tooltip_offy,
+	          tooltip_extra_css = tooltip_extra_css, hover_css = hover_css, selected_css = selected_css,
+	          tooltip_opacity = tooltip_opacity, tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
 	          zoom_max = zoom_max,
 	          selection_type = selection_type,
-	          selected_css = selected_css,
-	          ratio = width_svg / height_svg
+	          ratio = width_svg / height_svg, flexdashboard = flexdashboard
 	          )
 	unlink(path)
 
 	# create widget
 	htmlwidgets::createWidget(
 			name = 'ggiraph', x = x, package = 'ggiraph',
-			sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "100%", defaultHeight = "500px",
-			                            knitr.defaultWidth = "100%", knitr.defaultHeight = "500px")
+			sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "100%", defaultHeight = "500px")
 	)
 }
 
