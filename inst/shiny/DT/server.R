@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
     p <- ggplot(aes(x=wt, y=mpg, tooltip = label, data_id = label, onclick = onclick ),data=data) +
       geom_point_interactive(size = 3) + theme_minimal()
 
-    ggiraph(code = print(p),width = .5,
+    ggiraph(code = print(p),
             hover_css = "fill:red;cursor:pointer;",
             selection_type = "none",
             selected_css = "fill:red;")
