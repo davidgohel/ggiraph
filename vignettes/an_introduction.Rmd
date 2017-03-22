@@ -77,6 +77,8 @@ Default value of hover css is `hover_css = "fill:orange;"`. To see how to change
 
 ## Click actions
 
+### Using onclick
+
 Click actions must be a string column in the dataset containing valid javascript instructions. 
 
 ```{r message=FALSE, warning=FALSE}
@@ -97,5 +99,7 @@ ggiraph(code = print(gg_crime),
         hover_css = "fill-opacity:.3;cursor:pointer;")
 ```
 
+### within shiny
 
+When working with shiny, man can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. It makes possible to click on an element and trigger an action. More details are available here: [shiny](./articles/shiny_usage.html).
 

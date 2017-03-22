@@ -30,6 +30,7 @@ output$plot <- renderggiraph({
   })
 ```
 
+
 ## Selections
 
 It is possible to work with selecteds point on a *ggiraph* plot within a Shiny application.
@@ -61,22 +62,20 @@ session$sendCustomMessage(type = 'myplot_set', message = character(0))
 
 The package contains Shiny examples available in the `shiny` directory of the package (`system.file("shiny", package = "ggiraph")`).
 
-`crimes` and `cars` applications demonstrate multiple and single selections usage.
+### selections usage (server side)
 
 ```{r eval=FALSE}
 shiny::runApp(appDir = system.file("shiny/crimes", package = "ggiraph"), display.mode = "showcase")
 shiny::runApp(appDir = system.file("shiny/cars", package = "ggiraph"), display.mode = "showcase")
+
+# *group* selection
+shiny::runApp(appDir = system.file("shiny/iris", package = "ggiraph"), display.mode = "showcase")
 ```
 
-`DT` demonstrates how to use `onclick` actions on the client side.
+### onclick actions (client side).
 
 ```{r eval=FALSE}
 shiny::runApp(appDir = system.file("shiny/DT", package = "ggiraph"), display.mode = "showcase")
 ```
 
-`iris` demonstrates behavior of selections when some `data_id` are duplicated.
-
-```{r eval=FALSE}
-shiny::runApp(appDir = system.file("shiny/iris", package = "ggiraph"), display.mode = "showcase")
-```
 

@@ -25,6 +25,8 @@ navbar:
     href: articles/custom_animation_effects.html
   - text: shiny
     href: articles/shiny_usage.html
+  - text: sizing
+    href: articles/sizing.html
   - text: Function reference
     href: reference/index.html
   right:
