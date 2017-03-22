@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,13 +51,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/ggiraph.html">Introduction</a>
+  <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
-  <a href="../articles/shiny.html">shiny</a>
+  <a href="../articles/shiny_usage.html">shiny</a>
+</li>
+<li>
+  <a href="../articles/sizing.html">sizing</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -84,20 +89,27 @@
     </div>
 
     
-    <p>Render a ggiraph within an application page.</p>
+    Render a ggiraph within an application page.
     
 
     <pre><span class='fu'>ggiraphOutput</span>(<span class='no'>outputId</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='st'>"100%"</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='st'>"500px"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>outputId</dt>
-      <dd>output variable to read the ggiraph from.</dd>
-      <dt>width</dt>
-      <dd>widget width</dd>
-      <dt>height</dt>
-      <dd>widget height</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>outputId</th>
+      <td>output variable to read the ggiraph from.</td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td>widget width</td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td>widget height</td>
+    </tr>
+    </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

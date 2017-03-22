@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -56,6 +58,9 @@
 </li>
 <li>
   <a href="../articles/shiny_usage.html">shiny</a>
+</li>
+<li>
+  <a href="../articles/sizing.html">sizing</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -84,8 +89,8 @@
     </div>
 
     
-    <p>The geometry is based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot'>geom_boxplot</a></code>.
-See the documentation for those functions for more details.</p>
+    The geometry is based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot'>geom_boxplot</a></code>.
+See the documentation for those functions for more details.
     
 
     <pre><span class='fu'>geom_boxplot_interactive</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"boxplot"</span>,
@@ -95,60 +100,92 @@ See the documentation for those functions for more details.</p>
   <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>mapping</dt>
-      <dd>The aesthetic mapping, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-      <dt>data</dt>
-      <dd>A data frame, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-      <dt>stat</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>position</dt>
-      <dd>Postion adjustment, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-      <dt>...</dt>
-      <dd>other arguments passed on to layer. See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-      <dt>outlier.colour</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>outlier.color</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>outlier.shape</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>outlier.size</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>outlier.stroke</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>notch</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>notchwidth</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>varwidth</dt>
-      <dd>see <code>geom_boxplot</code>.</dd>
-      <dt>na.rm</dt>
-      <dd>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-      <dt>show.legend</dt>
-      <dd>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-      <dt>inherit.aes</dt>
-      <dd>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mapping</th>
+      <td>The aesthetic mapping, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td>A data frame, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    <tr>
+      <th>stat</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>position</th>
+      <td>Postion adjustment, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>other arguments passed on to layer. See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    <tr>
+      <th>outlier.colour</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>outlier.color</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>outlier.shape</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>outlier.size</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>outlier.stroke</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>notch</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>notchwidth</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>varwidth</th>
+      <td>see <code>geom_boxplot</code>.</td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    <tr>
+      <th>show.legend</th>
+      <td>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    <tr>
+      <th>inherit.aes</th>
+      <td>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='ggiraph.html'>ggiraph</a></code></p>
+    <code><a href='ggiraph.html'>ggiraph</a></code>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># add interactive boxplot -------</span>
+    <pre class="examples"><div class='input'><span class='co'># add interactive boxplot -------</span>
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mpg</span>,
   <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>class</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>hwy</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>class</span>)) +
   <span class='fu'>geom_boxplot_interactive</span>()
 
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>p</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>.5</span>)
-
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>p</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'>
 
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mpg</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>drv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>hwy</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>class</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>class</span>)) +
   <span class='fu'>geom_boxplot_interactive</span>(<span class='kw'>outlier.colour</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'>guides</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"none"</span>) + <span class='fu'>theme_minimal</span>()
 
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>p</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</pre>
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>p</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>.5</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
