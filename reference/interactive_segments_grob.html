@@ -31,6 +31,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,13 +51,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/ggiraph.html">Introduction</a>
+  <a href="../articles/an_introduction.html">Introduction</a>
 </li>
 <li>
-  <a href="../articles/custom_effects.html">Custom effects</a>
+  <a href="../articles/custom_animation_effects.html">Animation effects</a>
 </li>
 <li>
-  <a href="../articles/shiny.html">shiny</a>
+  <a href="../articles/shiny_usage.html">shiny</a>
+</li>
+<li>
+  <a href="../articles/sizing.html">sizing</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
@@ -84,8 +89,8 @@
     </div>
 
     
-    <p>This function can be used to generate interactive grob
-segments.</p>
+    This function can be used to generate interactive grob
+segments.
     
 
     <pre><span class='fu'>interactive_segments_grob</span>(<span class='kw'>x0</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0</span>, <span class='st'>"npc"</span>), <span class='kw'>y0</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0</span>, <span class='st'>"npc"</span>),
@@ -94,35 +99,60 @@ segments.</p>
   <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gp</span> <span class='kw'>=</span> <span class='fu'>gpar</span>(), <span class='kw'>vp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x0</dt>
-      <dd> Numeric indicating the starting x-values of the line segments. </dd>
-      <dt>y0</dt>
-      <dd> Numeric indicating the starting y-values of the line
-    segments. </dd>
-      <dt>x1</dt>
-      <dd> Numeric indicating the stopping x-values of the line
-    segments. </dd>
-      <dt>y1</dt>
-      <dd> Numeric indicating the stopping y-values of the line segments.</dd>
-      <dt>tooltip</dt>
-      <dd>tooltip associated with segments</dd>
-      <dt>onclick</dt>
-      <dd>javascript action to execute when segment is clicked</dd>
-      <dt>data_id</dt>
-      <dd>identifiers to associate with segments</dd>
-      <dt>default.units</dt>
-      <dd> A string. </dd>
-      <dt>arrow</dt>
-      <dd>A list describing arrow heads to place at either end
-    of the line segments, as produced by the <code>arrow</code> function.</dd>
-      <dt>name</dt>
-      <dd> A character identifier. </dd>
-      <dt>gp</dt>
-      <dd> An object of class <code>gpar</code>. </dd>
-      <dt>vp</dt>
-      <dd>A Grid viewport object (or NULL).</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x0</th>
+      <td> Numeric indicating the starting x-values of the line segments. </td>
+    </tr>
+    <tr>
+      <th>y0</th>
+      <td> Numeric indicating the starting y-values of the line
+    segments. </td>
+    </tr>
+    <tr>
+      <th>x1</th>
+      <td> Numeric indicating the stopping x-values of the line
+    segments. </td>
+    </tr>
+    <tr>
+      <th>y1</th>
+      <td> Numeric indicating the stopping y-values of the line segments.</td>
+    </tr>
+    <tr>
+      <th>tooltip</th>
+      <td>tooltip associated with segments</td>
+    </tr>
+    <tr>
+      <th>onclick</th>
+      <td>javascript action to execute when segment is clicked</td>
+    </tr>
+    <tr>
+      <th>data_id</th>
+      <td>identifiers to associate with segments</td>
+    </tr>
+    <tr>
+      <th>default.units</th>
+      <td> A string. </td>
+    </tr>
+    <tr>
+      <th>arrow</th>
+      <td>A list describing arrow heads to place at either end
+    of the line segments, as produced by the <code>arrow</code> function.</td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td> A character identifier. </td>
+    </tr>
+    <tr>
+      <th>gp</th>
+      <td> An object of class <code>gpar</code>. </td>
+    </tr>
+    <tr>
+      <th>vp</th>
+      <td>A Grid viewport object (or NULL).</td>
+    </tr>
+    </table>
     
 
   </div>
