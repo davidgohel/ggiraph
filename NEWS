@@ -1,8 +1,14 @@
 # ggiraph 0.3.3
 
+## Enhancement
+
+* widget sizing has been improved and ggiraph function gains new argument
+  `flexdashboard` to make sure the graph fits available room.
+
 ## Bug fixes
 
 * warnings did occur because some default_aes of ggproto were missing
+* slow zoom pan effect is now solved
 
 # ggiraph 0.3.2
 

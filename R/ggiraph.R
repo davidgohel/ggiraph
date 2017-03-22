@@ -35,6 +35,7 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
+#' @param width widget width ratio (0 < width <= 1)
 #' @param flexdashboard should be TRUE when used within a flexdashboard to
 #' ensure svg will fit in boxes.
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
@@ -43,7 +44,7 @@
 #' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(code, ggobj = NULL,
-	pointsize = 12,
+	pointsize = 12, width = 0.7,
 	width_svg = 6, height_svg = 6,
 	tooltip_extra_css,
 	hover_css,
@@ -114,14 +115,14 @@ ggiraph <- function(code, ggobj = NULL,
 	          tooltip_opacity = tooltip_opacity, tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
 	          zoom_max = zoom_max,
 	          selection_type = selection_type,
-	          ratio = width_svg / height_svg, flexdashboard = flexdashboard
+	          ratio = width_svg / height_svg, flexdashboard = flexdashboard, width = width
 	          )
 	unlink(path)
 
 	# create widget
 	htmlwidgets::createWidget(
 			name = 'ggiraph', x = x, package = 'ggiraph',
-			sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "100%", defaultHeight = "500px")
+			sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "70%", defaultHeight = "auto")
 	)
 }
 

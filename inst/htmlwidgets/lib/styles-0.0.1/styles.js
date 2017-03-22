@@ -105,14 +105,15 @@ function css_selected(id_str, selected_css) {
   return selected_css_;
 }
 
-function set_svg(id_str, x ){
+function set_svg(id_str, x, width ){
   d3.select("#" + id_str ).html("<div class=\"container\">" + x.html + "</div>")
     .style("width", null).style("height", null);
-
+  var scale_ = Math.round(width * 100);
   var ct_obj = d3.select("#" + id_str + " div" );
-  ct_obj.style("width", "100%").style("height", "0")
+  ct_obj.style("width", scale_+"%").style("height", "0")
     .style("position", "relative")
-    .style("padding-top", Math.round(1 / x.ratio * 100) + "%" );
+    .style("margin", "auto")
+    .style("padding-top", Math.round(1 / x.ratio * scale_) + "%" );
 
   var svg_obj = d3.select("#" + id_str + " svg");
   svg_obj.classed("svg-inline-container", true);
@@ -136,6 +137,18 @@ function resize_(id_str, width, height) {
 
 }
 
+function resize__(id_str, width, height) {
+  if( window[id_str + '_flexdashboard'] ) return ;
 
+  var width = window[id_str + '_width'];
+  var scale_ = Math.round(width * 100);
+
+  var ct_obj = d3.select("#" + id_str + " div" );
+  ct_obj.style("width", scale_+"%").style("height", "0")
+    .style("position", "relative")
+    .style("margin", "auto")
+    .style("padding-top", Math.round(1 / window[id_str + '_ratio'] * scale_) + "%" );
+
+}
 
 

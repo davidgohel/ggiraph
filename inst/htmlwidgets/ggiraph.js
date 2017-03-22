@@ -10,9 +10,10 @@ HTMLWidgets.widget({
     return {
       renderValue: function(x) {
         //el.innerHTML = x.html;
-        set_svg(el.id, x );
+        set_svg(el.id, x, x.width);
         var fn = Function(x.code);
         fn();
+        window[el.id + '_width'] = x.width;
         window[el.id + '_ratio'] = x.ratio;
         window[el.id + '_flexdashboard'] = x.flexdashboard || HTMLWidgets.viewerMode;
         // generate css elements
@@ -42,11 +43,13 @@ HTMLWidgets.widget({
         }
 
         resize_(el.id, width, height);
+        resize__(el.id, width, height);
 
       },
 
       resize: function(width, height) {
         resize_(el.id, width, height);
+        resize__(el.id, width, height);
       }
 
     };
