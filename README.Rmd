@@ -38,14 +38,16 @@ htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
 
 ## Installation 
 
-##### github
+##### Get development version on github
 
-    # get development version
-    devtools::install_github('davidgohel/ggiraph')
+```{r eval=FALSE}
+devtools::install_github('davidgohel/ggiraph')
+```
 
-##### cran
+##### Get CRAN version
 
-    # get cran version
-    install.packages("ggiraph")
+```{r eval=FALSE}
+install.packages("ggiraph")
+```    
 
 

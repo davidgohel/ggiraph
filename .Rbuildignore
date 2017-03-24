@@ -10,6 +10,6 @@
 ^todo\.md$
 ^docs$
 ^_pkgdown\.yml$
-^_README\.Rmd$
+^README\.Rmd$
 ^inst/ggiraph\.gif$
 ^inst/tools$
