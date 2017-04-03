@@ -89,8 +89,8 @@
     </div>
 
     
-    The geometry is based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment'>geom_segment</a></code>.
-See the documentation for those functions for more details.
+    <p>The geometry is based on <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment'>geom_segment</a></code>.
+See the documentation for those functions for more details.</p>
     
 
     <pre><span class='fu'>geom_segment_interactive</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
@@ -102,50 +102,50 @@ See the documentation for those functions for more details.
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mapping</th>
-      <td>The aesthetic mapping, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>The aesthetic mapping, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td>A data frame, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>A data frame, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>stat</th>
-      <td>The statistical transformation to use on the data for this
-layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>The statistical transformation to use on the data for this
+layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>position</th>
-      <td>Postion adjustment, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>Postion adjustment, see <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>arrow</th>
-      <td>Arrow specification, as created by ?grid::arrow</td>
+      <td><p>Arrow specification, as created by ?grid::arrow</p></td>
     </tr>
     <tr>
       <th>lineend</th>
-      <td>Line end style (round, butt, square)</td>
+      <td><p>Line end style (round, butt, square)</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>show.legend</th>
-      <td>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>inherit.aes</th>
-      <td>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td>other arguments passed on to layer. See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</td>
+      <td><p>other arguments passed on to layer. See <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_point'>geom_point</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <code><a href='ggiraph.html'>ggiraph</a></code>
+    <p><code><a href='ggiraph.html'>ggiraph</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -173,7 +173,7 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
         <span class='fu'>geom_point</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>dataset</span>, <span class='kw'>mapping</span><span class='kw'>=</span><span class='fu'>aes</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>x</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>),
                 <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>shape</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='kw'>fill</span><span class='kw'>=</span><span class='st'>"white"</span>)
 
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_1</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'><span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_2</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
+<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_1</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file("") accepte seulement open = "w+" et open = "w+b" : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div><div class='input'><span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_segment_2</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file("") accepte seulement open = "w+" et open = "w+b" : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
