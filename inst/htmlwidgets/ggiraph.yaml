@@ -3,8 +3,14 @@ dependencies:
     version: 4.3.0
     src: "htmlwidgets/lib/d3-4.3.0"
     script: d3.min.js
-  - name: styles
-    version: 0.0.1
-    src: "htmlwidgets/lib/styles-0.0.1"
-    script: styles.js
+  - name: d3-lasso
+    version: 0.0.5
+    src: "htmlwidgets/lib/d3-lasso-0.0.5"
+    script: d3-lasso.min.js
+  - name: ggiraph
+    version: 0.1.0
+    src: "htmlwidgets/lib/ggiraph-0.1.0"
+    script:
+      - ggiraph-lib.js
+      - global.js
     stylesheet: styles.css
