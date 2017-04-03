@@ -101,4 +101,4 @@ ggiraph(code = print(gg_crime),
 
 ### within shiny
 
-When working with shiny, man can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. It makes possible to click on an element and trigger an action. More details are available in vignette "ggiraph in shiny".
+When working with shiny, man can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. It makes possible to click on an element and trigger an action. More details are available in vignette "ggiraph in shiny". Note that in this case, `onclick` should not be used, both onclick and data_id will need the "click" event.

@@ -53,9 +53,20 @@ Difference from original functions is that the following
 aesthetics are understood: \code{tooltip}, \code{onclick}
 and \code{data_id}.
 
-Tooltips can be displayed when mouse is over graphical elements. On click
-actions can be set with javascript instructions. If id are associated with points,
-they get animated when mouse is over and can be selected when used in shiny apps.
+Tooltips can be displayed when mouse is over graphical elements.
+
+If id are associated with points, they get animated when mouse is
+over and can be selected when used in shiny apps.
+
+On click actions can be set with javascript instructions. This option
+should not be used simultaneously with selections in Shiny
+applications as both features are "on click" features.
+
+When \code{zoom_max} is set, "zoom activate", "zoom desactivate" and
+"zoom init" buttons are available in a toolbar.
+
+When \code{selection} is set to multiple (in Shiny applications), lasso
+selection and lasso anti-selections buttons are available in a toolbar.
 }
 \examples{
 # ggiraph simple example -------
