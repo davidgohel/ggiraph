@@ -1,6 +1,7 @@
 title: ggiraph package
 
 template:
+  package: ardatatemplate
   bootswatch: simplex
 
 reference:
