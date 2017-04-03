@@ -89,17 +89,21 @@
     </div>
 
     
-    Create an interactive graphic to be used in a web browser.
-
-    Use <code>geom_zzz_interactive</code> to create interactive graphical elements.
-
-    Difference from original functions is that the following
+    <p>Create an interactive graphic to be used in a web browser.</p>
+<p>Use <code>geom_zzz_interactive</code> to create interactive graphical elements.</p>
+<p>Difference from original functions is that the following
 aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
-and <code>data_id</code>.
-
-    Tooltips can be displayed when mouse is over graphical elements. On click
-actions can be set with javascript instructions. If id are associated with points,
-they get animated when mouse is over and can be selected when used in shiny apps.
+and <code>data_id</code>.</p>
+<p>Tooltips can be displayed when mouse is over graphical elements.</p>
+<p>If id are associated with points, they get animated when mouse is
+over and can be selected when used in shiny apps.</p>
+<p>On click actions can be set with javascript instructions. This option
+should not be used simultaneously with selections in Shiny
+applications as both features are "on click" features.</p>
+<p>When <code>zoom_max</code> is set, "zoom activate", "zoom desactivate" and
+"zoom init" buttons are available in a toolbar.</p>
+<p>When <code>selection</code> is set to multiple (in Shiny applications), lasso
+selection and lasso anti-selections buttons are available in a toolbar.</p>
     
 
     <pre><span class='fu'>ggiraph</span>(<span class='no'>code</span>, <span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>width_svg</span> <span class='kw'>=</span> <span class='fl'>6</span>,
@@ -112,67 +116,67 @@ they get animated when mouse is over and can be selected when used in shiny apps
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>code</th>
-      <td>Plotting code to execute</td>
+      <td><p>Plotting code to execute</p></td>
     </tr>
     <tr>
       <th>ggobj</th>
-      <td>ggplot objet to print. argument <code>code</code> will
-be ignored if this argument is supplied.</td>
+      <td><p>ggplot objet to print. argument <code>code</code> will
+be ignored if this argument is supplied.</p></td>
     </tr>
     <tr>
       <th>pointsize</th>
-      <td>the default pointsize of plotted text in pixels, default to 12.</td>
+      <td><p>the default pointsize of plotted text in pixels, default to 12.</p></td>
     </tr>
     <tr>
       <th>width</th>
-      <td>widget width ratio (0 &lt; width &lt;= 1)</td>
+      <td><p>widget width ratio (0 &lt; width &lt;= 1)</p></td>
     </tr>
     <tr>
       <th>width_svg, height_svg</th>
-      <td>svg viewbox width and height in inches</td>
+      <td><p>svg viewbox width and height in inches</p></td>
     </tr>
     <tr>
       <th>tooltip_extra_css</th>
-      <td>extra css (added to <code>position: absolute;pointer-events: none;</code>)
-used to customize tooltip area.</td>
+      <td><p>extra css (added to <code>position: absolute;pointer-events: none;</code>)
+used to customize tooltip area.</p></td>
     </tr>
     <tr>
       <th>hover_css</th>
-      <td>css to apply when mouse is hover and element with a data-id attribute.</td>
+      <td><p>css to apply when mouse is hover and element with a data-id attribute.</p></td>
     </tr>
     <tr>
       <th>tooltip_opacity</th>
-      <td>tooltip opacity</td>
+      <td><p>tooltip opacity</p></td>
     </tr>
     <tr>
       <th>tooltip_offx</th>
-      <td>tooltip x offset</td>
+      <td><p>tooltip x offset</p></td>
     </tr>
     <tr>
       <th>tooltip_offy</th>
-      <td>tooltip y offset</td>
+      <td><p>tooltip y offset</p></td>
     </tr>
     <tr>
       <th>zoom_max</th>
-      <td>maximum zoom factor</td>
+      <td><p>maximum zoom factor</p></td>
     </tr>
     <tr>
       <th>selection_type</th>
-      <td>row selection mode (&quot;single&quot;, &quot;multiple&quot;, &quot;none&quot;)
-when widget is in a Shiny application.</td>
+      <td><p>row selection mode ("single", "multiple", "none")
+when widget is in a Shiny application.</p></td>
     </tr>
     <tr>
       <th>selected_css</th>
-      <td>css to apply when element is selected (shiny only).</td>
+      <td><p>css to apply when element is selected (shiny only).</p></td>
     </tr>
     <tr>
       <th>flexdashboard</th>
-      <td>should be TRUE when used within a flexdashboard to
-ensure svg will fit in boxes.</td>
+      <td><p>should be TRUE when used within a flexdashboard to
+ensure svg will fit in boxes.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td>arguments passed on to <code><a href='http://www.rdocumentation.org/packages/rvg/topics/dsvg'>dsvg</a></code></td>
+      <td><p>arguments passed on to <code><a href='http://www.rdocumentation.org/packages/rvg/topics/dsvg'>dsvg</a></code></p></td>
     </tr>
     </table>
     
@@ -189,7 +193,7 @@ ensure svg will fit in boxes.</td>
                 <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>Species</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>tooltip</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>clickjs</span>) ) +
         <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span>()
 
-<span class='fu'>ggiraph</span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_point</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file(&quot;&quot;) accepte seulement open = &quot;w+&quot; et open = &quot;w+b&quot; : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
+<span class='fu'>ggiraph</span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg_point</span>)})</div><div class='output co'>#&gt; <span class='warning'>Warning: file("") accepte seulement open = "w+" et open = "w+b" : utilisation du premier</span></div><div class='output co'>#&gt; <span class='error'>Error in dirname(to): un argument de type vecteur de caractères est attendu</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

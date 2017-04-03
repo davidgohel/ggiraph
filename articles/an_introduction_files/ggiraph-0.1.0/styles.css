@@ -1,0 +1,70 @@
+.ggiraph-toolbar {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 1001;
+    background: rgba(255, 255, 255,.3);
+    border-radius: 5px;
+    padding-top:2px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0s;
+}
+
+.ggiraph-toolbar-block {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.ggiraph-toolbar-icon {
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding-right: 3px;
+}
+
+.drop {
+    stroke: #9E5C42;
+    fill: #9E5C42;
+}
+.drop:hover{
+    stroke: #8B2800;
+    fill: #8B2800;
+}
+.neutral {
+    stroke: #666666;
+    fill: #666666;
+}
+.neutral:hover{
+    stroke: black;
+    fill: black;
+}
+
+
+.svg-inline-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.lasso path {
+  stroke: rgb(80,80,80);
+  stroke-width:2px;
+}
+
+.lasso .drawn {
+  fill-opacity:.05 ;
+}
+
+.lasso .loop_close {
+  fill:none;
+  stroke-dasharray: 4,4;
+}
+
+.lasso .origin {
+  fill:#333333;
+  fill-opacity:.5;
+}
+
+
+
+
