@@ -26,7 +26,7 @@ dataset$clickjs = paste0("alert(\"",dataset$Species, "\")" )
 # plots
 gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
                                color = Species, tooltip = tooltip, onclick = clickjs) ) +
-  geom_point_interactive() + theme_dark()
+  geom_point_interactive() + theme_light()
 
 ggiraph(code = {print(gg_point)}, zoom_max = 4, flexdashboard = TRUE) 
 ```

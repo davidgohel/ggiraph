@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
   })
 
   output$plot <- renderggiraph({
-    ggiraph(code = print(gg_crime), selection_type = "multiple",
+    ggiraph(code = print(gg_crime), selection_type = "multiple", zoom_max = 4,
             hover_css = "fill:#FF3333;stroke:black;cursor:pointer;",
             selected_css = "fill:#FF3333;stroke:black;")
   })

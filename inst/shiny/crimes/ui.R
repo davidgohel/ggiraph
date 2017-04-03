@@ -2,12 +2,12 @@ shinyUI(fluidPage(
   tags$h1("ggiraph selection demo"),
 
   fluidRow(
-    column(width = 6,
+    column(width = 7,
            h4("Select states: "),
            actionButton("reset", label = "Reset selection", width = "100%"),
            ggiraph::ggiraphOutput("plot")
     ),
-    column(width = 6,
+    column(width = 5,
            h4("Selected states"),
            tableOutput("datatab")
     )
