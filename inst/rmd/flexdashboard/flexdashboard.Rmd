@@ -28,7 +28,7 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
                                color = Species, tooltip = tooltip, onclick = clickjs) ) +
   geom_point_interactive() + theme_light()
 
-ggiraph(code = {print(gg_point)}, zoom_max = 4, flexdashboard = TRUE) 
+ggiraph(code = {print(gg_point)}, zoom_max = 4, width = 1) 
 ```
 
 Column {data-width=350}
@@ -40,7 +40,7 @@ Column {data-width=350}
 g <- ggplot(mpg, aes( x = class, tooltip = class,
         data_id = class ) ) +
   geom_bar_interactive()
-ggiraph(code = print(g), flexdashboard = TRUE)
+g
 ```
 
 ### Chart C
@@ -72,6 +72,6 @@ gg_rect = ggplot() +
 		size = 4 )
 
 
-ggiraph(code = {print(gg_rect)}, flexdashboard = TRUE)
+gg_rect
 ```
 

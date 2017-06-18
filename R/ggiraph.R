@@ -5,6 +5,7 @@
 #' @importFrom grDevices dev.off
 #' @importFrom xml2 read_xml xml_find_all xml_text xml_ns
 #' @importFrom xml2 xml_remove xml_attr xml_attr<-
+#' @importFrom uuid UUIDgenerate
 
 #' @title ggiraph
 #'
@@ -113,7 +114,7 @@ ggiraph <- function(code, ggobj = NULL,
 	xml_remove(scr)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
-
+  xml_attr(data, "class") <- "svg-inline-container"
 
 	if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
 	  stop("please, do not specify position in tooltip_extra_css, this parameter is managed by ggiraph.")
@@ -121,20 +122,81 @@ ggiraph <- function(code, ggobj = NULL,
 	  stop("please, do not specify pointer-events in tooltip_extra_css, this parameter is managed by ggiraph.")
 
 
-	x = list( html = HTML( as.character(data) ), code = js,
-	          tooltip_extra_css = tooltip_extra_css, hover_css = hover_css, selected_css = selected_css,
-	          tooltip_opacity = tooltip_opacity, tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
-	          zoom_max = zoom_max,
-	          selection_type = selection_type,
-	          ratio = width_svg / height_svg, flexdashboard = flexdashboard, width = width
-	          )
 	unlink(path)
+	scale_ <- width*100
+	ratio_ <- width_svg / height_svg
+	style_container <- paste0("width:", round(scale_), "%;",
+	       "padding-top:",
+	       round(1 / ratio_ * scale_, 0),  "%;" )
+  id <- gsub("-", "", paste0("zz", UUIDgenerate() ))
 
-	# create widget
-	htmlwidgets::createWidget(
-			name = 'ggiraph', x = x, package = 'ggiraph',
-			sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "70%", defaultHeight = "auto")
-	)
+  dep_dir <- tempfile()
+  dir.create(dep_dir)
+
+  init_prop_name <- paste0("init_prop_", id)
+  array_selected_name <- paste0("array_selected_", id)
+  zoom_name <- paste0("zoom_", id)
+  lasso_name <- paste0("lasso_", id)
+  class_selected_name <- paste0("clicked_", id)
+  widget_id <- paste0("widget_", id)
+
+  js_file <- file.path(dep_dir, paste0("scripts_", id, ".js"))
+
+  js <- paste0("function ", init_prop_name, "(){", js, "};")
+  js <- paste0(js, paste0("var ", array_selected_name, " = [];") )
+  js <- paste0(js, sprintf("var %s = d3.zoom().scaleExtent([%.02f, %.02f]);", zoom_name, 1, zoom_max) )
+  js <- paste0(js, sprintf("var %s = d3.lasso();", lasso_name) )
+  js <- paste0(js, sprintf("var %s = '';", widget_id) )
+
+  # sprintf(
+  #   paste0("function (handlerid){Shiny.addCustomMessageHandler('%s',function(message) ",
+  #          "{",
+  #          "var varname = '%s'",
+  #          "d3.selectAll('#%s svg *[data-id]').classed('%s', false);",
+  #          "d3.selectAll(message).each(function(d, i) {",
+  #          "d3.selectAll('#%s svg *[data-id=\"'+ message[i] + '\"]').classed('%s', true);",
+  #          "});",
+  #          "window[varname] = message;",
+  #          "Shiny.onInputChange(varname, window[varname]);",
+  #          "});};" ),
+  #   paste0(id, "_set"), array_selected_name,
+  #   id, class_selected_name, id, class_selected_name)
+
+  cat(js, file = js_file)
+
+
+  css <- paste0("div.tooltip_", id,
+                " {position:absolute;pointer-events:none;z-index:999;",
+                tooltip_extra_css, "}\n",
+                ".cl_data_id_", id, ":{}.cl_data_id_", id,
+                ":hover{", hover_css, "}\n",
+                ".", class_selected_name, "{", selected_css, "}"
+                )
+
+  dep <- htmlDependency(id, "0.0.1", src = dep_dir, script = basename(js_file) )
+  ui_div_ <- ui_div(id = id, zoomable = (zoom_max > 1),
+                    letlasso = selection_type %in% "multiple",
+                    array_selected_name, class_selected_name )
+  html_ <- paste0("<div id='", id, "' class='container' style='", style_container, "'>",
+                  as.character(data), ui_div_,
+                  "<style>", css, "</style>",
+                  "</div>")
+  x = list( html = html_, uid = id,
+            funname = init_prop_name,
+            sel_array_name = array_selected_name,
+            selected_class = class_selected_name,
+            tooltip_opacity = tooltip_opacity,
+            tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
+            zoom_max = zoom_max,
+            selection_type = selection_type,
+            ratio = width_svg / height_svg,
+            width = width )
+
+  htmlwidgets::createWidget(dependencies = list(dep),
+                            name = 'ggiraph', x = x, package = 'ggiraph',
+                            sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "70%", defaultHeight = "auto")
+  )
+
 }
 
 #' @title Create a ggiraph output element
@@ -157,18 +219,7 @@ ggiraph <- function(code, ggobj = NULL,
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 
-  msger <- sprintf(
-    "Shiny.addCustomMessageHandler('%s',function(message) {var varname = '%s';d3.selectAll('#%s svg *[data-id]').classed('clicked_%s', false);d3.selectAll(message).each(function(d, i) {d3.selectAll('#%s svg *[data-id=\"'+ message[i] + '\"]').classed('clicked_%s', true);});window[varname] = message;Shiny.onInputChange(varname, window[varname]);});",
-    paste0(outputId, "_set"),
-    paste0(outputId, "_selected"),
-    outputId, outputId, outputId, outputId)
-
-
-
-  div(
-    singleton( tags$head(tags$script(msger)) ),
-	  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
-  )
+  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
 }
 
 #' @title Reactive version of ggiraph object
@@ -190,3 +241,51 @@ renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
 	if (!quoted) { expr <- substitute(expr) } # force quoted
 	shinyRenderWidget(expr, ggiraphOutput, env, quoted = TRUE)
 }
+
+
+
+
+
+
+
+
+
+
+zoom_logo_on = "<svg width='1.5em' height='1.5em' viewBox='0 0 512 512'><g><ellipse ry='150' rx='150' cy='213' cx='203.5' stroke-width='50' fill='transparent'/><line y2='455.5' x2='416' y1='331.5' x1='301' stroke-width='50'/></g></svg>";
+zoom_logo_off = "<svg width='1.5em' height='1.5em' viewBox='0 0 512 512'><g><ellipse ry='150' rx='150' cy='213' cx='203.5' stroke-width='50' fill='transparent'/><line y2='455.5' x2='416' y1='331.5' x1='301' stroke-width='50'/><line y2='455' x2='0' y1='0' x1='416' stroke-width='30'/></g></svg>";
+lasso_logo = "<svg width='1.5em' height='1.5em' viewBox='0 0 230 230'><g><ellipse ry='65.5' rx='86.5' cy='94' cx='115.5' stroke-width='20' fill='transparent'/><ellipse ry='11.500001' rx='10.5' cy='153' cx='91.5' stroke-width='20' fill='transparent'/><line y2='210.5' x2='105' y1='164.5' x1='96' stroke-width='20'/></g></svg>";
+arrow_expand_logo = "<svg width='1.5em' height='1.5em' viewBox='0 0 512 512'><g><polygon points='274,209.7 337.9,145.9 288,96 416,96 416,224 366.1,174.1 302.3,238 '/><polygon points='274,302.3 337.9,366.1 288,416 416,416 416,288 366.1,337.9 302.3,274'/><polygon points='238,302.3 174.1,366.1 224,416 96,416 96,288 145.9,337.9 209.7,274'/><polygon points='238,209.7 174.1,145.9 224,96 96,96 96,224 145.9,174.1 209.7,238'/></g><svg>";
+
+ui_div <- function(id, zoomable, letlasso, sel_array_name, selected_class){
+
+  bar_ <- "<div class='ggiraph-toolbar'>";
+  if( letlasso ){
+    bar_ <- paste0(bar_,
+                  "<div class='ggiraph-toolbar-block'>",
+                  sprintf("<a class='ggiraph-toolbar-icon neutral' title='lasso selection' href='javascript:lasso_on(\"%s\", true, \"%s\", \"%s\");'>",
+                          id, sel_array_name, selected_class),
+                  lasso_logo, "</a>",
+                  sprintf("<a class='ggiraph-toolbar-icon drop' title='lasso anti-selection' href='javascript:lasso_on(\"%s\", false, \"%s\", \"%s\");'>", id, sel_array_name, selected_class),
+                  lasso_logo, "</a>", "</div>")
+  }
+  if( zoomable ){
+    bar_ <- paste0(bar_,
+                  "<div class='ggiraph-toolbar-block'>",
+                  "<a class='ggiraph-toolbar-icon neutral' title='pan-zoom reset' href='javascript:zoom_identity(\"",
+                  id,
+                  "\");'>",
+                  arrow_expand_logo,
+                  "</a>",
+                  "<a class='ggiraph-toolbar-icon neutral' title='activate pan-zoom' href='javascript:zoom_on(\"",
+                  id, "\");'>",
+                  zoom_logo_on,
+                  "</a>",
+                  "<a class='ggiraph-toolbar-icon neutral' title='desactivate pan-zoom' href='javascript:zoom_off(\"",
+                  id,
+                  "\");'>", zoom_logo_off, "</a>",
+                  "</div>")
+  }
+  paste0(bar_, "</div>")
+}
+
+#
