@@ -20,6 +20,8 @@ By default offset is 10 pixels horizontally to the mouse position (`tooltip_offx
 
 ```{r message=FALSE}
 library(ggiraph)
+theme_set(theme_minimal())
+
 dataset <- mtcars
 dataset$carname <- row.names(dataset)
 gg_point_1 <- ggplot(dataset, aes(x = disp, y = qsec, tooltip = carname, data_id = carname, color= wt) ) + 

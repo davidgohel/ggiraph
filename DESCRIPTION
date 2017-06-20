@@ -2,7 +2,7 @@ Package: ggiraph
 Type: Package
 Title: Make 'ggplot2' Graphics Interactive
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.3.9000
+Version: 0.3.9003
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -21,7 +21,8 @@ Imports:
     stats,
     plyr,
     rvg (>= 0.1.1),
-    xml2 (>= 1.0.0)
+    xml2 (>= 1.0.0),
+    uuid
 Suggests:
     knitr,
     rmarkdown,
@@ -30,4 +31,4 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
