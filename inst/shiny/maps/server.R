@@ -20,7 +20,7 @@ shinyServer(function(input, output, session) {
   })
 
   output$plot <- renderggiraph({
-    ggiraph(code = print(gg), width = 1, width_svg = 6, height_svg = 4,
+    ggiraph(code = print(gg), width_svg = 6, height_svg = 4,
             zoom_max = 3,
             hover_css = "fill:#666666;cursor:pointer;",
             selection_type = "multiple",

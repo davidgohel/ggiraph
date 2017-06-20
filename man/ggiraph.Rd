@@ -4,10 +4,10 @@
 \alias{ggiraph}
 \title{ggiraph}
 \usage{
-ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.7, width_svg = 6,
+ggiraph(code, ggobj = NULL, pointsize = 12, width = NULL, width_svg = 6,
   height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, zoom_max = 1,
-  selection_type = "multiple", selected_css, flexdashboard = FALSE, ...)
+  selection_type = "multiple", selected_css, flexdashboard = NULL, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -17,7 +17,7 @@ be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{width}{widget width ratio (0 < width <= 1)}
+\item{width, flexdashboard}{deprecated}
 
 \item{width_svg, height_svg}{svg viewbox width and height in inches}
 
@@ -38,9 +38,6 @@ used to customize tooltip area.}
 when widget is in a Shiny application.}
 
 \item{selected_css}{css to apply when element is selected (shiny only).}
-
-\item{flexdashboard}{should be TRUE when used within a flexdashboard to
-ensure svg will fit in boxes.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }

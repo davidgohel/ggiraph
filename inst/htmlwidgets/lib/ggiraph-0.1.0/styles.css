@@ -39,11 +39,20 @@
     fill: black;
 }
 
+.container {
+    position: relative;
+    height: 0;
+    padding:0;
+    margin:auto;
+}
 
 .svg-inline-container {
     position: absolute;
+    margin:auto;
+    width:100%;
     top: 0;
     left: 0;
+    right: 0;
 }
 
 .lasso path {

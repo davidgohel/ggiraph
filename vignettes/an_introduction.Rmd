@@ -23,9 +23,9 @@ gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec,
 
 gg_point_1 <- gg_point_1 + theme_minimal()
 # htmlwidget call
-ggiraph(code = {print(gg_point_1)}, width = .6,
+ggiraph(code = {print(gg_point_1)}, width = .8,
         tooltip_extra_css = "padding:2px;background:rgba(70,70,70,0.1);color:black;border-radius:2px 2px 2px 2px;",
-        hover_css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;")
+        hover_css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;", pointsize = 14)
 
 ```
 
@@ -58,7 +58,7 @@ The first example show how to add tooltip:
 
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 2) 
-ggiraph(code = print(my_gg), width = .7)
+ggiraph(code = print(my_gg) )
 ```
 
 ## hover effects
@@ -68,7 +68,7 @@ Now let's add an hover effect. **Elements associated with a `data_id` will be an
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(
     aes(tooltip = model, data_id = model), size = 2) 
-ggiraph(code = print(my_gg), width = .7, hover_css = "cursor:pointer;fill:red;stroke:red;")
+ggiraph(code = print(my_gg), hover_css = "cursor:pointer;fill:red;stroke:red;")
 ```
 
 Default value of hover css is `hover_css = "fill:orange;"`. To see how to change that, read the *custome_effects* vignette.

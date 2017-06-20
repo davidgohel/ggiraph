@@ -52,18 +52,31 @@ function set_selector(container_id, sel_array_name, selected_class, sel_type, wi
 }
 
 function set_highlight(id) {
-  var widget_id = window["widget_" + id];
-  var sel_data_id = d3.selectAll('#' + widget_id + ' svg *[data-id]');
+  var sel_data_id = d3.selectAll('#' + id + ' svg *[data-id]');
   sel_data_id.classed("cl_data_id_" + id, true);
 }
 
+function set_hover_class(id) {
+  var sel_ = d3.selectAll('#' + id + ' svg *[data-id]');
+  sel_.on("mouseover", function(d) {
+          this.transition()
+              .duration(200)
+              .classed("cl_data_id_" + id, true);
+          })
+      .on("mouseout", function(d) {
+          div.transition()
+              .duration(500)
+              .classed("cl_data_id_" + id, false);
+      });
 
+}
 
 function resize(id, width, height) {
-  var container_id = d3.select('#' + id + ' div').attr("id");
-  var svg = d3.select('#' + id + ' svg');
-  var dady = svg.node().parentNode.parentNode;
-  svg.style("width", dady.style.width ).style("height", dady.style.height );
+  var containerdiv = d3.select('#' + id + " div");
+  var ratio = window["ratio_" + containerdiv.attr("id")];
+  var dady = containerdiv.node().parentNode;
+  var dadybb = dady.getBoundingClientRect();
+  containerdiv.style("width", (dadybb.bottom - dadybb.top) * ratio + "px");
 }
 
 
@@ -204,11 +217,8 @@ HTMLWidgets.widget({
         var fun_ = window[x.funname];
         fun_();
         set_over_effect(el.id);
-
-        set_tooltip(x.uid, x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy);
-
         set_highlight(x.uid);
-
+        set_tooltip(x.uid, x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy);
         if( HTMLWidgets.shinyMode ){
 
           set_selector(x.uid, x.sel_array_name, x.selected_class, x.selection_type, el.id);
@@ -223,6 +233,8 @@ HTMLWidgets.widget({
             Shiny.onInputChange(varname, window[x.sel_array_name]);
           });
 
+        } else{
+          d3.selectAll(".ggiraph-toolbar-block").filter(".shinyonly").remove();
         }
         resize(el.id, width, height);
       },

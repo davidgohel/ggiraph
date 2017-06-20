@@ -47,16 +47,14 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
-#' @param width widget width ratio (0 < width <= 1)
-#' @param flexdashboard should be TRUE when used within a flexdashboard to
-#' ensure svg will fit in boxes.
+#' @param width,flexdashboard deprecated
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @examples
 #' # ggiraph simple example -------
 #' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(code, ggobj = NULL,
-	pointsize = 12, width = 0.7,
+	pointsize = 12, width = NULL,
 	width_svg = 6, height_svg = 6,
 	tooltip_extra_css,
 	hover_css,
@@ -65,17 +63,20 @@ ggiraph <- function(code, ggobj = NULL,
 	tooltip_offy = 0,
 	zoom_max = 1,
 	selection_type = "multiple",
-	selected_css, flexdashboard = FALSE,
+	selected_css, flexdashboard = NULL,
 	...) {
 
   if( missing( tooltip_extra_css ))
     tooltip_extra_css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
   if( missing( hover_css ))
-    hover_css <- "fill:orange;"
+    hover_css <- "fill:orange;stroke:gray;"
   if( missing( selected_css ))
-    selected_css = "fill:orange;"
+    selected_css <- hover_css
 
-
+  if( !is.null(width) )
+    warning("argument 'width' is deprecated and will have no effect.")
+  if( !is.null(flexdashboard) )
+    warning("argument 'flexdashboard' is deprecated and will have no effect.")
 
   stopifnot(selection_type %in% c("single", "multiple", "none"))
   stopifnot(is.numeric(tooltip_offx))
@@ -123,12 +124,13 @@ ggiraph <- function(code, ggobj = NULL,
 
 
 	unlink(path)
-	scale_ <- width*100
+	scale_ <- 100
 	ratio_ <- width_svg / height_svg
-	style_container <- paste0("width:", round(scale_), "%;",
-	       "padding-top:",
-	       round(1 / ratio_ * scale_, 0),  "%;" )
-  id <- gsub("-", "", paste0("zz", UUIDgenerate() ))
+
+	style_container <- paste0(
+	  sprintf("%s:%.0f%%;", "padding-top", 1 / ratio_ * scale_),
+	  sprintf("%s:%.0f%%;", "width", scale_) )
+  id <- gsub("-", "", paste0("uid", UUIDgenerate() ))
 
   dep_dir <- tempfile()
   dir.create(dep_dir)
@@ -139,37 +141,23 @@ ggiraph <- function(code, ggobj = NULL,
   lasso_name <- paste0("lasso_", id)
   class_selected_name <- paste0("clicked_", id)
   widget_id <- paste0("widget_", id)
+  ratio_id <- paste0("ratio_", id)
 
-  js_file <- file.path(dep_dir, paste0("scripts_", id, ".js"))
 
   js <- paste0("function ", init_prop_name, "(){", js, "};")
   js <- paste0(js, paste0("var ", array_selected_name, " = [];") )
+  js <- paste0(js, sprintf("var %s = %.3f;", ratio_id, ratio_) )
   js <- paste0(js, sprintf("var %s = d3.zoom().scaleExtent([%.02f, %.02f]);", zoom_name, 1, zoom_max) )
   js <- paste0(js, sprintf("var %s = d3.lasso();", lasso_name) )
   js <- paste0(js, sprintf("var %s = '';", widget_id) )
 
-  # sprintf(
-  #   paste0("function (handlerid){Shiny.addCustomMessageHandler('%s',function(message) ",
-  #          "{",
-  #          "var varname = '%s'",
-  #          "d3.selectAll('#%s svg *[data-id]').classed('%s', false);",
-  #          "d3.selectAll(message).each(function(d, i) {",
-  #          "d3.selectAll('#%s svg *[data-id=\"'+ message[i] + '\"]').classed('%s', true);",
-  #          "});",
-  #          "window[varname] = message;",
-  #          "Shiny.onInputChange(varname, window[varname]);",
-  #          "});};" ),
-  #   paste0(id, "_set"), array_selected_name,
-  #   id, class_selected_name, id, class_selected_name)
-
+  js_file <- file.path(dep_dir, paste0("scripts_", id, ".js"))
   cat(js, file = js_file)
-
 
   css <- paste0("div.tooltip_", id,
                 " {position:absolute;pointer-events:none;z-index:999;",
                 tooltip_extra_css, "}\n",
-                ".cl_data_id_", id, ":{}.cl_data_id_", id,
-                ":hover{", hover_css, "}\n",
+                ".cl_data_id_", id, ":{}.cl_data_id_", id, ":hover{", hover_css, "}\n",
                 ".", class_selected_name, "{", selected_css, "}"
                 )
 
@@ -188,13 +176,13 @@ ggiraph <- function(code, ggobj = NULL,
             tooltip_opacity = tooltip_opacity,
             tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
             zoom_max = zoom_max,
-            selection_type = selection_type,
-            ratio = width_svg / height_svg,
-            width = width )
+            selection_type = selection_type)
 
   htmlwidgets::createWidget(dependencies = list(dep),
                             name = 'ggiraph', x = x, package = 'ggiraph',
-                            sizingPolicy = sizingPolicy(knitr.figure = FALSE, defaultWidth = "70%", defaultHeight = "auto")
+                            sizingPolicy = sizingPolicy(knitr.figure = FALSE,
+                                                        defaultWidth = "90%",
+                                                        defaultHeight = "500px")
   )
 
 }
@@ -261,7 +249,7 @@ ui_div <- function(id, zoomable, letlasso, sel_array_name, selected_class){
   bar_ <- "<div class='ggiraph-toolbar'>";
   if( letlasso ){
     bar_ <- paste0(bar_,
-                  "<div class='ggiraph-toolbar-block'>",
+                  "<div class='ggiraph-toolbar-block shinyonly'>",
                   sprintf("<a class='ggiraph-toolbar-icon neutral' title='lasso selection' href='javascript:lasso_on(\"%s\", true, \"%s\", \"%s\");'>",
                           id, sel_array_name, selected_class),
                   lasso_logo, "</a>",

@@ -33,6 +33,6 @@ if (require("maps") ) {
                 ),
                 map = states_map) +
     expand_limits(x = states_map$long, y = states_map$lat)
-  ggiraph(code = print(gg_map), width = .8)
+  ggiraph(code = print(gg_map))
 }
 
