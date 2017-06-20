@@ -1,0 +1,1 @@
+function init_prop_uid0ea697ee4dad4050b5d5bb849a472475(){};var array_selected_uid0ea697ee4dad4050b5d5bb849a472475 = [];var ratio_uid0ea697ee4dad4050b5d5bb849a472475 = 1.000;var zoom_uid0ea697ee4dad4050b5d5bb849a472475 = d3.zoom().scaleExtent([1.00, 1.00]);var lasso_uid0ea697ee4dad4050b5d5bb849a472475 = d3.lasso();var widget_uid0ea697ee4dad4050b5d5bb849a472475 = '';
