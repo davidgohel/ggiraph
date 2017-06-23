@@ -61,10 +61,10 @@ Now print the ggiraph:
 ggiraph(code = {print(gg_point_1)}, tooltip_extra_css = tooltip_css )
 ```
 
-Now, let's add a white rectangle with round borders to make it less crude and few other details:
+Now, let's add a gray rectangle with round borders to make it less crude and few other details:
 
 ```{r}
-tooltip_css <- "background-color:white;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;"
+tooltip_css <- "background-color:gray;color:white;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;"
 
 ggiraph(code = {print(gg_point_1)}, tooltip_extra_css = tooltip_css, tooltip_opacity = .75 )
 ```
