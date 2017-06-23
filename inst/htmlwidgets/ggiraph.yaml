@@ -9,5 +9,5 @@ dependencies:
     script: d3-lasso.min.js
   - name: ggiraph
     version: 0.2.0
-    src: "htmlwidgets/lib/ggiraph-0.1.0"
+    src: "htmlwidgets/lib/ggiraph-0.2.0"
     stylesheet: styles.css
