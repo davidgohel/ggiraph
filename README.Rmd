@@ -10,6 +10,17 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
+```{r results='asis', echo=FALSE}
+logo_file <- tempfile(fileext = ".png")
+rsvg::rsvg_png("/Users/davidgohel/Github/ggiraph/inst/ggiraphlogo.svg", file = logo_file, 
+               width = 181, height = 209)
+
+htmltools::span( htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
+        gdtools:::base64_file_encode(filename = logo_file) )))
+```
+
 > Make 'ggplot' Graphics Interactive
 
 [![Travis-CI Build Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
@@ -49,5 +60,4 @@ devtools::install_github('davidgohel/ggiraph')
 ```{r eval=FALSE}
 install.packages("ggiraph")
 ```    
-
 

@@ -3,13 +3,12 @@
 ## Enhancement
 
 * lasso selection has been implemented in Shiny context
-* a toolbar is now available for options, features are "zoom activate", "zoom desactivate", "zoom init",
-"lasso selection" and "lasso anti-selection". Lasso selection is only available in Shiny context.
+* a toolbar for zooming and selecting elements has been implemented.
 
 ## Changes
 
-* zoom is disabled by default and can be activated via a button in the toolbar. It prevents scrooling
-issue (mouse over a zoomable svg steals scroll ability within the document).
+* zoom is disabled by default and can be activated via a button in the toolbar. It prevents scrooling issue (mouse over a zoomable svg steals scroll ability within the document).
+* ggiraph arguments `flexdashboard` and `width` are now deprecated and have no effects
 
 # ggiraph 0.3.3
 
