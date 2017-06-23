@@ -23,20 +23,20 @@
 }
 
 .drop {
-    stroke: #9E5C42;
-    fill: #9E5C42;
+    stroke: #E30C37;
+    fill: #E30C37;
 }
 .drop:hover{
-    stroke: #8B2800;
-    fill: #8B2800;
+    stroke: #333333;
+    fill: #333333;
 }
 .neutral {
-    stroke: #666666;
-    fill: #666666;
+    stroke: #006699;
+    fill: #006699;
 }
 .neutral:hover{
-    stroke: black;
-    fill: black;
+    stroke: #333333;
+    fill: #333333;
 }
 
 .container {
