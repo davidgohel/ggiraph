@@ -7,7 +7,7 @@
 #' @importFrom xml2 xml_remove xml_attr xml_attr<-
 #' @importFrom uuid UUIDgenerate
 
-#' @title ggiraph
+#' @title create a ggiraph object
 #'
 #' @description Create an interactive graphic to be used in a web browser.
 #'
