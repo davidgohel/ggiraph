@@ -10,7 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The **ggiraph** package let R users to make **ggplot interactive**. The package is an htmlwidget. Below an example:
+The **ggiraph** package let R users make **ggplot interactive**. The package is an htmlwidget. Below is an example:
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(ggiraph)
@@ -43,7 +43,7 @@ These understand three aesthetics to let you add interactivity:
 * `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic is mandatory 
   when you want to use an hover effect or when you want to enable selection of points in shiny applications.**
 
-Let's prepare a ggplot object with `mpg` dataset. 
+Let's prepare a ggplot object with the `mpg` dataset. 
 
 ```{r}
 library(ggiraph)
@@ -54,7 +54,7 @@ g <- ggplot(mpg, aes( x = displ, y = cty, color = hwy) )
 
 ## tooltips
 
-The first example show how to add tooltip:
+The first example shows how to add a tooltip:
 
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 2) 
@@ -63,7 +63,7 @@ ggiraph(code = print(my_gg) )
 
 ## hover effects
 
-Now let's add an hover effect. **Elements associated with a `data_id` will be animated when mouse will be hover.**
+Now let's add an hover effect. **Elements associated with a `data_id` will be animated upon mouse over.**
 
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(
@@ -71,7 +71,7 @@ my_gg <- g + geom_point_interactive(
 ggiraph(code = print(my_gg), hover_css = "cursor:pointer;fill:red;stroke:red;")
 ```
 
-Default value of hover css is `hover_css = "fill:orange;"`. To see how to change that, read the *custome_effects* vignette.
+The default value of hover css is `hover_css = "fill:orange;"`. To see how to change that, read the *custome_effects* vignette.
 
 > Note that `data-id` can also be reused within a shiny application. 
 
@@ -99,4 +99,4 @@ ggiraph(code = print(gg_crime), hover_css = "fill-opacity:.3;cursor:pointer;")
 
 ### within shiny
 
-When working with shiny, man can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. It makes possible to click on an element and trigger an action. More details are available in vignette "ggiraph in shiny". Note that in this case, `onclick` should not be used, both onclick and data_id will need the "click" event.
+When working with shiny, you can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. This makes it possible to click on an element and trigger an action. More details are available in vignette "ggiraph in shiny". Note that in this case, `onclick` should not be used, both onclick and data_id will need the "click" event.

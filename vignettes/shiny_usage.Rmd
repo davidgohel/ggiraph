@@ -33,7 +33,7 @@ output$plot <- renderggiraph({
 
 ## Selections
 
-It is possible to work with selecteds point on a *ggiraph* plot within a Shiny application.
+It is possible to work with selected points on a *ggiraph* plot within a Shiny application.
 
 Selection can be of two types: `single` or `multiple`. The ggiraph's parameter `selection_type` will let you specify that. 
 
