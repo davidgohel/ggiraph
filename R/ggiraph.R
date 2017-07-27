@@ -43,6 +43,7 @@
 #' @param tooltip_opacity tooltip opacity
 #' @param tooltip_offx tooltip x offset
 #' @param tooltip_offy tooltip y offset
+#' @param tooltip_zindex tooltip css z-index, default to 999.
 #' @param zoom_max maximum zoom factor
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
@@ -61,6 +62,7 @@ ggiraph <- function(code, ggobj = NULL,
 	tooltip_opacity = .9,
 	tooltip_offx = 10,
 	tooltip_offy = 0,
+	tooltip_zindex = 999,
 	zoom_max = 1,
 	selection_type = "multiple",
 	selected_css, flexdashboard = NULL,
@@ -155,7 +157,7 @@ ggiraph <- function(code, ggobj = NULL,
   cat(js, file = js_file)
 
   css <- paste0("div.tooltip_", id,
-                " {position:absolute;pointer-events:none;z-index:999;",
+                sprintf( " {position:absolute;pointer-events:none;z-index:%.0f;", tooltip_zindex),
                 tooltip_extra_css, "}\n",
                 ".cl_data_id_", id, ":{}.cl_data_id_", id, ":hover{", hover_css, "}\n",
                 ".", class_selected_name, "{", selected_css, "}"

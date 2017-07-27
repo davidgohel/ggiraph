@@ -6,8 +6,9 @@
 \usage{
 ggiraph(code, ggobj = NULL, pointsize = 12, width = NULL, width_svg = 6,
   height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
-  tooltip_offx = 10, tooltip_offy = 0, zoom_max = 1,
-  selection_type = "multiple", selected_css, flexdashboard = NULL, ...)
+  tooltip_offx = 10, tooltip_offy = 0, tooltip_zindex = 999,
+  zoom_max = 1, selection_type = "multiple", selected_css,
+  flexdashboard = NULL, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -31,6 +32,8 @@ used to customize tooltip area.}
 \item{tooltip_offx}{tooltip x offset}
 
 \item{tooltip_offy}{tooltip y offset}
+
+\item{tooltip_zindex}{tooltip css z-index, default to 999.}
 
 \item{zoom_max}{maximum zoom factor}
 
