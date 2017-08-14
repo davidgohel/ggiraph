@@ -1,3 +1,9 @@
+# ggiraph 0.4.1
+
+## Changes
+
+* argument `flexdashboard` is no more deprecated.
+
 # ggiraph 0.4.0
 
 ## Enhancement
