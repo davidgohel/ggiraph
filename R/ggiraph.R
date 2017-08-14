@@ -48,7 +48,9 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
-#' @param width,flexdashboard deprecated
+#' @param width deprecated
+#' @param flexdashboard should be TRUE when used within a flexdashboard to
+#' ensure svg will fit in boxes.
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @examples
 #' # ggiraph simple example -------
@@ -65,7 +67,7 @@ ggiraph <- function(code, ggobj = NULL,
 	tooltip_zindex = 999,
 	zoom_max = 1,
 	selection_type = "multiple",
-	selected_css, flexdashboard = NULL,
+	selected_css, flexdashboard = FALSE,
 	...) {
 
   if( missing( tooltip_extra_css ))
@@ -77,8 +79,6 @@ ggiraph <- function(code, ggobj = NULL,
 
   if( !is.null(width) )
     warning("argument 'width' is deprecated and will have no effect.")
-  if( !is.null(flexdashboard) )
-    warning("argument 'flexdashboard' is deprecated and will have no effect.")
 
   stopifnot(selection_type %in% c("single", "multiple", "none"))
   stopifnot(is.numeric(tooltip_offx))
@@ -117,7 +117,10 @@ ggiraph <- function(code, ggobj = NULL,
 	xml_remove(scr)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
-  xml_attr(data, "class") <- "svg-inline-container"
+
+  if( flexdashboard )
+    xml_attr(data, "class") <- "svg-inline-container"
+  else xml_attr(data, "class") <- "svg-responsive-container"
 
 	if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
 	  stop("please, do not specify position in tooltip_extra_css, this parameter is managed by ggiraph.")
@@ -128,10 +131,12 @@ ggiraph <- function(code, ggobj = NULL,
 	unlink(path)
 	scale_ <- 100
 	ratio_ <- width_svg / height_svg
+	if( flexdashboard )
+  	style_container <- paste0("style='",
+  	  sprintf("%s:%.0f%%;", "padding-top", 1 / ratio_ * scale_),
+  	  sprintf("%s:%.0f%%;", "width", scale_), "' " )
+	else style_container <- ""
 
-	style_container <- paste0(
-	  sprintf("%s:%.0f%%;", "padding-top", 1 / ratio_ * scale_),
-	  sprintf("%s:%.0f%%;", "width", scale_) )
   id <- gsub("-", "", paste0("uid", UUIDgenerate() ))
 
   dep_dir <- tempfile()
@@ -144,6 +149,7 @@ ggiraph <- function(code, ggobj = NULL,
   class_selected_name <- paste0("clicked_", id)
   widget_id <- paste0("widget_", id)
   ratio_id <- paste0("ratio_", id)
+  is_flexdashboard_id <- paste0("fd_", id)
 
 
   js <- paste0("function ", init_prop_name, "(){", js, "};")
@@ -152,6 +158,7 @@ ggiraph <- function(code, ggobj = NULL,
   js <- paste0(js, sprintf("var %s = d3.zoom().scaleExtent([%.02f, %.02f]);", zoom_name, 1, zoom_max) )
   js <- paste0(js, sprintf("var %s = d3.lasso();", lasso_name) )
   js <- paste0(js, sprintf("var %s = '';", widget_id) )
+  js <- paste0(js, sprintf("var %s = %.0f;", is_flexdashboard_id, flexdashboard) )
 
   js_file <- file.path(dep_dir, paste0("scripts_", id, ".js"))
   cat(js, file = js_file)
@@ -167,7 +174,10 @@ ggiraph <- function(code, ggobj = NULL,
   ui_div_ <- ui_div(id = id, zoomable = (zoom_max > 1),
                     letlasso = selection_type %in% "multiple",
                     array_selected_name, class_selected_name )
-  html_ <- paste0("<div id='", id, "' class='container' style='", style_container, "'>",
+
+  div_class <- ""
+  if( flexdashboard ) div_class <- "class='container' "
+  html_ <- paste0("<div id='", id, "' ", div_class, style_container, ">",
                   as.character(data), ui_div_,
                   "<style>", css, "</style>",
                   "</div>")
@@ -178,13 +188,11 @@ ggiraph <- function(code, ggobj = NULL,
             tooltip_opacity = tooltip_opacity,
             tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
             zoom_max = zoom_max,
-            selection_type = selection_type)
+            selection_type = selection_type, flexdashboard = flexdashboard)
 
   htmlwidgets::createWidget(dependencies = list(dep),
                             name = 'ggiraph', x = x, package = 'ggiraph',
-                            sizingPolicy = sizingPolicy(knitr.figure = FALSE,
-                                                        defaultWidth = "90%",
-                                                        defaultHeight = "500px")
+                            sizingPolicy = sizingPolicy(knitr.figure = FALSE)
   )
 
 }

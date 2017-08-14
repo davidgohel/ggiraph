@@ -29,7 +29,7 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
                                tooltip = tooltip, onclick = clickjs) ) +
   geom_point_interactive() + theme_light()
 
-ggiraph(code = {print(gg_point)}, zoom_max = 4, width = 1, hover_css = "stroke:black;fill:orange;") 
+ggiraph(code = {print(gg_point)}, zoom_max = 4, width = 1, hover_css = "stroke:black;fill:orange;", flexdashboard = TRUE) 
 ```
 
 Column {data-width=350}

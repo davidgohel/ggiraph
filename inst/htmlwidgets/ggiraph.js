@@ -73,10 +73,13 @@ function set_hover_class(id) {
 
 function resize(id, width, height) {
   var containerdiv = d3.select('#' + id + " div");
-  var ratio = window["ratio_" + containerdiv.attr("id")];
-  var dady = containerdiv.node().parentNode;
-  var dadybb = dady.getBoundingClientRect();
-  containerdiv.style("width", (dadybb.bottom - dadybb.top) * ratio + "px");
+  var is_fd = window["fd_" + containerdiv.attr("id")];
+  if(is_fd > 0){
+    var ratio = window["ratio_" + containerdiv.attr("id")];
+    var dady = containerdiv.node().parentNode;
+    var dadybb = dady.getBoundingClientRect();
+    containerdiv.style("width", (dadybb.bottom - dadybb.top) * ratio + "px");
+  }
 }
 
 
@@ -212,7 +215,10 @@ HTMLWidgets.widget({
         var div_htmlwidget = d3.select("#" + el.id );
 
         div_htmlwidget.html(x.html);
-        div_htmlwidget.style("position", "relative").style("margin", "auto");
+        if( x.flexdashboard )
+          div_htmlwidget.style("position", "relative").style("margin", "auto");
+
+        div_htmlwidget.style("width", null).style("height", null);
 
         var fun_ = window[x.funname];
         fun_();

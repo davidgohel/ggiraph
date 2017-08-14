@@ -55,6 +55,10 @@
     right: 0;
 }
 
+.svg-responsive-container {
+    width:100%;
+}
+
 .lasso path {
   stroke: rgb(80,80,80);
   stroke-width:2px;
