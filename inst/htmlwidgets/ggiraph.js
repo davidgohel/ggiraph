@@ -16,7 +16,7 @@ function set_over_effect(id){
 
 function set_tooltip(id, tooltip_opacity, tooltip_offx, tooltip_offy) {
 
-  var div = d3.select("body").append("div")
+  var div = d3.select('#' + id).append("div")
       .attr("class", 'tooltip_' + id)
       .style("opacity", 0);
   var sel_tooltiped = d3.selectAll('#' + id + ' svg *[title]');
