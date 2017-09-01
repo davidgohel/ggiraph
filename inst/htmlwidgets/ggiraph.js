@@ -198,6 +198,11 @@ function select_data_id_multiple(selection, sel_array_name, selected_class, id, 
 }
 
 
+function tooltip_remove(id){
+    var subid = d3.select('#' + id + " div" ).attr("id");
+    d3.selectAll(".tooltip_" + subid ).remove();
+}
+
 
 
 HTMLWidgets.widget({
@@ -236,6 +241,11 @@ HTMLWidgets.widget({
             window[x.sel_array_name] = message;
             Shiny.onInputChange(varname, window[x.sel_array_name]);
           });
+
+          Shiny.addCustomMessageHandler(el.id+'_tooltip_remove',function(message) {
+            tooltip_remove(message);
+          });
+
 
         } else{
           d3.selectAll(".ggiraph-toolbar-block").filter(".shinyonly").remove();
