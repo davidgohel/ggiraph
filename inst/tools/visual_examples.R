@@ -1,6 +1,7 @@
 library(purrr)
 library(magrittr)
 library(rmarkdown)
+library(webshot)
 
 
 files <- list.files(system.file("shiny", package="ggiraph"), full.names = TRUE) %>%

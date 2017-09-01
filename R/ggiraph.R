@@ -129,13 +129,7 @@ ggiraph <- function(code, ggobj = NULL,
 
 
 	unlink(path)
-	scale_ <- 100
 	ratio_ <- width_svg / height_svg
-	if( flexdashboard )
-  	style_container <- paste0("style='",
-  	  sprintf("%s:%.0f%%;", "padding-top", 1 / ratio_ * scale_),
-  	  sprintf("%s:%.0f%%;", "width", scale_), "' " )
-	else style_container <- ""
 
   id <- gsub("-", "", paste0("uid", UUIDgenerate() ))
 
@@ -176,7 +170,17 @@ ggiraph <- function(code, ggobj = NULL,
                     array_selected_name, class_selected_name )
 
   div_class <- ""
-  if( flexdashboard ) div_class <- "class='container' "
+  if( !flexdashboard ){
+    div_class <- "class='ggiraph-container' "
+    style_container <- ""
+  } else {
+    div_class <- "class='ggiraph-container flex-container' "
+    style_container <- paste0(
+      "style='",
+      sprintf("%s:%.0f%%;", "padding-top", 1 / ratio_ * 90),
+      "' " )
+  }
+
   html_ <- paste0("<div id='", id, "' ", div_class, style_container, ">",
                   as.character(data), ui_div_,
                   "<style>", css, "</style>",

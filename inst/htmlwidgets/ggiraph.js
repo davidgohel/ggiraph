@@ -215,8 +215,6 @@ HTMLWidgets.widget({
         var div_htmlwidget = d3.select("#" + el.id );
 
         div_htmlwidget.html(x.html);
-        if( x.flexdashboard )
-          div_htmlwidget.style("position", "relative").style("margin", "auto");
 
         div_htmlwidget.style("width", null).style("height", null);
 
