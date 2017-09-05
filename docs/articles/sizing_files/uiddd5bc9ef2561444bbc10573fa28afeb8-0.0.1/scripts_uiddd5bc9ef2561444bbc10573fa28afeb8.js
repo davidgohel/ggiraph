@@ -1,1 +1,0 @@
-function init_prop_uiddd5bc9ef2561444bbc10573fa28afeb8(){};var array_selected_uiddd5bc9ef2561444bbc10573fa28afeb8 = [];var ratio_uiddd5bc9ef2561444bbc10573fa28afeb8 = 1.000;var zoom_uiddd5bc9ef2561444bbc10573fa28afeb8 = d3.zoom().scaleExtent([1.00, 1.00]);var lasso_uiddd5bc9ef2561444bbc10573fa28afeb8 = d3.lasso();var widget_uiddd5bc9ef2561444bbc10573fa28afeb8 = '';
