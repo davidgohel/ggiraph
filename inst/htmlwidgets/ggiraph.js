@@ -56,20 +56,6 @@ function set_highlight(id) {
   sel_data_id.classed("cl_data_id_" + id, true);
 }
 
-function set_hover_class(id) {
-  var sel_ = d3.selectAll('#' + id + ' svg *[data-id]');
-  sel_.on("mouseover", function(d) {
-          this.transition()
-              .duration(200)
-              .classed("cl_data_id_" + id, true);
-          })
-      .on("mouseout", function(d) {
-          div.transition()
-              .duration(500)
-              .classed("cl_data_id_" + id, false);
-      });
-
-}
 
 function resize(id, width, height) {
   var containerdiv = d3.select('#' + id + " div");
@@ -219,7 +205,17 @@ HTMLWidgets.widget({
         window["widget_" + x.uid] = el.id;
         var div_htmlwidget = d3.select("#" + el.id );
 
-        div_htmlwidget.html(x.html);
+        if( HTMLWidgets.shinyMode || x.flexdashboard ){
+          div_htmlwidget.html(x.html);
+        }
+        else if( x.use_wh ){
+          div_htmlwidget.html("<div style='width:"+ width + "px;height:"+ height + "px;'>" +
+            x.html + "</div>");
+        } else {
+          div_htmlwidget.html("<div style='width:"+ x.width + ";'>" +
+            x.html + "</div>");
+        }
+
 
         div_htmlwidget.style("width", null).style("height", null);
 

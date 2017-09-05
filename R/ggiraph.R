@@ -48,7 +48,8 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
-#' @param width deprecated
+#' @param width widget width ratio (0 < width <= 1)
+#' @param use_widget_size use htmlwidget width and height
 #' @param flexdashboard should be TRUE when used within a flexdashboard to
 #' ensure svg will fit in boxes.
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
@@ -57,7 +58,7 @@
 #' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(code, ggobj = NULL,
-	pointsize = 12, width = NULL,
+	pointsize = 12, width = .8,
 	width_svg = 6, height_svg = 6,
 	tooltip_extra_css,
 	hover_css,
@@ -66,6 +67,7 @@ ggiraph <- function(code, ggobj = NULL,
 	tooltip_offy = 0,
 	tooltip_zindex = 999,
 	zoom_max = 1,
+	use_widget_size = FALSE,
 	selection_type = "multiple",
 	selected_css, flexdashboard = FALSE,
 	...) {
@@ -77,8 +79,7 @@ ggiraph <- function(code, ggobj = NULL,
   if( missing( selected_css ))
     selected_css <- hover_css
 
-  if( !is.null(width) )
-    warning("argument 'width' is deprecated and will have no effect.")
+  stopifnot( is.numeric(width), width > 0, width <= 1 )
 
   stopifnot(selection_type %in% c("single", "multiple", "none"))
   stopifnot(is.numeric(tooltip_offx))
@@ -145,7 +146,6 @@ ggiraph <- function(code, ggobj = NULL,
   ratio_id <- paste0("ratio_", id)
   is_flexdashboard_id <- paste0("fd_", id)
 
-
   js <- paste0("function ", init_prop_name, "(){", js, "};")
   js <- paste0(js, paste0("var ", array_selected_name, " = [];") )
   js <- paste0(js, sprintf("var %s = %.3f;", ratio_id, ratio_) )
@@ -192,14 +192,16 @@ ggiraph <- function(code, ggobj = NULL,
             tooltip_opacity = tooltip_opacity,
             tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
             zoom_max = zoom_max,
+            use_wh = use_widget_size, width = sprintf( "%.0f%%", width * 100 ),
             selection_type = selection_type, flexdashboard = flexdashboard)
 
   htmlwidgets::createWidget(dependencies = list(dep),
                             name = 'ggiraph', x = x, package = 'ggiraph',
-                            sizingPolicy = sizingPolicy(knitr.figure = FALSE)
+                            sizingPolicy = sizingPolicy(knitr.figure = TRUE)
   )
 
 }
+
 
 #' @title Create a ggiraph output element
 #' @description Render a ggiraph within an application page.
@@ -218,10 +220,11 @@ ggiraph <- function(code, ggobj = NULL,
 #'   shinyAppDir(appDir = app_dir )
 #' }
 #' }
+#' @importFrom htmltools div
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
-
-  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
+  div( style = sprintf("width:%s;height:%s;", width, height),
+    shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height) )
 }
 
 #' @title Reactive version of ggiraph object
