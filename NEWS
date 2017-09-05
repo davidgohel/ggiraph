@@ -2,7 +2,9 @@
 
 ## Changes
 
-* argument `flexdashboard` is no more deprecated.
+* argument `flexdashboard` and `width` are no more deprecated...
+* ggiraph gains a new argument `use_widget_size` that force usage of htmlwidget size and
+  block the responsive behavior.
 
 # ggiraph 0.4.0
 
