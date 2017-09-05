@@ -11,7 +11,7 @@ ggiraph R package
 Overview
 --------
 
-`ggiraph` is an htmlwidget and a ggplot2 extension. It lets ggplot graphics being animated.
+`ggiraph` is an htmlwidget and a ggplot2 extension. It allows ggplot graphics to be animated.
 
 Animation is made with ggplot geometries that can understand three arguments:
 
