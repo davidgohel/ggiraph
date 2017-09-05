@@ -5,7 +5,7 @@ shinyUI(fluidPage(
     column(width = 7,
            h4("Select states: "),
            actionButton("reset", label = "Reset selection"),
-           ggiraph::ggiraphOutput("plot")
+           ggiraph::ggiraphOutput("plot", width = "70%")
     ),
     column(width = 5,
            h4("Selected states"),

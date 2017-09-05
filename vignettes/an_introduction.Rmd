@@ -23,7 +23,7 @@ gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec,
   scale_color_gradient(low = "#F3C899", high = "#8C120A") 
 
 # htmlwidget call
-ggiraph(code = {print(gg_point_1)}, 
+ggiraph(code = {print(gg_point_1)}, width_svg = 5, height_svg = 4, width = .75,
         tooltip_extra_css = "padding:2px;background:rgba(70,70,70,0.1);color:black;border-radius:2px 2px 2px 2px;",
         hover_css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;", pointsize = 14)
 
