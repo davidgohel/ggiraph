@@ -8,7 +8,7 @@ ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.8, width_svg = 6,
   height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, tooltip_zindex = 999,
   zoom_max = 1, use_widget_size = FALSE, selection_type = "multiple",
-  selected_css, flexdashboard = FALSE, ...)
+  selected_css, flexdashboard = FALSE, dep_dir = NULL, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -46,6 +46,9 @@ when widget is in a Shiny application.}
 
 \item{flexdashboard}{should be TRUE when used within a flexdashboard to
 ensure svg will fit in boxes.}
+
+\item{dep_dir}{the path where the output files are stored. If \code{NULL},
+the current path for temporary files is used.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
