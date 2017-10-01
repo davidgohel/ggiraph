@@ -1,3 +1,10 @@
+# ggiraph 0.4.2
+
+## Changes
+
+* ggiraph has a new argument `dep_dir` that controls the location of the output files.
+
+
 # ggiraph 0.4.1
 
 ## Changes

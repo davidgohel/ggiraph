@@ -52,6 +52,8 @@
 #' @param use_widget_size use htmlwidget width and height
 #' @param flexdashboard should be TRUE when used within a flexdashboard to
 #' ensure svg will fit in boxes.
+#' @param dep_dir the path where the output files are stored. If \code{NULL},
+#'  the current path for temporary files is used. 
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @examples
 #' # ggiraph simple example -------
@@ -70,6 +72,7 @@ ggiraph <- function(code, ggobj = NULL,
 	use_widget_size = FALSE,
 	selection_type = "multiple",
 	selected_css, flexdashboard = FALSE,
+	dep_dir = NULL,
 	...) {
 
   if( missing( tooltip_extra_css ))
@@ -134,8 +137,13 @@ ggiraph <- function(code, ggobj = NULL,
 
   id <- gsub("-", "", paste0("uid", UUIDgenerate() ))
 
-  dep_dir <- tempfile()
-  dir.create(dep_dir)
+  if ( is.null(dep_dir) ) {
+    dep_dir <- tempfile()
+    dir.create(dep_dir)
+  } else {
+    if ( !dir.exists(dep_dir) )
+      stop(dep_dir, " does not exist.", call. = FALSE)
+  }
 
   init_prop_name <- paste0("init_prop_", id)
   array_selected_name <- paste0("array_selected_", id)
