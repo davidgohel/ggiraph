@@ -36,6 +36,8 @@ See the documentation for those functions for more details.
 }
 \examples{
 # add interactive segments to a ggplot -------
+library(ggplot2)
+
 counts <- as.data.frame(table(x = rpois(100,5)))
 counts$x <- as.numeric( as.character(counts$x) )
 counts$xlab <- paste0("bar",as.character(counts$x) )

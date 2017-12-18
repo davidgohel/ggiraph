@@ -5,10 +5,10 @@
 \title{create a ggiraph object}
 \usage{
 ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.8, width_svg = 6,
-  height_svg = 6, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
+  height_svg = 5, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, tooltip_zindex = 999,
-  zoom_max = 1, use_widget_size = FALSE, selection_type = "multiple",
-  selected_css, flexdashboard = FALSE, dep_dir = NULL, ...)
+  zoom_max = 1, selection_type = "multiple", selected_css, dep_dir = NULL,
+  use_widget_size, flexdashboard, ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -18,9 +18,12 @@ be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{width}{widget width ratio (0 < width <= 1)}
+\item{width}{widget width ratio (0 < width <= 1). Unused within shiny
+applications or flexdashboard documents. See below.}
 
-\item{width_svg, height_svg}{svg viewbox width and height in inches}
+\item{width_svg, height_svg}{The width and height of the graphics region in inches.
+The default values are 6 and 5 inches. This will define the aspect ratio of the
+graphic as it will be used to define viewbox attribute of the SVG result.}
 
 \item{tooltip_extra_css}{extra css (added to \code{position: absolute;pointer-events: none;})
 used to customize tooltip area.}
@@ -37,18 +40,17 @@ used to customize tooltip area.}
 
 \item{zoom_max}{maximum zoom factor}
 
-\item{use_widget_size}{use htmlwidget width and height}
-
 \item{selection_type}{row selection mode ("single", "multiple", "none")
 when widget is in a Shiny application.}
 
 \item{selected_css}{css to apply when element is selected (shiny only).}
 
-\item{flexdashboard}{should be TRUE when used within a flexdashboard to
-ensure svg will fit in boxes.}
-
 \item{dep_dir}{the path where the output files are stored. If \code{NULL},
 the current path for temporary files is used.}
+
+\item{use_widget_size}{deprecated}
+
+\item{flexdashboard}{deprecated}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
@@ -76,17 +78,43 @@ When \code{zoom_max} is set, "zoom activate", "zoom desactivate" and
 When \code{selection} is set to multiple (in Shiny applications), lasso
 selection and lasso anti-selections buttons are available in a toolbar.
 }
+\section{Widget sizing}{
+
+ggiraph graphics are responsive, which mean, they will be resized
+according to their container. There are two responsive behavior
+implementation: one for Shiny applications and flexdashboard documents
+and one for other documents (i.e. R markdown and \code{saveWidget}).
+
+When a ggiraph graphic is in a Shiny application or in a flexdashboard
+graphic will be resized according to the arguments \code{width} and
+\code{height} of the function \code{ggiraphOutput}. Default
+values are '100%' and '500px'.
+
+When a ggiraph graphic is in an R markdown document (producing an HTML
+document), the graphic will be resized according to the argument \code{width} of the
+function \code{ggiraph}. Its value is beeing used to define a relative
+width of the graphic within its HTML container. Its height is automatically
+adjusted regarding to the argument \code{width} and the ratio between
+\code{width_svg} and \code{height_svg}.
+
+If this behavior does not fit with your need, I recommand you to use
+package widgetframe that wraps htmlwidgets inside a responsive iframe.
+}
+
 \examples{
 # ggiraph simple example -------
+library(ggplot2)
+
 # create dataset
-dataset = iris
-dataset$tooltip = dataset$Species
-dataset$clickjs = paste0("alert(\\"",dataset$Species, "\\")" )
+dataset = mtcars
+dataset$carname = row.names(mtcars)
 
 # plots
-gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
-		color = Species, tooltip = tooltip, onclick = clickjs) ) +
-	geom_point_interactive()
+gg_point = ggplot(
+  data = dataset,
+  mapping = aes(x = wt, y = qsec, color = disp,
+                tooltip = carname, data_id = carname) ) +
+	geom_point_interactive() + theme_minimal()
 
-ggiraph(code = {print(gg_point)})
+ggiraph(ggobj = gg_point, width = .7 )
 }

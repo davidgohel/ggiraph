@@ -8,6 +8,7 @@
 #' @inheritParams geom_point_interactive
 #' @param width Bar width.
 #' @examples
+#' library(ggplot2)
 #' g <- ggplot(mpg, aes( x = class, tooltip = class,
 #'         data_id = class ) ) +
 #'   geom_bar_interactive()

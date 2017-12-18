@@ -47,6 +47,7 @@ See the documentation for those functions for more details.
 }
 \examples{
 # add interactive paths to a ggplot -------
+library(ggplot2)
 # geom_line_interactive example -----
 
 gg <- ggplot(economics_long,

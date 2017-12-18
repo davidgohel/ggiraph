@@ -11,15 +11,8 @@ knitr::opts_chunk$set(
 ```
 
 
+<img src="tools/ggiraphlogo.svg" data-canonical-src="tools/ggiraphlogo.svg" width="15%"/>
 
-```{r results='asis', echo=FALSE}
-logo_file <- tempfile(fileext = ".png")
-rsvg::rsvg_png("/Users/davidgohel/Github/ggiraph/inst/ggiraphlogo.svg", file = logo_file, 
-               width = 181, height = 209)
-
-htmltools::span( htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
-        gdtools:::base64_file_encode(filename = logo_file) )))
-```
 
 > Make 'ggplot' Graphics Interactive
 
@@ -41,11 +34,8 @@ Animation is made with ggplot geometries that can understand three arguments:
 
 If used within a shiny application, elements associated with an id (`data_id`) can be selected and manipulated on client and server sides.
 
-```{r results='asis', echo=FALSE}
-htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
-        gdtools:::base64_file_encode(filename = "/Users/davidgohel/Github/ggiraph/inst/ggiraph.gif")
-        ))
-```
+<img src="tools/ggiraph.gif" data-canonical-src="tools/ggiraph.gif"/>
+
 
 ## Installation 
 

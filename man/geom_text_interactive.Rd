@@ -39,6 +39,8 @@ See the documentation for those functions for more details.
 }
 \examples{
 # add interactive polygons to a ggplot -------
+library(ggplot2)
+
 ## the data
 dataset = mtcars
 dataset$label = row.names(mtcars)

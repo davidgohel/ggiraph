@@ -32,6 +32,8 @@ See the documentation for those functions for more details.
 }
 \examples{
 # add interactive polygons to a ggplot -------
+library(ggplot2)
+
 # create data
 ids <- factor(c("1.1", "2.1", "1.2", "2.2", "1.3", "2.3"))
 

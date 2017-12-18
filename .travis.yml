@@ -1,8 +1,7 @@
-language: r
-
+language: R
 cache: packages
 
-warnings_are_errors: false
-
-r_github_packages:
-  - hadley/ggplot2
+r:
+ - oldrel
+ - release
+ - devel

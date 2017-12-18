@@ -1,3 +1,5 @@
+library(ggplot2)
+
 dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
 	x2 = c(2, 4, 3, 6, 6),
 	y1 = c( 1, 1, 4, 1, 3),

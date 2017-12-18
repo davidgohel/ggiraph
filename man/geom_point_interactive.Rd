@@ -35,17 +35,20 @@ The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be
 }
 \examples{
 # add interactive points to a ggplot -------
+library(ggplot2)
+
 # create dataset
-dataset = iris
-dataset$tooltip = dataset$Species
-dataset$clickjs = paste0("alert(\\"",dataset$Species, "\\")" )
+dataset = mtcars
+dataset$carname = row.names(mtcars)
 
 # plots
-gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
-		color = Species, tooltip = tooltip, onclick = clickjs) ) +
-	geom_point_interactive()
+gg_point = ggplot(
+  data = dataset,
+  mapping = aes(x = wt, y = qsec, color = disp,
+                tooltip = carname, data_id = carname) ) +
+	geom_point_interactive() + theme_minimal()
 
-ggiraph(code = {print(gg_point)})
+ggiraph(ggobj = gg_point, width = .7 )
 }
 \seealso{
 \code{\link{ggiraph}}

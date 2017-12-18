@@ -33,6 +33,7 @@ The geometry is based on \code{\link[ggplot2]{geom_bar}}.
 See the documentation for those functions for more details.
 }
 \examples{
+library(ggplot2)
 g <- ggplot(mpg, aes( x = class, tooltip = class,
         data_id = class ) ) +
   geom_bar_interactive()

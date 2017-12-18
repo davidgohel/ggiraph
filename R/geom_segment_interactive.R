@@ -71,8 +71,10 @@ GeomInteractiveSegment <- ggproto("GeomSegment", Geom,
 
 			data$group <- 1:nrow(data)
 			starts <- subset(data, select = c(-xend, -yend))
-			ends <- plyr::rename(subset(data, select = c(-x, -y)), c("xend" = "x", "yend" = "y"),
-					warn_missing = FALSE)
+
+			ends <- subset(data, select = c(-x, -y))
+			names(ends)[names(ends) %in% "xend"] <- "x"
+			names(ends)[names(ends) %in% "yend"] <- "y"
 
 			pieces <- rbind(starts, ends)
 			pieces <- pieces[order(pieces$group),]

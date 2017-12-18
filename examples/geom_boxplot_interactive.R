@@ -1,3 +1,5 @@
+library(ggplot2)
+
 p <- ggplot(mpg,
   aes(x = class, y = hwy, tooltip = class)) +
   geom_boxplot_interactive()

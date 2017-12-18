@@ -47,14 +47,14 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 				aesthetics <- setdiff(
 						names(data), c("x", "y", "xmin", "xmax", "ymin", "ymax")
 				)
+        # browser()
+        polys <- lapply(split(data, seq_len(nrow(data)) ), function(row) {
+          poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
+          aes <- as.data.frame(row[aesthetics],
+                               stringsAsFactors = FALSE)[rep(1,5), ]
 
-				polys <- plyr::alply(data, 1, function(row) {
-							poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
-							aes <- as.data.frame(row[aesthetics],
-									stringsAsFactors = FALSE)[rep(1,5), ]
-
-							GeomInteractivePolygon$draw_panel(cbind(poly, aes), panel_scales, coord)
-						})
+          GeomInteractivePolygon$draw_panel(cbind(poly, aes), panel_scales, coord)
+        } )
 
 				setGrobName("bar", do.call("grobTree", polys))
 			} else {
@@ -106,6 +106,7 @@ rect_to_poly <- function(xmin, xmax, ymin, ymax) {
 #' @rdname geom_rect_interactive
 #' @export
 #' @examples
+#' library(ggplot2)
 #' df <- data.frame(
 #'   id = rep(c("a", "b", "c", "d", "e"), 2),
 #'   x = rep(c(2, 5, 7, 9, 12), 2),

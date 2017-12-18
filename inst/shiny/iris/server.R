@@ -14,7 +14,7 @@ shinyServer(function(input, output, session) {
     ggiraph(code = print(p),
             hover_css = "fill:red;cursor:pointer;",
             selection_type = "single",
-            selected_css = "fill:red;")
+            selected_css = "fill:red;", width = 1)
   })
 
   observe( {

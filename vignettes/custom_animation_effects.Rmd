@@ -19,6 +19,7 @@ The arguments `tooltip_offx` and `tooltip_offy` are used to offset tooltip posit
 By default the offset is 10 pixels horizontally to the mouse position (`tooltip_offx=10`) and 0 pixels vertically (`tooltip_offx=10`).
 
 ```{r message=FALSE}
+library(ggplot2)
 library(ggiraph)
 theme_set(theme_minimal())
 

@@ -44,6 +44,8 @@ rectangles should be small.
 }
 \examples{
 # add interactive polygons to a ggplot -------
+library(ggplot2)
+
 dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
 	x2 = c(2, 4, 3, 6, 6),
 	y1 = c( 1, 1, 4, 1, 3),
@@ -70,6 +72,7 @@ gg_rect = ggplot() +
 
 
 ggiraph(code = {print(gg_rect)})
+library(ggplot2)
 df <- data.frame(
   id = rep(c("a", "b", "c", "d", "e"), 2),
   x = rep(c(2, 5, 7, 9, 12), 2),

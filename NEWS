@@ -3,6 +3,7 @@
 ## Changes
 
 * ggiraph has a new argument `dep_dir` that controls the location of the output files.
+* depraction of argument `use_widget_size` and flexdashboard
 
 
 # ggiraph 0.4.1

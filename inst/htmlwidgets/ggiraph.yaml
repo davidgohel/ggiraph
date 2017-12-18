@@ -8,6 +8,12 @@ dependencies:
     src: "htmlwidgets/lib/d3-lasso-0.0.5"
     script: d3-lasso.min.js
   - name: ggiraph
-    version: 0.2.0
-    src: "htmlwidgets/lib/ggiraph-0.2.0"
+    version: 0.3.0
+    src: "htmlwidgets/lib/ggiraph-0.3.0"
     stylesheet: styles.css
+    script:
+      - ggiraph_utils.js
+      - ggiraph_over_effect.js
+      - ggiraph_zoom.js
+      - ggiraph_tooltip.js
+      - ggiraph_selector.js

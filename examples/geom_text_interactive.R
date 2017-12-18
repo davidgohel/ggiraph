@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ## the data
 dataset = mtcars
 dataset$label = row.names(mtcars)

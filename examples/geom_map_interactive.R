@@ -1,3 +1,5 @@
+library(ggplot2)
+
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
 # create tooltips and onclick events

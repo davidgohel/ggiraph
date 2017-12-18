@@ -1,5 +1,7 @@
 .ggiraph-toolbar {
     position: absolute;
+    text-align:center;
+    width:100%;
     top: 3px;
     right: 3px;
     z-index: 1001;
@@ -37,30 +39,6 @@
 .neutral:hover{
     stroke: #333333;
     fill: #333333;
-}
-
-.ggiraph-container {
-    position: relative;
-    margin:auto;
-}
-
-.flex-container {
-    height: 0;
-    padding:0;
-    width:100%;
-}
-
-.svg-inline-container {
-    position: absolute;
-    margin:auto;
-    width:100%;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-.svg-responsive-container {
-    width:100%;
 }
 
 .lasso path {

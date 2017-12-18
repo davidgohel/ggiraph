@@ -43,7 +43,6 @@ geom_path_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 
 #' @importFrom stats complete.cases
 #' @importFrom stats ave
-#' @importFrom plyr ddply
 GeomPathInteractive <- ggproto("GeomPath", Geom,
 		draw_panel = function(data, panel_scales, coord, arrow = NULL,
 				lineend = "butt", linejoin = "round", linemitre = 1,
@@ -67,7 +66,7 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 			kept <- stats::ave(missing, data$group, FUN = keep)
 			data <- data[kept, ]
 			# must be sorted on group
-			data <- plyr::arrange(data, group)
+			data <- data[order(data$group),]
 
 			if (!all(kept) && !na.rm) {
 				warning("Removed ", sum(!kept), " rows containing missing values",
@@ -82,12 +81,16 @@ GeomPathInteractive <- ggproto("GeomPath", Geom,
 			if (nrow(munched) < 2) return(zeroGrob())
 
 			# Work out whether we should use lines or segments
-			attr <- plyr::ddply(munched, "group", function(df) {
-						data.frame(
-								solid = identical(unique(df$linetype), 1),
-								constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1
-						)
-					})
+			attr <- split(munched, munched$group)
+			attr <- lapply(attr, function(df){
+			  data.frame(
+			    group = unique(df$group),
+			    solid = identical(unique(df$linetype), 1),
+			    constant = nrow(unique(df[, c("alpha", "colour","size", "linetype")])) == 1,
+			    stringsAsFactors = FALSE
+			  )
+			})
+			attr <- do.call(rbind, attr)
 			solid_lines <- all(attr$solid)
 			constant <- all(attr$constant)
 			if (!solid_lines && !constant) {

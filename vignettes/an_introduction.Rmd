@@ -13,6 +13,7 @@ vignette: >
 The **ggiraph** package let R users make **ggplot interactive**. The package is an htmlwidget. Below is an example:
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
 library(ggiraph)
 theme_set(theme_minimal())
 
@@ -46,6 +47,7 @@ These understand three aesthetics to let you add interactivity:
 Let's prepare a ggplot object with the `mpg` dataset. 
 
 ```{r}
+library(ggplot2)
 library(ggiraph)
 
 head(mpg)

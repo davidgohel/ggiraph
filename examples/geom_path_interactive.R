@@ -1,3 +1,4 @@
+library(ggplot2)
 # geom_line_interactive example -----
 
 gg <- ggplot(economics_long,

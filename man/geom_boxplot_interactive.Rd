@@ -49,6 +49,8 @@ See the documentation for those functions for more details.
 }
 \examples{
 # add interactive boxplot -------
+library(ggplot2)
+
 p <- ggplot(mpg,
   aes(x = class, y = hwy, tooltip = class)) +
   geom_boxplot_interactive()
