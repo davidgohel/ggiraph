@@ -88,7 +88,9 @@ and one for other documents (i.e. R markdown and \code{saveWidget}).
 When a ggiraph graphic is in a Shiny application or in a flexdashboard
 graphic will be resized according to the arguments \code{width} and
 \code{height} of the function \code{ggiraphOutput}. Default
-values are '100%' and '500px'.
+values are '100%' and '500px'. These arguments determine the
+outer bounding box (and \code{width_svg} and \code{height_svg}
+determines the proportions.
 
 When a ggiraph graphic is in an R markdown document (producing an HTML
 document), the graphic will be resized according to the argument \code{width} of the

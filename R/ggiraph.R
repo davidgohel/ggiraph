@@ -1,6 +1,6 @@
-#' @import htmlwidgets
-#' @import htmltools
-#' @import rvg
+#' @importFrom rvg dsvg rvg_tracer_on rvg_tracer_off set_attr
+#' @importFrom htmltools htmlDependency
+#' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget
 #' @import grid
 #' @import ggplot2
 #' @importFrom grDevices dev.off
@@ -69,7 +69,9 @@
 #' When a ggiraph graphic is in a Shiny application or in a flexdashboard
 #' graphic will be resized according to the arguments \code{width} and
 #' \code{height} of the function \code{ggiraphOutput}. Default
-#' values are '100%' and '500px'.
+#' values are '100%' and '500px'. These arguments determine the
+#' outer bounding box (and \code{width_svg} and \code{height_svg}
+#' determines the proportions.
 #'
 #' When a ggiraph graphic is in an R markdown document (producing an HTML
 #' document), the graphic will be resized according to the argument \code{width} of the
@@ -226,7 +228,6 @@ ggiraph <- function(code, ggobj = NULL,
 #'   shinyAppDir(appDir = app_dir )
 #' }
 #' }
-#' @importFrom htmltools div
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
   if( "auto" %in% height )
