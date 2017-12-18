@@ -13,8 +13,8 @@ knitr::opts_chunk$set(
 
 ```{r results='asis', echo=FALSE}
 logo_file <- tempfile(fileext = ".png")
-rsvg::rsvg_png("tools/ggiraphlogo.svg", file = logo_file, 
-               width = 181, height = 209)
+rsvg::rsvg_png(system.file(package = "ggiraph", "medias", "ggiraphlogo.svg"), 
+               file = logo_file, width = 181, height = 209)
 
 htmltools::span( htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
         gdtools:::base64_file_encode(filename = logo_file) )))
@@ -42,7 +42,7 @@ If used within a shiny application, elements associated with an id (`data_id`) c
 
 ```{r results='asis', echo=FALSE}
 htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
-        gdtools:::base64_file_encode(filename = "tools/ggiraph.gif")
+        gdtools:::base64_file_encode(filename = system.file(package = "ggiraph", "medias", "ggiraph.gif"))
         ))
 ```
 
