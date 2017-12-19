@@ -4,7 +4,7 @@
 \alias{ggiraph}
 \title{create a ggiraph object}
 \usage{
-ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.8, width_svg = 6,
+ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.75, width_svg = 6,
   height_svg = 5, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, tooltip_zindex = 999,
   zoom_max = 1, selection_type = "multiple", selected_css, dep_dir = NULL,

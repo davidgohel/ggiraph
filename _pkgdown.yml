@@ -20,12 +20,8 @@ navbar:
   title: ggiraph
   type: default
   left:
-  - text: Introduction
-    href: articles/an_introduction.html
-  - text: Animation effects
-    href: articles/custom_animation_effects.html
-  - text: shiny
-    href: articles/shiny_usage.html
+  - text: Using ggiraph
+    href: articles/offcran/using_ggiraph.html
   - text: Function reference
     href: reference/index.html
   right:

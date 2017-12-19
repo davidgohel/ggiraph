@@ -85,7 +85,7 @@
 #' @export
 ggiraph <- function(code, ggobj = NULL,
                     pointsize = 12,
-                    width = .8,
+                    width = .75,
                     width_svg = 6, height_svg = 5,
                     tooltip_extra_css,
                     hover_css,

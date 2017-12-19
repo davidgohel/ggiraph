@@ -12,3 +12,4 @@
 ^_pkgdown\.yml$
 ^README\.Rmd$
 ^visualtests$
+^vignettes/offcran$

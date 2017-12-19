@@ -1,0 +1,12 @@
+---
+title: "Using ggiraph"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using ggiraph}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<meta http-equiv="refresh" content="0; URL='https://davidgohel.github.io/ggiraph/offcran/using_ggiraph.html'" />
+
+<p>If not automatically redirected, please visit (<a href="https://davidgohel.github.io/ggiraph/offcran/using_ggiraph.html">https://davidgohel.github.io/ggiraph/offcran/using_ggiraph.html</a>) for the latest vignette.</p>

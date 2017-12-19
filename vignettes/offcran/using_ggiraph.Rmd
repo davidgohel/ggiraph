@@ -1,0 +1,285 @@
+---
+title: "Using ggiraph"
+output: 
+  rmarkdown::html_vignette:
+    toc: true 
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Using ggiraph}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+The **ggiraph** package let R users make **ggplot interactive**. The package is an htmlwidget.
+The following graphic is produced by calling `ggiraph()` on a `ggplot` object.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(ggiraph)
+theme_set(theme_minimal())
+
+# geom_point_interactive example
+gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec, 
+		color = wt, tooltip = row.names(mtcars), data_id = row.names(mtcars) ) ) + 
+	geom_point_interactive(size=2) + 
+  scale_color_gradient(low = "#F3C899", high = "#8C120A") 
+
+# htmlwidget call
+ggiraph(code = {print(gg_point_1)}, width_svg = 5, height_svg = 4, width = .75,
+        tooltip_extra_css = "padding:2px;background:rgba(70,70,70,0.1);color:black;border-radius:2px 2px 2px 2px;",
+        hover_css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;")
+
+```
+
+## Introduction
+
+It extends ggplot2 with new `geom` functions:
+
+```{r echo=FALSE, results='asis'}
+geoms_ <- objects(envir = as.environment("package:ggiraph"), pattern = "^geom_([a-zA-Z0-9]*)_interactive$")
+htmltools::tags$ul( lapply( geoms_, htmltools::tags$li ) )
+```
+
+These understand three aesthetics to let you add interactivity:
+
+* `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
+* `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
+* `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic is mandatory 
+  when you want to use an hover effect or when you want to enable selection of points in shiny applications.**
+
+Let's prepare a ggplot object with the `mpg` dataset. 
+
+```{r}
+library(ggplot2)
+library(ggiraph)
+
+head(mpg)
+g <- ggplot(mpg, aes( x = displ, y = cty, color = hwy) )
+```
+
+### tooltips
+
+The first example shows how to add a tooltip:
+
+```{r message=FALSE}
+my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 2) 
+ggiraph(code = print(my_gg) )
+```
+
+### hover effects
+
+Now let's add an hover effect. **Elements associated with a `data_id` will be animated upon mouse over.**
+
+```{r message=FALSE}
+my_gg <- g + geom_point_interactive(
+    aes(tooltip = model, data_id = model), size = 2) 
+ggiraph(code = print(my_gg), hover_css = "cursor:pointer;fill:red;stroke:red;")
+```
+
+The default value of hover css is `hover_css = "fill:orange;"`. [Read more about custom animation effects](#custom-animation-effects)...
+
+> Note that `data-id` can also be reused within a shiny application. 
+
+### Click actions
+
+#### Using onclick
+
+Click actions must be a string column in the dataset containing valid javascript instructions. 
+
+```{r message=FALSE, warning=FALSE}
+crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
+head(crimes)
+
+# create an 'onclick' column
+crimes$onclick <- sprintf("window.open(\"%s%s\")",
+  "http://en.wikipedia.org/wiki/", as.character(crimes$state) )
+
+gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault, color = UrbanPop )) + 
+  geom_point_interactive(
+    aes( data_id = state, tooltip = state, onclick = onclick ), size = 3 ) + 
+  scale_colour_gradient(low = "#999999", high = "#FF3333")
+
+ggiraph(code = print(gg_crime), hover_css = "fill-opacity:.3;cursor:pointer;")
+```
+
+#### Within shiny
+
+When working with shiny, you can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. This makes it possible to click on an element and trigger an action. More details are available in vignette "ggiraph in shiny". Note that in this case, `onclick` should not be used, both onclick and data_id will need the "click" event. [Read more about shiny integration](#shiny-usage)...
+
+
+
+
+## Custom animation effects
+
+
+With `ggiraph`, you can customize tooltip style and mouse hover effects. This requires usage of `css`.
+
+### Tooltip position
+
+The arguments `tooltip_offx` and `tooltip_offy` are used to offset tooltip position. 
+
+By default the offset is 10 pixels horizontally to the mouse position (`tooltip_offx=10`) and 0 pixels vertically (`tooltip_offx=10`).
+
+```{r message=FALSE}
+library(ggplot2)
+library(ggiraph)
+theme_set(theme_minimal())
+
+dataset <- mtcars
+dataset$carname <- row.names(dataset)
+gg_point_1 <- ggplot(dataset, aes(x = disp, y = qsec, tooltip = carname, data_id = carname, color= wt) ) + 
+	geom_point_interactive(size=3)
+
+# htmlwidget call
+ggiraph(code = {print(gg_point_1)}, tooltip_offx = 20, tooltip_offy = -10 )
+```
+
+
+### Tooltip style
+
+The `ggiraph` function has an argument named `tooltip_extra_css`. It can be used to add css declarations to customize tooltip rendering.
+
+> Each css declaration includes a property name and an associated value. Property names and values are separated by colons and name-value pairs always end with a semicolon. For example `color:gray;text-align:center;`. Common properties are : 
+
+> * background-color: background color 
+* color: elements color
+* border-style, border-width, border-color: border properties
+* width, height: size of tooltip
+* padding: space around content
+
+Tooltip opacity can be defined with the argument `tooltip_opacity` (default to 0.9).
+
+Let's custom tooltip as:
+
+* italic font 
+* no background color
+
+```{r}
+tooltip_css <- "background-color:transparent;font-style:italic;"
+```
+
+Now print the ggiraph:
+
+```{r message=FALSE}
+ggiraph(code = {print(gg_point_1)}, tooltip_extra_css = tooltip_css )
+```
+
+Now, let's add a gray rectangle with round borders and a few other details to make it less crude:
+
+```{r}
+tooltip_css <- "background-color:gray;color:white;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;"
+
+ggiraph(code = {print(gg_point_1)}, tooltip_extra_css = tooltip_css, tooltip_opacity = .75 )
+```
+
+> Do not surround `tooltip_extra_css` value by curly braces, ggiraph takes care of that.
+
+### Hover effects
+
+Hover effects occur when the mouse is **over elements that have a `data-id` attribute** (resulting from using argument `data_id` in interactive geom functions). It will only modify SVG element rendering when the mouse is over an element. 
+
+Mouse over effects can be configured with the `hover_css` argument in the same way `tooltip_extra_css` is used for customizing tooltip rendering.
+
+css here is relative to SVG elements. SVG attributes are listed [here](https://developer.mozilla.org/fr/docs/Web/SVG/Attribute). Common properties are: 
+
+* fill: background color 
+* stroke: color
+* stroke-width: border width
+* r: circle radius (**no effect if Firefox is used**).
+
+To fill elements in red:
+
+```{r}
+ggiraph(code = {print(gg_point_1)}, hover_css = "fill:red;r:10pt;" )
+```
+
+### Zoom
+
+You can activate zoom; set `zoom_max` (maximum zoom factor) to a value 
+greater than 1. If the argument is greater than 1, a toolbar will 
+appear when mouse will be over the graphic. 
+
+Click on the icons in the toolbar to activate or desactivate the zoom.
+
+```{r}
+ggiraph(code = print(gg_point_1), zoom_max = 5)
+```
+
+
+
+## Shiny usage
+
+
+`ggiraph` is an htmlwidget. It can be used within a Shiny application. In 
+shiny, elements associated with `data_id` can be selected and the selection 
+(the `data_id` value) is available in the client and the server side of the 
+application. 
+
+### The client `ui.R`
+
+Instead of a `plotOutput`, use function `ggiraphOutput`. 
+
+```{r eval=FALSE}
+ggiraphOutput("plot")
+```
+
+### The server `server.R`
+
+Use function `ggiraphOutput`.
+
+```{r eval=FALSE}
+output$plot <- renderggiraph({
+    ggiraph(code = print(gg_blahblah) )
+  })
+```
+
+
+### Selections
+
+It is possible to work with selected points on a *ggiraph* plot within a Shiny application.
+
+Selection can be of two types: `single` or `multiple`. The ggiraph's parameter `selection_type` will let you specify that. 
+
+```{r eval=FALSE}
+output$myplot <- renderggiraph({
+    ggiraph(code = print(gg_blahblah), selection_type = "multiple" )
+  })
+```
+
+The selected points will be captured in the input reactive value `myplot_selected` (name of the input id of the reactive output value + `_selected`):
+
+```{r eval=FALSE}
+input$myplot_selected
+```
+
+
+You can also modify theses values by using the `session$sendCustomMessage` method with type `myplot_set` (name of the input id of the reactive output value + `_set`).
+
+```{r eval=FALSE}
+# delete selection
+session$sendCustomMessage(type = 'myplot_set', message = character(0))
+```
+
+
+### Examples
+
+The package contains Shiny examples available in the `shiny` directory of the package (`system.file("shiny", package = "ggiraph")`).
+
+#### selections usage (server side)
+
+```{r eval=FALSE}
+shiny::runApp(appDir = system.file("shiny/crimes", package = "ggiraph"), display.mode = "showcase")
+shiny::runApp(appDir = system.file("shiny/cars", package = "ggiraph"), display.mode = "showcase")
+
+# *group* selection
+shiny::runApp(appDir = system.file("shiny/iris", package = "ggiraph"), display.mode = "showcase")
+```
+
+#### onclick actions (client side).
+
+```{r eval=FALSE}
+shiny::runApp(appDir = system.file("shiny/DT", package = "ggiraph"), display.mode = "showcase")
+```
+
+
