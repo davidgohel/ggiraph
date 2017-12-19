@@ -13,3 +13,4 @@
 ^README\.Rmd$
 ^visualtests$
 ^vignettes/offcran$
+^cran-comments\.md$
