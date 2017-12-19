@@ -165,8 +165,7 @@ layer, as a string, see <code><a href='http://www.rdocumentation.org/packages/gg
 <span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> {<span class='fu'>print</span>(<span class='no'>gg</span>)}, <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:red;"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in yaml.load(readLines(con), error.label = error.label, ...): l'argument "error.label" est manquant, avec aucune valeur par défaut</span></div><div class='input'>
 
 <span class='co'># create datasets -----</span>
-<span class='no'>id</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"id"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>data</span> <span class='kw'>=</span> <span class='fu'>expand.grid</span>(<span class='fu'>list</span>(
+<span class='no'>id</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"id"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='img'><img src='geom_path_interactive-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>data</span> <span class='kw'>=</span> <span class='fu'>expand.grid</span>(<span class='fu'>list</span>(
         <span class='kw'>variable</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"2000"</span>, <span class='st'>"2005"</span>, <span class='st'>"2010"</span>, <span class='st'>"2015"</span>),
         <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>id</span>
         )
