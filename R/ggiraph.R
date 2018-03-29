@@ -56,6 +56,10 @@
 #'  the current path for temporary files is used.
 #' @param use_widget_size deprecated
 #' @param flexdashboard deprecated
+#' @param xml_reader_options read_xml additional arguments to be used
+#' when parsing the svg result. This feature can be used to parse
+#' huge svg files by using \code{list(options = "HUGE")} but this
+#' is not recommanded.
 #' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @examples
 #' # ggiraph simple example -------
@@ -98,6 +102,7 @@ ggiraph <- function(code, ggobj = NULL,
                     selected_css,
                     dep_dir = NULL,
                     use_widget_size, flexdashboard,
+                    xml_reader_options = list(),
                     ...) {
 
   if( !missing(flexdashboard) ) warning("argument `flexdashboard` has been deprecated.")
@@ -142,7 +147,8 @@ ggiraph <- function(code, ggobj = NULL,
   ggiwid.options$svgid = 1 + ggiwid.options$svgid
   options("ggiwid"=ggiwid.options)
 
-  data <- read_xml( path )
+  xml_reader_options$x <- path
+  data <- do.call(read_xml, xml_reader_options )
   scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
   js <- paste( sapply( scr, xml_text ), collapse = ";")
 

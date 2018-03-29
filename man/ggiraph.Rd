@@ -8,7 +8,7 @@ ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.75, width_svg = 6,
   height_svg = 5, tooltip_extra_css, hover_css, tooltip_opacity = 0.9,
   tooltip_offx = 10, tooltip_offy = 0, tooltip_zindex = 999,
   zoom_max = 1, selection_type = "multiple", selected_css, dep_dir = NULL,
-  use_widget_size, flexdashboard, ...)
+  use_widget_size, flexdashboard, xml_reader_options = list(), ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -51,6 +51,11 @@ the current path for temporary files is used.}
 \item{use_widget_size}{deprecated}
 
 \item{flexdashboard}{deprecated}
+
+\item{xml_reader_options}{read_xml additional arguments to be used
+when parsing the svg result. This feature can be used to parse
+huge svg files by using \code{list(options = "HUGE")} but this
+is not recommanded.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
