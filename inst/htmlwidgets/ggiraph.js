@@ -35,8 +35,9 @@ HTMLWidgets.widget({
         window[el.id] = x.uid;
         var fun_ = window[x.funname];
         fun_();
-        set_highlight(x.uid);
-        add_tooltip(x.uid, x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy);
+        //set_highlight(x.uid);
+        //add_tooltip(x.uid, x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy);
+        mouseover_behavior(x.uid, x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy, "hover_" + x.uid);
         set_over_effect(x.uid);
 
         if( HTMLWidgets.shinyMode ){

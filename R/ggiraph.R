@@ -177,6 +177,7 @@ ggiraph <- function(code, ggobj = NULL,
   zoom_name <- paste0("zoom_", svg_id)
   lasso_name <- paste0("lasso_", svg_id)
   class_selected_name <- paste0("clicked_", svg_id)
+  class_hover_id <- paste0("hover_", svg_id)
   js <- paste0("function ", init_prop_name, "(){", js, "};")
   js <- paste0(js, paste0("var ", array_selected_name, " = [];") )
   js <- paste0(js, sprintf("var %s = d3.zoom().scaleExtent([%.02f, %.02f]);", zoom_name, 1, zoom_max) )
@@ -188,7 +189,7 @@ ggiraph <- function(code, ggobj = NULL,
   css <- paste0(".tooltip_", svg_id,
                 sprintf( " {position:absolute;pointer-events:none;z-index:%.0f;", tooltip_zindex),
                 tooltip_extra_css, "}\n",
-                ".cl_data_id_", svg_id, ":{}.cl_data_id_", svg_id, ":hover{", hover_css, "}\n",
+                ".", class_hover_id, "{", hover_css, "}\n",
                 ".", class_selected_name, "{", selected_css, "}"
   )
 
