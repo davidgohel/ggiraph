@@ -52,7 +52,7 @@ GeomInteractiveVline <- ggproto("GeomVline", Geom,
                                   GeomInteractiveSegment$draw_panel(unique(data), panel_scales, coord)
                                 },
 
-                                default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA),
+                                default_aes = aes(colour = "black", size = 0.5, linetype = 1, alpha = NA, tooltip = NULL, onclick = NULL, data_id = NULL),
                                 required_aes = "xintercept",
 
                                 draw_key = draw_key_vline
