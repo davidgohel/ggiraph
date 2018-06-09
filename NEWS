@@ -4,11 +4,10 @@
 
 * new functions `geom_hline_interactive` and `geom_vline_interactive`
 implemented by Eric Book.
-* new functions `geom_sf_interactive`.
 
 ## Bug fixes
 
-* all element with the same data_id are highlighted when mouse is over one element.
+* all element with the same data_id are highlighted when mouse is over one of these elements.
 
 # ggiraph 0.4.2
 
