@@ -10,15 +10,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-```{r results='asis', echo=FALSE}
-logo_file <- tempfile(fileext = ".png")
-rsvg::rsvg_png(system.file(package = "ggiraph", "medias", "ggiraphlogo.svg"), 
-               file = logo_file, width = 181, height = 209)
-
-htmltools::span( htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
-        gdtools:::base64_file_encode(filename = logo_file) )))
-```
+<p align="center">
+  <img width="15%" src="http://www.ardata.fr/images/ggiraphlogo.svg">
+</p>
 
 > Make 'ggplot' Graphics Interactive
 
