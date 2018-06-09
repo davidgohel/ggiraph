@@ -47,7 +47,7 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 				aesthetics <- setdiff(
 						names(data), c("x", "y", "xmin", "xmax", "ymin", "ymax")
 				)
-        # browser()
+
         polys <- lapply(split(data, seq_len(nrow(data)) ), function(row) {
           poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
           aes <- as.data.frame(row[aesthetics],
