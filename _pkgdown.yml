@@ -22,6 +22,8 @@ navbar:
   left:
   - text: Using ggiraph
     href: articles/offcran/using_ggiraph.html
+  - text: Examples
+    href: articles/offcran/examples.html
   - text: Function reference
     href: reference/index.html
   right:

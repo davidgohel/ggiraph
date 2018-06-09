@@ -1,0 +1,166 @@
+---
+output: 
+  rmarkdown::html_vignette:
+    toc: true 
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## Arrange multiple plots into a grid 
+
+There are two avalaible options to arrange ggiraph outputs into a grid. As 
+`ggiraph` is mainly only new *geoms*, package `cowplot` and `patchwork` 
+can be used seamlessly.
+
+```{r message=FALSE}
+library(ggplot2)
+library(ggiraph)
+library(patchwork)
+library(cowplot)
+
+mtcars <- mtcars
+mtcars$tooltip <- rownames(mtcars)
+
+theme_set(theme_minimal())
+
+gg1 <- ggplot(mtcars) +
+  geom_point_interactive(aes(x = drat, y = wt, color = qsec, 
+    tooltip = tooltip, data_id = tooltip ), size = 4) 
+
+gg2 <- ggplot(mtcars) +
+  geom_point_interactive(aes(x = qsec, y = disp, color = mpg, 
+    tooltip = tooltip, data_id = tooltip ), size = 4)
+```
+
+
+### Using `cowplot`
+
+Mouseover points to see where they are located in the other graph.
+
+```{r}
+ggiraph( code = print(gg1 + gg2), width_svg = 8, height_svg = 4, 
+         hover_css = "fill:red;r:10pt;")
+```
+
+### Using `patchwork`
+
+Mouseover points to see where they are located in the other graph.
+
+```{r}
+ggiraph( code = print(gg1 + gg2), width_svg = 8, height_svg = 4, 
+         hover_css = "fill:red;r:10pt;")
+```
+
+## Dynamic dendrogram
+
+[expr.R](./expr.R)
+
+```{r message=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggdendro)
+library(purrr)
+library(ggiraph)
+
+source("expr.R")
+expr_set_extract[1:4, 4:9]
+```
+
+First compute data for dendrograms
+
+```{r message=FALSE}
+hc <- hclust(dist(expr_set_extract), "ave")
+dhr <- as.dendrogram(hc)
+order_r <- rownames(expr_set_extract)[hc$order]
+
+
+hc <- hclust(dist(t(expr_set_extract)), "ave")
+dhc <- as.dendrogram(hc)
+order_c <- colnames(expr_set_extract)[hc$order]
+
+data_r <- dendro_data(dhr, type = "rectangle")
+data_r <- segment(data_r)
+data_r <- data_r %>%
+  mutate( x_ = y + length(order_c),
+          xend_ = yend + length(order_c),
+          y_ = x,
+          yend_ = xend )
+data_c <- dendro_data(dhc, type = "rectangle")
+data_c <- segment(data_c) %>% mutate(
+  y = y + length(order_r),
+  yend = yend + length(order_r)
+)
+```
+
+Create a data.frame from the matrix, then order. 
+
+```{r message=FALSE}
+expr_set <- bind_cols(
+  data_frame(gene = rownames(expr_set_extract)),
+  as.data.frame(expr_set_extract)
+)
+expr_set <- gather(expr_set, variable, measure, -gene)
+expr_set$gene <- factor( expr_set$gene, levels = order_r )
+expr_set$variable <- factor( expr_set$variable, levels = order_c )
+expr_set <- arrange(expr_set, gene, variable)
+```
+
+Add a variable to have tooltips as tables
+
+```{r}
+str_model <- paste0("<tr><td>gene</td><td>%s</td></tr>", 
+  "<tr><td>variable</td><td>%s</td></tr>", 
+  "<tr><td>measure</td><td>%.03f</td></tr>")
+expr_set$tooltip <- sprintf(str_model, expr_set$gene, 
+                            expr_set$variable, expr_set$measure )
+expr_set$tooltip <- paste0( "<table>", 
+                            expr_set$tooltip, "</table>" )
+head(expr_set)
+```
+
+Create the ggplot using `geom_tile_interactive`
+
+```{r}
+p <- ggplot(data = expr_set, aes(x = variable, y = gene) ) +
+  geom_tile_interactive(aes(fill = measure, tooltip = tooltip), colour = "white") +
+  scale_fill_gradient(low = "white", high = "#BC120A", limits = c(0, 13)) +
+  geom_segment(
+    data = data_c,
+    mapping = aes(x = x, y = yend, xend = xend, yend = y),
+    colour = "gray20", size = .2) +
+  geom_segment(
+    data = data_r,
+    mapping = aes(x = x_, y = y_, xend = xend_, yend = yend_),
+    colour = "gray20", size = .2) +
+  coord_equal()
+```
+
+Theme the object
+
+```{r}
+p <- p + theme_minimal() +
+  theme(
+    legend.position = "right",
+    panel.grid.minor = element_line(color = "transparent"),
+    panel.grid.major = element_line(color = "transparent"),
+    axis.ticks.length	= unit(2, units = "mm"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 12),
+    axis.title = element_text(size = 9, colour = "gray30"),
+    axis.text.y = element_text(hjust = 1, size = 5, colour = "gray40"),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 5, colour = "gray40"),
+    legend.title=element_text(face = "bold", hjust = 0.5, size=8),
+    legend.text=element_text(size=6)
+  )
+```
+
+Use `ggiraph`
+
+```{r}
+ggiraph(ggobj = p, width_svg = 7, height_svg = 7, zoom_max = 4)
+```
+
