@@ -6,6 +6,9 @@
 implemented by Eric Book.
 * new functions `geom_sf_interactive`.
 
+## Bug fixes
+
+* all element with the same data_id are highlighted when mouse is over one element.
 
 # ggiraph 0.4.2
 

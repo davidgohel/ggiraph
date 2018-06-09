@@ -16,7 +16,7 @@ Authors@R: c(
 License: GPL-3
 Copyright: See file COPYRIGHTS.
 Imports:
-    grid, ggplot2 (>= 2.2.0),
+    grid, ggplot2 (>= 2.2.1),
     htmlwidgets (>= 0.6),
     stats,
     rvg (>= 0.1.1),
@@ -32,3 +32,4 @@ VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 6.0.1.9000
+Remotes: tidyverse/ggplot2
