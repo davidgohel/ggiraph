@@ -28,8 +28,8 @@ interactive_text_grob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
-    and \code{"top"}.  For numeric values, 0 means left alignment
-    and 1 means right alignment.
+    and \code{"top"}.  For numeric values, 0 means left (bottom) alignment
+    and 1 means right (top) alignment.
   }
 
 \item{hjust}{A numeric vector specifying horizontal justification.

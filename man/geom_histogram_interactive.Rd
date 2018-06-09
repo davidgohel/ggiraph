@@ -34,7 +34,7 @@ will be used as the layer data.}
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
 
-\item{...}{other arguments passed on to \code{\link[=layer]{layer()}}. These are
+\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
@@ -49,7 +49,7 @@ stories in your data.
 The bin width of a date variable is the number of days in each time; the
 bin width of a time variable is the number of seconds.}
 
-\item{bins}{Number of bins. Overridden by \code{binwidth}. Defaults to 30}
+\item{bins}{Number of bins. Overridden by \code{binwidth}. Defaults to 30.}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
