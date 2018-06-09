@@ -4,6 +4,7 @@
 
 * new functions `geom_hline_interactive` and `geom_vline_interactive`
 implemented by Eric Book.
+* new functions `geom_sf_interactive`.
 
 
 # ggiraph 0.4.2
