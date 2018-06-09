@@ -153,6 +153,7 @@ GeomInteractiveMap <- ggproto(
       )
     )
 
+    # TODO: what is this, do not remember
     if( !is.null(data$tooltip) && !is.character(data$tooltip) )
       data$tooltip <- as.character(data$tooltip)
     if( !is.null(data$onclick) && !is.character(data$onclick) )
@@ -173,3 +174,5 @@ GeomInteractiveMap <- ggproto(
 
   required_aes = c("map_id")
 )
+
+
