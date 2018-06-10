@@ -20,6 +20,8 @@ navbar:
   title: ggiraph
   type: default
   left:
+  - text: Home
+    href: index.html
   - text: Using ggiraph
     href: articles/offcran/using_ggiraph.html
   - text: Examples

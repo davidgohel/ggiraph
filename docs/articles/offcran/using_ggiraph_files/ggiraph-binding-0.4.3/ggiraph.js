@@ -1,13 +1,18 @@
+function isArray(x) {
+    return x.constructor.toString().indexOf("Array") > -1;
+}
+
 function set_shiny_env(x, htmlwidegt_id ){
   set_selector(x.uid, x.sel_array_name, x.selected_class, x.selection_type);
   var varname = htmlwidegt_id + '_selected';
   var settername = htmlwidegt_id + '_set';
   Shiny.addCustomMessageHandler(settername, function(message) {
-    d3.selectAll('#' + x.uid + ' *[data-id]').classed('clicked_'+x.uid, false);
-    d3.selectAll(message).each(function(d, i) {
-        d3.selectAll('#' + x.uid + ' *[data-id="'+ message[i] + '"]').classed('clicked_'+x.uid, true);
-      });
-    window[x.sel_array_name] = message;
+    if( typeof message === 'string' ) {
+      window[x.sel_array_name] = [message];
+    } else if( isArray(message) ){
+      window[x.sel_array_name] = message;
+    }
+    refresh_selected(x.sel_array_name, x.selected_class, x.uid);
     Shiny.onInputChange(varname, window[x.sel_array_name]);
   });
 }
