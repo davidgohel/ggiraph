@@ -1,3 +1,4 @@
+library(ggplot2)
 library(ggiraph)
 
 shinyServer(function(input, output, session) {

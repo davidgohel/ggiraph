@@ -1,6 +1,5 @@
-library(ggiraph)
-
 library(ggplot2)
+library(ggiraph)
 library(maps)
 
 us <- map_data("state")
