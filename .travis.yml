@@ -5,3 +5,5 @@ r:
  - oldrel
  - release
  - devel
+
+r_packages: sf
