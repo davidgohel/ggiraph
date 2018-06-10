@@ -1,5 +1,5 @@
 function refresh_selected(sel_array_name, selected_class, svg_id){
-
+    console.log("refresh_selected('" + sel_array_name + "', '" + selected_class + "', '" + svg_id+ "');");
     var svg = d3.select('#' + svg_id);
     svg.selectAll('*[data-id]').classed(selected_class, false);
 
