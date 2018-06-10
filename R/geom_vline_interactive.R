@@ -40,6 +40,10 @@ geom_vline_interactive <- function(mapping = NULL, data = NULL,
 }
 
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveVline <- ggproto("GeomVline", Geom,
                                 draw_panel = function(data, panel_scales, coord) {
                                   ranges <- coord$range(panel_scales)

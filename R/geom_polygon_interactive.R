@@ -29,6 +29,10 @@ geom_polygon_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 }
 
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 		draw_panel = function(data, panel_scales, coord) {
 			n <- nrow(data)
@@ -121,6 +125,10 @@ geom_map_interactive <- function(mapping = NULL, data = NULL, map, stat = "ident
   )
 }
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveMap <- ggproto(
   "GeomInteractiveMap",
   GeomInteractivePolygon,
@@ -153,7 +161,7 @@ GeomInteractiveMap <- ggproto(
       )
     )
 
-    # TODO: what is this, do not remember
+    # TODO: tidy this.
     if( !is.null(data$tooltip) && !is.character(data$tooltip) )
       data$tooltip <- as.character(data$tooltip)
     if( !is.null(data$onclick) && !is.character(data$onclick) )

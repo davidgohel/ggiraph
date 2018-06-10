@@ -45,6 +45,10 @@ geom_text_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 }
 
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveText <- ggproto(
   "GeomInteractiveText",
   Geom,

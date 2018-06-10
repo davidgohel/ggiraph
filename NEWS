@@ -4,10 +4,8 @@
 
 * new functions `geom_hline_interactive` and `geom_vline_interactive`
 implemented by Eric Book.
-
-## Bug fixes
-
 * all element with the same data_id are highlighted when mouse is over one of these elements.
+* ggproto `GeomInteractive` are exported.
 
 # ggiraph 0.4.2
 

@@ -182,6 +182,10 @@ geom_line_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
   )
 }
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveLine <- ggproto("GeomInteractiveLine", GeomPathInteractive,
                                setup_data = function(data, params) {
                                  data[order(data$PANEL, data$group, data$x), ]

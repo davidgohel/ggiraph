@@ -33,6 +33,10 @@ geom_segment_interactive <- function(mapping = NULL, data = NULL, stat = "identi
 	)
 }
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 #' @importFrom ggplot2 remove_missing
 GeomInteractiveSegment <- ggproto("GeomSegment", Geom,
 		draw_panel = function(data, panel_scales, coord, arrow = NULL,

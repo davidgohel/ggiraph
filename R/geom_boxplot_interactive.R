@@ -59,6 +59,10 @@ geom_boxplot_interactive <- function(
 
 
 #' @importFrom ggplot2 remove_missing
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveBoxplot <- ggproto(
   "GeomInteractiveBoxplot", Geom,
   setup_data = function(data, params) {

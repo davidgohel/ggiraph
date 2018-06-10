@@ -40,6 +40,10 @@ geom_hline_interactive <- function(mapping = NULL, data = NULL,
 }
 
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveHline <- ggproto("GeomHline", Geom,
                                 draw_panel = function(data, panel_scales, coord) {
                                   ranges <- coord$range(panel_scales)

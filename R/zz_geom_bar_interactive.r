@@ -50,6 +50,10 @@ geom_bar_interactive <- function(mapping = NULL, data = NULL,
   if (!is.null(a)) a else b
 }
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveBar <- ggproto("GeomInteractiveBar", GeomInteractiveRect,
           required_aes = c("x", "y"),
 

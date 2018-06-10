@@ -35,6 +35,10 @@ geom_rect_interactive <- function(mapping = NULL, data = NULL, stat = "identity"
 	)
 }
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 		default_aes = aes(colour = NA, fill = "grey20",
 		                  size = 0.5, linetype = 1, alpha = NA,
@@ -160,6 +164,10 @@ geom_tile_interactive <- function(mapping = NULL, data = NULL,
   )
 }
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveTile <- ggproto(
   "GeomInteractiveTile", GeomInteractiveRect,
   extra_params = c("na.rm", "width", "height"),
