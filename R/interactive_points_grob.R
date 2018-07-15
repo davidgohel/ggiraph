@@ -6,6 +6,7 @@
 #' @param onclick javascript action to execute when point is clicked
 #' @param data_id identifiers to associate with points
 #' @export
+#' @importFrom dplyr group_by
 interactive_points_grob <- function( x = unit(0.5, "npc"),
 		y = unit(0.5, "npc"),
 		tooltip = NULL,
