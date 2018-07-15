@@ -1,13 +1,15 @@
 library(ggplot2)
 
+if (requireNamespace("dplyr", quietly = TRUE)) {
 
-g1 <- ggplot(diamonds, aes(carat)) +
-  geom_histogram()
+  g1 <- ggplot(diamonds, aes(carat)) +
+    geom_histogram()
 
-gg_vline1 <- g1 + geom_vline_interactive(
-  aes(xintercept = mean(carat),
-      tooltip = round(mean(carat), 2),
-      data_id = carat))
+  gg_vline1 <- g1 + geom_vline_interactive(
+    aes(xintercept = mean(carat),
+        tooltip = round(mean(carat), 2),
+        data_id = carat))
+}
 
 dataset <- data.frame(x = rnorm(100))
 

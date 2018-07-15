@@ -1,13 +1,13 @@
 library(ggplot2)
 
+if( requireNamespace("dplyr")){
+  g1 <- ggplot(economics, aes(x = date, y = unemploy)) +
+    geom_point() + geom_line()
 
-g1 <- ggplot(economics, aes(x = date, y = unemploy)) +
-  geom_point() + geom_line()
-
-gg_hline1 <- g1 + geom_hline_interactive(
-  aes(yintercept = mean(unemploy),
-      tooltip = round(mean(unemploy), 2)))
-
+  gg_hline1 <- g1 + geom_hline_interactive(
+    aes(yintercept = mean(unemploy),
+        tooltip = round(mean(unemploy), 2)))
+}
 
 dataset <- data.frame(
   x = c(1, 2, 5, 6, 8),

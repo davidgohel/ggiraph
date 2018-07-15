@@ -1,11 +1,11 @@
 library(ggplot2)
 # geom_line_interactive example -----
-
-gg <- ggplot(economics_long,
+if( requireNamespace("dplyr")){
+  gg <- ggplot(economics_long,
     aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
-  geom_line_interactive(size = .75)
-ggiraph(code = {print(gg)}, hover_css = "stroke:red;")
-
+    geom_line_interactive(size = .75)
+  ggiraph(code = {print(gg)}, hover_css = "stroke:red;")
+}
 
 # create datasets -----
 id = paste0("id", 1:10)
