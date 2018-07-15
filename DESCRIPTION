@@ -21,14 +21,14 @@ Imports:
     stats,
     rvg (>= 0.1.1),
     xml2 (>= 1.0.0),
-    htmltools,
-    dplyr
+    htmltools
 Suggests:
     knitr,
     rmarkdown,
     maps,
     shiny,
-    sf (>= 0.3-4)
+    sf (>= 0.3-4),
+    dplyr
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues

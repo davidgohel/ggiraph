@@ -28,13 +28,15 @@ See the documentation for those functions for more details.
 # add interactive reference lines to a ggplot -------
 library(ggplot2)
 
-if( requireNamespace("dplyr")){
+if( requireNamespace("dplyr", quietly = TRUE)){
   g1 <- ggplot(economics, aes(x = date, y = unemploy)) +
     geom_point() + geom_line()
 
   gg_hline1 <- g1 + geom_hline_interactive(
     aes(yintercept = mean(unemploy),
         tooltip = round(mean(unemploy), 2)))
+
+  ggiraph(code = print(gg_hline1))
 }
 
 dataset <- data.frame(
@@ -57,7 +59,6 @@ gg_hline2 <- g2 + geom_hline_interactive(
       data_id = y, onclick = clickjs))
 
 
-ggiraph(code = print(gg_hline1))
 ggiraph(code = print(gg_hline2),
         hover_css = "cursor:pointer;fill:orange;stroke:orange;")
 }

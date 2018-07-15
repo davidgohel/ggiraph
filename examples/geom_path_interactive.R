@@ -1,6 +1,6 @@
 library(ggplot2)
 # geom_line_interactive example -----
-if( requireNamespace("dplyr")){
+if( requireNamespace("dplyr", quietly = TRUE)){
   gg <- ggplot(economics_long,
     aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
     geom_line_interactive(size = .75)

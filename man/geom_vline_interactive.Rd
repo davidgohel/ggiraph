@@ -37,6 +37,7 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
     aes(xintercept = mean(carat),
         tooltip = round(mean(carat), 2),
         data_id = carat))
+  ggiraph(code = print(gg_vline1))
 }
 
 dataset <- data.frame(x = rnorm(100))
@@ -50,7 +51,6 @@ gg_vline2 <- g2 + geom_vline_interactive(
   aes(xintercept = mean(x), tooltip = round(mean(x), 2),
       data_id = x, onclick = clickjs), color = "white")
 
-ggiraph(code = print(gg_vline1))
 ggiraph(code = print(gg_vline2),
         hover_css = "cursor:pointer;fill:orange;stroke:orange;")
 }

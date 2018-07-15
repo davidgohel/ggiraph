@@ -49,7 +49,7 @@ See the documentation for those functions for more details.
 # add interactive paths to a ggplot -------
 library(ggplot2)
 # geom_line_interactive example -----
-if( requireNamespace("dplyr")){
+if( requireNamespace("dplyr", quietly = TRUE)){
   gg <- ggplot(economics_long,
     aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
     geom_line_interactive(size = .75)
