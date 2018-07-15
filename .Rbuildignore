@@ -14,3 +14,4 @@
 ^visualtests$
 ^vignettes/offcran$
 ^cran-comments\.md$
+^revdep$
