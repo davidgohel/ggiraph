@@ -119,7 +119,7 @@ With `ggiraph`, you can customize tooltip style and mouse hover effects. This re
 
 The arguments `tooltip_offx` and `tooltip_offy` are used to offset tooltip position. 
 
-By default the offset is 10 pixels horizontally to the mouse position (`tooltip_offx=10`) and 0 pixels vertically (`tooltip_offx=10`).
+By default the offset is 10 pixels horizontally to the mouse position (`tooltip_offx=10`) and 0 pixels vertically (`tooltip_offy=0`).
 
 ```{r message=FALSE}
 library(ggplot2)
