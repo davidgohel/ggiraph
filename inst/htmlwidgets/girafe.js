@@ -39,15 +39,22 @@ HTMLWidgets.widget({
         ggobj.adjustSize(width, height);
         ggobj.IEFixResize(x.width, x.ratio);
 
+        var addLasso = ggobj.isSelectable() && HTMLWidgets.shinyMode;
+        var addZoom = true;
+        if( x.zoom_max <= 1 ){
+          addZoom = false;
+        }
+
         if( x.selection_type == "single" ){
           ggobj.selectizeSingle();
+          addLasso = false;
         } else if( x.selection_type == "multiple" ){
           ggobj.selectizeMultiple();
         } else {
           ggobj.selectizeNone();
+          addLasso = false;
         }
-        ggobj.addUI(true, true);
-        ggobj.setZoomer(1, 4);
+        ggobj.addUI(addLasso, addZoom);
 
         if( HTMLWidgets.shinyMode ){
           ggobj.setInputId(el.id + "_selected");
