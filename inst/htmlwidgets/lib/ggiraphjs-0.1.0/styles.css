@@ -8,6 +8,14 @@
   position: relative;
 }
 
+.girafe_container_ie {
+  height: 0;
+}
+.girafe_svg_ie {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
 .ggiraph-toolbar {
     position: absolute;

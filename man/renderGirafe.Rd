@@ -7,7 +7,7 @@
 renderGirafe(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{expr}{An expression that returns a \code{\link{}} object.}
+\item{expr}{An expression that returns a \code{\link{girafe}} object.}
 
 \item{env}{The environment in which to evaluate expr.}
 

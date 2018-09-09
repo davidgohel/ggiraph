@@ -37,6 +37,7 @@ HTMLWidgets.widget({
         ggobj.animateGElements(x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy);
         ggobj.animateToolbar();
         ggobj.adjustSize(width, height);
+        ggobj.IEFixResize(x.width, x.ratio);
 
         if( x.selection_type == "single" ){
           ggobj.selectizeSingle();

@@ -149,7 +149,8 @@ girafe <- function(code, ggobj = NULL,
   )
 
   x = list( html = as.character(data), css = css, js = js,
-            uid = svg_id, width = sprintf( "%.0f%%", width * 100 ),
+            uid = svg_id, width = width,
+            ratio = width_svg / height_svg,
             tooltip_opacity = tooltip_opacity,
             tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
             zoom_max = zoom_max,
@@ -184,7 +185,7 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 #'
 #' @description Makes a reactive version of a  object for use in Shiny.
 #'
-#' @param expr An expression that returns a \code{\link{}} object.
+#' @param expr An expression that returns a \code{\link{girafe}} object.
 #' @param env The environment in which to evaluate expr.
 #' @param quoted Is \code{expr} a quoted expression
 #' @export
