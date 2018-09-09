@@ -5,8 +5,8 @@
 \title{interactive boxplot}
 \usage{
 geom_histogram_interactive(mapping = NULL, data = NULL, stat = "bin",
-  position = "stack", ..., binwidth = NULL, bins = NULL, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+  position = "stack", ..., binwidth = NULL, bins = NULL,
+  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or

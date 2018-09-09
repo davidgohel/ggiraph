@@ -4,8 +4,9 @@
 \alias{geom_map_interactive}
 \title{interactive polygons from a reference map.}
 \usage{
-geom_map_interactive(mapping = NULL, data = NULL, map, stat = "identity",
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
+geom_map_interactive(mapping = NULL, data = NULL, map,
+  stat = "identity", na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}

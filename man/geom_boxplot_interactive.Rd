@@ -4,11 +4,12 @@
 \alias{geom_boxplot_interactive}
 \title{interactive boxplot}
 \usage{
-geom_boxplot_interactive(mapping = NULL, data = NULL, stat = "boxplot",
-  position = "dodge", ..., outlier.colour = NULL, outlier.color = NULL,
-  outlier.shape = 19, outlier.size = 1.5, outlier.stroke = 0.5,
-  notch = FALSE, notchwidth = 0.5, varwidth = FALSE, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_boxplot_interactive(mapping = NULL, data = NULL,
+  stat = "boxplot", position = "dodge", ..., outlier.colour = NULL,
+  outlier.color = NULL, outlier.shape = 19, outlier.size = 1.5,
+  outlier.stroke = 0.5, notch = FALSE, notchwidth = 0.5,
+  varwidth = FALSE, na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}

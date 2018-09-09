@@ -5,9 +5,9 @@
 \title{Generate an Interactive Grob Path}
 \usage{
 interactive_polyline_grob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1),
-  "npc"), id = NULL, id.lengths = NULL, tooltip = NULL, onclick = NULL,
-  data_id = NULL, default.units = "npc", arrow = NULL, name = NULL,
-  gp = gpar(), vp = NULL)
+  "npc"), id = NULL, id.lengths = NULL, tooltip = NULL,
+  onclick = NULL, data_id = NULL, default.units = "npc",
+  arrow = NULL, name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
 \item{x}{A numeric vector or unit object specifying x-values.}

@@ -4,10 +4,11 @@
 \alias{interactive_text_grob}
 \title{Generate interactive grob text}
 \usage{
-interactive_text_grob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-  tooltip = NULL, onclick = NULL, data_id = NULL, just = "centre",
-  hjust = NULL, vjust = NULL, rot = 0, check.overlap = FALSE,
-  default.units = "npc", name = NULL, gp = gpar(), vp = NULL)
+interactive_text_grob(label, x = unit(0.5, "npc"), y = unit(0.5,
+  "npc"), tooltip = NULL, onclick = NULL, data_id = NULL,
+  just = "centre", hjust = NULL, vjust = NULL, rot = 0,
+  check.overlap = FALSE, default.units = "npc", name = NULL,
+  gp = gpar(), vp = NULL)
 }
 \arguments{
 \item{label}{A character or \link{expression} vector.  Other

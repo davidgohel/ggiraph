@@ -4,9 +4,9 @@
 \alias{geom_point_interactive}
 \title{interactive points}
 \usage{
-geom_point_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_point_interactive(mapping = NULL, data = NULL,
+  stat = "identity", position = "identity", na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
