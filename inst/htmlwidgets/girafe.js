@@ -29,26 +29,33 @@ HTMLWidgets.widget({
     var ggobj = ggiraphjs.newgi(el.id);
     return {
       renderValue: function(x) {
+        console.log(x);
         ggobj.setSvgWidth(x.width);
         ggobj.setSvgId(x.uid);
-        ggobj.setZoomer(1, x.zoom_max);
-        ggobj.addStyle(x.css);
+        ggobj.setZoomer(x.settings.zoom.min, x.settings.zoom.max);
+        var css = ".tooltip_" + x.uid + x.settings.tooltip.css + "\n" +
+                  ".hover_" + x.uid + x.settings.hover.css + "\n" +
+                  ".clicked_" + x.uid + x.settings.capture.css + "\n"
+                  ;
+        ggobj.addStyle(css);
         ggobj.addSvg(x.html, x.js);
-        ggobj.animateGElements(x.tooltip_opacity, x.tooltip_offx, x.tooltip_offy);
+        ggobj.animateGElements(x.settings.tooltip.opacity,
+            x.settings.tooltip.offx, x.settings.tooltip.offx,
+            x.settings.tooltip.delay.over, x.settings.tooltip.delay.out);
         ggobj.animateToolbar();
         ggobj.adjustSize(width, height);
         ggobj.IEFixResize(x.width, x.ratio);
 
         var addLasso = ggobj.isSelectable() && HTMLWidgets.shinyMode;
         var addZoom = true;
-        if( x.zoom_max <= 1 ){
+        if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){
           addZoom = false;
         }
 
-        if( x.selection_type == "single" ){
+        if( x.settings.capture.type == "single" ){
           ggobj.selectizeSingle();
           addLasso = false;
-        } else if( x.selection_type == "multiple" ){
+        } else if( x.settings.capture.type == "multiple" ){
           ggobj.selectizeMultiple();
         } else {
           ggobj.selectizeNone();

@@ -9,21 +9,8 @@
 #' @param width_svg,height_svg The width and height of the graphics region in inches.
 #' The default values are 6 and 5 inches. This will define the aspect ratio of the
 #' graphic as it will be used to define viewbox attribute of the SVG result.
-#' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
-#' used to customize tooltip area.
-#' @param hover_css css to apply when mouse is hover and element with a data-id attribute.
-#' @param tooltip_opacity tooltip opacity
-#' @param tooltip_offx tooltip x offset
-#' @param tooltip_offy tooltip y offset
-#' @param tooltip_zindex tooltip css z-index, default to 999.
-#' @param zoom_max maximum zoom factor
-#' @param selection_type row selection mode ("single", "multiple", "none")
-#'  when widget is in a Shiny application.
-#' @param selected_css css to apply when element is selected (shiny only).
 #' @param width widget width ratio (0 < width <= 1). Unused within shiny
 #' applications or flexdashboard documents. See below.
-#' @param dep_dir the path where the output files are stored. If \code{NULL},
-#'  the current path for temporary files is used.
 #' @param xml_reader_options read_xml additional arguments to be used
 #' when parsing the svg result. This feature can be used to parse
 #' huge svg files by using \code{list(options = "HUGE")} but this
@@ -55,44 +42,12 @@
 #' If this behavior does not fit with your need, I recommand you to use
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
 #' @export
-
-girafe <- function(code, ggobj = NULL,
-                    pointsize = 12,
-                    width = 0.95,
-                    width_svg = 6, height_svg = 5,
-                    tooltip_extra_css,
-                    hover_css,
-                    tooltip_opacity = .9,
-                    tooltip_offx = 10,
-                    tooltip_offy = 0,
-                    tooltip_zindex = 999,
-                    zoom_max = 1,
-                    selection_type = "multiple",
-                    selected_css,
-                    dep_dir = NULL,
-                    xml_reader_options = list(),
-                    ...) {
-
-
-  if( missing( tooltip_extra_css ))
-    tooltip_extra_css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
-  if( missing( hover_css ))
-    hover_css <- "fill:orange;stroke:gray;"
-  if( missing( selected_css ))
-    selected_css <- hover_css
+girafe <- function(code, ggobj = NULL, pointsize = 12,
+                   width = 0.95,
+                   width_svg = 6, height_svg = 5,
+                   xml_reader_options = list(), ...) {
 
   stopifnot( is.numeric(width), width > 0, width <= 1 )
-
-  stopifnot(selection_type %in% c("single", "multiple", "none"))
-  stopifnot(is.numeric(tooltip_offx))
-  stopifnot(is.numeric(tooltip_offy))
-  stopifnot(is.numeric(tooltip_opacity))
-  stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
-  stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
-  stopifnot(is.numeric(zoom_max))
-
-  if( zoom_max < 1 )
-    stop("zoom_max should be >= 1")
 
   ggiwid.options = getOption("ggiwid")
   tmpdir = tempdir()
@@ -123,38 +78,23 @@ girafe <- function(code, ggobj = NULL,
   xml_attr(data, "height") <- NULL
   svg_id <- xml_attr(data, "id")
 
-  if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
-    stop("please, do not specify position in tooltip_extra_css, this parameter is managed by girafe.")
-  if( grepl(x = tooltip_extra_css, pattern = "pointer-events[ ]*:") )
-    stop("please, do not specify pointer-events in tooltip_extra_css, this parameter is managed by girafe.")
-
   unlink(path)
 
-  if ( is.null(dep_dir) ) {
-    dep_dir <- tempfile()
-    dir.create(dep_dir)
-  } else {
-    if ( !dir.exists(dep_dir) )
-      stop(dep_dir, " does not exist.", call. = FALSE)
-  }
+  tooltip_set <- tooltip_settings()
+  hover_set <- hover_settings()
+  zoom_set <- zoom_settings()
+  selection_set <- selection_settings()
 
-  class_selected_name <- paste0("clicked_", svg_id)
-  class_hover_id <- paste0("hover_", svg_id)
-
-  css <- paste0(".tooltip_", svg_id,
-                sprintf( " {position:absolute;pointer-events:none;z-index:%.0f;", tooltip_zindex),
-                tooltip_extra_css, "}\n",
-                ".", class_hover_id, "{", hover_css, "}\n",
-                ".", class_selected_name, "{", selected_css, "}"
-  )
-
-  x = list( html = as.character(data), css = css, js = js,
+  x = list( html = as.character(data), js = js,
             uid = svg_id, width = width,
             ratio = width_svg / height_svg,
-            tooltip_opacity = tooltip_opacity,
-            tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
-            zoom_max = zoom_max,
-            selection_type = selection_type)
+            settings = list(
+              tooltip = tooltip_set,
+              hover = hover_set,
+              zoom = zoom_set,
+              capture = selection_set
+              )
+            )
 
   createWidget(
     name = 'girafe', x = x, package = 'ggiraph',
@@ -194,8 +134,130 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
 	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
 }
 
+#' @title settings for tooltip
+#' @description settings to be used with \code{\link{girafe}}
+#' for tooltip customisation.
+#' @param css extra css (added to \code{position: absolute;pointer-events: none;})
+#' used to customize tooltip area.
+#' @param opacity tooltip opacity
+#' @param delay_mouseover delai
+#' @param delay_mouseout delai opacity
+#' @param offx tooltip x offset
+#' @param offy tooltip y offset
+#' @param zindex tooltip css z-index, default to 999.
+#' @export
+tooltip_settings <- function(css = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;",
+                             offx = 10, offy = 0,
+                             opacity = .9,
+                             delay_mouseover = 200,
+                             delay_mouseout = 500,
+                             zindex = 999){
 
-tooltip_settings <- function(x, css, opacity = .9, offx = 10, offy = 0, zindex){
+  if( grepl(x = css, pattern = "position[ ]*:") )
+    stop("please, do not specify position in css, this parameter is managed by girafe.")
+  if( grepl(x = css, pattern = "pointer-events[ ]*:") )
+    stop("please, do not specify pointer-events in css, this parameter is managed by girafe.")
 
+  stopifnot(is.numeric(offx),
+            is.numeric(offy),
+            is.numeric(opacity),
+            is.numeric(zindex)
+            )
+  stopifnot(opacity > 0 && opacity <= 1)
+  stopifnot(zindex >= 1)
+  zindex <- round(zindex, digits = 0)
+
+  css <- paste0("{position:absolute;pointer-events:none;",
+         sprintf("z-index:%.0f;", zindex),
+         css, "}")
+  x <- list(
+    css = css,
+    offx = offx, offy = offy,
+    opacity = opacity,
+    delay = list(over = delay_mouseover,
+                 out = delay_mouseout)
+  )
+  class(x) <- "tooltip_settings"
+  x
 }
+
+#' @title hover effect
+#' @description Allows customization of the animation
+#' of graphic elements on which the mouse is positioned.
+#' @param css extra css used to customize animation.
+#' @export
+hover_settings <- function(css = "fill:orange;stroke:gray;"){
+
+  css <- paste0("{", css, "}")
+  x <- list(
+    css = css
+  )
+  class(x) <- "hover_settings"
+  x
+}
+
+#' @export
+#' @title hover effect
+#' @description Allows customization of the rendering of
+#' selected graphic elements.
+#' @param css extra css used to customize animation.
+#' @param type selection mode ("single", "multiple", "none")
+#'  when widget is in a Shiny application.
+selection_settings <- function(
+  css = "fill:red;stroke:gray;",
+  type = "multiple"){
+
+  stopifnot(type %in%
+              c("single", "multiple", "none"))
+
+  css <- paste0("{", css, "}")
+  x <- list(
+    css = css,
+    type = type
+  )
+  class(x) <- "selection_settings"
+  x
+}
+
+#' @export
+#' @title zoom settings
+#' @description Allows customization of the zoom.
+#' @param min minimum zoom factor
+#' @param max maximum zoom factor
+zoom_settings <- function(min = 1, max = 1){
+
+  stopifnot(is.numeric(min), is.numeric(max))
+
+  if( max < .2 )
+    stop("max should be >= 0.2")
+  if( max < min )
+    stop("max should > min")
+
+  x <- list(
+    min = min,
+    max = max
+  )
+  class(x) <- "zoom_settings"
+  x
+}
+
+#' @export
+girafe_settings <- function(x, ...){
+  stopifnot(inherits(x, "girafe"))
+
+  args <- list(...)
+  for( arg in args ){
+    if( inherits(arg, "zoom_settings")){
+      x$x$settings$zoom <- arg
+    } else if( inherits(arg, "selection_settings")){
+      x$x$settings$capture <- arg
+    } else if( inherits(arg, "tooltip_settings")){
+      x$x$settings$tooltip <- arg
+    } else if( inherits(arg, "hover_settings")){
+      x$x$settings$hover <- arg
+    }
+  }
+  x
+}
+
 

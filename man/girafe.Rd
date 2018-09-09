@@ -5,10 +5,7 @@
 \title{create a girafe object}
 \usage{
 girafe(code, ggobj = NULL, pointsize = 12, width = 0.95,
-  width_svg = 6, height_svg = 5, tooltip_extra_css, hover_css,
-  tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
-  tooltip_zindex = 999, zoom_max = 1, selection_type = "multiple",
-  selected_css, dep_dir = NULL, xml_reader_options = list(), ...)
+  width_svg = 6, height_svg = 5, xml_reader_options = list(), ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -24,29 +21,6 @@ applications or flexdashboard documents. See below.}
 \item{width_svg, height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
 graphic as it will be used to define viewbox attribute of the SVG result.}
-
-\item{tooltip_extra_css}{extra css (added to \code{position: absolute;pointer-events: none;})
-used to customize tooltip area.}
-
-\item{hover_css}{css to apply when mouse is hover and element with a data-id attribute.}
-
-\item{tooltip_opacity}{tooltip opacity}
-
-\item{tooltip_offx}{tooltip x offset}
-
-\item{tooltip_offy}{tooltip y offset}
-
-\item{tooltip_zindex}{tooltip css z-index, default to 999.}
-
-\item{zoom_max}{maximum zoom factor}
-
-\item{selection_type}{row selection mode ("single", "multiple", "none")
-when widget is in a Shiny application.}
-
-\item{selected_css}{css to apply when element is selected (shiny only).}
-
-\item{dep_dir}{the path where the output files are stored. If \code{NULL},
-the current path for temporary files is used.}
 
 \item{xml_reader_options}{read_xml additional arguments to be used
 when parsing the svg result. This feature can be used to parse

@@ -11,10 +11,10 @@ shinyServer(function(input, output, session) {
     } else input$plot_selected
   })
 
-  output$plot <- renderGirafe({
+  output$plot <- renderggiraph({
     p <- ggplot(aes(x=wt,y=mpg, data_id = row.names(mtcars) ),data=mtcars) +
       geom_point_interactive(size = 3) + theme_minimal()
-    girafe(code = print(p),
+    ggiraph(code = print(p),
             hover_css = "fill:red;cursor:pointer;",
             selection_type = "single",
             selected_css = "fill:red;")
