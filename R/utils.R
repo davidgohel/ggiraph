@@ -27,10 +27,9 @@ ui_div <- function(id, zoomable, letlasso, sel_array_name, selected_class){
   if( letlasso ){
     bar_ <- paste0(bar_,
                    "<div class='ggiraph-toolbar-block shinyonly'>",
-                   sprintf("<a class='ggiraph-toolbar-icon neutral' title='lasso selection' href='javascript:lasso_on(\"%s\", true, \"%s\", \"%s\");'>",
-                           id, sel_array_name, selected_class),
+                   "<a class='ggiraph-toolbar-icon neutral' title='lasso selection' href='javascript:lasso_on(true);'>",
                    lasso_logo, "</a>",
-                   sprintf("<a class='ggiraph-toolbar-icon drop' title='lasso anti-selection' href='javascript:lasso_on(\"%s\", false, \"%s\", \"%s\");'>", id, sel_array_name, selected_class),
+                   "<a class='ggiraph-toolbar-icon drop' title='lasso anti-selection' href='javascript:lasso_on(false);'>",
                    lasso_logo, "</a>", "</div>")
   }
   if( zoomable ){

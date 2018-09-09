@@ -6,8 +6,8 @@
 \usage{
 interactive_segments_grob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   x1 = unit(1, "npc"), y1 = unit(1, "npc"), tooltip = NULL,
-  onclick = NULL, data_id = NULL, default.units = "npc", arrow = NULL,
-  name = NULL, gp = gpar(), vp = NULL)
+  onclick = NULL, data_id = NULL, default.units = "npc",
+  arrow = NULL, name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
 \item{x0}{ Numeric indicating the starting x-values of the line segments. }

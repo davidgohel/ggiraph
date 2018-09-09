@@ -4,9 +4,10 @@
 \alias{geom_segment_interactive}
 \title{Line interactive segments}
 \usage{
-geom_segment_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", arrow = NULL, lineend = "butt", na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, ...)
+geom_segment_interactive(mapping = NULL, data = NULL,
+  stat = "identity", position = "identity", arrow = NULL,
+  lineend = "butt", na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
