@@ -40,7 +40,9 @@ HTMLWidgets.widget({
         ggobj.addSvg(x.html, x.js);
         ggobj.animateGElements(x.settings.tooltip.opacity,
             x.settings.tooltip.offx, x.settings.tooltip.offy,
-            x.settings.tooltip.delay.over, x.settings.tooltip.delay.out);
+            x.settings.tooltip.use_cursor_pos,
+            x.settings.tooltip.delay.over, x.settings.tooltip.delay.out,
+            x.settings.tooltip.usefill, x.settings.tooltip.usestroke);
         ggobj.animateToolbar();
         ggobj.adjustSize(width, height);
         ggobj.IEFixResize(x.width, 1/x.ratio);
@@ -60,7 +62,9 @@ HTMLWidgets.widget({
           ggobj.selectizeNone();
           addLasso = false;
         }
-        ggobj.addUI(addLasso, addZoom);
+        ggobj.addUI(addLasso, addZoom,
+          x.settings.toolbar.saveaspng,
+          'ggiraph-toolbar-' + x.settings.toolbar.position);
 
         if( HTMLWidgets.shinyMode ){
           ggobj.setInputId(el.id + "_selected");

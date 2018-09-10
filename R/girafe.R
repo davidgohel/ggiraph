@@ -96,10 +96,11 @@ girafe <- function(
 
   unlink(path)
 
-  tooltip_set <- opt_tooltip()
-  hover_set <- opt_hover()
-  zoom_set <- opt_zoom()
-  selection_set <- opt_selection()
+  tooltip_set <- opts_tooltip()
+  hover_set <- opts_hover()
+  zoom_set <- opts_zoom()
+  selection_set <- opts_selection()
+  toolbar_set <- opts_toolbar()
 
   x = list( html = as.character(data), js = js,
             uid = svg_id, width = width,
@@ -108,7 +109,8 @@ girafe <- function(
               tooltip = tooltip_set,
               hover = hover_set,
               zoom = zoom_set,
-              capture = selection_set
+              capture = selection_set,
+              toolbar = toolbar_set
               )
             )
 

@@ -111,14 +111,16 @@ ggiraph <- function(code, ggobj = NULL,
          width_svg = width_svg, height_svg = height_svg, xml_reader_options = xml_reader_options, ...)
   x <- girafe_options(
     x = x,
-    opt_tooltip(css = tooltip_extra_css,
+    opts_tooltip(css = tooltip_extra_css,
                 opacity = tooltip_opacity,
+                use_cursor_pos = TRUE,
                 offx = tooltip_offx, offy = tooltip_offy,
                 delay_mouseover = 200, delay_mouseout = 500,
                 zindex = tooltip_zindex),
-    opt_zoom(min = 1, max = zoom_max),
-    opt_selection(type = selection_type, css = selected_css),
-    opt_hover(css = hover_css)
+    opts_zoom(min = 1, max = zoom_max),
+    opts_selection(type = selection_type, css = selected_css),
+    opts_toolbar(position = "top", saveaspng = FALSE),
+    opts_hover(css = hover_css)
     )
 
   # fix for package ceterisParibus unit tests

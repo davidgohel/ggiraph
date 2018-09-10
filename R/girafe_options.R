@@ -1,14 +1,18 @@
-#' @title settings for tooltip
+#' @title tooltip settings
 #' @description Settings to be used with \code{\link{girafe}}
 #' for tooltip customisation.
 #' @param css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
+#' @param use_cursor_pos should the cursor position be used to
+#' position tooltip (in addition to offx and offy).
 #' @param opacity tooltip background opacity
 #' @param delay_mouseover The duration in milliseconds of the
 #' transition associated with tooltip display.
 #' @param delay_mouseout The duration in milliseconds of the
 #' transition associated with tooltip end of display.
 #' @param offx,offy tooltip x and y offset
+#' @param use_fill,use_stroke logical, use fill and stroke properties to
+#' color tooltip.
 #' @param zindex tooltip css z-index, default to 999.
 #' @examples
 #' library(ggplot2)
@@ -24,15 +28,17 @@
 #'
 #' x <- girafe(ggobj = gg)
 #' x <- girafe_options(x,
-#'   opt_tooltip(opacity = .7,
+#'   opts_tooltip(opacity = .7,
 #'     offx = 20, offy = -10,
+#'     use_fill = TRUE, use_stroke = TRUE,
 #'     delay_mouseout = 1000) )
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opt_tooltip <- function(
-  css = NULL, offx = 10, offy = 0, opacity = .9,
+opts_tooltip <- function(
+  css = NULL, offx = 10, offy = 0, use_cursor_pos = TRUE,
+  opacity = .9, use_fill = FALSE, use_stroke = FALSE,
   delay_mouseover = 200, delay_mouseout = 500, zindex = 999){
 
   if( is.null(css)){
@@ -58,15 +64,17 @@ opt_tooltip <- function(
   x <- list(
     css = css,
     offx = offx, offy = offy,
+    use_cursor_pos = use_cursor_pos,
     opacity = opacity,
+    usefill = use_fill, usestroke = use_stroke,
     delay = list(over = delay_mouseover,
                  out = delay_mouseout)
   )
-  class(x) <- "opt_tooltip"
+  class(x) <- "opts_tooltip"
   x
 }
 
-#' @title hover effect
+#' @title hover effect settings
 #' @description Allows customization of the animation
 #' of graphic elements on which the mouse is positioned.
 #' @param css css to associate with elements to be animated
@@ -85,12 +93,12 @@ opt_tooltip <- function(
 #'
 #' x <- girafe(ggobj = gg)
 #' x <- girafe_options(x,
-#'   opt_hover(css = "fill:wheat;stroke:orange;r:5pt;") )
+#'   opts_hover(css = "fill:wheat;stroke:orange;r:5pt;") )
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opt_hover <- function(css = NULL){
+opts_hover <- function(css = NULL){
 
   if( is.null(css)){
     css <- "fill:orange;stroke:gray;"
@@ -99,11 +107,11 @@ opt_hover <- function(css = NULL){
   x <- list(
     css = css
   )
-  class(x) <- "opt_hover"
+  class(x) <- "opts_hover"
   x
 }
 
-#' @title hover effect
+#' @title selection effect settings
 #' @description Allows customization of the rendering of
 #' selected graphic elements.
 #' @param css css to associate with elements when they are selected.
@@ -123,13 +131,13 @@ opt_hover <- function(css = NULL){
 #'
 #' x <- girafe(ggobj = gg)
 #' x <- girafe_options(x,
-#'   opt_selection(type = "multiple",
+#'   opts_selection(type = "multiple",
 #'     css = "fill:red;stroke:gray;r:5pt;") )
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opt_selection <- function(css = NULL, type = "multiple"){
+opts_selection <- function(css = NULL, type = "multiple"){
 
   if( is.null(css)){
     css <- "fill:red;stroke:gray;"
@@ -143,7 +151,7 @@ opt_selection <- function(css = NULL, type = "multiple"){
     css = css,
     type = type
   )
-  class(x) <- "opt_selection"
+  class(x) <- "opts_selection"
   x
 }
 
@@ -165,12 +173,12 @@ opt_selection <- function(css = NULL, type = "multiple"){
 #'
 #' x <- girafe(ggobj = gg)
 #' x <- girafe_options(x,
-#'   opt_zoom(min = .7, max = 2) )
+#'   opts_zoom(min = .7, max = 2) )
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opt_zoom <- function(min = 1, max = 1){
+opts_zoom <- function(min = 1, max = 1){
 
   stopifnot(is.numeric(min), is.numeric(max))
 
@@ -183,7 +191,44 @@ opt_zoom <- function(min = 1, max = 1){
     min = min,
     max = max
   )
-  class(x) <- "opt_zoom"
+  class(x) <- "opts_zoom"
+  x
+}
+
+#' @title toolbar settings
+#' @description Allows customization of the toolbar
+#' @param position one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'
+#' @param saveaspng set to TRUE to propose the 'save as png' button.
+#' @examples
+#' library(ggplot2)
+#'
+#' dataset <- mtcars
+#' dataset$carname = row.names(mtcars)
+#'
+#' gg <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(x = wt, y = qsec, color = disp,
+#'                 tooltip = carname, data_id = carname) ) +
+#'   geom_point_interactive() + theme_minimal()
+#'
+#' x <- girafe(ggobj = gg)
+#' x <- girafe_options(x,
+#'   opts_toolbar(position = "top") )
+#' if( interactive() ) print(x)
+#' @export
+#' @family girafe animation options
+#' @seealso set options with \code{\link{girafe_options}}
+opts_toolbar <- function(position = "topright", saveaspng = TRUE){
+
+  stopifnot(position %in% c("top", "bottom",
+                            "topleft", "topright",
+                            "bottomleft", "bottomright") )
+
+  x <- list(
+    position = position,
+    saveaspng = saveaspng
+  )
+  class(x) <- "opts_toolbar"
   x
 }
 
@@ -191,7 +236,7 @@ opt_zoom <- function(min = 1, max = 1){
 #' @description Defines the animation options related to
 #' a \code{\link{girafe}} object.
 #' @param x girafe object.
-#' @param ... set of options defined by calls to \code{opt_*} functions.
+#' @param ... set of options defined by calls to \code{opts_*} functions.
 #' @examples
 #' library(ggplot2)
 #'
@@ -205,29 +250,31 @@ opt_zoom <- function(min = 1, max = 1){
 #'
 #' x <- girafe(ggobj = gg_point)
 #' x <- girafe_options(x = x,
-#'     opt_tooltip(opacity = .7),
-#'     opt_zoom(min = .5, max = 4),
-#'     opt_hover(css = "fill:red;stroke:orange;r:5pt;") )
+#'     opts_tooltip(opacity = .7),
+#'     opts_zoom(min = .5, max = 4),
+#'     opts_hover(css = "fill:red;stroke:orange;r:5pt;") )
 #'
 #' if(interactive()){
 #'   print(x)
 #' }
 #' @export
-#' @seealso \code{\link{opt_tooltip}}, \code{\link{opt_hover}},
-#' \code{\link{opt_selection}}, \code{\link{opt_zoom}}
+#' @seealso \code{\link{opts_tooltip}}, \code{\link{opts_hover}},
+#' \code{\link{opts_selection}}, \code{\link{opts_zoom}}
 girafe_options <- function(x, ...){
   stopifnot(inherits(x, "girafe"))
 
   args <- list(...)
   for( arg in args ){
-    if( inherits(arg, "opt_zoom")){
+    if( inherits(arg, "opts_zoom")){
       x$x$settings$zoom <- arg
-    } else if( inherits(arg, "opt_selection")){
+    } else if( inherits(arg, "opts_selection")){
       x$x$settings$capture <- arg
-    } else if( inherits(arg, "opt_tooltip")){
+    } else if( inherits(arg, "opts_tooltip")){
       x$x$settings$tooltip <- arg
-    } else if( inherits(arg, "opt_hover")){
+    } else if( inherits(arg, "opts_hover")){
       x$x$settings$hover <- arg
+    } else if( inherits(arg, "opts_toolbar")){
+      x$x$settings$toolbar <- arg
     }
   }
   x

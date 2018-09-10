@@ -48,8 +48,9 @@ export default class ggiraphjs {
         this.inputId = id;
     }
 
-    addUI(addLasso, addZoom) {
-        utils.add_ui(this, addLasso, addZoom);
+    addUI(addLasso, addZoom, saveaspng, classpos) {
+        
+        utils.add_ui(this, addLasso, addZoom, saveaspng, classpos);
     }
 
     addSvg(svg, jsstr) {
@@ -125,30 +126,46 @@ export default class ggiraphjs {
                     .style("opacity", 0);
             });
     }
-
-    animateGElements(opacity, offx, offy, delayover, delayout) {
+    
+    animateGElements(opacity, offx, offy, usecursor, delayover, delayout, usefill, usestroke) {
         const selected_class = this.hoverClassname();
         const sel_both = d3.selectAll('#' + this.svgid + ' *');
         const tooltipstr = "." + this.tooltipClassname();
         const svgid = this.svgid;
-        sel_both.on("mouseover", function (d) {
-            if (this.getAttribute("data-id") !== null) {
-                var curr_sel = d3.selectAll('#' + svgid +
-                    ' *[data-id="' + this.getAttribute("data-id") + '"]');
-                curr_sel.classed(selected_class, true);
-            }
-            if (this.getAttribute("title") !== null) {
-                d3.select(tooltipstr).transition()
-                    .duration(delayover)
-                    .style("opacity", opacity);
-                d3.select(tooltipstr).html(this.getAttribute("title"))
-                    .style("left", (d3.event.pageX + offx) + "px")
-                    .style("top", (d3.event.pageY + offy) + "px");
-            }
-        })
+        sel_both
+            .on("mouseover", function (d) {
+                if (this.getAttribute("data-id") !== null) {
+                    let curr_sel = d3.selectAll('#' + svgid +
+                        ' *[data-id="' + this.getAttribute("data-id") + '"]');
+                    curr_sel.classed(selected_class, true);
+                }
+                if (this.getAttribute("title") !== null) {
+                    d3.select(tooltipstr).transition()
+                        .duration(delayover)
+                        .style("opacity", opacity);
+                    if( usefill ){
+                        const fill = this.getAttribute("fill");
+                        d3.select(tooltipstr).style("background-color", fill);
+                    }
+                    if( usestroke ){
+                        const stroke = this.getAttribute("stroke");
+                        d3.select(tooltipstr).style("border-color", stroke);
+                    }
+                    d3.select(tooltipstr).html(this.getAttribute("title"))
+                        .style("left", (usecursor ? d3.event.pageX + offx : offx) + "px")
+                        .style("top", (usecursor ? d3.event.pageY + offy : offy) + "px");
+                }
+            })
+            .on("mousemove", function (d) {
+                if (this.getAttribute("title") !== null) {
+                    d3.select(tooltipstr).html(this.getAttribute("title"))
+                        .style("left", (usecursor ? d3.event.pageX + offx : offx) + "px")
+                        .style("top", (usecursor ? d3.event.pageY + offy : offy) + "px");
+                }
+            })
             .on("mouseout", function (d) {
                 if (this.getAttribute("data-id") !== null) {
-                    var curr_sel = d3.selectAll('#' + svgid +
+                    let curr_sel = d3.selectAll('#' + svgid +
                         ' *[data-id="' + d3.select(d3.event.currentTarget).attr("data-id") + '"]');
                     curr_sel.classed(selected_class, false);
                 }

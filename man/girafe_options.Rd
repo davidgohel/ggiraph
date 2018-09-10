@@ -9,7 +9,7 @@ girafe_options(x, ...)
 \arguments{
 \item{x}{girafe object.}
 
-\item{...}{set of options defined by calls to \code{opt_*} functions.}
+\item{...}{set of options defined by calls to \code{opts_*} functions.}
 }
 \description{
 Defines the animation options related to
@@ -28,15 +28,15 @@ gg_point = ggplot( data = dataset,
 
 x <- girafe(ggobj = gg_point)
 x <- girafe_options(x = x,
-    opt_tooltip(opacity = .7),
-    opt_zoom(min = .5, max = 4),
-    opt_hover(css = "fill:red;stroke:orange;r:5pt;") )
+    opts_tooltip(opacity = .7),
+    opts_zoom(min = .5, max = 4),
+    opts_hover(css = "fill:red;stroke:orange;r:5pt;") )
 
 if(interactive()){
   print(x)
 }
 }
 \seealso{
-\code{\link{opt_tooltip}}, \code{\link{opt_hover}},
-\code{\link{opt_selection}}, \code{\link{opt_zoom}}
+\code{\link{opts_tooltip}}, \code{\link{opts_hover}},
+\code{\link{opts_selection}}, \code{\link{opts_zoom}}
 }

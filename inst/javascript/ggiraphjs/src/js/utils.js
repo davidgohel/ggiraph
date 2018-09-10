@@ -35,8 +35,9 @@ export function navigator_id(){
     return M.join(' ');
 }
 
-export function add_ui(that, addLasso, addZoom) {
+export function add_ui(that, addLasso, addZoom, saveaspng, classpos) {
     const divToolbar = d3.select("#" + that.containerid + " .girafe_container_std").append("div").classed('ggiraph-toolbar', true);
+    divToolbar.classed(classpos, true);
     if (addLasso) {
         const divToolbarSelect = divToolbar.append("div")
             .classed('ggiraph-toolbar-block', true)
@@ -89,19 +90,21 @@ export function add_ui(that, addLasso, addZoom) {
             .html("<svg width='15pt' height='15pt' viewBox='0 0 512 512'><g><ellipse ry='150' rx='150' cy='213' cx='203.5' stroke-width='50' fill='transparent'/><line y2='455.5' x2='416' y1='331.5' x1='301' stroke-width='50'/><line y2='455' x2='0' y1='0' x1='416' stroke-width='30'/></g></svg>");
     }
 
-    const divToolbarMisc = divToolbar.append("div")
-        .classed('ggiraph-toolbar-block', true);
-    divToolbarMisc.append("a")
-        .classed('ggiraph-toolbar-icon', true)
-        .classed('neutral', true)
-        .attr('title', 'download png')
-        .on('click', function () {
-            if(typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1){
-                svgtopng.saveSvgAsPng(document.getElementById(that.svgid), "diagram.png");
-            } else {
-                console.error("This navigator does not support Promises");
-            }
-            
-        })
-        .html("<svg width='15pt' height='15pt' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'><g><polygon points='95 275 95 415 415 415 415 275 375 275 375 380 135 380 135 275'/><polygon points='220 30 220 250 150 175 150 245 250 345 350 245 350 175 280 250 280 30'/></g></svg>");
+    if (saveaspng) {
+        const divToolbarMisc = divToolbar.append("div")
+            .classed('ggiraph-toolbar-block', true);
+        divToolbarMisc.append("a")
+            .classed('ggiraph-toolbar-icon', true)
+            .classed('neutral', true)
+            .attr('title', 'download png')
+            .on('click', function () {
+                if(typeof Promise !== "undefined" && Promise.toString().indexOf("[native code]") !== -1){
+                    svgtopng.saveSvgAsPng(document.getElementById(that.svgid), "diagram.png");
+                } else {
+                    console.error("This navigator does not support Promises");
+                }
+                
+            })
+            .html("<svg width='15pt' height='15pt' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'><g><polygon points='95 275 95 415 415 415 415 275 375 275 375 380 135 380 135 275'/><polygon points='220 30 220 250 150 175 150 245 250 345 350 245 350 175 280 250 280 30'/></g></svg>");
+    }
 }
