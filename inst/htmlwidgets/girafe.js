@@ -44,7 +44,7 @@ HTMLWidgets.widget({
             x.settings.tooltip.delay.over, x.settings.tooltip.delay.out);
         ggobj.animateToolbar();
         ggobj.adjustSize(width, height);
-        ggobj.IEFixResize(x.width, x.ratio);
+        ggobj.IEFixResize(x.width, 1/x.ratio);
 
         var addLasso = ggobj.isSelectable() && HTMLWidgets.shinyMode;
         var addZoom = true;
