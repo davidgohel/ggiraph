@@ -15,3 +15,4 @@
 ^vignettes/offcran$
 ^cran-comments\.md$
 ^revdep$
+^inst/javascript$

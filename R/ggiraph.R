@@ -152,7 +152,7 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
   if( "auto" %in% width )
     stop("'width:auto' is not supported", call. = FALSE)
 
-  shinyWidgetOutput(outputId, 'ggiraph', package = 'ggiraph', width = width, height = height)
+  shinyWidgetOutput(outputId, 'girafe', package = 'ggiraph', width = width, height = height)
 }
 
 #' @title Reactive version of ggiraph object
@@ -172,7 +172,7 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #' @export
 renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
 	if (!quoted) { expr <- substitute(expr) } # force quoted
-	shinyRenderWidget(expr, ggiraphOutput, env, quoted = TRUE)
+	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
 }
 
 
