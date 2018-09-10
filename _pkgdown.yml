@@ -8,13 +8,20 @@ reference:
   - title: Make ggplot2 Graphics Interactive
     contents:
     - ggiraph
+    - girafe
   - title: Interactive geometries
     contents:
     - ends_with("_interactive")
+  - title: Customize girafe animations
+    contents:
+    - starts_with("opts_")
+    - girafe_options
   - title: Working with shiny
     contents:
     - renderggiraph
     - ggiraphOutput
+    - renderGirafe
+    - girafeOutput
 
 navbar:
   title: ggiraph

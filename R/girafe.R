@@ -1,12 +1,35 @@
 #' @title create a girafe object
 #'
-#' @description Create an interactive graphic to be used in a web browser.
+#' @description Create an interactive graphic with a ggplot object
+#' to be used in a web browser. The function should replace function
+#' \code{ggiraph}.
+#'
+#' @details
+#' Use \code{geom_zzz_interactive} to create interactive graphical elements.
+#'
+#' Difference from original functions is that the following
+#' aesthetics are understood: \code{tooltip}, \code{onclick}
+#' and \code{data_id}.
+#'
+#' Tooltips can be displayed when mouse is over graphical elements.
+#'
+#' If id are associated with points, they get animated when mouse is
+#' over and can be selected when used in shiny apps.
+#'
+#' On click actions can be set with javascript instructions. This option
+#' should not be used simultaneously with selections in Shiny
+#' applications as both features are "on click" features.
+#'
+#' When a zoom effect is set, "zoom activate", "zoom desactivate" and
+#' "zoom init" buttons are available in a toolbar.
+#'
+#' When selection type is set to 'multiple' (in Shiny applications), lasso
+#' selection and lasso anti-selections buttons are available in a toolbar.
 #'
 #' @param code Plotting code to execute
 #' @param ggobj ggplot objet to print. argument \code{code} will
 #' be ignored if this argument is supplied.
-#' @param width widget width ratio (0 < width <= 1). Unused within shiny
-#' applications or flexdashboard documents. See below.
+#' @param width widget width ratio (0 < width <= 1). See below in section .
 #' @param width_svg,height_svg The width and height of the graphics region in inches.
 #' The default values are 6 and 5 inches. This will define the aspect ratio of the
 #' graphic as it will be used to define viewbox attribute of the SVG result.
@@ -42,7 +65,7 @@
 #' implementation: one for Shiny applications and flexdashboard documents
 #' and one for other documents (i.e. R markdown and \code{saveWidget}).
 #'
-#' When a girafe graphic is in a Shiny application or in a flexdashboard
+#' When a girafe graphic is in a Shiny application
 #' graphic will be resized according to the arguments \code{width} and
 #' \code{height} of the function \code{girafeOutput}. Default
 #' values are '100%' and '500px'. These arguments determine the
@@ -58,6 +81,7 @@
 #'
 #' If this behavior does not fit with your need, I recommand you to use
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
+#' @seealso \code{\link{girafe_options}}
 #' @export
 girafe <- function(
   code, ggobj = NULL,  width = 0.9, pointsize = 12,

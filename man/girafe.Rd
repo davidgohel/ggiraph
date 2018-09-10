@@ -13,8 +13,7 @@ girafe(code, ggobj = NULL, width = 0.9, pointsize = 12,
 \item{ggobj}{ggplot objet to print. argument \code{code} will
 be ignored if this argument is supplied.}
 
-\item{width}{widget width ratio (0 < width <= 1). Unused within shiny
-applications or flexdashboard documents. See below.}
+\item{width}{widget width ratio (0 < width <= 1). See below in section .}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
@@ -30,7 +29,31 @@ is not recommanded.}
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
 }
 \description{
-Create an interactive graphic to be used in a web browser.
+Create an interactive graphic with a ggplot object
+to be used in a web browser. The function should replace function
+\code{ggiraph}.
+}
+\details{
+Use \code{geom_zzz_interactive} to create interactive graphical elements.
+
+Difference from original functions is that the following
+aesthetics are understood: \code{tooltip}, \code{onclick}
+and \code{data_id}.
+
+Tooltips can be displayed when mouse is over graphical elements.
+
+If id are associated with points, they get animated when mouse is
+over and can be selected when used in shiny apps.
+
+On click actions can be set with javascript instructions. This option
+should not be used simultaneously with selections in Shiny
+applications as both features are "on click" features.
+
+When a zoom effect is set, "zoom activate", "zoom desactivate" and
+"zoom init" buttons are available in a toolbar.
+
+When selection type is set to 'multiple' (in Shiny applications), lasso
+selection and lasso anti-selections buttons are available in a toolbar.
 }
 \section{Widget options}{
 
@@ -46,7 +69,7 @@ according to their container. There are two responsive behavior
 implementation: one for Shiny applications and flexdashboard documents
 and one for other documents (i.e. R markdown and \code{saveWidget}).
 
-When a girafe graphic is in a Shiny application or in a flexdashboard
+When a girafe graphic is in a Shiny application
 graphic will be resized according to the arguments \code{width} and
 \code{height} of the function \code{girafeOutput}. Default
 values are '100%' and '500px'. These arguments determine the
@@ -80,4 +103,7 @@ x <- girafe(ggobj = gg_point, width = 0.7)
 if(interactive()){
   print(x)
 }
+}
+\seealso{
+\code{\link{girafe_options}}
 }

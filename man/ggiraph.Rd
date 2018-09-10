@@ -19,10 +19,13 @@ be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{width}{widget width ratio (0 < width <= 1). Unused within shiny
-applications or flexdashboard documents. See below.}
+\item{width}{widget width ratio (0 < width <= 1). See below in section .}
 
-\item{width_svg, height_svg}{The width and height of the graphics region in inches.
+\item{width_svg}{The width and height of the graphics region in inches.
+The default values are 6 and 5 inches. This will define the aspect ratio of the
+graphic as it will be used to define viewbox attribute of the SVG result.}
+
+\item{height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
 graphic as it will be used to define viewbox attribute of the SVG result.}
 
@@ -46,7 +49,7 @@ when widget is in a Shiny application.}
 
 \item{selected_css}{css to apply when element is selected (shiny only).}
 
-\item{dep_dir}{the path where the output files are stored. If \code{NULL},
+\item{dep_dir}{Deprecated; the path where the output files are stored. If \code{NULL},
 the current path for temporary files is used.}
 
 \item{xml_reader_options}{read_xml additional arguments to be used
@@ -58,6 +61,9 @@ is not recommanded.}
 }
 \description{
 Create an interactive graphic to be used in a web browser.
+
+This function is maintained for backward compatibility reasons, user shoud
+now use function \code{\link{girafe}} and \code{\link{girafe_options}}.
 
 Use \code{geom_zzz_interactive} to create interactive graphical elements.
 

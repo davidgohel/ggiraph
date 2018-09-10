@@ -11,6 +11,9 @@
 #'
 #' @description Create an interactive graphic to be used in a web browser.
 #'
+#' This function is maintained for backward compatibility reasons, user shoud
+#' now use function \code{\link{girafe}} and \code{\link{girafe_options}}.
+#'
 #' Use \code{geom_zzz_interactive} to create interactive graphical elements.
 #'
 #' Difference from original functions is that the following
@@ -32,13 +35,7 @@
 #' When \code{selection} is set to multiple (in Shiny applications), lasso
 #' selection and lasso anti-selections buttons are available in a toolbar.
 #'
-#' @param code Plotting code to execute
-#' @param ggobj ggplot objet to print. argument \code{code} will
-#' be ignored if this argument is supplied.
-#' @param pointsize the default pointsize of plotted text in pixels, default to 12.
-#' @param width_svg,height_svg The width and height of the graphics region in inches.
-#' The default values are 6 and 5 inches. This will define the aspect ratio of the
-#' graphic as it will be used to define viewbox attribute of the SVG result.
+#' @inheritParams girafe
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
 #' @param hover_css css to apply when mouse is hover and element with a data-id attribute.
@@ -50,15 +47,8 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
-#' @param width widget width ratio (0 < width <= 1). Unused within shiny
-#' applications or flexdashboard documents. See below.
-#' @param dep_dir the path where the output files are stored. If \code{NULL},
+#' @param dep_dir Deprecated; the path where the output files are stored. If \code{NULL},
 #'  the current path for temporary files is used.
-#' @param xml_reader_options read_xml additional arguments to be used
-#' when parsing the svg result. This feature can be used to parse
-#' huge svg files by using \code{list(options = "HUGE")} but this
-#' is not recommanded.
-#' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
 #' @examples
 #' # ggiraph simple example -------
 #' @example examples/geom_point_interactive.R
