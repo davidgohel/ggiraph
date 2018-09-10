@@ -91,129 +91,39 @@ ggiraph <- function(code, ggobj = NULL,
                     pointsize = 12,
                     width = .75,
                     width_svg = 6, height_svg = 5,
-                    tooltip_extra_css,
-                    hover_css,
+                    tooltip_extra_css = NULL,
+                    hover_css = NULL,
                     tooltip_opacity = .9,
                     tooltip_offx = 10,
                     tooltip_offy = 0,
                     tooltip_zindex = 999,
                     zoom_max = 1,
                     selection_type = "multiple",
-                    selected_css,
+                    selected_css = NULL,
                     dep_dir = NULL,
-                    use_widget_size, flexdashboard,
                     xml_reader_options = list(),
                     ...) {
 
-  if( !missing(flexdashboard) ) warning("argument `flexdashboard` has been deprecated.")
-  if( !missing(use_widget_size) ) warning("argument `use_widget_size` has been deprecated.")
-
-  if( missing( tooltip_extra_css ))
-    tooltip_extra_css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
-  if( missing( hover_css ))
-    hover_css <- "fill:orange;stroke:gray;"
-  if( missing( selected_css ))
-    selected_css <- hover_css
-
-  stopifnot( is.numeric(width), width > 0, width <= 1 )
-
-  stopifnot(selection_type %in% c("single", "multiple", "none"))
-  stopifnot(is.numeric(tooltip_offx))
-  stopifnot(is.numeric(tooltip_offy))
-  stopifnot(is.numeric(tooltip_opacity))
-  stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
-  stopifnot(tooltip_opacity > 0 && tooltip_opacity <= 1)
-  stopifnot(is.numeric(zoom_max))
-
-  if( zoom_max < 1 )
-    stop("zoom_max should be >= 1")
-
-  ggiwid.options = getOption("ggiwid")
-  tmpdir = tempdir()
-  path = tempfile()
-  canvas_id <- ggiwid.options$svgid
-  dsvg(file = path, pointsize = pointsize, standalone = TRUE,
-       width = width_svg, height = height_svg,
-       canvas_id = canvas_id, ...
-  )
-  tryCatch({
-    if( !is.null(ggobj) ){
-      stopifnot(inherits(ggobj, "ggplot"))
-      print(ggobj)
-    } else
-      code
-  }, finally = dev.off() )
-
-  ggiwid.options$svgid = 1 + ggiwid.options$svgid
-  options("ggiwid"=ggiwid.options)
-
-  xml_reader_options$x <- path
-  data <- do.call(read_xml, xml_reader_options )
-  scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
-  js <- paste( sapply( scr, xml_text ), collapse = ";")
-
-  xml_remove(scr)
-  xml_attr(data, "width") <- NULL
-  xml_attr(data, "height") <- NULL
-  svg_id <- xml_attr(data, "id")
-
-  if( grepl(x = tooltip_extra_css, pattern = "position[ ]*:") )
-    stop("please, do not specify position in tooltip_extra_css, this parameter is managed by ggiraph.")
-  if( grepl(x = tooltip_extra_css, pattern = "pointer-events[ ]*:") )
-    stop("please, do not specify pointer-events in tooltip_extra_css, this parameter is managed by ggiraph.")
-
-  unlink(path)
-
-  if ( is.null(dep_dir) ) {
-    dep_dir <- tempfile()
-    dir.create(dep_dir)
-  } else {
-    if ( !dir.exists(dep_dir) )
-      stop(dep_dir, " does not exist.", call. = FALSE)
+  if( !missing(dep_dir) ){
+    warning("argument `dep_dir` has been deprecated.")
   }
 
-  init_prop_name <- paste0("init_prop_", svg_id)
-  array_selected_name <- paste0("array_selected_", svg_id)
-  zoom_name <- paste0("zoom_", svg_id)
-  lasso_name <- paste0("lasso_", svg_id)
-  class_selected_name <- paste0("clicked_", svg_id)
-  class_hover_id <- paste0("hover_", svg_id)
-  js <- paste0("function ", init_prop_name, "(){", js, "};")
-  js <- paste0(js, paste0("var ", array_selected_name, " = [];") )
-  js <- paste0(js, sprintf("var %s = d3.zoom().scaleExtent([%.02f, %.02f]);", zoom_name, 1, zoom_max) )
-  js <- paste0(js, sprintf("var %s = d3.lasso();", lasso_name) )
 
-  js_file <- file.path(dep_dir, paste0("scripts_", svg_id, ".js"))
-  cat(js, file = js_file)
+  x <- girafe(code = code, ggobj = ggobj, width = width, pointsize = pointsize,
+         width_svg = width_svg, height_svg = height_svg, xml_reader_options = xml_reader_options, ...)
+  x <- girafe_options(
+    x = x,
+    opt_tooltip(css = tooltip_extra_css,
+                opacity = tooltip_opacity,
+                offx = tooltip_offx, offy = tooltip_offy,
+                delay_mouseover = 200, delay_mouseout = 500,
+                zindex = tooltip_zindex),
+    opt_zoom(min = 1, max = zoom_max),
+    opt_selection(type = selection_type, css = selected_css),
+    opt_hover(css = hover_css)
+    )
 
-  css <- paste0(".tooltip_", svg_id,
-                sprintf( " {position:absolute;pointer-events:none;z-index:%.0f;", tooltip_zindex),
-                tooltip_extra_css, "}\n",
-                ".", class_hover_id, "{", hover_css, "}\n",
-                ".", class_selected_name, "{", selected_css, "}"
-  )
-
-  dep <- htmlDependency(svg_id, "0.0.1", src = dep_dir, script = basename(js_file) )
-  ui_div_ <- ui_div2(id = svg_id, zoomable = (zoom_max > 1),
-                     letlasso = selection_type %in% "multiple",
-                     array_selected_name, class_selected_name, zoom_name = zoom_name )
-
-  x = list( html = as.character(data), css = css, ui_html = ui_div_,
-            uid = svg_id, width = sprintf( "%.0f%%", width * 100 ),
-            funname = init_prop_name,
-            sel_array_name = array_selected_name,
-            selected_class = class_selected_name,
-            tooltip_opacity = tooltip_opacity,
-            tooltip_offx = tooltip_offx, tooltip_offy = tooltip_offy,
-            zoom_max = zoom_max,
-            selection_type = selection_type)
-
-  createWidget(
-    dependencies = list(dep),
-    name = 'ggiraph', x = x, package = 'ggiraph',
-    sizingPolicy = sizingPolicy(knitr.figure = TRUE, browser.fill = FALSE)
-  )
-
+  x
 }
 
 

@@ -5,10 +5,10 @@
 \title{create a ggiraph object}
 \usage{
 ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.75,
-  width_svg = 6, height_svg = 5, tooltip_extra_css, hover_css,
-  tooltip_opacity = 0.9, tooltip_offx = 10, tooltip_offy = 0,
-  tooltip_zindex = 999, zoom_max = 1, selection_type = "multiple",
-  selected_css, dep_dir = NULL, use_widget_size, flexdashboard,
+  width_svg = 6, height_svg = 5, tooltip_extra_css = NULL,
+  hover_css = NULL, tooltip_opacity = 0.9, tooltip_offx = 10,
+  tooltip_offy = 0, tooltip_zindex = 999, zoom_max = 1,
+  selection_type = "multiple", selected_css = NULL, dep_dir = NULL,
   xml_reader_options = list(), ...)
 }
 \arguments{
@@ -49,16 +49,16 @@ when widget is in a Shiny application.}
 \item{dep_dir}{the path where the output files are stored. If \code{NULL},
 the current path for temporary files is used.}
 
-\item{use_widget_size}{deprecated}
-
-\item{flexdashboard}{deprecated}
-
 \item{xml_reader_options}{read_xml additional arguments to be used
 when parsing the svg result. This feature can be used to parse
 huge svg files by using \code{list(options = "HUGE")} but this
 is not recommanded.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
+
+\item{use_widget_size}{deprecated}
+
+\item{flexdashboard}{deprecated}
 }
 \description{
 Create an interactive graphic to be used in a web browser.
