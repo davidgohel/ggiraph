@@ -170,7 +170,7 @@ geom_tile_interactive <- function(mapping = NULL, data = NULL,
 #' @export
 GeomInteractiveTile <- ggproto(
   "GeomInteractiveTile", GeomInteractiveRect,
-  extra_params = c("na.rm", "width", "height"),
+  extra_params = c("na.rm"),
 
   setup_data = function(data, params) {
      data$width <- data$width %||% params$width %||% resolution(data$x, FALSE)
