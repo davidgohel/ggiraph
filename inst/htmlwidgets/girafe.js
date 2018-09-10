@@ -29,7 +29,6 @@ HTMLWidgets.widget({
     var ggobj = ggiraphjs.newgi(el.id);
     return {
       renderValue: function(x) {
-        console.log(x);
         ggobj.setSvgWidth(x.width);
         ggobj.setSvgId(x.uid);
         ggobj.setZoomer(x.settings.zoom.min, x.settings.zoom.max);
