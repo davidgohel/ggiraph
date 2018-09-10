@@ -121,6 +121,9 @@ ggiraph <- function(code, ggobj = NULL,
     opt_hover(css = hover_css)
     )
 
+  # fix for package ceterisParibus unit tests
+  class(x) <- unique( c(class(x), "ggiraph"))
+
   x
 }
 
