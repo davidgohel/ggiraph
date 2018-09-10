@@ -4,7 +4,7 @@
 \alias{girafe}
 \title{create a girafe object}
 \usage{
-girafe(code, ggobj = NULL, pointsize = 12, width = 0.95,
+girafe(code, ggobj = NULL, width = 0.9, pointsize = 12,
   width_svg = 6, height_svg = 5, xml_reader_options = list(), ...)
 }
 \arguments{
@@ -13,10 +13,10 @@ girafe(code, ggobj = NULL, pointsize = 12, width = 0.95,
 \item{ggobj}{ggplot objet to print. argument \code{code} will
 be ignored if this argument is supplied.}
 
-\item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
-
 \item{width}{widget width ratio (0 < width <= 1). Unused within shiny
 applications or flexdashboard documents. See below.}
+
+\item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
 \item{width_svg, height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
@@ -32,6 +32,13 @@ is not recommanded.}
 \description{
 Create an interactive graphic to be used in a web browser.
 }
+\section{Widget options}{
+
+girafe animations can be customized with function \code{\link{girafe_options}}.
+Options are available to customize tooltips, hover effects, zoom effects
+and selection effects.
+}
+
 \section{Widget sizing}{
 
 girafe graphics are responsive, which mean, they will be resized
@@ -58,19 +65,19 @@ package widgetframe that wraps htmlwidgets inside a responsive iframe.
 }
 
 \examples{
-# girafe simple example -------
 library(ggplot2)
 
-# create dataset
-dataset = mtcars
+dataset <- mtcars
 dataset$carname = row.names(mtcars)
 
-# plots
-gg_point = ggplot(
-  data = dataset,
-  mapping = aes(x = wt, y = qsec, color = disp,
-                tooltip = carname, data_id = carname) ) +
-	geom_point_interactive() + theme_minimal()
+gg_point = ggplot( data = dataset,
+    mapping = aes(x = wt, y = qsec, color = disp,
+    tooltip = carname, data_id = carname) ) +
+  geom_point_interactive() + theme_minimal()
 
-ggiraph(ggobj = gg_point, width = .7 )
+x <- girafe(ggobj = gg_point, width = 0.7)
+
+if(interactive()){
+  print(x)
+}
 }
