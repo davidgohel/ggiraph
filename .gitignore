@@ -6,3 +6,4 @@ inst/doc
 inst/javascript/ggiraphjs/package-lock.json
 inst/javascript/ggiraphjs/node_modules
 inst/javascript/ggiraphjs/dist
+revdep
