@@ -139,7 +139,8 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 
 #' @title Reactive version of girafe
 #'
-#' @description Makes a reactive version of a  object for use in Shiny.
+#' @description Makes a reactive version of girafe
+#' object for use in Shiny.
 #'
 #' @param expr An expression that returns a \code{\link{girafe}} object.
 #' @param env The environment in which to evaluate expr.

@@ -14,5 +14,6 @@ renderGirafe(expr, env = parent.frame(), quoted = FALSE)
 \item{quoted}{Is \code{expr} a quoted expression}
 }
 \description{
-Makes a reactive version of a  object for use in Shiny.
+Makes a reactive version of girafe
+object for use in Shiny.
 }

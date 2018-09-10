@@ -90,8 +90,11 @@ opt_tooltip <- function(
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opt_hover <- function(css = "fill:orange;stroke:gray;"){
+opt_hover <- function(css = NULL){
 
+  if( is.null(css)){
+    css <- "fill:orange;stroke:gray;"
+  }
   css <- paste0("{", css, "}")
   x <- list(
     css = css
@@ -126,9 +129,11 @@ opt_hover <- function(css = "fill:orange;stroke:gray;"){
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opt_selection <- function(
-  css = "fill:red;stroke:gray;",
-  type = "multiple"){
+opt_selection <- function(css = NULL, type = "multiple"){
+
+  if( is.null(css)){
+    css <- "fill:red;stroke:gray;"
+  }
 
   stopifnot(type %in%
               c("single", "multiple", "none"))

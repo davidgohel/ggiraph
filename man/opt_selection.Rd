@@ -4,7 +4,7 @@
 \alias{opt_selection}
 \title{hover effect}
 \usage{
-opt_selection(css = "fill:red;stroke:gray;", type = "multiple")
+opt_selection(css = NULL, type = "multiple")
 }
 \arguments{
 \item{css}{css to associate with elements when they are selected.}

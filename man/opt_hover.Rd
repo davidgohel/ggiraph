@@ -4,7 +4,7 @@
 \alias{opt_hover}
 \title{hover effect}
 \usage{
-opt_hover(css = "fill:orange;stroke:gray;")
+opt_hover(css = NULL)
 }
 \arguments{
 \item{css}{css to associate with elements to be animated

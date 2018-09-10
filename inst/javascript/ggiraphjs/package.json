@@ -1,0 +1,38 @@
+{
+  "name": "ggiraphjs",
+  "version": "0.1.0",
+  "description": "ggiraph object javascript module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development;cp dist/ggiraphjs-0.1.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.1.0/ggiraphjs.min.js;",
+    "build": "webpack --mode production;cp dist/ggiraphjs-0.1.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.1.0/ggiraphjs.min.js;"
+  },
+  "keywords": [],
+  "author": "david.gohel@ardata.fr",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "copy-webpack-plugin": "^4.5.2",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "npm": "^6.4.0",
+    "path": "^0.12.7",
+    "prop-types": "^15.6.2",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.6",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "d3": "^5.7.0",
+    "d3-lasso": "0.0.5",
+    "d3-zoom": "^1.7.3",
+    "save-svg-as-png": "^1.4.6"
+  }
+}
