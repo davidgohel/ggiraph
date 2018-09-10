@@ -183,7 +183,8 @@ GeomInteractiveTile <- ggproto(
    },
 
    default_aes = aes(fill = "grey20", colour = NA, size = 0.1, linetype = 1,
-                     alpha = NA, tooltip = NULL, onclick = NULL, data_id = NULL),
+                     alpha = NA, width = NA, height = NA,
+                     tooltip = NULL, onclick = NULL, data_id = NULL),
 
    required_aes = c("x", "y"),
 
