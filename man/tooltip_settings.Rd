@@ -29,3 +29,22 @@ used to customize tooltip area.}
 settings to be used with \code{\link{girafe}}
 for tooltip customisation.
 }
+\examples{
+library(ggplot2)
+
+dataset <- mtcars
+dataset$carname = row.names(mtcars)
+
+gg <- ggplot(
+  data = dataset,
+  mapping = aes(x = wt, y = qsec, color = disp,
+                tooltip = carname, data_id = carname) ) +
+  geom_point_interactive() + theme_minimal()
+
+x <- girafe(ggobj = gg)
+x <- girafe_settings(x,
+  tooltip_settings(opacity = .7,
+    offx = 20, offy = -10,
+    delay_mouseout = 1000) )
+if( interactive() ) print(x)
+}

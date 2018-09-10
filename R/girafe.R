@@ -145,13 +145,29 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param offx tooltip x offset
 #' @param offy tooltip y offset
 #' @param zindex tooltip css z-index, default to 999.
+#' @examples
+#' library(ggplot2)
+#'
+#' dataset <- mtcars
+#' dataset$carname = row.names(mtcars)
+#'
+#' gg <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(x = wt, y = qsec, color = disp,
+#'                 tooltip = carname, data_id = carname) ) +
+#'   geom_point_interactive() + theme_minimal()
+#'
+#' x <- girafe(ggobj = gg)
+#' x <- girafe_settings(x,
+#'   tooltip_settings(opacity = .7,
+#'     offx = 20, offy = -10,
+#'     delay_mouseout = 1000) )
+#' if( interactive() ) print(x)
 #' @export
-tooltip_settings <- function(css = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;",
-                             offx = 10, offy = 0,
-                             opacity = .9,
-                             delay_mouseover = 200,
-                             delay_mouseout = 500,
-                             zindex = 999){
+tooltip_settings <- function(
+  css = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;",
+  offx = 10, offy = 0, opacity = .9,
+  delay_mouseover = 200, delay_mouseout = 500, zindex = 999){
 
   if( grepl(x = css, pattern = "position[ ]*:") )
     stop("please, do not specify position in css, this parameter is managed by girafe.")
@@ -185,6 +201,22 @@ tooltip_settings <- function(css = "padding:5px;background:black;color:white;bor
 #' @description Allows customization of the animation
 #' of graphic elements on which the mouse is positioned.
 #' @param css extra css used to customize animation.
+#' @examples
+#' library(ggplot2)
+#'
+#' dataset <- mtcars
+#' dataset$carname = row.names(mtcars)
+#'
+#' gg <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(x = wt, y = qsec, color = disp,
+#'                 tooltip = carname, data_id = carname) ) +
+#'   geom_point_interactive() + theme_minimal()
+#'
+#' x <- girafe(ggobj = gg)
+#' x <- girafe_settings(x,
+#'   hover_settings(css = "fill:wheat;stroke:orange;r:5pt;") )
+#' if( interactive() ) print(x)
 #' @export
 hover_settings <- function(css = "fill:orange;stroke:gray;"){
 
@@ -203,6 +235,23 @@ hover_settings <- function(css = "fill:orange;stroke:gray;"){
 #' @param css extra css used to customize animation.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
+#' @examples
+#' library(ggplot2)
+#'
+#' dataset <- mtcars
+#' dataset$carname = row.names(mtcars)
+#'
+#' gg <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(x = wt, y = qsec, color = disp,
+#'                 tooltip = carname, data_id = carname) ) +
+#'   geom_point_interactive() + theme_minimal()
+#'
+#' x <- girafe(ggobj = gg)
+#' x <- girafe_settings(x,
+#'   selection_settings(type = "multiple",
+#'     css = "fill:red;stroke:gray;r:5pt;") )
+#' if( interactive() ) print(x)
 selection_settings <- function(
   css = "fill:red;stroke:gray;",
   type = "multiple"){
@@ -219,11 +268,27 @@ selection_settings <- function(
   x
 }
 
-#' @export
 #' @title zoom settings
 #' @description Allows customization of the zoom.
 #' @param min minimum zoom factor
 #' @param max maximum zoom factor
+#' @examples
+#' library(ggplot2)
+#'
+#' dataset <- mtcars
+#' dataset$carname = row.names(mtcars)
+#'
+#' gg <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(x = wt, y = qsec, color = disp,
+#'                 tooltip = carname, data_id = carname) ) +
+#'   geom_point_interactive() + theme_minimal()
+#'
+#' x <- girafe(ggobj = gg)
+#' x <- girafe_settings(x,
+#'   zoom_settings(min = .7, max = 2) )
+#' if( interactive() ) print(x)
+#' @export
 zoom_settings <- function(min = 1, max = 1){
 
   stopifnot(is.numeric(min), is.numeric(max))

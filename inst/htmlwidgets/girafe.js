@@ -40,7 +40,7 @@ HTMLWidgets.widget({
         ggobj.addStyle(css);
         ggobj.addSvg(x.html, x.js);
         ggobj.animateGElements(x.settings.tooltip.opacity,
-            x.settings.tooltip.offx, x.settings.tooltip.offx,
+            x.settings.tooltip.offx, x.settings.tooltip.offy,
             x.settings.tooltip.delay.over, x.settings.tooltip.delay.out);
         ggobj.animateToolbar();
         ggobj.adjustSize(width, height);
