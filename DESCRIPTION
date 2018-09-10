@@ -2,7 +2,7 @@ Package: ggiraph
 Type: Package
 Title: Make 'ggplot2' Graphics Interactive
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.4.5.001
+Version: 0.5.0.001
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -10,6 +10,8 @@ Authors@R: c(
     comment = "d3.js"), 
     person("Speros", "Kokenes", role = c("cph"),
     comment = "d3-lasso"), 
+    person("Eric", "Shull", role = c("cph"),
+    comment = "saveSvgAsPng js library"), 
     person("Eric", "Book", role = c("ctb"),
     comment = "hline and vline geoms")
     )
