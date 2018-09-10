@@ -55,10 +55,6 @@ huge svg files by using \code{list(options = "HUGE")} but this
 is not recommanded.}
 
 \item{...}{arguments passed on to \code{\link[rvg]{dsvg}}}
-
-\item{use_widget_size}{deprecated}
-
-\item{flexdashboard}{deprecated}
 }
 \description{
 Create an interactive graphic to be used in a web browser.

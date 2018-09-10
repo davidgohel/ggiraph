@@ -54,8 +54,6 @@
 #' applications or flexdashboard documents. See below.
 #' @param dep_dir the path where the output files are stored. If \code{NULL},
 #'  the current path for temporary files is used.
-#' @param use_widget_size deprecated
-#' @param flexdashboard deprecated
 #' @param xml_reader_options read_xml additional arguments to be used
 #' when parsing the svg result. This feature can be used to parse
 #' huge svg files by using \code{list(options = "HUGE")} but this
