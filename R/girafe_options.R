@@ -236,9 +236,12 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 #' @description Defines the animation options related to
 #' a \code{\link{girafe}} object.
 #' @param x girafe object.
-#' @param ... set of options defined by calls to \code{opts_*} functions.
+#' @param ... set of options defined by calls to \code{opts_*} functions or
+#' to sizingPolicy from htmlwidgets (this won't have any effect within a
+#' shiny context).
 #' @examples
 #' library(ggplot2)
+#' library(htmlwidgets)
 #'
 #' dataset <- mtcars
 #' dataset$carname = row.names(mtcars)
@@ -252,6 +255,7 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 #' x <- girafe_options(x = x,
 #'     opts_tooltip(opacity = .7),
 #'     opts_zoom(min = .5, max = 4),
+#'     sizingPolicy(defaultWidth = "100%", defaultHeight = "300px"),
 #'     opts_hover(css = "fill:red;stroke:orange;r:5pt;") )
 #'
 #' if(interactive()){
@@ -259,7 +263,7 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 #' }
 #' @export
 #' @seealso \code{\link{opts_tooltip}}, \code{\link{opts_hover}},
-#' \code{\link{opts_selection}}, \code{\link{opts_zoom}}
+#' \code{\link{opts_selection}}, \code{\link{opts_zoom}}, \code{\link[htmlwidgets]{sizingPolicy}}
 girafe_options <- function(x, ...){
   stopifnot(inherits(x, "girafe"))
 
@@ -275,6 +279,9 @@ girafe_options <- function(x, ...){
       x$x$settings$hover <- arg
     } else if( inherits(arg, "opts_toolbar")){
       x$x$settings$toolbar <- arg
+    } else if( all( names( arg ) %in% c("defaultWidth", "defaultHeight", "padding", "viewer", "browser",
+                                  "knitr") ) ){
+      x$sizingPolicy <- arg
     }
   }
   x

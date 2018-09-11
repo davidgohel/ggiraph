@@ -9,7 +9,9 @@ girafe_options(x, ...)
 \arguments{
 \item{x}{girafe object.}
 
-\item{...}{set of options defined by calls to \code{opts_*} functions.}
+\item{...}{set of options defined by calls to \code{opts_*} functions or
+to sizingPolicy from htmlwidgets (this won't have any effect within a
+shiny context).}
 }
 \description{
 Defines the animation options related to
@@ -17,6 +19,7 @@ a \code{\link{girafe}} object.
 }
 \examples{
 library(ggplot2)
+library(htmlwidgets)
 
 dataset <- mtcars
 dataset$carname = row.names(mtcars)
@@ -30,6 +33,7 @@ x <- girafe(ggobj = gg_point)
 x <- girafe_options(x = x,
     opts_tooltip(opacity = .7),
     opts_zoom(min = .5, max = 4),
+    sizingPolicy(defaultWidth = "100\%", defaultHeight = "300px"),
     opts_hover(css = "fill:red;stroke:orange;r:5pt;") )
 
 if(interactive()){
@@ -38,5 +42,5 @@ if(interactive()){
 }
 \seealso{
 \code{\link{opts_tooltip}}, \code{\link{opts_hover}},
-\code{\link{opts_selection}}, \code{\link{opts_zoom}}
+\code{\link{opts_selection}}, \code{\link{opts_zoom}}, \code{\link[htmlwidgets]{sizingPolicy}}
 }
