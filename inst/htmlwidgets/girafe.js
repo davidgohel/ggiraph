@@ -47,7 +47,7 @@ HTMLWidgets.widget({
         ggobj.adjustSize(width, height);
         ggobj.IEFixResize(x.width, 1/x.ratio);
 
-        var addLasso = ggobj.isSelectable() && HTMLWidgets.shinyMode;
+        var addLasso = ggobj.isSelectable() //&& HTMLWidgets.shinyMode;
         var addZoom = true;
         if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){
           addZoom = false;

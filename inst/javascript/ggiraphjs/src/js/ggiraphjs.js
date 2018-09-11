@@ -54,6 +54,9 @@ export default class ggiraphjs {
     }
 
     addSvg(svg, jsstr) {
+        d3.select("#" + this.containerid + " div.girafe_container_std").remove();
+        d3.select("." + this.tooltipClassname()).remove();
+
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
             .html(svg);
