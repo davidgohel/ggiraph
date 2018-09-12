@@ -54,8 +54,15 @@ export default class ggiraphjs {
     }
 
     addSvg(svg, jsstr) {
-        d3.select("#" + this.containerid + " div.girafe_container_std").remove();
-        d3.select("." + this.tooltipClassname()).remove();
+        const oldsvg = d3.select("#" + this.containerid + " .girafe_container_std svg");
+        if( oldsvg.size() > 0 ){
+            const old_tooltip = d3.select("." + "tooltip_" + oldsvg.attr("id"));
+            old_tooltip.remove();
+        }
+        const oldcontainer = d3.select("#" + this.containerid + " div.girafe_container_std");
+        if( oldcontainer.size() > 0 ){
+            oldcontainer.remove();
+        }
 
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
