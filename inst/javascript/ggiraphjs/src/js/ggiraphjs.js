@@ -41,7 +41,11 @@ export default class ggiraphjs {
     }
 
     addStyle(css) {
-        d3.select("head").append("style").text(css);
+        const oldstyle = d3.select("#" + this.containerid + " style");
+        if( oldstyle.size() > 0 ){
+            oldstyle.remove();
+        }
+        d3.select("#" + this.containerid).append("style").text(css);
     }
 
     setInputId(id) {
