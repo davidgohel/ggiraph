@@ -47,22 +47,22 @@ HTMLWidgets.widget({
         ggobj.adjustSize(width, height);
         ggobj.IEFixResize(x.width, 1/x.ratio);
 
-        var addLasso = ggobj.isSelectable() //&& HTMLWidgets.shinyMode;
+        var addSelection = ggobj.isSelectable() && HTMLWidgets.shinyMode && x.settings.capture.only_shiny;
         var addZoom = true;
         if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){
           addZoom = false;
         }
 
-        if( x.settings.capture.type == "single" ){
+        if( addSelection && x.settings.capture.type == "single" ){
           ggobj.selectizeSingle();
-          addLasso = false;
-        } else if( x.settings.capture.type == "multiple" ){
+          addSelection = false;
+        } else if( addSelection && x.settings.capture.type == "multiple" ){
           ggobj.selectizeMultiple();
         } else {
           ggobj.selectizeNone();
-          addLasso = false;
+          addSelection = false;
         }
-        ggobj.addUI(addLasso, addZoom,
+        ggobj.addUI(addSelection, addZoom,
           x.settings.toolbar.saveaspng,
           'ggiraph-toolbar-' + x.settings.toolbar.position);
 

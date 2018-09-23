@@ -117,6 +117,7 @@ opts_hover <- function(css = NULL){
 #' @param css css to associate with elements when they are selected.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
+#' @param only_shiny disable selections if not in a shiny context.
 #' @examples
 #' library(ggplot2)
 #'
@@ -137,7 +138,7 @@ opts_hover <- function(css = NULL){
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opts_selection <- function(css = NULL, type = "multiple"){
+opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE){
 
   if( is.null(css)){
     css <- "fill:red;stroke:gray;"
@@ -149,7 +150,8 @@ opts_selection <- function(css = NULL, type = "multiple"){
   css <- paste0("{", css, "}")
   x <- list(
     css = css,
-    type = type
+    type = type,
+    only_shiny = only_shiny
   )
   class(x) <- "opts_selection"
   x

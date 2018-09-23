@@ -4,13 +4,15 @@
 \alias{opts_selection}
 \title{selection effect settings}
 \usage{
-opts_selection(css = NULL, type = "multiple")
+opts_selection(css = NULL, type = "multiple", only_shiny = TRUE)
 }
 \arguments{
 \item{css}{css to associate with elements when they are selected.}
 
 \item{type}{selection mode ("single", "multiple", "none")
 when widget is in a Shiny application.}
+
+\item{only_shiny}{disable selections if not in a shiny context.}
 }
 \description{
 Allows customization of the rendering of
