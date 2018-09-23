@@ -62,22 +62,27 @@
 #' @section Widget sizing:
 #' girafe graphics are responsive, which mean, they will be resized
 #' according to their container. There are two responsive behavior
-#' implementation: one for Shiny applications and flexdashboard documents
+#' implementations: one for Shiny applications and flexdashboard documents
 #' and one for other documents (i.e. R markdown and \code{saveWidget}).
 #'
-#' When a girafe graphic is in a Shiny application
+#' Graphics are created by an R graphic device (i.e pdf, png, svg here) and
+#' need arguments width and height to define a graphic region.
+#' Arguments \code{width_svg} and \code{height_svg} are used as corresponding
+#' values. They are defining the aspect ratio of the graphic. This proportion is
+#' always respected when the graph is displayed.
+#'
+#' When a girafe graphic is in a Shiny application,
 #' graphic will be resized according to the arguments \code{width} and
 #' \code{height} of the function \code{girafeOutput}. Default
-#' values are '100%' and '500px'. These arguments determine the
-#' outer bounding box (and \code{width_svg} and \code{height_svg}
-#' determines the proportions.
+#' values are '100\%' and '500px'. These arguments determine the
+#' outer bounding box of the graphic (the HTML element that will
+#' contain the graphic with an aspect ratio).
 #'
 #' When a girafe graphic is in an R markdown document (producing an HTML
 #' document), the graphic will be resized according to the argument \code{width} of the
 #' function \code{girafe}. Its value is beeing used to define a relative
 #' width of the graphic within its HTML container. Its height is automatically
-#' adjusted regarding to the argument \code{width} and the ratio between
-#' \code{width_svg} and \code{height_svg}.
+#' adjusted regarding to the argument \code{width} and the aspect ratio.
 #'
 #' If this behavior does not fit with your need, I recommand you to use
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.

@@ -14,27 +14,6 @@
 #' This function is maintained for backward compatibility reasons, user shoud
 #' now use function \code{\link{girafe}} and \code{\link{girafe_options}}.
 #'
-#' Use \code{geom_zzz_interactive} to create interactive graphical elements.
-#'
-#' Difference from original functions is that the following
-#' aesthetics are understood: \code{tooltip}, \code{onclick}
-#' and \code{data_id}.
-#'
-#' Tooltips can be displayed when mouse is over graphical elements.
-#'
-#' If id are associated with points, they get animated when mouse is
-#' over and can be selected when used in shiny apps.
-#'
-#' On click actions can be set with javascript instructions. This option
-#' should not be used simultaneously with selections in Shiny
-#' applications as both features are "on click" features.
-#'
-#' When \code{zoom_max} is set, "zoom activate", "zoom desactivate" and
-#' "zoom init" buttons are available in a toolbar.
-#'
-#' When \code{selection} is set to multiple (in Shiny applications), lasso
-#' selection and lasso anti-selections buttons are available in a toolbar.
-#'
 #' @inheritParams girafe
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
@@ -52,28 +31,6 @@
 #' @examples
 #' # ggiraph simple example -------
 #' @example examples/geom_point_interactive.R
-#' @section Widget sizing:
-#' ggiraph graphics are responsive, which mean, they will be resized
-#' according to their container. There are two responsive behavior
-#' implementation: one for Shiny applications and flexdashboard documents
-#' and one for other documents (i.e. R markdown and \code{saveWidget}).
-#'
-#' When a ggiraph graphic is in a Shiny application or in a flexdashboard
-#' graphic will be resized according to the arguments \code{width} and
-#' \code{height} of the function \code{ggiraphOutput}. Default
-#' values are '100%' and '500px'. These arguments determine the
-#' outer bounding box (and \code{width_svg} and \code{height_svg}
-#' determines the proportions.
-#'
-#' When a ggiraph graphic is in an R markdown document (producing an HTML
-#' document), the graphic will be resized according to the argument \code{width} of the
-#' function \code{ggiraph}. Its value is beeing used to define a relative
-#' width of the graphic within its HTML container. Its height is automatically
-#' adjusted regarding to the argument \code{width} and the ratio between
-#' \code{width_svg} and \code{height_svg}.
-#'
-#' If this behavior does not fit with your need, I recommand you to use
-#' package widgetframe that wraps htmlwidgets inside a responsive iframe.
 #' @export
 ggiraph <- function(code, ggobj = NULL,
                     pointsize = 12,
@@ -95,7 +52,6 @@ ggiraph <- function(code, ggobj = NULL,
   if( !missing(dep_dir) ){
     warning("argument `dep_dir` has been deprecated.")
   }
-
 
   x <- girafe(code = code, ggobj = ggobj, width = width, pointsize = pointsize,
          width_svg = width_svg, height_svg = height_svg, xml_reader_options = xml_reader_options, ...)
