@@ -32,7 +32,8 @@ Animation is made with ggplot geometries that can understand three arguments:
 * `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
 * `data_id`: column of dataset that contains id to be associated with elements. 
 
-If used within a shiny application, elements associated with an id (`data_id`) can be selected and manipulated on client and server sides.
+If used within a shiny application, elements associated with an id (`data_id`) 
+can be selected and manipulated on client and server sides.
 
 ```{r results='asis', echo=FALSE}
 htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',

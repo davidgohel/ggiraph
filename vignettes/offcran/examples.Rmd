@@ -42,8 +42,7 @@ gg2 <- ggplot(mtcars) +
 Mouseover points to see where they are located in the other graph.
 
 ```{r}
-ggiraph( code = print(gg1 + gg2), width_svg = 8, height_svg = 4, 
-         hover_css = "fill:red;r:10pt;")
+girafe( code = print(gg1 + gg2), width_svg = 8, height_svg = 4)
 ```
 
 ### Using `patchwork`
@@ -51,8 +50,7 @@ ggiraph( code = print(gg1 + gg2), width_svg = 8, height_svg = 4,
 Mouseover points to see where they are located in the other graph.
 
 ```{r}
-ggiraph( code = print(gg1 + gg2), width_svg = 8, height_svg = 4, 
-         hover_css = "fill:red;r:10pt;")
+girafe( code = print(gg1 + gg2), width_svg = 8, height_svg = 4)
 ```
 
 ## Dynamic dendrogram
@@ -158,10 +156,10 @@ p <- p + theme_minimal() +
   )
 ```
 
-Use `ggiraph`
+Use `girafe`
 
 ```{r}
-ggiraph(ggobj = p, width_svg = 8, height_svg = 6, zoom_max = 2)
+girafe(ggobj = p, width_svg = 8, height_svg = 6)
 ```
 
 ## Network with `ggraph`
@@ -265,12 +263,7 @@ ggg <- ggraph(g, layout = 'lgl') +
   scale_color_manual(values=c("The Ancients" = "#5BC8AC", "The Moderns" = "#F18D9E", Unclassified = "#E6D72A")) +
   theme(legend.position = "bottom")
 
-tooltip_css <- "background-color:white;color:#333333;font-style:italic;padding:5px;border-radius:3px 4px;border: 1pt #333333 solid;"
-hover_css <- "stroke:#333333;stroke-width:1pt;fill:red;cursor:pointer;"
-
-ggiraph(ggobj = ggg, width_svg = 8, height_svg = 6,
-        tooltip_extra_css = tooltip_css,
-        hover_css = hover_css, width = 1, zoom_max = 4)
+girafe(ggobj = ggg, width_svg = 8, height_svg = 6)
 ```
 
 

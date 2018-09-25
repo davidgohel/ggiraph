@@ -19,11 +19,11 @@ Render a ggiraph within an application page.
 \examples{
 \dontrun{
 if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "shiny/cars" )
+  app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny/cars" )
   shinyAppDir(appDir = app_dir )
  }
 if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "shiny/crimes" )
+  app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny/crimes" )
   shinyAppDir(appDir = app_dir )
 }
 }

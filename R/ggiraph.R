@@ -86,11 +86,11 @@ ggiraph <- function(code, ggobj = NULL,
 #' @examples
 #' \dontrun{
 #' if( require(shiny) && interactive() ){
-#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/cars" )
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny/cars" )
 #'   shinyAppDir(appDir = app_dir )
 #'  }
 #' if( require(shiny) && interactive() ){
-#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny/crimes" )
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny/crimes" )
 #'   shinyAppDir(appDir = app_dir )
 #' }
 #' }
@@ -114,7 +114,7 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #' @examples
 #' \dontrun{
 #' if( require(shiny) && interactive() ){
-#'   app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+#'   app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny" )
 #'   shinyAppDir(appDir = app_dir )
 #' }
 #' }

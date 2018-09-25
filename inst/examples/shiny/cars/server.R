@@ -11,7 +11,7 @@ shinyServer(function(input, output, session) {
     } else input$plot_selected
   })
 
-  output$plot <- renderggiraph({
+  output$plot <- renderGirafe({
     p <- ggplot(aes(x=wt,y=mpg, data_id = row.names(mtcars) ),data=mtcars) +
       geom_point_interactive(size = 3) + theme_minimal()
     ggiraph(code = print(p),

@@ -4,8 +4,8 @@ library(rmarkdown)
 library(webshot)
 
 
-files <- list.files(system.file("shiny", package="ggiraph"), full.names = TRUE) %>%
-  setdiff(system.file("shiny/ggraph", package="ggiraph")) %>%
+files <- list.files(system.file("examples/shiny", package="ggiraph"), full.names = TRUE) %>%
+  setdiff(system.file("examples/shiny/ggraph", package="ggiraph")) %>%
   map_chr(function(appdir) {
     message(appdir)
     png_ <- file.path( tempdir(), paste0( basename(appdir), ".png") )

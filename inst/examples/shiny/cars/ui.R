@@ -7,7 +7,7 @@ shinyUI(fluidPage(
     ),
 
     mainPanel(
-      ggiraphOutput("plot")
+      girafeOutput("plot")
     )
   )
 ))

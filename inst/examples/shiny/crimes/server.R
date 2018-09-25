@@ -18,9 +18,11 @@ shinyServer(function(input, output, session) {
   })
 
   output$plot <- renderggiraph({
-    ggiraph(code = print(gg_crime), width_svg = 6, height_svg = 8, selection_type = "multiple", zoom_max = 4,
-            hover_css = "fill:#FF3333;stroke:black;cursor:pointer;",
-            selected_css = "fill:#FF3333;stroke:black;")
+    x <- girafe(code = print(gg_crime), width_svg = 6, height_svg = 8)
+    x <- girafe_options(x, opts_selection(
+      type = "multiple", css = "fill:#FF3333;stroke:black;"),
+      opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;"))
+    x
   })
 
   observeEvent(input$reset, {

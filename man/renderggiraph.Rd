@@ -19,7 +19,7 @@ Makes a reactive version of a ggiraph object for use in Shiny.
 \examples{
 \dontrun{
 if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "shiny" )
+  app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny" )
   shinyAppDir(appDir = app_dir )
 }
 }

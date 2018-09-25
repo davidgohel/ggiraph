@@ -14,7 +14,9 @@ export default class ggiraphjs {
     }
 
     setSvgId(id) {
-        this.svgid = id;
+
+        this.svgid = utils.guid();
+        this.uid = id;
     }
     setSvgWidth(width) {
         this.csswidth = Math.round(width * 100) + "%";
@@ -40,11 +42,14 @@ export default class ggiraphjs {
         return 'hover_' + this.svgid;
     }
 
-    addStyle(css) {
+    addStyle(tooltipCss, hoverCss, clickedCss) {
         const oldstyle = d3.select("#" + this.containerid + " style");
         if( oldstyle.size() > 0 ){
             oldstyle.remove();
         }
+        const css = ".tooltip_" + this.svgid + tooltipCss + "\n" +
+            ".hover_" + this.svgid + hoverCss + "\n" +
+            ".clicked_" + this.svgid + clickedCss + "\n";
         d3.select("#" + this.containerid).append("style").text(css);
     }
 
@@ -58,6 +63,8 @@ export default class ggiraphjs {
     }
 
     addSvg(svg, jsstr) {
+
+        
         const oldsvg = d3.select("#" + this.containerid + " .girafe_container_std svg");
         if( oldsvg.size() > 0 ){
             const old_tooltip = d3.select("." + "tooltip_" + oldsvg.attr("id"));
@@ -68,11 +75,18 @@ export default class ggiraphjs {
             oldcontainer.remove();
         }
 
+        let newsvg = svg.split(this.uid).join(this.svgid);
+        svg = newsvg;
+ 
+        let newjsstr = jsstr.split(this.uid).join(this.svgid);
+        jsstr = newjsstr;
+
+
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
             .html(svg);
 
-        d3.select("body")
+        d3.select("#" + this.containerid)
             .append("div").attr("class", this.tooltipClassname())
             .style("position", "absolute").style("opacity", 0);
 
@@ -146,6 +160,7 @@ export default class ggiraphjs {
         const sel_both = d3.selectAll('#' + this.svgid + ' *');
         const tooltipstr = "." + this.tooltipClassname();
         const svgid = this.svgid;
+        const containerid = this.containerid;
         sel_both
             .on("mouseover", function (d) {
                 if (this.getAttribute("data-id") !== null) {
@@ -165,16 +180,31 @@ export default class ggiraphjs {
                         const stroke = this.getAttribute("stroke");
                         d3.select(tooltipstr).style("border-color", stroke);
                     }
-                    d3.select(tooltipstr).html(this.getAttribute("title"))
-                        .style("left", (usecursor ? d3.event.pageX + offx : offx) + "px")
-                        .style("top", (usecursor ? d3.event.pageY + offy : offy) + "px");
+                    d3.select(tooltipstr).html(this.getAttribute("title"));
+                    if( usecursor ){
+                        d3.select(tooltipstr)
+                            .style("left", (d3.event.pageX + offx) + "px")
+                            .style("top", (d3.event.pageY + offy) + "px");
+                    } else {
+                        const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
+                        d3.select(tooltipstr)
+                            .style("left", (offx + clientRect.left) + "px")
+                            .style("top", (document.documentElement.scrollTop + clientRect.y + offy) + "px");
+                    }
                 }
             })
             .on("mousemove", function (d) {
                 if (this.getAttribute("title") !== null) {
-                    d3.select(tooltipstr).html(this.getAttribute("title"))
-                        .style("left", (usecursor ? d3.event.pageX + offx : offx) + "px")
-                        .style("top", (usecursor ? d3.event.pageY + offy : offy) + "px");
+                    if( usecursor ){
+                        d3.select(tooltipstr)
+                            .style("left", (d3.event.pageX + offx) + "px")
+                            .style("top", (d3.event.pageY + offy) + "px");
+                    } else {
+                        const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
+                        d3.select(tooltipstr)
+                            .style("left", (offx + clientRect.left) + "px")
+                            .style("top", (document.documentElement.scrollTop + clientRect.y + offy) + "px");
+                    }
                 }
             })
             .on("mouseout", function (d) {
@@ -192,12 +222,20 @@ export default class ggiraphjs {
 
     }
 
+    setSelected(sel) {
+        this.dataSelected = sel;
+        this.refreshSelected();
+        if (this.inputId) {
+            Shiny.onInputChange(this.inputId, this.dataSelected);
+        }
+    }
+
     selectizeMultiple() {
         const sel_data_id = d3.selectAll('#' + this.svgid + ' *[data-id]');
-        let dataSel = this.dataSelected;
+        
         const that = this;
         sel_data_id.on("click", function (d, i) {
-
+            let dataSel = that.dataSelected;
             var dataid = d3.select(this).attr("data-id");
             var index = dataSel.indexOf(dataid);
             if (index < 0) {
@@ -216,9 +254,9 @@ export default class ggiraphjs {
 
     selectizeSingle() {
         const sel_data_id = d3.selectAll('#' + this.svgid + ' *[data-id]');
-        let dataSel = this.dataSelected;
         const that = this;
         sel_data_id.on("click", function (d, i) {
+            let dataSel = that.dataSelected;
 
             var dataid = d3.select(this).attr("data-id");
             var index = dataSel.indexOf(dataid);
@@ -237,8 +275,6 @@ export default class ggiraphjs {
 
     selectizeNone() {
         const sel_data_id = d3.selectAll('#' + this.svgid + ' *[data-id]');
-        let dataSel = this.dataSelected;
-        const that = this;
         sel_data_id.on("click", null);
     }
 
