@@ -97,10 +97,9 @@ girafe <- function(
   ggiwid.options = getOption("ggiwid")
   tmpdir = tempdir()
   path = tempfile()
-  canvas_id <- ggiwid.options$svgid
   dsvg(file = path, pointsize = pointsize, standalone = TRUE,
        width = width_svg, height = height_svg,
-       canvas_id = canvas_id, ...
+       canvas_id = 1L, ...
   )
   tryCatch({
     if( !is.null(ggobj) ){
@@ -109,9 +108,6 @@ girafe <- function(
     } else
       code
   }, finally = dev.off() )
-
-  ggiwid.options$svgid = 1 + ggiwid.options$svgid
-  options("ggiwid"=ggiwid.options)
 
   xml_reader_options$x <- path
   data <- do.call(read_xml, xml_reader_options )
