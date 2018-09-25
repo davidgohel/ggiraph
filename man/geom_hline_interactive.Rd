@@ -35,8 +35,7 @@ if( requireNamespace("dplyr", quietly = TRUE)){
   gg_hline1 <- g1 + geom_hline_interactive(
     aes(yintercept = mean(unemploy),
         tooltip = round(mean(unemploy), 2)))
-
-  ggiraph(code = print(gg_hline1))
+  girafe(ggobj = gg_hline1)
 }
 
 dataset <- data.frame(
@@ -59,8 +58,7 @@ gg_hline2 <- g2 + geom_hline_interactive(
       data_id = y, onclick = clickjs))
 
 
-ggiraph(code = print(gg_hline2),
-        hover_css = "cursor:pointer;fill:orange;stroke:orange;")
+girafe(ggobj = gg_hline2)
 }
 \seealso{
 \code{\link{ggiraph}}

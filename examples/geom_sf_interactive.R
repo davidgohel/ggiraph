@@ -18,7 +18,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
     geom_sf_interactive(aes(geometry = mid,
         size = AREA, tooltip = NAME, data_id = NAME),
       show.legend = "point")
-  ggiraph( ggobj = gg)
+  girafe( ggobj = gg)
 
 }
 

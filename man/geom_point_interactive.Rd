@@ -37,9 +37,13 @@ The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be
 # add interactive points to a ggplot -------
 library(ggplot2)
 
-# create dataset
-dataset = mtcars
-dataset$carname = row.names(mtcars)
+dataset <- structure(list(qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22
+), disp = c(160, 160, 108, 258, 360, 225), carname = c("Mazda RX4",
+"Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout",
+"Valiant"), wt = c(2.62, 2.875, 2.32, 3.215, 3.44, 3.46)), row.names = c("Mazda RX4",
+"Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout",
+"Valiant"), class = "data.frame")
+dataset
 
 # plots
 gg_point = ggplot(
@@ -48,7 +52,7 @@ gg_point = ggplot(
                 tooltip = carname, data_id = carname) ) +
 	geom_point_interactive() + theme_minimal()
 
-ggiraph(ggobj = gg_point, width = .7 )
+girafe(ggobj = gg_point, width = .7)
 }
 \seealso{
 \code{\link{ggiraph}}
