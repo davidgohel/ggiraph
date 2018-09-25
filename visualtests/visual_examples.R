@@ -14,7 +14,7 @@ files <- list.files(system.file("examples/shiny", package="ggiraph"), full.names
   })
 files %>% walk( browseURL )
 
-files <- list.files(system.file("rmd", package="ggiraph"), full.names = TRUE, recursive = TRUE, pattern = "\\.Rmd$") %>%
+files <- list.files(system.file("examples/rmd", package="ggiraph"), full.names = TRUE, recursive = TRUE, pattern = "\\.Rmd$") %>%
   map_chr(function(rmdfile) {
     render(rmdfile)
     png_ <- file.path( tempdir(), paste0( basename(rmdfile), ".png") )

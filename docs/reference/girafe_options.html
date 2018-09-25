@@ -124,18 +124,21 @@ a <code><a href='girafe.html'>girafe</a></code> object.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>set of options defined by calls to <code>opts_*</code> functions.</p></td>
+      <td><p>set of options defined by calls to <code>opts_*</code> functions or
+to sizingPolicy from htmlwidgets (this won't have any effect within a
+shiny context).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='opts_tooltip.html'>opts_tooltip</a></code>, <code><a href='opts_hover.html'>opts_hover</a></code>,
-<code><a href='opts_selection.html'>opts_selection</a></code>, <code><a href='opts_zoom.html'>opts_zoom</a></code></p></div>
+<code><a href='opts_selection.html'>opts_selection</a></code>, <code><a href='opts_zoom.html'>opts_zoom</a></code>, <code><a href='http://www.rdocumentation.org/packages/htmlwidgets/topics/sizingPolicy'>sizingPolicy</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'>library</span>(<span class='no'>htmlwidgets</span>)
 
 <span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>
 <span class='no'>dataset</span>$<span class='no'>carname</span> <span class='kw'>=</span> <span class='fu'>row.names</span>(<span class='no'>mtcars</span>)
@@ -149,6 +152,7 @@ a <code><a href='girafe.html'>girafe</a></code> object.</p>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>girafe_options</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>,
     <span class='fu'><a href='opts_tooltip.html'>opts_tooltip</a></span>(<span class='kw'>opacity</span> <span class='kw'>=</span> <span class='fl'>.7</span>),
     <span class='fu'><a href='opts_zoom.html'>opts_zoom</a></span>(<span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>4</span>),
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/htmlwidgets/topics/sizingPolicy'>sizingPolicy</a></span>(<span class='kw'>defaultWidth</span> <span class='kw'>=</span> <span class='st'>"100%"</span>, <span class='kw'>defaultHeight</span> <span class='kw'>=</span> <span class='st'>"300px"</span>),
     <span class='fu'><a href='opts_hover.html'>opts_hover</a></span>(<span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>"fill:red;stroke:orange;r:5pt;"</span>) )
 
 <span class='kw'>if</span>(<span class='fu'>interactive</span>()){
