@@ -34,21 +34,7 @@
 
 <meta property="og:description" content="Create an interactive graphic to be used in a web browser.
 This function is maintained for backward compatibility reasons, user shoud
-now use function girafe and girafe_options.
-Use geom_zzz_interactive to create interactive graphical elements.
-Difference from original functions is that the following
-aesthetics are understood: tooltip, onclick
-and data_id.
-Tooltips can be displayed when mouse is over graphical elements.
-If id are associated with points, they get animated when mouse is
-over and can be selected when used in shiny apps.
-On click actions can be set with javascript instructions. This option
-should not be used simultaneously with selections in Shiny
-applications as both features are &quot;on click&quot; features.
-When zoom_max is set, &quot;zoom activate&quot;, &quot;zoom desactivate&quot; and
-&quot;zoom init&quot; buttons are available in a toolbar.
-When selection is set to multiple (in Shiny applications), lasso
-selection and lasso anti-selections buttons are available in a toolbar." />
+now use function girafe and girafe_options." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,20 +112,6 @@ selection and lasso anti-selections buttons are available in a toolbar." />
     <p>Create an interactive graphic to be used in a web browser.</p>
 <p>This function is maintained for backward compatibility reasons, user shoud
 now use function <code><a href='girafe.html'>girafe</a></code> and <code><a href='girafe_options.html'>girafe_options</a></code>.</p>
-<p>Use <code>geom_zzz_interactive</code> to create interactive graphical elements.</p>
-<p>Difference from original functions is that the following
-aesthetics are understood: <code>tooltip</code>, <code>onclick</code>
-and <code>data_id</code>.</p>
-<p>Tooltips can be displayed when mouse is over graphical elements.</p>
-<p>If id are associated with points, they get animated when mouse is
-over and can be selected when used in shiny apps.</p>
-<p>On click actions can be set with javascript instructions. This option
-should not be used simultaneously with selections in Shiny
-applications as both features are "on click" features.</p>
-<p>When <code>zoom_max</code> is set, "zoom activate", "zoom desactivate" and
-"zoom init" buttons are available in a toolbar.</p>
-<p>When <code>selection</code> is set to multiple (in Shiny applications), lasso
-selection and lasso anti-selections buttons are available in a toolbar.</p>
     
     </div>
 
@@ -238,28 +210,6 @@ is not recommanded.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="widget-sizing"><a class="anchor" href="#widget-sizing"></a>Widget sizing</h2>
-
-    
-    <p>ggiraph graphics are responsive, which mean, they will be resized
-according to their container. There are two responsive behavior
-implementation: one for Shiny applications and flexdashboard documents
-and one for other documents (i.e. R markdown and <code>saveWidget</code>).</p>
-<p>When a ggiraph graphic is in a Shiny application or in a flexdashboard
-graphic will be resized according to the arguments <code>width</code> and
-<code>height</code> of the function <code>ggiraphOutput</code>. Default
-values are '100<!-- %' and '500px'. These arguments determine the -->
-outer bounding box (and <code>width_svg</code> and <code>height_svg</code>
-determines the proportions.</p>
-<p>When a ggiraph graphic is in an R markdown document (producing an HTML
-document), the graphic will be resized according to the argument <code>width</code> of the
-function <code>ggiraph</code>. Its value is beeing used to define a relative
-width of the graphic within its HTML container. Its height is automatically
-adjusted regarding to the argument <code>width</code> and the ratio between
-<code>width_svg</code> and <code>height_svg</code>.</p>
-<p>If this behavior does not fit with your need, I recommand you to use
-package widgetframe that wraps htmlwidgets inside a responsive iframe.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># ggiraph simple example -------</span>
@@ -282,9 +232,7 @@ package widgetframe that wraps htmlwidgets inside a responsive iframe.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#widget-sizing">Widget sizing</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

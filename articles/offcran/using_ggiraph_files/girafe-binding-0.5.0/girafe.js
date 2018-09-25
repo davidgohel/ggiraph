@@ -3,18 +3,15 @@ function isArray(x) {
 }
 
 function set_reactive(x, id ){
-  var varname = id + '_selected';
-  var settername = id + '_set';
 
-  Shiny.addCustomMessageHandler(settername, function(message) {
+  Shiny.addCustomMessageHandler(id + '_set', function(message) {
     if( typeof message === 'string' ) {
-      x.dataSelected = [message];
+      x.setSelected([message]);
     } else if( isArray(message) ){
-      x.dataSelected = message;
+      x.setSelected(message);
     }
-    x.refreshSelected();
-    Shiny.onInputChange(varname, x.dataSelected);
   });
+
 }
 
 
@@ -29,14 +26,10 @@ HTMLWidgets.widget({
     var ggobj = ggiraphjs.newgi(el.id);
     return {
       renderValue: function(x) {
-        ggobj.setSvgWidth(x.width);
         ggobj.setSvgId(x.uid);
+        ggobj.addStyle(x.settings.tooltip.css, x.settings.hover.css, x.settings.capture.css);
+        ggobj.setSvgWidth(x.width);
         ggobj.setZoomer(x.settings.zoom.min, x.settings.zoom.max);
-        var css = ".tooltip_" + x.uid + x.settings.tooltip.css + "\n" +
-                  ".hover_" + x.uid + x.settings.hover.css + "\n" +
-                  ".clicked_" + x.uid + x.settings.capture.css + "\n"
-                  ;
-        ggobj.addStyle(css);
         ggobj.addSvg(x.html, x.js);
         ggobj.animateGElements(x.settings.tooltip.opacity,
             x.settings.tooltip.offx, x.settings.tooltip.offy,
@@ -47,22 +40,22 @@ HTMLWidgets.widget({
         ggobj.adjustSize(width, height);
         ggobj.IEFixResize(x.width, 1/x.ratio);
 
-        var addLasso = ggobj.isSelectable() && HTMLWidgets.shinyMode;
+        var addSelection = ggobj.isSelectable() && HTMLWidgets.shinyMode && x.settings.capture.only_shiny;
         var addZoom = true;
         if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){
           addZoom = false;
         }
 
-        if( x.settings.capture.type == "single" ){
+        if( addSelection && x.settings.capture.type == "single" ){
           ggobj.selectizeSingle();
-          addLasso = false;
-        } else if( x.settings.capture.type == "multiple" ){
+          addSelection = false;
+        } else if( addSelection && x.settings.capture.type == "multiple" ){
           ggobj.selectizeMultiple();
         } else {
           ggobj.selectizeNone();
-          addLasso = false;
+          addSelection = false;
         }
-        ggobj.addUI(addLasso, addZoom,
+        ggobj.addUI(addSelection, addZoom,
           x.settings.toolbar.saveaspng,
           'ggiraph-toolbar-' + x.settings.toolbar.position);
 

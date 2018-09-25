@@ -29,7 +29,8 @@
 .ggiraph-toolbar-top {
     text-align:center;
     top: 3px;
-    right: 3px;
+    right: 0px;
+    left: 0px;
 }
 .ggiraph-toolbar-topleft {
     text-align:left;
@@ -45,7 +46,8 @@
 .ggiraph-toolbar-bottom {
     text-align:center;
     bottom: 3px;
-    right: 3px;
+    right: 0px;
+    left: 0px;
 }
 .ggiraph-toolbar-bottomleft {
     text-align:left;
