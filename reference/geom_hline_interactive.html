@@ -161,8 +161,7 @@ See the documentation for those functions for more details.</p>
   <span class='no'>gg_hline1</span> <span class='kw'>&lt;-</span> <span class='no'>g1</span> + <span class='fu'>geom_hline_interactive</span>(
     <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>yintercept</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>unemploy</span>),
         <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fu'>round</span>(<span class='fu'>mean</span>(<span class='no'>unemploy</span>), <span class='fl'>2</span>)))
-
-  <span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>gg_hline1</span>))
+  <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg_hline1</span>)
 }
 
 <span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
@@ -185,8 +184,7 @@ See the documentation for those functions for more details.</p>
       <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>clickjs</span>))
 
 
-<span class='fu'><a href='ggiraph.html'>ggiraph</a></span>(<span class='kw'>code</span> <span class='kw'>=</span> <span class='fu'>print</span>(<span class='no'>gg_hline2</span>),
-        <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"cursor:pointer;fill:orange;stroke:orange;"</span>)</div></pre>
+<span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg_hline2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

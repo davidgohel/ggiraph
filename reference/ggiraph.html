@@ -215,10 +215,19 @@ is not recommanded.</p></td>
     <pre class="examples"><div class='input'><span class='co'># ggiraph simple example -------</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 
-<span class='co'># create dataset</span>
-<span class='no'>dataset</span> <span class='kw'>=</span> <span class='no'>mtcars</span>
-<span class='no'>dataset</span>$<span class='no'>carname</span> <span class='kw'>=</span> <span class='fu'>row.names</span>(<span class='no'>mtcars</span>)
-
+<span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='fu'>structure</span>(<span class='fu'>list</span>(<span class='kw'>qsec</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>16.46</span>, <span class='fl'>17.02</span>, <span class='fl'>18.61</span>, <span class='fl'>19.44</span>, <span class='fl'>17.02</span>, <span class='fl'>20.22</span>
+), <span class='kw'>disp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>160</span>, <span class='fl'>160</span>, <span class='fl'>108</span>, <span class='fl'>258</span>, <span class='fl'>360</span>, <span class='fl'>225</span>), <span class='kw'>carname</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Mazda RX4"</span>,
+<span class='st'>"Mazda RX4 Wag"</span>, <span class='st'>"Datsun 710"</span>, <span class='st'>"Hornet 4 Drive"</span>, <span class='st'>"Hornet Sportabout"</span>,
+<span class='st'>"Valiant"</span>), <span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2.62</span>, <span class='fl'>2.875</span>, <span class='fl'>2.32</span>, <span class='fl'>3.215</span>, <span class='fl'>3.44</span>, <span class='fl'>3.46</span>)), <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Mazda RX4"</span>,
+<span class='st'>"Mazda RX4 Wag"</span>, <span class='st'>"Datsun 710"</span>, <span class='st'>"Hornet 4 Drive"</span>, <span class='st'>"Hornet Sportabout"</span>,
+<span class='st'>"Valiant"</span>), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
+<span class='no'>dataset</span></div><div class='output co'>#&gt;                    qsec disp           carname    wt
+#&gt; Mazda RX4         16.46  160         Mazda RX4 2.620
+#&gt; Mazda RX4 Wag     17.02  160     Mazda RX4 Wag 2.875
+#&gt; Datsun 710        18.61  108        Datsun 710 2.320
+#&gt; Hornet 4 Drive    19.44  258    Hornet 4 Drive 3.215
+#&gt; Hornet Sportabout 17.02  360 Hornet Sportabout 3.440
+#&gt; Valiant           20.22  225           Valiant 3.460</div><div class='input'>
 <span class='co'># plots</span>
 <span class='no'>gg_point</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dataset</span>,
@@ -226,7 +235,7 @@ is not recommanded.</p></td>
                 <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>carname</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>carname</span>) ) +
         <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span>() + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_minimal</a></span>()
 
-<span class='fu'>ggiraph</span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg_point</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>.7</span> )</div></pre>
+<span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg_point</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>.7</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
