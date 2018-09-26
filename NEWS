@@ -1,3 +1,20 @@
+# ggiraph 0.5.0
+
+## Changes
+
+* the package offers now new functions `girafe()` and `girafe_options()` to
+  be used instead of function `ggiraph()`. It is more
+  convenient to use when customization is needed.
+
+## Enhancement
+
+* add a 'download as png' button
+* usage of d3 version 5.7.0
+
+## Bug fixes
+
+* responsive behaviour when rendered in IE <= 12 is now fixed
+
 # ggiraph 0.4.4
 
 ## Enhancement
