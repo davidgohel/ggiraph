@@ -72,9 +72,7 @@ export default class ggiraphjs {
         return newjsstr;
     }
 
-    addSvg(svg, jsstr) {
-
-        
+    removeContent() {
         const oldsvg = d3.select("#" + this.containerid + " .girafe_container_std svg");
         if( oldsvg.size() > 0 ){
             const old_tooltip = d3.select("." + "tooltip_" + oldsvg.attr("id"));
@@ -85,12 +83,23 @@ export default class ggiraphjs {
             oldcontainer.remove();
         }
 
+        const tooltipstr = "." + this.tooltipClassname();
+        const tt = d3.select(tooltipstr);
+        if( tt.size() > 0 ){
+            tt.remove();
+        }
 
+    }
+
+    addSvg(svg, jsstr) {
+
+        this.removeContent();
+        
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
             .html(this.updateSvgId(svg));
 
-        d3.select("#" + this.containerid)
+        d3.select("body")
             .append("div").attr("class", this.tooltipClassname())
             .style("position", "absolute").style("opacity", 0);
 
