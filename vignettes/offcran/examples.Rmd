@@ -175,27 +175,7 @@ library(ggraph)
 library(magrittr)
 library(ggiraph)
 
-pdb <- tools::CRAN_package_db()
-
-aut <- pdb$Author %>%
-  str_replace_all("\\(([^)]+)\\)", "") %>%
-  str_replace_all("\\[([^]]+)\\]", "") %>%
-  str_replace_all("<([^>]+)>", "") %>%
-  str_replace_all("\n", " ") %>%
-  str_replace_all("[Cc]ontribution.* from|[Cc]ontribution.* by|[Cc]ontributors", " ") %>%
-  str_replace_all("\\(|\\)|\\[|\\]", " ") %>%
-  iconv(to = "ASCII//TRANSLIT") %>%
-  str_replace_all("'$|^'", "") %>%
-  gsub("([A-Z])([A-Z]{1,})", "\\1\\L\\2", ., perl = TRUE) %>%
-  gsub("\\b([A-Z]{1}) \\b", "\\1\\. ", .) 
-
-aut <- aut %>%
-  purrr::map(str_split, ",|;|&| \\. |--|(?<=[a-z])\\.| [Aa]nd | [Ww]ith | [Bb]y ", simplify = TRUE) %>%
-  purrr::map(str_replace_all, "[[:space:]]+", " ") %>%
-  purrr::map(str_replace_all, " $|^ | \\.", "") %>%
-  purrr::map(function(x) x[str_length(x) != 0]) %>%
-  set_names(pdb$Package) %>%
-  extract(map_lgl(., function(x) length(x) > 1))
+aut <- readRDS("aut.RDS")
 
 aut_list <- aut %>%
   unlist() %>%
@@ -231,24 +211,6 @@ g <- g %>%
   filter(Package > 4) %>%
   mutate(Component = group_components()) %>%
   filter(Component == names(table(Component))[which.max(table(Component))])
-
-
-g <- mutate(g, Community = group_edge_betweenness(),
-            Degree = centrality_degree())
-
-
-g <- g %>%
-  mutate(Community = case_when(Community == names(sort(table(Community),
-                                                       decr = TRUE))[1] ~ "The Ancients",
-                               Community == names(sort(table(Community),
-                                                       decr = TRUE))[2] ~ "The Moderns",
-                               Community %in% names(sort(table(Community),
-                                                         decr = TRUE))[-1:-2] ~ "Unclassified")) %>%
-  mutate(Community = factor(Community))
-
-g <- g %>%
-  filter(Degree > 5) %>%
-  mutate(Degree = centrality_degree())
 ```
 
 We can now create the plot :
@@ -257,13 +219,13 @@ We can now create the plot :
 ggg <- ggraph(g, layout = 'lgl') +
   geom_edge_fan(alpha = 0.1, edge_width = .2) +
   geom_point_interactive(aes(x, y,
-                             tooltip = Name, data_id = Name, color = Community,
-                             size = Package), alpha = .7 ) +
+    tooltip = Name, data_id = Name, 
+    size = Package), alpha = .7, color = "#006699" ) +
   theme_graph() +
-  scale_color_manual(values=c("The Ancients" = "#5BC8AC", "The Moderns" = "#F18D9E", Unclassified = "#E6D72A")) +
   theme(legend.position = "bottom")
 
-girafe(ggobj = ggg, width_svg = 8, height_svg = 6)
+girafe(ggobj = ggg, width_svg = 8, height_svg = 6) %>% 
+  girafe_options(opts_zoom(max = 4))
 ```
 
 

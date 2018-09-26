@@ -34,17 +34,11 @@ aut <- aut %>%
   extract(map_lgl(., function(x) length(x) > 1))
 
 
-# map2_df(aut, names(aut),
-#      function(author, package) {
-#        tibble(Package= rep(package, length(author)), author = author)
-#      }
-#      )
 aut_list <- aut %>%
   unlist() %>%
   dplyr::as_data_frame() %>%
   count(value) %>%
   rename(Name = value, Package = n)
-
 
 edge_list <- aut %>%
   purrr::map(combn, m = 2) %>%
@@ -73,24 +67,5 @@ g <- g %>%
   mutate(Component = group_components()) %>%
   filter(Component == names(table(Component))[which.max(table(Component))])
 
-
-g <- mutate(g, Community = group_edge_betweenness(),
-            Degree = centrality_degree())
-
-
-g <- g %>%
-  mutate(Community = case_when(Community == names(sort(table(Community),
-                                                       decr = TRUE))[1] ~ "The Ancients",
-                               Community == names(sort(table(Community),
-                                                       decr = TRUE))[2] ~ "The Moderns",
-                               Community %in% names(sort(table(Community),
-                                                         decr = TRUE))[-1:-2] ~ "Unclassified")) %>%
-  mutate(Community = factor(Community))
-
-g <- g %>%
-  filter(Degree > 5) %>%
-  mutate(Degree = centrality_degree())
-
 pdb <- pdb[, c("Package", "Title", "Version", "License", "Author")] %>%
   as_tibble()
-

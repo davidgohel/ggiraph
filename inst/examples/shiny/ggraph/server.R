@@ -9,10 +9,9 @@ library(flextable)
 ggg <- ggraph(g, layout = 'lgl') +
   geom_edge_fan(alpha = 0.1, edge_width = .2) +
   geom_point_interactive(aes(x, y,
-                             tooltip = Name, data_id = Name, color = Community,
-                             size = Package), alpha = .7 ) +
+                             tooltip = Name, data_id = Name,
+                             size = Package), alpha = .7, color = "#006699" ) +
   theme_graph() +
-  scale_color_manual(values=c("The Ancients"="#5BC8AC", "The Moderns"="#F18D9E", Unclassified="#E6D72A")) +
   theme(legend.position = "bottom")
 
 
