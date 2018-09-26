@@ -128,7 +128,7 @@ girafe <- function(
   toolbar_set <- opts_toolbar()
 
   x = list( html = as.character(data), js = js,
-            uid = svg_id, width = width,
+            uid = 2L, width = width,
             ratio = width_svg / height_svg,
             settings = list(
               tooltip = tooltip_set,

@@ -62,6 +62,16 @@ export default class ggiraphjs {
         utils.add_ui(this, addLasso, addZoom, saveaspng, classpos);
     }
 
+    updateSvgId(str){
+        let newsvg = str.split("svg_" + this.uid).join(this.svgid);
+        newsvg = newsvg.split("cl" + this.uid ).join("cl_" + this.svgid);
+        return newsvg;
+    }
+    updateJsId(str){
+        const newjsstr = str.split("svg_" + this.uid).join(this.svgid);
+        return newjsstr;
+    }
+
     addSvg(svg, jsstr) {
 
         
@@ -75,22 +85,16 @@ export default class ggiraphjs {
             oldcontainer.remove();
         }
 
-        let newsvg = svg.split(this.uid).join(this.svgid);
-        svg = newsvg;
- 
-        let newjsstr = jsstr.split(this.uid).join(this.svgid);
-        jsstr = newjsstr;
-
 
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
-            .html(svg);
+            .html(this.updateSvgId(svg));
 
         d3.select("#" + this.containerid)
             .append("div").attr("class", this.tooltipClassname())
             .style("position", "absolute").style("opacity", 0);
 
-        var fun_ = utils.parseFunction(jsstr);
+        var fun_ = utils.parseFunction(this.updateJsId(jsstr));
         fun_();
     }
 
