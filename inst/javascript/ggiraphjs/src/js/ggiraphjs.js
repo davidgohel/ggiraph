@@ -14,7 +14,6 @@ export default class ggiraphjs {
     }
 
     setSvgId(id) {
-
         this.svgid = utils.guid();
         this.uid = id;
     }
@@ -62,16 +61,6 @@ export default class ggiraphjs {
         utils.add_ui(this, addLasso, addZoom, saveaspng, classpos);
     }
 
-    updateSvgId(str){
-        let newsvg = str.split("svg_" + this.uid).join(this.svgid);
-        newsvg = newsvg.split("cl" + this.uid ).join("cl_" + this.svgid);
-        return newsvg;
-    }
-    updateJsId(str){
-        const newjsstr = str.split("svg_" + this.uid).join(this.svgid);
-        return newjsstr;
-    }
-
     removeContent() {
         const oldsvg = d3.select("#" + this.containerid + " .girafe_container_std svg");
         if( oldsvg.size() > 0 ){
@@ -90,21 +79,24 @@ export default class ggiraphjs {
         }
 
     }
-
+    
     addSvg(svg, jsstr) {
 
         this.removeContent();
         
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
-            .html(this.updateSvgId(svg));
+            .html(svg);
 
         d3.select("body")
             .append("div").attr("class", this.tooltipClassname())
             .style("position", "absolute").style("opacity", 0);
 
-        var fun_ = utils.parseFunction(this.updateJsId(jsstr));
+        var fun_ = utils.parseFunction(jsstr);
         fun_();
+
+        d3.select("#" + this.uid).attr("id", this.svgid);
+
     }
 
     IEFixResize(width, ratio) {

@@ -93,13 +93,11 @@ girafe <- function(
   width_svg = 6, height_svg = 5, xml_reader_options = list(), ...) {
 
   stopifnot( is.numeric(width), width > 0, width <= 1 )
-
-  ggiwid.options = getOption("ggiwid")
-  tmpdir = tempdir()
+  canvas_id <- basename( tempfile(pattern = "svg_", fileext = format(Sys.time(), "%Y%m%d%H%M%S") ) )
   path = tempfile()
   dsvg(file = path, pointsize = pointsize, standalone = TRUE,
        width = width_svg, height = height_svg,
-       canvas_id = 1L, ...
+       canvas_id = canvas_id, ...
   )
   tryCatch({
     if( !is.null(ggobj) ){
@@ -117,8 +115,6 @@ girafe <- function(
   xml_remove(scr)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
-  svg_id <- xml_attr(data, "id")
-
   unlink(path)
 
   tooltip_set <- opts_tooltip()
@@ -128,7 +124,7 @@ girafe <- function(
   toolbar_set <- opts_toolbar()
 
   x = list( html = as.character(data), js = js,
-            uid = 2L, width = width,
+            uid = canvas_id, width = width,
             ratio = width_svg / height_svg,
             settings = list(
               tooltip = tooltip_set,

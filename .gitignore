@@ -7,3 +7,6 @@ inst/javascript/ggiraphjs/package-lock.json
 inst/javascript/ggiraphjs/node_modules
 inst/javascript/ggiraphjs/dist
 revdep
+src/*.o
+src/*.so
+src/*.dll

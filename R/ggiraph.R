@@ -1,4 +1,3 @@
-#' @importFrom rvg dsvg rvg_tracer_on rvg_tracer_off set_attr
 #' @importFrom htmltools htmlDependency
 #' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget
 #' @import grid
