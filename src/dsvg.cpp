@@ -498,7 +498,7 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   fprintf(svgd->file, "viewBox='0 0 %.2f %.2f' ", dd->right, dd->bottom);
   fprintf(svgd->file, "width='%.2f' ", dd->right);
   fprintf(svgd->file, "height='%.2f'", dd->bottom);
-  fputs("><g>' ", svgd->file);
+  fputs("><g>", svgd->file);
 
   int bg_fill, fill, col;
   a_color bg_temp(gc->fill);
