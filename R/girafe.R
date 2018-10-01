@@ -58,7 +58,7 @@
 #' @section Widget options:
 #' girafe animations can be customized with function \code{\link{girafe_options}}.
 #' Options are available to customize tooltips, hover effects, zoom effects
-#' and selection effects.
+#' selection effects and toolbar.
 #' @section Widget sizing:
 #' girafe graphics are responsive, which mean, they will be resized
 #' according to their container. There are two responsive behavior

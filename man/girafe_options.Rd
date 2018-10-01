@@ -42,5 +42,6 @@ if(interactive()){
 }
 \seealso{
 \code{\link{opts_tooltip}}, \code{\link{opts_hover}},
-\code{\link{opts_selection}}, \code{\link{opts_zoom}}, \code{\link[htmlwidgets]{sizingPolicy}}
+\code{\link{opts_selection}}, \code{\link{opts_zoom}},
+\code{\link{opts_toolbar}}, \code{\link[htmlwidgets]{sizingPolicy}}
 }

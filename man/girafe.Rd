@@ -59,7 +59,7 @@ selection and lasso anti-selections buttons are available in a toolbar.
 
 girafe animations can be customized with function \code{\link{girafe_options}}.
 Options are available to customize tooltips, hover effects, zoom effects
-and selection effects.
+selection effects and toolbar.
 }
 
 \section{Widget sizing}{
