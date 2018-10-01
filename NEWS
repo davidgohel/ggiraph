@@ -1,3 +1,10 @@
+# ggiraph 0.6.0
+
+## Changes
+
+* The package is no more importing rvg and now need a compiler to install
+  the package from source.
+
 # ggiraph 0.5.0
 
 ## Changes
