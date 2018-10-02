@@ -4,7 +4,8 @@
 #' @param css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
 #' @param use_cursor_pos should the cursor position be used to
-#' position tooltip (in addition to offx and offy).
+#' position tooltip (in addition to offx and offy). Setting to
+#' TRUE will have no effect in the RStudio browser windows.
 #' @param opacity tooltip background opacity
 #' @param delay_mouseover The duration in milliseconds of the
 #' transition associated with tooltip display.

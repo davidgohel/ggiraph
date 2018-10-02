@@ -16,7 +16,8 @@ used to customize tooltip area.}
 \item{offx, offy}{tooltip x and y offset}
 
 \item{use_cursor_pos}{should the cursor position be used to
-position tooltip (in addition to offx and offy).}
+position tooltip (in addition to offx and offy). Setting to
+TRUE will have no effect in the RStudio browser windows.}
 
 \item{opacity}{tooltip background opacity}
 
