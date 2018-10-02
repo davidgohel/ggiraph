@@ -33,10 +33,6 @@ export default class ggiraphjs {
         return 'clicked_' + this.svgid;
     }
 
-    setZoomer(min, max) {
-        this.zoomer = d3.zoom().scaleExtent([min, max]);
-    }
-
     hoverClassname() {
         return 'hover_' + this.svgid;
     }
