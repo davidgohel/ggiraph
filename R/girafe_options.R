@@ -202,6 +202,10 @@ opts_zoom <- function(min = 1, max = 1){
 #' @description Allows customization of the toolbar
 #' @param position one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'
 #' @param saveaspng set to TRUE to propose the 'save as png' button.
+#' @note
+#' \code{saveaspng} relies on JavaScript promises, so any browsers that don't natively
+#' support the standard Promise object will need to have a polyfill (e.g.
+#' Internet Explorer with version less than 11 will need it).
 #' @examples
 #' library(ggplot2)
 #'

@@ -17,3 +17,4 @@
 ^revdep$
 ^inst/javascript$
 ^inst/medias$
+tests/testthat/test-dom.R

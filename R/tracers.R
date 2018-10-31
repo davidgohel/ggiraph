@@ -1,5 +1,6 @@
-#-' @import graphics
-#-' @import grDevices
+#' @import graphics
+#' @importFrom grDevices dev.cur dev.list
+
 #-' @title trace on id colection
 #-'
 #-' @description Start collecting id of an rvg device.

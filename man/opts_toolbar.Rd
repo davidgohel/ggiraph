@@ -14,6 +14,11 @@ opts_toolbar(position = "topright", saveaspng = TRUE)
 \description{
 Allows customization of the toolbar
 }
+\note{
+\code{saveaspng} relies on JavaScript promises, so any browsers that don't natively
+support the standard Promise object will need to have a polyfill (e.g.
+Internet Explorer with version less than 11 will need it).
+}
 \examples{
 library(ggplot2)
 

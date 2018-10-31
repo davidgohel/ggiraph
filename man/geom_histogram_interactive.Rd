@@ -29,7 +29,7 @@ the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data.}
 
 \item{stat}{Use to override the default connection between
-\code{geom_histogram}/\code{geom_freqpoly} and \code{stat_bin}.}
+\code{geom_histogram()}/\code{geom_freqpoly()} and \code{stat_bin()}.}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
