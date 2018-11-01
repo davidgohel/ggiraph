@@ -3,8 +3,8 @@
 
 #-' @title trace on id colection
 #-'
-#-' @description Start collecting id of an rvg device.
-rvg_tracer_on <- function(){
+#-' @description Start collecting id of an dsvg device.
+dsvg_tracer_on <- function(){
 
   dl <- dev.list()
   if( length( dl ) < 1 )
@@ -16,10 +16,10 @@ rvg_tracer_on <- function(){
 
 #-' @title trace off id colection
 #-'
-#-' @description get collected id of an rvg device and
+#-' @description get collected id of an dsvg device and
 #-' stop collecting.
 #-' @return graphical elements id as integer values.
-rvg_tracer_off <- function(){
+dsvg_tracer_off <- function(){
 
   dl <- dev.list()
   if( length( dl ) < 1 )
@@ -40,15 +40,15 @@ rvg_tracer_off <- function(){
 #-' @description set attributes with javascript instructions
 #-' to graphical elements.
 #-' @param ids integer vector of graphical elements identifiers (returned by
-#-' \code{\link{rvg_tracer_off}}).
+#-' \code{\link{dsvg_tracer_off}}).
 #-' @param attribute name of the attribute to set.
 #-' @param str values to set for the attribute.
 set_attr = function( ids, attribute, str ){
   stopifnot( .Device == "dsvg_device" )
   if( is.factor(str) )
-    str = as.character( str )
+    str <- as.character( str )
   if( is.factor(attribute) )
-    str = as.character( attribute )
+    str <- as.character( attribute )
 
   stopifnot( is.character(attribute) )
   stopifnot( is.character(str) )

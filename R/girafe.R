@@ -38,7 +38,7 @@
 #' when parsing the svg result. This feature can be used to parse
 #' huge svg files by using \code{list(options = "HUGE")} but this
 #' is not recommanded.
-#' @param ... arguments passed on to \code{\link[rvg]{dsvg}}
+#' @param ... arguments passed on to \code{\link{dsvg}}
 #' @examples
 #' library(ggplot2)
 #'

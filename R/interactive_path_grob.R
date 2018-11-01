@@ -28,10 +28,10 @@ interactive_path_grob <- function(
 #' @description draw an interactive_path_grob
 #' @inheritParams grid::drawDetails
 drawDetails.interactive_path_grob <- function(x,recording) {
-	rvg_tracer_on()
+  dsvg_tracer_on()
 	argnames = setdiff( names(x), c("tooltip", "onclick", "data_id") )
 	do.call( grid.path, x[argnames] )
-	ids = rvg_tracer_off()
+	ids <- dsvg_tracer_off()
 	if( length( ids ) > 0 ) {
 
 	  if( is.null(x$id) )

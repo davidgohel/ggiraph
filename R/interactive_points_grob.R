@@ -28,9 +28,9 @@ interactive_points_grob <- function( x = unit(0.5, "npc"),
 #' @description draw an interactive_points_grob
 #' @inheritParams grid::drawDetails
 drawDetails.interactive_points_grob <- function(x,recording) {
-	rvg_tracer_on()
+  dsvg_tracer_on()
 	grid.points(x = x$x, y = x$y, pch = x$pch, size = x$size, default.units = "native", gp = x$gp )
-	ids = rvg_tracer_off()
+	ids <- dsvg_tracer_off()
 	if( length( ids ) > 0 ) {
 		if( !is.null( x$tooltip ))
 		  set_attr( ids = as.integer( ids ), str = encode_cr(x$tooltip), attribute = "title" )

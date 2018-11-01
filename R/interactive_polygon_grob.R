@@ -30,10 +30,10 @@ interactive_polygon_grob <- function(x=unit(c(0, 1), "npc"),
 #' @description draw an interactive_polygon_grob
 #' @inheritParams grid::drawDetails
 drawDetails.interactive_polygon_grob <- function(x,recording) {
-	rvg_tracer_on()
+  dsvg_tracer_on()
 	argnames = setdiff( names(x), c("tooltip", "onclick", "data_id") )
 	do.call( grid.polygon, x[argnames] )
-	ids = rvg_tracer_off()
+	ids <- dsvg_tracer_off()
 	if( length( ids ) > 0 ) {
 
 	  if( is.null(x$id) )

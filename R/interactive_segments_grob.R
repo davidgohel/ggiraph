@@ -34,11 +34,11 @@ interactive_segments_grob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 #' @description draw an interactive_segments_grob
 #' @inheritParams grid::drawDetails
 drawDetails.interactive_segments_grob <- function(x,recording) {
-	rvg_tracer_on()
+  dsvg_tracer_on()
 	argnames = setdiff( names(x), c("tooltip", "onclick", "data_id") )
 	do.call( grid.segments, x[argnames] )
 
-	ids = rvg_tracer_off()
+	ids <- dsvg_tracer_off()
 	if( length( ids ) > 0 ) {
 
 		if( !is.null( x$tooltip )){

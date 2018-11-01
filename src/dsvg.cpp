@@ -1,5 +1,5 @@
 /*
- * This file is part of rvg.
+ * This file is part of ggiraph.
  * Copyright (c) 2018, David Gohel All rights reserved.
  *
  * rvg is free software: you can redistribute it and/or modify
