@@ -37,7 +37,7 @@ HTMLWidgets.widget({
             x.settings.tooltip.delay.over, x.settings.tooltip.delay.out,
             x.settings.tooltip.usefill, x.settings.tooltip.usestroke);
         ggobj.animateToolbar();
-        ggobj.adjustSize(width, height);
+        ggobj.adjustSize(width, height, x.settings.shiny_sizing);
         ggobj.IEFixResize(x.width, 1/x.ratio);
 
         var addSelection = ggobj.isSelectable() && HTMLWidgets.shinyMode && x.settings.capture.only_shiny;

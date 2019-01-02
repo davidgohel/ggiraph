@@ -65,7 +65,8 @@ ggiraph <- function(code, ggobj = NULL,
     opts_zoom(min = 1, max = zoom_max),
     opts_selection(type = selection_type, css = selected_css),
     opts_toolbar(position = "top", saveaspng = FALSE),
-    opts_hover(css = hover_css)
+    opts_hover(css = hover_css),
+    opts_shiny_sizing()
     )
 
   # fix for package ceterisParibus unit tests

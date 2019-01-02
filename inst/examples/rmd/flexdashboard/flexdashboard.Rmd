@@ -8,6 +8,7 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+
 ```
 
 Column {data-width=650}
@@ -19,6 +20,9 @@ Column {data-width=650}
 library(ggiraph)
 library(ggplot2)
 library(magrittr)
+opts_sizing <- opts_shiny_sizing( 
+  svg_auto_width = TRUE, svg_auto_height = FALSE,
+  svg_limit_width = FALSE, svg_limit_height = FALSE)
 
 dataset = iris
 dataset$tooltip = dataset$Species
@@ -30,7 +34,9 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
                                tooltip = tooltip, onclick = clickjs) ) +
   geom_point_interactive() + theme_light()
 
-ggiraph(code = {print(gg_point)}, zoom_max = 4, hover_css = "stroke:black;fill:orange;") 
+x <- ggiraph(code = {print(gg_point)}, zoom_max = 4, hover_css = "stroke:black;fill:orange;") 
+x <- girafe_options(x = x, opts_sizing )
+x
 ```
 
 Column {data-width=350}

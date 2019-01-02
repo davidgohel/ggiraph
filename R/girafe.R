@@ -122,6 +122,7 @@ girafe <- function(
   zoom_set <- opts_zoom()
   selection_set <- opts_selection()
   toolbar_set <- opts_toolbar()
+  shiny_sizing_set <- opts_shiny_sizing()
 
   x = list( html = as.character(data), js = js,
             uid = canvas_id, width = width,
@@ -131,7 +132,8 @@ girafe <- function(
               hover = hover_set,
               zoom = zoom_set,
               capture = selection_set,
-              toolbar = toolbar_set
+              toolbar = toolbar_set,
+              shiny_sizing = shiny_sizing_set
               )
             )
 

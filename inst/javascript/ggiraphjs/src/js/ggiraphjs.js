@@ -110,36 +110,62 @@ export default class ggiraphjs {
 
     }
 
-    adjustSize(width, height) {
+    adjustSize(width, height, shiny_sizing) {
         const containerid = this.containerid;
         const svgid = this.svgid;
 
-        d3.select("#" + svgid).attr("preserveAspectRatio", "xMidYMin");
+        d3.select("#" + svgid).attr("preserveAspectRatio", "xMidYMin meet");
         d3.select("#" + containerid + " .girafe_container_std")
             .style("width", this.csswidth);
         d3.select("#" + svgid).attr("width", null).attr("height", null);
 
+        //if (HTMLWidgets.shinyMode) {
 
-        if (HTMLWidgets.shinyMode) {
+            const container_width = d3.select("#" + containerid).style("width");
+            const container_height = d3.select("#" + containerid).style("height");
+            const box = d3.select("#" + svgid).property("viewBox").baseVal;
+
+            const width_ = container_width ? container_width : width;
+            const height_ = container_height ? container_height : height;
+            const maxwidth_ = container_width ? container_width : box.width + "px";
+            const maxheight_ = container_height ? container_height : box.height + "px";
+
+            const swidth = shiny_sizing.svg_auto_width ? "100%" : width_;
+            const sheight = shiny_sizing.svg_auto_height ? "100%" : height_;
+            const smaxwidth = shiny_sizing.svg_limit_width ? maxwidth_ : "unset";
+            const smaxheight = shiny_sizing.svg_limit_height ? maxheight_ : "unset";
+            console.log('swidth:' + swidth);
+            console.log('sheight:' + sheight);
+            console.log('smaxwidth:' + smaxwidth);
+            console.log('smaxheight:' + smaxheight);
             d3.select("#" + svgid)
-                .style("width", "100%")
-                .style("height", height)
+                .style("width", swidth)
+                .style("height", sheight)
+                .style("max-width", smaxwidth)
+                .style("max-height", smaxheight)
                 .style("margin-left", "auto")
                 .style("margin-right", "auto");
-        } else {
-            d3.select("#" + containerid)
-                .style("width", null)
-                .style("height", null);
-        }
+        //} 
+        d3.select("#" + containerid)
+            .style("width", null)
+            .style("height", null);
+    
     }
 
     setSize(width, height) {
         const svgid = this.svgid;
 
-        if (HTMLWidgets.shinyMode) {
-            d3.select("#" + svgid)
-                .style("height", height);
-        }
+        // if (HTMLWidgets.shinyMode) {
+        //     const el = d3.select("#" + svgid);
+        //     const cwidth = el.style("width");
+        //     const cheight = el.style("height");
+        //     if (cwidth !== "100%") {
+        //       el.style("width", width);
+        //     }
+        //     if(cheight !== "100%") {
+        //       el.style("height", height);
+        //     }
+        // }
     }
 
     animateToolbar() {

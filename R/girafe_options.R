@@ -239,6 +239,35 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
   x
 }
 
+#' @title shiny sizing settings
+#' @description Allows customization of the svg style sizing in shiny
+#' @param svg_auto_width When TRUE (default), sets the css width property to 100\%, otherwise it is set by the girafeOutput width parameter
+#' @param svg_auto_height When TRUE, sets the css height property to 100\%, otherwise (default) it is set by the girafeOutput height parameter
+#' @param svg_limit_width When TRUE, sets the css max-width property to the svg's width, otherwise (default) it is not set
+#' @param svg_limit_height When TRUE, sets the css max-width property to the svg's height, otherwise (default) it is not set
+#' @export
+#' @family girafe sizing options
+#' @seealso set options with \code{\link{girafe_options}}
+opts_shiny_sizing <- function(svg_auto_width = TRUE, svg_auto_height = FALSE,
+                              svg_limit_width = FALSE, svg_limit_height = FALSE){
+
+  stopifnot(
+    is.logical(svg_auto_width),
+    is.logical(svg_auto_height),
+    is.logical(svg_limit_width),
+    is.logical(svg_limit_height)
+  )
+
+  x <- list(
+    svg_auto_width = as.logical(svg_auto_width),
+    svg_auto_height = as.logical(svg_auto_height),
+    svg_limit_width = as.logical(svg_limit_width),
+    svg_limit_height = as.logical(svg_limit_height)
+  )
+  class(x) <- "opts_shiny_sizing"
+  x
+}
+
 #' @title set girafe options
 #' @description Defines the animation options related to
 #' a \code{\link{girafe}} object.
@@ -287,6 +316,8 @@ girafe_options <- function(x, ...){
       x$x$settings$hover <- arg
     } else if( inherits(arg, "opts_toolbar")){
       x$x$settings$toolbar <- arg
+    } else if( inherits(arg, "opts_shiny_sizing")){
+      x$x$settings$shiny_sizing <- arg
     } else if( all( names( arg ) %in% c("defaultWidth", "defaultHeight", "padding", "viewer", "browser",
                                   "knitr") ) ){
       x$sizingPolicy <- arg
