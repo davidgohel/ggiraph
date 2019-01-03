@@ -41,8 +41,8 @@ HTMLWidgets.widget({
           ggobj.fixSize(width, height);
         } else if( HTMLWidgets.shinyMode ){
           ggobj.autoScale("100%");
-          ggobj.IEFixResize(x.settings.sizing.width, 1/x.ratio);
-          ggobj.setSizeLimits(width, 0, height, 0);
+          ggobj.IEFixResize(1, 1/x.ratio);
+          ggobj.setSizeLimits(width+'px', 0, height+'px', 0);
           ggobj.removeContainerLimits();
         } else {
           ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + "%");

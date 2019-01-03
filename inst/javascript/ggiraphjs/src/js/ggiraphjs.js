@@ -96,14 +96,13 @@ export default class ggiraphjs {
 
         if (utils.navigator_id() == "IE 11" ||
             utils.navigator_id().substring(0, 4) === "MSIE") {
-            debugger;
             const containerid = this.containerid;
             const svgid = this.svgid;
 
-            d3.select("#" + svgid).classed("girafe_svg_ie", true);
-            d3.select("#" + containerid + " div").classed("girafe_container_ie", true)
-                .style("width", Math.round(width * 100) + "%")
-                .style("padding-bottom", Math.round(width * ratio * 100) + "%");
+            // d3.select("#" + svgid).classed("girafe_svg_ie", true);
+            // d3.select("#" + containerid + " div").classed("girafe_container_ie", true)
+            //     .style("width", Math.round(width * 100) + "%")
+            //     .style("padding-bottom", Math.round(width * ratio * 100) + "%");
         }
 
     }
