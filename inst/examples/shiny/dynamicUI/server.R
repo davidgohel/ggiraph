@@ -1,8 +1,6 @@
 library(shiny)
 library(ggplot2)
 library(ggiraph)
-library(flextable)
-
 
 max_plots <- 5
 

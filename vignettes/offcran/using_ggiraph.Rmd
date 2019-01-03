@@ -18,7 +18,7 @@ on a `ggplot` object.
 > Note that `girafe()` is a new function but `ggiraph()` function will be maintained. However, 
   the `ggiraph()` function is only using `girafe()` function!
 
-```{r echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", out.height=500}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(ggiraph)
 theme_set(theme_minimal())
