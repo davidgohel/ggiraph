@@ -4,16 +4,14 @@
 \alias{girafe}
 \title{create a girafe object}
 \usage{
-girafe(code, ggobj = NULL, width = 0.9, pointsize = 12,
-  width_svg = 6, height_svg = 5, xml_reader_options = list(), ...)
+girafe(code, ggobj = NULL, pointsize = 12, width_svg = 6,
+  height_svg = 5, xml_reader_options = list(), ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
 
 \item{ggobj}{ggplot objet to print. argument \code{code} will
 be ignored if this argument is supplied.}
-
-\item{width}{widget width ratio (0 < width <= 1). See below in section .}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
@@ -27,6 +25,8 @@ huge svg files by using \code{list(options = "HUGE")} but this
 is not recommanded.}
 
 \item{...}{arguments passed on to \code{\link{dsvg}}}
+
+\item{width}{widget width ratio (0 < width <= 1). See below in section .}
 }
 \description{
 Create an interactive graphic with a ggplot object

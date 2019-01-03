@@ -8,7 +8,6 @@ export default class ggiraphjs {
         this.dataSelected = [];
         this.typeSelection = null;
         this.svgid = null;
-        this.csswidth = null;
         this.inputId = null;
         this.zoomer = null;
     }
@@ -17,9 +16,7 @@ export default class ggiraphjs {
         this.svgid = utils.guid();
         this.uid = id;
     }
-    setSvgWidth(width) {
-        this.csswidth = Math.round(width * 100) + "%";
-    }
+   
     setZoomer(min, max) {
         this.zoomer = d3.zoom().scaleExtent([min, max]);
     }
@@ -39,7 +36,7 @@ export default class ggiraphjs {
 
     addStyle(tooltipCss, hoverCss, clickedCss) {
         const oldstyle = d3.select("#" + this.containerid + " style");
-        if( oldstyle.size() > 0 ){
+        if (oldstyle.size() > 0) {
             oldstyle.remove();
         }
         const css = ".tooltip_" + this.svgid + tooltipCss + "\n" +
@@ -53,33 +50,33 @@ export default class ggiraphjs {
     }
 
     addUI(addLasso, addZoom, saveaspng, classpos) {
-        
+
         utils.add_ui(this, addLasso, addZoom, saveaspng, classpos);
     }
 
     removeContent() {
         const oldsvg = d3.select("#" + this.containerid + " .girafe_container_std svg");
-        if( oldsvg.size() > 0 ){
+        if (oldsvg.size() > 0) {
             const old_tooltip = d3.select("." + "tooltip_" + oldsvg.attr("id"));
             old_tooltip.remove();
         }
         const oldcontainer = d3.select("#" + this.containerid + " div.girafe_container_std");
-        if( oldcontainer.size() > 0 ){
+        if (oldcontainer.size() > 0) {
             oldcontainer.remove();
         }
 
         const tooltipstr = "." + this.tooltipClassname();
         const tt = d3.select(tooltipstr);
-        if( tt.size() > 0 ){
+        if (tt.size() > 0) {
             tt.remove();
         }
 
     }
-    
+
     addSvg(svg, jsstr) {
 
         this.removeContent();
-        
+
         d3.select("#" + this.containerid)
             .append("div").attr("class", "girafe_container_std")
             .html(svg);
@@ -99,6 +96,7 @@ export default class ggiraphjs {
 
         if (utils.navigator_id() == "IE 11" ||
             utils.navigator_id().substring(0, 4) === "MSIE") {
+            debugger;
             const containerid = this.containerid;
             const svgid = this.svgid;
 
@@ -110,63 +108,43 @@ export default class ggiraphjs {
 
     }
 
-    adjustSize(width, height, shiny_sizing) {
+    autoScale(csswidth) {
+        const svgid = this.svgid;
+
+        d3.select("#" + svgid)
+            .style("width", csswidth)
+            .style("height", "100%")
+            .style("margin-left", "auto")
+            .style("margin-right", "auto");
+    }
+
+    fixSize(width, height) {
         const containerid = this.containerid;
         const svgid = this.svgid;
 
         d3.select("#" + svgid).attr("preserveAspectRatio", "xMidYMin meet");
         d3.select("#" + containerid + " .girafe_container_std")
-            .style("width", this.csswidth);
-        d3.select("#" + svgid).attr("width", null).attr("height", null);
+            .style("width", "100%");
+        d3.select("#" + svgid).attr("width", width).attr("height", height);
+        d3.select("#" + svgid).style("width", width).style("height", height);
+    }
 
-        //if (HTMLWidgets.shinyMode) {
+    setSizeLimits(width_max, width_min, height_max, height_min) {
+        const svgid = this.svgid;
 
-            const container_width = d3.select("#" + containerid).style("width");
-            const container_height = d3.select("#" + containerid).style("height");
-            const box = d3.select("#" + svgid).property("viewBox").baseVal;
-
-            const width_ = container_width ? container_width : width;
-            const height_ = container_height ? container_height : height;
-            const maxwidth_ = container_width ? container_width : box.width + "px";
-            const maxheight_ = container_height ? container_height : box.height + "px";
-
-            const swidth = shiny_sizing.svg_auto_width ? "100%" : width_;
-            const sheight = shiny_sizing.svg_auto_height ? "100%" : height_;
-            const smaxwidth = shiny_sizing.svg_limit_width ? maxwidth_ : "unset";
-            const smaxheight = shiny_sizing.svg_limit_height ? maxheight_ : "unset";
-            console.log('swidth:' + swidth);
-            console.log('sheight:' + sheight);
-            console.log('smaxwidth:' + smaxwidth);
-            console.log('smaxheight:' + smaxheight);
-            d3.select("#" + svgid)
-                .style("width", swidth)
-                .style("height", sheight)
-                .style("max-width", smaxwidth)
-                .style("max-height", smaxheight)
-                .style("margin-left", "auto")
-                .style("margin-right", "auto");
-        //} 
+        d3.select("#" + svgid)
+            .style("max-width", width_max)
+            .style("max-height", height_max)
+            .style("min-width", width_min)
+            .style("min-height", height_min);
+    }
+    removeContainerLimits() {
+        const containerid = this.containerid;
         d3.select("#" + containerid)
             .style("width", null)
             .style("height", null);
-    
     }
 
-    setSize(width, height) {
-        const svgid = this.svgid;
-
-        // if (HTMLWidgets.shinyMode) {
-        //     const el = d3.select("#" + svgid);
-        //     const cwidth = el.style("width");
-        //     const cheight = el.style("height");
-        //     if (cwidth !== "100%") {
-        //       el.style("width", width);
-        //     }
-        //     if(cheight !== "100%") {
-        //       el.style("height", height);
-        //     }
-        // }
-    }
 
     animateToolbar() {
         const id = this.containerid;
@@ -181,7 +159,7 @@ export default class ggiraphjs {
                     .style("opacity", 0);
             });
     }
-    
+
     animateGElements(opacity, offx, offy, usecursor, delayover, delayout, usefill, usestroke) {
         const selected_class = this.hoverClassname();
         const sel_both = d3.selectAll('#' + this.svgid + ' *');
@@ -199,16 +177,16 @@ export default class ggiraphjs {
                     d3.select(tooltipstr).transition()
                         .duration(delayover)
                         .style("opacity", opacity);
-                    if( usefill ){
+                    if (usefill) {
                         const fill = this.getAttribute("fill");
                         d3.select(tooltipstr).style("background-color", fill);
                     }
-                    if( usestroke ){
+                    if (usestroke) {
                         const stroke = this.getAttribute("stroke");
                         d3.select(tooltipstr).style("border-color", stroke);
                     }
                     d3.select(tooltipstr).html(this.getAttribute("title"));
-                    if( usecursor ){
+                    if (usecursor) {
                         d3.select(tooltipstr)
                             .style("left", (d3.event.pageX + offx) + "px")
                             .style("top", (d3.event.pageY + offy) + "px");
@@ -222,7 +200,7 @@ export default class ggiraphjs {
             })
             .on("mousemove", function (d) {
                 if (this.getAttribute("title") !== null) {
-                    if( usecursor ){
+                    if (usecursor) {
                         d3.select(tooltipstr)
                             .style("left", (d3.event.pageX + offx) + "px")
                             .style("top", (d3.event.pageY + offy) + "px");
@@ -259,7 +237,7 @@ export default class ggiraphjs {
 
     selectizeMultiple() {
         const sel_data_id = d3.selectAll('#' + this.svgid + ' *[data-id]');
-        
+
         const that = this;
         sel_data_id.on("click", function (d, i) {
             let dataSel = that.dataSelected;

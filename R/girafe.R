@@ -89,10 +89,9 @@
 #' @seealso \code{\link{girafe_options}}
 #' @export
 girafe <- function(
-  code, ggobj = NULL,  width = 0.9, pointsize = 12,
+  code, ggobj = NULL,  pointsize = 12,
   width_svg = 6, height_svg = 5, xml_reader_options = list(), ...) {
 
-  stopifnot( is.numeric(width), width > 0, width <= 1 )
   canvas_id <- basename( tempfile(pattern = "svg_", fileext = format(Sys.time(), "%Y%m%d%H%M%S") ) )
   path = tempfile()
   dsvg(file = path, pointsize = pointsize, standalone = TRUE,
@@ -122,10 +121,10 @@ girafe <- function(
   zoom_set <- opts_zoom()
   selection_set <- opts_selection()
   toolbar_set <- opts_toolbar()
-  shiny_sizing_set <- opts_shiny_sizing()
+  sizing_set <- opts_sizing()
 
   x = list( html = as.character(data), js = js,
-            uid = canvas_id, width = width,
+            uid = canvas_id,
             ratio = width_svg / height_svg,
             settings = list(
               tooltip = tooltip_set,
@@ -133,7 +132,7 @@ girafe <- function(
               zoom = zoom_set,
               capture = selection_set,
               toolbar = toolbar_set,
-              shiny_sizing = shiny_sizing_set
+              sizing = sizing_set
               )
             )
 
@@ -154,10 +153,10 @@ girafe <- function(
 #' @param height widget height
 #' @export
 girafeOutput <- function(outputId, width = "100%", height = "500px"){
-  if( "auto" %in% height )
-    stop("'height:auto' is not supported", call. = FALSE)
-  if( "auto" %in% width )
-    stop("'width:auto' is not supported", call. = FALSE)
+  # if( "auto" %in% height )
+  #   stop("'height:auto' is not supported", call. = FALSE)
+  # if( "auto" %in% width )
+  #   stop("'width:auto' is not supported", call. = FALSE)
 
   shinyWidgetOutput(outputId, 'girafe', package = 'ggiraph', width = width, height = height)
 }

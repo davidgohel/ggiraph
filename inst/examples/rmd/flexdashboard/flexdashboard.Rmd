@@ -20,9 +20,6 @@ Column {data-width=650}
 library(ggiraph)
 library(ggplot2)
 library(magrittr)
-opts_sizing <- opts_shiny_sizing( 
-  svg_auto_width = TRUE, svg_auto_height = FALSE,
-  svg_limit_width = FALSE, svg_limit_height = FALSE)
 
 dataset = iris
 dataset$tooltip = dataset$Species
@@ -35,7 +32,6 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
   geom_point_interactive() + theme_light()
 
 x <- ggiraph(code = {print(gg_point)}, zoom_max = 4, hover_css = "stroke:black;fill:orange;") 
-x <- girafe_options(x = x, opts_sizing )
 x
 ```
 

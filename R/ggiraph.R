@@ -52,7 +52,7 @@ ggiraph <- function(code, ggobj = NULL,
     warning("argument `dep_dir` has been deprecated.")
   }
 
-  x <- girafe(code = code, ggobj = ggobj, width = width, pointsize = pointsize,
+  x <- girafe(code = code, ggobj = ggobj, pointsize = pointsize,
          width_svg = width_svg, height_svg = height_svg, xml_reader_options = xml_reader_options, ...)
   x <- girafe_options(
     x = x,
@@ -66,7 +66,7 @@ ggiraph <- function(code, ggobj = NULL,
     opts_selection(type = selection_type, css = selected_css),
     opts_toolbar(position = "top", saveaspng = FALSE),
     opts_hover(css = hover_css),
-    opts_shiny_sizing()
+    opts_sizing(rescale = TRUE, width = width)
     )
 
   # fix for package ceterisParibus unit tests
@@ -96,10 +96,10 @@ ggiraph <- function(code, ggobj = NULL,
 #' }
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
-  if( "auto" %in% height )
-    stop("'height:auto' is not supported", call. = FALSE)
-  if( "auto" %in% width )
-    stop("'width:auto' is not supported", call. = FALSE)
+  # if( "auto" %in% height )
+  #   stop("'height:auto' is not supported", call. = FALSE)
+  # if( "auto" %in% width )
+  #   stop("'width:auto' is not supported", call. = FALSE)
 
   shinyWidgetOutput(outputId, 'girafe', package = 'ggiraph', width = width, height = height)
 }

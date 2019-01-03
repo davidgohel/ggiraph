@@ -239,32 +239,26 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
   x
 }
 
-#' @title shiny sizing settings
-#' @description Allows customization of the svg style sizing in shiny
-#' @param svg_auto_width When TRUE (default), sets the css width property to 100\%, otherwise it is set by the girafeOutput width parameter
-#' @param svg_auto_height When TRUE, sets the css height property to 100\%, otherwise (default) it is set by the girafeOutput height parameter
-#' @param svg_limit_width When TRUE, sets the css max-width property to the svg's width, otherwise (default) it is not set
-#' @param svg_limit_height When TRUE, sets the css max-width property to the svg's height, otherwise (default) it is not set
-#' @export
+
+#' @title girafe sizing settings
+#' @description Allows customization of the svg style sizing
+#' @param rescale if TRUE, graphic will be resized when its container will be resized.
+#' @param width widget width ratio (0 < width <= 1).
 #' @family girafe sizing options
 #' @seealso set options with \code{\link{girafe_options}}
-opts_shiny_sizing <- function(svg_auto_width = TRUE, svg_auto_height = FALSE,
-                              svg_limit_width = FALSE, svg_limit_height = FALSE){
+#' @export
+opts_sizing <- function(rescale = TRUE, width = 1){
+  if( !is.logical(rescale) || length(rescale) != 1L ){
+    stop("parameter rescale should be a scalar logical")
+  } else rescale <- as.logical(rescale)
+  if( !is.numeric(width) || length(width) != 1L ){
+    stop("parameter width should be a scalar double")
+  } else width <- as.double(width)
 
-  stopifnot(
-    is.logical(svg_auto_width),
-    is.logical(svg_auto_height),
-    is.logical(svg_limit_width),
-    is.logical(svg_limit_height)
-  )
+  stopifnot(width > 0, width <= 1 )
 
-  x <- list(
-    svg_auto_width = as.logical(svg_auto_width),
-    svg_auto_height = as.logical(svg_auto_height),
-    svg_limit_width = as.logical(svg_limit_width),
-    svg_limit_height = as.logical(svg_limit_height)
-  )
-  class(x) <- "opts_shiny_sizing"
+  x <- list(rescale = rescale, width = width)
+  class(x) <- "opts_sizing"
   x
 }
 
@@ -316,8 +310,8 @@ girafe_options <- function(x, ...){
       x$x$settings$hover <- arg
     } else if( inherits(arg, "opts_toolbar")){
       x$x$settings$toolbar <- arg
-    } else if( inherits(arg, "opts_shiny_sizing")){
-      x$x$settings$shiny_sizing <- arg
+    } else if( inherits(arg, "opts_sizing")){
+      x$x$settings$sizing <- arg
     } else if( all( names( arg ) %in% c("defaultWidth", "defaultHeight", "padding", "viewer", "browser",
                                   "knitr") ) ){
       x$sizingPolicy <- arg

@@ -18,7 +18,7 @@ on a `ggplot` object.
 > Note that `girafe()` is a new function but `ggiraph()` function will be maintained. However, 
   the `ggiraph()` function is only using `girafe()` function!
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", out.height=500}
 library(ggplot2)
 library(ggiraph)
 theme_set(theme_minimal())
@@ -30,8 +30,9 @@ gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec,
   scale_color_gradient(low = "#F3C899", high = "#8C120A") 
 
 # htmlwidget call
-x <- girafe(ggobj = gg_point_1, width_svg = 5, height_svg = 4, width = .75)
+x <- girafe(ggobj = gg_point_1, width_svg = 5, height_svg = 4)
 x <- girafe_options(x = x,
+    opts_sizing(rescale = FALSE), 
     opts_tooltip(opacity = .8, css = "background-color:gray;color:white;padding:2px;border-radius:2px;"),
     opts_hover(css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;") )
 x

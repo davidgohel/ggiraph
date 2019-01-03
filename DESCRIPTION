@@ -19,6 +19,7 @@ Authors@R: c(
     )
 License: GPL-3
 Copyright: See file COPYRIGHTS.
+Encoding: UTF-8
 Imports:
     grid, ggplot2 (>= 3.0.0),
     htmlwidgets (>= 0.6),

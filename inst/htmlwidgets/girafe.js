@@ -28,7 +28,6 @@ HTMLWidgets.widget({
       renderValue: function(x) {
         ggobj.setSvgId(x.uid);
         ggobj.addStyle(x.settings.tooltip.css, x.settings.hover.css, x.settings.capture.css);
-        ggobj.setSvgWidth(x.width);
         ggobj.setZoomer(x.settings.zoom.min, x.settings.zoom.max);
         ggobj.addSvg(x.html, x.js);
         ggobj.animateGElements(x.settings.tooltip.opacity,
@@ -37,8 +36,20 @@ HTMLWidgets.widget({
             x.settings.tooltip.delay.over, x.settings.tooltip.delay.out,
             x.settings.tooltip.usefill, x.settings.tooltip.usestroke);
         ggobj.animateToolbar();
-        ggobj.adjustSize(width, height, x.settings.shiny_sizing);
-        ggobj.IEFixResize(x.width, 1/x.ratio);
+
+        if( !x.settings.sizing.rescale ){
+          ggobj.fixSize(width, height);
+        } else if( HTMLWidgets.shinyMode ){
+          ggobj.autoScale("100%");
+          ggobj.IEFixResize(x.settings.sizing.width, 1/x.ratio);
+          ggobj.setSizeLimits(width, 0, height, 0);
+          ggobj.removeContainerLimits();
+        } else {
+          ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + "%");
+          ggobj.IEFixResize(x.settings.sizing.width, 1/x.ratio);
+          ggobj.setSizeLimits("unset", "unset", "unset", "unset");
+          ggobj.removeContainerLimits();
+        }
 
         var addSelection = ggobj.isSelectable() && HTMLWidgets.shinyMode && x.settings.capture.only_shiny;
         var addZoom = true;
@@ -67,7 +78,7 @@ HTMLWidgets.widget({
       },
 
       resize: function(width, height) {
-        ggobj.setSize(width, height);
+        //ggobj.setSize(width, height);
       }
 
     };
