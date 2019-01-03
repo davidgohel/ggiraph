@@ -129,6 +129,7 @@ export default class ggiraphjs {
     }
 
     setSizeLimits(width_max, width_min, height_max, height_min) {
+        
         const svgid = this.svgid;
 
         d3.select("#" + svgid)
@@ -138,10 +139,15 @@ export default class ggiraphjs {
             .style("min-height", height_min);
     }
     removeContainerLimits() {
-        const containerid = this.containerid;
-        d3.select("#" + containerid)
-            .style("width", null)
-            .style("height", null);
+        if (utils.navigator_id() == "IE 11" ||
+        utils.navigator_id().substring(0, 4) === "MSIE") {
+
+        } else {
+            const containerid = this.containerid;
+            d3.select("#" + containerid)
+                .style("width", null)
+                .style("height", null);
+        }
     }
 
 

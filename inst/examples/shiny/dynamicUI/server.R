@@ -15,7 +15,7 @@ server <- function(input, output) {
     plot_output_list <- lapply(seq_len(input$n), function(i) {
       plotname <- paste("plot", i, sep = "")
       div(
-        girafeOutput(plotname, width = "100%", height = "250px"),
+        girafeOutput(plotname, width = "100%", height = "450px"),
         hr()
       )
     })
