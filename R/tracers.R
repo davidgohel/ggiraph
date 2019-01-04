@@ -1,9 +1,10 @@
 #' @import graphics
 #' @importFrom grDevices dev.cur dev.list
 
-#-' @title trace on id colection
-#-'
-#-' @description Start collecting id of an dsvg device.
+#' @title trace on id colection
+#'
+#' @description Start collecting id of an dsvg device.
+#' @noRd
 dsvg_tracer_on <- function(){
 
   dl <- dev.list()
@@ -14,11 +15,12 @@ dsvg_tracer_on <- function(){
   invisible()
 }
 
-#-' @title trace off id colection
-#-'
-#-' @description get collected id of an dsvg device and
-#-' stop collecting.
-#-' @return graphical elements id as integer values.
+#' @title trace off id colection
+#'
+#' @description get collected id of an dsvg device and
+#' stop collecting.
+#' @return graphical elements id as integer values.
+#' @noRd
 dsvg_tracer_off <- function(){
 
   dl <- dev.list()
@@ -35,14 +37,15 @@ dsvg_tracer_off <- function(){
 }
 
 
-#-' @title set attributes to graphical elements
-#-'
-#-' @description set attributes with javascript instructions
-#-' to graphical elements.
-#-' @param ids integer vector of graphical elements identifiers (returned by
-#-' \code{\link{dsvg_tracer_off}}).
-#-' @param attribute name of the attribute to set.
-#-' @param str values to set for the attribute.
+#' @title set attributes to graphical elements
+#'
+#' @description set attributes with javascript instructions
+#' to graphical elements.
+#' @param ids integer vector of graphical elements identifiers (returned by
+#' \code{\link{dsvg_tracer_off}}).
+#' @param attribute name of the attribute to set.
+#' @param str values to set for the attribute.
+#' @noRd
 set_attr = function( ids, attribute, str ){
   stopifnot( .Device == "dsvg_device" )
   if( is.factor(str) )
@@ -53,6 +56,7 @@ set_attr = function( ids, attribute, str ){
   stopifnot( is.character(attribute) )
   stopifnot( is.character(str) )
   stopifnot( is.numeric(ids) )
+
   if( length(ids) != length(str) ){
     stop("ids don't have the same length than str (most often, it occurs because of clipping)")
   }

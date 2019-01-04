@@ -25,8 +25,6 @@ huge svg files by using \code{list(options = "HUGE")} but this
 is not recommanded.}
 
 \item{...}{arguments passed on to \code{\link{dsvg}}}
-
-\item{width}{widget width ratio (0 < width <= 1). See below in section .}
 }
 \description{
 Create an interactive graphic with a ggplot object

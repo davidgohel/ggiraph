@@ -19,7 +19,7 @@ be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 
-\item{width}{widget width ratio (0 < width <= 1). See below in section .}
+\item{width}{widget width ratio (0 < width <= 1).}
 
 \item{width_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the

@@ -14,6 +14,7 @@
 #' now use function \code{\link{girafe}} and \code{\link{girafe_options}}.
 #'
 #' @inheritParams girafe
+#' @param width widget width ratio (0 < width <= 1).
 #' @param tooltip_extra_css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
 #' @param hover_css css to apply when mouse is hover and element with a data-id attribute.
