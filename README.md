@@ -3,7 +3,7 @@ ggiraph R package
 
 <p align="center">
 
-<img width="15%" src="http://www.ardata.fr/images/ggiraphlogo.svg">
+<img width="15%" src="https://www.ardata.fr/img/hexbin/ggiraph.svg">
 
 </p>
 
