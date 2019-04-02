@@ -293,7 +293,7 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #' }
 #' @export
 #' @seealso \code{\link{opts_tooltip}}, \code{\link{opts_hover}},
-#' \code{\link{opts_selection}}, \code{\link{opts_zoom}},
+#' \code{\link{opts_selection}}, \code{\link{opts_zoom}}, \code{\link{opts_sizing}},
 #' \code{\link{opts_toolbar}}, \code{\link[htmlwidgets]{sizingPolicy}}
 girafe_options <- function(x, ...){
   stopifnot(inherits(x, "girafe"))
