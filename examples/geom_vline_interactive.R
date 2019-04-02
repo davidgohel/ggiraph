@@ -8,7 +8,7 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
   gg_vline1 <- g1 + geom_vline_interactive(
     aes(xintercept = mean(carat),
         tooltip = round(mean(carat), 2),
-        data_id = carat))
+        data_id = carat), size = 3)
   ggiraph(code = print(gg_vline1))
 }
 

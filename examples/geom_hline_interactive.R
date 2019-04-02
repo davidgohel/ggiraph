@@ -6,7 +6,7 @@ if( requireNamespace("dplyr", quietly = TRUE)){
 
   gg_hline1 <- g1 + geom_hline_interactive(
     aes(yintercept = mean(unemploy),
-        tooltip = round(mean(unemploy), 2)))
+        tooltip = round(mean(unemploy), 2)), size = 3)
   girafe(ggobj = gg_hline1)
 }
 

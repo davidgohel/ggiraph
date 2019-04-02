@@ -84,5 +84,5 @@ gg_point = ggplot(
                 tooltip = carname, data_id = carname) ) +
 	geom_point_interactive() + theme_minimal()
 
-girafe(ggobj = gg_point, width = .7)
+girafe(ggobj = gg_point)
 }

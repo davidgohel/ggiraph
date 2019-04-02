@@ -252,7 +252,7 @@ girafe_options(x, opts_toolbar(position = "topleft") )
 Also 'save as png' button can be desactivated by using argument `saveaspng`.
 
 ```{r}
-girafe_options(x, opts_toolbar(saveaspng = TRUE) )
+girafe_options(x, opts_toolbar(saveaspng = FALSE) )
 ```
 
 
