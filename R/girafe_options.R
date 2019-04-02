@@ -242,10 +242,27 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 
 #' @title girafe sizing settings
 #' @description Allows customization of the svg style sizing
-#' @param rescale if TRUE, graphic will be resized when its container will be resized.
+#' @param rescale if FALSE, graphic will not be resized
+#' and the dimensions are exactly those of the container.
 #' @param width widget width ratio (0 < width <= 1).
 #' @family girafe sizing options
 #' @seealso set options with \code{\link{girafe_options}}
+#' @examples
+#' library(ggplot2)
+#'
+#' dataset <- mtcars
+#' dataset$carname = row.names(mtcars)
+#'
+#' gg <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(x = wt, y = qsec, color = disp,
+#'                 tooltip = carname, data_id = carname) ) +
+#'   geom_point_interactive() + theme_minimal()
+#'
+#' x <- girafe(ggobj = gg)
+#' x <- girafe_options(x,
+#'   opts_sizing(rescale = FALSE) )
+#' if( interactive() ) print(x)
 #' @export
 opts_sizing <- function(rescale = TRUE, width = 1){
   if( !is.logical(rescale) || length(rescale) != 1L ){

@@ -7,12 +7,30 @@
 opts_sizing(rescale = TRUE, width = 1)
 }
 \arguments{
-\item{rescale}{if TRUE, graphic will be resized when its container will be resized.}
+\item{rescale}{if FALSE, graphic will not be resized
+and the dimensions are exactly those of the container.}
 
 \item{width}{widget width ratio (0 < width <= 1).}
 }
 \description{
 Allows customization of the svg style sizing
+}
+\examples{
+library(ggplot2)
+
+dataset <- mtcars
+dataset$carname = row.names(mtcars)
+
+gg <- ggplot(
+  data = dataset,
+  mapping = aes(x = wt, y = qsec, color = disp,
+                tooltip = carname, data_id = carname) ) +
+  geom_point_interactive() + theme_minimal()
+
+x <- girafe(ggobj = gg)
+x <- girafe_options(x,
+  opts_sizing(rescale = FALSE) )
+if( interactive() ) print(x)
 }
 \seealso{
 set options with \code{\link{girafe_options}}

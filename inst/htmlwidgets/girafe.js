@@ -24,6 +24,7 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
     var ggobj = ggiraphjs.newgi(el.id);
+
     return {
       renderValue: function(x) {
         ggobj.setSvgId(x.uid);
@@ -38,7 +39,9 @@ HTMLWidgets.widget({
         ggobj.animateToolbar();
 
         if( !x.settings.sizing.rescale ){
-          ggobj.fixSize(width, height);
+          var width_ = d3.select(el).style("width");
+          var height_ = d3.select(el).style("height");
+          ggobj.fixSize(width_, height_);
         } else if( HTMLWidgets.shinyMode ){
           ggobj.autoScale("100%");
           ggobj.IEFixResize(1, 1/x.ratio);
