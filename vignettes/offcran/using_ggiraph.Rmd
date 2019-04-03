@@ -123,8 +123,9 @@ and data_id will need the "click" event. [Read more about shiny integration](#sh
 
 ## Custom animation effects
 
+> Use function `girafe_options`
 
-With `ggiraph`, you can customize tooltip style, mouse hover effects, toolbarposition... 
+With `ggiraph`, you can customize tooltip style, mouse hover effects, toolbar position... 
 This requires usage of `css` instructions and options. The function `girafe_options()` 
 will be used to customize animation effects. These effects will be defined by function 
 calls, i.e. `opts_tooltip()`, `opts_toolbar()`, ...
@@ -254,6 +255,15 @@ Also 'save as png' button can be desactivated by using argument `saveaspng`.
 ```{r}
 girafe_options(x, opts_toolbar(saveaspng = FALSE) )
 ```
+
+### Size options
+
+The resizing behaviour can be interrupted with `opts_sizing(rescale = FALSE)`.
+
+```{r}
+girafe_options(x, opts_sizing(rescale = FALSE) )
+```
+
 
 
 ## Shiny usage

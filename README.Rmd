@@ -29,11 +29,8 @@ Animation is made with ggplot geometries that can understand three arguments:
 If used within a shiny application, elements associated with an id (`data_id`) 
 can be selected and manipulated on client and server sides.
 
-```{r results='asis', echo=FALSE}
-htmltools::HTML(sprintf('<img src="data:image/gif;base64,%s"/>',
-        gdtools:::base64_file_encode(filename = system.file(package = "ggiraph", "medias", "ggiraph.gif"))
-        ))
-```
+<iframe width="100%" height="550" src="https://www.youtube.com/embed/cJt5hlCi_do" frameborder="0" allowfullscreen></iframe>
+
 
 
 ## Installation 
