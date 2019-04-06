@@ -28,9 +28,7 @@ If used within a shiny application, elements associated with an id
 (`data_id`) can be selected and manipulated on client and server
 sides.
 
-<iframe width="560" height="600" src="https://www.youtube.com/embed/cJt5hlCi_do" frameborder="0" allowfullscreen>
-
-</iframe>
+[![](https://img.youtube.com/vi/cJt5hlCi_do/0.jpg)](https://youtu.be/cJt5hlCi_do)
 
 ## Installation
 
