@@ -11,6 +11,7 @@
 ^docs$
 ^_pkgdown\.yml$
 ^README\.Rmd$
+^revdep$
 ^visualtests$
 ^vignettes/offcran$
 ^cran-comments\.md$
