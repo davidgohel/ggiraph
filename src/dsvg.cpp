@@ -10,6 +10,7 @@
 #include "fonts.h"
 #include "R_ext/GraphicsEngine.h"
 #include "a_color.h"
+#include <locale>
 
 
 std::string line_style(double width, int col, int type, int join, int end)
@@ -358,6 +359,7 @@ static void dsvg_rect(double x0, double y0, double x1, double y1,
 static void dsvg_circle(double x, double y, double r, const pGEcontext gc,
                        pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+
   int idx = svgd->new_id();
   svgd->register_element();
 
@@ -594,6 +596,8 @@ bool DSVG_(std::string file, double width, double height, std::string bg,
   R_GE_checkVersionOrDie(R_GE_version);
   R_CheckDeviceAvailable();
   BEGIN_SUSPEND_INTERRUPTS {
+    setlocale(LC_NUMERIC, "C");
+
     pDevDesc dev = dsvg_driver_new(file, bg_, width, height, pointsize, standalone, canvas_id, clip_id_root,
                                    aliases);
     if (dev == NULL)
