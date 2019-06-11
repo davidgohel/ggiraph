@@ -42,7 +42,7 @@ gg2 <- ggplot(mtcars) +
 Mouseover points to see where they are located in the other graph.
 
 ```{r}
-girafe( code = print(gg1 + gg2), width_svg = 8, height_svg = 4)
+girafe( ggobj = plot_grid(gg1, gg2), width_svg = 8, height_svg = 4)
 ```
 
 ### Using `patchwork`
