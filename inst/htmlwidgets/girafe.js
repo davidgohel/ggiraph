@@ -63,8 +63,18 @@ HTMLWidgets.widget({
         if( addSelection && x.settings.capture.type == "single" ){
           ggobj.selectizeSingle();
           addSelection = false;
+
+          if( typeof x.settings.capture.selected === 'string' ) {
+            ggobj.setSelected([x.settings.capture.selected]);
+          }
+
         } else if( addSelection && x.settings.capture.type == "multiple" ){
           ggobj.selectizeMultiple();
+          if( typeof x.settings.capture.selected === 'string' ) {
+            ggobj.setSelected([x.settings.capture.selected]);
+          } else if( isArray(x.settings.capture.selected) ){
+            ggobj.setSelected(x.settings.capture.selected);
+          }
         } else {
           ggobj.selectizeNone();
           addSelection = false;

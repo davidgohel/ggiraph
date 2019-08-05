@@ -139,7 +139,7 @@ opts_hover <- function(css = NULL){
 #' @export
 #' @family girafe animation options
 #' @seealso set options with \code{\link{girafe_options}}
-opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE){
+opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE, selected = character(0)){
 
   if( is.null(css)){
     css <- "fill:red;stroke:gray;"
@@ -152,7 +152,8 @@ opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE){
   x <- list(
     css = css,
     type = type,
-    only_shiny = only_shiny
+    only_shiny = only_shiny,
+    selected = selected
   )
   class(x) <- "opts_selection"
   x

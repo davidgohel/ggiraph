@@ -4,7 +4,8 @@
 \alias{opts_selection}
 \title{selection effect settings}
 \usage{
-opts_selection(css = NULL, type = "multiple", only_shiny = TRUE)
+opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
+  selected = character(0))
 }
 \arguments{
 \item{css}{css to associate with elements when they are selected.}
