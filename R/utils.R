@@ -4,6 +4,7 @@ setGrobName <- function (prefix, grob)
 	grob
 }
 
+#' @importFrom htmltools htmlEscape
 encode_cr <- function(x)
   htmltools::htmlEscape(text = gsub(
     pattern = "\n",
