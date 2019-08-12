@@ -192,6 +192,8 @@ export default class ggiraphjs {
                         tooltipEl.style("border-color", stroke);
                     }
                     tooltipEl.html(this.getAttribute("title"));
+                    // set the tooltip again so that html entities are properly decoded
+                    tooltipEl.html(tooltipEl.text());
                     const tooltipRect = tooltipEl.node().getBoundingClientRect();
                     const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
                     if (usecursor) {

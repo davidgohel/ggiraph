@@ -5,7 +5,7 @@ setGrobName <- function (prefix, grob)
 }
 
 encode_cr <- function(x)
-  gsub(pattern = "\n", replacement = "<br>", x = x)
+  gsub(pattern = "\n", replacement = "&lt;br&gt;", x = x)
 
 
 #' @section Geoms:
