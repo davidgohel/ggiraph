@@ -179,25 +179,39 @@ export default class ggiraphjs {
                     curr_sel.classed(selected_class, true);
                 }
                 if (this.getAttribute("title") !== null) {
-                    d3.select(tooltipstr).transition()
+                    const tooltipEl = d3.select(tooltipstr);
+                    tooltipEl.transition()
                         .duration(delayover)
                         .style("opacity", opacity);
                     if (usefill) {
                         const fill = this.getAttribute("fill");
-                        d3.select(tooltipstr).style("background-color", fill);
+                        tooltipEl.style("background-color", fill);
                     }
                     if (usestroke) {
                         const stroke = this.getAttribute("stroke");
-                        d3.select(tooltipstr).style("border-color", stroke);
+                        tooltipEl.style("border-color", stroke);
                     }
-                    d3.select(tooltipstr).html(this.getAttribute("title"));
+                    tooltipEl.html(this.getAttribute("title"));
+                    // set the tooltip again so that html entities are properly decoded
+                    tooltipEl.html(tooltipEl.text());
+                    const tooltipRect = tooltipEl.node().getBoundingClientRect();
+                    const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
                     if (usecursor) {
-                        d3.select(tooltipstr)
-                            .style("left", (d3.event.pageX + offx) + "px")
-                            .style("top", (d3.event.pageY + offy) + "px");
+                      let xpos = (d3.event.pageX + offx);
+                      const xdiff = (xpos + tooltipRect.width) - (clientRect.x + clientRect.width);
+                      if (xdiff > 0) {
+                          xpos -= xdiff;
+                      }
+                      let ypos = (d3.event.pageY + offy);
+                      const ydiff = (ypos + tooltipRect.height) - (clientRect.y + clientRect.height + window.pageYOffset);
+                      if (ydiff > 0) {
+                          ypos -= ydiff;
+                      }
+                      tooltipEl
+                            .style("left", xpos + "px")
+                            .style("top", ypos + "px");
                     } else {
-                        const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
-                        d3.select(tooltipstr)
+                        tooltipEl
                             .style("left", (offx + clientRect.left) + "px")
                             .style("top", (document.documentElement.scrollTop + clientRect.y + offy) + "px");
                     }
@@ -205,13 +219,25 @@ export default class ggiraphjs {
             })
             .on("mousemove", function (d) {
                 if (this.getAttribute("title") !== null) {
+                    const tooltipEl = d3.select(tooltipstr);
+                    const tooltipRect = tooltipEl.node().getBoundingClientRect();
+                    const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
                     if (usecursor) {
-                        d3.select(tooltipstr)
-                            .style("left", (d3.event.pageX + offx) + "px")
-                            .style("top", (d3.event.pageY + offy) + "px");
+                        let xpos = (d3.event.pageX + offx);
+                        const xdiff = (xpos + tooltipRect.width) - (clientRect.x + clientRect.width);
+                        if (xdiff > 0) {
+                            xpos -= xdiff;
+                        }
+                        let ypos = (d3.event.pageY + offy);
+                        const ydiff = (ypos + tooltipRect.height) - (clientRect.y + clientRect.height + window.pageYOffset);
+                        if (ydiff > 0) {
+                            ypos -= ydiff;
+                        }
+                        tooltipEl
+                              .style("left", xpos + "px")
+                              .style("top", ypos + "px");
                     } else {
-                        const clientRect = d3.select("#" + containerid).node().getBoundingClientRect();
-                        d3.select(tooltipstr)
+                        tooltipEl
                             .style("left", (offx + clientRect.left) + "px")
                             .style("top", (document.documentElement.scrollTop + clientRect.y + offy) + "px");
                     }
