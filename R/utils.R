@@ -5,7 +5,12 @@ setGrobName <- function (prefix, grob)
 }
 
 encode_cr <- function(x)
-  gsub(pattern = "\n", replacement = "&lt;br&gt;", x = x)
+  htmltools::htmlEscape(text = gsub(
+    pattern = "\n",
+    replacement = "<br>",
+    x = x
+  ),
+  attribute = TRUE)
 
 
 #' @section Geoms:
