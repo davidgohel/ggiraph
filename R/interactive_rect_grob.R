@@ -36,7 +36,8 @@ interactive_rect_grob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 #' @inheritParams grid::drawDetails
 drawDetails.interactive_rect_grob <- function(x,recording) {
   dsvg_tracer_on()
-	argnames = setdiff( names(x), c("tooltip", "onclick", "data_id") )
+	argnames = intersect( c("x", "y", "width", "height", "just", "hjust", "vjust", "default.units",
+	                      "name", "gp", "draw", "vp"), names(x) )
 	do.call( grid.rect, x[argnames] )
 
 	ids <- dsvg_tracer_off()
