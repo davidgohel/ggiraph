@@ -6,9 +6,11 @@ export default class ggiraphjs {
     constructor(containerid) {
         this.containerid = containerid;
         this.dataSelected = [];
+        this.dataKeySelected = [];
         this.typeSelection = null;
         this.svgid = null;
         this.inputId = null;
+        this.inputKeyId = null;
         this.zoomer = null;
     }
 
@@ -47,6 +49,10 @@ export default class ggiraphjs {
 
     setInputId(id) {
         this.inputId = id;
+    }
+
+    setInputKeyId(id) {
+        this.inputKeyId = id;
     }
 
     addUI(addLasso, addZoom, saveaspng, classpos) {
@@ -265,6 +271,13 @@ export default class ggiraphjs {
             Shiny.onInputChange(this.inputId, this.dataSelected);
         }
     }
+    setKeySelected(sel) {
+        this.dataKeySelected = sel;
+        this.refreshKeySelected();
+        if (this.inputKeyId) {
+            Shiny.onInputChange(this.inputKeyId, this.dataKeySelected);
+        }
+    }
 
     selectizeMultiple() {
         const sel_data_id = d3.selectAll('#' + this.svgid + ' *[data-id]');
@@ -314,6 +327,54 @@ export default class ggiraphjs {
         sel_data_id.on("click", null);
     }
 
+    selectizeKeyMultiple() {
+        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[key-id]');
+
+        const that = this;
+        sel_data_id.on("click", function (d, i) {
+            let dataSel = that.dataKeySelected;
+            var dataid = d3.select(this).attr("key-id");
+            var index = dataSel.indexOf(dataid);
+            if (index < 0) {
+                dataSel.push(dataid);
+            } else {
+                dataSel.splice(index, 1);
+            }
+            that.dataKeySelected = dataSel;
+            that.refreshKeySelected();
+            if (that.inputKeyId) {
+                Shiny.onInputChange(that.inputKeyId, that.dataKeySelected);
+            }
+
+        });
+    }
+
+    selectizeKeySingle() {
+        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[key-id]');
+        const that = this;
+        sel_data_id.on("click", function (d, i) {
+            let dataSel = that.dataKeySelected;
+
+            var dataid = d3.select(this).attr("key-id");
+            var index = dataSel.indexOf(dataid);
+            if (index < 0) {
+                dataSel = [dataid];
+            } else {
+                dataSel = [];
+            }
+            that.dataKeySelected = dataSel;
+            that.refreshKeySelected();
+            if (that.inputKeyId) {
+                Shiny.onInputChange(that.inputKeyId, that.dataKeySelected);
+            }
+        });
+    }
+
+    selectizeKeyNone() {
+        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[key-id]');
+        sel_data_id.on("click", null);
+    }
+
     refreshSelected() {
         const selected_class = this.selectedClassname();
         const svgid = this.svgid;
@@ -324,7 +385,16 @@ export default class ggiraphjs {
             svg.selectAll('*[data-id=\"' + that.dataSelected[i] + '\"]').classed(selected_class, true);
         });
     }
-
+    refreshKeySelected() {
+        const selected_class = this.selectedClassname();
+        const svgid = this.svgid;
+        var svg = d3.select('#' + svgid);
+        svg.selectAll('*[key-id]').classed(selected_class, false);
+        const that = this;
+        d3.selectAll(that.dataKeySelected).each(function (d, i) {
+            svg.selectAll('*[key-id=\"' + that.dataKeySelected[i] + '\"]').classed(selected_class, true);
+        });
+    }
     zoomOn() {
         const svgid = this.svgid;
         d3.select("#" + this.containerid).call(this.zoomer

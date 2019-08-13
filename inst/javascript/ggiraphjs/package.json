@@ -1,11 +1,11 @@
 {
   "name": "ggiraphjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ggiraph object javascript module",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development;cp dist/ggiraphjs-0.1.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.1.0/ggiraphjs.min.js;",
-    "build": "webpack --mode production;cp dist/ggiraphjs-0.1.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.1.0/ggiraphjs.min.js;"
+    "dev": "webpack --mode development;cp dist/ggiraphjs-0.2.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.2.0/ggiraphjs.min.js;",
+    "build": "webpack --mode production;cp dist/ggiraphjs-0.2.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.2.0/ggiraphjs.min.js;"
   },
   "keywords": [],
   "author": "david.gohel@ardata.fr",

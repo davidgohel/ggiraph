@@ -11,6 +11,13 @@ function set_reactive(x, id ){
       x.setSelected(message);
     }
   });
+  Shiny.addCustomMessageHandler(id + '_key_set', function(message) {
+    if( typeof message === 'string' ) {
+      x.setKeySelected([message]);
+    } else if( isArray(message) ){
+      x.setKeySelected(message);
+    }
+  });
 
 }
 
@@ -62,6 +69,7 @@ HTMLWidgets.widget({
 
         if( addSelection && x.settings.capture.type == "single" ){
           ggobj.selectizeSingle();
+          ggobj.selectizeKeySingle();
           addSelection = false;
 
           if( typeof x.settings.capture.selected === 'string' ) {
@@ -70,6 +78,7 @@ HTMLWidgets.widget({
 
         } else if( addSelection && x.settings.capture.type == "multiple" ){
           ggobj.selectizeMultiple();
+          ggobj.selectizeKeyMultiple();
           if( typeof x.settings.capture.selected === 'string' ) {
             ggobj.setSelected([x.settings.capture.selected]);
           } else if( isArray(x.settings.capture.selected) ){
@@ -77,14 +86,17 @@ HTMLWidgets.widget({
           }
         } else {
           ggobj.selectizeNone();
+          ggobj.selectizeKeyNone();
           addSelection = false;
         }
+
         ggobj.addUI(addSelection, addZoom,
           x.settings.toolbar.saveaspng,
           'ggiraph-toolbar-' + x.settings.toolbar.position);
 
         if( HTMLWidgets.shinyMode ){
           ggobj.setInputId(el.id + "_selected");
+          ggobj.setInputKeyId(el.id + "_key_selected");
           set_reactive(ggobj, el.id );
         }
 

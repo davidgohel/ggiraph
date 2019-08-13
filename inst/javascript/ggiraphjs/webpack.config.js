@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name]-0.1.0.min.js',
+    filename: '[name]-0.2.0.min.js',
     library: '[name]'
   },
   module: {
