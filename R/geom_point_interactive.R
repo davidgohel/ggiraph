@@ -19,7 +19,7 @@
 #' @examples
 #' # add interactive points to a ggplot -------
 #' @example examples/geom_point_interactive.R
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @export
 geom_point_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
 		position = "identity", na.rm = FALSE,

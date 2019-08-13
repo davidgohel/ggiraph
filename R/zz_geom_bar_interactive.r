@@ -4,7 +4,7 @@
 #' The geometry is based on \code{\link[ggplot2]{geom_bar}}.
 #' See the documentation for those functions for more details.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams geom_point_interactive
 #' @param width Bar width.
 #' @examples

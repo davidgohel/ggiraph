@@ -61,5 +61,5 @@ x <- girafe(ggobj = gg, width_svg = 5, height_svg = 4)
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

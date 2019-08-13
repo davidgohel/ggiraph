@@ -10,7 +10,7 @@
 #' @param linejoin Line join style (round, mitre, bevel)
 #' @param linemitre Line mitre limit (number greater than 1)
 #' @param arrow Arrow specification, as created by \link[grid]{arrow}
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @examples
 #' # add interactive paths to a ggplot -------
 #' @example examples/geom_path_interactive.R

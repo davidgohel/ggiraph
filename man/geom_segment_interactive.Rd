@@ -66,5 +66,5 @@ ggiraph(code = {print(gg_segment_1)})
 ggiraph(code = {print(gg_segment_2)})
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

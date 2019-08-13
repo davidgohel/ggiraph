@@ -137,5 +137,5 @@ p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
 ggiraph( code = print(p))
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

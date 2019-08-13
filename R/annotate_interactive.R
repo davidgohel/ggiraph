@@ -3,7 +3,7 @@
 #' @description
 #' Create interactive annotations, similar to ggplot2 \code{\link[ggplot2]{annotate}}.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams ggplot2::annotate
 #' @importFrom ggplot2 annotate
 #' @examples

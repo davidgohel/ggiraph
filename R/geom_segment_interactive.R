@@ -4,7 +4,7 @@
 #' The geometry is based on \code{\link[ggplot2]{geom_segment}}.
 #' See the documentation for those functions for more details.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams geom_point_interactive
 #' @param lineend Line end style (round, butt, square)
 #' @param arrow Arrow specification, as created by ?grid::arrow

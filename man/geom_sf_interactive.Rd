@@ -58,5 +58,5 @@ if (requireNamespace("sf", quietly = TRUE)) {
 
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

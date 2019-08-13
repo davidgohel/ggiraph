@@ -55,5 +55,5 @@ gg_point = ggplot(
 girafe(ggobj = gg_point)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

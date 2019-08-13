@@ -78,5 +78,5 @@ group of data (same for \code{data_id}). It means it is only possible
 to associate a single tooltip to a set of bins.
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

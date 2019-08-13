@@ -66,5 +66,5 @@ p <- ggplot(mpg, aes(x = drv, y = hwy, tooltip = class, fill = class)) +
 girafe(ggobj = p)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

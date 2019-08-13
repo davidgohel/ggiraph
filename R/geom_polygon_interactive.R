@@ -4,7 +4,7 @@
 #' The geometry is based on \code{\link[ggplot2]{geom_polygon}}.
 #' See the documentation for those functions for more details.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams geom_point_interactive
 #' @examples
 #' # add interactive polygons to a ggplot -------
@@ -99,7 +99,7 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 #' @examples
 #' # add interactive maps to a ggplot -------
 #' @example examples/geom_map_interactive.R
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @export
 geom_map_interactive <- function(mapping = NULL, data = NULL, map, stat = "identity",
                                  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...) {

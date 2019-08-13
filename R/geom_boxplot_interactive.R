@@ -4,7 +4,7 @@
 #' The geometry is based on \code{\link[ggplot2]{geom_boxplot}}.
 #' See the documentation for those functions for more details.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams geom_point_interactive
 #' @param stat see \code{geom_boxplot}.
 #' @param outlier.colour see \code{geom_boxplot}.

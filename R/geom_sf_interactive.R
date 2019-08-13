@@ -113,7 +113,7 @@ GeomInteractiveSf <- ggproto("GeomInteractiveSf", Geom,
 #' The geometry is based on \code{\link[ggplot2]{ggsf}}.
 #' See the documentation for those functions for more details.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams geom_point_interactive
 #' @examples
 #' # add interactive sf objects to a ggplot -------

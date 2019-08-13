@@ -8,7 +8,7 @@
 #' group of data (same for \code{data_id}). It means it is only possible
 #' to associate a single tooltip to a set of bins.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams ggplot2::geom_histogram
 #' @export
 geom_histogram_interactive <- function(mapping = NULL, data = NULL,

@@ -55,5 +55,5 @@ ggiraph(code = print(gg_vline2),
         hover_css = "cursor:pointer;fill:orange;stroke:orange;")
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

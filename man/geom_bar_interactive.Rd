@@ -48,5 +48,5 @@ g <- ggplot(dat, aes( x = name, y = height, tooltip = gender,
 ggiraph(code = print(g))
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

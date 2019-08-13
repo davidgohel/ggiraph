@@ -11,7 +11,7 @@
 #' Function \code{geom_tile_interactive} should be used with caution, total number of
 #' rectangles should be small.
 #'
-#' @seealso \code{\link{ggiraph}}
+#' @seealso \code{\link{girafe}}
 #' @inheritParams ggplot2::geom_rect
 #' @examples
 #' # add interactive polygons to a ggplot -------

@@ -61,5 +61,5 @@ gg_hline2 <- g2 + geom_hline_interactive(
 girafe(ggobj = gg_hline2)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }
