@@ -10,3 +10,5 @@ revdep
 src/*.o
 src/*.so
 src/*.dll
+.project
+vignettes/overview.html
