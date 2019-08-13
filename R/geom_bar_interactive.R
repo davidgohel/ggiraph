@@ -43,6 +43,7 @@ geom_bar_interactive <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @usage NULL
 #' @export
+#' @include geom_rect_interactive.R
 GeomInteractiveBar <- ggproto("GeomInteractiveBar", GeomInteractiveRect,
           required_aes = c("x", "y"),
 
