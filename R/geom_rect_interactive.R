@@ -12,7 +12,7 @@
 #' rectangles should be small.
 #'
 #' @seealso \code{\link{ggiraph}}
-#' @inheritParams geom_point_interactive
+#' @inheritParams ggplot2::geom_rect
 #' @examples
 #' # add interactive polygons to a ggplot -------
 #' @example examples/geom_rect_interactive.R
