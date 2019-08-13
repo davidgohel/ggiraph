@@ -1,30 +1,40 @@
 #' @export
+#' @title Create your own interactive discrete scale
+#' @description The scale is based on \code{\link[ggplot2]{scale_colour_manual}}.
+#' These functions allow you to make interactive legends associated with interactive
+#' layers.
+#' @inheritParams ggplot2::scale_colour_manual
+#' @param tooltip tooltip associated with keys, one per key, a named vector
+#' @param onclick javascript actions to execute when a key is clicked, one per key, a named vector
+#' @param data_id identifiers to associate with key, one per key, a named vector
+#' @name scale_manual_interactive
 scale_colour_manual_interactive <-
-  function(..., values, data_id = NULL, tooltip = NULL,
+  function(..., values, data_id = NULL, onclick = NULL, tooltip = NULL,
            aesthetics = "colour") {
-  zz <- scale_colour_manual(..., values = values, aesthetics = aesthetics)
+    zz <- scale_colour_manual(..., values = values, aesthetics = aesthetics)
 
-  scale_interactive <- FALSE
+    scale_interactive <- FALSE
 
-  if( !is.null(data_id) ){
-    zz$data_id <- data_id
-    scale_interactive <- TRUE
-  }
-  if( !is.null(tooltip) ){
-    zz$tooltip <- tooltip
-    scale_interactive <- TRUE
-  }
-  zz$guide <- paste0(zz$guide, "_interactive")
+    if( !is.null(data_id) ){
+      zz$data_id <- data_id
+      scale_interactive <- TRUE
+    }
+    if( !is.null(tooltip) ){
+      zz$tooltip <- tooltip
+      scale_interactive <- TRUE
+    }
+    if( !is.null(onclick) ){
+      zz$onclick <- onclick
+      scale_interactive <- TRUE
+    }
+    zz$guide <- paste0(zz$guide, "_interactive")
 
-  zz
+    zz
   }
 
 #' @export
-scale_color_manual_interactive <- scale_colour_manual_interactive
-
-
-#' @export
-scale_fill_manual_interactive <- function(..., values, data_id = NULL, tooltip = NULL, aesthetics = "fill") {
+#' @rdname scale_manual_interactive
+scale_fill_manual_interactive <- function(..., values, data_id = NULL, onclick = NULL, tooltip = NULL, aesthetics = "fill") {
   zz <- scale_fill_manual(..., values = values, aesthetics = aesthetics)
   scale_interactive <- FALSE
 
@@ -36,6 +46,10 @@ scale_fill_manual_interactive <- function(..., values, data_id = NULL, tooltip =
     zz$tooltip <- tooltip
     scale_interactive <- TRUE
   }
+  if( !is.null(onclick) ){
+    zz$onclick <- onclick
+    scale_interactive <- TRUE
+  }
 
   zz$guide <- paste0(zz$guide, "_interactive")
 
@@ -43,6 +57,10 @@ scale_fill_manual_interactive <- function(..., values, data_id = NULL, tooltip =
 }
 
 #' @export
+#' @title interactive legend guide
+#' @description an interactive legend guide.
+#' See \code{\link[ggplot2]{guide_legend}} for more details.
+#' @param ... arguments passed to guide_legend.
 guide_legend_interactive <- function(...) {
   zz <- guide_legend(...)
 
@@ -52,6 +70,10 @@ guide_legend_interactive <- function(...) {
 
 #' @export
 #' @importFrom ggplot2 guide_train
+#' @inheritParams ggplot2::guide_train
+#' @param scale,aesthetic other parameters used by guide_train
+#' @title methods for interactive legend guide
+#' @description These functions should not be used by the end users.
 guide_train.legend_interactive <- function(guide, scale, aesthetic = NULL) {
   zz <- NextMethod()
   if( is.null(zz) ) return(zz)
@@ -75,22 +97,6 @@ guide_train.legend_interactive <- function(guide, scale, aesthetic = NULL) {
 }
 
 draw_key_point_interactive <- function(data, params, size) {
-
-  if (is.null(data$shape)) {
-    data$shape <- 19
-  }
-  else if (is.character(data$shape)) {
-    data$shape <- ggplot2:::translate_shape_string(data$shape)
-  }
-  interactive_points_grob(x = 0.5, y = 0.5,
-                          tooltip = data$tooltip,
-                          onclick = data$onclick,
-                          data_id = data$data_id,
-                          pch = data$shape,
-                          gp = gpar(col = alpha(data$colour %||% "black", data$alpha),
-                                    fill = alpha(data$fill %||% "black", data$alpha),
-                                    fontsize = (data$size %||% 1.5) * .pt + (data$stroke %||% 0.5) * .stroke/2,
-                                    lwd = (data$stroke %||% 0.5) * .stroke/2),
-                          cl = "interactive_key_points_grob"
-                          )
+  gr <- draw_key_point(data, params, size)
+  add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
 }
