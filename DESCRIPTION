@@ -72,6 +72,7 @@ Collate:
     'interactive_polyline_grob.R'
     'interactive_rect_grob.R'
     'interactive_segments_grob.R'
+    'interactive_sf_grob.R'
     'interactive_text_grob.R'
     'tracers.R'
     'utils.R'
