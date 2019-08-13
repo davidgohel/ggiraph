@@ -47,6 +47,7 @@ a warning. If \code{TRUE}, missing values are silently removed.}
 Create interactive annotations, similar to ggplot2 \code{\link[ggplot2]{annotate}}.
 }
 \examples{
+# add interactive annotation -------
 library(ggplot2)
 library(ggiraph)
 

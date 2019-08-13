@@ -33,19 +33,23 @@ The geometry is based on \code{\link[ggplot2]{geom_bar}}.
 See the documentation for those functions for more details.
 }
 \examples{
+# add interactive bar -------
 library(ggplot2)
-g <- ggplot(mpg, aes( x = class, tooltip = class,
+
+p <- ggplot(mpg, aes( x = class, tooltip = class,
         data_id = class ) ) +
   geom_bar_interactive()
-ggiraph(code = print(g))
+
+ggiraph(code = print(p))
 
 dat <- data.frame( name = c( "David", "Constance", "Leonie" ),
     gender = c( "Male", "Female", "Female" ),
     height = c(172, 159, 71 ) )
-g <- ggplot(dat, aes( x = name, y = height, tooltip = gender,
+p <- ggplot(dat, aes( x = name, y = height, tooltip = gender,
         data_id = name ) ) +
   geom_bar_interactive(stat = "identity")
-ggiraph(code = print(g))
+
+girafe(ggobj = p)
 }
 \seealso{
 \code{\link{girafe}}

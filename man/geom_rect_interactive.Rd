@@ -102,6 +102,7 @@ gg_rect = ggplot() +
 
 
 ggiraph(code = {print(gg_rect)})
+# add interactive tiles to a ggplot -------
 library(ggplot2)
 df <- data.frame(
   id = rep(c("a", "b", "c", "d", "e"), 2),
