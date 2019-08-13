@@ -119,6 +119,8 @@ opts_hover <- function(css = NULL){
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param only_shiny disable selections if not in a shiny context.
+#' @param selected character vector, id to be selected when the graph will be
+#' initialized.
 #' @examples
 #' library(ggplot2)
 #'

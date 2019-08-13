@@ -14,6 +14,9 @@ opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
 when widget is in a Shiny application.}
 
 \item{only_shiny}{disable selections if not in a shiny context.}
+
+\item{selected}{character vector, id to be selected when the graph will be
+initialized.}
 }
 \description{
 Allows customization of the rendering of
