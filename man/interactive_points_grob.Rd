@@ -7,7 +7,7 @@
 interactive_points_grob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   tooltip = NULL, onclick = NULL, data_id = NULL, pch = 1,
   size = unit(1, "char"), default.units = "native", name = NULL,
-  gp = gpar(), vp = NULL)
+  gp = gpar(), vp = NULL, cl = "interactive_points_grob")
 }
 \arguments{
 \item{x}{numeric vector or unit object specifying x-values.}
@@ -39,6 +39,8 @@ interactive_points_grob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     \code{pch = 21:25}.}
 
 \item{vp}{A Grid viewport object (or NULL).}
+
+\item{cl}{class to set}
 }
 \description{
 This function can be used to generate interactive grob

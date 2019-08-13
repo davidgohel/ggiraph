@@ -5,6 +5,7 @@
 #' @param tooltip tooltip associated with points
 #' @param onclick javascript action to execute when point is clicked
 #' @param data_id identifiers to associate with points
+#' @param cl class to set
 #' @export
 interactive_points_grob <- function( x = unit(0.5, "npc"),
 		y = unit(0.5, "npc"),
@@ -13,14 +14,14 @@ interactive_points_grob <- function( x = unit(0.5, "npc"),
 		data_id = NULL,
 		pch=1, size=unit(1, "char"),
 		default.units="native",
-		name=NULL, gp=gpar(), vp=NULL) {
+		name=NULL, gp=gpar(), vp=NULL, cl = "interactive_points_grob") {
 	if (!is.unit(x))
 		x <- unit(x, default.units)
 	if (!is.unit(y))
 		y <- unit(y, default.units)
 	grob(tooltip = tooltip, onclick = onclick, data_id = data_id,
 			x = x, y = y, pch = pch, size=size,
-			name=name, gp=gp, vp=vp, cl="interactive_points_grob")
+			name=name, gp=gp, vp=vp, cl = cl)
 }
 
 #' @export
@@ -38,6 +39,24 @@ drawDetails.interactive_points_grob <- function(x,recording) {
 		  set_attr( ids = as.integer( ids ), str = x$onclick, attribute = "onclick" )
 		if( !is.null( x$data_id ))
 		  set_attr( ids = as.integer( ids ), str = x$data_id, attribute = "data-id" )
+	}
+
+
+	invisible()
+}
+
+#' @export
+drawDetails.interactive_key_points_grob <- function(x,recording) {
+  dsvg_tracer_on()
+	grid.points(x = x$x, y = x$y, pch = x$pch, size = x$size, default.units = "native", gp = x$gp )
+	ids <- dsvg_tracer_off()
+	if( length( ids ) > 0 ) {
+		if( !is.null( x$tooltip ))
+		  set_attr( ids = as.integer( ids ), str = encode_cr(x$tooltip), attribute = "title" )
+		if( !is.null( x$onclick ))
+		  set_attr( ids = as.integer( ids ), str = x$onclick, attribute = "onclick" )
+		if( !is.null( x$data_id ))
+		  set_attr( ids = as.integer( ids ), str = x$data_id, attribute = "key-id" )
 	}
 
 
