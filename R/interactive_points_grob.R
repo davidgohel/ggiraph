@@ -30,38 +30,8 @@ interactive_points_grob <- function( x = unit(0.5, "npc"),
 #' @inheritParams grid::drawDetails
 drawDetails.interactive_points_grob <- function(x,recording) {
   dsvg_tracer_on()
-	grid.points(x = x$x, y = x$y, pch = x$pch, size = x$size, default.units = "native", gp = x$gp )
-	ids <- dsvg_tracer_off()
-	if( length( ids ) > 0 ) {
-		if( !is.null( x$tooltip ))
-		  set_attr( ids = as.integer( ids ), str = encode_cr(x$tooltip), attribute = "title" )
-		if( !is.null( x$onclick ))
-		  set_attr( ids = as.integer( ids ), str = x$onclick, attribute = "onclick" )
-		if( !is.null( x$data_id ))
-		  set_attr( ids = as.integer( ids ), str = x$data_id, attribute = "data-id" )
-	}
-
-
+  do.call( grid.points, x[grob_argnames(x = x, grob = grid::pointsGrob)] )
+  ids <- dsvg_tracer_off()
+  interactive_attr_toxml(x = x, ids = ids)
 	invisible()
 }
-
-#' @export
-drawDetails.interactive_key_points_grob <- function(x,recording) {
-  dsvg_tracer_on()
-	grid.points(x = x$x, y = x$y, pch = x$pch, size = x$size, default.units = "native", gp = x$gp )
-	ids <- dsvg_tracer_off()
-	if( length( ids ) > 0 ) {
-		if( !is.null( x$tooltip ))
-		  set_attr( ids = as.integer( ids ), str = encode_cr(x$tooltip), attribute = "title" )
-		if( !is.null( x$onclick ))
-		  set_attr( ids = as.integer( ids ), str = x$onclick, attribute = "onclick" )
-		if( !is.null( x$data_id ))
-		  set_attr( ids = as.integer( ids ), str = x$data_id, attribute = "key-id" )
-	}
-
-
-	invisible()
-}
-
-
-
