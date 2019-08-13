@@ -41,7 +41,6 @@ geom_point_interactive <- function(mapping = NULL, data = NULL, stat = "identity
 
 
 
-#' @importFrom ggplot2 remove_missing
 #' @rdname ggiraph-ggproto
 #' @format NULL
 #' @usage NULL

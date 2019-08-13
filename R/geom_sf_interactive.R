@@ -58,7 +58,6 @@ interactive_sf_grob <- function(row) {
 }
 
 # GeomInteractiveSf -----
-#' @importFrom ggplot2 coord_sf
 GeomInteractiveSf <- ggproto("GeomInteractiveSf", Geom,
                              required_aes = "geometry",
                              default_aes = aes(

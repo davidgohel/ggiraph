@@ -87,7 +87,6 @@ GeomInteractivePolygon <- ggproto("GeomInteractivePolygon", Geom,
 
 
 
-#' @importFrom ggplot2 PositionIdentity
 #' @title interactive polygons from a reference map.
 #'
 #' @description

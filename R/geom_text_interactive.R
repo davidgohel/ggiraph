@@ -1,4 +1,3 @@
-#' @importFrom ggplot2 position_nudge
 #' @title interactive textual annotations.
 #'
 #' @description

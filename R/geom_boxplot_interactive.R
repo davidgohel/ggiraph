@@ -58,7 +58,6 @@ geom_boxplot_interactive <- function(
 
 
 
-#' @importFrom ggplot2 remove_missing
 #' @rdname ggiraph-ggproto
 #' @format NULL
 #' @usage NULL
@@ -175,7 +174,6 @@ GeomInteractiveBoxplot <- ggproto(
 
 
 
-#' @importFrom ggplot2 GeomErrorbar
 GeomInteractiveCrossbar <- ggproto("GeomInteractiveCrossbar", Geom,
   setup_data = function(data, params) {
     GeomErrorbar$setup_data(data, params)

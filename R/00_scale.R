@@ -69,7 +69,6 @@ guide_legend_interactive <- function(...) {
 }
 
 #' @export
-#' @importFrom ggplot2 guide_train
 #' @inheritParams ggplot2::guide_train
 #' @param scale,aesthetic other parameters used by guide_train
 #' @title methods for interactive legend guide

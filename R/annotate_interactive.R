@@ -5,7 +5,6 @@
 #'
 #' @seealso \code{\link{girafe}}
 #' @inheritParams ggplot2::annotate
-#' @importFrom ggplot2 annotate
 #' @examples
 #' # add interactive annotation -------
 #' @example examples/annotate_interactive.R
