@@ -17,22 +17,27 @@
 #' # add interactive polygons to a ggplot -------
 #' @example examples/geom_rect_interactive.R
 #' @export
-geom_rect_interactive <- function(mapping = NULL, data = NULL, stat = "identity",
-		position = "identity", na.rm = FALSE, show.legend = NA,
-		inherit.aes = TRUE, ...) {
-	layer(
-			data = data,
-			mapping = mapping,
-			stat = stat,
-			geom = GeomInteractiveRect,
-			position = position,
-			show.legend = show.legend,
-			inherit.aes = inherit.aes,
-			params = list(
-			  na.rm = na.rm,
-			  ...
-			)
-	)
+geom_rect_interactive <- function(mapping = NULL, data = NULL,
+                                  stat = "identity", position = "identity",
+                                  ...,
+                                  linejoin = "mitre",
+                                  na.rm = FALSE,
+                                  show.legend = NA,
+                                  inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomInteractiveRect,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      linejoin = linejoin,
+      na.rm = na.rm,
+      ...
+    )
+  )
 }
 
 #' @rdname ggiraph-ggproto
@@ -46,7 +51,7 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 
 		required_aes = c("xmin", "xmax", "ymin", "ymax"),
 
-		draw_panel = function(self, data, panel_scales, coord) {
+		draw_panel = function(self, data, panel_scales, coord, linejoin = "mitre") {
 			if (!coord$is_linear()) {
 				aesthetics <- setdiff(
 						names(data), c("x", "y", "xmin", "xmax", "ymin", "ymax")
@@ -82,11 +87,14 @@ GeomInteractiveRect <- ggproto("GeomInteractiveRect", Geom,
 								default.units = "native",
 								just = c("left", "top"),
 								gp = gpar(
-										col = coords$colour,
-										fill = alpha(coords$fill, coords$alpha),
-										lwd = coords$size * .pt,
-										lty = coords$linetype,
-										lineend = "butt"
+								  col = coords$colour,
+								  fill = alpha(coords$fill, coords$alpha),
+								  lwd = coords$size * .pt,
+								  lty = coords$linetype,
+								  linejoin = linejoin,
+								  # `lineend` is a workaround for Windows and intentionally kept unexposed
+								  # as an argument. (c.f. https://github.com/tidyverse/ggplot2/issues/3037#issuecomment-457504667)
+								  lineend = if (identical(linejoin, "round")) "round" else "square"
 								)
 						))
 			}
