@@ -1,3 +1,14 @@
+# ggiraph 0.6.2
+
+## Enhancement
+
+* tooltip will always be displayed inside the SVG area (for small devices)
+
+## Bug fixes
+
+* responsive behaviour when rendered in IE <= 12 is now fixed
+* Handle html entities in tooltip
+
 # ggiraph 0.6.1
 
 ## Enhancement

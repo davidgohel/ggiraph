@@ -6,8 +6,8 @@
 \title{interactive rectangles}
 \usage{
 geom_rect_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+  position = "identity", ..., linejoin = "mitre", na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE)
 
 geom_tile_interactive(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", ..., na.rm = FALSE, show.legend = NA,
@@ -23,13 +23,13 @@ layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
 
 \item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
 
+\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+
 \item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
 
 \item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
 
 \item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_rect}} and
