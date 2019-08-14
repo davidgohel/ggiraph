@@ -4,21 +4,10 @@
 \alias{geom_hline_interactive}
 \title{Horizontal interactive reference line}
 \usage{
-geom_hline_interactive(mapping = NULL, data = NULL, ..., yintercept,
-  na.rm = FALSE, show.legend = NA)
+geom_hline_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
-
-\item{yintercept}{controls the position of the line}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_hline}}.
@@ -27,6 +16,7 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive reference lines to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 if( requireNamespace("dplyr", quietly = TRUE)){
   g1 <- ggplot(economics, aes(x = date, y = unemploy)) +
@@ -35,7 +25,8 @@ if( requireNamespace("dplyr", quietly = TRUE)){
   gg_hline1 <- g1 + geom_hline_interactive(
     aes(yintercept = mean(unemploy),
         tooltip = round(mean(unemploy), 2)), size = 3)
-  girafe(ggobj = gg_hline1)
+  x <- girafe(ggobj = gg_hline1)
+  if( interactive() ) print(x)
 }
 
 dataset <- data.frame(
@@ -57,8 +48,8 @@ gg_hline2 <- g2 + geom_hline_interactive(
       tooltip = round(mean(y), 2),
       data_id = y, onclick = clickjs))
 
-
-girafe(ggobj = gg_hline2)
+x <- girafe(ggobj = gg_hline2)
+if( interactive() ) print(x)
 }
 \seealso{
 \code{\link{girafe}}

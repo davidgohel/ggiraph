@@ -4,27 +4,10 @@
 \alias{geom_map_interactive}
 \title{interactive polygons from a reference map.}
 \usage{
-geom_map_interactive(mapping = NULL, data = NULL, map,
-  stat = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_map_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{map}{Data frame that contains the map coordinates. See \code{\link[ggplot2]{geom_map}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_map}}.
@@ -33,6 +16,7 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive maps to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
@@ -69,8 +53,8 @@ if (require("maps") ) {
                 ),
                 map = states_map) +
     expand_limits(x = states_map$long, y = states_map$lat)
-  ggiraph(code = print(gg_map))
-  girafe(ggobj = gg_map)
+  x <- girafe(ggobj = gg_map)
+  if( interactive() ) print(x)
 }
 
 }

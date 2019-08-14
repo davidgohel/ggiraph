@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggiraph)
 
 counts <- as.data.frame(table(x = rpois(100,5)))
 counts$x <- as.numeric( as.character(counts$x) )
@@ -7,6 +8,8 @@ counts$xlab <- paste0("bar",as.character(counts$x) )
 gg_segment_1 <- ggplot(data = counts, aes(x = x, y = Freq,
 			yend = 0, xend = x, tooltip = xlab ) ) +
 	geom_segment_interactive( size = I(10))
+x <- girafe(ggobj = gg_segment_1)
+if( interactive() ) print(x)
 
 dataset = data.frame(x=c(1,2,5,6,8),
 		y=c(3,6,2,8,7),
@@ -23,5 +26,5 @@ gg_segment_2 = ggplot() +
 	geom_point(data=dataset, mapping=aes(x=x, y=y),
 		size=4, shape=21, fill="white")
 
-ggiraph(code = {print(gg_segment_1)})
-ggiraph(code = {print(gg_segment_2)})
+x <- girafe(ggobj = gg_segment_2)
+if( interactive() ) print(x)

@@ -4,34 +4,10 @@
 \alias{geom_text_interactive}
 \title{interactive textual annotations.}
 \usage{
-geom_text_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", parse = FALSE, ..., nudge_x = 0,
-  nudge_y = 0, check_overlap = FALSE, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_text_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{parse}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
-
-\item{nudge_x, nudge_y}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{check_overlap}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_text}}.
@@ -40,6 +16,7 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive polygons to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 ## the data
 dataset = mtcars
@@ -58,7 +35,10 @@ gg_text = ggplot(dataset,
   coord_cartesian(xlim = c(0,50))
 
 ## display the plot
-ggiraph(code = {print(gg_text)}, hover_css = "fill:#FF4C3B;font-style:italic;")
+x <- girafe(ggobj = gg_text)
+x <- girafe_options(x = x,
+                    opts_hover(css = "fill:#FF4C3B;font-style:italic;") )
+if( interactive() ) print(x)
 }
 \seealso{
 \code{\link{girafe}}

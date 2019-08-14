@@ -6,61 +6,12 @@
 \alias{geom_tile_interactive}
 \title{interactive rectangles}
 \usage{
-geom_rect_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., linejoin = "mitre", na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_rect_interactive(...)
 
-geom_tile_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ..., na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_tile_interactive(...)
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
-\code{\link[=aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
-
-\item{data}{The data to be displayed in this layer. There are three
-options:
-
-If \code{NULL}, the default, the data is inherited from the plot
-data as specified in the call to \code{\link[=ggplot]{ggplot()}}.
-
-A \code{data.frame}, or other object, will override the plot
-data. All objects will be fortified to produce a data frame. See
-\code{\link[=fortify]{fortify()}} for which variables will be created.
-
-A \code{function} will be called with a single argument,
-the plot data. The return value must be a \code{data.frame}, and
-will be used as the layer data. A \code{function} can be created
-from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string.}
-
-\item{position}{Position adjustment, either as a string, or the result of
-a call to a position adjustment function.}
-
-\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-\code{colour = "red"} or \code{size = 3}. They may also be parameters
-to the paired geom/stat.}
-
-\item{linejoin}{Line join style (round, mitre, bevel).}
-
-\item{na.rm}{If \code{FALSE}, the default, missing values are removed with
-a warning. If \code{TRUE}, missing values are silently removed.}
-
-\item{show.legend}{logical. Should this layer be included in the legends?
-\code{NA}, the default, includes if any aesthetics are mapped.
-\code{FALSE} never includes, and \code{TRUE} always includes.
-It can also be a named logical vector to finely select the aesthetics to
-display.}
-
-\item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
-rather than combining with them. This is most useful for helper functions
-that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_rect}} and
@@ -76,6 +27,7 @@ rectangles should be small.
 \examples{
 # add interactive polygons to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
 	x2 = c(2, 4, 3, 6, 6),
@@ -101,10 +53,12 @@ gg_rect = ggplot() +
 					label = r ),
 		size = 4 )
 
-
-ggiraph(code = {print(gg_rect)})
+x <- girafe(ggobj = gg_rect)
+if( interactive() ) print(x)
 # add interactive tiles to a ggplot -------
 library(ggplot2)
+library(ggiraph)
+
 df <- data.frame(
   id = rep(c("a", "b", "c", "d", "e"), 2),
   x = rep(c(2, 5, 7, 9, 12), 2),
@@ -112,11 +66,10 @@ df <- data.frame(
   z = factor(rep(1:5, each = 2)),
   w = rep(diff(c(0, 4, 6, 8, 10, 14)), 2)
 )
-ggiraph( code = {
-  print(
-    ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
-  )
-})
+
+p <- ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 
 
 # correlation dataset ----
@@ -131,12 +84,12 @@ cor_mat[["tooltip"]] <-
   sprintf("<i>`\%s`</i> vs <i>`\%s`</i>:</br><code>\%.03f</code>",
   var1, var2, cor)
 
-# ggplot creation and ggiraph printing ----
 p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
   geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
   scale_fill_gradient2(low = "#BC120A", mid = "white", high = "#BC120A", limits = c(-1, 1)) +
   coord_equal()
-ggiraph( code = print(p))
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 }
 \seealso{
 \code{\link{girafe}}

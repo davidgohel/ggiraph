@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggiraph)
 
 dataset <- structure(list(qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22
 ), disp = c(160, 160, 108, 258, 360, 225), carname = c("Mazda RX4",
@@ -9,10 +10,9 @@ dataset <- structure(list(qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22
 dataset
 
 # plots
-gg_point = ggplot(
-  data = dataset,
-  mapping = aes(x = wt, y = qsec, color = disp,
-                tooltip = carname, data_id = carname) ) +
-	geom_point_interactive() + theme_minimal()
+gg_point = ggplot(data = dataset) +
+	geom_point_interactive(aes(x = wt, y = qsec, color = disp,
+    tooltip = carname, data_id = carname)) + theme_minimal()
 
-girafe(ggobj = gg_point)
+x <- girafe(ggobj = gg_point)
+if( interactive() ) print(x)

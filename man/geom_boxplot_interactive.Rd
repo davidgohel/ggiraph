@@ -4,45 +4,10 @@
 \alias{geom_boxplot_interactive}
 \title{interactive boxplot}
 \usage{
-geom_boxplot_interactive(mapping = NULL, data = NULL,
-  stat = "boxplot", position = "dodge", ..., outlier.colour = NULL,
-  outlier.color = NULL, outlier.shape = 19, outlier.size = 1.5,
-  outlier.stroke = 0.5, notch = FALSE, notchwidth = 0.5,
-  varwidth = FALSE, na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE)
+geom_boxplot_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{see \code{geom_boxplot}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
-
-\item{outlier.colour}{see \code{geom_boxplot}.}
-
-\item{outlier.color}{see \code{geom_boxplot}.}
-
-\item{outlier.shape}{see \code{geom_boxplot}.}
-
-\item{outlier.size}{see \code{geom_boxplot}.}
-
-\item{outlier.stroke}{see \code{geom_boxplot}.}
-
-\item{notch}{see \code{geom_boxplot}.}
-
-\item{notchwidth}{see \code{geom_boxplot}.}
-
-\item{varwidth}{see \code{geom_boxplot}.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_boxplot}}.
@@ -51,19 +16,21 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive boxplot -------
 library(ggplot2)
+library(ggiraph)
 
 p <- ggplot(mpg,
   aes(x = class, y = hwy, tooltip = class)) +
   geom_boxplot_interactive()
 
-ggiraph(code = print(p))
-
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 
 p <- ggplot(mpg, aes(x = drv, y = hwy, tooltip = class, fill = class)) +
   geom_boxplot_interactive(outlier.colour = "red") +
   guides(fill = "none") + theme_minimal()
 
-girafe(ggobj = p)
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 }
 \seealso{
 \code{\link{girafe}}

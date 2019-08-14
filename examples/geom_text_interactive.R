@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggiraph)
 
 ## the data
 dataset = mtcars
@@ -17,4 +18,7 @@ gg_text = ggplot(dataset,
   coord_cartesian(xlim = c(0,50))
 
 ## display the plot
-ggiraph(code = {print(gg_text)}, hover_css = "fill:#FF4C3B;font-style:italic;")
+x <- girafe(ggobj = gg_text)
+x <- girafe_options(x = x,
+                    opts_hover(css = "fill:#FF4C3B;font-style:italic;") )
+if( interactive() ) print(x)

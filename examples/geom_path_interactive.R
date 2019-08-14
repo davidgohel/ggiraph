@@ -1,10 +1,16 @@
 library(ggplot2)
+library(ggiraph)
+
 # geom_line_interactive example -----
 if( requireNamespace("dplyr", quietly = TRUE)){
   gg <- ggplot(economics_long,
     aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
     geom_line_interactive(size = .75)
-  ggiraph(code = {print(gg)}, hover_css = "stroke:red;")
+  x <- girafe(ggobj = gg)
+  x <- girafe_options(x = x,
+                      opts_hover(css = "stroke:red;") )
+  if( interactive() ) print(x)
+
 }
 
 # create datasets -----
@@ -49,7 +55,18 @@ gg_path_3 = ggplot(dataset2) +
 		color = color, tooltip = label, onclick = onclick), size = 1 )
 
 # ggiraph widgets ---
-ggiraph(code = {print(gg_path_1)}, hover_css = "stroke-width:3px;")
-ggiraph(code = {print(gg_path_2)}, hover_css = "stroke:orange;stroke-width:3px;")
-ggiraph(code = {print(gg_path_3)}, hover_css = "stroke-width:10px;")
+x <- girafe(ggobj = gg_path_1)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke-width:3px;") )
+if( interactive() ) print(x)
+
+x <- girafe(ggobj = gg_path_2)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke:orange;stroke-width:3px;") )
+if( interactive() ) print(x)
+
+x <- girafe(ggobj = gg_path_3)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke-width:10px;") )
+if( interactive() ) print(x)
 

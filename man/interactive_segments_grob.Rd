@@ -7,7 +7,8 @@
 interactive_segments_grob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   x1 = unit(1, "npc"), y1 = unit(1, "npc"), tooltip = NULL,
   onclick = NULL, data_id = NULL, default.units = "npc",
-  arrow = NULL, name = NULL, gp = gpar(), vp = NULL)
+  arrow = NULL, name = NULL, gp = gpar(), vp = NULL,
+  cl = "interactive_segments_grob")
 }
 \arguments{
 \item{x0}{ Numeric indicating the starting x-values of the line segments. }
@@ -36,6 +37,8 @@ interactive_segments_grob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 \item{gp}{ An object of class \code{gpar}. }
 
 \item{vp}{A Grid viewport object (or NULL).}
+
+\item{cl}{class to set}
 }
 \description{
 This function can be used to generate interactive grob

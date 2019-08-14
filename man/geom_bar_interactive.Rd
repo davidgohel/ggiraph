@@ -4,29 +4,10 @@
 \alias{geom_bar_interactive}
 \title{interactive bars}
 \usage{
-geom_bar_interactive(mapping = NULL, data = NULL, stat = "count",
-  position = "stack", ..., width = NULL, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE)
+geom_bar_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
-
-\item{width}{Bar width.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_bar}}.
@@ -35,12 +16,14 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive bar -------
 library(ggplot2)
+library(ggiraph)
 
 p <- ggplot(mpg, aes( x = class, tooltip = class,
         data_id = class ) ) +
   geom_bar_interactive()
 
-ggiraph(code = print(p))
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 
 dat <- data.frame( name = c( "David", "Constance", "Leonie" ),
     gender = c( "Male", "Female", "Female" ),
@@ -49,7 +32,15 @@ p <- ggplot(dat, aes( x = name, y = height, tooltip = gender,
         data_id = name ) ) +
   geom_bar_interactive(stat = "identity")
 
-girafe(ggobj = p)
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
+
+p <- ggplot(diamonds, aes(carat)) +
+  geom_histogram_interactive(bins=30, aes(tooltip = ..count..,
+                             data_id = carat) )
+
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 }
 \seealso{
 \code{\link{girafe}}

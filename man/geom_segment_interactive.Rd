@@ -4,32 +4,10 @@
 \alias{geom_segment_interactive}
 \title{Line interactive segments}
 \usage{
-geom_segment_interactive(mapping = NULL, data = NULL,
-  stat = "identity", position = "identity", arrow = NULL,
-  lineend = "butt", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_segment_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{arrow}{Arrow specification, as created by ?grid::arrow}
-
-\item{lineend}{Line end style (round, butt, square)}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_segment}}.
@@ -38,6 +16,7 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive segments to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 counts <- as.data.frame(table(x = rpois(100,5)))
 counts$x <- as.numeric( as.character(counts$x) )
@@ -46,6 +25,8 @@ counts$xlab <- paste0("bar",as.character(counts$x) )
 gg_segment_1 <- ggplot(data = counts, aes(x = x, y = Freq,
 			yend = 0, xend = x, tooltip = xlab ) ) +
 	geom_segment_interactive( size = I(10))
+x <- girafe(ggobj = gg_segment_1)
+if( interactive() ) print(x)
 
 dataset = data.frame(x=c(1,2,5,6,8),
 		y=c(3,6,2,8,7),
@@ -62,8 +43,8 @@ gg_segment_2 = ggplot() +
 	geom_point(data=dataset, mapping=aes(x=x, y=y),
 		size=4, shape=21, fill="white")
 
-ggiraph(code = {print(gg_segment_1)})
-ggiraph(code = {print(gg_segment_2)})
+x <- girafe(ggobj = gg_segment_2)
+if( interactive() ) print(x)
 }
 \seealso{
 \code{\link{girafe}}

@@ -6,8 +6,11 @@ if (requireNamespace("sf", quietly = TRUE)) {
   nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
   gg <- ggplot(nc) +
     geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))
-  ggiraph( ggobj = gg)
+  x <- girafe(ggobj = gg)
+  if( interactive() ) print(x)
+}
 
+if (requireNamespace("sf", quietly = TRUE)) {
   nc_3857 <- sf::st_transform(nc, "+init=epsg:3857")
 
   # Unfortunately if you plot other types of feature you'll need to use
@@ -18,7 +21,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
     geom_sf_interactive(aes(geometry = mid,
         size = AREA, tooltip = NAME, data_id = NAME),
       show.legend = "point")
-  girafe( ggobj = gg)
-
+  x <- girafe( ggobj = gg)
+  if( interactive() ) print(x)
 }
 

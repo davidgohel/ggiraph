@@ -5,40 +5,12 @@
 \alias{geom_line_interactive}
 \title{interactive observations connections}
 \usage{
-geom_path_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", lineend = "butt", linejoin = "round",
-  linemitre = 1, na.rm = FALSE, arrow = NULL, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_path_interactive(...)
 
-geom_line_interactive(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_line_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{lineend}{Line end style (round, butt, square)}
-
-\item{linejoin}{Line join style (round, mitre, bevel)}
-
-\item{linemitre}{Line mitre limit (number greater than 1)}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{arrow}{Arrow specification, as created by \link[grid]{arrow}}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_path}} and
@@ -48,12 +20,18 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive paths to a ggplot -------
 library(ggplot2)
+library(ggiraph)
+
 # geom_line_interactive example -----
 if( requireNamespace("dplyr", quietly = TRUE)){
   gg <- ggplot(economics_long,
     aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
     geom_line_interactive(size = .75)
-  ggiraph(code = {print(gg)}, hover_css = "stroke:red;")
+  x <- girafe(ggobj = gg)
+  x <- girafe_options(x = x,
+                      opts_hover(css = "stroke:red;") )
+  if( interactive() ) print(x)
+
 }
 
 # create datasets -----
@@ -98,9 +76,20 @@ gg_path_3 = ggplot(dataset2) +
 		color = color, tooltip = label, onclick = onclick), size = 1 )
 
 # ggiraph widgets ---
-ggiraph(code = {print(gg_path_1)}, hover_css = "stroke-width:3px;")
-ggiraph(code = {print(gg_path_2)}, hover_css = "stroke:orange;stroke-width:3px;")
-ggiraph(code = {print(gg_path_3)}, hover_css = "stroke-width:10px;")
+x <- girafe(ggobj = gg_path_1)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke-width:3px;") )
+if( interactive() ) print(x)
+
+x <- girafe(ggobj = gg_path_2)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke:orange;stroke-width:3px;") )
+if( interactive() ) print(x)
+
+x <- girafe(ggobj = gg_path_3)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke-width:10px;") )
+if( interactive() ) print(x)
 
 }
 \seealso{
