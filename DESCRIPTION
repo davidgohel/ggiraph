@@ -36,7 +36,7 @@ Suggests:
     rmarkdown,
     maps,
     shiny,
-    sf (>= 0.3-4),
+    sf (>= 0.7-3),
     dplyr
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph
