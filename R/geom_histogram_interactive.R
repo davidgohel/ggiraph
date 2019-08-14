@@ -1,4 +1,4 @@
-#' @title interactive boxplot
+#' @title interactive histogram
 #'
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_histogram}}.
@@ -8,32 +8,9 @@
 #' group of data (same for \code{data_id}). It means it is only possible
 #' to associate a single tooltip to a set of bins.
 #'
+#' @param ... arguments passed to base geometry.
 #' @seealso \code{\link{girafe}}
-#' @inheritParams ggplot2::geom_histogram
 #' @export
-geom_histogram_interactive <- function(mapping = NULL, data = NULL,
-                           stat = "bin", position = "stack",
-                           ...,
-                           binwidth = NULL,
-                           bins = NULL,
-                           na.rm = FALSE,
-                           show.legend = NA,
-                           inherit.aes = TRUE) {
-
-  layer(
-    data = data,
-    mapping = mapping,
-    stat = stat,
-    geom = GeomInteractiveBar,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(
-      binwidth = binwidth,
-      bins = bins,
-      na.rm = na.rm,
-      pad = FALSE,
-      ...
-    )
-  )
+geom_histogram_interactive <- function(...) {
+  layer_interactive(geom_histogram, ...)
 }

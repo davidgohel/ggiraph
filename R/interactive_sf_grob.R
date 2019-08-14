@@ -1,49 +1,80 @@
-interactive_sf_grob <- function(row) {
-  # Need to extract geometry out of corresponding list column
-  geometry <- row$geometry[[1]]
-
-  if (inherits(geometry, c("POINT", "MULTIPOINT"))) {
-    row <- utils::modifyList(default_aesthetics("point"), row)
-    gp <- gpar(
-      col = alpha(row$colour, row$alpha),
-      fill = alpha(row$fill, row$alpha),
-      # Stroke is added around the outside of the point
-      fontsize = row$size * .pt + row$stroke * .stroke / 2,
-      lwd = row$stroke * .stroke / 2
+#' @importFrom stats setNames
+interactive_sf_grob <-
+  function(x,
+           lineend = "butt",
+           linejoin = "round",
+           linemitre = 10) {
+    # Need to extract geometry out of corresponding list column
+    geometry <- x$geometry
+    type <- sf_types[sf::st_geometry_type(geometry)]
+    is_point <- type %in% "point"
+    type_ind <- match(type, c("point", "line", "other"))
+    defaults <- list(
+      GeomInteractivePoint$default_aes,
+      GeomInteractiveLine$default_aes,
+      modify_list(
+        GeomInteractivePolygon$default_aes,
+        list(fill = "grey90", colour = "grey35")
+      )
     )
-
-    zz <- sf::st_as_grob(geometry, gp = gp, pch = row$shape)
-
-    if (!is.null(row$tooltip))
-      zz$tooltip <- rep(row$tooltip, length(zz$x))
-    if (!is.null(row$onclick))
-      zz$onclick <- rep(row$onclick, length(zz$x))
-    if (!is.null(row$data_id))
-      zz$data_id <- rep(row$data_id, length(zz$x))
-
-    class(zz) <- c("interactive_points_grob", class(zz))
-    zz
-  } else {
-    row <- utils::modifyList(default_aesthetics("poly"), row)
+    default_names <- unique(unlist(lapply(defaults, names)))
+    defaults <-
+      lapply(stats::setNames(default_names, default_names), function(n) {
+        unlist(lapply(defaults, function(def)
+          def[[n]] %||% NA))
+      })
+    alpha <- x$alpha %||% defaults$alpha[type_ind]
+    col <- x$colour %||% defaults$colour[type_ind]
+    col[is_point] <- alpha(col[is_point], alpha[is_point])
+    fill <- x$fill %||% defaults$fill[type_ind]
+    fill <- alpha(fill, alpha)
+    size <- x$size %||% defaults$size[type_ind]
+    stroke <- (x$stroke %||% defaults$stroke[1]) * .stroke / 2
+    fontsize <- size * .pt + stroke
+    lwd <- ifelse(is_point, stroke, size * .pt)
+    pch <- x$shape %||% defaults$shape[type_ind]
+    lty <- x$linetype %||% defaults$linetype[type_ind]
+    tooltip <- x$tooltip %||% defaults$tooltip[type_ind]
+    onclick <- x$onclick %||% defaults$onclick[type_ind]
+    data_id <- x$data_id %||% defaults$data_id[type_ind]
     gp <- gpar(
-      col = row$colour,
-      fill = alpha(row$fill, row$alpha),
-      lwd = row$size * .pt,
-      lty = row$linetype,
-      lineend = "butt"
+      col = col,
+      fill = fill,
+      fontsize = fontsize,
+      lwd = lwd,
+      lty = lty,
+      lineend = lineend,
+      linejoin = linejoin,
+      linemitre = linemitre
     )
-
-    zz <- sf::st_as_grob(geometry, gp = gp)
-    if (!is.null(row$tooltip))
-      zz$tooltip <- rep(row$tooltip, length(zz$x))
-    if (!is.null(row$onclick))
-      zz$onclick <- rep(row$onclick, length(zz$x))
-    if (!is.null(row$data_id))
-      zz$data_id <- rep(row$data_id, length(zz$x))
-
-    class(zz) <- c("interactive_path_grob", class(zz))
-
-    zz
+    g <- sf::st_as_grob(geometry, pch = pch, gp = gp)
+    g <- copy_interactive_attrs(x, g)
+    if (is_point[1]) {
+      class(g) <- c("interactive_points_grob", class(g))
+    } else {
+      class(g) <- c("interactive_path_grob", class(g))
+    }
+    g
   }
-}
 
+sf_types <-
+  c(
+    GEOMETRY = "other",
+    POINT = "point",
+    LINESTRING = "line",
+    POLYGON = "other",
+    MULTIPOINT = "point",
+    MULTILINESTRING = "line",
+    MULTIPOLYGON = "other",
+    GEOMETRYCOLLECTION = "other",
+    CIRCULARSTRING = "line",
+    COMPOUNDCURVE = "other",
+    CURVEPOLYGON = "other",
+    MULTICURVE = "other",
+    MULTISURFACE = "other",
+    CURVE = "other",
+    SURFACE = "other",
+    POLYHEDRALSURFACE = "other",
+    TIN = "other",
+    TRIANGLE = "other"
+  )
