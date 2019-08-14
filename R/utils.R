@@ -139,20 +139,20 @@ interactive_attr_toxml <- function(x,
                                    ids = character(0),
                                    rows = NULL,
                                    attr_name = "data-id") {
-  if (!is.null(x$data_attr)) {
-    attr_name <- x$data_attr
-  }
-  if (is.null(rows)) {
-    if (!is.null(x$tooltip)) {
-      rows <- seq_along(x$tooltip)
-    } else if (!is.null(x$onclick)) {
-      rows <- seq_along(x$onclick)
-    } else if (!is.null(x$data_id)) {
-      rows <- seq_along(x$data_id)
-    }
-  }
-
   if (length(ids) > 0) {
+    if (!is.null(x$data_attr)) {
+      attr_name <- x$data_attr
+    }
+    if (is.null(rows)) {
+      if (!is.null(x$tooltip)) {
+        rows <- seq_along(x$tooltip)
+      } else if (!is.null(x$onclick)) {
+        rows <- seq_along(x$onclick)
+      } else if (!is.null(x$data_id)) {
+        rows <- seq_along(x$data_id)
+      }
+    }
+
     if (!is.null(x$tooltip)) {
       set_attr(
         ids = as.integer(ids),
@@ -175,8 +175,6 @@ interactive_attr_toxml <- function(x,
       )
     }
   }
-
-  invisible()
 }
 
 #' Returns the arguments for a grob function

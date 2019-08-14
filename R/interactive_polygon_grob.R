@@ -53,7 +53,7 @@ drawDetails.interactive_polygon_grob <- function(x, recording) {
     if (is.null(x$id))
       x$id <- rep(1, length(x$x))
     posid = which(!duplicated(x$id))
+    interactive_attr_toxml(x = x, ids = ids, rows = posid)
   }
-  interactive_attr_toxml(x = x, ids = ids, rows = posid)
   invisible()
 }
