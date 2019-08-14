@@ -2,72 +2,12 @@
 % Please edit documentation in R/geom_histogram_interactive.R
 \name{geom_histogram_interactive}
 \alias{geom_histogram_interactive}
-\title{interactive boxplot}
+\title{interactive histogram}
 \usage{
-geom_histogram_interactive(mapping = NULL, data = NULL, stat = "bin",
-  position = "stack", ..., binwidth = NULL, bins = NULL,
-  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE)
+geom_histogram_interactive(...)
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
-\code{\link[=aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
-
-\item{data}{The data to be displayed in this layer. There are three
-options:
-
-If \code{NULL}, the default, the data is inherited from the plot
-data as specified in the call to \code{\link[=ggplot]{ggplot()}}.
-
-A \code{data.frame}, or other object, will override the plot
-data. All objects will be fortified to produce a data frame. See
-\code{\link[=fortify]{fortify()}} for which variables will be created.
-
-A \code{function} will be called with a single argument,
-the plot data. The return value must be a \code{data.frame}, and
-will be used as the layer data. A \code{function} can be created
-from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
-
-\item{stat}{Use to override the default connection between
-\code{geom_histogram()}/\code{geom_freqpoly()} and \code{stat_bin()}.}
-
-\item{position}{Position adjustment, either as a string, or the result of
-a call to a position adjustment function.}
-
-\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-\code{colour = "red"} or \code{size = 3}. They may also be parameters
-to the paired geom/stat.}
-
-\item{binwidth}{The width of the bins. Can be specified as a numeric value
-or as a function that calculates width from unscaled x. Here, "unscaled x"
-refers to the original x values in the data, before application of any
-scale transformation. When specifying a function along with a grouping
-structure, the function will be called once per group.
-The default is to use \code{bins}
-bins that cover the range of the data. You should always override
-this value, exploring multiple widths to find the best to illustrate the
-stories in your data.
-
-The bin width of a date variable is the number of days in each time; the
-bin width of a time variable is the number of seconds.}
-
-\item{bins}{Number of bins. Overridden by \code{binwidth}. Defaults to 30.}
-
-\item{na.rm}{If \code{FALSE}, the default, missing values are removed with
-a warning. If \code{TRUE}, missing values are silently removed.}
-
-\item{show.legend}{logical. Should this layer be included in the legends?
-\code{NA}, the default, includes if any aesthetics are mapped.
-\code{FALSE} never includes, and \code{TRUE} always includes.
-It can also be a named logical vector to finely select the aesthetics to
-display.}
-
-\item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
-rather than combining with them. This is most useful for helper functions
-that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_histogram}}.
@@ -78,5 +18,5 @@ group of data (same for \code{data_id}). It means it is only possible
 to associate a single tooltip to a set of bins.
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

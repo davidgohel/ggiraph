@@ -4,27 +4,10 @@
 \alias{geom_point_interactive}
 \title{interactive points}
 \usage{
-geom_point_interactive(mapping = NULL, data = NULL,
-  stat = "identity", position = "identity", na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, ...)
+geom_point_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_point}}.
@@ -36,6 +19,7 @@ The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be
 \examples{
 # add interactive points to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 dataset <- structure(list(qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22
 ), disp = c(160, 160, 108, 258, 360, 225), carname = c("Mazda RX4",
@@ -46,14 +30,13 @@ dataset <- structure(list(qsec = c(16.46, 17.02, 18.61, 19.44, 17.02, 20.22
 dataset
 
 # plots
-gg_point = ggplot(
-  data = dataset,
-  mapping = aes(x = wt, y = qsec, color = disp,
-                tooltip = carname, data_id = carname) ) +
-	geom_point_interactive() + theme_minimal()
+gg_point = ggplot(data = dataset) +
+	geom_point_interactive(aes(x = wt, y = qsec, color = disp,
+    tooltip = carname, data_id = carname)) + theme_minimal()
 
-girafe(ggobj = gg_point)
+x <- girafe(ggobj = gg_point)
+if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

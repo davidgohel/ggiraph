@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggiraph)
 
 # create data
 ids <- factor(c("1.1", "2.1", "1.2", "2.2", "1.3", "2.3"))
@@ -23,5 +24,5 @@ gg_poly_1 <- ggplot(datapoly, aes( x = x, y = y ) ) +
 		tooltip = value, data_id = value, onclick = oc))
 
 # display ------
-ggiraph(code = {print(gg_poly_1)})
-
+x <- girafe(ggobj = gg_poly_1)
+if( interactive() ) print(x)

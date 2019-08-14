@@ -8,7 +8,7 @@ interactive_text_grob(label, x = unit(0.5, "npc"), y = unit(0.5,
   "npc"), tooltip = NULL, onclick = NULL, data_id = NULL,
   just = "centre", hjust = NULL, vjust = NULL, rot = 0,
   check.overlap = FALSE, default.units = "npc", name = NULL,
-  gp = gpar(), vp = NULL)
+  gp = gpar(), vp = NULL, cl = "interactive_text_grob")
 }
 \arguments{
 \item{label}{A character or \link{expression} vector.  Other
@@ -55,6 +55,8 @@ interactive_text_grob(label, x = unit(0.5, "npc"), y = unit(0.5,
     a list of graphical parameter settings.}
 
 \item{vp}{A Grid viewport object (or NULL).}
+
+\item{cl}{class to set}
 }
 \description{
 This function can be used to generate interactive grob

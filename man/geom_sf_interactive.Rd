@@ -4,30 +4,13 @@
 \alias{geom_sf_interactive}
 \title{interactive sf objects}
 \usage{
-geom_sf_interactive(mapping = aes(), data = NULL, stat = "sf",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, ...)
+geom_sf_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
-The geometry is based on \code{\link[ggplot2]{ggsf}}.
+The geometry is based on \code{\link[ggplot2]{geom_sf}}.
 See the documentation for those functions for more details.
 }
 \examples{
@@ -40,8 +23,11 @@ if (requireNamespace("sf", quietly = TRUE)) {
   nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
   gg <- ggplot(nc) +
     geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))
-  ggiraph( ggobj = gg)
+  x <- girafe(ggobj = gg)
+  if( interactive() ) print(x)
+}
 
+if (requireNamespace("sf", quietly = TRUE)) {
   nc_3857 <- sf::st_transform(nc, "+init=epsg:3857")
 
   # Unfortunately if you plot other types of feature you'll need to use
@@ -52,11 +38,11 @@ if (requireNamespace("sf", quietly = TRUE)) {
     geom_sf_interactive(aes(geometry = mid,
         size = AREA, tooltip = NAME, data_id = NAME),
       show.legend = "point")
-  girafe( ggobj = gg)
-
+  x <- girafe( ggobj = gg)
+  if( interactive() ) print(x)
 }
 
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

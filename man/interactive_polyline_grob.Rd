@@ -7,7 +7,8 @@
 interactive_polyline_grob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1),
   "npc"), id = NULL, id.lengths = NULL, tooltip = NULL,
   onclick = NULL, data_id = NULL, default.units = "npc",
-  arrow = NULL, name = NULL, gp = gpar(), vp = NULL)
+  arrow = NULL, name = NULL, gp = gpar(), vp = NULL,
+  cl = "interactive_polyline_grob")
 }
 \arguments{
 \item{x}{A numeric vector or unit object specifying x-values.}
@@ -41,6 +42,8 @@ interactive_polyline_grob(x = unit(c(0, 1), "npc"), y = unit(c(0, 1),
     a list of graphical parameter settings.}
 
 \item{vp}{A Grid viewport object (or NULL).}
+
+\item{cl}{class to set}
 }
 \description{
 This function can be used to generate an interactive grob

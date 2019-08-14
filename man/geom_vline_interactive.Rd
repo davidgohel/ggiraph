@@ -4,21 +4,10 @@
 \alias{geom_vline_interactive}
 \title{Vertical interactive reference line}
 \usage{
-geom_vline_interactive(mapping = NULL, data = NULL, ..., xintercept,
-  na.rm = FALSE, show.legend = NA)
+geom_vline_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
-
-\item{xintercept}{controls the position of the line}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_vline}}.
@@ -27,9 +16,9 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive reference lines to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 if (requireNamespace("dplyr", quietly = TRUE)) {
-
   g1 <- ggplot(diamonds, aes(carat)) +
     geom_histogram()
 
@@ -37,7 +26,8 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
     aes(xintercept = mean(carat),
         tooltip = round(mean(carat), 2),
         data_id = carat), size = 3)
-  ggiraph(code = print(gg_vline1))
+  x <- girafe(ggobj = gg_vline1)
+  if( interactive() ) print(x)
 }
 
 dataset <- data.frame(x = rnorm(100))
@@ -51,9 +41,11 @@ gg_vline2 <- g2 + geom_vline_interactive(
   aes(xintercept = mean(x), tooltip = round(mean(x), 2),
       data_id = x, onclick = clickjs), color = "white")
 
-ggiraph(code = print(gg_vline2),
-        hover_css = "cursor:pointer;fill:orange;stroke:orange;")
+x <- girafe(ggobj = gg_vline2)
+x <- girafe_options(x = x,
+                    opts_hover(css = "cursor:pointer;fill:orange;stroke:orange;") )
+if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggiraph)
 
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
@@ -35,7 +36,7 @@ if (require("maps") ) {
                 ),
                 map = states_map) +
     expand_limits(x = states_map$long, y = states_map$lat)
-  ggiraph(code = print(gg_map))
-  girafe(ggobj = gg_map)
+  x <- girafe(ggobj = gg_map)
+  if( interactive() ) print(x)
 }
 

@@ -8,7 +8,7 @@ interactive_rect_grob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   width = unit(1, "npc"), height = unit(1, "npc"), tooltip = NULL,
   onclick = NULL, data_id = NULL, just = "centre", hjust = NULL,
   vjust = NULL, default.units = "npc", name = NULL, gp = gpar(),
-  vp = NULL)
+  vp = NULL, cl = "interactive_rect_grob")
 }
 \arguments{
 \item{x}{A numeric vector or unit object specifying x-location.}
@@ -51,6 +51,8 @@ interactive_rect_grob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     a list of graphical parameter settings.}
 
 \item{vp}{A Grid viewport object (or NULL).}
+
+\item{cl}{class to set}
 }
 \description{
 This function can be used to generate interactive grob

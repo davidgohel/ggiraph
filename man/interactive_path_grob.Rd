@@ -5,8 +5,10 @@
 \title{Generate interactive grob paths}
 \usage{
 interactive_path_grob(x, y, id = NULL, id.lengths = NULL,
-  rule = "winding", tooltip = NULL, onclick = NULL, data_id = NULL,
-  default.units = "npc", name = NULL, gp = gpar(), vp = NULL)
+  pathId = NULL, pathId.lengths = NULL, rule = "winding",
+  tooltip = NULL, onclick = NULL, data_id = NULL,
+  default.units = "npc", name = NULL, gp = gpar(), vp = NULL,
+  cl = "interactive_path_grob")
 }
 \arguments{
 \item{x}{A numeric vector or unit object specifying x-locations.}
@@ -20,6 +22,14 @@ interactive_path_grob(x, y, id = NULL, id.lengths = NULL,
 \item{id.lengths}{A numeric vector used to separate locations in \code{x} and
     \code{y} into sub-paths.  Specifies consecutive blocks of
     locations which make up separate sub-paths.}
+
+\item{pathId}{A numeric vector used to separate locations in \code{x} and
+    \code{y} into distinct paths.  All locations with the same
+    \code{pathId} belong to the same path.}
+
+\item{pathId.lengths}{A numeric vector used to separate locations in \code{x} 
+    and \code{y} into paths.  Specifies consecutive blocks of locations which 
+    make up separate paths.}
 
 \item{rule}{A character value specifying the fill rule: either
     \code{"winding"} or \code{"evenodd"}.}
@@ -41,6 +51,8 @@ interactive_path_grob(x, y, id = NULL, id.lengths = NULL,
     a list of graphical parameter settings.}
 
 \item{vp}{A Grid viewport object (or NULL).}
+
+\item{cl}{class to set}
 }
 \description{
 This function can be used to generate interactive grob

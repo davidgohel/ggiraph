@@ -4,27 +4,10 @@
 \alias{geom_polygon_interactive}
 \title{interactive polygons}
 \usage{
-geom_polygon_interactive(mapping = NULL, data = NULL,
-  stat = "identity", position = "identity", na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, ...)
+geom_polygon_interactive(...)
 }
 \arguments{
-\item{mapping}{The aesthetic mapping, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{data}{A data frame, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{stat}{The statistical transformation to use on the data for this
-layer, as a string, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{position}{Postion adjustment, see \code{\link[ggplot2]{geom_point}}.}
-
-\item{na.rm}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{show.legend}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{inherit.aes}{See \code{\link[ggplot2]{geom_point}}.}
-
-\item{...}{other arguments passed on to layer. See \code{\link[ggplot2]{geom_point}}.}
+\item{...}{arguments passed to base geometry.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_polygon}}.
@@ -33,6 +16,7 @@ See the documentation for those functions for more details.
 \examples{
 # add interactive polygons to a ggplot -------
 library(ggplot2)
+library(ggiraph)
 
 # create data
 ids <- factor(c("1.1", "2.1", "1.2", "2.2", "1.3", "2.3"))
@@ -57,9 +41,9 @@ gg_poly_1 <- ggplot(datapoly, aes( x = x, y = y ) ) +
 		tooltip = value, data_id = value, onclick = oc))
 
 # display ------
-ggiraph(code = {print(gg_poly_1)})
-
+x <- girafe(ggobj = gg_poly_1)
+if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{ggiraph}}
+\code{\link{girafe}}
 }

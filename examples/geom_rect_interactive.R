@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggiraph)
 
 dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
 	x2 = c(2, 4, 3, 6, 6),
@@ -24,5 +25,5 @@ gg_rect = ggplot() +
 					label = r ),
 		size = 4 )
 
-
-ggiraph(code = {print(gg_rect)})
+x <- girafe(ggobj = gg_rect)
+if( interactive() ) print(x)
