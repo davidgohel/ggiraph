@@ -75,4 +75,6 @@ Collate:
     'interactive_sf_grob.R'
     'interactive_text_grob.R'
     'tracers.R'
+    'utils_ggplot2_performance.R'
+    'utils_ggplot2.R'
     'utils.R'
