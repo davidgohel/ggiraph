@@ -7,7 +7,7 @@ Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
     person("Panagiotis", "Skintzos", role = c("ctb"),
-    email = "p@pskintzos.net"),
+    email = "dev@pskintzos.net"),
     person("Mike", "Bostock", role = c("cph"),
     comment = "d3.js"), 
     person("Speros", "Kokenes", role = c("cph"),
@@ -21,7 +21,7 @@ License: GPL-3
 Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 Imports:
-    grid, ggplot2 (>= 3.0.0),
+    grid, ggplot2 (>= 3.2.0),
     htmlwidgets (>= 0.6),
     stats,
     xml2 (>= 1.0.0),
@@ -44,6 +44,9 @@ RoxygenNote: 6.1.1
 Collate: 
     '00_scale.R'
     'RcppExports.R'
+    'utils_ggplot2_performance.R'
+    'utils_ggplot2.R'
+    'utils.R'
     'annotate_interactive.R'
     'dsvg.R'
     'dsvg_view.R'
@@ -75,6 +78,3 @@ Collate:
     'interactive_sf_grob.R'
     'interactive_text_grob.R'
     'tracers.R'
-    'utils_ggplot2_performance.R'
-    'utils_ggplot2.R'
-    'utils.R'
