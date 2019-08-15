@@ -139,41 +139,42 @@ interactive_attr_toxml <- function(x,
                                    ids = character(0),
                                    rows = NULL,
                                    attr_name = "data-id") {
-  if (length(ids) > 0) {
-    if (!is.null(x$data_attr)) {
-      attr_name <- x$data_attr
-    }
-    if (is.null(rows)) {
-      if (!is.null(x$tooltip)) {
-        rows <- seq_along(x$tooltip)
-      } else if (!is.null(x$onclick)) {
-        rows <- seq_along(x$onclick)
-      } else if (!is.null(x$data_id)) {
-        rows <- seq_along(x$data_id)
-      }
-    }
+  if( length(ids) < 1 )
+    return(invisible())
 
+  if (!is.null(x$data_attr)) {
+    attr_name <- x$data_attr
+  }
+  if (is.null(rows)) {
     if (!is.null(x$tooltip)) {
-      set_attr(
-        ids = as.integer(ids),
-        str = encode_cr(x$tooltip[rows]),
-        attribute = "title"
-      )
+      rows <- seq_along(x$tooltip)
+    } else if (!is.null(x$onclick)) {
+      rows <- seq_along(x$onclick)
+    } else if (!is.null(x$data_id)) {
+      rows <- seq_along(x$data_id)
     }
-    if (!is.null(x$onclick)) {
-      set_attr(
-        ids = as.integer(ids),
-        str = x$onclick[rows],
-        attribute = "onclick"
-      )
-    }
-    if (!is.null(x$data_id)) {
-      set_attr(
-        ids = as.integer(ids),
-        str = x$data_id[rows],
-        attribute = attr_name
-      )
-    }
+  }
+
+  if (!is.null(x$tooltip)) {
+    set_attr(
+      ids = as.integer(ids),
+      str = encode_cr(x$tooltip[rows]),
+      attribute = "title"
+    )
+  }
+  if (!is.null(x$onclick)) {
+    set_attr(
+      ids = as.integer(ids),
+      str = x$onclick[rows],
+      attribute = "onclick"
+    )
+  }
+  if (!is.null(x$data_id)) {
+    set_attr(
+      ids = as.integer(ids),
+      str = x$data_id[rows],
+      attribute = attr_name
+    )
   }
 }
 

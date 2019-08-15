@@ -3,11 +3,13 @@
 ## Enhancement
 
 * tooltip will always be displayed inside the SVG area (for small devices)
+* Upgrade geoms to ggplot2 v3.2.0 (thanks for this huge work kindly made by Panagiotis Skintzos)
 
 ## Bug fixes
 
-* responsive behaviour when rendered in IE <= 12 is now fixed
 * Handle html entities in tooltip
+* fix some differences of rendering between ggplot2 pure graphs
+  and girafe output (#125)
 
 # ggiraph 0.6.1
 
