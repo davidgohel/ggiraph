@@ -62,6 +62,7 @@ Collate:
     'geom_hline_interactive.R'
     'geom_map_interactive.R'
     'geom_point_interactive.R'
+    'geom_raster_interactive.R'
     'geom_segment_interactive.R'
     'geom_sf_interactive.R'
     'geom_text_interactive.R'
