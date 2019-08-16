@@ -33,7 +33,7 @@ GeomInteractiveRaster <- ggproto(
 
     coords <- coords[1,, drop = FALSE]
     coords <- force_interactive_aes_to_char(coords)
-    add_interactive_attrs(zz, coords, cl = "interactive_raster_grob")
+    add_interactive_attrs(zz, coords)
   },
   draw_key = function(data, params, size) {
     gr <- draw_key_rect(data, params, size)
@@ -45,7 +45,7 @@ GeomInteractiveRaster <- ggproto(
 #' @title interactive_raster_grob drawing
 #' @description draw an interactive_rect_grob
 #' @inheritParams grid::drawDetails
-drawDetails.interactive_raster_grob <- function(x, recording) {
+drawDetails.interactive_rastergrob_grob <- function(x, recording) {
   # ugly fix for beeing able to call grid.raster as argument name is raster and not image
   names(x)[names(x) %in% "raster"] <- "image"
   dsvg_tracer_on()
