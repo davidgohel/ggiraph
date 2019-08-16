@@ -161,6 +161,28 @@ opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE, sel
   x
 }
 
+#' @export
+#' @rdname opts_selection
+opts_selection_key <- function(css = NULL, type = "single", only_shiny = TRUE, selected = character(0)){
+
+  if( is.null(css)){
+    css <- "stroke:gray;"
+  }
+
+  stopifnot(type %in%
+              c("single", "multiple", "none"))
+
+  css <- paste0("{", css, "}")
+  x <- list(
+    css = css,
+    type = type,
+    only_shiny = only_shiny,
+    selected = selected
+  )
+  class(x) <- "opts_selection_key"
+  x
+}
+
 #' @title zoom settings
 #' @description Allows customization of the zoom.
 #' @param min minimum zoom factor
@@ -324,6 +346,8 @@ girafe_options <- function(x, ...){
       x$x$settings$zoom <- arg
     } else if (inherits(arg, "opts_selection")) {
       x$x$settings$capture <- arg
+    } else if (inherits(arg, "opts_selection_key")) {
+      x$x$settings$capturekey <- arg
     } else if (inherits(arg, "opts_tooltip")) {
       x$x$settings$tooltip <- arg
     } else if (inherits(arg, "opts_hover")) {
