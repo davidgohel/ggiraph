@@ -52,7 +52,14 @@ HTMLWidgets.widget({
         } else if( HTMLWidgets.shinyMode ){
           ggobj.autoScale("100%");
           ggobj.IEFixResize(1, 1/x.ratio);
-          ggobj.setSizeLimits(width+'px', 0, height+'px', 0);
+          var maxWidth = width;
+          var maxHeight = height;
+          try {
+            const box = d3.select("#" + ggobj.svgid).property("viewBox").baseVal;
+            maxWidth = box.width;
+            maxHeight = box.height;
+          } catch (e) {}
+          ggobj.setSizeLimits(maxWidth+'px', 0, maxHeight+'px', 0);
           ggobj.removeContainerLimits();
         } else {
           ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + "%");
