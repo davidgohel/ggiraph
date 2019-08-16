@@ -1,46 +1,29 @@
-#' @title Generate an Interactive Grob Path
-#' @description This function can be used to generate an interactive grob
-#' path.
+#' @title Generate interactive polyline grob
 #'
-#' @inheritParams grid::polylineGrob
+#' @description
+#' The grob is based on \code{\link[grid]{polylineGrob}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
 #' @param tooltip tooltip associated with polylines
 #' @param onclick javascript action to execute when polyline is clicked
 #' @param data_id identifiers to associate with polylines
 #' @param cl class to set
 #' @export
 interactive_polyline_grob <-
-  function(x = unit(c(0, 1), "npc"),
-           y = unit(c(0, 1), "npc"),
-           id = NULL,
-           id.lengths = NULL,
+  function(...,
            tooltip = NULL,
            onclick = NULL,
            data_id = NULL,
-           default.units = "npc",
-           arrow = NULL,
-           name = NULL,
-           gp = gpar(),
-           vp = NULL,
            cl = "interactive_polyline_grob") {
-    # Allow user to specify unitless vector;  add default units
-    if (!is.unit(x))
-      x <- unit(x, default.units)
-    if (!is.unit(y))
-      y <- unit(y, default.units)
-    grob(
-      tooltip = tooltip,
-      onclick = onclick,
-      data_id = data_id,
-      x = x,
-      y = y,
-      id = id,
-      id.lengths = id.lengths,
-      arrow = arrow,
-      name = name,
-      gp = gp,
-      vp = vp,
-      cl = cl
-    )
+    gr <- grid::polylineGrob(...)
+    add_interactive_attrs(gr,
+                          list(
+                            tooltip = tooltip,
+                            onclick = onclick,
+                            data_id = data_id
+                          ),
+                          cl = cl)
   }
 
 #' @export

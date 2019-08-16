@@ -1,44 +1,29 @@
-#' @title Generate interactive grob polygons
-#' @description This function can be used to generate interactive grob
-#' polygons.
+#' @title Generate interactive polygon grob
 #'
-#' @inheritParams grid::polygonGrob
+#' @description
+#' The grob is based on \code{\link[grid]{polygonGrob}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
 #' @param tooltip tooltip associated with polygons
 #' @param onclick javascript action to execute when polygon is clicked
 #' @param data_id identifiers to associate with polygons
 #' @param cl class to set
 #' @export
 interactive_polygon_grob <-
-  function(x = unit(c(0, 1), "npc"),
-           y = unit(c(0, 1), "npc"),
-           id = NULL,
-           id.lengths = NULL,
+  function(...,
            tooltip = NULL,
            onclick = NULL,
            data_id = NULL,
-           default.units = "npc",
-           name = NULL,
-           gp = gpar(),
-           vp = NULL,
            cl = "interactive_polygon_grob") {
-    # Allow user to specify unitless vector;  add default units
-    if (!is.unit(x))
-      x <- unit(x, default.units)
-    if (!is.unit(y))
-      y <- unit(y, default.units)
-    grob(
-      tooltip = tooltip,
-      onclick = onclick,
-      data_id = data_id,
-      x = x,
-      y = y,
-      id = id,
-      id.lengths = id.lengths,
-      name = name,
-      gp = gp,
-      vp = vp,
-      cl = cl
-    )
+    gr <- grid::polygonGrob(...)
+    add_interactive_attrs(gr,
+                          list(
+                            tooltip = tooltip,
+                            onclick = onclick,
+                            data_id = data_id
+                          ),
+                          cl = cl)
   }
 
 #' @export

@@ -2,59 +2,23 @@
 % Please edit documentation in R/interactive_path_grob.R
 \name{interactive_path_grob}
 \alias{interactive_path_grob}
-\title{Generate interactive grob paths}
+\title{Generate interactive path grob}
 \usage{
-interactive_path_grob(x, y, id = NULL, id.lengths = NULL,
-  pathId = NULL, pathId.lengths = NULL, rule = "winding",
-  tooltip = NULL, onclick = NULL, data_id = NULL,
-  default.units = "npc", name = NULL, gp = gpar(), vp = NULL,
-  cl = "interactive_path_grob")
+interactive_path_grob(..., tooltip = NULL, onclick = NULL,
+  data_id = NULL, cl = "interactive_path_grob")
 }
 \arguments{
-\item{x}{A numeric vector or unit object specifying x-locations.}
+\item{...}{arguments passed to base function.}
 
-\item{y}{A numeric vector or unit object specifying y-locations.}
+\item{tooltip}{tooltip associated with paths}
 
-\item{id}{A numeric vector used to separate locations in \code{x} and
-    \code{y} into sub-paths.  All locations with the same
-    \code{id} belong to the same sub-path.}
+\item{onclick}{javascript action to execute when path is clicked}
 
-\item{id.lengths}{A numeric vector used to separate locations in \code{x} and
-    \code{y} into sub-paths.  Specifies consecutive blocks of
-    locations which make up separate sub-paths.}
-
-\item{pathId}{A numeric vector used to separate locations in \code{x} and
-    \code{y} into distinct paths.  All locations with the same
-    \code{pathId} belong to the same path.}
-
-\item{pathId.lengths}{A numeric vector used to separate locations in \code{x} 
-    and \code{y} into paths.  Specifies consecutive blocks of locations which 
-    make up separate paths.}
-
-\item{rule}{A character value specifying the fill rule: either
-    \code{"winding"} or \code{"evenodd"}.}
-
-\item{tooltip}{tooltip associated with polygons}
-
-\item{onclick}{javascript action to execute when polygon is clicked}
-
-\item{data_id}{identifiers to associate with polygons}
-
-\item{default.units}{A string indicating the default units to use
-    if \code{x} or \code{y}
-    are only given as numeric vectors.}
-
-\item{name}{ A character identifier. }
-
-\item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
-    a list of graphical parameter settings.}
-
-\item{vp}{A Grid viewport object (or NULL).}
+\item{data_id}{identifiers to associate with paths}
 
 \item{cl}{class to set}
 }
 \description{
-This function can be used to generate interactive grob
-paths
+The grob is based on \code{\link[grid]{pathGrob}}.
+See the documentation for that function for more details.
 }

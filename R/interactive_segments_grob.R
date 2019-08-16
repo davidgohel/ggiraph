@@ -1,50 +1,29 @@
-#' @title Generate interactive grob segments
-#' @description This function can be used to generate interactive grob
-#' segments.
+#' @title Generate interactive segments grob
 #'
-#' @inheritParams grid::segmentsGrob
+#' @description
+#' The grob is based on \code{\link[grid]{segmentsGrob}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
 #' @param tooltip tooltip associated with segments
 #' @param onclick javascript action to execute when segment is clicked
 #' @param data_id identifiers to associate with segments
 #' @param cl class to set
 #' @export
 interactive_segments_grob <-
-  function(x0 = unit(0, "npc"),
-           y0 = unit(0, "npc"),
-           x1 = unit(1, "npc"),
-           y1 = unit(1, "npc"),
+  function(...,
            tooltip = NULL,
            onclick = NULL,
            data_id = NULL,
-           default.units = "npc",
-           arrow = NULL,
-           name = NULL,
-           gp = gpar(),
-           vp = NULL,
            cl = "interactive_segments_grob") {
-    # Allow user to specify unitless vector;  add default units
-    if (!is.unit(x0))
-      x0 <- unit(x0, default.units)
-    if (!is.unit(x1))
-      x1 <- unit(x1, default.units)
-    if (!is.unit(y0))
-      y0 <- unit(y0, default.units)
-    if (!is.unit(y1))
-      y1 <- unit(y1, default.units)
-    grob(
-      tooltip = tooltip,
-      onclick = onclick,
-      data_id = data_id,
-      x0 = x0,
-      y0 = y0,
-      x1 = x1,
-      y1 = y1,
-      arrow = arrow,
-      name = name,
-      gp = gp,
-      vp = vp,
-      cl = cl
-    )
+    gr <- grid::segmentsGrob(...)
+    add_interactive_attrs(gr,
+                          list(
+                            tooltip = tooltip,
+                            onclick = onclick,
+                            data_id = data_id
+                          ),
+                          cl = cl)
   }
 
 #' @export
