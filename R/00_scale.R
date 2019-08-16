@@ -36,19 +36,15 @@ scale_colour_manual_interactive <-
 #' @rdname scale_manual_interactive
 scale_fill_manual_interactive <- function(..., values, data_id = NULL, onclick = NULL, tooltip = NULL, aesthetics = "fill") {
   zz <- scale_fill_manual(..., values = values, aesthetics = aesthetics)
-  scale_interactive <- FALSE
 
   if( !is.null(data_id) ){
     zz$data_id <- data_id
-    scale_interactive <- TRUE
   }
   if( !is.null(tooltip) ){
     zz$tooltip <- tooltip
-    scale_interactive <- TRUE
   }
   if( !is.null(onclick) ){
     zz$onclick <- onclick
-    scale_interactive <- TRUE
   }
 
   zz$guide <- paste0(zz$guide, "_interactive")
@@ -89,6 +85,11 @@ guide_train.legend_interactive <- function(guide, scale, aesthetic = NULL) {
     key$tooltip <- scale$tooltip[breaks]
   } else if(!is.null(scale$tooltip)) {
     key$tooltip <- scale$tooltip
+  }
+  if( !is.null(scale$onclick) && length(breaks) > 0 ){
+    key$onclick <- scale$onclick[breaks]
+  } else if(!is.null(scale$onclick)) {
+    key$onclick <- scale$onclick
   }
 
   zz$key <- key
