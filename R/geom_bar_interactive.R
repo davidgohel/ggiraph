@@ -22,6 +22,10 @@ geom_bar_interactive <- function(...) {
 GeomInteractiveBar <- ggproto(
   "GeomInteractiveBar",
   GeomBar,
+  draw_key = function(data, params, size) {
+    gr <- draw_key_polygon(data, params, size)
+    add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
+  },
   default_aes = add_default_interactive_aes(GeomBar),
   draw_panel = function(self, data, panel_params, coord, width = NULL) {
     GeomInteractiveRect$draw_panel(data, panel_params, coord)

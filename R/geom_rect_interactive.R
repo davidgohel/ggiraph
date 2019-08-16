@@ -30,6 +30,10 @@ GeomInteractiveRect <- ggproto(
   "GeomInteractiveRect",
   GeomRect,
   default_aes = add_default_interactive_aes(GeomRect),
+  draw_key = function(data, params, size) {
+    gr <- draw_key_polygon(data, params, size)
+    add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
+  },
   draw_panel = function(self, data, panel_params, coord, linejoin = "mitre") {
     if (!coord$is_linear()) {
       aesthetics <- setdiff(names(data),
