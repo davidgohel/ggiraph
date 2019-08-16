@@ -99,6 +99,12 @@ add_interactive_attrs <- function(gr,
                                   data,
                                   cl = NULL,
                                   data_attr = "data-id") {
+  if( inherits(gr, "gTree") ){
+    for(i in seq_along(gr$children)){
+      gr$children[[i]] <- add_interactive_attrs(gr = gr$children[[i]], data = data, cl = cl, data_attr = data_attr)
+    }
+    return(gr)
+  }
   gr$tooltip <- data$tooltip
   gr$onclick <- data$onclick
   gr$data_id <- data$data_id
