@@ -2,63 +2,23 @@
 % Please edit documentation in R/interactive_text_grob.R
 \name{interactive_text_grob}
 \alias{interactive_text_grob}
-\title{Generate interactive grob text}
+\title{Generate interactive text grob}
 \usage{
-interactive_text_grob(label, x = unit(0.5, "npc"), y = unit(0.5,
-  "npc"), tooltip = NULL, onclick = NULL, data_id = NULL,
-  just = "centre", hjust = NULL, vjust = NULL, rot = 0,
-  check.overlap = FALSE, default.units = "npc", name = NULL,
-  gp = gpar(), vp = NULL, cl = "interactive_text_grob")
+interactive_text_grob(..., tooltip = NULL, onclick = NULL,
+  data_id = NULL, cl = "interactive_text_grob")
 }
 \arguments{
-\item{label}{A character or \link{expression} vector.  Other
-    objects are coerced by \code{\link{as.graphicsAnnot}}.}
+\item{...}{arguments passed to base function.}
 
-\item{x}{A numeric vector or unit object specifying x-values.}
+\item{tooltip}{tooltip associated with texts}
 
-\item{y}{A numeric vector or unit object specifying y-values.}
+\item{onclick}{javascript action to execute when text is clicked}
 
-\item{tooltip}{tooltip associated with rectangles}
-
-\item{onclick}{javascript action to execute when rectangle is clicked}
-
-\item{data_id}{identifiers to associate with rectangles}
-
-\item{just}{The justification of the text
-    relative to its (x, y) location.  If there are two values, the first
-    value specifies horizontal justification and the second value specifies
-    vertical justification.  Possible string values are: \code{"left"},
-    \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
-    and \code{"top"}.  For numeric values, 0 means left (bottom) alignment
-    and 1 means right (top) alignment.
-  }
-
-\item{hjust}{A numeric vector specifying horizontal justification.
-    If specified, overrides the \code{just} setting.}
-
-\item{vjust}{A numeric vector specifying vertical justification.
-    If specified, overrides the \code{just} setting.}
-
-\item{rot}{The angle to rotate the text.}
-
-\item{check.overlap}{A logical value to indicate whether to
-    check for and omit overlapping text.}
-
-\item{default.units}{A string indicating the default units to use
-    if \code{x} or \code{y}
-    are only given as numeric vectors.}
-
-\item{name}{ A character identifier. }
-
-\item{gp}{An object of class \code{gpar}, typically the output
-    from a call to the function \code{gpar}.  This is basically
-    a list of graphical parameter settings.}
-
-\item{vp}{A Grid viewport object (or NULL).}
+\item{data_id}{identifiers to associate with texts}
 
 \item{cl}{class to set}
 }
 \description{
-This function can be used to generate interactive grob
-text.
+The grob is based on \code{\link[grid]{textGrob}}.
+See the documentation for that function for more details.
 }

@@ -1,51 +1,29 @@
-#' @title Generate interactive grob text
-#' @description This function can be used to generate interactive grob
-#' text.
+#' @title Generate interactive text grob
 #'
-#' @inheritParams grid::textGrob
-#' @param tooltip tooltip associated with rectangles
-#' @param onclick javascript action to execute when rectangle is clicked
-#' @param data_id identifiers to associate with rectangles
+#' @description
+#' The grob is based on \code{\link[grid]{textGrob}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
+#' @param tooltip tooltip associated with texts
+#' @param onclick javascript action to execute when text is clicked
+#' @param data_id identifiers to associate with texts
 #' @param cl class to set
 #' @export
 interactive_text_grob <-
-  function(label,
-           x = unit(0.5, "npc"),
-           y = unit(0.5, "npc"),
+  function(...,
            tooltip = NULL,
            onclick = NULL,
            data_id = NULL,
-           just = "centre",
-           hjust = NULL,
-           vjust = NULL,
-           rot = 0,
-           check.overlap = FALSE,
-           default.units = "npc",
-           name = NULL,
-           gp = gpar(),
-           vp = NULL,
            cl = "interactive_text_grob") {
-    if (!is.unit(x))
-      x <- unit(x, default.units)
-    if (!is.unit(y))
-      y <- unit(y, default.units)
-    grob(
-      tooltip = tooltip,
-      onclick = onclick,
-      data_id = data_id,
-      label = label,
-      x = x,
-      y = y,
-      just = just,
-      hjust = hjust,
-      vjust = vjust,
-      rot = rot,
-      check.overlap = check.overlap,
-      name = name,
-      gp = gp,
-      vp = vp,
-      cl = cl
-    )
+    gr <- grid::textGrob(...)
+    add_interactive_attrs(gr,
+                          list(
+                            tooltip = tooltip,
+                            onclick = onclick,
+                            data_id = data_id
+                          ),
+                          cl = cl)
   }
 
 #' @export

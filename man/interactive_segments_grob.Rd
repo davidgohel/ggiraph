@@ -2,24 +2,13 @@
 % Please edit documentation in R/interactive_segments_grob.R
 \name{interactive_segments_grob}
 \alias{interactive_segments_grob}
-\title{Generate interactive grob segments}
+\title{Generate interactive segments grob}
 \usage{
-interactive_segments_grob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
-  x1 = unit(1, "npc"), y1 = unit(1, "npc"), tooltip = NULL,
-  onclick = NULL, data_id = NULL, default.units = "npc",
-  arrow = NULL, name = NULL, gp = gpar(), vp = NULL,
-  cl = "interactive_segments_grob")
+interactive_segments_grob(..., tooltip = NULL, onclick = NULL,
+  data_id = NULL, cl = "interactive_segments_grob")
 }
 \arguments{
-\item{x0}{ Numeric indicating the starting x-values of the line segments. }
-
-\item{y0}{ Numeric indicating the starting y-values of the line
-    segments. }
-
-\item{x1}{ Numeric indicating the stopping x-values of the line
-    segments. }
-
-\item{y1}{ Numeric indicating the stopping y-values of the line segments.}
+\item{...}{arguments passed to base function.}
 
 \item{tooltip}{tooltip associated with segments}
 
@@ -27,20 +16,9 @@ interactive_segments_grob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 
 \item{data_id}{identifiers to associate with segments}
 
-\item{default.units}{ A string. }
-
-\item{arrow}{A list describing arrow heads to place at either end
-    of the line segments, as produced by the \code{arrow} function.}
-
-\item{name}{ A character identifier. }
-
-\item{gp}{ An object of class \code{gpar}. }
-
-\item{vp}{A Grid viewport object (or NULL).}
-
 \item{cl}{class to set}
 }
 \description{
-This function can be used to generate interactive grob
-segments.
+The grob is based on \code{\link[grid]{segmentsGrob}}.
+See the documentation for that function for more details.
 }

@@ -1,50 +1,29 @@
-#' @title Generate interactive grob paths
-#' @description This function can be used to generate interactive grob
-#' paths
+#' @title Generate interactive path grob
 #'
-#' @inheritParams grid::pathGrob
-#' @param tooltip tooltip associated with polygons
-#' @param onclick javascript action to execute when polygon is clicked
-#' @param data_id identifiers to associate with polygons
+#' @description
+#' The grob is based on \code{\link[grid]{pathGrob}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
+#' @param tooltip tooltip associated with paths
+#' @param onclick javascript action to execute when path is clicked
+#' @param data_id identifiers to associate with paths
 #' @param cl class to set
 #' @export
 interactive_path_grob <-
-  function(x,
-           y,
-           id = NULL,
-           id.lengths = NULL,
-           pathId = NULL,
-           pathId.lengths = NULL,
-           rule = "winding",
+  function(...,
            tooltip = NULL,
            onclick = NULL,
            data_id = NULL,
-           default.units = "npc",
-           name = NULL,
-           gp = gpar(),
-           vp = NULL,
            cl = "interactive_path_grob") {
-    # Allow user to specify unitless vector;  add default units
-    if (!is.unit(x))
-      x <- unit(x, default.units)
-    if (!is.unit(y))
-      y <- unit(y, default.units)
-    grob(
-      tooltip = tooltip,
-      onclick = onclick,
-      data_id = data_id,
-      x = x,
-      y = y,
-      id = id,
-      id.lengths = id.lengths,
-      pathId = pathId,
-      pathId.lengths = pathId.lengths,
-      rule = rule,
-      name = name,
-      gp = gp,
-      vp = vp,
-      cl = cl
-    )
+    gr <- grid::pathGrob(...)
+    add_interactive_attrs(gr,
+                          list(
+                            tooltip = tooltip,
+                            onclick = onclick,
+                            data_id = data_id
+                          ),
+                          cl = cl)
   }
 
 #' @export

@@ -1,53 +1,29 @@
-#' @title Generate interactive grob rectangles
-#' @description This function can be used to generate interactive grob
-#' rectangles.
+#' @title Generate interactive rectangle grob
 #'
-#' @inheritParams grid::rectGrob
+#' @description
+#' The grob is based on \code{\link[grid]{rectGrob}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
 #' @param tooltip tooltip associated with rectangles
 #' @param onclick javascript action to execute when rectangle is clicked
 #' @param data_id identifiers to associate with rectangles
 #' @param cl class to set
 #' @export
 interactive_rect_grob <-
-  function(x = unit(0.5, "npc"),
-           y = unit(0.5, "npc"),
-           width = unit(1, "npc"),
-           height = unit(1, "npc"),
+  function(...,
            tooltip = NULL,
            onclick = NULL,
            data_id = NULL,
-           just = "centre",
-           hjust = NULL,
-           vjust = NULL,
-           default.units = "npc",
-           name = NULL,
-           gp = gpar(),
-           vp = NULL,
            cl = "interactive_rect_grob") {
-    if (!is.unit(x))
-      x <- unit(x, default.units)
-    if (!is.unit(y))
-      y <- unit(y, default.units)
-    if (!is.unit(width))
-      width <- unit(width, default.units)
-    if (!is.unit(height))
-      height <- unit(height, default.units)
-    grob(
-      tooltip = tooltip,
-      onclick = onclick,
-      data_id = data_id,
-      x = x,
-      y = y,
-      width = width,
-      height = height,
-      just = just,
-      hjust = hjust,
-      vjust = vjust,
-      name = name,
-      gp = gp,
-      vp = vp,
-      cl = cl
-    )
+    gr <- grid::rectGrob(...)
+    add_interactive_attrs(gr,
+                          list(
+                            tooltip = tooltip,
+                            onclick = onclick,
+                            data_id = data_id
+                          ),
+                          cl = cl)
   }
 
 #' @export
