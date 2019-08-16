@@ -96,7 +96,3 @@ guide_train.legend_interactive <- function(guide, scale, aesthetic = NULL) {
   zz
 }
 
-draw_key_point_interactive <- function(data, params, size) {
-  gr <- draw_key_point(data, params, size)
-  add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
-}
