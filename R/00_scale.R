@@ -49,3 +49,48 @@ scale_fill_manual_interactive <- function(..., values, data_id = NULL, onclick =
   zz
 }
 
+#' @export
+#' @importFrom scales seq_gradient_pal
+scale_colour_gradient_interactive <- function(..., low = "#132B43", high = "#56B1F7", space = "Lab",
+                                              na.value = "grey50", guide = "colourbar", aesthetics = "colour",
+                                              data_id = NULL, onclick = NULL, tooltip = NULL) {
+  zz <- continuous_scale(aesthetics, "gradient", seq_gradient_pal(low, high, space),
+                         na.value = na.value, guide = guide, ...)
+
+  if( !is.null(data_id) ){
+    zz$data_id <- data_id
+  }
+  if( !is.null(tooltip) ){
+    zz$tooltip <- tooltip
+  }
+  if( !is.null(onclick) ){
+    zz$onclick <- onclick
+  }
+
+  zz$guide <- paste0(zz$guide, "_interactive")
+  zz
+}
+
+#' @export
+scale_fill_gradient_interactive <- function(..., low = "#132B43", high = "#56B1F7", space = "Lab",
+                                              na.value = "grey50", guide = "colourbar", aesthetics = "fill",
+                                              data_id = NULL, onclick = NULL, tooltip = NULL) {
+  zz <- continuous_scale(aesthetics, "gradient", seq_gradient_pal(low, high, space),
+                         na.value = na.value, guide = guide, ...)
+
+  if( !is.null(data_id) ){
+    zz$data_id <- data_id
+  }
+  if( !is.null(tooltip) ){
+    zz$tooltip <- tooltip
+  }
+  if( !is.null(onclick) ){
+    zz$onclick <- onclick
+  }
+
+  zz$guide <- paste0(zz$guide, "_interactive")
+  zz
+}
+
+
+
