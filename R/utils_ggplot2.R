@@ -67,3 +67,10 @@ empty <- function(df) {
 "%||%" <- function(a, b) {
   if (!is.null(a)) a else b
 }
+
+# from ggplot2 utilities.r
+message_wrap <- function(...) {
+  msg <- paste(..., collapse = "", sep = "")
+  wrapped <- strwrap(msg, width = getOption("width") - 2)
+  message(paste0(wrapped, collapse = "\n"))
+}
