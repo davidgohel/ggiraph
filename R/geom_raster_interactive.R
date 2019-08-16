@@ -6,6 +6,10 @@
 #'
 #' @param ... arguments passed to base geometry.
 #' @seealso \code{\link{girafe}}
+#' @examples
+#' # add interactive polygons to a ggplot -------
+#' @example examples/geom_rect_interactive.R
+#' @seealso \code{\link{girafe}}
 #' @export
 geom_raster_interactive <- function(...) {
   layer_interactive(geom_raster, ...)
