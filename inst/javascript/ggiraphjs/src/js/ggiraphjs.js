@@ -179,6 +179,11 @@ export default class ggiraphjs {
         const containerid = this.containerid;
         sel_both
             .on("mouseover", function (d) {
+                if (this.getAttribute("key-id") !== null) {
+                    let curr_sel = d3.selectAll('#' + svgid +
+                        ' *[key-id="' + this.getAttribute("key-id") + '"]');
+                    curr_sel.classed(selected_class, true);
+                }
                 if (this.getAttribute("data-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
                         ' *[data-id="' + this.getAttribute("data-id") + '"]');
@@ -250,6 +255,11 @@ export default class ggiraphjs {
                 }
             })
             .on("mouseout", function (d) {
+                if (this.getAttribute("key-id") !== null) {
+                    let curr_sel = d3.selectAll('#' + svgid +
+                        ' *[key-id="' + d3.select(d3.event.currentTarget).attr("key-id") + '"]');
+                    curr_sel.classed(selected_class, false);
+                }
                 if (this.getAttribute("data-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
                         ' *[data-id="' + d3.select(d3.event.currentTarget).attr("data-id") + '"]');
