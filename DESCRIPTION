@@ -28,7 +28,7 @@ Imports:
     htmltools,
     Rcpp (>= 0.12.12), 
     gdtools (>= 0.1.6),
-    purrr
+    purrr, scales
 LinkingTo: Rcpp, gdtools
 Suggests:
     knitr,
@@ -70,6 +70,7 @@ Collate:
     'ggiraph.R'
     'girafe.R'
     'girafe_options.R'
+    'guide_legend_interactive.R'
     'interactive_path_grob.R'
     'interactive_points_grob.R'
     'interactive_polygon_grob.R'
