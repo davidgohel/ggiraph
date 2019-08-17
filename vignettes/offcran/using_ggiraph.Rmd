@@ -90,6 +90,14 @@ x
 
 ### Click actions
 
+#### Within shiny
+
+When working with shiny, you can use the `data_id` aesthetic to associate points, polygons 
+and other graphical elements with a value that will be available in a reactive context. 
+This makes it possible to click on an element and trigger an action. 
+Note that in this case, `onclick` should not be used, both onclick 
+and data_id will need the "click" event. [Read more about shiny integration](#shiny-usage)...
+
 #### Using onclick
 
 Click actions must be a string column in the dataset containing valid javascript instructions. 
@@ -109,15 +117,6 @@ gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault, color = UrbanPop )) +
 
 girafe(ggobj = gg_crime)
 ```
-
-#### Within shiny
-
-When working with shiny, you can use the `data_id` aesthetic to associate points, polygons 
-and other graphical elements with a value that will be available in a reactive context. 
-This makes it possible to click on an element and trigger an action. 
-Note that in this case, `onclick` should not be used, both onclick 
-and data_id will need the "click" event. [Read more about shiny integration](#shiny-usage)...
-
 
 
 
@@ -279,15 +278,15 @@ application.
 Instead of a `plotOutput`, use function `ggiraphOutput`. 
 
 ```{r eval=FALSE}
-ggiraphOutput("plot")
+girafeOutput("plot")
 ```
 
 ### The server `server.R`
 
-Use function `ggiraphOutput`.
+Use function `renderGirafe`.
 
 ```{r eval=FALSE}
-output$plot <- renderggiraph({
+output$plot <- renderGirafe({
     ggiraph(code = print(gg_blahblah) )
   })
 ```
@@ -300,7 +299,7 @@ It is possible to work with selected points on a *ggiraph* plot within a Shiny a
 Selection can be of two types: `single` or `multiple`. The ggiraph's parameter `selection_type` will let you specify that. 
 
 ```{r eval=FALSE}
-output$myplot <- renderggiraph({
+output$myplot <- renderGirafe({
     ggiraph(code = print(gg_blahblah), selection_type = "multiple" )
   })
 ```
