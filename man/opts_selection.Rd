@@ -2,9 +2,13 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_selection}
 \alias{opts_selection}
+\alias{opts_selection_key}
 \title{selection effect settings}
 \usage{
 opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
+  selected = character(0))
+
+opts_selection_key(css = NULL, type = "single", only_shiny = TRUE,
   selected = character(0))
 }
 \arguments{
@@ -21,6 +25,8 @@ initialized.}
 \description{
 Allows customization of the rendering of
 selected graphic elements.
+Use \code{opts_selection} to define selection in panels and
+\code{opts_selection_key} to define selection in legends.
 }
 \examples{
 library(ggplot2)
@@ -41,9 +47,8 @@ x <- girafe_options(x,
 if( interactive() ) print(x)
 }
 \seealso{
-set options with \code{\link{girafe_options}}
-
-Other girafe animation options: \code{\link{opts_hover}},
+Other girafe animation options: \code{\link{girafe_options}},
+  \code{\link{opts_hover}}, \code{\link{opts_sizing}},
   \code{\link{opts_toolbar}}, \code{\link{opts_tooltip}},
   \code{\link{opts_zoom}}
 }

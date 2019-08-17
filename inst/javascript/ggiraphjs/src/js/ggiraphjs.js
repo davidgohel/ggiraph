@@ -28,22 +28,30 @@ export default class ggiraphjs {
         return 'tooltip_' + this.svgid;
     }
 
-    selectedClassname() {
+    selectedDataClassname() {
         return 'clicked_' + this.svgid;
+    }
+    selectedKeyClassname() {
+        return 'clickedkey_' + this.svgid;
     }
 
     hoverClassname() {
         return 'hover_' + this.svgid;
     }
+    hoverKeyClassname() {
+        return 'hoverkey_' + this.svgid;
+    }
 
-    addStyle(tooltipCss, hoverCss, clickedCss) {
+    addStyle(tooltipCss, hoverCss, hoverKeyCss, clickedCss, clickedKeyCss) {
         const oldstyle = d3.select("#" + this.containerid + " style");
         if (oldstyle.size() > 0) {
             oldstyle.remove();
         }
         const css = ".tooltip_" + this.svgid + tooltipCss + "\n" +
             ".hover_" + this.svgid + hoverCss + "\n" +
-            ".clicked_" + this.svgid + clickedCss + "\n";
+            ".hoverkey_" + this.svgid + hoverKeyCss + "\n" +
+            ".clicked_" + this.svgid + clickedCss + "\n" +
+            ".clickedkey_" + this.svgid + clickedKeyCss + "\n";
         d3.select("#" + this.containerid).append("style").text(css);
     }
 
@@ -173,6 +181,7 @@ export default class ggiraphjs {
 
     animateGElements(opacity, offx, offy, usecursor, delayover, delayout, usefill, usestroke) {
         const selected_class = this.hoverClassname();
+        const selectedkey_class = this.hoverKeyClassname();
         const sel_both = d3.selectAll('#' + this.svgid + ' *');
         const tooltipstr = "." + this.tooltipClassname();
         const svgid = this.svgid;
@@ -182,7 +191,7 @@ export default class ggiraphjs {
                 if (this.getAttribute("key-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
                         ' *[key-id="' + this.getAttribute("key-id") + '"]');
-                    curr_sel.classed(selected_class, true);
+                    curr_sel.classed(selectedkey_class, true);
                 }
                 if (this.getAttribute("data-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
@@ -258,7 +267,7 @@ export default class ggiraphjs {
                 if (this.getAttribute("key-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
                         ' *[key-id="' + d3.select(d3.event.currentTarget).attr("key-id") + '"]');
-                    curr_sel.classed(selected_class, false);
+                    curr_sel.classed(selectedkey_class, false);
                 }
                 if (this.getAttribute("data-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
@@ -386,7 +395,7 @@ export default class ggiraphjs {
     }
 
     refreshSelected() {
-        const selected_class = this.selectedClassname();
+        const selected_class = this.selectedDataClassname();
         const svgid = this.svgid;
         var svg = d3.select('#' + svgid);
         svg.selectAll('*[data-id]').classed(selected_class, false);
@@ -396,7 +405,7 @@ export default class ggiraphjs {
         });
     }
     refreshKeySelected() {
-        const selected_class = this.selectedClassname();
+        const selected_class = this.selectedKeyClassname();
         const svgid = this.svgid;
         var svg = d3.select('#' + svgid);
         svg.selectAll('*[key-id]').classed(selected_class, false);
@@ -425,7 +434,7 @@ export default class ggiraphjs {
     isSelectable() {
         const svgid = this.svgid;
         var svg = d3.select('#' + svgid);
-        return (svg.selectAll('*[data-id]').size() > 0);
+        return (svg.selectAll('*[data-id]').size() > 0 || svg.selectAll('*[key-id]').size() > 0);
     }
 
     lasso_on(add) {
@@ -436,7 +445,7 @@ export default class ggiraphjs {
         var lasso_draw = function () { };
         var lasso_end = function () {
             lasso_.selectedItems().each(function (d, i) {
-                d3.select(this).classed(that.selectedClassname, true);
+                d3.select(this).classed(that.selectedDataClassname(), true);
                 var dataid = d3.select(this).attr("data-id");
                 var index = that.dataSelected.indexOf(dataid);
                 if (index < 0 && add) {

@@ -3,10 +3,14 @@
 \name{scale_manual_interactive}
 \alias{scale_manual_interactive}
 \alias{scale_colour_manual_interactive}
+\alias{scale_color_manual_interactive}
 \alias{scale_fill_manual_interactive}
 \title{Create your own interactive discrete scale}
 \usage{
 scale_colour_manual_interactive(..., values, data_id = NULL,
+  onclick = NULL, tooltip = NULL, aesthetics = "colour")
+
+scale_color_manual_interactive(..., values, data_id = NULL,
   onclick = NULL, tooltip = NULL, aesthetics = "colour")
 
 scale_fill_manual_interactive(..., values, data_id = NULL,
@@ -63,11 +67,14 @@ If unnamed, values will be matched in order (usually alphabetical) with
 the limits of the scale. Any data values that don't match will be
 given \code{na.value}.}
 
-\item{data_id}{identifiers to associate with key, one per key, a named vector}
+\item{data_id}{a named character vector where names are level values and values are
+identifiers. Identifiers are available as reactive input values in shiny applications.}
 
-\item{onclick}{javascript actions to execute when a key is clicked, one per key, a named vector}
+\item{onclick}{a named character vector where names are level values and values are
+an associated JavaScript action. Action will be executed when a key will be clicked}
 
-\item{tooltip}{tooltip associated with keys, one per key, a named vector}
+\item{tooltip}{a named character vector where names are level values and values are
+an associated tooltip value, text and html are supported.}
 
 \item{aesthetics}{Character string or vector of character strings listing the
 name(s) of the aesthetic(s) that this scale works with. This can be useful, for
@@ -76,6 +83,14 @@ same time, via \code{aesthetics = c("colour", "fill")}.}
 }
 \description{
 The scale is based on \code{\link[ggplot2]{scale_colour_manual}}.
-These functions allow you to make interactive legends associated with interactive
-layers.
+These functions allow you to make interactive legend's keys associated with an
+interactive layer.
+
+For a discrete interactive scale, a single tooltip, data_id and onclick
+is available for each level. The primary goal when these function has been
+written was to enable a click on a legend's key in a shiny application.
 }
+\seealso{
+Other interactive scale: \code{\link{scale_gradient_interactive}}
+}
+\concept{interactive scale}

@@ -117,6 +117,7 @@ girafe <- function(
 
   tooltip_set <- opts_tooltip()
   hover_set <- opts_hover()
+  hoverkey_set <- opts_hover_key()
   zoom_set <- opts_zoom()
   selection_set <- opts_selection()
   selectionkey_set <- opts_selection_key()
@@ -129,6 +130,7 @@ girafe <- function(
             settings = list(
               tooltip = tooltip_set,
               hover = hover_set,
+              hoverkey = hoverkey_set,
               zoom = zoom_set,
               capture = selection_set,
               capturekey = selectionkey_set,

@@ -36,7 +36,6 @@
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-#' @seealso set options with \code{\link{girafe_options}}
 opts_tooltip <- function(
   css = NULL, offx = 10, offy = 0, use_cursor_pos = TRUE,
   opacity = .9, use_fill = FALSE, use_stroke = FALSE,
@@ -78,6 +77,8 @@ opts_tooltip <- function(
 #' @title hover effect settings
 #' @description Allows customization of the animation
 #' of graphic elements on which the mouse is positioned.
+#' Use \code{opts_hover} to animate elements in panels and
+#' \code{opts_hover_key} to animate elements in legends.
 #' @param css css to associate with elements to be animated
 #' when mouse is hover them.
 #' @examples
@@ -98,7 +99,6 @@ opts_tooltip <- function(
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-#' @seealso set options with \code{\link{girafe_options}}
 opts_hover <- function(css = NULL){
 
   if( is.null(css)){
@@ -112,9 +112,26 @@ opts_hover <- function(css = NULL){
   x
 }
 
+#' @export
+#' @rdname opts_hover
+opts_hover_key <- function(css = NULL){
+
+  if( is.null(css)){
+    css <- "stroke:red;"
+  }
+  css <- paste0("{", css, "}")
+  x <- list(
+    css = css
+  )
+  class(x) <- "opts_hover_key"
+  x
+}
+
 #' @title selection effect settings
 #' @description Allows customization of the rendering of
 #' selected graphic elements.
+#' Use \code{opts_selection} to define selection in panels and
+#' \code{opts_selection_key} to define selection in legends.
 #' @param css css to associate with elements when they are selected.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
@@ -140,7 +157,6 @@ opts_hover <- function(css = NULL){
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-#' @seealso set options with \code{\link{girafe_options}}
 opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE, selected = character(0)){
 
   if( is.null(css)){
@@ -205,7 +221,6 @@ opts_selection_key <- function(css = NULL, type = "single", only_shiny = TRUE, s
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-#' @seealso set options with \code{\link{girafe_options}}
 opts_zoom <- function(min = 1, max = 1){
 
   stopifnot(is.numeric(min), is.numeric(max))
@@ -249,7 +264,6 @@ opts_zoom <- function(min = 1, max = 1){
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-#' @seealso set options with \code{\link{girafe_options}}
 opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 
   stopifnot(position %in% c("top", "bottom",
@@ -270,8 +284,7 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 #' @param rescale if FALSE, graphic will not be resized
 #' and the dimensions are exactly those of the container.
 #' @param width widget width ratio (0 < width <= 1).
-#' @family girafe sizing options
-#' @seealso set options with \code{\link{girafe_options}}
+#' @family girafe animation options
 #' @examples
 #' library(ggplot2)
 #'
@@ -334,9 +347,8 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #'   print(x)
 #' }
 #' @export
-#' @seealso \code{\link{opts_tooltip}}, \code{\link{opts_hover}},
-#' \code{\link{opts_selection}}, \code{\link{opts_zoom}}, \code{\link{opts_sizing}},
-#' \code{\link{opts_toolbar}}, \code{\link[htmlwidgets]{sizingPolicy}}
+#' @seealso \code{\link{girafe}}
+#' @family girafe animation options
 girafe_options <- function(x, ...){
   stopifnot(inherits(x, "girafe"))
 
@@ -352,6 +364,8 @@ girafe_options <- function(x, ...){
       x$x$settings$tooltip <- arg
     } else if (inherits(arg, "opts_hover")) {
       x$x$settings$hover <- arg
+    } else if (inherits(arg, "opts_hover_key")) {
+      x$x$settings$hoverkey <- arg
     } else if (inherits(arg, "opts_toolbar")) {
       x$x$settings$toolbar <- arg
     } else if (inherits(arg, "opts_sizing")) {

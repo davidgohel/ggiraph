@@ -35,7 +35,9 @@ HTMLWidgets.widget({
     return {
       renderValue: function(x) {
         ggobj.setSvgId(x.uid);
-        ggobj.addStyle(x.settings.tooltip.css, x.settings.hover.css, x.settings.capture.css);
+        ggobj.addStyle(x.settings.tooltip.css,
+            x.settings.hover.css, x.settings.hoverkey.css,
+            x.settings.capture.css, x.settings.capturekey.css);
         ggobj.setZoomer(x.settings.zoom.min, x.settings.zoom.max);
         ggobj.addSvg(x.html, x.js);
         ggobj.animateGElements(x.settings.tooltip.opacity,
@@ -68,24 +70,40 @@ HTMLWidgets.widget({
           ggobj.removeContainerLimits();
         }
 
-        var addSelection = ggobj.isSelectable() && HTMLWidgets.shinyMode && x.settings.capture.only_shiny;
+        var addSelection = ggobj.isSelectable() &&
+          HTMLWidgets.shinyMode &&
+          ( x.settings.capture.only_shiny || x.settings.capturekey.only_shiny);
+
         var addZoom = true;
         if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){
           addZoom = false;
         }
 
+        if( addSelection && x.settings.capturekey.type == "single" ){
+          ggobj.selectizeKeySingle();
+          if( typeof x.settings.capturekey.selected === 'string' ) {
+            ggobj.setKeySelected([x.settings.capturekey.selected]);
+          }
+        } else if( addSelection && x.settings.capturekey.type == "multiple" ){
+          ggobj.selectizeKeyMultiple();
+          if( typeof x.settings.capturekey.selected === 'string' ) {
+            ggobj.setKeySelected([x.settings.capturekey.selected]);
+          } else if( isArray(x.settings.capturekey.selected) ){
+            ggobj.setKeySelected(x.settings.capturekey.selected);
+          }
+        } else {
+          ggobj.selectizeKeyNone();
+        }
+
         if( addSelection && x.settings.capture.type == "single" ){
           ggobj.selectizeSingle();
-          ggobj.selectizeKeySingle();
           addSelection = false;
-
           if( typeof x.settings.capture.selected === 'string' ) {
             ggobj.setSelected([x.settings.capture.selected]);
           }
 
         } else if( addSelection && x.settings.capture.type == "multiple" ){
           ggobj.selectizeMultiple();
-          ggobj.selectizeKeyMultiple();
           if( typeof x.settings.capture.selected === 'string' ) {
             ggobj.setSelected([x.settings.capture.selected]);
           } else if( isArray(x.settings.capture.selected) ){
@@ -93,7 +111,6 @@ HTMLWidgets.widget({
           }
         } else {
           ggobj.selectizeNone();
-          ggobj.selectizeKeyNone();
           addSelection = false;
         }
 

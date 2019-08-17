@@ -2,9 +2,12 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_hover}
 \alias{opts_hover}
+\alias{opts_hover_key}
 \title{hover effect settings}
 \usage{
 opts_hover(css = NULL)
+
+opts_hover_key(css = NULL)
 }
 \arguments{
 \item{css}{css to associate with elements to be animated
@@ -13,6 +16,8 @@ when mouse is hover them.}
 \description{
 Allows customization of the animation
 of graphic elements on which the mouse is positioned.
+Use \code{opts_hover} to animate elements in panels and
+\code{opts_hover_key} to animate elements in legends.
 }
 \examples{
 library(ggplot2)
@@ -32,9 +37,8 @@ x <- girafe_options(x,
 if( interactive() ) print(x)
 }
 \seealso{
-set options with \code{\link{girafe_options}}
-
-Other girafe animation options: \code{\link{opts_selection}},
+Other girafe animation options: \code{\link{girafe_options}},
+  \code{\link{opts_selection}}, \code{\link{opts_sizing}},
   \code{\link{opts_toolbar}}, \code{\link{opts_tooltip}},
   \code{\link{opts_zoom}}
 }

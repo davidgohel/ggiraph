@@ -32,10 +32,9 @@ x <- girafe_options(x,
 if( interactive() ) print(x)
 }
 \seealso{
-set options with \code{\link{girafe_options}}
-
-Other girafe animation options: \code{\link{opts_hover}},
-  \code{\link{opts_selection}}, \code{\link{opts_toolbar}},
+Other girafe animation options: \code{\link{girafe_options}},
+  \code{\link{opts_hover}}, \code{\link{opts_selection}},
+  \code{\link{opts_sizing}}, \code{\link{opts_toolbar}},
   \code{\link{opts_tooltip}}
 }
 \concept{girafe animation options}

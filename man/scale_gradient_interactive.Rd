@@ -3,10 +3,16 @@
 \name{scale_gradient_interactive}
 \alias{scale_gradient_interactive}
 \alias{scale_colour_gradient_interactive}
+\alias{scale_color_gradient_interactive}
 \alias{scale_fill_gradient_interactive}
 \title{Create your own interactive gradient scale}
 \usage{
 scale_colour_gradient_interactive(..., low = "#132B43",
+  high = "#56B1F7", space = "Lab", na.value = "grey50",
+  guide = "colourbar", aesthetics = "colour", data_id = NULL,
+  onclick = NULL, tooltip = NULL)
+
+scale_color_gradient_interactive(..., low = "#132B43",
   high = "#56B1F7", space = "Lab", na.value = "grey50",
   guide = "colourbar", aesthetics = "colour", data_id = NULL,
   onclick = NULL, tooltip = NULL)
@@ -105,14 +111,28 @@ name(s) of the aesthetic(s) that this scale works with. This can be useful, for
 example, to apply colour settings to the \code{colour} and \code{fill} aesthetics at the
 same time, via \code{aesthetics = c("colour", "fill")}.}
 
-\item{data_id}{identifiers to associate with key, one per key, a named vector}
+\item{data_id}{a single character value, the identifier. Identifier is available
+as a reactive input value in shiny applications.}
 
-\item{onclick}{javascript actions to execute when a key is clicked, one per key, a named vector}
+\item{onclick}{a single character value, associated JavaScript action. Action will be
+executed when the legend will be clicked.}
 
-\item{tooltip}{tooltip associated with keys, one per key, a named vector}
+\item{tooltip}{a single character value, the tooltip value, text and html are supported.}
 }
 \description{
 The scale is based on \code{\link[ggplot2]{scale_colour_gradient}}.
-These functions allow you to make interactive legends associated with interactive
-layers.
+These functions allow you to make interactive legends associated with a
+layer.
+
+For a continuous interactive scale, only single tooltip, data_id and onclick
+is available. The primary goal when this function has been written was to enable
+a click on a legend in a shiny application.
 }
+\note{
+It is not planned to provide a more advanced interactivity within shiny applications
+but contributions are welcome.
+}
+\seealso{
+Other interactive scale: \code{\link{scale_manual_interactive}}
+}
+\concept{interactive scale}

@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggiraph)
 
-gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species, data_id = Species)) +
+gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species, data_id = 1:150)) +
   geom_point_interactive( size = 3 ) +
   theme_minimal() +
   scale_colour_manual_interactive(
@@ -13,22 +13,21 @@ gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species, data_
 
 shinyServer(function(input, output, session) {
 
-  selected_points <- reactive({
-    input$plot_selected
-  })
   selected_keys <- reactive({
     input$plot_key_selected
   })
 
   output$plot <- renderggiraph({
     x <- girafe(code = print(gg), width_svg = 6, height_svg = 8)
-    x <- girafe_options(x, opts_selection(
-      type = "multiple", css = "fill:#FF3333;stroke:black;"),
-      opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;"))
+    x <- girafe_options(x, opts_selection_key(css = "stroke:black;r:5pt;"),
+                        opts_hover(css = "fill:wheat;stroke:black;stroke-width:3px;cursor:pointer;"),
+                        opts_hoverkey(css = "stroke:black;r:5pt;cursor:pointer;")
+                        )
     x
   })
 
   output$datatab <- renderTable({
+    print(selected_keys())
     out <- iris[iris$Species %in% selected_keys(), ]
     if( nrow(out) < 1 ) return(NULL)
     row.names(out) <- NULL
