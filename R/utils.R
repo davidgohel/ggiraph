@@ -112,6 +112,10 @@ add_interactive_attrs <- function(gr,
 
   if (is.null(cl)) {
     cl <- paste("interactive", class(gr)[1], "grob", sep = "_")
+    # some grobs have class name which contains "grob" already, like rastergrob
+    # and labelgrob, so they end up named like interactive_rastergrob_grob.
+    # we normalize the name here, to use class interactive_raster_grob.
+    cl <- sub("grob_grob", "_grob", cl)
   }
   class(gr)[1] <- cl
   gr

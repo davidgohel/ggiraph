@@ -7,8 +7,8 @@
 #' @param ... arguments passed to base geometry.
 #' @seealso \code{\link{girafe}}
 #' @examples
-#' # add interactive polygons to a ggplot -------
-#' @example examples/geom_rect_interactive.R
+#' # add interactive raster to a ggplot -------
+#' @example examples/geom_raster_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
 geom_raster_interactive <- function(...) {
@@ -47,9 +47,9 @@ GeomInteractiveRaster <- ggproto(
 
 #' @export
 #' @title interactive_raster_grob drawing
-#' @description draw an interactive_rect_grob
+#' @description draw an interactive_raster_grob
 #' @inheritParams grid::drawDetails
-drawDetails.interactive_rastergrob_grob <- function(x, recording) {
+drawDetails.interactive_raster_grob <- function(x, recording) {
   # ugly fix for beeing able to call grid.raster as argument name is raster and not image
   names(x)[names(x) %in% "raster"] <- "image"
   dsvg_tracer_on()
