@@ -2,15 +2,22 @@
 % Please edit documentation in R/geom_sf_interactive.R
 \name{geom_sf_interactive}
 \alias{geom_sf_interactive}
+\alias{geom_sf_label_interactive}
+\alias{geom_sf_text_interactive}
 \title{interactive sf objects}
 \usage{
 geom_sf_interactive(...)
+
+geom_sf_label_interactive(...)
+
+geom_sf_text_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base geometry.}
 }
 \description{
-The geometry is based on \code{\link[ggplot2]{geom_sf}}.
+These geometries are based on \code{\link[ggplot2]{geom_sf}},
+\code{\link[ggplot2]{geom_sf_label}} and \code{\link[ggplot2]{geom_sf_text}}.
 See the documentation for those functions for more details.
 }
 \examples{
@@ -25,9 +32,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
     geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))
   x <- girafe(ggobj = gg)
   if( interactive() ) print(x)
-}
 
-if (requireNamespace("sf", quietly = TRUE)) {
   nc_3857 <- sf::st_transform(nc, "+init=epsg:3857")
 
   # Unfortunately if you plot other types of feature you'll need to use
@@ -40,8 +45,21 @@ if (requireNamespace("sf", quietly = TRUE)) {
       show.legend = "point")
   x <- girafe( ggobj = gg)
   if( interactive() ) print(x)
-}
 
+  # Example with texts.
+  gg <- ggplot(nc_3857[1:3, ]) +
+    geom_sf(aes(fill = AREA)) +
+    geom_sf_text_interactive(aes(label = NAME, tooltip = NAME), color="white")
+  x <- girafe( ggobj = gg)
+  if( interactive() ) print(x)
+
+  # Example with labels.
+  gg <- ggplot(nc_3857[1:3, ]) +
+    geom_sf(aes(fill = AREA)) +
+    geom_sf_label_interactive(aes(label = NAME, tooltip = NAME))
+  x <- girafe( ggobj = gg)
+  if( interactive() ) print(x)
+}
 }
 \seealso{
 \code{\link{girafe}}
