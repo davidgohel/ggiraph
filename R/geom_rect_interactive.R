@@ -52,14 +52,11 @@ GeomInteractiveRect <- ggproto(
       coords <- coord$transform(data, panel_params)
       coords <- force_interactive_aes_to_char(coords)
 
-      ggname(
+      gr <- ggname(
         "geom_rect_interactive",
-        interactive_rect_grob(
+        rectGrob(
           coords$xmin,
           coords$ymax,
-          tooltip = coords$tooltip,
-          onclick = coords$onclick,
-          data_id = coords$data_id,
           width = coords$xmax - coords$xmin,
           height = coords$ymax - coords$ymin,
           default.units = "native",
@@ -79,6 +76,7 @@ GeomInteractiveRect <- ggproto(
           )
         )
       )
+      add_interactive_attrs(gr, coords)
     }
   }
 )

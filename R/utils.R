@@ -55,17 +55,20 @@ force_interactive_aes_to_char <- function(data) {
 #' and returns the result
 #' @noRd
 copy_interactive_attrs <-
-  function(src, dest, useList = FALSE, ...) {
-    if (useList == TRUE) {
-      for (a in INTERACTIVE_ATTR_NAMES) {
-        if (!is.null(src[[a]])) {
-          dest[[a]] <- unlist(mapply(rep, as.character(src[[a]]), ...))
+  function(src, dest, forceChar = TRUE, useList = FALSE, rows = NULL, ...) {
+    for (a in INTERACTIVE_ATTR_NAMES) {
+      if (!is.null(src[[a]])) {
+        if (is.null(rows)) {
+          val <- src[[a]]
+        } else {
+          val <- src[[a]][rows]
         }
-      }
-    } else {
-      for (a in INTERACTIVE_ATTR_NAMES) {
-        if (!is.null(src[[a]])) {
-          dest[[a]] <- rep(as.character(src[[a]]), ...)
+        if (forceChar)
+          val <- as.character(val)
+        if (useList) {
+          dest[[a]] <- unlist(mapply(rep, val, ...))
+        } else {
+          dest[[a]] <- rep(val, ...)
         }
       }
     }
@@ -88,10 +91,16 @@ get_interactive_attr_names <- function(x) {
   intersect(names(x), INTERACTIVE_ATTR_NAMES)
 }
 
-#' Gathers the interactive attributes that may exist in an object.
+#' Returns the interactive attributes that may exist in an object
+#' or in the parent environment by default.
 #' @noRd
-collect_interactive_attrs <- function(x) {
-  x[get_interactive_attr_names(x)]
+#' @importFrom rlang env_get_list caller_env
+get_interactive_attrs <- function(x = caller_env()) {
+  if (is.environment(x)) {
+    env_get_list(env = x, INTERACTIVE_ATTR_NAMES)
+  } else {
+    x[get_interactive_attr_names(x)]
+  }
 }
 
 #' Removes the interactive attributes from an object.
@@ -108,6 +117,7 @@ remove_interactive_attrs <- function(x) {
 #' @noRd
 add_interactive_attrs <- function(gr,
                                   data,
+                                  rows = NULL,
                                   cl = NULL,
                                   data_attr = "data-id") {
   # if passed grob is a gTree, loop through the children
@@ -145,8 +155,14 @@ add_interactive_attrs <- function(gr,
     }
     return(gr)
   }
-  for (a in INTERACTIVE_ATTR_NAMES) {
-    gr[[a]] <- data[[a]]
+  if (is.null(rows)) {
+    for (a in INTERACTIVE_ATTR_NAMES) {
+      gr[[a]] <- data[[a]]
+    }
+  } else {
+    for (a in INTERACTIVE_ATTR_NAMES) {
+      gr[[a]] <- data[[a]][rows]
+    }
   }
   gr$data_attr <- data_attr
 
@@ -237,12 +253,12 @@ layer_interactive <-
     })
     # check if it contains interactive aesthetics
     if (index > 0 && has_interactive_attrs(args[[index]])) {
-      interactive_mapping <- collect_interactive_attrs(args[[index]])
+      interactive_mapping <- get_interactive_attrs(args[[index]])
       args[[index]] <- remove_interactive_attrs(args[[index]])
     }
     # check named parameters
     if (has_interactive_attrs(args)) {
-      interactive_params <- collect_interactive_attrs(args)
+      interactive_params <- get_interactive_attrs(args)
       args <- remove_interactive_attrs(args)
     }
     # call layer

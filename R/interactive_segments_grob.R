@@ -18,11 +18,7 @@ interactive_segments_grob <-
            cl = "interactive_segments_grob") {
     gr <- grid::segmentsGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 

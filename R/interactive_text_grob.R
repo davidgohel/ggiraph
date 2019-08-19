@@ -18,11 +18,7 @@ interactive_text_grob <-
            cl = "interactive_text_grob") {
     gr <- grid::textGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 

@@ -42,16 +42,13 @@ GeomInteractivePolygon <- ggproto(
 
       munched <- force_interactive_aes_to_char(munched)
 
-      ggname(
+      gr <- ggname(
         "geom_polygon_interactive",
-        interactive_polygon_grob(
+        polygonGrob(
           munched$x,
           munched$y,
           default.units = "native",
           id = munched$group,
-          tooltip = munched$tooltip,
-          onclick = munched$onclick,
-          data_id = munched$data_id,
           gp = gpar(
             col = first_rows$colour,
             fill = alpha(first_rows$fill, first_rows$alpha),
@@ -60,6 +57,7 @@ GeomInteractivePolygon <- ggproto(
           )
         )
       )
+      add_interactive_attrs(gr, munched)
     } else {
       if (utils::packageVersion('grid') < "3.6") {
         stop("Polygons with holes requires R 3.6 or above", call. = FALSE)
@@ -76,18 +74,15 @@ GeomInteractivePolygon <- ggproto(
 
       munched <- force_interactive_aes_to_char(munched)
 
-      ggname(
+      gr <- ggname(
         "geom_path_interactive",
-        interactive_path_grob(
+        pathGrob(
           munched$x,
           munched$y,
           default.units = "native",
           id = id,
           pathId = munched$group,
           rule = rule,
-          tooltip = munched$tooltip,
-          onclick = munched$onclick,
-          data_id = munched$data_id,
           gp = gpar(
             col = first_rows$colour,
             fill = alpha(first_rows$fill, first_rows$alpha),
@@ -96,6 +91,7 @@ GeomInteractivePolygon <- ggproto(
           )
         )
       )
+      add_interactive_attrs(gr, munched)
     }
   }
 )

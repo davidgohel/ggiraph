@@ -84,14 +84,11 @@ GeomInteractivePath <- ggproto(
     munched <- force_interactive_aes_to_char(munched)
 
     if (!constant) {
-      interactive_segments_grob(
+      gr <- segmentsGrob(
         munched$x[!end],
         munched$y[!end],
         munched$x[!start],
         munched$y[!start],
-        tooltip = munched$tooltip[!end],
-        onclick = munched$onclick[!end],
-        data_id = munched$data_id[!end],
         default.units = "native",
         arrow = arrow,
         gp = gpar(
@@ -104,15 +101,13 @@ GeomInteractivePath <- ggproto(
           linemitre = linemitre
         )
       )
+      add_interactive_attrs(gr, munched, rows = !end)
     } else {
       id <- match(munched$group, unique(munched$group))
-      interactive_polyline_grob(
+      gr <- polylineGrob(
         munched$x,
         munched$y,
         id = id,
-        tooltip = munched$tooltip,
-        onclick = munched$onclick,
-        data_id = munched$data_id,
         default.units = "native",
         arrow = arrow,
         gp = gpar(
@@ -125,6 +120,7 @@ GeomInteractivePath <- ggproto(
           linemitre = linemitre
         )
       )
+      add_interactive_attrs(gr, munched)
     }
   }
 )

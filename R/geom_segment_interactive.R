@@ -56,27 +56,24 @@ GeomInteractiveSegment <- ggproto(
 
       coord <- force_interactive_aes_to_char(coord)
 
-      return(
-        interactive_segments_grob(
-          coord$x,
-          coord$y,
-          coord$xend,
-          coord$yend,
-          tooltip = coord$tooltip,
-          onclick = coord$onclick,
-          data_id = coord$data_id,
-          default.units = "native",
-          gp = gpar(
-            col = alpha(coord$colour, coord$alpha),
-            fill = alpha(arrow.fill, coord$alpha),
-            lwd = coord$size * .pt,
-            lty = coord$linetype,
-            lineend = lineend,
-            linejoin = linejoin
-          ),
-          arrow = arrow
-        )
+      gr <- segmentsGrob(
+        coord$x,
+        coord$y,
+        coord$xend,
+        coord$yend,
+        default.units = "native",
+        gp = gpar(
+          col = alpha(coord$colour, coord$alpha),
+          fill = alpha(arrow.fill, coord$alpha),
+          lwd = coord$size * .pt,
+          lty = coord$linetype,
+          lineend = lineend,
+          linejoin = linejoin
+        ),
+        arrow = arrow
       )
+      gr <- add_interactive_attrs(gr, coord)
+      return(gr)
     }
 
     data$group <- 1:nrow(data)

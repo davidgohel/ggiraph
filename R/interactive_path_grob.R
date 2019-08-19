@@ -18,11 +18,7 @@ interactive_path_grob <-
            cl = "interactive_path_grob") {
     gr <- grid::pathGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 
