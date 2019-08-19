@@ -1,12 +1,6 @@
-#' @title Vertical interactive reference line
-#'
-#' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_vline}}.
-#' See the documentation for those functions for more details.
-#'
-#' @param ... arguments passed to base geometry.
+#' @rdname geom_abline_interactive
 #' @examples
-#' # add interactive reference lines to a ggplot -------
+#' # add vertical interactive reference lines to a ggplot -------
 #' @example examples/geom_vline_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export

@@ -52,6 +52,7 @@ Collate:
     'dsvg.R'
     'dsvg_view.R'
     'fonts.R'
+    'geom_abline_interactive.R'
     'geom_path_interactive.R'
     'geom_polygon_interactive.R'
     'geom_rect_interactive.R'
