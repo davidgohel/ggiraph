@@ -52,7 +52,7 @@ GeomInteractiveMap <- ggproto(
     )
 
     data <- force_interactive_aes_to_char(data)
-    args <- copy_interactive_attrs(data, args, run_l$lengths)
+    args <- copy_interactive_attrs(data, args, useList = TRUE, run_l$lengths)
     do.call(interactive_polygon_grob, args)
   }
 )

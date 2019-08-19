@@ -55,18 +55,30 @@ force_interactive_aes_to_char <- function(data) {
 #' Copies interactive attributes from one object to the other.
 #' and returns the result
 #' @noRd
-copy_interactive_attrs <- function(src, dest, rep_lengths = 1) {
-  if (!is.null(src$tooltip)) {
-    dest$tooltip <-
-      unlist(mapply(rep, as.character(src$tooltip), rep_lengths))
-  }
-  if (!is.null(src$onclick)) {
-    dest$onclick <-
-      unlist(mapply(rep, as.character(src$onclick), rep_lengths))
-  }
-  if (!is.null(src$data_id)) {
-    dest$data_id <-
-      unlist(mapply(rep, as.character(src$data_id), rep_lengths))
+copy_interactive_attrs <- function(src, dest, useList = FALSE, ...) {
+  if (useList == TRUE) {
+    if (!is.null(src$tooltip)) {
+      dest$tooltip <-
+        unlist(mapply(rep, as.character(src$tooltip), ...))
+    }
+    if (!is.null(src$onclick)) {
+      dest$onclick <-
+        unlist(mapply(rep, as.character(src$onclick), ...))
+    }
+    if (!is.null(src$data_id)) {
+      dest$data_id <-
+        unlist(mapply(rep, as.character(src$data_id), ...))
+    }
+  } else {
+    if (!is.null(src$tooltip)) {
+      dest$tooltip <- rep(as.character(src$tooltip), ...)
+    }
+    if (!is.null(src$onclick)) {
+      dest$onclick <- rep(as.character(src$onclick), ...)
+    }
+    if (!is.null(src$data_id)) {
+      dest$data_id <- rep(as.character(src$data_id), ...)
+    }
   }
   dest
 }
