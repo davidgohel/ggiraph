@@ -2,6 +2,10 @@ GeomInteractiveCrossbar <- ggproto(
   "GeomInteractiveCrossbar",
   GeomCrossbar,
   default_aes = add_default_interactive_aes(GeomCrossbar),
+  draw_key = function(data, params, size) {
+    gr <- GeomCrossbar$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data,
                         panel_params,
                         coord,

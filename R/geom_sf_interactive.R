@@ -22,6 +22,10 @@ GeomInteractiveSf <- ggproto(
   "GeomInteractiveSf",
   GeomSf,
   default_aes = add_default_interactive_aes(GeomSf),
+  draw_key = function(data, params, size) {
+    gr <- GeomSf$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data,
                         panel_params,
                         coord,
@@ -46,10 +50,5 @@ GeomInteractiveSf <- ggproto(
       )
     })
     do.call("gList", grobs)
-  },
-
-  draw_key = function(data, params, size) {
-    gr <- GeomSf$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, cl = NULL)
   }
 )

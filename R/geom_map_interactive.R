@@ -22,6 +22,10 @@ GeomInteractiveMap <- ggproto(
   "GeomInteractiveMap",
   GeomMap,
   default_aes = add_default_interactive_aes(GeomMap),
+  draw_key = function(data, params, size) {
+    gr <- GeomMap$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data, panel_params, coord, map) {
     # Only use matching data and map ids
     common <- intersect(data$map_id, map$id)

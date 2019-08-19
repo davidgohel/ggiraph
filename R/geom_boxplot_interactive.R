@@ -21,12 +21,11 @@ geom_boxplot_interactive  <- function(...) {
 GeomInteractiveBoxplot <- ggproto(
   "GeomInteractiveBoxplot",
   GeomBoxplot,
-  draw_key = function(data, params, size) {
-    gr <- draw_key_boxplot(data, params, size)
-    add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
-  },
-
   default_aes = add_default_interactive_aes(GeomBoxplot),
+  draw_key = function(data, params, size) {
+    gr <- GeomBoxplot$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_group = function(data,
                         panel_params,
                         coord,

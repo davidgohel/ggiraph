@@ -22,6 +22,10 @@ GeomInteractiveText <- ggproto(
   "GeomInteractiveText",
   GeomText,
   default_aes = add_default_interactive_aes(GeomText),
+  draw_key = function(data, params, size) {
+    gr <- GeomText$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data,
                         panel_params,
                         coord,

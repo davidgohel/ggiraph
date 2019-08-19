@@ -27,8 +27,8 @@ GeomInteractivePath <- ggproto(
   GeomPath,
   default_aes = add_default_interactive_aes(GeomPath),
   draw_key = function(data, params, size) {
-    gr <- draw_key_path(data, params, size)
-    add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
+    gr <- GeomPath$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
   },
   draw_panel = function(data,
                         panel_params,

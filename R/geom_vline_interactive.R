@@ -22,6 +22,10 @@ GeomInteractiveVline <- ggproto(
   "GeomInteractiveVline",
   GeomVline,
   default_aes = add_default_interactive_aes(GeomVline),
+  draw_key = function(data, params, size) {
+    gr <- GeomVline$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data, panel_params, coord) {
     ranges <- coord$backtransform_range(panel_params)
 

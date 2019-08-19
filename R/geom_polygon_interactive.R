@@ -23,6 +23,10 @@ GeomInteractivePolygon <- ggproto(
   "GeomInteractivePolygon",
   GeomPolygon,
   default_aes = add_default_interactive_aes(GeomPolygon),
+  draw_key = function(data, params, size) {
+    gr <- GeomPolygon$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data, panel_params, coord, rule = "evenodd") {
     n <- nrow(data)
     if (n == 1)
