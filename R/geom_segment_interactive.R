@@ -87,7 +87,7 @@ GeomInteractiveSegment <- ggproto(
     pieces <- rbind(starts, ends)
     pieces <- pieces[order(pieces$group),]
 
-    GeomPathInteractive$draw_panel(pieces,
+    GeomInteractivePath$draw_panel(pieces,
                                    panel_params,
                                    coord,
                                    arrow = arrow,
