@@ -1,8 +1,8 @@
 #' @title interactive observations connections
 #'
 #' @description
-#' These geometries are based on \code{\link[ggplot2]{geom_path}} and
-#' \code{\link[ggplot2]{geom_line}}.
+#' These geometries are based on \code{\link[ggplot2]{geom_path}},
+#' \code{\link[ggplot2]{geom_line}} and \code{\link[ggplot2]{geom_step}}.
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base geometry.
@@ -144,3 +144,47 @@ GeomInteractiveLine <- ggproto(
     data[order(data$PANEL, data$group, data$x), ]
   }
 )
+
+#' @export
+#' @rdname geom_path_interactive
+geom_step_interactive <- function(...) {
+  layer_interactive(geom_step, ...)
+}
+
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomInteractiveStep <-
+  ggproto(
+    "GeomInteractiveStep",
+    GeomInteractivePath,
+    draw_panel = function(data, panel_params, coord, direction = "hv") {
+      data <- dapply(data, "group", stairstep, direction = direction)
+      GeomInteractivePath$draw_panel(data, panel_params, coord)
+    }
+  )
+
+# Calculate stairsteps
+stairstep <- function(data, direction = "hv") {
+  direction <- match.arg(direction, c("hv", "vh"))
+  data <- as.data.frame(data)[order(data$x), ]
+  n <- nrow(data)
+
+  if (n <= 1) {
+    # Need at least one observation
+    return(data[0, , drop = FALSE])
+  }
+
+  if (direction == "vh") {
+    xs <- rep(1:n, each = 2)[-2 * n]
+    ys <- c(1, rep(2:n, each = 2))
+  } else {
+    ys <- rep(1:n, each = 2)[-2 * n]
+    xs <- c(1, rep(2:n, each = 2))
+  }
+
+  new_data_frame(c(list(x = data$x[xs],
+                        y = data$y[ys]),
+                   data[xs, setdiff(names(data), c("x", "y"))]))
+}

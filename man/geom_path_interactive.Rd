@@ -3,18 +3,21 @@
 \name{geom_path_interactive}
 \alias{geom_path_interactive}
 \alias{geom_line_interactive}
+\alias{geom_step_interactive}
 \title{interactive observations connections}
 \usage{
 geom_path_interactive(...)
 
 geom_line_interactive(...)
+
+geom_step_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base geometry.}
 }
 \description{
-These geometries are based on \code{\link[ggplot2]{geom_path}} and
-\code{\link[ggplot2]{geom_line}}.
+These geometries are based on \code{\link[ggplot2]{geom_path}},
+\code{\link[ggplot2]{geom_line}} and \code{\link[ggplot2]{geom_step}}.
 See the documentation for those functions for more details.
 }
 \examples{
@@ -32,6 +35,17 @@ if( requireNamespace("dplyr", quietly = TRUE)){
                       opts_hover(css = "stroke:red;") )
   if( interactive() ) print(x)
 
+}
+
+# geom_step_interactive example -----
+if( requireNamespace("dplyr", quietly = TRUE)){
+  recent <- economics[economics$date > as.Date("2013-01-01"), ]
+  gg = ggplot(recent, aes(date, unemploy)) +
+    geom_step_interactive(aes(tooltip = date, data_id = date))
+  x <- girafe(ggobj = gg)
+  x <- girafe_options(x = x,
+                      opts_hover(css = "stroke:red;") )
+  if( interactive() ) print(x)
 }
 
 # create datasets -----

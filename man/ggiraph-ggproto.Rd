@@ -12,6 +12,7 @@
 \alias{GeomInteractive}
 \alias{GeomInteractivePath}
 \alias{GeomInteractiveLine}
+\alias{GeomInteractiveStep}
 \alias{GeomInteractivePolygon}
 \alias{GeomInteractiveRect}
 \alias{GeomInteractiveBar}
