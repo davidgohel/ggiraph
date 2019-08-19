@@ -31,9 +31,15 @@ drawDetails.interactive_path_grob <- function(x, recording) {
   do.call(grid.path, x[grob_argnames(x = x, grob = grid::pathGrob)])
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
-    if (is.null(x$id))
-      x$id <- rep(1, length(x$x))
-    posid = which(!duplicated(x$id))
+    # if pathId is specified use that (polygons with holes for example)
+    if (!is.null(x$pathId)) {
+      posid = which(!duplicated(x$pathId))
+    } else {
+      if (is.null(x$id)) {
+        x$id <- rep(1, length(x$x))
+      }
+      posid = which(!duplicated(x$id))
+    }
     interactive_attr_toxml(x = x, ids = ids, rows = posid)
   }
   invisible()

@@ -70,3 +70,8 @@ x <- girafe_options(x = x,
                     opts_hover(css = "stroke-width:10px;") )
 if( interactive() ) print(x)
 
+m <- ggplot(economics, aes(unemploy/pop, psavert))
+p <- m + geom_path_interactive(aes(colour = as.numeric(date), tooltip=date))
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
+
