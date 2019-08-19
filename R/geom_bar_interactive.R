@@ -1,7 +1,8 @@
 #' @title interactive bars
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_bar}}.
+#' The geometries are based on \code{\link[ggplot2]{geom_bar}}
+#' and \code{\link[ggplot2]{geom_col}}.
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base geometry.
