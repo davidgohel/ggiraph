@@ -111,9 +111,38 @@ add_interactive_attrs <- function(gr,
                                   data,
                                   cl = NULL,
                                   data_attr = "data-id") {
-  if( inherits(gr, "gTree") ){
-    for(i in seq_along(gr$children)){
-      gr$children[[i]] <- add_interactive_attrs(gr = gr$children[[i]], data = data, cl = cl, data_attr = data_attr)
+  # if passed grob is a gTree, loop through the children
+  # note that some grobs (like labelgrob) inherit from gTree,
+  # but have no children. So we need to check the children length, first.
+  if (inherits(gr, "gTree") && length(gr$children) > 0) {
+    # check the lengths of children grobs and data
+    data_len <- nrow(data)
+    children_len <- length(gr$children)
+    if (is.null(data_len) || data_len == 1) {
+      # pass the data as a whole
+      for(i in seq_along(gr$children)){
+        gr$children[[i]] <-
+          add_interactive_attrs(
+            gr = gr$children[[i]],
+            data = data,
+            cl = cl,
+            data_attr = data_attr
+          )
+      }
+
+    } else if (children_len == data_len) {
+      # pass the correct data row
+      for (i in seq_along(gr$children)) {
+        gr$children[[i]] <-
+          add_interactive_attrs(
+            gr = gr$children[[i]],
+            data = data[i, , drop = FALSE],
+            cl = cl,
+            data_attr = data_attr
+          )
+      }
+    } else {
+      stop("Can't add interactive attrs to gTree", call. = FALSE)
     }
     return(gr)
   }
