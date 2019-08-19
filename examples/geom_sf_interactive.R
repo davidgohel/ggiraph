@@ -2,7 +2,9 @@ library(ggplot2)
 library(ggiraph)
 
 ## original code: see section examples of ggplot2::geom_sf help file
-if (requireNamespace("sf", quietly = TRUE)) {
+if (requireNamespace("sf",
+                     quietly = TRUE,
+                     versionCheck = c(op = ">=", version = "0.7-3"))) {
   nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
   gg <- ggplot(nc) +
     geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))
