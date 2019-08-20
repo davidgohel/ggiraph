@@ -19,6 +19,7 @@ geom_sf_interactive <- function(...) {
 #' @format NULL
 #' @usage NULL
 #' @export
+#' @importFrom purrr flatten
 GeomInteractiveSf <- ggproto(
   "GeomInteractiveSf",
   GeomSf,
@@ -37,6 +38,7 @@ GeomInteractiveSf <- ggproto(
     data <- force_interactive_aes_to_char(data)
     # call original draw_panel for each data row/geometry
     # this way multi geometries are handled too
+    useflatten <-  FALSE
     grobs <- lapply(1:nrow(data), function(i) {
       row <- data[i, , drop = FALSE]
       gr <- GeomSf$draw_panel(row,
@@ -46,9 +48,20 @@ GeomInteractiveSf <- ggproto(
                               lineend = lineend,
                               linejoin = linejoin,
                               linemitre = linemitre)
-      add_interactive_attrs(gr, row)
+      if (inherits(gr, "gList")) { # grid v<3.6.0
+        useflatten <<- TRUE
+        for (i in seq_along(gr)) {
+          gr[[i]] <- add_interactive_attrs(gr[[i]], row)
+        }
+        gr
+      } else {
+        add_interactive_attrs(gr, row)
+      }
     })
-    gTree(children = do.call("gList", grobs))
+    if (useflatten) {
+      grobs <- flatten(grobs)
+    }
+    do.call("gList", grobs)
   }
 )
 
