@@ -37,6 +37,7 @@ Suggests:
     maps,
     shiny,
     sf (>= 0.7-3),
+    quantreg,
     dplyr
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph
@@ -60,7 +61,9 @@ Collate:
     'geom_bar_interactive.R'
     'geom_boxplot_interactive.R'
     'geom_col_interactive.R'
+    'geom_contour_interactive.R'
     'geom_crossbar_interactive.R'
+    'geom_density_2d_interactive.R'
     'geom_density_interactive.R'
     'geom_errorbar_interactive.R'
     'geom_errorbarh_interactive.R'
@@ -73,6 +76,7 @@ Collate:
     'geom_map_interactive.R'
     'geom_point_interactive.R'
     'geom_pointrange_interactive.R'
+    'geom_quantile_interactive.R'
     'geom_raster_interactive.R'
     'geom_ribbon_interactive.R'
     'geom_segment_interactive.R'
