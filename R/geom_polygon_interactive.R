@@ -78,23 +78,23 @@ GeomInteractivePolygon <- ggproto(
 
       munched <- force_interactive_aes_to_char(munched)
 
-      gr <- ggname(
-        "geom_path_interactive",
-        pathGrob(
-          munched$x,
-          munched$y,
-          default.units = "native",
-          id = id,
-          pathId = munched$group,
-          rule = rule,
-          gp = gpar(
-            col = first_rows$colour,
-            fill = alpha(first_rows$fill, first_rows$alpha),
-            lwd = first_rows$size * .pt,
-            lty = first_rows$linetype
-          )
+      args <- list(
+        x = munched$x,
+        y = munched$y,
+        default.units = "native",
+        id = id,
+        pathId = munched$group,
+        rule = rule,
+        gp = gpar(
+          col = first_rows$colour,
+          fill = alpha(first_rows$fill, first_rows$alpha),
+          lwd = first_rows$size * .pt,
+          lty = first_rows$linetype
         )
       )
+      # pathId argument does not exist prior to grid v3.6.0
+      # so we dont't call pathGrob directly because travis test fails
+      gr <- do.call(pathGrob, args[grob_argnames(x = args, grob = grid::pathGrob)])
       add_interactive_attrs(gr, munched)
     }
   }
