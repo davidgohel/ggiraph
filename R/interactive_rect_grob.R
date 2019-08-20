@@ -18,11 +18,7 @@ interactive_rect_grob <-
            cl = "interactive_rect_grob") {
     gr <- grid::rectGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 

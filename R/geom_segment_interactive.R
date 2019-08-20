@@ -22,6 +22,10 @@ GeomInteractiveSegment <- ggproto(
   "GeomInteractiveSegment",
   GeomSegment,
   default_aes = add_default_interactive_aes(GeomSegment),
+  draw_key = function(data, params, size) {
+    gr <- GeomSegment$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data,
                         panel_params,
                         coord,
@@ -56,27 +60,24 @@ GeomInteractiveSegment <- ggproto(
 
       coord <- force_interactive_aes_to_char(coord)
 
-      return(
-        interactive_segments_grob(
-          coord$x,
-          coord$y,
-          coord$xend,
-          coord$yend,
-          tooltip = coord$tooltip,
-          onclick = coord$onclick,
-          data_id = coord$data_id,
-          default.units = "native",
-          gp = gpar(
-            col = alpha(coord$colour, coord$alpha),
-            fill = alpha(arrow.fill, coord$alpha),
-            lwd = coord$size * .pt,
-            lty = coord$linetype,
-            lineend = lineend,
-            linejoin = linejoin
-          ),
-          arrow = arrow
-        )
+      gr <- segmentsGrob(
+        coord$x,
+        coord$y,
+        coord$xend,
+        coord$yend,
+        default.units = "native",
+        gp = gpar(
+          col = alpha(coord$colour, coord$alpha),
+          fill = alpha(arrow.fill, coord$alpha),
+          lwd = coord$size * .pt,
+          lty = coord$linetype,
+          lineend = lineend,
+          linejoin = linejoin
+        ),
+        arrow = arrow
       )
+      gr <- add_interactive_attrs(gr, coord)
+      return(gr)
     }
 
     data$group <- 1:nrow(data)
@@ -87,7 +88,7 @@ GeomInteractiveSegment <- ggproto(
     pieces <- rbind(starts, ends)
     pieces <- pieces[order(pieces$group),]
 
-    GeomPathInteractive$draw_panel(pieces,
+    GeomInteractivePath$draw_panel(pieces,
                                    panel_params,
                                    coord,
                                    arrow = arrow,

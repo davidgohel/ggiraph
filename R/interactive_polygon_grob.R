@@ -18,11 +18,7 @@ interactive_polygon_grob <-
            cl = "interactive_polygon_grob") {
     gr <- grid::polygonGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 

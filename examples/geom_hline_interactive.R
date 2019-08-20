@@ -33,3 +33,4 @@ gg_hline2 <- g2 + geom_hline_interactive(
 
 x <- girafe(ggobj = gg_hline2)
 if( interactive() ) print(x)
+

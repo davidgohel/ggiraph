@@ -26,8 +26,8 @@ GeomInteractivePoint <- ggproto(
   GeomPoint,
   default_aes = add_default_interactive_aes(GeomPoint),
   draw_key = function(data, params, size) {
-    gr <- draw_key_point(data, params, size)
-    add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
+    gr <- GeomPoint$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
   },
   draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
     zz <- GeomPoint$draw_panel(data, panel_params, coord, na.rm = na.rm)

@@ -31,8 +31,8 @@ GeomInteractiveRect <- ggproto(
   GeomRect,
   default_aes = add_default_interactive_aes(GeomRect),
   draw_key = function(data, params, size) {
-    gr <- draw_key_polygon(data, params, size)
-    add_interactive_attrs(gr, data, cl = NULL, data_attr = "key-id")
+    gr <- GeomRect$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
   },
   draw_panel = function(self, data, panel_params, coord, linejoin = "mitre") {
     if (!coord$is_linear()) {
@@ -52,14 +52,11 @@ GeomInteractiveRect <- ggproto(
       coords <- coord$transform(data, panel_params)
       coords <- force_interactive_aes_to_char(coords)
 
-      ggname(
+      gr <- ggname(
         "geom_rect_interactive",
-        interactive_rect_grob(
+        rectGrob(
           coords$xmin,
           coords$ymax,
-          tooltip = coords$tooltip,
-          onclick = coords$onclick,
-          data_id = coords$data_id,
           width = coords$xmax - coords$xmin,
           height = coords$ymax - coords$ymin,
           default.units = "native",
@@ -79,6 +76,7 @@ GeomInteractiveRect <- ggproto(
           )
         )
       )
+      add_interactive_attrs(gr, coords)
     }
   }
 )

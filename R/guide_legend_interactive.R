@@ -10,7 +10,7 @@ guide_legend_interactive <- function(...) {
 }
 #' @export
 guide_geom.legend_interactive <- function(guide, layers, default_mapping){
-  default_mapping <- append_aes(default_mapping, list(data_id = NULL, tooltip = NULL, onclick = NULL))
+  default_mapping <- append_aes(default_mapping, INTERACTIVE_ATTR_DEFAULTS)
   NextMethod()
 }
 
@@ -25,22 +25,11 @@ guide_train.legend_interactive <- function(guide, scale, aesthetic = NULL) {
 
   key <- zz$key
   breaks <- scale$get_breaks()
-  if( !is.null(scale$data_id) && length(breaks) > 0 ){
-    key$data_id <- scale$data_id[breaks]
-  } else if(!is.null(scale$data_id)) {
-    key$data_id <- scale$data_id
+  rows = NULL
+  if (length(breaks) > 0) {
+    rows = breaks
   }
-  if( !is.null(scale$tooltip) && length(breaks) > 0 ){
-    key$tooltip <- scale$tooltip[breaks]
-  } else if(!is.null(scale$tooltip)) {
-    key$tooltip <- scale$tooltip
-  }
-  if( !is.null(scale$onclick) && length(breaks) > 0 ){
-    key$onclick <- scale$onclick[breaks]
-  } else if(!is.null(scale$onclick)) {
-    key$onclick <- scale$onclick
-  }
-
+  key <- copy_interactive_attrs(scale, key, forceChar = FALSE, rows = rows)
   zz$key <- key
   zz
 }

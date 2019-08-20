@@ -12,15 +12,8 @@ dat <- data.frame( name = c( "David", "Constance", "Leonie" ),
     gender = c( "Male", "Female", "Female" ),
     height = c(172, 159, 71 ) )
 p <- ggplot(dat, aes( x = name, y = height, tooltip = gender,
-        data_id = name ) ) +
-  geom_bar_interactive(stat = "identity")
-
-x <- girafe(ggobj = p)
-if( interactive() ) print(x)
-
-p <- ggplot(diamonds, aes(carat)) +
-  geom_histogram_interactive(bins=30, aes(tooltip = ..count..,
-                             data_id = carat) )
+                      data_id = name ) ) +
+  geom_col_interactive()
 
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)

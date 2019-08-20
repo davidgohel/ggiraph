@@ -1,7 +1,33 @@
+#' Interactive vertical intervals: lines, crossbars & errorbars
+#'
+#' @description
+#' These geometries are based on \code{\link[ggplot2]{geom_crossbar}},
+#' \code{\link[ggplot2]{geom_errorbar}}, \code{\link[ggplot2]{geom_linerange}}
+#' and \code{\link[ggplot2]{geom_pointrange}}.
+#' See the documentation for those functions for more details.
+#'
+#' @param ... arguments passed to base geometry.
+#' @examples
+#' # add interactive intervals -------
+#' @example examples/geom_crossbar_interactive.R
+#' @seealso \code{\link{girafe}}
+#' @export
+geom_crossbar_interactive <- function(...) {
+  layer_interactive(geom_crossbar, ...)
+}
+
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
 GeomInteractiveCrossbar <- ggproto(
   "GeomInteractiveCrossbar",
   GeomCrossbar,
   default_aes = add_default_interactive_aes(GeomCrossbar),
+  draw_key = function(data, params, size) {
+    gr <- GeomCrossbar$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(data,
                         panel_params,
                         coord,

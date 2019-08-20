@@ -18,11 +18,7 @@ interactive_polyline_grob <-
            cl = "interactive_polyline_grob") {
     gr <- grid::polylineGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 

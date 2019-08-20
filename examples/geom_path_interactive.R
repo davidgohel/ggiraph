@@ -13,6 +13,17 @@ if( requireNamespace("dplyr", quietly = TRUE)){
 
 }
 
+# geom_step_interactive example -----
+if( requireNamespace("dplyr", quietly = TRUE)){
+  recent <- economics[economics$date > as.Date("2013-01-01"), ]
+  gg = ggplot(recent, aes(date, unemploy)) +
+    geom_step_interactive(aes(tooltip = date, data_id = date))
+  x <- girafe(ggobj = gg)
+  x <- girafe_options(x = x,
+                      opts_hover(css = "stroke:red;") )
+  if( interactive() ) print(x)
+}
+
 # create datasets -----
 id = paste0("id", 1:10)
 data = expand.grid(list(
@@ -68,5 +79,10 @@ if( interactive() ) print(x)
 x <- girafe(ggobj = gg_path_3)
 x <- girafe_options(x = x,
                     opts_hover(css = "stroke-width:10px;") )
+if( interactive() ) print(x)
+
+m <- ggplot(economics, aes(unemploy/pop, psavert))
+p <- m + geom_path_interactive(aes(colour = as.numeric(date), tooltip=date))
+x <- girafe(ggobj = p)
 if( interactive() ) print(x)
 

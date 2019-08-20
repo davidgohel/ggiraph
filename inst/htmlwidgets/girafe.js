@@ -71,8 +71,12 @@ HTMLWidgets.widget({
         }
 
         var addSelection = ggobj.isSelectable() &&
-          HTMLWidgets.shinyMode &&
-          ( x.settings.capture.only_shiny || x.settings.capturekey.only_shiny);
+          (( HTMLWidgets.shinyMode &&
+            ( x.settings.capture.only_shiny || x.settings.capturekey.only_shiny)
+          ) ||
+          ( !HTMLWidgets.shinyMode &&
+            ( !x.settings.capture.only_shiny || !x.settings.capturekey.only_shiny)
+          ));
 
         var addZoom = true;
         if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){

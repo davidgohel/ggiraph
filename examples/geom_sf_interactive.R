@@ -2,15 +2,15 @@ library(ggplot2)
 library(ggiraph)
 
 ## original code: see section examples of ggplot2::geom_sf help file
-if (requireNamespace("sf", quietly = TRUE)) {
+if (requireNamespace("sf",
+                     quietly = TRUE,
+                     versionCheck = c(op = ">=", version = "0.7-3"))) {
   nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
   gg <- ggplot(nc) +
     geom_sf_interactive(aes(fill = AREA, tooltip = NAME, data_id = NAME))
   x <- girafe(ggobj = gg)
   if( interactive() ) print(x)
-}
 
-if (requireNamespace("sf", quietly = TRUE)) {
   nc_3857 <- sf::st_transform(nc, "+init=epsg:3857")
 
   # Unfortunately if you plot other types of feature you'll need to use
@@ -23,5 +23,18 @@ if (requireNamespace("sf", quietly = TRUE)) {
       show.legend = "point")
   x <- girafe( ggobj = gg)
   if( interactive() ) print(x)
-}
 
+  # Example with texts.
+  gg <- ggplot(nc_3857[1:3, ]) +
+    geom_sf(aes(fill = AREA)) +
+    geom_sf_text_interactive(aes(label = NAME, tooltip = NAME), color="white")
+  x <- girafe( ggobj = gg)
+  if( interactive() ) print(x)
+
+  # Example with labels.
+  gg <- ggplot(nc_3857[1:3, ]) +
+    geom_sf(aes(fill = AREA)) +
+    geom_sf_label_interactive(aes(label = NAME, tooltip = NAME))
+  x <- girafe( ggobj = gg)
+  if( interactive() ) print(x)
+}

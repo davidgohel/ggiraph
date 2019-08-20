@@ -28,7 +28,7 @@ Imports:
     htmltools,
     Rcpp (>= 0.12.12), 
     gdtools (>= 0.1.6),
-    purrr, scales
+    purrr, scales, rlang
 LinkingTo: Rcpp, gdtools
 Suggests:
     knitr,
@@ -37,34 +37,51 @@ Suggests:
     maps,
     shiny,
     sf (>= 0.7-3),
+    quantreg,
     dplyr
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 6.1.1
 Collate: 
-    '00_scale.R'
-    'RcppExports.R'
     'utils_ggplot2_performance.R'
     'utils_ggplot2.R'
     'utils.R'
+    '00_scale.R'
+    'RcppExports.R'
     'annotate_interactive.R'
+    'annotation_raster_interactive.R'
     'dsvg.R'
     'dsvg_view.R'
     'fonts.R'
+    'geom_abline_interactive.R'
     'geom_path_interactive.R'
     'geom_polygon_interactive.R'
     'geom_rect_interactive.R'
     'geom_bar_interactive.R'
     'geom_boxplot_interactive.R'
+    'geom_col_interactive.R'
+    'geom_contour_interactive.R'
     'geom_crossbar_interactive.R'
+    'geom_density_2d_interactive.R'
+    'geom_density_interactive.R'
+    'geom_errorbar_interactive.R'
+    'geom_errorbarh_interactive.R'
+    'geom_freqpoly_interactive.R'
     'geom_histogram_interactive.R'
     'geom_hline_interactive.R'
+    'geom_jitter_interactive.R'
+    'geom_label_interactive.R'
+    'geom_linerange_interactive.R'
     'geom_map_interactive.R'
     'geom_point_interactive.R'
+    'geom_pointrange_interactive.R'
+    'geom_quantile_interactive.R'
     'geom_raster_interactive.R'
+    'geom_ribbon_interactive.R'
     'geom_segment_interactive.R'
     'geom_sf_interactive.R'
+    'geom_smooth_interactive.R'
     'geom_text_interactive.R'
     'geom_tile_interactive.R'
     'geom_vline_interactive.R'
@@ -78,7 +95,7 @@ Collate:
     'interactive_polygon_grob.R'
     'interactive_polyline_grob.R'
     'interactive_rect_grob.R'
+    'interactive_roundrect_grob.R'
     'interactive_segments_grob.R'
-    'interactive_sf_grob.R'
     'interactive_text_grob.R'
     'tracers.R'

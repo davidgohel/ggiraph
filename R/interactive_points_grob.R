@@ -18,11 +18,7 @@ interactive_points_grob <-
            cl = "interactive_points_grob") {
     gr <- grid::pointsGrob(...)
     add_interactive_attrs(gr,
-                          list(
-                            tooltip = tooltip,
-                            onclick = onclick,
-                            data_id = data_id
-                          ),
+                          get_interactive_attrs(),
                           cl = cl)
   }
 

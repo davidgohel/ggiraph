@@ -15,6 +15,10 @@ GeomInteractiveTile <- ggproto(
   "GeomInteractiveTile",
   GeomTile,
   default_aes = add_default_interactive_aes(GeomTile),
+  draw_key = function(data, params, size) {
+    gr <- GeomTile$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
   draw_panel = function(self, data, panel_params, coord, linejoin = "mitre") {
     GeomInteractiveRect$draw_panel(data, panel_params, coord, linejoin = linejoin)
   }
