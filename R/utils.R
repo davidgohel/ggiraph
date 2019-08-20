@@ -55,7 +55,7 @@ force_interactive_aes_to_char <- function(data) {
 #' and returns the result
 #' @noRd
 copy_interactive_attrs <-
-  function(src, dest, forceChar = TRUE, useList = FALSE, rows = NULL, ...) {
+  function(src, dest, ..., forceChar = TRUE, useList = FALSE, rows = NULL) {
     for (a in INTERACTIVE_ATTR_NAMES) {
       if (!is.null(src[[a]])) {
         if (is.null(rows)) {
