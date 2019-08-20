@@ -49,6 +49,7 @@ Collate:
     'utils_ggplot2.R'
     'utils.R'
     'annotate_interactive.R'
+    'annotation_raster_interactive.R'
     'dsvg.R'
     'dsvg_view.R'
     'fonts.R'
