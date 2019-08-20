@@ -44,11 +44,11 @@ URL: https://davidgohel.github.io/ggiraph
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 6.1.1
 Collate: 
-    '00_scale.R'
-    'RcppExports.R'
     'utils_ggplot2_performance.R'
     'utils_ggplot2.R'
     'utils.R'
+    '00_scale.R'
+    'RcppExports.R'
     'annotate_interactive.R'
     'annotation_raster_interactive.R'
     'dsvg.R'

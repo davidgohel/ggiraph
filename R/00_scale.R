@@ -16,6 +16,7 @@
 #' identifiers. Identifiers are available as reactive input values in shiny applications.
 #' @name scale_manual_interactive
 #' @family interactive scale
+#' @include utils.R
 scale_colour_manual_interactive <-
   function(..., values, data_id = NULL, onclick = NULL, tooltip = NULL,
            aesthetics = "colour") {

@@ -48,7 +48,7 @@ GeomInteractiveSf <- ggproto(
                               linemitre = linemitre)
       add_interactive_attrs(gr, row)
     })
-    do.call("gList", grobs)
+    gTree(children = do.call("gList", grobs))
   }
 )
 
