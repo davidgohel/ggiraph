@@ -4,7 +4,7 @@ library(xml2)
 # tracer -------
 test_that("tracer is working", {
   file <- tempfile(fileext = ".svg")
-  dsvg( file = file, standalone = FALSE, bg = "transparent" )
+  dsvg( file = file, standalone = FALSE, bg = "transparent", canvas_id = "svgid" )
   plot.new()
   ggiraph:::dsvg_tracer_on()
   points(c(0.5, .6), c(.4, .3))
@@ -16,7 +16,7 @@ test_that("tracer is working", {
 
   doc <- read_xml(file)
   circle_id <- sapply( xml_find_all(doc, ".//circle"), xml_attr, "id" )
-  expect_equal(circle_id, as.character(1:2) )
+  expect_equal(circle_id, paste0("svgid_el_", as.character(1:2)) )
 })
 
 # set_attr -------
@@ -68,7 +68,7 @@ test_that("attributes are written from comments", {
   dev.off()
 
   doc <- read_xml(file)
-  ggiraph:::set_svg_attributes(doc)
+  ggiraph:::set_svg_attributes(doc, "svgid")
   comment_nodes <- xml_find_all(doc, "//*[local-name() = 'comment']")
   expect_equal(length(comment_nodes), 0)
   circles <- xml_find_all(doc, ".//circle")

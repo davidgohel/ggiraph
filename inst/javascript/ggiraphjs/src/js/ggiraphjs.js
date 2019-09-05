@@ -15,10 +15,9 @@ export default class ggiraphjs {
     }
 
     setSvgId(id) {
-        this.svgid = utils.guid();
-        this.uid = id;
+        this.svgid = id;
     }
-   
+
     setZoomer(min, max) {
         this.zoomer = d3.zoom().scaleExtent([min, max]);
     }
@@ -103,9 +102,6 @@ export default class ggiraphjs {
             var fun_ = utils.parseFunction(jsstr);
             fun_();
         }
-
-        d3.select("#" + this.uid).attr("id", this.svgid);
-
     }
 
     IEFixResize(width, ratio) {
@@ -145,7 +141,7 @@ export default class ggiraphjs {
     }
 
     setSizeLimits(width_max, width_min, height_max, height_min) {
-        
+
         const svgid = this.svgid;
 
         d3.select("#" + svgid)

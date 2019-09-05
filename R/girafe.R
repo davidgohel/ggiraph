@@ -87,11 +87,12 @@
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
 #' @seealso \code{\link{girafe_options}}
 #' @export
+#' @importFrom uuid UUIDgenerate
 girafe <- function(
   code, ggobj = NULL,  pointsize = 12,
   width_svg = 6, height_svg = 5, xml_reader_options = list(), ...) {
 
-  canvas_id <- basename( tempfile(pattern = "svg_", fileext = format(Sys.time(), "%Y%m%d%H%M%S") ) )
+  canvas_id <- paste("svg", UUIDgenerate(), sep = "_")
   path = tempfile()
   dsvg(file = path, pointsize = pointsize, standalone = TRUE,
        width = width_svg, height = height_svg,
@@ -107,7 +108,7 @@ girafe <- function(
 
   xml_reader_options$x <- path
   data <- do.call(read_xml, xml_reader_options )
-  set_svg_attributes(data)
+  set_svg_attributes(data, canvas_id)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
   unlink(path)
@@ -177,14 +178,15 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 #' @importFrom purrr walk
 #' @importFrom xml2 xml_find_first
-set_svg_attributes <- function(data) {
+set_svg_attributes <- function(data, canvas_id) {
   comments <- xml_find_all(data, "//*[local-name() = 'comment']")
+  idprefix <- paste0(canvas_id, "_el_")
   errored <- 0
   walk(comments, function(comment) {
-    targetId <- xml_attr(comment, "target")
+    targetIndex <- xml_attr(comment, "target")
     attrName <- xml_attr(comment, "attr")
     attrValue <- xml_text(comment)
-    target <- xml_find_first(data, paste0("//*[@id='", targetId, "']"))
+    target <- xml_find_first(data, paste0("//*[@id='", idprefix, targetIndex, "']"))
     if (!inherits(target, "xml_missing")) {
       xml_attr(target, attrName) <- attrValue
     } else {
