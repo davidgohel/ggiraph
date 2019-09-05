@@ -502,7 +502,7 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
     col = gc->col;
     gc->fill = bg_fill;
     gc->col = bg_fill;
-    dsvg_clip(0, 0, dd->right, dd->bottom, dd);
+    dsvg_clip(0, dd->right, 0, dd->bottom, dd);
     dsvg_rect(0, 0, dd->right, dd->bottom, gc, dd);
     gc->fill = fill;
     gc->col = col;
