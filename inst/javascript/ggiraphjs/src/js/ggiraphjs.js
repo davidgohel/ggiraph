@@ -180,7 +180,9 @@ export default class ggiraphjs {
     animateGElements(opacity, offx, offy, usecursor, delayover, delayout, usefill, usestroke) {
         const selected_class = this.hoverClassname();
         const selectedkey_class = this.hoverKeyClassname();
-        const sel_both = d3.selectAll('#' + this.svgid + ' *');
+        const sel_both = d3.selectAll('#' + this.svgid + ' *[title]' +
+                                      ', #' + this.svgid + ' *[data-id]' +
+                                      ', #' + this.svgid + ' *[key-id]');
         const tooltipstr = "." + this.tooltipClassname();
         const svgid = this.svgid;
         const containerid = this.containerid;
