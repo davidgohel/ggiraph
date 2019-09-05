@@ -675,14 +675,10 @@ bool add_attribute(int dn, Rcpp::IntegerVector id,
 
   DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
 
-  fputs("<script type='text/javascript'><![CDATA[", svgd->file);
-
   for( int i = 0 ; i < nb_elts ; i++ ){
-    fprintf(svgd->file,
-            "document.querySelectorAll('#%s')[0].getElementById('%d').setAttribute('%s','%s');",
-            svgd->canvas_id.c_str(), id[i], name.c_str(), str[i].c_str());
+    fprintf(svgd->file, "<comment target='%d' attr='%s'><![CDATA[%s]]></comment>",
+            id[i], name.c_str(), str[i].c_str());
   }
-  fputs("]]></script>", svgd->file);
   return true;
 }
 

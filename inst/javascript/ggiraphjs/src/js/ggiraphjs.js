@@ -99,8 +99,10 @@ export default class ggiraphjs {
             .append("div").attr("class", this.tooltipClassname())
             .style("position", "absolute").style("opacity", 0);
 
-        var fun_ = utils.parseFunction(jsstr);
-        fun_();
+        if (jsstr) {
+            var fun_ = utils.parseFunction(jsstr);
+            fun_();
+        }
 
         d3.select("#" + this.uid).attr("id", this.svgid);
 

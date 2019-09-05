@@ -107,10 +107,7 @@ girafe <- function(
 
   xml_reader_options$x <- path
   data <- do.call(read_xml, xml_reader_options )
-  scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
-  js <- paste( sapply( scr, xml_text ), collapse = ";")
-  js <- paste0("function zzz(){", js, "};")
-  xml_remove(scr)
+  set_svg_attributes(data)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
   unlink(path)
@@ -124,7 +121,7 @@ girafe <- function(
   toolbar_set <- opts_toolbar()
   sizing_set <- opts_sizing()
 
-  x = list( html = as.character(data), js = js,
+  x = list( html = as.character(data), js = NULL,
             uid = canvas_id,
             ratio = width_svg / height_svg,
             settings = list(
@@ -178,3 +175,24 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
 	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
 }
 
+#' @importFrom purrr walk
+#' @importFrom xml2 xml_find_first
+set_svg_attributes <- function(data) {
+  comments <- xml_find_all(data, "//*[local-name() = 'comment']")
+  errored <- 0
+  walk(comments, function(comment) {
+    targetId <- xml_attr(comment, "target")
+    attrName <- xml_attr(comment, "attr")
+    attrValue <- xml_text(comment)
+    target <- xml_find_first(data, paste0("//*[@id='", targetId, "']"))
+    if (!inherits(target, "xml_missing")) {
+      xml_attr(target, attrName) <- attrValue
+    } else {
+      errored <<- errored + 1
+    }
+  })
+  xml_remove(comments)
+  if (errored > 0) {
+    stop("Could not set svg attributes for some elements (", errored, " cases)")
+  }
+}
