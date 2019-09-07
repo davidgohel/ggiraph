@@ -80,19 +80,23 @@ GeomInteractiveBoxplot <- ggproto(
 
     if (!is.null(data$outliers) &&
         length(data$outliers[[1]] >= 1)) {
+      outl <- list(
+        y = data$outliers[[1]],
+        x = data$x[1],
+        tooltip = formatC(data$outliers[[1]]),
+        colour = outlier.colour %||% data$colour[1],
+        fill = outlier.fill %||% data$fill[1],
+        shape = outlier.shape %||% data$shape[1],
+        size = outlier.size %||% data$size[1],
+        stroke = outlier.stroke %||% data$stroke[1],
+        fill = NA,
+        alpha = outlier.alpha %||% data$alpha[1]
+      )
+      if (!is.null(data$data_id[1])) {
+        outl$data_id <- data$data_id[1]
+      }
       outliers <- new_data_frame(
-        list(
-          y = data$outliers[[1]],
-          x = data$x[1],
-          tooltip = formatC(data$outliers[[1]]),
-          colour = outlier.colour %||% data$colour[1],
-          fill = outlier.fill %||% data$fill[1],
-          shape = outlier.shape %||% data$shape[1],
-          size = outlier.size %||% data$size[1],
-          stroke = outlier.stroke %||% data$stroke[1],
-          fill = NA,
-          alpha = outlier.alpha %||% data$alpha[1]
-        ),
+        outl,
         n = length(data$outliers[[1]])
       )
       outliers_grob <-
