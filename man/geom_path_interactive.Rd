@@ -28,11 +28,12 @@ library(ggiraph)
 # geom_line_interactive example -----
 if( requireNamespace("dplyr", quietly = TRUE)){
   gg <- ggplot(economics_long,
-    aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
+    aes(date, value01, colour = variable, tooltip = variable, data_id = variable,
+        hover_css = "fill:none;")) +
     geom_line_interactive(size = .75)
   x <- girafe(ggobj = gg)
   x <- girafe_options(x = x,
-                      opts_hover(css = "stroke:red;") )
+                      opts_hover(css = "stroke:red;fill:orange") )
   if( interactive() ) print(x)
 
 }

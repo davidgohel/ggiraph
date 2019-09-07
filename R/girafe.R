@@ -176,25 +176,3 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
 	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
 }
 
-#' @importFrom purrr walk
-#' @importFrom xml2 xml_find_first
-set_svg_attributes <- function(data, canvas_id) {
-  comments <- xml_find_all(data, "//*[local-name() = 'comment']")
-  idprefix <- paste0(canvas_id, "_el_")
-  errored <- 0
-  walk(comments, function(comment) {
-    targetIndex <- xml_attr(comment, "target")
-    attrName <- xml_attr(comment, "attr")
-    attrValue <- xml_text(comment)
-    target <- xml_find_first(data, paste0("//*[@id='", idprefix, targetIndex, "']"))
-    if (!inherits(target, "xml_missing")) {
-      xml_attr(target, attrName) <- attrValue
-    } else {
-      errored <<- errored + 1
-    }
-  })
-  xml_remove(comments)
-  if (errored > 0) {
-    stop("Could not set svg attributes for some elements (", errored, " cases)")
-  }
-}

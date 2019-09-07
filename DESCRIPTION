@@ -100,4 +100,5 @@ Collate:
     'interactive_roundrect_grob.R'
     'interactive_segments_grob.R'
     'interactive_text_grob.R'
+    'svg.R'
     'tracers.R'
