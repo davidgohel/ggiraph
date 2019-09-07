@@ -2,14 +2,33 @@
 % Please edit documentation in R/guide_colourbar_interactive.R
 \name{guide_colourbar_interactive}
 \alias{guide_colourbar_interactive}
-\title{interactive colourbar guide}
+\alias{guide_colorbar_interactive}
+\title{Create interactive continuous colour bar guide}
 \usage{
 guide_colourbar_interactive(...)
+
+guide_colorbar_interactive(...)
 }
 \arguments{
-\item{...}{arguments passed to guide_legend.}
+\item{...}{arguments passed to base function.}
+}
+\value{
+An interactive guide object.
 }
 \description{
-an interactive legend guide.
-See \code{\link[ggplot2]{guide_legend}} for more details.
+The guide is based on \code{\link[ggplot2]{guide_colourbar}}.
+See the documentation for that function for more details.
+}
+\section{Details for guide_*_interactive functions}{
+
+The guides do not accept any interactive parameter directly.
+They receive them from the scales.
+Their arguments `title.theme` and `label.theme` can be set as element_text_interactive.
+Or via the theme, see the element_*_interactive section below for more details.
+}
+
+\seealso{
+\code{\link{interactive_parameters}}
+
+\code{\link{girafe}}
 }

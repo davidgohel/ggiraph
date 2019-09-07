@@ -46,6 +46,27 @@ The interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors depending on params on base function.
 }
 
+\section{Details for scale_*_interactive functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors, depending on the number of breaks (levels).
+Their length should match the length of the breaks. They can also be
+named vectors, where each name should correspond to the same break name.
+Note that they give interactivity only to the key element of the legend.
+For the title, the text labels and the background of the legend,
+the relevant theme elements or relevant guide arguments
+can be used to add interactivity. See the guide_\*_interactive and
+element_\*_interactive sections below for more details.
+}
+
+\section{Details for guide_*_interactive functions}{
+
+The guides do not accept any interactive parameter directly.
+They receive them from the scales.
+Their arguments `title.theme` and `label.theme` can be set as element_text_interactive.
+Or via the theme, see the element_*_interactive section below for more details.
+}
+
 \section{Details for element_*_interactive functions}{
 
 The interactive parameters can be supplied as arguments in the relevant function
