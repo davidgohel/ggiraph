@@ -16,10 +16,6 @@ guide_geom.colourbar_interactive <- function(guide, layers, default_mapping){
 }
 
 #' @export
-#' @inheritParams ggplot2::guide_train
-#' @param scale,aesthetic other parameters used by guide_train
-#' @title methods for interactive colourbar guide
-#' @description These functions should not be used by the end users.
 guide_train.colourbar_interactive <- function(guide, scale, aesthetic = NULL) {
   zz <- NextMethod()
   zz <- copy_interactive_attrs(scale, zz, forceChar = FALSE)

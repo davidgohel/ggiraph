@@ -15,9 +15,6 @@ interactive_rect_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_rect_grob drawing
-#' @description draw an interactive_rect_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_rect_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.rect, x[grob_argnames(x = x, grob = grid::rectGrob)])

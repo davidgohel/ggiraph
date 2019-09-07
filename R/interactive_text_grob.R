@@ -15,9 +15,6 @@ interactive_text_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_text_grob drawing
-#' @description draw an interactive_text_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_text_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.text, x[grob_argnames(x = x, grob = grid::textGrob)])

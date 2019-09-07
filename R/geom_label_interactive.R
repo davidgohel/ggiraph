@@ -44,9 +44,6 @@ GeomInteractiveLabel <- ggproto(
 )
 
 #' @export
-#' @title interactive_label_grob drawing
-#' @description draw an interactive_label_grob
-#' @inheritParams grid::makeContent
 makeContent.interactive_label_grob <- function(x) {
   hj <- resolveHJust(x$just, NULL)
   vj <- resolveVJust(x$just, NULL)

@@ -15,9 +15,6 @@ interactive_points_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_points_grob drawing
-#' @description draw an interactive_points_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_points_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.points, x[grob_argnames(x = x, grob = grid::pointsGrob)])

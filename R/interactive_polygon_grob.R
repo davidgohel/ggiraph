@@ -15,9 +15,6 @@ interactive_polygon_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_polygon_grob drawing
-#' @description draw an interactive_polygon_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_polygon_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.polygon, x[grob_argnames(x = x, grob = grid::polygonGrob)])

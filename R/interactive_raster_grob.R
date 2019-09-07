@@ -16,9 +16,6 @@ interactive_raster_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_raster_grob drawing
-#' @description draw an interactive_raster_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_raster_grob <- function(x, recording) {
   # ugly fix for beeing able to call grid.raster as argument name is raster and not image
   names(x)[names(x) %in% "raster"] <- "image"

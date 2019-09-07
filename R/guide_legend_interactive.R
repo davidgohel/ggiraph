@@ -15,10 +15,6 @@ guide_geom.legend_interactive <- function(guide, layers, default_mapping){
 }
 
 #' @export
-#' @inheritParams ggplot2::guide_train
-#' @param scale,aesthetic other parameters used by guide_train
-#' @title methods for interactive legend guide
-#' @description These functions should not be used by the end users.
 guide_train.legend_interactive <- function(guide, scale, aesthetic = NULL) {
   zz <- NextMethod()
   if( is.null(zz) ) return(zz)

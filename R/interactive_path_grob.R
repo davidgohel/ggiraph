@@ -15,9 +15,6 @@ interactive_path_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_path_grob drawing
-#' @description draw an interactive_path_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_path_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.path, x[grob_argnames(x = x, grob = grid::pathGrob)])

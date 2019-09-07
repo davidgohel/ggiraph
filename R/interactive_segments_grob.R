@@ -15,9 +15,6 @@ interactive_segments_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_segments_grob drawing
-#' @description draw an interactive_segments_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_segments_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.segments, x[grob_argnames(x = x, grob = grid::segmentsGrob)])

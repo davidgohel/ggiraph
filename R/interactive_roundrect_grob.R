@@ -15,9 +15,6 @@ interactive_roundrect_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_roundrect_grob drawing
-#' @description draw an interactive_roundrect_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_roundrect_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.roundrect, x[grob_argnames(x = x, grob = grid::roundrectGrob)])

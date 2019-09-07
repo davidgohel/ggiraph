@@ -36,6 +36,7 @@ encode_cr <- function(x)
 #' @usage NULL
 #' @title ggproto classes for ggiraph
 #' @name GeomInteractive
+#' @keywords internal
 NULL
 
 

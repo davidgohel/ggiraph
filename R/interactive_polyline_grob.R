@@ -16,9 +16,6 @@ interactive_polyline_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_polyline_grob drawing
-#' @description draw an interactive_polyline_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_polyline_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.polyline, x[grob_argnames(x = x, grob = grid::polylineGrob)])
@@ -39,9 +36,6 @@ interactive_lines_grob <- function(...) {
 }
 
 #' @export
-#' @title interactive_lines_grob drawing
-#' @description draw an interactive_lines_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_lines_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.lines, x[grob_argnames(x = x, grob = grid::linesGrob)])
