@@ -1,0 +1,234 @@
+#' @title Interactive parameters
+#'
+#' @description
+#' Throughout ggiraph there are functions that add interactivity to ggplot plot elements.
+#' The user can control the various aspects of interactivity by supplying
+#' a special set of parameters to these functions.
+#'
+#' @param tooltip Tooltip text to associate with one or more elements.
+#' If this is supplied a tooltip is shown when the element is hovered.
+#' Plain text or html is supported.
+#'
+#' @param onclick Javascript code to associate with one or more elements.
+#' This code will be executed when the element is clicked.
+#'
+#' @param data_id Identifier to associate with one or more elements.
+#' This is mandatory parameter if hover and selection interactivity is desired.
+#' Identifiers are available as reactive input values in Shiny applications.
+#'
+#' @section Details for geom_*_interactive functions:
+#' The interactive parameters can be supplied with two ways:
+#' \itemize{
+#'   \item As aesthetics with the mapping argument (via \code{\link[ggplot2]{aes}}).
+#'   In this way they can be mapped to data columns and apply to a set of geometries.
+#'
+#'   \item As plain arguments into the geom_*_interactive function (see
+#'   \code{\link[ggplot2]{layer}}). In this way they can be set to a scalar value.
+#' }
+#'
+#' @section Details for annotate_*_interactive functions:
+#' The interactive parameters can be supplied as arguments in the relevant function
+#' and they can be scalar values or vectors depending on params on base function.
+#'
+#' @seealso \code{\link{girafe_options}}
+#' @seealso \code{\link{girafe}}
+#' @rdname ipar
+#' @name interactive_parameters
+NULL
+
+# A list of interactive parameters.
+# Important: data_id should always be first,
+# so that it's the first attribute that is set in the svg element.
+IPAR_DEFAULTS <- list(
+  data_id = NULL,
+  tooltip = NULL,
+  onclick = NULL
+)
+
+IPAR_NAMES <- names(IPAR_DEFAULTS)
+
+#' Checks if passed object contains interactive parameters.
+#' @noRd
+has_interactive_attrs <- function(x, ipar = IPAR_NAMES) {
+  for (a in ipar) {
+    if (!is.null(x[[a]]))
+      return(TRUE)
+  }
+  FALSE
+}
+
+#' Returns the names of the interactive parameters that may exist in an object.
+#' @noRd
+get_interactive_attr_names <- function(x, ipar = IPAR_NAMES) {
+  intersect(names(x), ipar)
+}
+
+#' Returns the interactive parameters that may exist in an object
+#' or in the parent environment by default.
+#' @noRd
+#' @importFrom rlang env_get_list caller_env
+get_interactive_attrs <- function(x = caller_env(), ipar = IPAR_NAMES) {
+  if (is.environment(x)) {
+    env_get_list(env = x, ipar, NULL)
+  } else {
+    x[get_interactive_attr_names(x, ipar = ipar)]
+  }
+}
+
+#' Removes the interactive parameters from an object.
+#' @noRd
+remove_interactive_attrs <- function(x, ipar = IPAR_NAMES) {
+  for (a in ipar) {
+    x[[a]] <- NULL
+  }
+  x
+}
+
+#' Ensures that interactive parameters are characters.
+#' @noRd
+force_interactive_aes_to_char <- function(data, ipar = IPAR_NAMES) {
+  for (a in ipar) {
+    if (!is.null(data[[a]]) && !is.character(data[[a]])) {
+      data[[a]] <- as.character(data[[a]])
+    }
+  }
+  data
+}
+
+#' Copies interactive parameters from one object to the other.
+#' and returns the result
+#' @noRd
+copy_interactive_attrs <- function(src,
+                                   dest,
+                                   ...,
+                                   forceChar = TRUE,
+                                   useList = FALSE,
+                                   rows = NULL,
+                                   ipar = IPAR_NAMES) {
+  for (a in ipar) {
+    if (!is.null(src[[a]])) {
+      if (is.null(rows)) {
+        val <- src[[a]]
+      } else {
+        val <- src[[a]][rows]
+      }
+      if (forceChar)
+        val <- as.character(val)
+      if (useList) {
+        dest[[a]] <- unlist(mapply(rep, val, ...))
+      } else {
+        dest[[a]] <- rep(val, ...)
+      }
+    }
+  }
+  dest
+}
+
+#' Add the interactive parameters from a data object to a grob.
+#' and changes its class
+#' @noRd
+add_interactive_attrs <- function(gr,
+                                  data,
+                                  rows = NULL,
+                                  cl = NULL,
+                                  data_attr = "data-id",
+                                  ipar = IPAR_NAMES) {
+  # if passed grob is a gTree, loop through the children
+  # note that some grobs (like labelgrob) inherit from gTree,
+  # but have no children. So we need to check the children length, first.
+  if (inherits(gr, "gTree") && length(gr$children) > 0) {
+    # check the lengths of children grobs and data
+    data_len <- nrow(data)
+    children_len <- length(gr$children)
+    if (is.null(data_len) || data_len == 1) {
+      # pass the data as a whole
+      for (i in seq_along(gr$children)) {
+        gr$children[[i]] <-
+          add_interactive_attrs(
+            gr = gr$children[[i]],
+            data = data,
+            rows = rows,
+            cl = cl,
+            data_attr = data_attr,
+            ipar = ipar
+          )
+      }
+
+    } else if (children_len == data_len) {
+      # pass the correct data row
+      for (i in seq_along(gr$children)) {
+        gr$children[[i]] <-
+          add_interactive_attrs(
+            gr = gr$children[[i]],
+            data = data[i, , drop = FALSE],
+            rows = rows,
+            cl = cl,
+            data_attr = data_attr,
+            ipar = ipar
+          )
+      }
+    } else {
+      stop("Can't add interactive attrs to gTree", call. = FALSE)
+    }
+    return(gr)
+  }
+  if (is.null(rows)) {
+    for (a in ipar) {
+      gr[[a]] <- data[[a]]
+    }
+  } else {
+    for (a in ipar) {
+      gr[[a]] <- data[[a]][rows]
+    }
+  }
+  gr$data_attr <- data_attr
+
+  if (is.null(cl)) {
+    cl <- paste("interactive", class(gr)[1], "grob", sep = "_")
+    # some grobs have class name which contains "grob" already, like rastergrob
+    # and labelgrob, so they end up named like interactive_rastergrob_grob.
+    # we normalize the name here, to use class interactive_raster_grob.
+    cl <- sub("grob_grob", "_grob", cl)
+  }
+  class(gr)[1] <- cl
+  gr
+}
+
+#' Sets the interactive attributtes to the svg output.
+#' @noRd
+interactive_attr_toxml <- function(x,
+                                   ids = character(0),
+                                   rows = NULL,
+                                   attr_name = "data-id",
+                                   ipar = IPAR_NAMES) {
+  if (length(ids) < 1)
+    return(invisible())
+
+  if (!is.null(x$data_attr)) {
+    attr_name <- x$data_attr
+  }
+  if (is.null(rows)) {
+    for (a in ipar) {
+      if (is.null(rows) && !is.null(x[[a]])) {
+        rows <- seq_along(x[[a]])
+      }
+    }
+  }
+
+  for (a in ipar) {
+    if (!is.null(x[[a]])) {
+      attrValue <- x[[a]][rows]
+      attrValue <- switch(a,
+                          tooltip = encode_cr(attrValue),
+                          attrValue)
+      attrName <- switch(a,
+                         tooltip = "title",
+                         data_id = attr_name,
+                         a)
+      set_attr(ids = as.integer(ids),
+               str = attrValue,
+               attribute = attrName)
+    }
+  }
+  invisible()
+}

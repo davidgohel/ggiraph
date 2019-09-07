@@ -10,7 +10,7 @@ guide_legend_interactive <- function(...) {
 }
 #' @export
 guide_geom.legend_interactive <- function(guide, layers, default_mapping){
-  default_mapping <- append_aes(default_mapping, INTERACTIVE_ATTR_DEFAULTS)
+  default_mapping <- append_aes(default_mapping, IPAR_DEFAULTS)
   NextMethod()
 }
 

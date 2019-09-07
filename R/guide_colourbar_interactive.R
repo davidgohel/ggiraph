@@ -11,7 +11,7 @@ guide_colourbar_interactive <- function(...) {
 
 #' @export
 guide_geom.colourbar_interactive <- function(guide, layers, default_mapping){
-  default_mapping <- append_aes(default_mapping, INTERACTIVE_ATTR_DEFAULTS)
+  default_mapping <- append_aes(default_mapping, IPAR_DEFAULTS)
   NextMethod()
 }
 
@@ -30,7 +30,7 @@ guide_train.colourbar_interactive <- function(guide, scale, aesthetic = NULL) {
 #' @importFrom purrr compact
 guide_gengrob.colourbar_interactive <- function(guide, theme) {
   zz <- NextMethod()
-  data <- compact(guide[INTERACTIVE_ATTR_NAMES])
+  data <- compact(guide[IPAR_NAMES])
   zz$grobs <- lapply(zz$grobs,
          function(z){
            add_interactive_attrs(z, data, data_attr = "key-id")
