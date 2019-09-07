@@ -38,6 +38,20 @@
 #' The interactive parameters can be supplied as arguments in the relevant function
 #' and they can be scalar values or vectors depending on params on base function.
 #'
+#' @section Details for element_*_interactive functions:
+#' The interactive parameters can be supplied as arguments in the relevant function
+#' and they should be scalar values.
+#'
+#' For theme text elements (\code{\link{element_text_interactive}}), the interactive parameters
+#' can also be supplied while setting a label value, via the \code{\link[ggplot2]{labs}} family
+#' of functions or when setting a scale/guide title or key label.
+#' Instead of setting a character value for the element, function
+#' \code{\link{label_interactive}} can be used to define interactive parameters
+#' to go along with the label.
+#' When the parameters are supplied that way, they override the default values
+#' that are set at the theme via \code{element_text_interactive} or via the \code{guide}'s
+#' theme parameters.
+#'
 #' @section Details for interactive_*_grob functions:
 #' The interactive parameters can be supplied as arguments in the relevant function
 #' and they can be scalar values or vectors depending on params on base function.
@@ -78,13 +92,17 @@ get_interactive_attr_names <- function(x, ipar = IPAR_NAMES) {
 }
 
 #' Returns the interactive parameters that may exist in an object
-#' or in the parent environment by default.
+#' or in the parent environment by default,
+#' or inside an "interactive" attribute of the object.
 #' @noRd
 #' @importFrom rlang env_get_list caller_env
 get_interactive_attrs <- function(x = caller_env(), ipar = IPAR_NAMES) {
   if (is.environment(x)) {
     env_get_list(env = x, ipar, NULL)
   } else {
+    if (!is.null(attr(x, "interactive"))) {
+      x <- attr(x, "interactive")
+    }
     x[get_interactive_attr_names(x, ipar = ipar)]
   }
 }

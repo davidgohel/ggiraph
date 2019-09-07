@@ -55,6 +55,7 @@ Collate:
     'annotation_raster_interactive.R'
     'dsvg.R'
     'dsvg_view.R'
+    'element_interactive.R'
     'fonts.R'
     'geom_abline_interactive.R'
     'geom_path_interactive.R'

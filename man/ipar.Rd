@@ -46,6 +46,22 @@ The interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors depending on params on base function.
 }
 
+\section{Details for element_*_interactive functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they should be scalar values.
+
+For theme text elements (\code{\link{element_text_interactive}}), the interactive parameters
+can also be supplied while setting a label value, via the \code{\link[ggplot2]{labs}} family
+of functions or when setting a scale/guide title or key label.
+Instead of setting a character value for the element, function
+\code{\link{label_interactive}} can be used to define interactive parameters
+to go along with the label.
+When the parameters are supplied that way, they override the default values
+that are set at the theme via \code{element_text_interactive} or via the \code{guide}'s
+theme parameters.
+}
+
 \section{Details for interactive_*_grob functions}{
 
 The interactive parameters can be supplied as arguments in the relevant function
