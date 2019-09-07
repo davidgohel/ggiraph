@@ -60,4 +60,3 @@ append_aes <- function(mapping, lst) {
 grob_argnames <- function(x, grob) {
   intersect(names(formals(grob)), names(x))
 }
-

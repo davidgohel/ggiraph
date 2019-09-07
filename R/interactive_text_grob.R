@@ -1,26 +1,18 @@
-#' @title Generate interactive text grob
+#' @title Create interactive text grob
 #'
 #' @description
 #' The grob is based on \code{\link[grid]{textGrob}}.
 #' See the documentation for that function for more details.
 #'
-#' @param ... arguments passed to base function.
-#' @param tooltip tooltip associated with texts
-#' @param onclick javascript action to execute when text is clicked
-#' @param data_id identifiers to associate with texts
-#' @param cl class to set
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @return An interactive grob object.
+#' @inheritSection interactive_parameters Details for interactive_*_grob functions
+#' @seealso \code{\link{girafe}}
 #' @export
-interactive_text_grob <-
-  function(...,
-           tooltip = NULL,
-           onclick = NULL,
-           data_id = NULL,
-           cl = "interactive_text_grob") {
-    gr <- grid::textGrob(...)
-    add_interactive_attrs(gr,
-                          get_interactive_attrs(),
-                          cl = cl)
-  }
+interactive_text_grob <- function(...) {
+  grob_interactive(grid::textGrob, ...)
+}
 
 #' @export
 #' @title interactive_text_grob drawing

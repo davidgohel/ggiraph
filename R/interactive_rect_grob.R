@@ -1,26 +1,18 @@
-#' @title Generate interactive rectangle grob
+#' @title Create interactive rectangle grob
 #'
 #' @description
 #' The grob is based on \code{\link[grid]{rectGrob}}.
 #' See the documentation for that function for more details.
 #'
-#' @param ... arguments passed to base function.
-#' @param tooltip tooltip associated with rectangles
-#' @param onclick javascript action to execute when rectangle is clicked
-#' @param data_id identifiers to associate with rectangles
-#' @param cl class to set
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @return An interactive grob object.
+#' @inheritSection interactive_parameters Details for interactive_*_grob functions
+#' @seealso \code{\link{girafe}}
 #' @export
-interactive_rect_grob <-
-  function(...,
-           tooltip = NULL,
-           onclick = NULL,
-           data_id = NULL,
-           cl = "interactive_rect_grob") {
-    gr <- grid::rectGrob(...)
-    add_interactive_attrs(gr,
-                          get_interactive_attrs(),
-                          cl = cl)
-  }
+interactive_rect_grob <- function(...) {
+  grob_interactive(grid::rectGrob, ...)
+}
 
 #' @export
 #' @title interactive_rect_grob drawing

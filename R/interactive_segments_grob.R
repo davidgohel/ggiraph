@@ -1,26 +1,18 @@
-#' @title Generate interactive segments grob
+#' @title Create interactive segments grob
 #'
 #' @description
 #' The grob is based on \code{\link[grid]{segmentsGrob}}.
 #' See the documentation for that function for more details.
 #'
-#' @param ... arguments passed to base function.
-#' @param tooltip tooltip associated with segments
-#' @param onclick javascript action to execute when segment is clicked
-#' @param data_id identifiers to associate with segments
-#' @param cl class to set
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @return An interactive grob object.
+#' @inheritSection interactive_parameters Details for interactive_*_grob functions
+#' @seealso \code{\link{girafe}}
 #' @export
-interactive_segments_grob <-
-  function(...,
-           tooltip = NULL,
-           onclick = NULL,
-           data_id = NULL,
-           cl = "interactive_segments_grob") {
-    gr <- grid::segmentsGrob(...)
-    add_interactive_attrs(gr,
-                          get_interactive_attrs(),
-                          cl = cl)
-  }
+interactive_segments_grob <- function(...) {
+  grob_interactive(grid::segmentsGrob, ...)
+}
 
 #' @export
 #' @title interactive_segments_grob drawing

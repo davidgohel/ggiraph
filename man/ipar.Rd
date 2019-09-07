@@ -46,6 +46,12 @@ The interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors depending on params on base function.
 }
 
+\section{Details for interactive_*_grob functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.
+}
+
 \seealso{
 \code{\link{girafe_options}}
 

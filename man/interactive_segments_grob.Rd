@@ -2,23 +2,27 @@
 % Please edit documentation in R/interactive_segments_grob.R
 \name{interactive_segments_grob}
 \alias{interactive_segments_grob}
-\title{Generate interactive segments grob}
+\title{Create interactive segments grob}
 \usage{
-interactive_segments_grob(..., tooltip = NULL, onclick = NULL,
-  data_id = NULL, cl = "interactive_segments_grob")
+interactive_segments_grob(...)
 }
 \arguments{
-\item{...}{arguments passed to base function.}
-
-\item{tooltip}{tooltip associated with segments}
-
-\item{onclick}{javascript action to execute when segment is clicked}
-
-\item{data_id}{identifiers to associate with segments}
-
-\item{cl}{class to set}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
+}
+\value{
+An interactive grob object.
 }
 \description{
 The grob is based on \code{\link[grid]{segmentsGrob}}.
 See the documentation for that function for more details.
+}
+\section{Details for interactive_*_grob functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.
+}
+
+\seealso{
+\code{\link{girafe}}
 }
