@@ -145,6 +145,7 @@ add_interactive_attrs <- function(gr,
                                   data,
                                   rows = NULL,
                                   cl = NULL,
+                                  overwrite = TRUE,
                                   data_attr = "data-id",
                                   ipar = IPAR_NAMES) {
   # if passed grob is a gTree, loop through the children
@@ -163,6 +164,7 @@ add_interactive_attrs <- function(gr,
             data = data,
             rows = rows,
             cl = cl,
+            overwrite = overwrite,
             data_attr = data_attr,
             ipar = ipar
           )
@@ -177,6 +179,7 @@ add_interactive_attrs <- function(gr,
             data = data[i, , drop = FALSE],
             rows = rows,
             cl = cl,
+            overwrite = overwrite,
             data_attr = data_attr,
             ipar = ipar
           )
@@ -186,25 +189,33 @@ add_interactive_attrs <- function(gr,
     }
     return(gr)
   }
+  # check that is a grob
+  if (!is.grob(gr) || is.zero(gr))
+    return(gr)
+  # check if it's interactive grob already
+  isInteractive <- length(grep("interactive_", class(gr))) > 0
   if (is.null(rows)) {
     for (a in ipar) {
-      gr[[a]] <- data[[a]]
+      if (!isInteractive || isTRUE(overwrite) || is.null(gr[[a]]))
+        gr[[a]] <- data[[a]]
     }
   } else {
     for (a in ipar) {
-      gr[[a]] <- data[[a]][rows]
+      if (!isInteractive || isTRUE(overwrite) || is.null(gr[[a]]))
+        gr[[a]] <- data[[a]][rows]
     }
   }
   gr$data_attr <- data_attr
 
-  if (is.null(cl)) {
+  if (is.null(cl) && !isInteractive) {
     cl <- paste("interactive", class(gr)[1], "grob", sep = "_")
     # some grobs have class name which contains "grob" already, like rastergrob
     # and labelgrob, so they end up named like interactive_rastergrob_grob.
     # we normalize the name here, to use class interactive_raster_grob.
     cl <- sub("grob_grob", "_grob", cl)
   }
-  class(gr)[1] <- cl
+  # just extend the class, so that it inherits other grob methods
+  class(gr) <- c(cl, class(gr))
   gr
 }
 

@@ -74,3 +74,8 @@ message_wrap <- function(...) {
   wrapped <- strwrap(msg, width = getOption("width") - 2)
   message(paste0(wrapped, collapse = "\n"))
 }
+
+# from ggplot2 grob-null.r
+is.zero <- function(x)
+  is.null(x) || inherits(x, "zeroGrob")
+
