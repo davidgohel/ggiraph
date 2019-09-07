@@ -2,7 +2,7 @@
 % Please edit documentation in R/girafe_options.R
 \name{girafe_options}
 \alias{girafe_options}
-\title{set girafe options}
+\title{Set girafe options}
 \usage{
 girafe_options(x, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_zoom}
 \alias{opts_zoom}
-\title{zoom settings}
+\title{Zoom settings}
 \usage{
 opts_zoom(min = 1, max = 1)
 }

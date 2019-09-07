@@ -6,7 +6,7 @@
 #' @importFrom xml2 read_xml xml_find_all xml_text xml_ns
 #' @importFrom xml2 xml_remove xml_attr xml_attr<-
 
-#' @title create a ggiraph object
+#' @title Create a ggiraph object
 #'
 #' @description Create an interactive graphic to be used in a web browser.
 #'

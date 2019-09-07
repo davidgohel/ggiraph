@@ -3,7 +3,7 @@
 \name{opts_hover}
 \alias{opts_hover}
 \alias{opts_hover_key}
-\title{hover effect settings}
+\title{Hover effect settings}
 \usage{
 opts_hover(css = NULL)
 

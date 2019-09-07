@@ -1,18 +1,19 @@
-#' @title interactive polygons from a reference map.
+#' @title Create interactive polygons from a reference map
 #'
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_map}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive maps to a ggplot -------
 #' @example examples/geom_map_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_map_interactive <- function(...) {
+geom_map_interactive <- function(...)
   layer_interactive(geom_map, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

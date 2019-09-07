@@ -3,9 +3,8 @@
 #' # add interactive labels to a ggplot -------
 #' @example examples/geom_label_interactive.R
 #' @export
-geom_label_interactive <- function(...) {
+geom_label_interactive <- function(...)
   layer_interactive(geom_label, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

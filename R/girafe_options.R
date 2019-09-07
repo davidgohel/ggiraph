@@ -1,4 +1,4 @@
-#' @title tooltip settings
+#' @title Tooltip settings
 #' @description Settings to be used with \code{\link{girafe}}
 #' for tooltip customisation.
 #' @param css extra css (added to \code{position: absolute;pointer-events: none;})
@@ -74,7 +74,7 @@ opts_tooltip <- function(
   x
 }
 
-#' @title hover effect settings
+#' @title Hover effect settings
 #' @description Allows customization of the animation
 #' of graphic elements on which the mouse is positioned.
 #' Use \code{opts_hover} to animate elements in panels and
@@ -127,7 +127,7 @@ opts_hover_key <- function(css = NULL){
   x
 }
 
-#' @title selection effect settings
+#' @title Selection effect settings
 #' @description Allows customization of the rendering of
 #' selected graphic elements.
 #' Use \code{opts_selection} to define selection in panels and
@@ -199,7 +199,7 @@ opts_selection_key <- function(css = NULL, type = "single", only_shiny = TRUE, s
   x
 }
 
-#' @title zoom settings
+#' @title Zoom settings
 #' @description Allows customization of the zoom.
 #' @param min minimum zoom factor
 #' @param max maximum zoom factor
@@ -238,7 +238,7 @@ opts_zoom <- function(min = 1, max = 1){
   x
 }
 
-#' @title toolbar settings
+#' @title Toolbar settings
 #' @description Allows customization of the toolbar
 #' @param position one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'
 #' @param saveaspng set to TRUE to propose the 'save as png' button.
@@ -279,7 +279,7 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE){
 }
 
 
-#' @title girafe sizing settings
+#' @title Girafe sizing settings
 #' @description Allows customization of the svg style sizing
 #' @param rescale if FALSE, graphic will not be resized
 #' and the dimensions are exactly those of the container.
@@ -317,7 +317,7 @@ opts_sizing <- function(rescale = TRUE, width = 1){
   x
 }
 
-#' @title set girafe options
+#' @title Set girafe options
 #' @description Defines the animation options related to
 #' a \code{\link{girafe}} object.
 #' @param x girafe object.

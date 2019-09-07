@@ -1,18 +1,19 @@
-#' Interactive horizontal error bars
+#' Create interactive horizontal error bars
 #'
 #' @description
 #' This geometry is based on \code{\link[ggplot2]{geom_errorbarh}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add horizontal error bars -------
 #' @example examples/geom_errorbarh_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_errorbarh_interactive <- function(...) {
+geom_errorbarh_interactive <- function(...)
   layer_interactive(geom_errorbarh, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

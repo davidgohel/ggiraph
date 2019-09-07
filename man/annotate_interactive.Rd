@@ -2,19 +2,26 @@
 % Please edit documentation in R/annotate_interactive.R
 \name{annotate_interactive}
 \alias{annotate_interactive}
-\title{interactive annotations}
+\title{Create interactive annotations}
 \usage{
 annotate_interactive(...)
 }
 \arguments{
-\item{...}{arguments passed to base geometry.}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
 }
 \description{
-The geometry is based on \code{\link[ggplot2]{annotate}}.
-See the documentation for those functions for more details.
+The layer is based on \code{\link[ggplot2]{annotate}}.
+See the documentation for that function for more details.
 }
+\section{Details for annotate_*_interactive functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.
+}
+
 \examples{
-# add interactive annotation -------
+# add interactive annotation to a ggplot -------
 library(ggplot2)
 library(ggiraph)
 

@@ -1,8 +1,7 @@
 #' @export
 #' @rdname geom_bar_interactive
-geom_col_interactive <- function(...) {
+geom_col_interactive <- function(...)
   layer_interactive(geom_col, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

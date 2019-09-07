@@ -1,4 +1,4 @@
-#' @title create a girafe object
+#' @title Create a girafe object
 #'
 #' @description Create an interactive graphic with a ggplot object
 #' to be used in a web browser. The function should replace function
@@ -7,9 +7,8 @@
 #' @details
 #' Use \code{geom_zzz_interactive} to create interactive graphical elements.
 #'
-#' Difference from original functions is that the following
-#' aesthetics are understood: \code{tooltip}, \code{onclick}
-#' and \code{data_id}.
+#' Difference from original functions is that some extra aesthetics are understood:
+#' the \code{\link{interactive_parameters}}.
 #'
 #' Tooltips can be displayed when mouse is over graphical elements.
 #'

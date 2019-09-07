@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggiraph.R
 \name{ggiraph}
 \alias{ggiraph}
-\title{create a ggiraph object}
+\title{Create a ggiraph object}
 \usage{
 ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.75,
   width_svg = 6, height_svg = 5, tooltip_extra_css = NULL,

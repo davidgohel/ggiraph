@@ -1,19 +1,20 @@
-#' @title interactive ribbons and area plots
+#' @title Create interactive ribbons and area plots
 #'
 #' @description
 #' The geometries are based on \code{\link[ggplot2]{geom_ribbon}}
 #' and \code{\link[ggplot2]{geom_area}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive bar -------
 #' @example examples/geom_ribbon_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_ribbon_interactive <- function(...) {
+geom_ribbon_interactive <- function(...)
   layer_interactive(geom_ribbon, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -75,9 +76,8 @@ GeomInteractiveRibbon <- ggproto(
 
 #' @rdname geom_ribbon_interactive
 #' @export
-geom_area_interactive <- function(...) {
+geom_area_interactive <- function(...)
   layer_interactive(geom_area, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

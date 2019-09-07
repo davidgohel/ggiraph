@@ -1,19 +1,20 @@
-#' @title interactive sf objects
+#' @title Create interactive sf objects
 #'
 #' @description
 #' These geometries are based on \code{\link[ggplot2]{geom_sf}},
 #' \code{\link[ggplot2]{geom_sf_label}} and \code{\link[ggplot2]{geom_sf_text}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive sf objects to a ggplot -------
 #' @example examples/geom_sf_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_sf_interactive <- function(...) {
+geom_sf_interactive <- function(...)
   layer_interactive(geom_sf, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -67,12 +68,10 @@ GeomInteractiveSf <- ggproto(
 
 #' @export
 #' @rdname geom_sf_interactive
-geom_sf_label_interactive <- function(...) {
+geom_sf_label_interactive <- function(...)
   layer_interactive(geom_sf_label, ..., interactive_geom = GeomInteractiveLabel)
-}
 
 #' @export
 #' @rdname geom_sf_interactive
-geom_sf_text_interactive <- function(...) {
+geom_sf_text_interactive <- function(...)
   layer_interactive(geom_sf_text, ..., interactive_geom = GeomInteractiveText)
-}

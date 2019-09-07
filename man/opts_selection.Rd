@@ -3,7 +3,7 @@
 \name{opts_selection}
 \alias{opts_selection}
 \alias{opts_selection_key}
-\title{selection effect settings}
+\title{Selection effect settings}
 \usage{
 opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
   selected = character(0))

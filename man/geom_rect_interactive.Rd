@@ -4,14 +4,15 @@
 \name{geom_rect_interactive}
 \alias{geom_rect_interactive}
 \alias{geom_tile_interactive}
-\title{interactive rectangles}
+\title{Create interactive rectangles}
 \usage{
 geom_rect_interactive(...)
 
 geom_tile_interactive(...)
 }
 \arguments{
-\item{...}{arguments passed to base geometry.}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_rect}} and
@@ -24,6 +25,18 @@ svg and make it unreadable in a browser.
 Function \code{geom_tile_interactive} should be used with caution, total number of
 rectangles should be small.
 }
+\section{Details for geom_*_interactive functions}{
+
+The interactive parameters can be supplied with two ways:
+\itemize{
+  \item As aesthetics with the mapping argument (via \code{\link[ggplot2]{aes}}).
+  In this way they can be mapped to data columns and apply to a set of geometries.
+
+  \item As plain arguments into the geom_*_interactive function (see
+  \code{\link[ggplot2]{layer}}). In this way they can be set to a scalar value.
+}
+}
+
 \examples{
 # add interactive polygons to a ggplot -------
 library(ggplot2)

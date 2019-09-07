@@ -2,7 +2,7 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_tooltip}
 \alias{opts_tooltip}
-\title{tooltip settings}
+\title{Tooltip settings}
 \usage{
 opts_tooltip(css = NULL, offx = 10, offy = 0,
   use_cursor_pos = TRUE, opacity = 0.9, use_fill = FALSE,
