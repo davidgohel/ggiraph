@@ -81,16 +81,33 @@ label_interactive <- function(label, ...) {
 }
 
 #' @export
+#' @importFrom purrr transpose
 element_grob.interactive_element_text <- function(element,
                                                   label = "",
                                                   ...) {
+  ipar <- attr(element, "ipar")
+  if (is.null(ipar))
+    ipar <- IPAR_NAMES
+  el_ip <- get_interactive_attrs(element, ipar = ipar)
   if (inherits(label, "interactive_label")) {
-    ipar <- attr(element, "ipar")
-    if (is.null(ipar))
-      ipar <- IPAR_NAMES
-    ipl <- get_interactive_attrs(label, ipar = ipar)
-    ip <- get_interactive_attrs(element, ipar = ipar)
-    ip <- modify_list(ip, ipl)
+    lbl_ip <- get_interactive_attrs(label, ipar = ipar)
+    ip <- modify_list(el_ip, lbl_ip)
+    attr(element, "interactive") <- ip
+
+  } else if (is.list(label)) {
+    # guide labels in continuous scales are passed as a list
+    label <- label[!is.na(label)]
+    # process items
+    ip <- lapply(label, function(x) {
+      if (inherits(x, "interactive_label")) {
+        lbl_ip <- get_interactive_attrs(x, ipar = ipar)
+        modify_list(el_ip, lbl_ip)
+      } else {
+        el_ip
+      }
+    })
+    # transpose and convert to character
+    ip <- lapply(transpose(ip), as.character)
     attr(element, "interactive") <- ip
   }
   NextMethod()
@@ -131,4 +148,13 @@ merge_element.interactive_element <- function(new, old) {
 
   attr(new, "interactive") <- new_attr
   new
+}
+
+as_interactive_element_text <- function(el) {
+  if (!inherits(el, "interactive_element_text")) {
+    class(el) <- c("interactive_element_text",
+                   "interactive_element",
+                   class(el))
+  }
+  el
 }

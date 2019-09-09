@@ -5,7 +5,10 @@
 #'
 #' @param ... arguments passed to base function.
 #' @return An interactive guide object.
-#' @inheritSection interactive_parameters Details for guide_*_interactive functions
+#' @inheritSection interactive_parameters Details for scale_*_interactive and guide_*_interactive functions
+#' @examples
+#' # add interactive colourbar guide to a ggplot -------
+#' @example examples/scale_gradient_guide_colourbar_interactive.R
 #' @seealso \code{\link{interactive_parameters}}
 #' @seealso \code{\link{girafe}}
 #' @export

@@ -11,7 +11,7 @@
 #' @param ... arguments passed to base function,
 #' plus any of the \code{\link{interactive_parameters}}.
 #' @return An interactive scale object.
-#' @inheritSection interactive_parameters Details for scale_*_interactive functions
+#' @inheritSection interactive_parameters Details for scale_*_interactive and guide_*_interactive functions
 #' @seealso \code{\link{girafe}}
 #' @export
 #' @name scale_colour_interactive

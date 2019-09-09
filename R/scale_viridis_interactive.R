@@ -9,7 +9,10 @@
 #' @param ... arguments passed to base function,
 #' plus any of the \code{\link{interactive_parameters}}.
 #' @return An interactive scale object.
-#' @inheritSection interactive_parameters Details for scale_*_interactive functions
+#' @inheritSection interactive_parameters Details for scale_*_interactive and guide_*_interactive functions
+#' @examples
+#' # add interactive viridis scale to a ggplot -------
+#' @example examples/scale_viridis_guide_legend_continuous_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
 #' @name scale_viridis_interactive
