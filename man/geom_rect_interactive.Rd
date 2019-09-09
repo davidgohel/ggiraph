@@ -99,7 +99,8 @@ cor_mat[["tooltip"]] <-
 
 p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
   geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
-  scale_fill_gradient2(low = "#BC120A", mid = "white", high = "#BC120A", limits = c(-1, 1)) +
+  scale_fill_gradient2_interactive(low = "#BC120A", mid = "white", high = "#BC120A",
+                                   limits = c(-1, 1), data_id = "cormat", tooltip = "cormat") +
   coord_equal()
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)

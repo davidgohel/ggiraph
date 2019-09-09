@@ -5,6 +5,11 @@
 \alias{scale_colour_manual_interactive}
 \alias{scale_color_manual_interactive}
 \alias{scale_fill_manual_interactive}
+\alias{scale_size_manual_interactive}
+\alias{scale_shape_manual_interactive}
+\alias{scale_linetype_manual_interactive}
+\alias{scale_alpha_manual_interactive}
+\alias{scale_discrete_manual_interactive}
 \title{Create your own interactive discrete scale}
 \usage{
 scale_colour_manual_interactive(...)
@@ -12,6 +17,16 @@ scale_colour_manual_interactive(...)
 scale_color_manual_interactive(...)
 
 scale_fill_manual_interactive(...)
+
+scale_size_manual_interactive(...)
+
+scale_shape_manual_interactive(...)
+
+scale_linetype_manual_interactive(...)
+
+scale_alpha_manual_interactive(...)
+
+scale_discrete_manual_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
@@ -22,8 +37,13 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_colour_manual}} and
-\code{\link[ggplot2]{scale_fill_manual}}.
+\code{\link[ggplot2]{scale_colour_manual}},
+\code{\link[ggplot2]{scale_fill_manual}},
+\code{\link[ggplot2]{scale_size_manual}},
+\code{\link[ggplot2]{scale_shape_manual}},
+\code{\link[ggplot2]{scale_linetype_manual}},
+\code{\link[ggplot2]{scale_alpha_manual}} and
+\code{\link[ggplot2]{scale_discrete_manual}}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_*_interactive functions}{
@@ -42,6 +62,13 @@ element_\*_interactive sections below for more details.
 \seealso{
 \code{\link{girafe}}
 
-Other interactive scale: \code{\link{scale_gradient_interactive}}
+Other interactive scale: \code{\link{scale_alpha_interactive}},
+  \code{\link{scale_colour_brewer_interactive}},
+  \code{\link{scale_colour_interactive}},
+  \code{\link{scale_gradient_interactive}},
+  \code{\link{scale_linetype_interactive}},
+  \code{\link{scale_shape_interactive}},
+  \code{\link{scale_size_interactive}},
+  \code{\link{scale_viridis_interactive}}
 }
 \concept{interactive scale}

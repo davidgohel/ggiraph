@@ -55,7 +55,7 @@ if (interactive()) print(x)
 p <- d + stat_density_2d(aes(fill = stat(nlevel),
                              tooltip = paste("nlevel:", stat(nlevel))),
                          geom = "interactive_polygon") +
-  facet_grid(. ~ cut) + scale_fill_viridis_c()
+  facet_grid(. ~ cut) + scale_fill_viridis_c_interactive(tooltip = "nlevel")
 x <- girafe(ggobj = p)
 if (interactive()) print(x)
 
