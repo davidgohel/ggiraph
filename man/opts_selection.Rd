@@ -3,12 +3,16 @@
 \name{opts_selection}
 \alias{opts_selection}
 \alias{opts_selection_key}
+\alias{opts_selection_theme}
 \title{Selection effect settings}
 \usage{
 opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
   selected = character(0))
 
 opts_selection_key(css = NULL, type = "single", only_shiny = TRUE,
+  selected = character(0))
+
+opts_selection_theme(css = NULL, type = "single", only_shiny = TRUE,
   selected = character(0))
 }
 \arguments{
@@ -25,8 +29,9 @@ initialized.}
 \description{
 Allows customization of the rendering of
 selected graphic elements.
-Use \code{opts_selection} to define selection in panels and
-\code{opts_selection_key} to define selection in legends.
+Use \code{opts_selection} for interactive geometries in panels,
+\code{opts_selection_key} for interactive scales/guides and
+\code{opts_selection_theme} for interactive theme elements.
 }
 \examples{
 library(ggplot2)

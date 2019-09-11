@@ -10,8 +10,10 @@ set_svg_attributes <- function(data, canvas_id) {
   idprefix <- paste0(canvas_id, "_el_")
   env_data_hover <- new.env(parent = emptyenv())
   env_key_hover <- new.env(parent = emptyenv())
+  env_theme_hover <- new.env(parent = emptyenv())
   env_data_selected <- new.env(parent = emptyenv())
   env_key_selected <- new.env(parent = emptyenv())
+  env_theme_selected <- new.env(parent = emptyenv())
   errored <- 0
   walk(comments, function(comment) {
     targetIndex <- xml_attr(comment, "target")
@@ -21,15 +23,20 @@ set_svg_attributes <- function(data, canvas_id) {
                              paste0("//*[@id='", idprefix, targetIndex, "']"))
     if (!inherits(target, "xml_missing")) {
       if (attrName == "hover_css") {
-        # collect unique combinations of hover_css per data/key id
-        collect_css(target, attrValue, env_data_hover, env_key_hover)
+        # collect unique combinations of hover_css per data/key/theme id
+        collect_css(target,
+                    attrValue,
+                    env_data_hover,
+                    env_key_hover,
+                    env_theme_hover)
 
       } else if (attrName == "selected_css") {
-        # collect unique combinations of selected_css per data/key id
+        # collect unique combinations of selected_css per data/key/theme id
         collect_css(target,
                     attrValue,
                     env_data_selected,
-                    env_key_selected)
+                    env_key_selected,
+                    env_theme_selected)
 
       } else {
         # set the attribute directly
@@ -50,6 +57,11 @@ set_svg_attributes <- function(data, canvas_id) {
                     "hoverkey_",
                     canvas_id))
   css <- c(css,
+           make_css(env_theme_hover,
+                    "theme-id",
+                    "hovertheme_",
+                    canvas_id))
+  css <- c(css,
            make_css(env_data_selected,
                     "data-id",
                     "clicked_",
@@ -58,6 +70,11 @@ set_svg_attributes <- function(data, canvas_id) {
            make_css(env_key_selected,
                     "key-id",
                     "clicked_key",
+                    canvas_id))
+  css <- c(css,
+           make_css(env_theme_selected,
+                    "theme-id",
+                    "clicked_theme",
                     canvas_id))
   if (length(css) > 0) {
     style_tag <-
@@ -74,13 +91,20 @@ set_svg_attributes <- function(data, canvas_id) {
   }
 }
 
-collect_css <- function(target, attrValue, env_data, env_key) {
+collect_css <- function(target,
+                        attrValue,
+                        env_data,
+                        env_key,
+                        env_theme) {
   data_id <- xml_attr(target, "data-id")
   key_id <- xml_attr(target, "key-id")
+  theme_id <- xml_attr(target, "theme-id")
   if (!is.null(data_id) && !is.na(data_id)) {
     env_data[[data_id]] <- attrValue
   } else if (!is.null(key_id) && !is.na(key_id)) {
     env_key[[key_id]] <- attrValue
+  } else if (!is.null(theme_id) && !is.na(theme_id)) {
+    env_theme[[theme_id]] <- attrValue
   }
 }
 

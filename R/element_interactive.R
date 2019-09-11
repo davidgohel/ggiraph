@@ -120,7 +120,7 @@ element_grob.interactive_element <- function(element, ...) {
     ipar <- IPAR_NAMES
   data_attr <- attr(element, "data_attr")
   if (is.null(data_attr))
-    data_attr <- "data-id"
+    data_attr <- "theme-id"
   ip <- get_interactive_attrs(element, ipar = ipar)
   gr <- NextMethod()
   add_interactive_attrs(gr, ip, ipar = ipar, data_attr = data_attr)

@@ -75,12 +75,12 @@ opts_tooltip <- function(
 }
 
 #' @title Hover effect settings
-#' @description Allows customization of the animation
-#' of graphic elements on which the mouse is positioned.
-#' Use \code{opts_hover} to animate elements in panels and
-#' \code{opts_hover_key} to animate elements in legends.
-#' @param css css to associate with elements to be animated
-#' when mouse is hover them.
+#' @description Allows customization of the rendering
+#' of graphic elements when the user hovers over them with the cursor (mouse pointer).
+#' Use \code{opts_hover} for interactive geometries in panels,
+#' \code{opts_hover_key} for interactive scales/guides and
+#' \code{opts_hover_theme} for interactive theme elements.
+#' @param css css to associate with elements when they are hovered.
 #' @examples
 #' library(ggplot2)
 #'
@@ -127,11 +127,27 @@ opts_hover_key <- function(css = NULL){
   x
 }
 
+#' @export
+#' @rdname opts_hover
+opts_hover_theme <- function(css = NULL){
+
+  if( is.null(css)){
+    css <- "stroke:green;"
+  }
+  css <- paste0("{", css, "}")
+  x <- list(
+    css = css
+  )
+  class(x) <- "opts_hover_theme"
+  x
+}
+
 #' @title Selection effect settings
 #' @description Allows customization of the rendering of
 #' selected graphic elements.
-#' Use \code{opts_selection} to define selection in panels and
-#' \code{opts_selection_key} to define selection in legends.
+#' Use \code{opts_selection} for interactive geometries in panels,
+#' \code{opts_selection_key} for interactive scales/guides and
+#' \code{opts_selection_theme} for interactive theme elements.
 #' @param css css to associate with elements when they are selected.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
@@ -196,6 +212,28 @@ opts_selection_key <- function(css = NULL, type = "single", only_shiny = TRUE, s
     selected = selected
   )
   class(x) <- "opts_selection_key"
+  x
+}
+
+#' @export
+#' @rdname opts_selection
+opts_selection_theme <- function(css = NULL, type = "single", only_shiny = TRUE, selected = character(0)){
+
+  if( is.null(css)){
+    css <- "stroke:gray;"
+  }
+
+  stopifnot(type %in%
+              c("single", "multiple", "none"))
+
+  css <- paste0("{", css, "}")
+  x <- list(
+    css = css,
+    type = type,
+    only_shiny = only_shiny,
+    selected = selected
+  )
+  class(x) <- "opts_selection_theme"
   x
 }
 

@@ -3,21 +3,24 @@
 \name{opts_hover}
 \alias{opts_hover}
 \alias{opts_hover_key}
+\alias{opts_hover_theme}
 \title{Hover effect settings}
 \usage{
 opts_hover(css = NULL)
 
 opts_hover_key(css = NULL)
+
+opts_hover_theme(css = NULL)
 }
 \arguments{
-\item{css}{css to associate with elements to be animated
-when mouse is hover them.}
+\item{css}{css to associate with elements when they are hovered.}
 }
 \description{
-Allows customization of the animation
-of graphic elements on which the mouse is positioned.
-Use \code{opts_hover} to animate elements in panels and
-\code{opts_hover_key} to animate elements in legends.
+Allows customization of the rendering
+of graphic elements when the user hovers over them with the cursor (mouse pointer).
+Use \code{opts_hover} for interactive geometries in panels,
+\code{opts_hover_key} for interactive scales/guides and
+\code{opts_hover_theme} for interactive theme elements.
 }
 \examples{
 library(ggplot2)
