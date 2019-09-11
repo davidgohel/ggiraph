@@ -11,7 +11,14 @@
 #include "R_ext/GraphicsEngine.h"
 #include "a_color.h"
 #include <locale>
+#include <sstream>
 
+std::string to_string( const int& n )
+{
+  std::ostringstream stm ;
+  stm << n ;
+  return stm.str() ;
+}
 
 std::string line_style(double width, int col, int type, int join, int end)
 {
@@ -136,13 +143,13 @@ public:
 
   void new_element() {
     element_index++;
-    element_id.assign(canvas_id + "_el_" + std::to_string(element_index));
+    element_id.assign(canvas_id + "_el_" + to_string(element_index));
     register_element();
   }
 
   void new_clip() {
     clip_index++;
-    clip_id.assign(canvas_id + "_cl_" + std::to_string(clip_index));
+    clip_id.assign(canvas_id + "_cl_" + to_string(clip_index));
   }
 
   void set_tracer_on(){
