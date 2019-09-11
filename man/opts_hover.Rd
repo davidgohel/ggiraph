@@ -13,7 +13,9 @@ opts_hover_key(css = NULL)
 opts_hover_theme(css = NULL)
 }
 \arguments{
-\item{css}{css to associate with elements when they are hovered.}
+\item{css}{css to associate with elements when they are hovered.
+It must be a scalar character. It can also be constructed with
+\code{\link{girafe_css}}, to give more control over the css for different element types.}
 }
 \description{
 Allows customization of the rendering

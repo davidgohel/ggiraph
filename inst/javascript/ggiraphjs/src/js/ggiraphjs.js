@@ -30,37 +30,38 @@ export default class ggiraphjs {
     }
 
     selectedDataClassname() {
-        return 'clicked_' + this.svgid;
+        return 'selected_' + this.svgid;
     }
     selectedKeyClassname() {
-        return 'clickedkey_' + this.svgid;
+        return 'selected_key_' + this.svgid;
     }
     selectedThemeClassname() {
-        return 'clickedtheme_' + this.svgid;
+        return 'selected_theme_' + this.svgid;
     }
 
     hoverClassname() {
         return 'hover_' + this.svgid;
     }
     hoverKeyClassname() {
-        return 'hoverkey_' + this.svgid;
+        return 'hover_key_' + this.svgid;
     }
     hoverThemeClassname() {
-        return 'hovertheme_' + this.svgid;
+        return 'hover_theme_' + this.svgid;
     }
 
-    addStyle(tooltipCss, hoverCss, hoverKeyCss, hoverThemeCss, clickedCss, clickedKeyCss, clickedThemeCss) {
+    addStyle(tooltipCss, hoverCss, hoverKeyCss, hoverThemeCss, selectedCss, selectedKeyCss, selectedThemeCss) {
         const oldstyle = d3.select("#" + this.containerid + " style");
         if (oldstyle.size() > 0) {
             oldstyle.remove();
         }
-        const css = ".tooltip_" + this.svgid + tooltipCss + "\n" +
-            ".hover_" + this.svgid + hoverCss + "\n" +
-            ".hoverkey_" + this.svgid + hoverKeyCss + "\n" +
-            ".hovertheme_" + this.svgid + hoverThemeCss + "\n" +
-            ".clicked_" + this.svgid + clickedCss + "\n" +
-            ".clickedkey_" + this.svgid + clickedKeyCss + "\n" +
-            ".clickedtheme_" + this.svgid + clickedThemeCss + "\n";
+        const css =
+            tooltipCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            hoverCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            hoverKeyCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            hoverThemeCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            selectedCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            selectedKeyCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            selectedThemeCss.replace(/SVGID_/g, this.svgid) + "\n";
         d3.select("#" + this.containerid).append("style").text(css);
     }
 

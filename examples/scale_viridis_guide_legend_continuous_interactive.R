@@ -38,7 +38,7 @@ x <- girafe(ggobj = p3)
 if (interactive()) print(x)
 
 
-# make the title interactive and reverse order of keys
+# make the title and labels interactive
 p4 <- p + scale_fill_viridis_c_interactive(
   data_id = function(breaks) {
     as.character(breaks)
@@ -46,11 +46,23 @@ p4 <- p + scale_fill_viridis_c_interactive(
   tooltip = function(breaks) {
     as.character(breaks)
   },
-  guide = guide_legend(
-    reverse = TRUE
-  ),
+  guide = "legend",
   name = label_interactive("nlevel", data_id = "nlevel",
-                           tooltip = "nlevel")
+                           tooltip = "nlevel"),
+  labels = function(breaks) {
+    l <- lapply(breaks, function(br) {
+      label_interactive(
+        as.character(br),
+        data_id = as.character(br),
+        onclick = paste0("alert(\"", as.character(br), "\")"),
+        tooltip = as.character(br)
+      )
+    })
+    l
+  }
 )
 x <- girafe(ggobj = p4)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
+

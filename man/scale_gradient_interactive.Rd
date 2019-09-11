@@ -112,6 +112,8 @@ p2 <- p + scale_fill_gradient_interactive(
   )
 )
 x <- girafe(ggobj = p2)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 
 # make the legend labels interactive
@@ -137,6 +139,8 @@ p3 <- p + scale_fill_gradient_interactive(
   }
 )
 x <- girafe(ggobj = p3)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 
 # also via the guide
@@ -160,6 +164,8 @@ p4 <- p + scale_fill_gradient_interactive(
   )
 )
 x <- girafe(ggobj = p4)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 
 # make the legend background interactive
@@ -171,6 +177,8 @@ p5 <- p4 + theme(
   )
 )
 x <- girafe(ggobj = p5)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 }
 \seealso{

@@ -76,24 +76,28 @@ if (interactive()) print(x)
 # make the title interactive too
 p2 <- p +
   scale_fill_manual_interactive(
-    name = label_interactive("gender", tooltip="Gender levels"),
+    name = label_interactive("gender", tooltip="Gender levels", data_id="legend.title"),
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = c(Female = "Female", Male = "Male"),
     tooltip = c(Male = "Male", Female = "Female")
   )
 x <- girafe(ggobj = p2)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 
 # the interactive params can be functions too
 p3 <- p +
   scale_fill_manual_interactive(
-    name = label_interactive("gender", tooltip="Gender levels"),
+    name = label_interactive("gender", tooltip="Gender levels", data_id="legend.title"),
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = function(breaks) { as.character(breaks)},
     tooltip = function(breaks) { as.character(breaks)},
     onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") }
   )
 x <- girafe(ggobj = p3)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 
 # also via the guide
@@ -105,7 +109,7 @@ p4 <- p + scale_fill_manual_interactive(
   guide = guide_legend_interactive(
     title.theme = element_text_interactive(
       size = 8,
-      data_id = "gender",
+      data_id = "legend.title",
       onclick = "alert(\\"Gender levels\\")",
       tooltip = "Gender levels"
     ),
@@ -115,12 +119,14 @@ p4 <- p + scale_fill_manual_interactive(
   )
 )
 x <- girafe(ggobj = p4)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 
 # make the legend labels interactive
 p5 <- p +
   scale_fill_manual_interactive(
-    name = label_interactive("gender", tooltip="Gender levels"),
+    name = label_interactive("gender", tooltip="Gender levels", data_id="legend.title"),
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = function(breaks) { as.character(breaks)},
     tooltip = function(breaks) { as.character(breaks)},
@@ -137,6 +143,8 @@ p5 <- p +
     }
   )
 x <- girafe(ggobj = p5)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
 library(ggplot2)
 library(ggiraph)
@@ -178,7 +186,7 @@ x <- girafe(ggobj = p3)
 if (interactive()) print(x)
 
 
-# make the title interactive and reverse order of keys
+# make the title and labels interactive
 p4 <- p + scale_fill_viridis_c_interactive(
   data_id = function(breaks) {
     as.character(breaks)
@@ -186,14 +194,26 @@ p4 <- p + scale_fill_viridis_c_interactive(
   tooltip = function(breaks) {
     as.character(breaks)
   },
-  guide = guide_legend(
-    reverse = TRUE
-  ),
+  guide = "legend",
   name = label_interactive("nlevel", data_id = "nlevel",
-                           tooltip = "nlevel")
+                           tooltip = "nlevel"),
+  labels = function(breaks) {
+    l <- lapply(breaks, function(br) {
+      label_interactive(
+        as.character(br),
+        data_id = as.character(br),
+        onclick = paste0("alert(\\"", as.character(br), "\\")"),
+        tooltip = as.character(br)
+      )
+    })
+    l
+  }
 )
 x <- girafe(ggobj = p4)
+x <- girafe_options(x,
+                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
+
 }
 \seealso{
 \code{\link{interactive_parameters}}

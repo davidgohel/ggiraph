@@ -36,14 +36,22 @@
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_tooltip <- function(
-  css = NULL, offx = 10, offy = 0, use_cursor_pos = TRUE,
-  opacity = .9, use_fill = FALSE, use_stroke = FALSE,
-  delay_mouseover = 200, delay_mouseout = 500, zindex = 999){
-
-  if( is.null(css)){
-    css <- "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;"
-  }
+opts_tooltip <- function(css = NULL,
+                         offx = 10,
+                         offy = 0,
+                         use_cursor_pos = TRUE,
+                         opacity = .9,
+                         use_fill = FALSE,
+                         use_stroke = FALSE,
+                         delay_mouseover = 200,
+                         delay_mouseout = 500,
+                         zindex = 999) {
+  css <- check_css(
+    css = css,
+    default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px",
+    cls_prefix = "tooltip_",
+    name = "opts_tooltip"
+  )
   if( grepl(x = css, pattern = "position[ ]*:") )
     stop("do not specify position in css, this parameter is managed by girafe.")
   if( grepl(x = css, pattern = "pointer-events[ ]*:") )
@@ -58,9 +66,13 @@ opts_tooltip <- function(
   stopifnot(zindex >= 1)
   zindex <- round(zindex, digits = 0)
 
-  css <- paste0("{position:absolute;pointer-events:none;",
-                sprintf("z-index:%.0f;", zindex),
-                css, "}")
+  css <- sub("\\}\n$",
+             paste0(
+               "; position:absolute;pointer-events:none;",
+               sprintf("z-index:%.0f;", zindex),
+               "}\n"
+             ),
+             css)
   x <- list(
     css = css,
     offx = offx, offy = offy,
@@ -81,6 +93,8 @@ opts_tooltip <- function(
 #' \code{opts_hover_key} for interactive scales/guides and
 #' \code{opts_hover_theme} for interactive theme elements.
 #' @param css css to associate with elements when they are hovered.
+#' It must be a scalar character. It can also be constructed with
+#' \code{\link{girafe_css}}, to give more control over the css for different element types.
 #' @examples
 #' library(ggplot2)
 #'
@@ -99,47 +113,35 @@ opts_tooltip <- function(
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_hover <- function(css = NULL){
-
-  if( is.null(css)){
-    css <- "fill:orange;stroke:gray;"
-  }
-  css <- paste0("{", css, "}")
-  x <- list(
-    css = css
-  )
-  class(x) <- "opts_hover"
-  x
+opts_hover <- function(css = NULL) {
+  css <- check_css(css,
+                   default = "fill:orange;stroke:gray;",
+                   cls_prefix = "hover_",
+                   name = "opts_hover")
+  structure(list(css = css),
+            class = "opts_hover")
 }
 
 #' @export
 #' @rdname opts_hover
-opts_hover_key <- function(css = NULL){
-
-  if( is.null(css)){
-    css <- "stroke:red;"
-  }
-  css <- paste0("{", css, "}")
-  x <- list(
-    css = css
-  )
-  class(x) <- "opts_hover_key"
-  x
+opts_hover_key <- function(css = NULL) {
+  css <- check_css(css,
+                   default = "stroke:red;",
+                   cls_prefix = "hover_key_",
+                   name = "opts_hover")
+  structure(list(css = css),
+            class = "opts_hover_key")
 }
 
 #' @export
 #' @rdname opts_hover
-opts_hover_theme <- function(css = NULL){
-
-  if( is.null(css)){
-    css <- "stroke:green;"
-  }
-  css <- paste0("{", css, "}")
-  x <- list(
-    css = css
-  )
-  class(x) <- "opts_hover_theme"
-  x
+opts_hover_theme <- function(css = NULL) {
+  css <- check_css(css,
+                   default = "fill:green;",
+                   cls_prefix = "hover_theme_",
+                   name = "opts_hover_theme")
+  structure(list(css = css),
+            class = "opts_hover_theme")
 }
 
 #' @title Selection effect settings
@@ -149,6 +151,8 @@ opts_hover_theme <- function(css = NULL){
 #' \code{opts_selection_key} for interactive scales/guides and
 #' \code{opts_selection_theme} for interactive theme elements.
 #' @param css css to associate with elements when they are selected.
+#' It must be a scalar character. It can also be constructed with
+#' \code{\link{girafe_css}}, to give more control over the css for different element types.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param only_shiny disable selections if not in a shiny context.
@@ -173,68 +177,65 @@ opts_hover_theme <- function(css = NULL){
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_selection <- function(css = NULL, type = "multiple", only_shiny = TRUE, selected = character(0)){
-
-  if( is.null(css)){
-    css <- "fill:red;stroke:gray;"
-  }
-
+opts_selection <- function(css = NULL,
+                           type = "multiple",
+                           only_shiny = TRUE,
+                           selected = character(0)) {
+  css <- check_css(css,
+                   default = "fill:red;stroke:gray;",
+                   cls_prefix = "selected_",
+                   name = "opts_selection")
   stopifnot(type %in%
               c("single", "multiple", "none"))
-
-  css <- paste0("{", css, "}")
-  x <- list(
+  structure(list(
     css = css,
     type = type,
     only_shiny = only_shiny,
     selected = selected
-  )
-  class(x) <- "opts_selection"
-  x
+  ),
+  class = "opts_selection")
 }
 
 #' @export
 #' @rdname opts_selection
-opts_selection_key <- function(css = NULL, type = "single", only_shiny = TRUE, selected = character(0)){
-
-  if( is.null(css)){
-    css <- "stroke:gray;"
-  }
-
+opts_selection_key <- function(css = NULL,
+                               type = "single",
+                               only_shiny = TRUE,
+                               selected = character(0)) {
+  css <- check_css(css,
+                   default = "stroke:gray;",
+                   cls_prefix = "selected_key_",
+                   name = "opts_selection_key")
   stopifnot(type %in%
               c("single", "multiple", "none"))
-
-  css <- paste0("{", css, "}")
-  x <- list(
+  structure(list(
     css = css,
     type = type,
     only_shiny = only_shiny,
     selected = selected
-  )
-  class(x) <- "opts_selection_key"
-  x
+  ),
+  class = "opts_selection_key")
 }
 
 #' @export
 #' @rdname opts_selection
-opts_selection_theme <- function(css = NULL, type = "single", only_shiny = TRUE, selected = character(0)){
-
-  if( is.null(css)){
-    css <- "stroke:gray;"
-  }
-
+opts_selection_theme <- function(css = NULL,
+                                 type = "single",
+                                 only_shiny = TRUE,
+                                 selected = character(0)) {
+  css <- check_css(css,
+                   default = "stroke:gray;",
+                   cls_prefix = "selected_theme_",
+                   name = "opts_selection_theme")
   stopifnot(type %in%
               c("single", "multiple", "none"))
-
-  css <- paste0("{", css, "}")
-  x <- list(
+  structure(list(
     css = css,
     type = type,
     only_shiny = only_shiny,
     selected = selected
-  )
-  class(x) <- "opts_selection_theme"
-  x
+  ),
+  class = "opts_selection_theme")
 }
 
 #' @title Zoom settings
@@ -398,12 +399,16 @@ girafe_options <- function(x, ...){
       x$x$settings$capture <- arg
     } else if (inherits(arg, "opts_selection_key")) {
       x$x$settings$capturekey <- arg
+    } else if (inherits(arg, "opts_selection_theme")) {
+      x$x$settings$capturetheme <- arg
     } else if (inherits(arg, "opts_tooltip")) {
       x$x$settings$tooltip <- arg
     } else if (inherits(arg, "opts_hover")) {
       x$x$settings$hover <- arg
     } else if (inherits(arg, "opts_hover_key")) {
       x$x$settings$hoverkey <- arg
+    } else if (inherits(arg, "opts_hover_theme")) {
+      x$x$settings$hovertheme <- arg
     } else if (inherits(arg, "opts_toolbar")) {
       x$x$settings$toolbar <- arg
     } else if (inherits(arg, "opts_sizing")) {

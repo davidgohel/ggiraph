@@ -16,7 +16,9 @@ opts_selection_theme(css = NULL, type = "single", only_shiny = TRUE,
   selected = character(0))
 }
 \arguments{
-\item{css}{css to associate with elements when they are selected.}
+\item{css}{css to associate with elements when they are selected.
+It must be a scalar character. It can also be constructed with
+\code{\link{girafe_css}}, to give more control over the css for different element types.}
 
 \item{type}{selection mode ("single", "multiple", "none")
 when widget is in a Shiny application.}

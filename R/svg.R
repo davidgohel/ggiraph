@@ -54,27 +54,27 @@ set_svg_attributes <- function(data, canvas_id) {
   css <- c(css,
            make_css(env_key_hover,
                     "key-id",
-                    "hoverkey_",
+                    "hover_key_",
                     canvas_id))
   css <- c(css,
            make_css(env_theme_hover,
                     "theme-id",
-                    "hovertheme_",
+                    "hover_theme_",
                     canvas_id))
   css <- c(css,
            make_css(env_data_selected,
                     "data-id",
-                    "clicked_",
+                    "selected_",
                     canvas_id))
   css <- c(css,
            make_css(env_key_selected,
                     "key-id",
-                    "clicked_key",
+                    "selected_key",
                     canvas_id))
   css <- c(css,
            make_css(env_theme_selected,
                     "theme-id",
-                    "clicked_theme",
+                    "selected_theme",
                     canvas_id))
   if (length(css) > 0) {
     style_tag <-
@@ -110,17 +110,78 @@ collect_css <- function(target,
 
 make_css <- function(envir, data_attr, cls_prefix, canvas_id) {
   lapply(ls(envir, all.names = TRUE, sorted = FALSE), function(x) {
-    css <- get(x, envir = envir)
-    paste0(".",
-           cls_prefix,
-           canvas_id,
-           "[",
-           data_attr,
-           " = \"",
-           x ,
-           "\"]",
-           " {",
-           css,
-           "}")
+    check_css(
+      css = get(x, envir = envir),
+      default = "",
+      cls_prefix = cls_prefix,
+      canvas_id = canvas_id
+    )
   })
+}
+
+#' CSS creation helper
+#'
+#' It allows specifying individual styles for various SVG elements.
+#'
+#' @param css The generic css style
+#' @param text Override style for text elements (svg:text)
+#' @param point Override style for point elements (svg:circle)
+#' @param line Override style for line elements (svg:line, svg:polyline)
+#' @param area Override style for area elements (svg:rect, svg:polygon, svg:path)
+#'
+#' @return css as scalar character
+#' @examples
+#' library(ggiraph)
+#'
+#' girafe_css(
+#'   css = "fill:orange;stroke:gray;",
+#'   text = "stroke:none; font-size: larger",
+#'   line = "fill:none",
+#'   area = "stroke-width:3px",
+#'   point = "stroke-width:3px"
+#' )
+#' @export
+girafe_css <- function(css,
+                       text = NULL,
+                       point = NULL,
+                       line = NULL,
+                       area = NULL) {
+  css <- paste("/*GIRAFE CSS*/ ._CLASSNAME_ {", css, "}\n")
+  if (!is.null(text))
+    css <- paste(css, paste("text._CLASSNAME_ {", text, "}\n"))
+  if (!is.null(point))
+    css <- paste(css, paste("circle._CLASSNAME_ {", point, "}\n"))
+  if (!is.null(line))
+    css <- paste(css,
+                 paste("line._CLASSNAME_, polyline._CLASSNAME_ {", line, "}\n"))
+  if (!is.null(area))
+    css <- paste(css,
+                 paste(
+                   "rect._CLASSNAME_, polygon._CLASSNAME_, path._CLASSNAME_ {",
+                   area,
+                   "}\n"
+                 ))
+  return(css)
+}
+
+#' Helper to check css argument, given in other functions
+#' @noRd
+#' @importFrom rlang is_scalar_character
+check_css <- function(css,
+                      default,
+                      cls_prefix,
+                      name = cls_prefix,
+                      canvas_id = "SVGID_") {
+  if (is.null(css)) {
+    css <- default
+  } else if (!is_scalar_character(css)) {
+    stop(name, ": css must be a scalar character", call. = FALSE)
+  }
+  pattern = "\\/\\*GIRAFE CSS\\*\\/"
+  if (!grepl(pattern, css)) {
+    css <- girafe_css(css)
+  }
+  css <- gsub("_CLASSNAME_", paste0(cls_prefix, canvas_id), css)
+  css <- gsub(pattern, "", css)
+  css
 }
