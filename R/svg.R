@@ -129,6 +129,7 @@ make_css <- function(envir, data_attr, cls_prefix, canvas_id) {
 #' @param point Override style for point elements (svg:circle)
 #' @param line Override style for line elements (svg:line, svg:polyline)
 #' @param area Override style for area elements (svg:rect, svg:polygon, svg:path)
+#' @param image Override style for image elements (svg:image)
 #'
 #' @return css as scalar character
 #' @examples
@@ -139,14 +140,16 @@ make_css <- function(envir, data_attr, cls_prefix, canvas_id) {
 #'   text = "stroke:none; font-size: larger",
 #'   line = "fill:none",
 #'   area = "stroke-width:3px",
-#'   point = "stroke-width:3px"
+#'   point = "stroke-width:3px",
+#'   image = "outline:2px red"
 #' )
 #' @export
 girafe_css <- function(css,
                        text = NULL,
                        point = NULL,
                        line = NULL,
-                       area = NULL) {
+                       area = NULL,
+                       image = NULL) {
   css <- paste("/*GIRAFE CSS*/ ._CLASSNAME_ {", css, "}\n")
   if (!is.null(text))
     css <- paste(css, paste("text._CLASSNAME_ {", text, "}\n"))
@@ -162,6 +165,8 @@ girafe_css <- function(css,
                    area,
                    "}\n"
                  ))
+  if (!is.null(image))
+    css <- paste(css, paste("image._CLASSNAME_ {", image, "}\n"))
   return(css)
 }
 

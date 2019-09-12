@@ -5,7 +5,7 @@
 \title{CSS creation helper}
 \usage{
 girafe_css(css, text = NULL, point = NULL, line = NULL,
-  area = NULL)
+  area = NULL, image = NULL)
 }
 \arguments{
 \item{css}{The generic css style}
@@ -17,6 +17,8 @@ girafe_css(css, text = NULL, point = NULL, line = NULL,
 \item{line}{Override style for line elements (svg:line, svg:polyline)}
 
 \item{area}{Override style for area elements (svg:rect, svg:polygon, svg:path)}
+
+\item{image}{Override style for area elements (svg:image)}
 }
 \value{
 css as scalar character
@@ -30,8 +32,9 @@ library(ggiraph)
 girafe_css(
   css = "fill:orange;stroke:gray;",
   text = "stroke:none; font-size: larger",
+  point = "stroke-width:3px",
   line = "fill:none",
   area = "stroke-width:3px",
-  point = "stroke-width:3px"
+  image = "outline:2px red"
 )
 }
