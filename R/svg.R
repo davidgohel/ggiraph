@@ -114,7 +114,8 @@ make_css <- function(envir, data_attr, cls_prefix, canvas_id) {
       css = get(x, envir = envir),
       default = "",
       cls_prefix = cls_prefix,
-      canvas_id = canvas_id
+      canvas_id = canvas_id,
+      filter = paste0("[", data_attr, " = \"", x , "\"]")
     )
   })
 }
@@ -171,7 +172,8 @@ check_css <- function(css,
                       default,
                       cls_prefix,
                       name = cls_prefix,
-                      canvas_id = "SVGID_") {
+                      canvas_id = "SVGID_",
+                      filter = NULL) {
   if (is.null(css)) {
     css <- default
   } else if (!is_scalar_character(css)) {
@@ -181,7 +183,7 @@ check_css <- function(css,
   if (!grepl(pattern, css)) {
     css <- girafe_css(css)
   }
-  css <- gsub("_CLASSNAME_", paste0(cls_prefix, canvas_id), css)
+  css <- gsub("_CLASSNAME_", paste0(cls_prefix, canvas_id, filter), css)
   css <- gsub(pattern, "", css)
   css
 }
