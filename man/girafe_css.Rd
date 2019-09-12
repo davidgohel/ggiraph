@@ -18,7 +18,7 @@ girafe_css(css, text = NULL, point = NULL, line = NULL,
 
 \item{area}{Override style for area elements (svg:rect, svg:polygon, svg:path)}
 
-\item{image}{Override style for area elements (svg:image)}
+\item{image}{Override style for image elements (svg:image)}
 }
 \value{
 css as scalar character
@@ -32,9 +32,9 @@ library(ggiraph)
 girafe_css(
   css = "fill:orange;stroke:gray;",
   text = "stroke:none; font-size: larger",
-  point = "stroke-width:3px",
   line = "fill:none",
   area = "stroke-width:3px",
+  point = "stroke-width:3px",
   image = "outline:2px red"
 )
 }
