@@ -3,9 +3,8 @@
 #' @examples
 #' # add interactive tiles to a ggplot -------
 #' @example examples/geom_tile_interactive.R
-geom_tile_interactive <- function(...) {
+geom_tile_interactive <- function(...)
   layer_interactive(geom_tile, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

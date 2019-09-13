@@ -18,6 +18,13 @@ function set_reactive(x, id ){
       x.setKeySelected(message);
     }
   });
+  Shiny.addCustomMessageHandler(id + '_theme_set', function(message) {
+    if( typeof message === 'string' ) {
+      x.setThemeSelected([message]);
+    } else if( isArray(message) ){
+      x.setThemeSelected(message);
+    }
+  });
 
 }
 
@@ -36,8 +43,8 @@ HTMLWidgets.widget({
       renderValue: function(x) {
         ggobj.setSvgId(x.uid);
         ggobj.addStyle(x.settings.tooltip.css,
-            x.settings.hover.css, x.settings.hoverkey.css,
-            x.settings.capture.css, x.settings.capturekey.css);
+            x.settings.hover.css, x.settings.hoverkey.css, x.settings.hovertheme.css,
+            x.settings.capture.css, x.settings.capturekey.css, x.settings.capturetheme.css);
         ggobj.setZoomer(x.settings.zoom.min, x.settings.zoom.max);
         ggobj.addSvg(x.html, x.js);
         ggobj.animateGElements(x.settings.tooltip.opacity,
@@ -72,15 +79,35 @@ HTMLWidgets.widget({
 
         var addSelection = ggobj.isSelectable() &&
           (( HTMLWidgets.shinyMode &&
-            ( x.settings.capture.only_shiny || x.settings.capturekey.only_shiny)
+            ( x.settings.capture.only_shiny ||
+              x.settings.capturekey.only_shiny ||
+              x.settings.capturetheme.only_shiny)
           ) ||
           ( !HTMLWidgets.shinyMode &&
-            ( !x.settings.capture.only_shiny || !x.settings.capturekey.only_shiny)
+            ( !x.settings.capture.only_shiny ||
+              !x.settings.capturekey.only_shiny ||
+              !x.settings.capturetheme.only_shiny)
           ));
 
         var addZoom = true;
         if( x.settings.zoom.min === 1 && x.settings.zoom.max <= 1 ){
           addZoom = false;
+        }
+
+        if( addSelection && x.settings.capturetheme.type == "single" ){
+          ggobj.selectizeThemeSingle();
+          if( typeof x.settings.capturetheme.selected === 'string' ) {
+            ggobj.setThemeSelected([x.settings.capturetheme.selected]);
+          }
+        } else if( addSelection && x.settings.capturetheme.type == "multiple" ){
+          ggobj.selectizeThemeMultiple();
+          if( typeof x.settings.capturetheme.selected === 'string' ) {
+            ggobj.setThemeSelected([x.settings.capturetheme.selected]);
+          } else if( isArray(x.settings.capturetheme.selected) ){
+            ggobj.setThemeSelected(x.settings.capturetheme.selected);
+          }
+        } else {
+          ggobj.selectizeThemeNone();
         }
 
         if( addSelection && x.settings.capturekey.type == "single" ){
@@ -125,6 +152,7 @@ HTMLWidgets.widget({
         if( HTMLWidgets.shinyMode ){
           ggobj.setInputId(el.id + "_selected");
           ggobj.setInputKeyId(el.id + "_key_selected");
+          ggobj.setInputThemeId(el.id + "_theme_selected");
           set_reactive(ggobj, el.id );
         }
 

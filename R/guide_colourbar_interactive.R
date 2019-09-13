@@ -1,39 +1,52 @@
+#' @title Create interactive continuous colour bar guide
+#' @description
+#' The guide is based on \code{\link[ggplot2]{guide_colourbar}}.
+#' See the documentation for that function for more details.
+#'
+#' @param ... arguments passed to base function.
+#' @return An interactive guide object.
+#' @inheritSection interactive_parameters Details for scale_*_interactive and guide_*_interactive functions
+#' @examples
+#' # add interactive colourbar guide to a ggplot -------
+#' @example examples/scale_gradient_guide_colourbar_interactive.R
+#' @seealso \code{\link{interactive_parameters}}
+#' @seealso \code{\link{girafe}}
 #' @export
-#' @title interactive colourbar guide
-#' @description an interactive legend guide.
-#' See \code{\link[ggplot2]{guide_legend}} for more details.
-#' @param ... arguments passed to guide_legend.
-guide_colourbar_interactive <- function(...) {
-  zz <- guide_colourbar(...)
-  class(zz) <- c("colourbar_interactive", class(zz))
-  zz
-}
+guide_colourbar_interactive <- function(...)
+  guide_interactive(guide_colourbar, "interactive_colourbar", ...)
 
 #' @export
-guide_geom.colourbar_interactive <- function(guide, layers, default_mapping){
-  default_mapping <- append_aes(default_mapping, INTERACTIVE_ATTR_DEFAULTS)
-  NextMethod()
-}
+#' @rdname guide_colourbar_interactive
+guide_colorbar_interactive <- guide_colourbar_interactive
 
 #' @export
-#' @inheritParams ggplot2::guide_train
-#' @param scale,aesthetic other parameters used by guide_train
-#' @title methods for interactive colourbar guide
-#' @description These functions should not be used by the end users.
-guide_train.colourbar_interactive <- function(guide, scale, aesthetic = NULL) {
+guide_train.interactive_colourbar <- function(guide,
+                                              scale,
+                                              aesthetic = NULL) {
   zz <- NextMethod()
-  zz <- copy_interactive_attrs(scale, zz, forceChar = FALSE)
-  zz
+  if (is.null(zz))
+    return(zz)
+
+  # just copy them from scale to trained guide
+  copy_interactive_attrs(scale, zz)
 }
 
 #' @export
 #' @importFrom purrr compact
-guide_gengrob.colourbar_interactive <- function(guide, theme) {
-  zz <- NextMethod()
-  data <- compact(guide[INTERACTIVE_ATTR_NAMES])
-  zz$grobs <- lapply(zz$grobs,
-         function(z){
-           add_interactive_attrs(z, data, data_attr = "key-id")
-         })
-  zz
+guide_gengrob.interactive_colourbar <- function(guide, theme) {
+  guide_gtable <- NextMethod()
+  data <- compact(guide[IPAR_NAMES])
+  # set them to the bar
+  barIndex <- which(guide_gtable$layout$name == "bar")
+  guide_gtable$grobs[[barIndex]] <-
+    add_interactive_attrs(guide_gtable$grobs[[barIndex]],
+                          data,
+                          data_attr = "key-id")
+
+  # or set them everywhere?
+  # guide_gtable$grobs <- lapply(guide_gtable$grobs, function(z) {
+  #   # some grobs may already be set interactive, from theme elements
+  #   add_interactive_attrs(z, data, data_attr = "key-id", overwrite = FALSE)
+  # })
+  guide_gtable
 }

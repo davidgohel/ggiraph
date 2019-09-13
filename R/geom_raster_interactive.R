@@ -1,19 +1,20 @@
-#' @title interactive raster rectangles.
+#' @title Create interactive raster rectangles
 #'
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_raster}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @seealso \code{\link{girafe}}
 #' @examples
 #' # add interactive raster to a ggplot -------
 #' @example examples/geom_raster_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_raster_interactive <- function(...) {
+geom_raster_interactive <- function(...)
   layer_interactive(geom_raster, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -44,18 +45,3 @@ GeomInteractiveRaster <- ggproto(
     add_interactive_attrs(zz, coords)
   }
 )
-
-#' @export
-#' @title interactive_raster_grob drawing
-#' @description draw an interactive_raster_grob
-#' @inheritParams grid::drawDetails
-drawDetails.interactive_raster_grob <- function(x, recording) {
-  # ugly fix for beeing able to call grid.raster as argument name is raster and not image
-  names(x)[names(x) %in% "raster"] <- "image"
-  dsvg_tracer_on()
-  do.call(grid.raster, x[grob_argnames(x = x, grob = grid::rasterGrob)])
-  ids <- dsvg_tracer_off()
-  interactive_attr_toxml(x = x, ids = ids)
-  invisible()
-}
-

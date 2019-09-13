@@ -1,18 +1,19 @@
-#' @title interactive smoothed conditional means
+#' @title Create interactive smoothed conditional means
 #'
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_smooth}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive bar -------
 #' @example examples/geom_smooth_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_smooth_interactive <- function(...) {
+geom_smooth_interactive <- function(...)
   layer_interactive(geom_smooth, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

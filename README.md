@@ -12,10 +12,11 @@ ggiraph R package
 ## Overview
 
 `ggiraph` is an htmlwidget and a ggplot2 extension. It allows ggplot
-graphics to be animated.
+graphics to be interactive, by exporting them as SVG documents and using
+special attributes on the various elements.
 
-Animation is made with ggplot geometries that can understand three
-arguments:
+Interactivity is added to ggplot geometries, legends and theme elements,
+via some parameters:
 
   - `tooltip`: column of dataset that contains tooltips to be displayed
     when mouse is over elements.
@@ -28,7 +29,9 @@ If used within a shiny application, elements associated with an id
 (`data_id`) can be selected and manipulated on client and server
 sides.
 
-[![](https://img.youtube.com/vi/cJt5hlCi_do/0.jpg)](https://youtu.be/cJt5hlCi_do)
+<iframe width="100%" height="550" src="https://www.youtube.com/embed/cJt5hlCi_do" frameborder="0" allowfullscreen>
+
+</iframe>
 
 ## Installation
 

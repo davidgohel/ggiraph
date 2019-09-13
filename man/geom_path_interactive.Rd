@@ -4,7 +4,7 @@
 \alias{geom_path_interactive}
 \alias{geom_line_interactive}
 \alias{geom_step_interactive}
-\title{interactive observations connections}
+\title{Create interactive observations connections}
 \usage{
 geom_path_interactive(...)
 
@@ -13,13 +13,26 @@ geom_line_interactive(...)
 geom_step_interactive(...)
 }
 \arguments{
-\item{...}{arguments passed to base geometry.}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_path}},
 \code{\link[ggplot2]{geom_line}} and \code{\link[ggplot2]{geom_step}}.
 See the documentation for those functions for more details.
 }
+\section{Details for geom_*_interactive functions}{
+
+The interactive parameters can be supplied with two ways:
+\itemize{
+  \item As aesthetics with the mapping argument (via \code{\link[ggplot2]{aes}}).
+  In this way they can be mapped to data columns and apply to a set of geometries.
+
+  \item As plain arguments into the geom_*_interactive function (see
+  \code{\link[ggplot2]{layer}}). In this way they can be set to a scalar value.
+}
+}
+
 \examples{
 # add interactive paths to a ggplot -------
 library(ggplot2)
@@ -28,11 +41,12 @@ library(ggiraph)
 # geom_line_interactive example -----
 if( requireNamespace("dplyr", quietly = TRUE)){
   gg <- ggplot(economics_long,
-    aes(date, value01, colour = variable, tooltip = variable, data_id = variable)) +
+    aes(date, value01, colour = variable, tooltip = variable, data_id = variable,
+        hover_css = "fill:none;")) +
     geom_line_interactive(size = .75)
   x <- girafe(ggobj = gg)
   x <- girafe_options(x = x,
-                      opts_hover(css = "stroke:red;") )
+                      opts_hover(css = "stroke:red;fill:orange") )
   if( interactive() ) print(x)
 
 }

@@ -6,14 +6,14 @@ export function parseFunction (str) {
         fn_declare = str.substring(0, fn_body_idx),
         fn_params = fn_declare.substring(fn_declare.indexOf('(')+1, fn_declare.lastIndexOf(')')),
         args = fn_params.split(',');
-  
+
     args.push(fn_body);
-  
+
     function Fn () {
       return Function.apply(this, args);
     }
     Fn.prototype = Function.prototype;
-      
+
     return new Fn();
   }
 
@@ -103,20 +103,8 @@ export function add_ui(that, addLasso, addZoom, saveaspng, classpos) {
                 } else {
                     console.error("This navigator does not support Promises");
                 }
-                
+
             })
             .html("<svg width='15pt' height='15pt' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'><g><polygon points='95 275 95 415 415 415 415 275 375 275 375 380 135 380 135 275'/><polygon points='220 30 220 250 150 175 150 245 250 345 350 245 350 175 280 250 280 30'/></g></svg>");
     }
 }
-
-//https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-export function guid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return "id" + s4() + s4();
-  }
-
-  

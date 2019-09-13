@@ -4,9 +4,8 @@
 #' @example examples/geom_hline_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_hline_interactive <- function(...) {
+geom_hline_interactive <- function(...)
   layer_interactive(geom_hline, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

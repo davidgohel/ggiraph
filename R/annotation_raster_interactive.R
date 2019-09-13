@@ -1,19 +1,19 @@
-#' @title interactive annotations
+#' @title Create interactive raster annotations
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{annotation_raster}}.
-#' See the documentation for those functions for more details.
+#' The layer is based on \code{\link[ggplot2]{annotation_raster}}.
+#' See the documentation for that function for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for annotate_*_interactive functions
 #' @examples
-#' # add diagonal interactive reference lines to a ggplot -------
+#' # add interactive raster annotation to a ggplot -------
 #' @example examples/annotation_raster_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-#' @include utils.R
-annotation_raster_interactive <- function(...) {
+annotation_raster_interactive <- function(...)
   layer_interactive(annotation_raster, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

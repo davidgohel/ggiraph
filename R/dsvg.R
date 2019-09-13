@@ -31,12 +31,11 @@ dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
                 fonts = list()) {
 
   system_fonts <- validate_fonts( fonts )
-  clip_id_root <- basename( tempfile(pattern = "id", fileext = format(Sys.time(), "%Y%m%d%H%M%S") ) )
 
   invisible(DSVG_(file=file, width=width, height=height, bg=bg,
                   pointsize=pointsize,
                   standalone=standalone,
-                  canvas_id=canvas_id, clip_id_root = clip_id_root,
+                  canvas_id=canvas_id,
                   aliases = list(system = system_fonts, user = list())
                   )
             )

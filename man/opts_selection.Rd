@@ -3,16 +3,22 @@
 \name{opts_selection}
 \alias{opts_selection}
 \alias{opts_selection_key}
-\title{selection effect settings}
+\alias{opts_selection_theme}
+\title{Selection effect settings}
 \usage{
 opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
   selected = character(0))
 
 opts_selection_key(css = NULL, type = "single", only_shiny = TRUE,
   selected = character(0))
+
+opts_selection_theme(css = NULL, type = "single", only_shiny = TRUE,
+  selected = character(0))
 }
 \arguments{
-\item{css}{css to associate with elements when they are selected.}
+\item{css}{css to associate with elements when they are selected.
+It must be a scalar character. It can also be constructed with
+\code{\link{girafe_css}}, to give more control over the css for different element types.}
 
 \item{type}{selection mode ("single", "multiple", "none")
 when widget is in a Shiny application.}
@@ -25,8 +31,9 @@ initialized.}
 \description{
 Allows customization of the rendering of
 selected graphic elements.
-Use \code{opts_selection} to define selection in panels and
-\code{opts_selection_key} to define selection in legends.
+Use \code{opts_selection} for interactive geometries in panels,
+\code{opts_selection_key} for interactive scales/guides and
+\code{opts_selection_theme} for interactive theme elements.
 }
 \examples{
 library(ggplot2)

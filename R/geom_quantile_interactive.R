@@ -1,19 +1,20 @@
-#' @title interactive quantile regression.
+#' @title Create interactive quantile regression
 #'
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_quantile}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @seealso \code{\link{girafe}}
 #' @examples
 #' # add interactive quantiles to a ggplot -------
 #' @example examples/geom_quantile_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_quantile_interactive <- function(...) {
+geom_quantile_interactive <- function(...)
   layer_interactive(geom_quantile, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

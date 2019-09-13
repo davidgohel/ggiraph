@@ -1,19 +1,20 @@
-#' @title interactive textual annotations.
+#' @title Create interactive textual annotations
 #'
 #' @description
 #' The geometries are based on \code{\link[ggplot2]{geom_text}}
 #' and \code{\link[ggplot2]{geom_label}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive texts to a ggplot -------
 #' @example examples/geom_text_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_text_interactive <- function(...) {
+geom_text_interactive <- function(...)
   layer_interactive(geom_text, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

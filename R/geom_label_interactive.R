@@ -3,9 +3,8 @@
 #' # add interactive labels to a ggplot -------
 #' @example examples/geom_label_interactive.R
 #' @export
-geom_label_interactive <- function(...) {
+geom_label_interactive <- function(...)
   layer_interactive(geom_label, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -45,9 +44,6 @@ GeomInteractiveLabel <- ggproto(
 )
 
 #' @export
-#' @title interactive_label_grob drawing
-#' @description draw an interactive_label_grob
-#' @inheritParams grid::makeContent
 makeContent.interactive_label_grob <- function(x) {
   hj <- resolveHJust(x$just, NULL)
   vj <- resolveVJust(x$just, NULL)

@@ -4,14 +4,15 @@
 \name{geom_freqpoly_interactive}
 \alias{geom_freqpoly_interactive}
 \alias{geom_histogram_interactive}
-\title{interactive histograms and frequency polygons}
+\title{Create interactive histograms and frequency polygons}
 \usage{
 geom_freqpoly_interactive(...)
 
 geom_histogram_interactive(...)
 }
 \arguments{
-\item{...}{arguments passed to base geometry.}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
 }
 \description{
 The geometries are based on \code{\link[ggplot2]{geom_histogram}}
@@ -22,6 +23,18 @@ This interactive version is only providing a single tooltip per
 group of data (same for \code{data_id}). It means it is only possible
 to associate a single tooltip to a set of bins.
 }
+\section{Details for geom_*_interactive functions}{
+
+The interactive parameters can be supplied with two ways:
+\itemize{
+  \item As aesthetics with the mapping argument (via \code{\link[ggplot2]{aes}}).
+  In this way they can be mapped to data columns and apply to a set of geometries.
+
+  \item As plain arguments into the geom_*_interactive function (see
+  \code{\link[ggplot2]{layer}}). In this way they can be set to a scalar value.
+}
+}
+
 \examples{
 # add interactive histogram -------
 library(ggplot2)

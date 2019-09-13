@@ -2,7 +2,7 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_sizing}
 \alias{opts_sizing}
-\title{girafe sizing settings}
+\title{Girafe sizing settings}
 \usage{
 opts_sizing(rescale = TRUE, width = 1)
 }

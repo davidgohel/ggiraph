@@ -2,19 +2,26 @@
 % Please edit documentation in R/annotation_raster_interactive.R
 \name{annotation_raster_interactive}
 \alias{annotation_raster_interactive}
-\title{interactive annotations}
+\title{Create interactive raster annotations}
 \usage{
 annotation_raster_interactive(...)
 }
 \arguments{
-\item{...}{arguments passed to base geometry.}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
 }
 \description{
-The geometry is based on \code{\link[ggplot2]{annotation_raster}}.
-See the documentation for those functions for more details.
+The layer is based on \code{\link[ggplot2]{annotation_raster}}.
+See the documentation for that function for more details.
 }
+\section{Details for annotate_*_interactive functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.
+}
+
 \examples{
-# add diagonal interactive reference lines to a ggplot -------
+# add interactive raster annotation to a ggplot -------
 library(ggplot2)
 library(ggiraph)
 

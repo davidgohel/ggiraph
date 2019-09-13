@@ -1,8 +1,7 @@
 #' @rdname geom_crossbar_interactive
 #' @export
-geom_errorbar_interactive <- function(...) {
+geom_errorbar_interactive <- function(...)
   layer_interactive(geom_errorbar, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

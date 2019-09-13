@@ -2,23 +2,27 @@
 % Please edit documentation in R/interactive_points_grob.R
 \name{interactive_points_grob}
 \alias{interactive_points_grob}
-\title{Generate interactive points grob}
+\title{Create interactive points grob}
 \usage{
-interactive_points_grob(..., tooltip = NULL, onclick = NULL,
-  data_id = NULL, cl = "interactive_points_grob")
+interactive_points_grob(...)
 }
 \arguments{
-\item{...}{arguments passed to base function.}
-
-\item{tooltip}{tooltip associated with points}
-
-\item{onclick}{javascript action to execute when point is clicked}
-
-\item{data_id}{identifiers to associate with points}
-
-\item{cl}{class to set}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
+}
+\value{
+An interactive grob object.
 }
 \description{
 The grob is based on \code{\link[grid]{pointsGrob}}.
 See the documentation for that function for more details.
+}
+\section{Details for interactive_*_grob functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.
+}
+
+\seealso{
+\code{\link{girafe}}
 }

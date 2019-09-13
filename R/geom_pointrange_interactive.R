@@ -1,8 +1,7 @@
 #' @rdname geom_crossbar_interactive
 #' @export
-geom_pointrange_interactive <- function(...) {
+geom_pointrange_interactive <- function(...)
   layer_interactive(geom_pointrange, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

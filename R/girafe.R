@@ -1,4 +1,4 @@
-#' @title create a girafe object
+#' @title Create a girafe object
 #'
 #' @description Create an interactive graphic with a ggplot object
 #' to be used in a web browser. The function should replace function
@@ -7,9 +7,8 @@
 #' @details
 #' Use \code{geom_zzz_interactive} to create interactive graphical elements.
 #'
-#' Difference from original functions is that the following
-#' aesthetics are understood: \code{tooltip}, \code{onclick}
-#' and \code{data_id}.
+#' Difference from original functions is that some extra aesthetics are understood:
+#' the \code{\link{interactive_parameters}}.
 #'
 #' Tooltips can be displayed when mouse is over graphical elements.
 #'
@@ -87,11 +86,12 @@
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
 #' @seealso \code{\link{girafe_options}}
 #' @export
+#' @importFrom uuid UUIDgenerate
 girafe <- function(
   code, ggobj = NULL,  pointsize = 12,
   width_svg = 6, height_svg = 5, xml_reader_options = list(), ...) {
 
-  canvas_id <- basename( tempfile(pattern = "svg_", fileext = format(Sys.time(), "%Y%m%d%H%M%S") ) )
+  canvas_id <- paste("svg", UUIDgenerate(), sep = "_")
   path = tempfile()
   dsvg(file = path, pointsize = pointsize, standalone = TRUE,
        width = width_svg, height = height_svg,
@@ -107,10 +107,7 @@ girafe <- function(
 
   xml_reader_options$x <- path
   data <- do.call(read_xml, xml_reader_options )
-  scr <- xml_find_all(data, "//*[@type='text/javascript']", ns = xml_ns(data) )
-  js <- paste( sapply( scr, xml_text ), collapse = ";")
-  js <- paste0("function zzz(){", js, "};")
-  xml_remove(scr)
+  set_svg_attributes(data, canvas_id)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
   unlink(path)
@@ -118,22 +115,26 @@ girafe <- function(
   tooltip_set <- opts_tooltip()
   hover_set <- opts_hover()
   hoverkey_set <- opts_hover_key()
+  hovertheme_set <- opts_hover_theme()
   zoom_set <- opts_zoom()
   selection_set <- opts_selection()
   selectionkey_set <- opts_selection_key()
+  selectiontheme_set <- opts_selection_theme()
   toolbar_set <- opts_toolbar()
   sizing_set <- opts_sizing()
 
-  x = list( html = as.character(data), js = js,
+  x = list( html = as.character(data), js = NULL,
             uid = canvas_id,
             ratio = width_svg / height_svg,
             settings = list(
               tooltip = tooltip_set,
               hover = hover_set,
               hoverkey = hoverkey_set,
+              hovertheme = hovertheme_set,
               zoom = zoom_set,
               capture = selection_set,
               capturekey = selectionkey_set,
+              capturetheme = selectiontheme_set,
               toolbar = toolbar_set,
               sizing = sizing_set
               )

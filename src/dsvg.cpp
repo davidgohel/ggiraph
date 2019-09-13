@@ -11,7 +11,14 @@
 #include "R_ext/GraphicsEngine.h"
 #include "a_color.h"
 #include <locale>
+#include <sstream>
 
+std::string to_string( const int& n )
+{
+  std::ostringstream stm ;
+  stm << n ;
+  return stm.str() ;
+}
 
 std::string line_style(double width, int col, int type, int join, int end)
 {
@@ -87,10 +94,11 @@ public:
   FILE *file;
   std::string filename;
   int pageno;
-  int id;
   std::string canvas_id;
-  std::string clip_id_root;
-  int clip_id;
+  int element_index;
+  std::string element_id;
+  int clip_index;
+  std::string clip_id;
   double clipleft, clipright, cliptop, clipbottom;
   bool standalone;
   /*   */
@@ -106,15 +114,16 @@ public:
 
   DSVG_dev(std::string filename_, bool standalone_,
            std::string canvas_id_,
-           std::string clip_id_root_,
            int bg_,
            Rcpp::List& aliases_,
            double width_, double height_ ):
       filename(filename_),
       pageno(0),
-	    id(-1),
-	    canvas_id(canvas_id_),
-	    clip_id_root(clip_id_root_),
+      canvas_id(canvas_id_),
+      element_index(0),
+      element_id(canvas_id_ + "_el_0"),
+      clip_index(0),
+      clip_id(canvas_id_ + "_cl_0"),
       standalone(standalone_),
       tracer_on(0),
       tracer_is_init(0),
@@ -132,9 +141,15 @@ public:
     return file != NULL;
   }
 
-  int new_id() {
-  	id++;
-  	return id;
+  void new_element() {
+    element_index++;
+    element_id.assign(canvas_id + "_el_" + to_string(element_index));
+    register_element();
+  }
+
+  void new_clip() {
+    clip_index++;
+    clip_id.assign(canvas_id + "_cl_" + to_string(clip_index));
   }
 
   void set_tracer_on(){
@@ -154,10 +169,10 @@ public:
   void register_element() {
     if( tracer_on > 0 ){
       if( tracer_is_init < 1 ){
-        tracer_first_elt = id;
+        tracer_first_elt = element_index;
         tracer_is_init = 1;
       }
-      tracer_last_elt = id;
+      tracer_last_elt = element_index;
     }
   }
 
@@ -208,10 +223,10 @@ static void dsvg_clip(double x0, double x1, double y0, double y1, pDevDesc dd) {
   svgd->clipbottom = y0;
   svgd->cliptop = y1;
 
-  svgd->clip_id++;
+  svgd->new_clip();
 
   fputs("<defs>", svgd->file);
-  fprintf(svgd->file, "<clipPath id='cl_%s_%d'>", svgd->clip_id_root.c_str(), svgd->clip_id );
+  fprintf(svgd->file, "<clipPath id='%s'>", svgd->clip_id.c_str() );
   fprintf(svgd->file, "<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'/>",
           std::min(x0, x1), std::min(y0, y1),
           std::abs(x1 - x0),
@@ -232,11 +247,11 @@ static void dsvg_close(pDevDesc dd) {
 static void dsvg_line(double x1, double y1, double x2, double y2,
                      const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  int idx = svgd->new_id();
-  svgd->register_element();
-  fprintf(svgd->file, "<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' id='%d'",
-    x1, y1, x2, y2, idx);
-  fprintf(svgd->file, " clip-path='url(#cl_%s_%d)'", svgd->canvas_id.c_str(), svgd->clip_id);
+  svgd->new_element();
+
+  fprintf(svgd->file, "<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' id='%s'",
+    x1, y1, x2, y2, svgd->element_id.c_str());
+  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
   std::string line_style_ = line_style(gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
   fprintf(svgd->file, "%s", line_style_.c_str());
   a_color col_(gc->fill);
@@ -248,16 +263,16 @@ static void dsvg_line(double x1, double y1, double x2, double y2,
 static void dsvg_polyline(int n, double *x, double *y, const pGEcontext gc,
                          pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  int idx = svgd->new_id();
-  svgd->register_element();
+  svgd->new_element();
+
   fputs("<polyline points='", svgd->file);
   fprintf(svgd->file, "%.2f,%.2f", x[0], y[0]);
   for (int i = 1; i < n; i++) {
     fprintf(svgd->file, " %.2f,%.2f", x[i], y[i]);
   }
   fputs("'", svgd->file);
-  fprintf(svgd->file, " id='%d'", idx);
-  fprintf(svgd->file, " clip-path='url(#cl_%s_%d)'", svgd->canvas_id.c_str(), svgd->clip_id);
+  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
+  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
   fputs(" fill=\"none\"", svgd->file);
 
   std::string line_style_ = line_style(gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
@@ -268,16 +283,16 @@ static void dsvg_polyline(int n, double *x, double *y, const pGEcontext gc,
 static void dsvg_polygon(int n, double *x, double *y, const pGEcontext gc,
                         pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  int idx = svgd->new_id();
-  svgd->register_element();
+  svgd->new_element();
+
   fputs("<polygon points='", svgd->file);
   fprintf(svgd->file, "%.2f,%.2f", x[0], y[0]);
   for (int i = 1; i < n; i++) {
     fprintf(svgd->file, " %.2f,%.2f", x[i], y[i]);
   }
   fputs("'", svgd->file);
-  fprintf(svgd->file, " id='%d'", idx);
-  fprintf(svgd->file, " clip-path='url(#cl_%s_%d)'", svgd->clip_id_root.c_str(), svgd->clip_id);
+  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
+  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
 
   a_color col_(gc->fill);
   fprintf(svgd->file, "%s", col_.svg_fill_attr().c_str());
@@ -293,8 +308,7 @@ void dsvg_path(double *x, double *y,
               Rboolean winding,
               const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  int idx = svgd->new_id();
-  svgd->register_element();
+  svgd->new_element();
   int index = 0;
 
   fputs("<path d='", svgd->file);
@@ -307,8 +321,8 @@ void dsvg_path(double *x, double *y,
     }
     fputs("Z ", svgd->file);
   }
-  fprintf(svgd->file, "' id='%d'", idx);
-  fprintf(svgd->file, " clip-path='url(#cl_%s_%d)'", svgd->clip_id_root.c_str(), svgd->clip_id);
+  fprintf(svgd->file, "' id='%s'", svgd->element_id.c_str());
+  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
 
   a_color fill_(gc->fill);
   fprintf(svgd->file, "%s", fill_.svg_fill_attr().c_str());
@@ -339,14 +353,13 @@ static double dsvg_strwidth(const char *str, const pGEcontext gc, pDevDesc dd) {
 static void dsvg_rect(double x0, double y0, double x1, double y1,
                      const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  int idx = svgd->new_id();
-  svgd->register_element();
+  svgd->new_element();
 
   fprintf(svgd->file,
       "<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'",
       fmin(x0, x1), fmin(y0, y1), fabs(x1 - x0), fabs(y1 - y0));
-  fprintf(svgd->file, " id='%d'", idx);
-  fprintf(svgd->file, " clip-path='url(#cl_%s_%d)'", svgd->clip_id_root.c_str(), svgd->clip_id);
+  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
+  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
 
   a_color fill_(gc->fill);
   fprintf(svgd->file, "%s", fill_.svg_fill_attr().c_str());
@@ -359,13 +372,11 @@ static void dsvg_rect(double x0, double y0, double x1, double y1,
 static void dsvg_circle(double x, double y, double r, const pGEcontext gc,
                        pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-
-  int idx = svgd->new_id();
-  svgd->register_element();
+  svgd->new_element();
 
   fprintf(svgd->file, "<circle cx='%.2f' cy='%.2f' r='%.2fpt'", x, y, r * .75 );
-  fprintf(svgd->file, " id='%d'", idx);
-  fprintf(svgd->file, " clip-path='url(#cl_%s_%d)'", svgd->clip_id_root.c_str(), svgd->clip_id);
+  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
+  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
   a_color fill_(gc->fill);
   fprintf(svgd->file, "%s", fill_.svg_fill_attr().c_str());
   std::string line_style_ = line_style(gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
@@ -376,10 +387,9 @@ static void dsvg_circle(double x, double y, double r, const pGEcontext gc,
 static void dsvg_text_utf8(double x, double y, const char *str, double rot,
                      double hadj, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  svgd->new_element();
 
-  int idx = svgd->new_id();
-  svgd->register_element();
-  fprintf(svgd->file, "<g clip-path='url(#cl_%s_%d)'>", svgd->clip_id_root.c_str(), svgd->clip_id);
+  fprintf(svgd->file, "<g clip-path='url(#%s)'>", svgd->clip_id.c_str());
 
   fputs("<text", svgd->file);
   if (rot == 0) {
@@ -388,7 +398,7 @@ static void dsvg_text_utf8(double x, double y, const char *str, double rot,
     fprintf(svgd->file, " transform='translate(%.2f,%.2f) rotate(%0.0f)'", x, y,
       -1.0 * rot);
   }
-  fprintf(svgd->file, " id='%d'", idx);
+  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
   fprintf(svgd->file, " font-size='%.2fpt'", gc->cex * gc->ps * .75 );
   if (is_bold(gc->fontface))
     fputs(" font-weight='bold'", svgd->file);
@@ -439,8 +449,7 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
                        const pGEcontext gc, pDevDesc dd)
 {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  int idx = svgd->new_id();
-  svgd->register_element();
+  svgd->new_element();
 
   if (height < 0)
     height = -height;
@@ -454,8 +463,8 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
 
   fprintf(svgd->file, "<image x='%.2f' y='%.2f' ", x, y - height );
   fprintf(svgd->file, "width='%.2f' height='%.2f' ", width, height);
-  fprintf(svgd->file, "id='%d' ", idx);
-  fprintf(svgd->file, "clip-path='url(#cl_%s_%d)' ", svgd->clip_id_root.c_str(), svgd->clip_id);
+  fprintf(svgd->file, "id='%s' ", svgd->element_id.c_str());
+  fprintf(svgd->file, "clip-path='url(#%s)' ", svgd->clip_id.c_str());
 
   if (fabs(rot)>0.001) {
     fprintf(svgd->file, "transform='rotate(%0.0f,%0.0f,%0.0f)' ", -1.0 * rot, x, y );
@@ -473,7 +482,6 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   if (svgd->pageno > 0) {
     Rf_error("svgd only supports one page");
   }
-  svgd->new_id();
 
   if (svgd->standalone)
     fputs("<?xml version='1.0' encoding='UTF-8'?>\n", svgd->file);
@@ -502,7 +510,7 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
     col = gc->col;
     gc->fill = bg_fill;
     gc->col = bg_fill;
-    dsvg_clip(0, 0, dd->right, dd->bottom, dd);
+    dsvg_clip(0, dd->right, 0, dd->bottom, dd);
     dsvg_rect(0, 0, dd->right, dd->bottom, gc, dd);
     gc->fill = fill;
     gc->col = col;
@@ -514,7 +522,6 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
 
 pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
                         double height, int pointsize, bool standalone, std::string canvas_id,
-                        std::string clip_id_root,
                         Rcpp::List aliases) {
 
   pDevDesc dd = (DevDesc*) calloc(1, sizeof(DevDesc));
@@ -581,7 +588,7 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
   dd->haveTransparentBg = 2;
 
   dd->deviceSpecific = new DSVG_dev(filename, standalone,
-                                    canvas_id, clip_id_root,
+                                    canvas_id,
                                     bg, aliases,
                                     width * 72, height * 72);
   return dd;
@@ -589,7 +596,7 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
 
 // [[Rcpp::export]]
 bool DSVG_(std::string file, double width, double height, std::string bg,
-             int pointsize, bool standalone, std::string canvas_id, std::string clip_id_root, Rcpp::List aliases) {
+             int pointsize, bool standalone, std::string canvas_id, Rcpp::List aliases) {
 
   int bg_ = R_GE_str2col(bg.c_str());
 
@@ -598,7 +605,7 @@ bool DSVG_(std::string file, double width, double height, std::string bg,
   BEGIN_SUSPEND_INTERRUPTS {
     setlocale(LC_NUMERIC, "C");
 
-    pDevDesc dev = dsvg_driver_new(file, bg_, width, height, pointsize, standalone, canvas_id, clip_id_root,
+    pDevDesc dev = dsvg_driver_new(file, bg_, width, height, pointsize, standalone, canvas_id,
                                    aliases);
     if (dev == NULL)
       Rcpp::stop("Failed to start SVG2 device");
@@ -675,14 +682,10 @@ bool add_attribute(int dn, Rcpp::IntegerVector id,
 
   DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
 
-  fputs("<script type='text/javascript'><![CDATA[", svgd->file);
-
   for( int i = 0 ; i < nb_elts ; i++ ){
-    fprintf(svgd->file,
-            "document.querySelectorAll('#%s')[0].getElementById('%d').setAttribute('%s','%s');",
-            svgd->canvas_id.c_str(), id[i], name.c_str(), str[i].c_str());
+    fprintf(svgd->file, "<comment target='%d' attr='%s'><![CDATA[%s]]></comment>",
+            id[i], name.c_str(), str[i].c_str());
   }
-  fputs("]]></script>", svgd->file);
   return true;
 }
 

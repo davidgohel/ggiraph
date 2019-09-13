@@ -1,19 +1,20 @@
-#' @title interactive observations connections
+#' @title Create interactive observations connections
 #'
 #' @description
 #' These geometries are based on \code{\link[ggplot2]{geom_path}},
 #' \code{\link[ggplot2]{geom_line}} and \code{\link[ggplot2]{geom_step}}.
 #' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive paths to a ggplot -------
 #' @example examples/geom_path_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_path_interactive <- function(...) {
+geom_path_interactive <- function(...)
   layer_interactive(geom_path, ...)
-}
 
 #' @importFrom stats complete.cases
 #' @importFrom stats ave
@@ -21,7 +22,6 @@ geom_path_interactive <- function(...) {
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @include utils.R
 GeomInteractivePath <- ggproto(
   "GeomInteractivePath",
   GeomPath,
@@ -128,10 +128,8 @@ GeomInteractivePath <- ggproto(
 
 #' @export
 #' @rdname geom_path_interactive
-#' @include utils.R
-geom_line_interactive <- function(...) {
+geom_line_interactive <- function(...)
   layer_interactive(geom_line, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -147,9 +145,8 @@ GeomInteractiveLine <- ggproto(
 
 #' @export
 #' @rdname geom_path_interactive
-geom_step_interactive <- function(...) {
+geom_step_interactive <- function(...)
   layer_interactive(geom_step, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

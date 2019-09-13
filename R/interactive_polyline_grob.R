@@ -1,31 +1,21 @@
-#' @title Generate interactive polyline grob
+#' @title Create interactive polyline grob
 #'
 #' @description
-#' The grob is based on \code{\link[grid]{polylineGrob}}.
-#' See the documentation for that function for more details.
+#' These grobs are based on \code{\link[grid]{polylineGrob}} and
+#' \code{\link[grid]{linesGrob}}.
+#' See the documentation for those functions for more details.
 #'
-#' @param ... arguments passed to base function.
-#' @param tooltip tooltip associated with polylines
-#' @param onclick javascript action to execute when polyline is clicked
-#' @param data_id identifiers to associate with polylines
-#' @param cl class to set
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @return An interactive grob object.
+#' @inheritSection interactive_parameters Details for interactive_*_grob functions
+#' @seealso \code{\link{girafe}}
 #' @export
-interactive_polyline_grob <-
-  function(...,
-           tooltip = NULL,
-           onclick = NULL,
-           data_id = NULL,
-           cl = "interactive_polyline_grob") {
-    gr <- grid::polylineGrob(...)
-    add_interactive_attrs(gr,
-                          get_interactive_attrs(),
-                          cl = cl)
-  }
+interactive_polyline_grob <- function(...) {
+  grob_interactive(grid::polylineGrob, ...)
+}
 
 #' @export
-#' @title interactive_polyline_grob drawing
-#' @description draw an interactive_polyline_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_polyline_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.polyline, x[grob_argnames(x = x, grob = grid::polylineGrob)])
@@ -39,10 +29,13 @@ drawDetails.interactive_polyline_grob <- function(x, recording) {
   invisible()
 }
 
+#' @rdname interactive_polyline_grob
 #' @export
-#' @title interactive_lines_grob drawing
-#' @description draw an interactive_lines_grob
-#' @inheritParams grid::drawDetails
+interactive_lines_grob <- function(...) {
+  grob_interactive(grid::linesGrob, ...)
+}
+
+#' @export
 drawDetails.interactive_lines_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.lines, x[grob_argnames(x = x, grob = grid::linesGrob)])

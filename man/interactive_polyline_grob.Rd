@@ -2,23 +2,31 @@
 % Please edit documentation in R/interactive_polyline_grob.R
 \name{interactive_polyline_grob}
 \alias{interactive_polyline_grob}
-\title{Generate interactive polyline grob}
+\alias{interactive_lines_grob}
+\title{Create interactive polyline grob}
 \usage{
-interactive_polyline_grob(..., tooltip = NULL, onclick = NULL,
-  data_id = NULL, cl = "interactive_polyline_grob")
+interactive_polyline_grob(...)
+
+interactive_lines_grob(...)
 }
 \arguments{
-\item{...}{arguments passed to base function.}
-
-\item{tooltip}{tooltip associated with polylines}
-
-\item{onclick}{javascript action to execute when polyline is clicked}
-
-\item{data_id}{identifiers to associate with polylines}
-
-\item{cl}{class to set}
+\item{...}{arguments passed to base function,
+plus any of the \code{\link{interactive_parameters}}.}
+}
+\value{
+An interactive grob object.
 }
 \description{
-The grob is based on \code{\link[grid]{polylineGrob}}.
-See the documentation for that function for more details.
+These grobs are based on \code{\link[grid]{polylineGrob}} and
+\code{\link[grid]{linesGrob}}.
+See the documentation for those functions for more details.
+}
+\section{Details for interactive_*_grob functions}{
+
+The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.
+}
+
+\seealso{
+\code{\link{girafe}}
 }

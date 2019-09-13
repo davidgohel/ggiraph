@@ -7,18 +7,19 @@ export default class ggiraphjs {
         this.containerid = containerid;
         this.dataSelected = [];
         this.dataKeySelected = [];
+        this.dataThemeSelected = [];
         this.typeSelection = null;
         this.svgid = null;
         this.inputId = null;
         this.inputKeyId = null;
+        this.inputThemeId = null;
         this.zoomer = null;
     }
 
     setSvgId(id) {
-        this.svgid = utils.guid();
-        this.uid = id;
+        this.svgid = id;
     }
-   
+
     setZoomer(min, max) {
         this.zoomer = d3.zoom().scaleExtent([min, max]);
     }
@@ -29,29 +30,38 @@ export default class ggiraphjs {
     }
 
     selectedDataClassname() {
-        return 'clicked_' + this.svgid;
+        return 'selected_' + this.svgid;
     }
     selectedKeyClassname() {
-        return 'clickedkey_' + this.svgid;
+        return 'selected_key_' + this.svgid;
+    }
+    selectedThemeClassname() {
+        return 'selected_theme_' + this.svgid;
     }
 
     hoverClassname() {
         return 'hover_' + this.svgid;
     }
     hoverKeyClassname() {
-        return 'hoverkey_' + this.svgid;
+        return 'hover_key_' + this.svgid;
+    }
+    hoverThemeClassname() {
+        return 'hover_theme_' + this.svgid;
     }
 
-    addStyle(tooltipCss, hoverCss, hoverKeyCss, clickedCss, clickedKeyCss) {
+    addStyle(tooltipCss, hoverCss, hoverKeyCss, hoverThemeCss, selectedCss, selectedKeyCss, selectedThemeCss) {
         const oldstyle = d3.select("#" + this.containerid + " style");
         if (oldstyle.size() > 0) {
             oldstyle.remove();
         }
-        const css = ".tooltip_" + this.svgid + tooltipCss + "\n" +
-            ".hover_" + this.svgid + hoverCss + "\n" +
-            ".hoverkey_" + this.svgid + hoverKeyCss + "\n" +
-            ".clicked_" + this.svgid + clickedCss + "\n" +
-            ".clickedkey_" + this.svgid + clickedKeyCss + "\n";
+        const css =
+            tooltipCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            hoverCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            hoverKeyCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            hoverThemeCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            selectedCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            selectedKeyCss.replace(/SVGID_/g, this.svgid) + "\n" +
+            selectedThemeCss.replace(/SVGID_/g, this.svgid) + "\n";
         d3.select("#" + this.containerid).append("style").text(css);
     }
 
@@ -61,6 +71,10 @@ export default class ggiraphjs {
 
     setInputKeyId(id) {
         this.inputKeyId = id;
+    }
+
+    setInputThemeId(id) {
+        this.inputThemeId = id;
     }
 
     addUI(addLasso, addZoom, saveaspng, classpos) {
@@ -99,11 +113,10 @@ export default class ggiraphjs {
             .append("div").attr("class", this.tooltipClassname())
             .style("position", "absolute").style("opacity", 0);
 
-        var fun_ = utils.parseFunction(jsstr);
-        fun_();
-
-        d3.select("#" + this.uid).attr("id", this.svgid);
-
+        if (jsstr) {
+            var fun_ = utils.parseFunction(jsstr);
+            fun_();
+        }
     }
 
     IEFixResize(width, ratio) {
@@ -143,7 +156,7 @@ export default class ggiraphjs {
     }
 
     setSizeLimits(width_max, width_min, height_max, height_min) {
-        
+
         const svgid = this.svgid;
 
         d3.select("#" + svgid)
@@ -182,12 +195,21 @@ export default class ggiraphjs {
     animateGElements(opacity, offx, offy, usecursor, delayover, delayout, usefill, usestroke) {
         const selected_class = this.hoverClassname();
         const selectedkey_class = this.hoverKeyClassname();
-        const sel_both = d3.selectAll('#' + this.svgid + ' *');
+        const selectedtheme_class = this.hoverThemeClassname();
+        const sel_all = d3.selectAll('#' + this.svgid + ' *[title]' +
+                                      ', #' + this.svgid + ' *[data-id]' +
+                                      ', #' + this.svgid + ' *[key-id]' +
+                                      ', #' + this.svgid + ' *[theme-id]');
         const tooltipstr = "." + this.tooltipClassname();
         const svgid = this.svgid;
         const containerid = this.containerid;
-        sel_both
+        sel_all
             .on("mouseover", function (d) {
+                if (this.getAttribute("theme-id") !== null) {
+                    let curr_sel = d3.selectAll('#' + svgid +
+                        ' *[theme-id="' + this.getAttribute("theme-id") + '"]');
+                    curr_sel.classed(selectedtheme_class, true);
+                }
                 if (this.getAttribute("key-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
                         ' *[key-id="' + this.getAttribute("key-id") + '"]');
@@ -264,14 +286,19 @@ export default class ggiraphjs {
                 }
             })
             .on("mouseout", function (d) {
+                if (this.getAttribute("theme-id") !== null) {
+                    let curr_sel = d3.selectAll('#' + svgid +
+                        ' *[theme-id="' + this.getAttribute("theme-id") + '"]');
+                    curr_sel.classed(selectedtheme_class, false);
+                }
                 if (this.getAttribute("key-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
-                        ' *[key-id="' + d3.select(d3.event.currentTarget).attr("key-id") + '"]');
+                        ' *[key-id="' + this.getAttribute("key-id") + '"]');
                     curr_sel.classed(selectedkey_class, false);
                 }
                 if (this.getAttribute("data-id") !== null) {
                     let curr_sel = d3.selectAll('#' + svgid +
-                        ' *[data-id="' + d3.select(d3.event.currentTarget).attr("data-id") + '"]');
+                        ' *[data-id="' + this.getAttribute("data-id") + '"]');
                     curr_sel.classed(selected_class, false);
                 }
                 if (this.getAttribute("title") !== null) {
@@ -295,6 +322,13 @@ export default class ggiraphjs {
         this.refreshKeySelected();
         if (this.inputKeyId) {
             Shiny.onInputChange(this.inputKeyId, this.dataKeySelected);
+        }
+    }
+    setThemeSelected(sel) {
+        this.dataThemeSelected = sel;
+        this.refreshThemeSelected();
+        if (this.inputThemeId) {
+            Shiny.onInputChange(this.inputThemeId, this.dataThemeSelected);
         }
     }
 
@@ -390,7 +424,55 @@ export default class ggiraphjs {
     }
 
     selectizeKeyNone() {
-        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[key-id]');
+        const sel_key_id = d3.selectAll('#' + this.svgid + ' *[key-id]');
+        sel_key_id.on("click", null);
+    }
+
+    selectizeThemeMultiple() {
+        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[theme-id]');
+
+        const that = this;
+        sel_data_id.on("click", function (d, i) {
+            let dataSel = that.dataThemeSelected;
+            var dataid = d3.select(this).attr("theme-id");
+            var index = dataSel.indexOf(dataid);
+            if (index < 0) {
+                dataSel.push(dataid);
+            } else {
+                dataSel.splice(index, 1);
+            }
+            that.dataThemeSelected = dataSel;
+            that.refreshThemeSelected();
+            if (that.inputThemeId) {
+                Shiny.onInputChange(that.inputThemeId, that.dataThemeSelected);
+            }
+
+        });
+    }
+
+    selectizeThemeSingle() {
+        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[theme-id]');
+        const that = this;
+        sel_data_id.on("click", function (d, i) {
+            let dataSel = that.dataThemeSelected;
+
+            var dataid = d3.select(this).attr("theme-id");
+            var index = dataSel.indexOf(dataid);
+            if (index < 0) {
+                dataSel = [dataid];
+            } else {
+                dataSel = [];
+            }
+            that.dataThemeSelected = dataSel;
+            that.refreshThemeSelected();
+            if (that.inputThemeId) {
+                Shiny.onInputChange(that.inputThemeId, that.dataThemeSelected);
+            }
+        });
+    }
+
+    selectizeThemeNone() {
+        const sel_data_id = d3.selectAll('#' + this.svgid + ' *[theme-id]');
         sel_data_id.on("click", null);
     }
 
@@ -414,6 +496,16 @@ export default class ggiraphjs {
             svg.selectAll('*[key-id=\"' + that.dataKeySelected[i] + '\"]').classed(selected_class, true);
         });
     }
+    refreshThemeSelected() {
+        const selected_class = this.selectedThemeClassname();
+        const svgid = this.svgid;
+        var svg = d3.select('#' + svgid);
+        svg.selectAll('*[theme-id]').classed(selected_class, false);
+        const that = this;
+        d3.selectAll(that.dataThemeSelected).each(function (d, i) {
+            svg.selectAll('*[theme-id=\"' + that.dataThemeSelected[i] + '\"]').classed(selected_class, true);
+        });
+    }
     zoomOn() {
         const svgid = this.svgid;
         d3.select("#" + this.containerid).call(this.zoomer
@@ -434,7 +526,9 @@ export default class ggiraphjs {
     isSelectable() {
         const svgid = this.svgid;
         var svg = d3.select('#' + svgid);
-        return (svg.selectAll('*[data-id]').size() > 0 || svg.selectAll('*[key-id]').size() > 0);
+        return (svg.selectAll('*[data-id]').size() > 0 ||
+                svg.selectAll('*[key-id]').size() > 0 ||
+                svg.selectAll('*[theme-id]').size() > 0);
     }
 
     lasso_on(add) {

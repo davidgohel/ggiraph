@@ -8,7 +8,7 @@ p <- ggplot(mpg,
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)
 
-p <- ggplot(mpg, aes(x = drv, y = hwy, tooltip = class, fill = class)) +
+p <- ggplot(mpg, aes(x = drv, y = hwy, tooltip = class, fill = class, data_id=class)) +
   geom_boxplot_interactive(outlier.colour = "red") +
   guides(fill = "none") + theme_minimal()
 

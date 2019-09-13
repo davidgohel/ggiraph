@@ -64,3 +64,4 @@ See \code{\link[ggplot2]{Geom}} for more information.
 }
 
 \keyword{datasets}
+\keyword{internal}

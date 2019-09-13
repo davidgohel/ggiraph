@@ -1,31 +1,20 @@
-#' @title Generate interactive polygon grob
+#' @title Create interactive polygon grob
 #'
 #' @description
 #' The grob is based on \code{\link[grid]{polygonGrob}}.
 #' See the documentation for that function for more details.
 #'
-#' @param ... arguments passed to base function.
-#' @param tooltip tooltip associated with polygons
-#' @param onclick javascript action to execute when polygon is clicked
-#' @param data_id identifiers to associate with polygons
-#' @param cl class to set
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @return An interactive grob object.
+#' @inheritSection interactive_parameters Details for interactive_*_grob functions
+#' @seealso \code{\link{girafe}}
 #' @export
-interactive_polygon_grob <-
-  function(...,
-           tooltip = NULL,
-           onclick = NULL,
-           data_id = NULL,
-           cl = "interactive_polygon_grob") {
-    gr <- grid::polygonGrob(...)
-    add_interactive_attrs(gr,
-                          get_interactive_attrs(),
-                          cl = cl)
-  }
+interactive_polygon_grob <- function(...) {
+  grob_interactive(grid::polygonGrob, ...)
+}
 
 #' @export
-#' @title interactive_polygon_grob drawing
-#' @description draw an interactive_polygon_grob
-#' @inheritParams grid::drawDetails
 drawDetails.interactive_polygon_grob <- function(x, recording) {
   dsvg_tracer_on()
   do.call(grid.polygon, x[grob_argnames(x = x, grob = grid::polygonGrob)])

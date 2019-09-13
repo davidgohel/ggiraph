@@ -1,4 +1,4 @@
-#' @title interactive points
+#' @title Create interactive points
 #'
 #' @description
 #' The geometry is based on \code{\link[ggplot2]{geom_point}}.
@@ -7,15 +7,16 @@
 #' @note
 #' The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be used.
 #'
-#' @param ... arguments passed to base geometry.
+#' @param ... arguments passed to base function,
+#' plus any of the \code{\link{interactive_parameters}}.
+#' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive points to a ggplot -------
 #' @example examples/geom_point_interactive.R
 #' @seealso \code{\link{girafe}}
 #' @export
-geom_point_interactive <- function(...) {
+geom_point_interactive <- function(...)
   layer_interactive(geom_point, ...)
-}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -36,4 +37,3 @@ GeomInteractivePoint <- ggproto(
     add_interactive_attrs(zz, coords)
   }
 )
-

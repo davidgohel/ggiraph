@@ -2,7 +2,7 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_toolbar}
 \alias{opts_toolbar}
-\title{toolbar settings}
+\title{Toolbar settings}
 \usage{
 opts_toolbar(position = "topright", saveaspng = TRUE)
 }
