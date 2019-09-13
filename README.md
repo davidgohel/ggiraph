@@ -1,6 +1,16 @@
 ggiraph R package
 ================
 
+[![Build
+Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
+[![Build
+status](https://ci.appveyor.com/api/projects/status/github/davidgohel/ggiraph?branch=master)](https://ci.appveyor.com/project/davidgohel/ggiraph/branch/master)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ggiraph)](https://cran.r-project.org/package=ggiraph)
+![cranlogs](http://cranlogs.r-pkg.org./badges/ggiraph) [![Project
+Status: Active – The project has reached a stable, usable state and is
+being actively
+developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+
 <p align="center">
 
 <img width="15%" src="https://www.ardata.fr/img/hexbin/ggiraph.svg">
@@ -26,8 +36,7 @@ via some parameters:
     elements.
 
 If used within a shiny application, elements associated with an id
-(`data_id`) can be selected and manipulated on client and server
-sides.
+(`data_id`) can be selected and manipulated on client and server sides.
 
 <iframe width="100%" height="550" src="https://www.youtube.com/embed/cJt5hlCi_do" frameborder="0" allowfullscreen>
 
