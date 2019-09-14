@@ -1,26 +1,29 @@
+destination: docs
+
 title: ggiraph package
 
 template:
   package: ardown
   bootswatch: simplex
 
+home:
+  links:
+  - text: 'Visit <a href="https://www.ardata.fr"><img alt="ardata" src="https://www.ardata.fr/img/ardata-logo.svg" width="70"></a> website'
+    href: https://www.ardata.fr
+
 reference:
   - title: Make ggplot2 Graphics Interactive
     contents:
-    - ggiraph
     - girafe
   - title: Interactive geometries
     contents:
     - ends_with("_interactive")
-    - annotate_interactive
   - title: Customize girafe animations
     contents:
     - starts_with("opts_")
     - girafe_options
   - title: Working with shiny
     contents:
-    - renderggiraph
-    - ggiraphOutput
     - renderGirafe
     - girafeOutput
 
