@@ -13,7 +13,7 @@ p <- ggplot(diamonds, aes(depth, fill = cut, colour = cut)) +
   xlim(55, 70)
 x <- girafe(ggobj = p)
 x <- girafe_options(x = x,
-                    opts_hover(css = "stroke:red;stroke-width:3px;fill-opacity:0.8;") )
+                    opts_hover(css = "stroke:yellow;stroke-width:3px;fill-opacity:0.8;") )
 if( interactive() ) print(x)
 
 
