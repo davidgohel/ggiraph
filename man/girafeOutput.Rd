@@ -7,7 +7,8 @@
 girafeOutput(outputId, width = "100\%", height = "500px")
 }
 \arguments{
-\item{outputId}{output variable to read the girafe from.}
+\item{outputId}{output variable to read the girafe from. Do not use special JavaScript
+characters such as a period \code{.} in the id, this would create a JavaScript error.}
 
 \item{width}{widget width}
 

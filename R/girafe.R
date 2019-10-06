@@ -134,7 +134,8 @@ girafe <- function(
 #' @title Create a girafe output element
 #' @description Render a girafe within an application page.
 #'
-#' @param outputId output variable to read the girafe from.
+#' @param outputId output variable to read the girafe from. Do not use special JavaScript
+#' characters such as a period \code{.} in the id, this would create a JavaScript error.
 #' @param width widget width
 #' @param height widget height
 #' @export
