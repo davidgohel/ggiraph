@@ -13,10 +13,9 @@ vignette: >
 
 The **ggiraph** package let R users make **ggplot interactive**. The package 
 is an htmlwidget. The following graphic is produced by calling `girafe()` function 
-on a `ggplot` object.
+with a `ggplot` object.
 
-> Note that `girafe()` is a new function but `ggiraph()` function will be maintained. However, 
-  the `ggiraph()` function is only using `girafe()` function!
+> Note that `girafe()` should replace `ggiraph()` function that has been refactored. 
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -30,7 +29,7 @@ gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec,
   scale_color_gradient(low = "#F3C899", high = "#8C120A") 
 
 # htmlwidget call
-x <- girafe(ggobj = gg_point_1, width_svg = 5, height_svg = 4)
+x <- girafe(ggobj = gg_point_1, width_svg = 6, height_svg = 5)
 x <- girafe_options(x = x,
     opts_sizing(rescale = FALSE), 
     opts_tooltip(opacity = .8, css = "background-color:gray;color:white;padding:2px;border-radius:2px;"),
@@ -40,31 +39,30 @@ x
 
 ## Introduction
 
-It extends ggplot2 with new `geom` functions:
+It extends ggplot2 with:
 
-```{r echo=FALSE, results='asis'}
-geoms_ <- objects(envir = as.environment("package:ggiraph"), pattern = "^geom_([a-zA-Z0-9]*)_interactive$")
-htmltools::tags$ul( lapply( geoms_, htmltools::tags$li ) )
-```
+* interactive `geom` functions: `geom_point_interactive()`, `geom_col_interactive`, etc.
+* interactive `scale` functions: `scale_color_continuous_interactive()`, `scale_fill_manual_interactive()`, etc.
+* interactive `guide` functions: `guide_colorbar_interactive()`, `guide_colourbar_interactive()`, `guide_legend_interactive()`.
 
 These understand three aesthetics to let you add interactivity:
 
 * `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
-* `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic is mandatory 
-  when you want to use an hover effect or when you want to enable selection of points in shiny applications.**
-* `onclick`: column of dataset that contains javascript function to be executed when elements are clicked. 
+* `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic 
+is mandatory when you want to use an hover effect or when you want to enable selection of points 
+in shiny applications.**
+* `onclick`: column of dataset that contains javascript function to be executed when 
+elements are clicked. 
 
 Let's prepare a ggplot object with the `mpg` dataset. 
 
 ```{r}
 library(ggplot2)
 library(ggiraph)
-
-head(mpg)
 g <- ggplot(mpg, aes( x = displ, y = cty, color = hwy) )
 ```
 
-### tooltips
+## tooltips
 
 The first example shows how to add a tooltip:
 
@@ -73,9 +71,10 @@ my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 2)
 girafe(code = print(my_gg) )
 ```
 
-### hover effects
+## hover effects
 
-Now let's add an hover effect. **Elements associated with a `data_id` will be animated upon mouse over.**
+Now let's add an hover effect. **Elements associated with a `data_id` will be 
+animated upon mouse over.**
 
 ```{r message=FALSE}
 my_gg <- g + geom_point_interactive(
@@ -86,9 +85,9 @@ x
 
 > Note that `data-id` can also be reused within a shiny application as a reactive value. 
 
-### Click actions
+## Click actions
 
-#### Within shiny
+### Within shiny
 
 When working with shiny, you can use the `data_id` aesthetic to associate points, polygons 
 and other graphical elements with a value that will be available in a reactive context. 
@@ -96,7 +95,7 @@ This makes it possible to click on an element and trigger an action.
 Note that in this case, `onclick` should not be used, both onclick 
 and data_id will need the "click" event. [Read more about shiny integration](#shiny-usage)...
 
-#### Using onclick
+### Using onclick
 
 Click actions must be a string column in the dataset containing valid javascript instructions. 
 
