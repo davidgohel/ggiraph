@@ -82,9 +82,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ggiraph-dev-version-0701-" class="section level1">
+<div id="ggiraph-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ggiraph-dev-version-0701-" class="anchor"></a>ggiraph (dev version 0.7.0.1) <img src="reference/figures/logo.png" align="right" width="120">
+<a href="#ggiraph-" class="anchor"></a>ggiraph <img src="reference/figures/logo.png" align="right" width="120">
 </h1></div>
 
 <blockquote>
@@ -94,7 +94,7 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p><code>ggiraph</code> is a tool that allows you to create dynamic ggplot graphs. This allows you to add tooltips, animations and JavaScript actions to the graphics.The package also allows the selection of graphical elements when used in shiny applications.</p>
-<p><img src="./man/figures/image_girafe.png" width="350"></p>
+<p><img src="https://www.ardata.fr/img/image_girafe.png"></p>
 <blockquote>
 <p>Under the hood, <code>ggiraph</code> is an htmlwidget and a ggplot2 extension. It allows graphics to be interactive, by exporting them as SVG documents and using special attributes on the various elements.</p>
 </blockquote>
@@ -107,10 +107,21 @@
 <li>
 <code>data_id</code>: id to be associated with elements (used for hover and click actions)</li>
 </ul>
+<div id="why-using-ggiraph" class="section level3">
+<h3 class="hasAnchor">
+<a href="#why-using-ggiraph" class="anchor"></a>Why using ggiraph</h3>
+<ul>
+<li>You want to provide your readers with more information than the basic information available; you can display a tooltip when the player’s mouse is on a graphical element, you can also visually animate elements with the same attribute when the mouse passes over a graphical element, and finally you can link a JavaScript action to the click, such as opening a hypertext link.</li>
+<li>You want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, ggiraph allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value.</li>
+</ul>
+</div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
+<div id="with-r-and-r-markdown" class="section level3">
+<h3 class="hasAnchor">
+<a href="#with-r-and-r-markdown" class="anchor"></a>With R and R Markdown</h3>
 <p>The things you need to know to create an interactive graphic :</p>
 <ul>
 <li>Instead of using <code>geom_point</code>, use <code>geom_point_interactive</code>, instead of using <code>geom_sf</code>, use <code>geom_sf_interactive</code>… Provide at least one of the aesthetics <code>tooltip</code>, <code>data_id</code> and <code>onclick</code> to create interactive elements.</li>
@@ -127,37 +138,19 @@
 <a class="sourceLine" id="cb1-9" title="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()</a>
 <a class="sourceLine" id="cb1-10" title="10"></a>
 <a class="sourceLine" id="cb1-11" title="11"><span class="kw"><a href="reference/girafe.html">girafe</a></span>(<span class="dt">ggobj =</span> gg_point)</a></code></pre></div>
+</div>
 <div id="usage-within-shiny" class="section level3">
 <h3 class="hasAnchor">
 <a href="#usage-within-shiny" class="anchor"></a>Usage within Shiny</h3>
 <ul>
 <li>If used within a shiny application, elements associated with an id (<code>data_id</code>) can be selected and manipulated on client and server sides. The list of selected values will be stored in in a reactive value named <code>[shiny_id]_selected</code>.</li>
 </ul>
-<p><img src="./man/figures/shiny_girafe.png"></p>
+<p><img src="https://www.ardata.fr/img/shiny_girafe.png"></p>
 </div>
-<div id="why-using-ggiraph" class="section level3">
+<div id="available-interactive-layers" class="section level3">
 <h3 class="hasAnchor">
-<a href="#why-using-ggiraph" class="anchor"></a>Why using ggiraph</h3>
-<ul>
-<li>You want to provide your readers with more information than the basic information available; you can display a tooltip when the player’s mouse is on a graphical element, you can also visually animate elements with the same attribute when the mouse passes over a graphical element, and finally you can link a JavaScript action to the click, such as opening a hypertext link.</li>
-<li>You want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, ggiraph allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value.</li>
-</ul>
-</div>
-<div id="list-of-available-interactive-functions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#list-of-available-interactive-functions" class="anchor"></a>List of available interactive functions</h3>
-<blockquote>
-<p>Geoms</p>
-</blockquote>
-<p><code><a href="reference/geom_abline_interactive.html">geom_abline_interactive()</a></code>, <code><a href="reference/geom_ribbon_interactive.html">geom_area_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_bar_interactive()</a></code>, <code><a href="reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_col_interactive()</a></code>, <code><a href="reference/geom_contour_interactive.html">geom_contour_interactive()</a></code>, <code><a href="reference/geom_crossbar_interactive.html">geom_crossbar_interactive()</a></code>, <code><a href="reference/geom_density_2d_interactive.html">geom_density_2d_interactive()</a></code>, <code><a href="reference/geom_density_interactive.html">geom_density_interactive()</a></code>, <code><a href="reference/geom_density_2d_interactive.html">geom_density2d_interactive()</a></code>, <code><a href="reference/geom_crossbar_interactive.html">geom_errorbar_interactive()</a></code>, <code><a href="reference/geom_errorbarh_interactive.html">geom_errorbarh_interactive()</a></code>, <code><a href="reference/geom_histogram_interactive.html">geom_freqpoly_interactive()</a></code>, <code><a href="reference/geom_histogram_interactive.html">geom_histogram_interactive()</a></code>, <code><a href="reference/geom_abline_interactive.html">geom_hline_interactive()</a></code>, <code><a href="reference/geom_jitter_interactive.html">geom_jitter_interactive()</a></code>, <code><a href="reference/geom_text_interactive.html">geom_label_interactive()</a></code>, <code><a href="reference/geom_path_interactive.html">geom_line_interactive()</a></code>, <code><a href="reference/geom_crossbar_interactive.html">geom_linerange_interactive()</a></code>, <code><a href="reference/geom_map_interactive.html">geom_map_interactive()</a></code>, <code><a href="reference/geom_path_interactive.html">geom_path_interactive()</a></code>, <code><a href="reference/geom_point_interactive.html">geom_point_interactive()</a></code>, <code><a href="reference/geom_crossbar_interactive.html">geom_pointrange_interactive()</a></code>, <code><a href="reference/geom_polygon_interactive.html">geom_polygon_interactive()</a></code>, <code><a href="reference/geom_quantile_interactive.html">geom_quantile_interactive()</a></code>, <code><a href="reference/geom_raster_interactive.html">geom_raster_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_rect_interactive()</a></code>, <code><a href="reference/geom_ribbon_interactive.html">geom_ribbon_interactive()</a></code>, <code><a href="reference/geom_segment_interactive.html">geom_segment_interactive()</a></code>, <code><a href="reference/geom_sf_interactive.html">geom_sf_interactive()</a></code>, <code><a href="reference/geom_sf_interactive.html">geom_sf_label_interactive()</a></code>, <code><a href="reference/geom_sf_interactive.html">geom_sf_text_interactive()</a></code>, <code><a href="reference/geom_smooth_interactive.html">geom_smooth_interactive()</a></code>, <code><a href="reference/geom_path_interactive.html">geom_step_interactive()</a></code>, <code><a href="reference/geom_text_interactive.html">geom_text_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_tile_interactive()</a></code>, <code><a href="reference/geom_abline_interactive.html">geom_vline_interactive()</a></code></p>
-<blockquote>
-<p>Scales</p>
-</blockquote>
-<p><code><a href="reference/scale_alpha_interactive.html">scale_alpha_continuous_interactive()</a></code>, <code><a href="reference/scale_alpha_interactive.html">scale_alpha_date_interactive()</a></code>, <code><a href="reference/scale_alpha_interactive.html">scale_alpha_datetime_interactive()</a></code>, <code><a href="reference/scale_alpha_interactive.html">scale_alpha_discrete_interactive()</a></code>, <code><a href="reference/scale_alpha_interactive.html">scale_alpha_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_alpha_manual_interactive()</a></code>, <code><a href="reference/scale_alpha_interactive.html">scale_alpha_ordinal_interactive()</a></code>, <code><a href="reference/scale_colour_brewer_interactive.html">scale_color_brewer_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_color_continuous_interactive()</a></code>, <code><a href="reference/scale_colour_brewer_interactive.html">scale_color_distiller_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_color_gradient_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_color_gradient2_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_color_gradientn_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_color_grey_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_color_hue_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_color_manual_interactive()</a></code>, <code><a href="reference/scale_viridis_interactive.html">scale_color_viridis_c_interactive()</a></code>, <code><a href="reference/scale_viridis_interactive.html">scale_color_viridis_d_interactive()</a></code>, <code><a href="reference/scale_colour_brewer_interactive.html">scale_colour_brewer_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_colour_continuous_interactive()</a></code>, <code><a href="reference/scale_colour_brewer_interactive.html">scale_colour_distiller_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_colour_gradient_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_colour_gradient2_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_colour_gradientn_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_colour_grey_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_colour_hue_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_colour_manual_interactive()</a></code>, <code><a href="reference/scale_viridis_interactive.html">scale_colour_viridis_c_interactive()</a></code>, <code><a href="reference/scale_viridis_interactive.html">scale_colour_viridis_d_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_discrete_manual_interactive()</a></code>, <code><a href="reference/scale_colour_brewer_interactive.html">scale_fill_brewer_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_fill_continuous_interactive()</a></code>, <code><a href="reference/scale_colour_brewer_interactive.html">scale_fill_distiller_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_fill_gradient_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_fill_gradient2_interactive()</a></code>, <code><a href="reference/scale_gradient_interactive.html">scale_fill_gradientn_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_fill_grey_interactive()</a></code>, <code><a href="reference/scale_colour_interactive.html">scale_fill_hue_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_fill_manual_interactive()</a></code>, <code><a href="reference/scale_viridis_interactive.html">scale_fill_viridis_c_interactive()</a></code>, <code><a href="reference/scale_viridis_interactive.html">scale_fill_viridis_d_interactive()</a></code>, <code><a href="reference/scale_linetype_interactive.html">scale_linetype_continuous_interactive()</a></code>, <code><a href="reference/scale_linetype_interactive.html">scale_linetype_discrete_interactive()</a></code>, <code><a href="reference/scale_linetype_interactive.html">scale_linetype_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_linetype_manual_interactive()</a></code>, <code><a href="reference/scale_size_interactive.html">scale_radius_interactive()</a></code>, <code><a href="reference/scale_shape_interactive.html">scale_shape_continuous_interactive()</a></code>, <code><a href="reference/scale_shape_interactive.html">scale_shape_discrete_interactive()</a></code>, <code><a href="reference/scale_shape_interactive.html">scale_shape_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_shape_manual_interactive()</a></code>, <code><a href="reference/scale_shape_interactive.html">scale_shape_ordinal_interactive()</a></code>, <code><a href="reference/scale_size_interactive.html">scale_size_continuous_interactive()</a></code>, <code><a href="reference/scale_size_interactive.html">scale_size_discrete_interactive()</a></code>, <code><a href="reference/scale_size_interactive.html">scale_size_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_size_manual_interactive()</a></code>, <code><a href="reference/scale_size_interactive.html">scale_size_ordinal_interactive()</a></code></p>
-<blockquote>
-<p>Guide</p>
-</blockquote>
-<p><code><a href="reference/guide_colourbar_interactive.html">guide_colorbar_interactive()</a></code>, <code><a href="reference/guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code>, <code><a href="reference/guide_legend_interactive.html">guide_legend_interactive()</a></code></p>
+<a href="#available-interactive-layers" class="anchor"></a>Available interactive layers</h3>
+<p>They are several available interactive geometries. They are all based on their ggplot version, same goes for scales and the few guides: <code><a href="reference/geom_point_interactive.html">geom_point_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_col_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_tile_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_fill_manual_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_discrete_manual_interactive()</a></code>, <code><a href="reference/guide_legend_interactive.html">guide_legend_interactive()</a></code>, …</p>
 </div>
 </div>
 <div id="installation" class="section level2">

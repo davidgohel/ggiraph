@@ -1,5 +1,5 @@
 
-# ggiraph (dev version 0.7.0.1) <img src="man/figures/logo.png" align="right" width="120" />
+# ggiraph <img src="man/figures/logo.png" align="right" width="120" />
 
 [![Travis Build
 Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
@@ -18,7 +18,7 @@ This allows you to add tooltips, animations and JavaScript actions to
 the graphics.The package also allows the selection of graphical elements
 when used in shiny applications.
 
-<img src="./man/figures/image_girafe.png" width="350"/>
+![](https://www.ardata.fr/img/image_girafe.png)
 
 > Under the hood, `ggiraph` is an htmlwidget and a ggplot2 extension. It
 > allows graphics to be interactive, by exporting them as SVG documents
@@ -33,7 +33,24 @@ via the following aesthetics:
   - `data_id`: id to be associated with elements (used for hover and
     click actions)
 
+### Why using ggiraph
+
+  - You want to provide your readers with more information than the
+    basic information available; you can display a tooltip when the
+    player’s mouse is on a graphical element, you can also visually
+    animate elements with the same attribute when the mouse passes over
+    a graphical element, and finally you can link a JavaScript action to
+    the click, such as opening a hypertext link.
+  - You want to allow users of a Shiny application to select graphical
+    elements; for example, you can make the points of a scatter plot
+    selectable and available as a reactive value from the server part of
+    your application. With Shiny, ggiraph allows interaction with graph
+    elements, legends elements, titles and ggplot theme elements from
+    the server part; each selection is available as a reactive value.
+
 ## Usage
+
+### With R and R Markdown
 
 The things you need to know to create an interactive graphic :
 
@@ -67,96 +84,15 @@ girafe(ggobj = gg_point)
     sides. The list of selected values will be stored in in a reactive
     value named `[shiny_id]_selected`.
 
-![](./man/figures/shiny_girafe.png)
+![](https://www.ardata.fr/img/shiny_girafe.png)
 
-### Why using ggiraph
+### Available interactive layers
 
-  - You want to provide your readers with more information than the
-    basic information available; you can display a tooltip when the
-    player’s mouse is on a graphical element, you can also visually
-    animate elements with the same attribute when the mouse passes over
-    a graphical element, and finally you can link a JavaScript action to
-    the click, such as opening a hypertext link.
-  - You want to allow users of a Shiny application to select graphical
-    elements; for example, you can make the points of a scatter plot
-    selectable and available as a reactive value from the server part of
-    your application. With Shiny, ggiraph allows interaction with graph
-    elements, legends elements, titles and ggplot theme elements from
-    the server part; each selection is available as a reactive value.
-
-### List of available interactive functions
-
-> Geoms
-
-`geom_abline_interactive()`, `geom_area_interactive()`,
-`geom_bar_interactive()`, `geom_boxplot_interactive()`,
-`geom_col_interactive()`, `geom_contour_interactive()`,
-`geom_crossbar_interactive()`, `geom_density_2d_interactive()`,
-`geom_density_interactive()`, `geom_density2d_interactive()`,
-`geom_errorbar_interactive()`, `geom_errorbarh_interactive()`,
-`geom_freqpoly_interactive()`, `geom_histogram_interactive()`,
-`geom_hline_interactive()`, `geom_jitter_interactive()`,
-`geom_label_interactive()`, `geom_line_interactive()`,
-`geom_linerange_interactive()`, `geom_map_interactive()`,
-`geom_path_interactive()`, `geom_point_interactive()`,
-`geom_pointrange_interactive()`, `geom_polygon_interactive()`,
-`geom_quantile_interactive()`, `geom_raster_interactive()`,
-`geom_rect_interactive()`, `geom_ribbon_interactive()`,
-`geom_segment_interactive()`, `geom_sf_interactive()`,
-`geom_sf_label_interactive()`, `geom_sf_text_interactive()`,
-`geom_smooth_interactive()`, `geom_step_interactive()`,
-`geom_text_interactive()`, `geom_tile_interactive()`,
-`geom_vline_interactive()`
-
-> Scales
-
-`scale_alpha_continuous_interactive()`,
-`scale_alpha_date_interactive()`, `scale_alpha_datetime_interactive()`,
-`scale_alpha_discrete_interactive()`, `scale_alpha_interactive()`,
-`scale_alpha_manual_interactive()`, `scale_alpha_ordinal_interactive()`,
-`scale_color_brewer_interactive()`,
-`scale_color_continuous_interactive()`,
-`scale_color_distiller_interactive()`,
-`scale_color_gradient_interactive()`,
-`scale_color_gradient2_interactive()`,
-`scale_color_gradientn_interactive()`, `scale_color_grey_interactive()`,
-`scale_color_hue_interactive()`, `scale_color_manual_interactive()`,
-`scale_color_viridis_c_interactive()`,
-`scale_color_viridis_d_interactive()`,
-`scale_colour_brewer_interactive()`,
-`scale_colour_continuous_interactive()`,
-`scale_colour_distiller_interactive()`,
-`scale_colour_gradient_interactive()`,
-`scale_colour_gradient2_interactive()`,
-`scale_colour_gradientn_interactive()`,
-`scale_colour_grey_interactive()`, `scale_colour_hue_interactive()`,
-`scale_colour_manual_interactive()`,
-`scale_colour_viridis_c_interactive()`,
-`scale_colour_viridis_d_interactive()`,
-`scale_discrete_manual_interactive()`,
-`scale_fill_brewer_interactive()`,
-`scale_fill_continuous_interactive()`,
-`scale_fill_distiller_interactive()`,
-`scale_fill_gradient_interactive()`,
-`scale_fill_gradient2_interactive()`,
-`scale_fill_gradientn_interactive()`, `scale_fill_grey_interactive()`,
-`scale_fill_hue_interactive()`, `scale_fill_manual_interactive()`,
-`scale_fill_viridis_c_interactive()`,
-`scale_fill_viridis_d_interactive()`,
-`scale_linetype_continuous_interactive()`,
-`scale_linetype_discrete_interactive()`, `scale_linetype_interactive()`,
-`scale_linetype_manual_interactive()`, `scale_radius_interactive()`,
-`scale_shape_continuous_interactive()`,
-`scale_shape_discrete_interactive()`, `scale_shape_interactive()`,
-`scale_shape_manual_interactive()`, `scale_shape_ordinal_interactive()`,
-`scale_size_continuous_interactive()`,
-`scale_size_discrete_interactive()`, `scale_size_interactive()`,
-`scale_size_manual_interactive()`, `scale_size_ordinal_interactive()`
-
-> Guide
-
-`guide_colorbar_interactive()`, `guide_colourbar_interactive()`,
-`guide_legend_interactive()`
+They are several available interactive geometries. They are all based on
+their ggplot version, same goes for scales and the few guides:
+`geom_point_interactive()`, `geom_col_interactive()`,
+`geom_tile_interactive()`, `scale_fill_manual_interactive()`,
+`scale_discrete_manual_interactive()`, `guide_legend_interactive()`, …
 
 ## Installation
 
