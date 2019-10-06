@@ -38,3 +38,10 @@ body {
     color: #333;
     text-decoration: none;
 }
+.caption {
+  color: #777;
+  font-style: italic;
+}
+video {
+  margin-bottom: 15px;
+}
