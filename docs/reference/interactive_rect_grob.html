@@ -6,23 +6,34 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate interactive grob rectangles — interactive_rect_grob • ggiraph package</title>
+<title>Create interactive rectangle grob — interactive_rect_grob • ggiraph package</title>
+
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +41,13 @@
 
 
 
-<meta property="og:title" content="Generate interactive grob rectangles — interactive_rect_grob" />
 
-<meta property="og:description" content="This function can be used to generate interactive grob
-rectangles." />
+<meta property="og:title" content="Create interactive rectangle grob — interactive_rect_grob" />
+<meta property="og:description" content="The grob is based on rectGrob.
+See the documentation for that function for more details." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +59,7 @@ rectangles." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +78,7 @@ rectangles." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.1</span>
       </span>
     </div>
 
@@ -77,13 +91,18 @@ rectangles." />
   <a href="../articles/offcran/using_ggiraph.html">Using ggiraph</a>
 </li>
 <li>
+  <a href="../articles/offcran/customizing.html">Customizing girafe objects</a>
+</li>
+<li>
+  <a href="../articles/offcran/shiny.html">Shiny usage</a>
+</li>
+<li>
   <a href="../articles/offcran/examples.html">Examples</a>
 </li>
 <li>
   <a href="../reference/index.html">Function reference</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidgohel/ggiraph">
@@ -98,121 +117,69 @@ rectangles." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate interactive grob rectangles</h1>
+    <h1>Create interactive rectangle grob</h1>
     
     <div class="hidden name"><code>interactive_rect_grob.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>This function can be used to generate interactive grob
-rectangles.</p>
-    
+    <p>The grob is based on <code><a href='https://rdrr.io/r/grid/grid.rect.html'>rectGrob</a></code>.
+See the documentation for that function for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>interactive_rect_grob</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.5</span>, <span class='st'>"npc"</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>0.5</span>, <span class='st'>"npc"</span>),
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>1</span>, <span class='st'>"npc"</span>), <span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'>unit</span>(<span class='fl'>1</span>, <span class='st'>"npc"</span>), <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>just</span> <span class='kw'>=</span> <span class='st'>"centre"</span>, <span class='kw'>hjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>vjust</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>default.units</span> <span class='kw'>=</span> <span class='st'>"npc"</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gp</span> <span class='kw'>=</span> <span class='fu'>gpar</span>(),
-  <span class='kw'>vp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>interactive_rect_grob</span>(<span class='no'>...</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A numeric vector or unit object specifying x-location.</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>A numeric vector or unit object specifying y-location.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>A numeric vector or unit object specifying width.</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>A numeric vector or unit object specifying height.</p></td>
-    </tr>
-    <tr>
-      <th>tooltip</th>
-      <td><p>tooltip associated with rectangles</p></td>
-    </tr>
-    <tr>
-      <th>onclick</th>
-      <td><p>javascript action to execute when rectangle is clicked</p></td>
-    </tr>
-    <tr>
-      <th>data_id</th>
-      <td><p>identifiers to associate with rectangles</p></td>
-    </tr>
-    <tr>
-      <th>just</th>
-      <td><p>The justification of the rectangle
-    relative to its (x, y) location.  If there are two values, the first
-    value specifies horizontal justification and the second value specifies
-    vertical justification.  Possible string values are: <code>"left"</code>,
-    <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>,
-    and <code>"top"</code>.  For numeric values, 0 means left alignment
-    and 1 means right alignment.</p></td>
-    </tr>
-    <tr>
-      <th>hjust</th>
-      <td><p>A numeric vector specifying horizontal justification.
-    If specified, overrides the <code>just</code> setting.</p></td>
-    </tr>
-    <tr>
-      <th>vjust</th>
-      <td><p>A numeric vector specifying vertical justification.
-    If specified, overrides the <code>just</code> setting.</p></td>
-    </tr>
-    <tr>
-      <th>default.units</th>
-      <td><p>A string indicating the default units to use
-    if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code>
-    are only given as numeric vectors.</p></td>
-    </tr>
-    <tr>
-      <th>name</th>
-      <td><p>A character identifier.</p></td>
-    </tr>
-    <tr>
-      <th>gp</th>
-      <td><p>An object of class <code>gpar</code>, typically the output
-    from a call to the function <code>gpar</code>.  This is basically
-    a list of graphical parameter settings.</p></td>
-    </tr>
-    <tr>
-      <th>vp</th>
-      <td><p>A Grid viewport object (or NULL).</p></td>
+      <th>...</th>
+      <td><p>arguments passed to base function,
+plus any of the <code><a href='ipar.html'>interactive_parameters</a></code>.</p></td>
     </tr>
     </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An interactive grob object.</p>
+    <h2 class="hasAnchor" id="details-for-interactive-grob-functions"><a class="anchor" href="#details-for-interactive-grob-functions"></a>Details for interactive_*_grob functions</h2>
+
     
+
+<p>The interactive parameters can be supplied as arguments in the relevant function
+and they can be scalar values or vectors depending on params on base function.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='girafe.html'>girafe</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#details-for-interactive-grob-functions">Details for interactive_*_grob functions</a></li>
+      <li><a href="#see-also">See also</a></li>
+    </ul>
 
   </div>
 </div>
 
+
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.6.1 - Developed by David Gohel - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.0.1 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
 <script>
@@ -224,11 +191,14 @@ rectangles.</p>
   ga('create', 'UA-48354045-1', 'auto');
   ga('send', 'pageview');
 </script>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
