@@ -1,3 +1,12 @@
+# ggiraph 0.7.0
+
+## Enhancement
+
+* refactoring of internals
+* new function `girafe_css()` to define individual css properties per type of elements
+* ability to add interactivity to panel as usual but also theme and scales now
+* Upgrade geoms to ggplot2 v3.2.0 (thanks for this huge work kindly made by Panagiotis Skintzos)
+
 # ggiraph 0.6.2
 
 ## Enhancement
