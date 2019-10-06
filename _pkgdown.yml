@@ -17,7 +17,13 @@ reference:
     - girafe
   - title: Interactive geometries
     contents:
-    - ends_with("_interactive")
+    - starts_with("geom_")
+  - title: Interactive scales
+    contents:
+    - starts_with("scale_")
+  - title: Interactive annotations
+    contents:
+    - starts_with("annotate_")
   - title: Customize girafe animations
     contents:
     - starts_with("opts_")
@@ -35,6 +41,10 @@ navbar:
     href: index.html
   - text: Using ggiraph
     href: articles/offcran/using_ggiraph.html
+  - text: Customizing girafe objects
+    href: articles/offcran/customizing.html
+  - text: Shiny usage
+    href: articles/offcran/shiny.html
   - text: Examples
     href: articles/offcran/examples.html
   - text: Function reference
