@@ -15,23 +15,30 @@ reference:
   - title: Make ggplot2 Graphics Interactive
     contents:
     - girafe
-  - title: Interactive geometries
-    contents:
-    - starts_with("geom_")
-  - title: Interactive scales
-    contents:
-    - starts_with("scale_")
-  - title: Interactive annotations
-    contents:
-    - starts_with("annotate_")
+    - interactive_parameters
   - title: Customize girafe animations
     contents:
+    - girafe_css
     - starts_with("opts_")
     - girafe_options
   - title: Working with shiny
     contents:
     - renderGirafe
     - girafeOutput
+  - title: Interactive geometries
+    contents:
+    - starts_with("geom_")
+  - title: Interactive scales
+    contents:
+    - starts_with("scale_")
+    - starts_with("guide_")
+  - title: Other interactive layers
+    contents:
+    - starts_with("annotate_")
+    - annotation_raster_interactive
+    - label_interactive
+    - starts_with("element_")
+    - element_interactive
 
 navbar:
   title: ggiraph
