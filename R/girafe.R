@@ -36,6 +36,8 @@
 #' when parsing the svg result. This feature can be used to parse
 #' huge svg files by using \code{list(options = "HUGE")} but this
 #' is not recommanded.
+#' @param options a list of options for girafe rendering, see
+#' \code{\link{opts_tooltip}}, \code{\link{opts_hover}}, \code{\link{opts_selection}}, ...
 #' @param ... arguments passed on to \code{\link{dsvg}}
 #' @examples
 #' library(ggplot2)
@@ -89,7 +91,8 @@
 #' @importFrom uuid UUIDgenerate
 girafe <- function(
   code, ggobj = NULL,  pointsize = 12,
-  width_svg = 6, height_svg = 5, xml_reader_options = list(), ...) {
+  width_svg = 6, height_svg = 5, xml_reader_options = list(),
+  options = list(), ...) {
 
   canvas_id <- paste("svg", UUIDgenerate(), sep = "_")
   path = tempfile()
@@ -112,32 +115,11 @@ girafe <- function(
   xml_attr(data, "height") <- NULL
   unlink(path)
 
-  tooltip_set <- opts_tooltip()
-  hover_set <- opts_hover()
-  hoverkey_set <- opts_hover_key()
-  hovertheme_set <- opts_hover_theme()
-  zoom_set <- opts_zoom()
-  selection_set <- opts_selection()
-  selectionkey_set <- opts_selection_key()
-  selectiontheme_set <- opts_selection_theme()
-  toolbar_set <- opts_toolbar()
-  sizing_set <- opts_sizing()
-
+  settings <- merge_options(default_opts(), options)
   x = list( html = as.character(data), js = NULL,
             uid = canvas_id,
             ratio = width_svg / height_svg,
-            settings = list(
-              tooltip = tooltip_set,
-              hover = hover_set,
-              hoverkey = hoverkey_set,
-              hovertheme = hovertheme_set,
-              zoom = zoom_set,
-              capture = selection_set,
-              capturekey = selectionkey_set,
-              capturetheme = selectiontheme_set,
-              toolbar = toolbar_set,
-              sizing = sizing_set
-              )
+            settings = settings
             )
 
   createWidget(
@@ -177,5 +159,48 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
 	if (!quoted) { expr <- substitute(expr) } # force quoted
 	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
+}
+
+default_opts <- function(){
+  settings <- list(
+    tooltip = opts_tooltip(),
+    hover = opts_hover(),
+    hoverkey = opts_hover_key(),
+    hovertheme = opts_hover_theme(),
+    zoom = opts_zoom(),
+    capture = opts_selection(),
+    capturekey = opts_selection_key(),
+    capturetheme = opts_selection_theme(),
+    toolbar = opts_toolbar(),
+    sizing = opts_sizing()
+  )
+  settings
+}
+
+merge_options <- function(options, args){
+  for (arg in args) {
+    if (inherits(arg, "opts_zoom")) {
+      options$zoom <- arg
+    } else if (inherits(arg, "opts_selection")) {
+      options$capture <- arg
+    } else if (inherits(arg, "opts_selection_key")) {
+      options$capturekey <- arg
+    } else if (inherits(arg, "opts_selection_theme")) {
+      options$capturetheme <- arg
+    } else if (inherits(arg, "opts_tooltip")) {
+      options$tooltip <- arg
+    } else if (inherits(arg, "opts_hover")) {
+      options$hover <- arg
+    } else if (inherits(arg, "opts_hover_key")) {
+      options$hoverkey <- arg
+    } else if (inherits(arg, "opts_hover_theme")) {
+      options$hovertheme <- arg
+    } else if (inherits(arg, "opts_toolbar")) {
+      options$toolbar <- arg
+    } else if (inherits(arg, "opts_sizing")) {
+      options$sizing <- arg
+    }
+  }
+  options
 }
 

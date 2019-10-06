@@ -392,28 +392,10 @@ girafe_options <- function(x, ...){
   stopifnot(inherits(x, "girafe"))
 
   args <- list(...)
+  x$x$settings <- merge_options(x$x$settings, args)
+
   for (arg in args) {
-    if (inherits(arg, "opts_zoom")) {
-      x$x$settings$zoom <- arg
-    } else if (inherits(arg, "opts_selection")) {
-      x$x$settings$capture <- arg
-    } else if (inherits(arg, "opts_selection_key")) {
-      x$x$settings$capturekey <- arg
-    } else if (inherits(arg, "opts_selection_theme")) {
-      x$x$settings$capturetheme <- arg
-    } else if (inherits(arg, "opts_tooltip")) {
-      x$x$settings$tooltip <- arg
-    } else if (inherits(arg, "opts_hover")) {
-      x$x$settings$hover <- arg
-    } else if (inherits(arg, "opts_hover_key")) {
-      x$x$settings$hoverkey <- arg
-    } else if (inherits(arg, "opts_hover_theme")) {
-      x$x$settings$hovertheme <- arg
-    } else if (inherits(arg, "opts_toolbar")) {
-      x$x$settings$toolbar <- arg
-    } else if (inherits(arg, "opts_sizing")) {
-      x$x$settings$sizing <- arg
-    } else if (all(names(arg) %in% c("defaultWidth", "defaultHeight", "padding", "viewer", "browser", "knitr"))) {
+    if (all(names(arg) %in% c("defaultWidth", "defaultHeight", "padding", "viewer", "browser", "knitr"))) {
       x$sizingPolicy <- arg
     }
   }

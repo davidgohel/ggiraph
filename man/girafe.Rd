@@ -5,7 +5,7 @@
 \title{Create a girafe object}
 \usage{
 girafe(code, ggobj = NULL, pointsize = 12, width_svg = 6,
-  height_svg = 5, xml_reader_options = list(), ...)
+  height_svg = 5, xml_reader_options = list(), options = list(), ...)
 }
 \arguments{
 \item{code}{Plotting code to execute}
@@ -23,6 +23,9 @@ graphic as it will be used to define viewbox attribute of the SVG result.}
 when parsing the svg result. This feature can be used to parse
 huge svg files by using \code{list(options = "HUGE")} but this
 is not recommanded.}
+
+\item{options}{a list of options for girafe rendering, see
+\code{\link{opts_tooltip}}, \code{\link{opts_hover}}, \code{\link{opts_selection}}, ...}
 
 \item{...}{arguments passed on to \code{\link{dsvg}}}
 }
