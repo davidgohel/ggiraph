@@ -147,8 +147,6 @@ The package contains Shiny examples available in the `shiny` directory of the pa
 
 ### Panel selections usage (server side)
 
-![](img/lasso_selection.png)
-
 ```{r eval=FALSE}
 shiny::runApp(appDir = system.file("examples/shiny/crimes", package = "ggiraph"), display.mode = "showcase")
 ```
