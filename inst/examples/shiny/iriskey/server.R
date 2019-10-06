@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggiraph)
 
-gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species, data_id = 1:150)) +
+gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point_interactive( size = 3 ) +
   theme_minimal() +
   scale_colour_manual_interactive(
@@ -21,7 +21,7 @@ shinyServer(function(input, output, session) {
     x <- girafe(code = print(gg), width_svg = 6, height_svg = 8)
     x <- girafe_options(x, opts_selection_key(css = "stroke:black;r:5pt;"),
                         opts_hover(css = "fill:wheat;stroke:black;stroke-width:3px;cursor:pointer;"),
-                        opts_hoverkey(css = "stroke:black;r:5pt;cursor:pointer;")
+                        opts_hover_key(css = "stroke:black;r:5pt;cursor:pointer;")
                         )
     x
   })
