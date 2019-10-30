@@ -143,24 +143,32 @@ girafe(ggobj = gg,
 
 ## Examples
 
-The package contains Shiny examples available in the `shiny` directory of the package (`system.file("shiny", package = "ggiraph")`).
+The package contains Shiny examples available in the `shiny` 
+directory of the package (`system.file("shiny", package = "ggiraph")`).
+
+Use function `run_girafe_example` to launch the applications 
+in showcase mode. They can be used to better understand how 
+to use girafe graphics with shiny applications. 
+
+The following applications are available: `cars`, `click_scale`, 
+`crimes`, `DT`, `dynamic_ui`, `iris`, `maps`.
 
 ### Panel selections usage (server side)
 
 ```{r eval=FALSE}
-shiny::runApp(appDir = system.file("examples/shiny/crimes", package = "ggiraph"), display.mode = "showcase")
+run_girafe_example("crimes")
 ```
 
 ### Legend selections usage (server side)
 
 ```{r eval=FALSE}
-shiny::runApp(appDir = system.file("examples/shiny/iriskey", package = "ggiraph"), display.mode = "showcase")
+run_girafe_example("click_scale")
 ```
 
 ### onclick actions (client side).
 
 ```{r eval=FALSE}
-shiny::runApp(appDir = system.file("examples/shiny/DT", package = "ggiraph"), display.mode = "showcase")
+run_girafe_example("DT")
 ```
 
 

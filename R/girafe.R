@@ -205,3 +205,42 @@ merge_options <- function(options, args){
   options
 }
 
+
+
+
+
+
+
+girafe_app_paths <- function(){
+  example_dir <- system.file(package = "ggiraph", "examples", "shiny")
+  list.files(example_dir, full.names = TRUE)
+}
+
+#' Run shiny examples and see corresponding code
+#'
+#' @param name an application name, one of
+#' cars, click_scale, crimes, DT, dynamic_ui,
+#' iris, maps.
+#'
+#' @importFrom shiny runApp
+#' @export
+run_girafe_example <- function(name = "crimes"){
+  example_dir <- system.file(package = "ggiraph", "examples", "shiny")
+  apps <- girafe_app_paths()
+  if( !name %in% basename(apps) ){
+    stop("could not find app named ", shQuote(name), " in the following list: ",
+         paste0(shQuote(basename(apps)), collapse = ", ")
+    )
+  }
+  runApp(
+    appDir = file.path(example_dir, name),
+    display.mode = "showcase")
+}
+
+
+
+
+
+
+
+
