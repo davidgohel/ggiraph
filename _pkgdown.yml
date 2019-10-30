@@ -25,6 +25,7 @@ reference:
     contents:
     - renderGirafe
     - girafeOutput
+    - run_girafe_example
   - title: Interactive geometries
     contents:
     - starts_with("geom_")
