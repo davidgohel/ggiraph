@@ -27,7 +27,7 @@ Imports:
     xml2 (>= 1.0.0),
     htmltools,
     Rcpp (>= 0.12.12), 
-    gdtools (>= 0.1.6),
+    gdtools (>= 0.2.1),
     purrr, rlang, uuid
 LinkingTo: Rcpp, gdtools
 Suggests:
