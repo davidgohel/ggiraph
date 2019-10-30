@@ -225,8 +225,9 @@ static void dsvg_clip(double x0, double x1, double y0, double y1, pDevDesc dd) {
 
   svgd->new_clip();
 
+  const char *clipid = svgd->clip_id.c_str();
   fputs("<defs>", svgd->file);
-  fprintf(svgd->file, "<clipPath id='%s'>", svgd->clip_id.c_str() );
+  fprintf(svgd->file, "<clipPath id='%s'>", clipid );
   fprintf(svgd->file, "<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'/>",
           std::min(x0, x1), std::min(y0, y1),
           std::abs(x1 - x0),
@@ -248,10 +249,12 @@ static void dsvg_line(double x1, double y1, double x2, double y2,
                      const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
 
   fprintf(svgd->file, "<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' id='%s'",
-    x1, y1, x2, y2, svgd->element_id.c_str());
-  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
+    x1, y1, x2, y2, eltid);
+  fprintf(svgd->file, " clip-path='url(#%s)'", clipid);
   std::string line_style_ = line_style(gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
   fprintf(svgd->file, "%s", line_style_.c_str());
   a_color col_(gc->fill);
@@ -264,6 +267,8 @@ static void dsvg_polyline(int n, double *x, double *y, const pGEcontext gc,
                          pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
 
   fputs("<polyline points='", svgd->file);
   fprintf(svgd->file, "%.2f,%.2f", x[0], y[0]);
@@ -271,8 +276,8 @@ static void dsvg_polyline(int n, double *x, double *y, const pGEcontext gc,
     fprintf(svgd->file, " %.2f,%.2f", x[i], y[i]);
   }
   fputs("'", svgd->file);
-  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
-  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
+  fprintf(svgd->file, " id='%s'", eltid);
+  fprintf(svgd->file, " clip-path='url(#%s)'", clipid);
   fputs(" fill=\"none\"", svgd->file);
 
   std::string line_style_ = line_style(gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
@@ -284,6 +289,8 @@ static void dsvg_polygon(int n, double *x, double *y, const pGEcontext gc,
                         pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
 
   fputs("<polygon points='", svgd->file);
   fprintf(svgd->file, "%.2f,%.2f", x[0], y[0]);
@@ -291,8 +298,8 @@ static void dsvg_polygon(int n, double *x, double *y, const pGEcontext gc,
     fprintf(svgd->file, " %.2f,%.2f", x[i], y[i]);
   }
   fputs("'", svgd->file);
-  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
-  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
+  fprintf(svgd->file, " id='%s'", eltid);
+  fprintf(svgd->file, " clip-path='url(#%s)'", clipid);
 
   a_color col_(gc->fill);
   fprintf(svgd->file, "%s", col_.svg_fill_attr().c_str());
@@ -309,6 +316,8 @@ void dsvg_path(double *x, double *y,
               const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
   int index = 0;
 
   fputs("<path d='", svgd->file);
@@ -321,8 +330,8 @@ void dsvg_path(double *x, double *y,
     }
     fputs("Z ", svgd->file);
   }
-  fprintf(svgd->file, "' id='%s'", svgd->element_id.c_str());
-  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
+  fprintf(svgd->file, "' id='%s'", eltid);
+  fprintf(svgd->file, " clip-path='url(#%s)'", clipid);
 
   a_color fill_(gc->fill);
   fprintf(svgd->file, "%s", fill_.svg_fill_attr().c_str());
@@ -354,12 +363,14 @@ static void dsvg_rect(double x0, double y0, double x1, double y1,
                      const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *eltid = svgd->element_id.c_str();
+  const char *clipid = svgd->clip_id.c_str();
 
   fprintf(svgd->file,
       "<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'",
       fmin(x0, x1), fmin(y0, y1), fabs(x1 - x0), fabs(y1 - y0));
-  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
-  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
+  fprintf(svgd->file, " id='%s'", eltid);
+  fprintf(svgd->file, " clip-path='url(#%s)'", clipid);
 
   a_color fill_(gc->fill);
   fprintf(svgd->file, "%s", fill_.svg_fill_attr().c_str());
@@ -373,10 +384,12 @@ static void dsvg_circle(double x, double y, double r, const pGEcontext gc,
                        pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *eltid = svgd->element_id.c_str();
+  const char *clipid = svgd->clip_id.c_str();
 
   fprintf(svgd->file, "<circle cx='%.2f' cy='%.2f' r='%.2fpt'", x, y, r * .75 );
-  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
-  fprintf(svgd->file, " clip-path='url(#%s)'", svgd->clip_id.c_str());
+  fprintf(svgd->file, " id='%s'", eltid);
+  fprintf(svgd->file, " clip-path='url(#%s)'", clipid);
   a_color fill_(gc->fill);
   fprintf(svgd->file, "%s", fill_.svg_fill_attr().c_str());
   std::string line_style_ = line_style(gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
@@ -388,8 +401,10 @@ static void dsvg_text_utf8(double x, double y, const char *str, double rot,
                      double hadj, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
 
-  fprintf(svgd->file, "<g clip-path='url(#%s)'>", svgd->clip_id.c_str());
+  fprintf(svgd->file, "<g clip-path='url(#%s)'>", clipid);
 
   fputs("<text", svgd->file);
   if (rot == 0) {
@@ -398,7 +413,7 @@ static void dsvg_text_utf8(double x, double y, const char *str, double rot,
     fprintf(svgd->file, " transform='translate(%.2f,%.2f) rotate(%0.0f)'", x, y,
       -1.0 * rot);
   }
-  fprintf(svgd->file, " id='%s'", svgd->element_id.c_str());
+  fprintf(svgd->file, " id='%s'", eltid);
   fprintf(svgd->file, " font-size='%.2fpt'", gc->cex * gc->ps * .75 );
   if (is_bold(gc->fontface))
     fputs(" font-weight='bold'", svgd->file);
@@ -450,6 +465,8 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
 {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
 
   if (height < 0)
     height = -height;
@@ -463,8 +480,8 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
 
   fprintf(svgd->file, "<image x='%.2f' y='%.2f' ", x, y - height );
   fprintf(svgd->file, "width='%.2f' height='%.2f' ", width, height);
-  fprintf(svgd->file, "id='%s' ", svgd->element_id.c_str());
-  fprintf(svgd->file, "clip-path='url(#%s)' ", svgd->clip_id.c_str());
+  fprintf(svgd->file, "id='%s' ", eltid);
+  fprintf(svgd->file, "clip-path='url(#%s)' ", clipid);
 
   if (fabs(rot)>0.001) {
     fprintf(svgd->file, "transform='rotate(%0.0f,%0.0f,%0.0f)' ", -1.0 * rot, x, y );
