@@ -10,7 +10,7 @@ shinyUI(fluidPage(
 
   fluidRow(
     column(width=6,
-      ggiraphOutput("plot_")
+      girafeOutput("plot_")
     ),
     column(width=6,
            DT::dataTableOutput("dt_")

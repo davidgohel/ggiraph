@@ -12,23 +12,33 @@ gg <- gg + coord_map() + theme_void()
 
 shinyServer(function(input, output, session) {
 
-  selected_car <- reactive({
+  selected_states <- reactive({
     if( is.null(input$plot_selected)){
       character(0)
     } else input$plot_selected
   })
 
-  output$plot <- renderggiraph({
-    ggiraph(code = print(gg), width_svg = 6, height_svg = 4,
-            zoom_max = 3,
-            hover_css = "fill:#666666;cursor:pointer;",
-            selection_type = "multiple",
-            selected_css = "fill:orange;")
+  output$plot <- renderGirafe({
+    girafe(
+      ggobj = gg, width_svg = 6, height_svg = 4,
+      options = list(
+        opts_hover(css = "fill:#666666;cursor:pointer;"),
+        opts_selection(css = "fill:orange;", type = "multiple"),
+        opts_zoom(max = 3)
+      )
+    )
   })
 
-  observe( {
-    value <- selected_car()
-    updateTextInput(session = session, "sel", value = paste0(value, collapse = ",") )
+  output$seltext <- renderUI({
+    value <- selected_states()
+    if( !isTruthy(value) )
+      value <- "<none>"
+    value <- paste0(value, collapse = ", ")
+    tags$div(
+      tags$caption("Selected states are:"),
+      tags$strong(value)
+    )
   })
+
 
 })

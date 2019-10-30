@@ -6,11 +6,11 @@ shinyUI(fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-      textInput("sel", label = "Selected states")
+      uiOutput("seltext")
     ),
 
     mainPanel(
-      ggiraphOutput("plot")
+      girafeOutput("plot")
     )
   )
 ))

@@ -14,15 +14,24 @@ shinyServer(function(input, output, session) {
   output$plot <- renderGirafe({
     p <- ggplot(aes(x=wt,y=mpg, data_id = row.names(mtcars) ),data=mtcars) +
       geom_point_interactive(size = 3) + theme_minimal()
-    ggiraph(code = print(p),
-            hover_css = "fill:red;cursor:pointer;",
-            selection_type = "single",
-            selected_css = "fill:red;")
+    girafe(
+      ggobj = p,
+      options = list(
+        opts_hover(css = "fill:red;cursor:pointer;"),
+        opts_selection(type = "single", css = "fill:red;")
+      )
+    )
   })
 
-  observe( {
+  output$selpoint <- renderUI({
     value <- selected_car()
-    updateTextInput(session = session, "selpoint", value = paste0(value, collapse = ",") )
+    if( !isTruthy(value) )
+      value <- "<none>"
+    tags$div(
+      tags$caption("Selected point is:"),
+      tags$strong(value)
+    )
+
   })
 
 })

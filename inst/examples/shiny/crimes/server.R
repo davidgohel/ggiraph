@@ -1,6 +1,5 @@
 library(ggplot2)
 library(ggiraph)
-library(maps)
 
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
@@ -17,11 +16,14 @@ shinyServer(function(input, output, session) {
     input$plot_selected
   })
 
-  output$plot <- renderggiraph({
-    x <- girafe(code = print(gg_crime), width_svg = 6, height_svg = 8)
-    x <- girafe_options(x, opts_selection(
-      type = "multiple", css = "fill:#FF3333;stroke:black;"),
-      opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;"))
+  output$plot <- renderGirafe({
+    x <- girafe(code = print(gg_crime),
+                width_svg = 6, height_svg = 8,
+                options = list(
+                  opts_selection(
+                    type = "multiple", css = "fill:#FF3333;stroke:black;"),
+                  opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;")
+                ))
     x
   })
 

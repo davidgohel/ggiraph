@@ -37,8 +37,10 @@ server <- function(input, output) {
         plotdata <- data.frame(x = pts, y = pts, label = letters[pts])
         g <- ggplot(plotdata, aes(x = x, y = y, data_id = label)) +
           geom_point_interactive(size = 4)
-        x <- girafe(code = print(g))
-        x <- girafe_options(x = x, opts_sizing(rescale = TRUE ))
+        x <- girafe(
+          ggobj = g,
+          options = list(opts_sizing(rescale = TRUE ))
+        )
         x
       })
 
