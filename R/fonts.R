@@ -2,14 +2,14 @@ r_font_families <- c("sans", "serif", "mono", "symbol")
 
 #' @importFrom gdtools font_family_exists
 default_fontname <- function() {
-  def_fonts <- if( Sys.info()["sysname"] == "windows" ){
+  def_fonts <- if( Sys.info()["sysname"] == "Windows" ){
     c(
       sans = "Arial",
       serif = "Times New Roman",
       mono = "Courier New",
       symbol = "Symbol"
     )
-  } else if( Sys.info()["sysname"] == "darwin" ){
+  } else if( Sys.info()["sysname"] == "Darwin" ){
     c(
       sans = "Helvetica",
       serif = "Times",
