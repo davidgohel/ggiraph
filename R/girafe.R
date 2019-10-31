@@ -222,7 +222,6 @@ girafe_app_paths <- function(){
 #' cars, click_scale, crimes, DT, dynamic_ui,
 #' iris, maps and modal.
 #'
-#' @importFrom shiny runApp
 #' @export
 run_girafe_example <- function(name = "crimes"){
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
@@ -232,9 +231,11 @@ run_girafe_example <- function(name = "crimes"){
          paste0(shQuote(basename(apps)), collapse = ", ")
     )
   }
-  runApp(
-    appDir = file.path(example_dir, name),
-    display.mode = "showcase")
+  if(requireNamespace("shiny"))
+    shiny::runApp(
+      appDir = file.path(example_dir, name),
+      display.mode = "showcase")
+  else warning("package shiny is required to be able to use the function")
 }
 
 
