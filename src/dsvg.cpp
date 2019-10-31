@@ -125,10 +125,10 @@ public:
       clip_index(0),
       clip_id(canvas_id_ + "_cl_0"),
       standalone(standalone_),
-      tracer_on(0),
-      tracer_is_init(0),
       tracer_first_elt(-1),
       tracer_last_elt(-1),
+      tracer_on(0),
+      tracer_is_init(0),
       system_aliases(Rcpp::wrap(aliases_["system"])),
       user_aliases(Rcpp::wrap(aliases_["user"])),
       cc(gdtools::context_create() ) {
