@@ -93,7 +93,7 @@ When working with shiny, you can use the `data_id` aesthetic to associate points
 and other graphical elements with a value that will be available in a reactive context. 
 This makes it possible to click on an element and trigger an action. 
 Note that in this case, `onclick` should not be used, both onclick 
-and data_id will need the "click" event. [Read more about shiny integration](#shiny-usage)...
+and data_id will need the "click" event. [Read more about shiny integration](./shiny.html)...
 
 ### Using onclick
 
