@@ -9,7 +9,7 @@ run_girafe_example(name = "crimes")
 \arguments{
 \item{name}{an application name, one of
 cars, click_scale, crimes, DT, dynamic_ui,
-iris, maps.}
+iris, maps and modal.}
 }
 \description{
 Run shiny examples and see corresponding code

@@ -220,7 +220,7 @@ girafe_app_paths <- function(){
 #'
 #' @param name an application name, one of
 #' cars, click_scale, crimes, DT, dynamic_ui,
-#' iris, maps.
+#' iris, maps and modal.
 #'
 #' @importFrom shiny runApp
 #' @export
