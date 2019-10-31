@@ -1,7 +1,5 @@
 library(ggplot2)
 library(ggiraph)
-library(maps)
-
 
 shinyServer(function(input, output, session) {
 

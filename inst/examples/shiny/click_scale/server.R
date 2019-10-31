@@ -1,4 +1,4 @@
-  library(ggplot2)
+library(ggplot2)
 library(ggiraph)
 
 gg <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
