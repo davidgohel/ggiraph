@@ -4,8 +4,16 @@
 \alias{girafe}
 \title{Create a girafe object}
 \usage{
-girafe(code, ggobj = NULL, pointsize = 12, width_svg = 6,
-  height_svg = 5, xml_reader_options = list(), options = list(), ...)
+girafe(
+  code,
+  ggobj = NULL,
+  pointsize = 12,
+  width_svg = 6,
+  height_svg = 5,
+  xml_reader_options = list(),
+  options = list(),
+  ...
+)
 }
 \arguments{
 \item{code}{Plotting code to execute}

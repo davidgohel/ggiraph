@@ -73,7 +73,7 @@ groups = sample(LETTERS[1:3], size = length(id), replace = TRUE)
 data$group = groups[match(data$id, id)]
 data$value = runif(n = nrow(data))
 data$tooltip = paste0('line ', data$id )
-data$onclick = paste0("alert(\\"", data$id, "\\")" )
+data$onclick = paste0("alert(\"", data$id, "\")" )
 
 cols = c("orange", "orange1", "orange2", "navajowhite4", "navy")
 dataset2 <- data.frame(x = rep(1:20, 5),
@@ -83,9 +83,9 @@ dataset2 <- data.frame(x = rep(1:20, 5),
 		color = factor(rep(1:5, each=20)),
 		label = rep(paste0( "id ", 1:5 ), each=20),
 		onclick = paste0(
-		  "alert(\\"",
+		  "alert(\"",
 		  sample(letters, 100, replace = TRUE),
-		  "\\")" )
+		  "\")" )
 )
 
 

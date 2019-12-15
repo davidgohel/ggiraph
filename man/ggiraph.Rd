@@ -4,12 +4,26 @@
 \alias{ggiraph}
 \title{Create a ggiraph object}
 \usage{
-ggiraph(code, ggobj = NULL, pointsize = 12, width = 0.75,
-  width_svg = 6, height_svg = 5, tooltip_extra_css = NULL,
-  hover_css = NULL, tooltip_opacity = 0.9, tooltip_offx = 10,
-  tooltip_offy = 0, tooltip_zindex = 999, zoom_max = 1,
-  selection_type = "multiple", selected_css = NULL, dep_dir = NULL,
-  xml_reader_options = list(), ...)
+ggiraph(
+  code,
+  ggobj = NULL,
+  pointsize = 12,
+  width = 0.75,
+  width_svg = 6,
+  height_svg = 5,
+  tooltip_extra_css = NULL,
+  hover_css = NULL,
+  tooltip_opacity = 0.9,
+  tooltip_offx = 10,
+  tooltip_offy = 0,
+  tooltip_zindex = 999,
+  zoom_max = 1,
+  selection_type = "multiple",
+  selected_css = NULL,
+  dep_dir = NULL,
+  xml_reader_options = list(),
+  ...
+)
 }
 \arguments{
 \item{code}{Plotting code to execute}

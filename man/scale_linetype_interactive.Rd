@@ -62,13 +62,14 @@ See the element_*_interactive section for more details.
 \seealso{
 \code{\link{girafe}}
 
-Other interactive scale: \code{\link{scale_alpha_interactive}},
-  \code{\link{scale_colour_brewer_interactive}},
-  \code{\link{scale_colour_interactive}},
-  \code{\link{scale_gradient_interactive}},
-  \code{\link{scale_manual_interactive}},
-  \code{\link{scale_shape_interactive}},
-  \code{\link{scale_size_interactive}},
-  \code{\link{scale_viridis_interactive}}
+Other interactive scale: 
+\code{\link{scale_alpha_interactive}()},
+\code{\link{scale_colour_brewer_interactive}()},
+\code{\link{scale_colour_interactive}},
+\code{\link{scale_gradient_interactive}},
+\code{\link{scale_manual_interactive}},
+\code{\link{scale_shape_interactive}()},
+\code{\link{scale_size_interactive}()},
+\code{\link{scale_viridis_interactive}}
 }
 \concept{interactive scale}

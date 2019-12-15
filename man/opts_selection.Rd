@@ -6,14 +6,26 @@
 \alias{opts_selection_theme}
 \title{Selection effect settings}
 \usage{
-opts_selection(css = NULL, type = "multiple", only_shiny = TRUE,
-  selected = character(0))
+opts_selection(
+  css = NULL,
+  type = "multiple",
+  only_shiny = TRUE,
+  selected = character(0)
+)
 
-opts_selection_key(css = NULL, type = "single", only_shiny = TRUE,
-  selected = character(0))
+opts_selection_key(
+  css = NULL,
+  type = "single",
+  only_shiny = TRUE,
+  selected = character(0)
+)
 
-opts_selection_theme(css = NULL, type = "single", only_shiny = TRUE,
-  selected = character(0))
+opts_selection_theme(
+  css = NULL,
+  type = "single",
+  only_shiny = TRUE,
+  selected = character(0)
+)
 }
 \arguments{
 \item{css}{css to associate with elements when they are selected.
@@ -54,9 +66,12 @@ x <- girafe_options(x,
 if( interactive() ) print(x)
 }
 \seealso{
-Other girafe animation options: \code{\link{girafe_options}},
-  \code{\link{opts_hover}}, \code{\link{opts_sizing}},
-  \code{\link{opts_toolbar}}, \code{\link{opts_tooltip}},
-  \code{\link{opts_zoom}}
+Other girafe animation options: 
+\code{\link{girafe_options}()},
+\code{\link{opts_hover}()},
+\code{\link{opts_sizing}()},
+\code{\link{opts_toolbar}()},
+\code{\link{opts_tooltip}()},
+\code{\link{opts_zoom}()}
 }
 \concept{girafe animation options}

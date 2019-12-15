@@ -122,7 +122,7 @@ p3 <- p +
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = function(breaks) { as.character(breaks)},
     tooltip = function(breaks) { as.character(breaks)},
-    onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") }
+    onclick = function(breaks) { paste0("alert(\"", as.character(breaks), "\")") }
   )
 x <- girafe(ggobj = p3)
 x <- girafe_options(x,
@@ -134,12 +134,12 @@ p4 <- p + scale_fill_manual_interactive(
   values = c(Male = "#0072B2", Female = "#009E73"),
   data_id = function(breaks) { as.character(breaks)},
   tooltip = function(breaks) { as.character(breaks)},
-  onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") },
+  onclick = function(breaks) { paste0("alert(\"", as.character(breaks), "\")") },
   guide = guide_legend_interactive(
     title.theme = element_text_interactive(
       size = 8,
       data_id = "legend.title",
-      onclick = "alert(\\"Gender levels\\")",
+      onclick = "alert(\"Gender levels\")",
       tooltip = "Gender levels"
     ),
     label.theme = element_text_interactive(
@@ -159,13 +159,13 @@ p5 <- p +
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = function(breaks) { as.character(breaks)},
     tooltip = function(breaks) { as.character(breaks)},
-    onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") },
+    onclick = function(breaks) { paste0("alert(\"", as.character(breaks), "\")") },
     labels = function(breaks) {
       lapply(breaks, function(br) {
         label_interactive(
           as.character(br),
           data_id = as.character(br),
-          onclick = paste0("alert(\\"", as.character(br), "\\")"),
+          onclick = paste0("alert(\"", as.character(br), "\")"),
           tooltip = as.character(br)
         )
       })
@@ -179,13 +179,14 @@ if (interactive()) print(x)
 \seealso{
 \code{\link{girafe}}
 
-Other interactive scale: \code{\link{scale_alpha_interactive}},
-  \code{\link{scale_colour_brewer_interactive}},
-  \code{\link{scale_colour_interactive}},
-  \code{\link{scale_gradient_interactive}},
-  \code{\link{scale_linetype_interactive}},
-  \code{\link{scale_shape_interactive}},
-  \code{\link{scale_size_interactive}},
-  \code{\link{scale_viridis_interactive}}
+Other interactive scale: 
+\code{\link{scale_alpha_interactive}()},
+\code{\link{scale_colour_brewer_interactive}()},
+\code{\link{scale_colour_interactive}},
+\code{\link{scale_gradient_interactive}},
+\code{\link{scale_linetype_interactive}()},
+\code{\link{scale_shape_interactive}()},
+\code{\link{scale_size_interactive}()},
+\code{\link{scale_viridis_interactive}}
 }
 \concept{interactive scale}

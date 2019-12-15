@@ -94,7 +94,7 @@ gg_point = ggplot(data = dataset) +
     subtitle = label_interactive(
       "by ggiraph",
       tooltip = "Click me!",
-      onclick = "window.open(\\"https://davidgohel.github.io/ggiraph/\\")",
+      onclick = "window.open(\"https://davidgohel.github.io/ggiraph/\")",
       hover_css = "fill:magenta;cursor:pointer;"
     )
   )

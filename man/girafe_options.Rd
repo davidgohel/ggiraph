@@ -43,9 +43,12 @@ if(interactive()){
 \seealso{
 \code{\link{girafe}}
 
-Other girafe animation options: \code{\link{opts_hover}},
-  \code{\link{opts_selection}}, \code{\link{opts_sizing}},
-  \code{\link{opts_toolbar}}, \code{\link{opts_tooltip}},
-  \code{\link{opts_zoom}}
+Other girafe animation options: 
+\code{\link{opts_hover}()},
+\code{\link{opts_selection}()},
+\code{\link{opts_sizing}()},
+\code{\link{opts_toolbar}()},
+\code{\link{opts_tooltip}()},
+\code{\link{opts_zoom}()}
 }
 \concept{girafe animation options}

@@ -4,9 +4,16 @@
 \alias{dsvg}
 \title{SVG Graphics Driver}
 \usage{
-dsvg(file = "Rplots.svg", width = 6, height = 6, bg = "white",
-  pointsize = 12, standalone = TRUE, canvas_id = "svg_1",
-  fonts = list())
+dsvg(
+  file = "Rplots.svg",
+  width = 6,
+  height = 6,
+  bg = "white",
+  pointsize = 12,
+  standalone = TRUE,
+  canvas_id = "svg_1",
+  fonts = list()
+)
 }
 \arguments{
 \item{file}{the file where output will appear.}

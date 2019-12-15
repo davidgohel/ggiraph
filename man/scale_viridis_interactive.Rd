@@ -128,7 +128,7 @@ p4 <- p + scale_fill_viridis_c_interactive(
       label_interactive(
         as.character(br),
         data_id = as.character(br),
-        onclick = paste0("alert(\\"", as.character(br), "\\")"),
+        onclick = paste0("alert(\"", as.character(br), "\")"),
         tooltip = as.character(br)
       )
     })
@@ -144,13 +144,14 @@ if (interactive()) print(x)
 \seealso{
 \code{\link{girafe}}
 
-Other interactive scale: \code{\link{scale_alpha_interactive}},
-  \code{\link{scale_colour_brewer_interactive}},
-  \code{\link{scale_colour_interactive}},
-  \code{\link{scale_gradient_interactive}},
-  \code{\link{scale_linetype_interactive}},
-  \code{\link{scale_manual_interactive}},
-  \code{\link{scale_shape_interactive}},
-  \code{\link{scale_size_interactive}}
+Other interactive scale: 
+\code{\link{scale_alpha_interactive}()},
+\code{\link{scale_colour_brewer_interactive}()},
+\code{\link{scale_colour_interactive}},
+\code{\link{scale_gradient_interactive}},
+\code{\link{scale_linetype_interactive}()},
+\code{\link{scale_manual_interactive}},
+\code{\link{scale_shape_interactive}()},
+\code{\link{scale_size_interactive}()}
 }
 \concept{interactive scale}

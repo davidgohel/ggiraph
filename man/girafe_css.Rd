@@ -4,8 +4,14 @@
 \alias{girafe_css}
 \title{CSS creation helper}
 \usage{
-girafe_css(css, text = NULL, point = NULL, line = NULL,
-  area = NULL, image = NULL)
+girafe_css(
+  css,
+  text = NULL,
+  point = NULL,
+  line = NULL,
+  area = NULL,
+  image = NULL
+)
 }
 \arguments{
 \item{css}{The generic css style}

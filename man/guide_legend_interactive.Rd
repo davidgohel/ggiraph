@@ -51,7 +51,6 @@ See the element_*_interactive section for more details.
 
 \examples{
 # add interactive discrete legend guide to a ggplot -------
-# add interactive continuous legend guide to a ggplot -------
 library(ggplot2)
 library(ggiraph)
 
@@ -93,7 +92,7 @@ p3 <- p +
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = function(breaks) { as.character(breaks)},
     tooltip = function(breaks) { as.character(breaks)},
-    onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") }
+    onclick = function(breaks) { paste0("alert(\"", as.character(breaks), "\")") }
   )
 x <- girafe(ggobj = p3)
 x <- girafe_options(x,
@@ -105,12 +104,12 @@ p4 <- p + scale_fill_manual_interactive(
   values = c(Male = "#0072B2", Female = "#009E73"),
   data_id = function(breaks) { as.character(breaks)},
   tooltip = function(breaks) { as.character(breaks)},
-  onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") },
+  onclick = function(breaks) { paste0("alert(\"", as.character(breaks), "\")") },
   guide = guide_legend_interactive(
     title.theme = element_text_interactive(
       size = 8,
       data_id = "legend.title",
-      onclick = "alert(\\"Gender levels\\")",
+      onclick = "alert(\"Gender levels\")",
       tooltip = "Gender levels"
     ),
     label.theme = element_text_interactive(
@@ -130,13 +129,13 @@ p5 <- p +
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = function(breaks) { as.character(breaks)},
     tooltip = function(breaks) { as.character(breaks)},
-    onclick = function(breaks) { paste0("alert(\\"", as.character(breaks), "\\")") },
+    onclick = function(breaks) { paste0("alert(\"", as.character(breaks), "\")") },
     labels = function(breaks) {
       lapply(breaks, function(br) {
         label_interactive(
           as.character(br),
           data_id = as.character(br),
-          onclick = paste0("alert(\\"", as.character(br), "\\")"),
+          onclick = paste0("alert(\"", as.character(br), "\")"),
           tooltip = as.character(br)
         )
       })
@@ -146,6 +145,7 @@ x <- girafe(ggobj = p5)
 x <- girafe_options(x,
                     opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
 if (interactive()) print(x)
+# add interactive continuous legend guide to a ggplot -------
 library(ggplot2)
 library(ggiraph)
 
@@ -202,7 +202,7 @@ p4 <- p + scale_fill_viridis_c_interactive(
       label_interactive(
         as.character(br),
         data_id = as.character(br),
-        onclick = paste0("alert(\\"", as.character(br), "\\")"),
+        onclick = paste0("alert(\"", as.character(br), "\")"),
         tooltip = as.character(br)
       )
     })
