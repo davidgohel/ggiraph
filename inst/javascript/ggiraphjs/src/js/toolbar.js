@@ -93,7 +93,7 @@ export default class ToolbarHandler {
         .attr('title', 'download png')
         .on('click', function () {
           if (typeof Promise !== 'undefined' && Promise.toString().indexOf('[native code]') !== -1) {
-            svgtopng.saveSvgAsPng(document.getElementById(that.svgid), 'diagram.png');
+            svgtopng.saveSvgAsPng(document.getElementById(that.svgid), 'diagram.png', { encoderOptions: 1 });
           } else {
             console.error('This navigator does not support Promises');
           }
