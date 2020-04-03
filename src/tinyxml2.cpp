@@ -2684,9 +2684,9 @@ void XMLPrinter::PushAttribute( const char* name, const char* value )
     TIXMLASSERT( _elementJustOpened );
     Putc ( ' ' );
     Write( name );
-    Write( "=\"" );
+    Write( "='" );
     PrintString( value, false );
-    Putc ( '\"' );
+    Putc ( '\'' );
 }
 
 
