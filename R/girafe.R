@@ -110,7 +110,6 @@ girafe <- function(
 
   xml_reader_options$x <- path
   data <- do.call(read_xml, xml_reader_options )
-  set_svg_attributes(data, canvas_id)
   xml_attr(data, "width") <- NULL
   xml_attr(data, "height") <- NULL
   unlink(path)

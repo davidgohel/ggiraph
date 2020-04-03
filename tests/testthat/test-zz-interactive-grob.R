@@ -22,7 +22,6 @@ test_that("interactive_points_grob is working", {
   dev.off()
 
   doc <- read_xml(file)
-  ggiraph:::set_svg_attributes(doc, "svgid")
   circles <- xml_find_all(doc, ".//circle")
   expect_length(circles, length(s))
   circle_id <- sapply(circles, xml_attr, "id" )

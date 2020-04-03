@@ -299,6 +299,8 @@ interactive_attr_toxml <- function(x,
       attrValue <- x[[a]][rows]
       attrValue <- switch(a,
                           tooltip = encode_cr(attrValue),
+                          hover_css = check_css_attr(attrValue),
+                          selected_css = check_css_attr(attrValue),
                           attrValue)
       attrName <- switch(a,
                          tooltip = "title",
