@@ -10,7 +10,11 @@ scale_interactive <- function(scale_func,
   # Call default scale function
   sc <- do.call(scale_func, args)
   # set the guide
-  if (is.character(sc$guide)) {
+  if (isFALSE(sc$guide) || is.null(sc$guide)) {
+    # no guide
+    return(sc)
+
+  } else if (is.character(sc$guide)) {
     if (sc$guide %in% c("legend", "colourbar", "colorbar")) {
       sc$guide <- paste0(sc$guide, "_interactive")
     } else if (sc$guide %in% c("legend_interactive",
