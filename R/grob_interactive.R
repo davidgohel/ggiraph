@@ -17,6 +17,6 @@ grob_interactive <- function(grob_func,
     interactive_params,
     cl = cl,
     data_attr = data_attr,
-    ipar = IPAR_NAMES
+    ipar = ipar
   )
 }
