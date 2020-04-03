@@ -1,3 +1,17 @@
+# ggiraph 0.7.1
+
+## Enhancement
+* Refactoring of ggiraphjs, with separate modules for each action context
+* Added shiny messaging for hovered elements
+* Added opts_hover_inv for inverted hover effect
+* Added parameter for exported png filename and set png quality to 1
+
+## Bug fixes
+* misc fixes in interactive geom internals
+
+## Documentation
+* Added a complete shiny example (gender) for selection/hover options/tricks
+
 # ggiraph 0.7.0
 
 ## Enhancement
