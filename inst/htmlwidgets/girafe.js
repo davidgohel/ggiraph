@@ -14,6 +14,7 @@ HTMLWidgets.widget({
         ggobj.setSvgId(x.uid);
         ggobj.addStyle([
           x.settings.tooltip.css,
+          x.settings.hoverinv.css,
           x.settings.hover.css, x.settings.hoverkey.css, x.settings.hovertheme.css,
           x.settings.capture.css, x.settings.capturekey.css, x.settings.capturetheme.css
         ]);
@@ -54,21 +55,24 @@ HTMLWidgets.widget({
             attrName: 'data-id',
             inputSuffix: '_hovered',
             messageSuffix: '_hovered_set',
-            reactive: x.settings.hover.reactive
+            reactive: x.settings.hover.reactive,
+            invClassPrefix: (x.settings.hoverinv.css.length > 0 ? 'hover_inv' : null)
           },
           {
             classPrefix: 'hover_key',
             attrName: 'key-id',
             inputSuffix: '_key_hovered',
             messageSuffix: '_key_hovered_set',
-            reactive: x.settings.hoverkey.reactive
+            reactive: x.settings.hoverkey.reactive,
+            invClassPrefix: null
           },
           {
             classPrefix: 'hover_theme',
             attrName: 'theme-id',
             inputSuffix: '_theme_hovered',
             messageSuffix: '_theme_hovered_set',
-            reactive: x.settings.hovertheme.reactive
+            reactive: x.settings.hovertheme.reactive,
+            invClassPrefix: null
           }
         ], HTMLWidgets.shinyMode);
 

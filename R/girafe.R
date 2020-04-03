@@ -168,6 +168,7 @@ default_opts <- function(){
     hover = opts_hover(),
     hoverkey = opts_hover_key(),
     hovertheme = opts_hover_theme(),
+    hoverinv = opts_hover_inv(),
     zoom = opts_zoom(),
     capture = opts_selection(),
     capturekey = opts_selection_key(),
@@ -196,6 +197,8 @@ merge_options <- function(options, args){
       options$hoverkey <- arg
     } else if (inherits(arg, "opts_hover_theme")) {
       options$hovertheme <- arg
+    } else if (inherits(arg, "opts_hover_inv")) {
+      options$hoverinv <- arg
     } else if (inherits(arg, "opts_toolbar")) {
       options$toolbar <- arg
     } else if (inherits(arg, "opts_sizing")) {

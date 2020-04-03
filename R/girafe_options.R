@@ -92,6 +92,8 @@ opts_tooltip <- function(css = NULL,
 #' Use \code{opts_hover} for interactive geometries in panels,
 #' \code{opts_hover_key} for interactive scales/guides and
 #' \code{opts_hover_theme} for interactive theme elements.
+#' Use \code{opts_hover_inv} for the effect on the rest of the geometries,
+#' while one is hovered (inverted operation).
 #' @param css css to associate with elements when they are hovered.
 #' It must be a scalar character. It can also be constructed with
 #' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
@@ -122,6 +124,17 @@ opts_hover <- function(css = NULL,
                    name = "opts_hover")
   structure(list(css = css, reactive = reactive),
             class = "opts_hover")
+}
+
+#' @export
+#' @rdname opts_hover
+opts_hover_inv <- function(css = NULL) {
+  css <- check_css(css,
+                   default = "",
+                   cls_prefix = "hover_inv_",
+                   name = "opts_hover_inv")
+  structure(list(css = css),
+            class = "opts_hover_inv")
 }
 
 #' @export

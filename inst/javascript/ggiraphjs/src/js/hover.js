@@ -3,9 +3,10 @@ import * as utils from './utils'
 
 export default class HoverHandler {
 
-  constructor(svgid, classPrefix, attrName, shinyInputId, shinyMessageId) {
+  constructor(svgid, classPrefix, invClassPrefix, attrName, shinyInputId, shinyMessageId) {
     this.svgid = svgid;
     this.clsName = classPrefix + '_' + svgid;
+    this.invClsName = invClassPrefix + '_' + svgid;
     this.attrName = attrName;
     this.shinyInputId = shinyInputId;
     this.shinyMessageId = shinyMessageId;
@@ -90,12 +91,21 @@ export default class HoverHandler {
     svgEl
       .selectAll('*[' + this.attrName + '].' + this.clsName)
       .classed(this.clsName, false);
+    if (this.invClsName) {
+      svgEl
+        .selectAll('*[' + this.attrName + '].' + this.invClsName)
+        .classed(this.invClsName, false);
+    }
 
     const that = this;
     for (var i = 0; i < that.dataHovered.length; i++) {
       svgEl
         .selectAll('*[' + that.attrName + '="' + that.dataHovered[i] + '"]')
         .classed(that.clsName, true);
+    }
+    if (this.invClsName && this.dataHovered.length > 0) {
+      svgEl.selectAll('*[' + this.attrName + ']:not(.' + this.clsName + ')')
+        .classed(this.invClsName, true);
     }
   }
 }

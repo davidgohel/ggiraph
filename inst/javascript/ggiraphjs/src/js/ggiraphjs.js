@@ -128,7 +128,7 @@ export default class ggiraphjs {
         const inputId = shinyMode && item.reactive ? this.containerid + item.inputSuffix : null;
         const messageId = shinyMode && item.reactive ? this.containerid + item.messageSuffix : null;
         const handler = new HoverHandler(
-          this.svgid, item.classPrefix, item.attrName,
+          this.svgid, item.classPrefix, item.invClassPrefix, item.attrName,
           inputId, messageId
         );
         if (handler.init())

@@ -150,24 +150,33 @@ girafe_css <- function(css,
                        line = NULL,
                        area = NULL,
                        image = NULL) {
-  css <- paste("/*GIRAFE CSS*/ ._CLASSNAME_ {", css, "}\n")
-  if (!is.null(text))
-    css <- paste(css, paste("text._CLASSNAME_ {", text, "}\n"))
-  if (!is.null(point))
-    css <- paste(css, paste("circle._CLASSNAME_ {", point, "}\n"))
-  if (!is.null(line))
-    css <- paste(css,
-                 paste("line._CLASSNAME_, polyline._CLASSNAME_ {", line, "}\n"))
-  if (!is.null(area))
-    css <- paste(css,
-                 paste(
-                   "rect._CLASSNAME_, polygon._CLASSNAME_, path._CLASSNAME_ {",
-                   area,
-                   "}\n"
-                 ))
-  if (!is.null(image))
-    css <- paste(css, paste("image._CLASSNAME_ {", image, "}\n"))
-  return(css)
+  css <- paste0("/*GIRAFE CSS*/", validate_css(css, "css"))
+  css <- paste0(css, validate_css(text, "text", "text"))
+  css <- paste0(css, validate_css(point, "point", "circle"))
+  css <- paste0(css,
+                validate_css(line, "line", c("line", "polyline")))
+  css <- paste0(css,
+                validate_css(area, "line", c("rect", "polygon", "path")))
+  css <- paste0(css, validate_css(image, "image", "image"))
+  css
+}
+
+#' Helper to check girafe_css argument
+#' @noRd
+#' @importFrom rlang is_scalar_character
+validate_css <- function(css,
+                         name,
+                         tag = NULL) {
+  if (is.null(css))
+    css <- ""
+  if (!is_scalar_character(css))
+    stop(paste0("Argument `", name, "` must be a scalar character"), call. = FALSE)
+  css <- trimws(css)
+  if (nchar(css) > 0) {
+    tag <- paste0(tag, "._CLASSNAME_", collapse = ", ")
+    css <- paste(tag, "{", css, "}\n")
+  }
+  css
 }
 
 #' Helper to check css argument, given in other functions
