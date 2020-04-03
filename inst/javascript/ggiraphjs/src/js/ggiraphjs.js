@@ -120,13 +120,16 @@ export default class ggiraphjs {
     } catch (e) { console.error(e) }
   }
 
-  setupHover(hoverItems) {
+  setupHover(hoverItems, shinyMode) {
     // register hover handlers
     for (var i = 0; i < hoverItems.length; i++) {
       const item = hoverItems[i];
       try {
+        const inputId = shinyMode && item.reactive ? this.containerid + item.inputSuffix : null;
+        const messageId = shinyMode && item.reactive ? this.containerid + item.messageSuffix : null;
         const handler = new HoverHandler(
-          this.svgid, item.classPrefix, item.attrName
+          this.svgid, item.classPrefix, item.attrName,
+          inputId, messageId
         );
         if (handler.init())
           this.handlers.push(handler);

@@ -51,17 +51,26 @@ HTMLWidgets.widget({
         ggobj.setupHover([
           {
             classPrefix: 'hover',
-            attrName: 'data-id'
+            attrName: 'data-id',
+            inputSuffix: '_hovered',
+            messageSuffix: '_hovered_set',
+            reactive: x.settings.hover.reactive
           },
           {
             classPrefix: 'hover_key',
-            attrName: 'key-id'
+            attrName: 'key-id',
+            inputSuffix: '_key_hovered',
+            messageSuffix: '_key_hovered_set',
+            reactive: x.settings.hoverkey.reactive
           },
           {
             classPrefix: 'hover_theme',
-            attrName: 'theme-id'
+            attrName: 'theme-id',
+            inputSuffix: '_theme_hovered',
+            messageSuffix: '_theme_hovered_set',
+            reactive: x.settings.hovertheme.reactive
           }
-        ]);
+        ], HTMLWidgets.shinyMode);
 
         ggobj.setupSelection([
           {

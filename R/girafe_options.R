@@ -94,6 +94,7 @@ opts_tooltip <- function(css = NULL,
 #' \code{opts_hover_theme} for interactive theme elements.
 #' @param css css to associate with elements when they are hovered.
 #' It must be a scalar character. It can also be constructed with
+#' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
 #' \code{\link{girafe_css}}, to give more control over the css for different element types.
 #' @examples
 #' library(ggplot2)
@@ -113,34 +114,37 @@ opts_tooltip <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_hover <- function(css = NULL) {
+opts_hover <- function(css = NULL,
+                       reactive = FALSE) {
   css <- check_css(css,
                    default = "fill:orange;stroke:gray;",
                    cls_prefix = "hover_",
                    name = "opts_hover")
-  structure(list(css = css),
+  structure(list(css = css, reactive = reactive),
             class = "opts_hover")
 }
 
 #' @export
 #' @rdname opts_hover
-opts_hover_key <- function(css = NULL) {
+opts_hover_key <- function(css = NULL,
+                           reactive = FALSE) {
   css <- check_css(css,
                    default = "stroke:red;",
                    cls_prefix = "hover_key_",
                    name = "opts_hover")
-  structure(list(css = css),
+  structure(list(css = css, reactive = reactive),
             class = "opts_hover_key")
 }
 
 #' @export
 #' @rdname opts_hover
-opts_hover_theme <- function(css = NULL) {
+opts_hover_theme <- function(css = NULL,
+                             reactive = FALSE) {
   css <- check_css(css,
                    default = "fill:green;",
                    cls_prefix = "hover_theme_",
                    name = "opts_hover_theme")
-  structure(list(css = css),
+  structure(list(css = css, reactive = reactive),
             class = "opts_hover_theme")
 }
 

@@ -1,11 +1,14 @@
 import * as d3 from 'd3'
+import * as utils from './utils'
 
 export default class HoverHandler {
 
-  constructor(svgid, classPrefix, attrName) {
+  constructor(svgid, classPrefix, attrName, shinyInputId, shinyMessageId) {
     this.svgid = svgid;
     this.clsName = classPrefix + '_' + svgid;
     this.attrName = attrName;
+    this.shinyInputId = shinyInputId;
+    this.shinyMessageId = shinyMessageId;
     this.dataHovered = [];
   }
 
@@ -25,6 +28,17 @@ export default class HoverHandler {
       this.addEventListener("mouseout", that);
     });
 
+    // add shiny listener
+    if (this.shinyMessageId) {
+      Shiny.addCustomMessageHandler(this.shinyMessageId, function(message) {
+        if (typeof message === 'string') {
+          that.setHovered([message]);
+        } else if (utils.isArray(message)) {
+          that.setHovered(message);
+        }
+      });
+    }
+
     // return true to add to list of handLers
     return true;
   }
@@ -40,7 +54,15 @@ export default class HoverHandler {
           this.removeEventListener("mouseout", that);
         });
     } catch (e) { console.error(e) }
-    //
+
+    // remove shiny listener
+    if (this.shinyMessageId) {
+      try {
+        // For Shiny the only way to really remove it
+        // is to replace it with a void one
+        Shiny.addCustomMessageHandler(this.shinyMessageId, function(message) {});
+      } catch (e) { console.error(e) }
+    }
     this.dataHovered = [];
   }
 
@@ -58,6 +80,9 @@ export default class HoverHandler {
   setHovered(hovered) {
     this.dataHovered = hovered;
     this.refreshHovered();
+    if (this.shinyInputId) {
+      Shiny.onInputChange(this.shinyInputId, this.dataHovered);
+    }
   }
 
   refreshHovered() {
