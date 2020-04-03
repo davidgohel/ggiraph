@@ -17,7 +17,7 @@ interactive_text_grob <- function(...) {
 #' @export
 drawDetails.interactive_text_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.text, x[grob_argnames(x = x, grob = grid::textGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   interactive_attr_toxml(x = x, ids = ids)
   invisible()

@@ -17,7 +17,7 @@ interactive_polygon_grob <- function(...) {
 #' @export
 drawDetails.interactive_polygon_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.polygon, x[grob_argnames(x = x, grob = grid::polygonGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
     if (is.null(x$id))

@@ -17,7 +17,7 @@ interactive_path_grob <- function(...) {
 #' @export
 drawDetails.interactive_path_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.path, x[grob_argnames(x = x, grob = grid::pathGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
     # if pathId is specified use that (polygons with holes for example)

@@ -17,7 +17,7 @@ interactive_segments_grob <- function(...) {
 #' @export
 drawDetails.interactive_segments_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.segments, x[grob_argnames(x = x, grob = grid::segmentsGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   interactive_attr_toxml(x = x, ids = ids)
   invisible()

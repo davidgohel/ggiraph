@@ -15,10 +15,7 @@ interactive_roundrect_grob <- function(...) {
 }
 
 #' @export
-drawDetails.interactive_roundrect_grob <- function(x, recording) {
-  dsvg_tracer_on()
-  do.call(grid.roundrect, x[grob_argnames(x = x, grob = grid::roundrectGrob)])
-  ids <- dsvg_tracer_off()
-  interactive_attr_toxml(x = x, ids = ids)
-  invisible()
+makeContent.interactive_roundrect_grob <- function(x) {
+  gr <- NextMethod()
+  add_interactive_attrs(gr, x)
 }
