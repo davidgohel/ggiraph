@@ -20,3 +20,4 @@
 ^inst/medias$
 tests/testthat/test-dom.R
 ^pkgdown$
+^\.github$

@@ -1,3 +1,8 @@
+# ggiraph 0.7.5
+
+## Enhancement
+* Using tinyxml2 for creating the svg doc
+
 # ggiraph 0.7.1
 
 ## Enhancement
