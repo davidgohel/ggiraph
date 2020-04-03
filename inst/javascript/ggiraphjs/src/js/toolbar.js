@@ -45,7 +45,7 @@ export default class ToolbarHandler {
       divToolbarSelect.append('a')
         .classed(this.clsName + '-icon', true)
         .classed('drop', true)
-        .attr('title', 'lasso selection')
+        .attr('title', 'lasso deselection')
         .on('click', function () {
           that.selectionHandler.lasso(false);
         })
