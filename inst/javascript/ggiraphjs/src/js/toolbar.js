@@ -4,7 +4,7 @@ import * as svgtopng from 'save-svg-as-png'
 export default class ToolbarHandler {
 
   constructor(containerid, svgid, classname,
-              position, zoomHandler, selectionHandler, saveaspng) {
+              position, zoomHandler, selectionHandler, saveaspng, pngname) {
     this.containerid = containerid;
     this.svgid = svgid;
     this.clsName = classname;
@@ -12,6 +12,7 @@ export default class ToolbarHandler {
     this.zoomHandler = zoomHandler;
     this.selectionHandler = selectionHandler;
     this.saveaspng = saveaspng;
+    this.pngname = pngname;
   }
 
   init() {
@@ -93,7 +94,7 @@ export default class ToolbarHandler {
         .attr('title', 'download png')
         .on('click', function () {
           if (typeof Promise !== 'undefined' && Promise.toString().indexOf('[native code]') !== -1) {
-            svgtopng.saveSvgAsPng(document.getElementById(that.svgid), 'diagram.png', { encoderOptions: 1 });
+            svgtopng.saveSvgAsPng(document.getElementById(that.svgid), that.pngname + '.png', { encoderOptions: 1 });
           } else {
             console.error('This navigator does not support Promises');
           }

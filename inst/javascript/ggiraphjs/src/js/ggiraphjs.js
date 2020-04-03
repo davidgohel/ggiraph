@@ -173,7 +173,7 @@ export default class ggiraphjs {
     } catch (e) { console.error(e) }
   }
 
-  setupToolbar(className, position, saveaspng) {
+  setupToolbar(className, position, saveaspng, pngname) {
     // register toolbar handler
     try {
       // for zoom tools, we need the active zoom handler if exists
@@ -193,7 +193,7 @@ export default class ggiraphjs {
       const handler = new ToolbarHandler(
         this.containerid, this.svgid,
         className, position,
-        zoomHandler, selectionHandler, saveaspng
+        zoomHandler, selectionHandler, saveaspng, pngname
       );
       if (handler.init())
         this.handlers.push(handler);

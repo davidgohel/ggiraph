@@ -108,7 +108,7 @@ HTMLWidgets.widget({
 
         ggobj.setupZoom(x.settings.zoom.min, x.settings.zoom.max);
         ggobj.setupToolbar('ggiraph-toolbar',
-          x.settings.toolbar.position, x.settings.toolbar.saveaspng);
+          x.settings.toolbar.position, x.settings.toolbar.saveaspng, x.settings.toolbar.pngname);
       },
 
       resize: function(width, height) {

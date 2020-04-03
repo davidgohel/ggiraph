@@ -298,6 +298,7 @@ opts_zoom <- function(min = 1, max = 1){
 #' @description Allows customization of the toolbar
 #' @param position one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'
 #' @param saveaspng set to TRUE to propose the 'save as png' button.
+#' @param pngname the default basename (without .png extension) to use for the png file.
 #' @note
 #' \code{saveaspng} relies on JavaScript promises, so any browsers that don't natively
 #' support the standard Promise object will need to have a polyfill (e.g.
@@ -320,15 +321,16 @@ opts_zoom <- function(min = 1, max = 1){
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_toolbar <- function(position = "topright", saveaspng = TRUE){
+opts_toolbar <- function(position = "topright", saveaspng = TRUE, pngname = "diagram"){
 
   stopifnot(position %in% c("top", "bottom",
                             "topleft", "topright",
                             "bottomleft", "bottomright") )
-
+  stopifnot(is.character(pngname))
   x <- list(
     position = position,
-    saveaspng = saveaspng
+    saveaspng = saveaspng,
+    pngname = pngname
   )
   class(x) <- "opts_toolbar"
   x
