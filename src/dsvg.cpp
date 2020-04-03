@@ -14,81 +14,6 @@
 #include <locale>
 #include <sstream>
 
-std::string to_string( const int& n )
-{
-  std::ostringstream stm ;
-  stm << n ;
-  return stm.str() ;
-}
-
-std::string line_style(double width, int col, int type, int join, int end)
-{
-  a_color col_(col);
-
-  if( col_.is_visible() < 1 || width < 0.0001 || type < 0 )
-    return col_.svg_stroke_attr();
-
-
-  std::stringstream os;
-
-  os << " stroke-width=\""<< width * 72 / 96 << "\"";
-  os << col_.svg_stroke_attr();
-
-  int lty = type;
-  double lwd = width;
-
-  switch (type) {
-  case LTY_BLANK:
-    break;
-  case LTY_SOLID:
-    break;
-  default:
-    os << " stroke-dasharray=\"";
-  os << (int) lwd * (lty & 15);
-  lty = lty >> 4;
-  for(int i = 0 ; i < 8 && lty & 15 ; i++) {
-    os << ","<< (int) lwd * (lty & 15);
-    lty = lty >> 4;
-  }
-  os << "\"";
-  break;
-  }
-
-  switch (join) {
-  case GE_ROUND_JOIN: //round
-    os << " stroke-linejoin=\"round\"";
-    break;
-  case GE_MITRE_JOIN: //mitre
-    os << " stroke-linejoin=\"miter\"";
-    break;
-  case GE_BEVEL_JOIN: //bevel
-    os << " stroke-linejoin=\"bevel\"";
-    break;
-  default:
-    os << " stroke-linejoin=\"round\"";
-  break;
-  }
-
-  switch (end) {
-  case GE_ROUND_CAP:
-    os << " stroke-linecap=\"round\"";
-    break;
-  case GE_BUTT_CAP:
-    os << " stroke-linecap=\"butt\"";
-    break;
-  case GE_SQUARE_CAP:
-    os << " stroke-linecap=\"square\"";
-    break;
-  default:
-    os << " stroke-linecap=\"round\"";
-  break;
-  }
-
-  return os.str();
-}
-
-
-
 // SVG device metadata
 class DSVG_dev {
 public:
@@ -270,7 +195,7 @@ private:
 };
 
 static void dsvg_metric_info(int c, const pGEcontext gc, double* ascent,
-                            double* descent, double* width, pDevDesc dd) {
+                             double* descent, double* width, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
   bool Unicode = mbcslocale;
@@ -317,10 +242,10 @@ static void dsvg_clip(double x0, double x1, double y0, double y1, pDevDesc dd) {
   SVGElement* clipPath = svgd->svg_element("clipPath", false, defs);
   set_attr(clipPath, "id", clipid);
   SVGElement* rect = svgd->svg_element("rect", false, clipPath);
-  set_attr(rect, "x", format(std::min(x0, x1)));
-  set_attr(rect, "y", format(std::min(y0, y1)));
-  set_attr(rect, "width", format(std::abs(x1 - x0)));
-  set_attr(rect, "height", format(std::abs(y1 - y0)));
+  set_attr(rect, "x", std::min(x0, x1));
+  set_attr(rect, "y", std::min(y0, y1));
+  set_attr(rect, "width", std::abs(x1 - x0));
+  set_attr(rect, "height", std::abs(y1 - y0));
 }
 
 static void dsvg_close(pDevDesc dd) {
@@ -329,25 +254,25 @@ static void dsvg_close(pDevDesc dd) {
 }
 
 static void dsvg_line(double x1, double y1, double x2, double y2,
-                     const pGEcontext gc, pDevDesc dd) {
+                      const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *clipid = svgd->clip_id.c_str();
   const char *eltid = svgd->element_id.c_str();
 
   SVGElement* line = svgd->svg_element("line", true);
-  set_attr(line, "x1", format(x1));
-  set_attr(line, "y1", format(y1));
-  set_attr(line, "x2", format(x2));
-  set_attr(line, "y2", format(y2));
+  set_attr(line, "x1", x1);
+  set_attr(line, "y1", y1);
+  set_attr(line, "x2", x2);
+  set_attr(line, "y2", y2);
   set_attr(line, "id", eltid);
-  set_attr(line, "clip-path", format("url(#%s)", clipid));
+  set_clip(line, clipid);
   set_stroke(line, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
   set_fill(line, gc->fill);
 }
 
 static void dsvg_polyline(int n, double *x, double *y, const pGEcontext gc,
-                         pDevDesc dd) {
+                          pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *clipid = svgd->clip_id.c_str();
@@ -364,12 +289,12 @@ static void dsvg_polyline(int n, double *x, double *y, const pGEcontext gc,
   }
   set_attr(polyline, "points", os.str().c_str());
   set_attr(polyline, "id", eltid);
-  set_attr(polyline, "clip-path", format("url(#%s)", clipid));
+  set_clip(polyline, clipid);
   set_attr(polyline, "fill", "none");
   set_stroke(polyline, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
 }
 static void dsvg_polygon(int n, double *x, double *y, const pGEcontext gc,
-                        pDevDesc dd) {
+                         pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *clipid = svgd->clip_id.c_str();
@@ -386,15 +311,15 @@ static void dsvg_polygon(int n, double *x, double *y, const pGEcontext gc,
   }
   set_attr(polygon, "points", os.str().c_str());
   set_attr(polygon, "id", eltid);
-  set_attr(polygon, "clip-path", format("url(#%s)", clipid));
+  set_clip(polygon, clipid);
   set_fill(polygon, gc->fill);
   set_stroke(polygon, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
 }
 
 void dsvg_path(double *x, double *y,
-              int npoly, int *nper,
-              Rboolean winding,
-              const pGEcontext gc, pDevDesc dd) {
+               int npoly, int *nper,
+               Rboolean winding,
+               const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *clipid = svgd->clip_id.c_str();
@@ -416,7 +341,7 @@ void dsvg_path(double *x, double *y,
   }
   set_attr(path, "d", os.str().c_str());
   set_attr(path, "id", eltid);
-  set_attr(path, "clip-path", format("url(#%s)", clipid));
+  set_clip(path, clipid);
   set_fill(path, gc->fill);
 
   if (winding)
@@ -441,59 +366,63 @@ static double dsvg_strwidth(const char *str, const pGEcontext gc, pDevDesc dd) {
 }
 
 static void dsvg_rect(double x0, double y0, double x1, double y1,
-                     const pGEcontext gc, pDevDesc dd) {
+                      const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *eltid = svgd->element_id.c_str();
   const char *clipid = svgd->clip_id.c_str();
 
   SVGElement* rect = svgd->svg_element("rect", true);
-  set_attr(rect, "x", format(fmin(x0, x1)));
-  set_attr(rect, "y", format(fmin(y0, y1)));
-  set_attr(rect, "width", format(fabs(x1 - x0)));
-  set_attr(rect, "height", format(fabs(y1 - y0)));
+  set_attr(rect, "x", fmin(x0, x1));
+  set_attr(rect, "y", fmin(y0, y1));
+  set_attr(rect, "width", fabs(x1 - x0));
+  set_attr(rect, "height", fabs(y1 - y0));
   set_attr(rect, "id", eltid);
-  set_attr(rect, "clip-path", format("url(#%s)", clipid));
+  set_clip(rect, clipid);
   set_fill(rect, gc->fill);
   set_stroke(rect, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
 }
 
 static void dsvg_circle(double x, double y, double r, const pGEcontext gc,
-                       pDevDesc dd) {
+                        pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *eltid = svgd->element_id.c_str();
   const char *clipid = svgd->clip_id.c_str();
 
   SVGElement* circle = svgd->svg_element("circle", true);
-  set_attr(circle, "cx", format(x));
-  set_attr(circle, "cy", format(y));
-  set_attr(circle, "r", format("%.2fpt",r * .75));
+  set_attr(circle, "cx", x);
+  set_attr(circle, "cy", y);
+  set_attr(circle, "r", to_string(r * .75) + "pt");
   set_attr(circle, "id", eltid);
-  set_attr(circle, "clip-path", format("url(#%s)", clipid));
+  set_clip(circle, clipid);
   set_fill(circle, gc->fill);
   set_stroke(circle, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
 }
 
 static void dsvg_text_utf8(double x, double y, const char *str, double rot,
-                     double hadj, const pGEcontext gc, pDevDesc dd) {
+                           double hadj, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
   const char *clipid = svgd->clip_id.c_str();
   const char *eltid = svgd->element_id.c_str();
 
   SVGElement* g = svgd->svg_element("g", false);
-  set_attr(g, "clip-path", format("url(#%s)", clipid));
+  set_clip(g, clipid);
   SVGElement* text = svgd->svg_element("text", true, g);
 
   if (rot == 0) {
-    set_attr(text, "x", format(x));
-    set_attr(text, "y", format(y));
+    set_attr(text, "x", x);
+    set_attr(text, "y", y);
   } else {
-    set_attr(text, "transform", format("translate(%.2f,%.2f) rotate(%0.0f)", x, y, -1.0 * rot));
+    std::ostringstream ost;
+    ost.flags(std::ios_base::fixed | std::ios_base::dec);
+    ost.precision(2);
+    ost << "translate(" << x << "," << y << ") rotate(" << -1.0 * rot << ")";
+    set_attr(text, "transform", ost.str().c_str());
   }
   set_attr(text, "id", eltid);
-  set_attr(text, "font-size", format("%.2fpt", gc->cex * gc->ps * .75));
+  set_attr(text, "font-size", to_string(gc->cex * gc->ps * .75) + "pt");
   if (is_bold(gc->fontface))
     set_attr(text, "font-weight", "bold");
   if (is_italic(gc->fontface))
@@ -509,12 +438,12 @@ static void dsvg_text_utf8(double x, double y, const char *str, double rot,
 }
 
 static void dsvg_text(double x, double y, const char *str, double rot,
-                     double hadj, const pGEcontext gc, pDevDesc dd) {
+                      double hadj, const pGEcontext gc, pDevDesc dd) {
   return dsvg_text_utf8(x, y, Rf_translateCharUTF8(Rf_mkChar(str)), rot, hadj, gc, dd);
 }
 
 static void dsvg_size(double *left, double *right, double *bottom, double *top,
-                     pDevDesc dd) {
+                      pDevDesc dd) {
   *left = dd->left;
   *right = dd->right;
   *bottom = dd->bottom;
@@ -522,11 +451,11 @@ static void dsvg_size(double *left, double *right, double *bottom, double *top,
 }
 
 static void dsvg_raster(unsigned int *raster, int w, int h,
-                       double x, double y,
-                       double width, double height,
-                       double rot,
-                       Rboolean interpolate,
-                       const pGEcontext gc, pDevDesc dd)
+                        double x, double y,
+                        double width, double height,
+                        double rot,
+                        Rboolean interpolate,
+                        const pGEcontext gc, pDevDesc dd)
 {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
   svgd->new_element();
@@ -544,15 +473,19 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
   std::string base64_str = gdtools::raster_to_str(raster_, w, h, width*(25/6), height*(25/6), interpolate);
 
   SVGElement* image = svgd->svg_element("image", true);
-  set_attr(image, "x", format(x));
-  set_attr(image, "y", format(y - height));
-  set_attr(image, "width", format(width));
-  set_attr(image, "height", format(height));
+  set_attr(image, "x", x);
+  set_attr(image, "y", y - height);
+  set_attr(image, "width", width);
+  set_attr(image, "height", height);
   set_attr(image, "id", eltid);
-  set_attr(image, "clip-path", format("url(#%s)", clipid));
+  set_clip(image, clipid);
 
   if (fabs(rot)>0.001) {
-    set_attr(image, "transform", format("rotate(%0.0f,%0.0f,%0.0f)", -1.0 * rot, x, y));
+    std::ostringstream ost;
+    ost.flags(std::ios_base::fixed | std::ios_base::dec);
+    ost.precision(2);
+    ost << "rotate(" << -1.0 * rot << "," << x << "," << y << ")";
+    set_attr(image, "transform", ost.str().c_str());
   }
 
   std::stringstream os;
@@ -572,10 +505,11 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
 
   SVGElement* root = svgd->svg_root();
   set_attr(root, "id", svgd->canvas_id.c_str());
-  set_attr(root, "viewBox", format("0 0 %.2f %.2f", dd->right, dd->bottom));
+  set_attr(root, "viewBox", to_string(0) + " " + to_string(0) + " " +
+    to_string(dd->right) + " " + to_string(dd->bottom));
   if (svgd->setdims) {
-    set_attr(root, "width", format(dd->right));
-    set_attr(root, "height", format(dd->bottom));
+    set_attr(root, "width", dd->right);
+    set_attr(root, "height", dd->bottom);
   }
 
   int bg_fill, fill, col;
@@ -601,8 +535,8 @@ static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
 
 
 pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
-                        double height, int pointsize, bool standalone, bool setdims,
-                        std::string canvas_id, Rcpp::List aliases) {
+                         double height, int pointsize, bool standalone, bool setdims,
+                         std::string canvas_id, Rcpp::List aliases) {
 
   pDevDesc dd = (DevDesc*) calloc(1, sizeof(DevDesc));
   if (dd == NULL)
@@ -676,7 +610,7 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
 
 // [[Rcpp::export]]
 bool DSVG_(std::string file, double width, double height, std::string bg,
-             int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases) {
+           int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases) {
 
   int bg_ = R_GE_str2col(bg.c_str());
 
@@ -790,8 +724,8 @@ std::string compile_css(const std::string& cls_prefix,
 
 // [[Rcpp::export]]
 bool add_attribute(int dn, Rcpp::IntegerVector id,
-                  std::vector< std::string > str,
-                  std::string name){
+                   std::vector< std::string > str,
+                   std::string name){
   int nb_elts = id.size();
   pGEDevDesc dev= GEgetDevice(dn);
 
@@ -861,4 +795,3 @@ bool add_attribute(int dn, Rcpp::IntegerVector id,
   }
   return true;
 }
-

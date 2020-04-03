@@ -1,21 +1,19 @@
 #include "utils.h"
 #include "a_color.h"
 
-const size_t FMT_BUFFER_SIZE = 200;
-char* fmtbuffer = new char[FMT_BUFFER_SIZE];
-const char* format( const char* format, ... ) {
-  memset(fmtbuffer, 0, FMT_BUFFER_SIZE);
-  va_list va;
-  va_start( va, format );
-  vsnprintf(fmtbuffer, FMT_BUFFER_SIZE, format, va);
-  va_end( va );
-  return fmtbuffer;
+std::string to_string( const double& d ) {
+  std::ostringstream os;
+  os.flags(std::ios_base::fixed | std::ios_base::dec);
+  os.precision(2);
+  os << d ;
+  return os.str();
 }
-const char* format( const double d ) {
-  return format("%.2f", d);
-}
-const char* format( const int i ) {
-  return format("%d", i);
+std::string to_string( const int& i ) {
+  std::ostringstream os;
+  os.flags(std::ios_base::fixed | std::ios_base::dec);
+  os.precision(0);
+  os << i ;
+  return os.str();
 }
 
 const char* svg_attribute(const SVGElement* element, const char * name) {
@@ -61,6 +59,15 @@ void prepend_element(SVGElement* child, SVGElement* parent) {
 void set_attr(SVGElement* element, const char* name, const char* value) {
   element->SetAttribute(name, value);
 }
+void set_attr(SVGElement* element, const char* name, const double& value) {
+  element->SetAttribute(name, to_string(value).c_str());
+}
+void set_attr(SVGElement* element, const char* name, const int& value) {
+  element->SetAttribute(name, to_string(value).c_str());
+}
+void set_attr(SVGElement* element, const char* name, const std::string value) {
+  element->SetAttribute(name, value.c_str());
+}
 
 void set_fill(SVGElement* element, const int col) {
   a_color col_(col);
@@ -84,7 +91,7 @@ void set_stroke(SVGElement* element, const double width, const int col, const in
     return;
   }
 
-  set_attr(element, "stroke-width", format(width * 72 / 96));
+  set_attr(element, "stroke-width", width * 72 / 96);
 
   int lty = type;
   double lwd = width;
@@ -135,4 +142,10 @@ void set_stroke(SVGElement* element, const double width, const int col, const in
     set_attr(element, "stroke-linecap", "round");
   break;
   }
+}
+
+void set_clip(SVGElement* element, const char* clipid) {
+  std::ostringstream os;
+  os << "url(#" << clipid << ")";
+  set_attr(element, "clip-path", os.str().c_str());
 }

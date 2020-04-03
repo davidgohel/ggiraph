@@ -2,7 +2,7 @@ Package: ggiraph
 Type: Package
 Title: Make 'ggplot2' Graphics Interactive
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.7.5
+Version: 0.7.5.001
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -20,6 +20,7 @@ Authors@R: c(
 License: GPL-3
 Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
+SystemRequirements: C++11
 Imports:
     grid, ggplot2 (>= 3.2.0),
     htmlwidgets (>= 0.6),
