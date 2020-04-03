@@ -46,7 +46,6 @@ ggiraph <- function(code, ggobj = NULL,
                     selection_type = "multiple",
                     selected_css = NULL,
                     dep_dir = NULL,
-                    xml_reader_options = list(),
                     ...) {
 
   if( !missing(dep_dir) ){
@@ -54,7 +53,7 @@ ggiraph <- function(code, ggobj = NULL,
   }
 
   x <- girafe(code = code, ggobj = ggobj, pointsize = pointsize,
-         width_svg = width_svg, height_svg = height_svg, xml_reader_options = xml_reader_options, ...)
+         width_svg = width_svg, height_svg = height_svg, ...)
   x <- girafe_options(
     x = x,
     opts_tooltip(css = tooltip_extra_css,

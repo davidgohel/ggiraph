@@ -32,10 +32,6 @@
 #' The default values are 6 and 5 inches. This will define the aspect ratio of the
 #' graphic as it will be used to define viewbox attribute of the SVG result.
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
-#' @param xml_reader_options read_xml additional arguments to be used
-#' when parsing the svg result. This feature can be used to parse
-#' huge svg files by using \code{list(options = "HUGE")} but this
-#' is not recommanded.
 #' @param options a list of options for girafe rendering, see
 #' \code{\link{opts_tooltip}}, \code{\link{opts_hover}}, \code{\link{opts_selection}}, ...
 #' @param ... arguments passed on to \code{\link{dsvg}}
@@ -91,7 +87,7 @@
 #' @importFrom uuid UUIDgenerate
 girafe <- function(
   code, ggobj = NULL,  pointsize = 12,
-  width_svg = 6, height_svg = 5, xml_reader_options = list(),
+  width_svg = 6, height_svg = 5,
   options = list(), ...) {
 
   canvas_id <- paste("svg", UUIDgenerate(), sep = "_")
@@ -108,18 +104,15 @@ girafe <- function(
       code
   }, finally = dev.off() )
 
-  xml_reader_options$x <- path
-  data <- do.call(read_xml, xml_reader_options )
-  xml_attr(data, "width") <- NULL
-  xml_attr(data, "height") <- NULL
-  unlink(path)
-
   settings <- merge_options(default_opts(), options)
-  x = list( html = as.character(data), js = NULL,
+  x = list( html = readr::read_file(path),
+            js = NULL,
             uid = canvas_id,
             ratio = width_svg / height_svg,
             settings = settings
             )
+
+  unlink(path)
 
   createWidget(
     name = 'girafe', x = x, package = 'ggiraph',

@@ -28,7 +28,7 @@ Imports:
     htmltools,
     Rcpp (>= 0.12.12), 
     gdtools (>= 0.2.1),
-    purrr, rlang, uuid
+    purrr, rlang, uuid, readr
 LinkingTo: Rcpp, gdtools
 Suggests:
     knitr,

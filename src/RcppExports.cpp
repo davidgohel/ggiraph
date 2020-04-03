@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // DSVG_
-bool DSVG_(std::string file, double width, double height, std::string bg, int pointsize, bool standalone, std::string canvas_id, Rcpp::List aliases);
-RcppExport SEXP _ggiraph_DSVG_(SEXP fileSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP bgSEXP, SEXP pointsizeSEXP, SEXP standaloneSEXP, SEXP canvas_idSEXP, SEXP aliasesSEXP) {
+bool DSVG_(std::string file, double width, double height, std::string bg, int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases);
+RcppExport SEXP _ggiraph_DSVG_(SEXP fileSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP bgSEXP, SEXP pointsizeSEXP, SEXP standaloneSEXP, SEXP setdimsSEXP, SEXP canvas_idSEXP, SEXP aliasesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,9 +17,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::string >::type bg(bgSEXP);
     Rcpp::traits::input_parameter< int >::type pointsize(pointsizeSEXP);
     Rcpp::traits::input_parameter< bool >::type standalone(standaloneSEXP);
+    Rcpp::traits::input_parameter< bool >::type setdims(setdimsSEXP);
     Rcpp::traits::input_parameter< std::string >::type canvas_id(canvas_idSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type aliases(aliasesSEXP);
-    rcpp_result_gen = Rcpp::wrap(DSVG_(file, width, height, bg, pointsize, standalone, canvas_id, aliases));
+    rcpp_result_gen = Rcpp::wrap(DSVG_(file, width, height, bg, pointsize, standalone, setdims, canvas_id, aliases));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -72,7 +73,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ggiraph_DSVG_", (DL_FUNC) &_ggiraph_DSVG_, 8},
+    {"_ggiraph_DSVG_", (DL_FUNC) &_ggiraph_DSVG_, 9},
     {"_ggiraph_set_tracer_on", (DL_FUNC) &_ggiraph_set_tracer_on, 1},
     {"_ggiraph_set_tracer_off", (DL_FUNC) &_ggiraph_set_tracer_off, 1},
     {"_ggiraph_collect_id", (DL_FUNC) &_ggiraph_collect_id, 1},

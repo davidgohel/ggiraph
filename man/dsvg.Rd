@@ -11,6 +11,7 @@ dsvg(
   bg = "white",
   pointsize = 12,
   standalone = TRUE,
+  setdims = TRUE,
   canvas_id = "svg_1",
   fonts = list()
 )
@@ -26,6 +27,8 @@ dsvg(
 
 \item{standalone}{Produce a stand alone svg file? If \code{FALSE}, omits
 xml header and default namespace.}
+
+\item{setdims}{If TRUE (the default), the svg node will have attributes width & height set}
 
 \item{canvas_id}{svg id within HTML page.}
 
