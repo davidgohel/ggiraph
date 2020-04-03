@@ -1,11 +1,14 @@
 {
   "name": "ggiraphjs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "ggiraph object javascript module",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development;cp dist/ggiraphjs-0.2.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.2.0/ggiraphjs.min.js;",
-    "build": "webpack --mode production;cp dist/ggiraphjs-0.2.0.min.js ../../htmlwidgets/lib/ggiraphjs-0.2.0/ggiraphjs.min.js;"
+    "deployjs": "cp dist/ggiraphjs-$npm_package_version.min.js ../../htmlwidgets/lib/ggiraphjs-$npm_package_version/ggiraphjs.min.js",
+    "deploycss": "cp dist/ggiraphjs-$npm_package_version.min.css ../../htmlwidgets/lib/ggiraphjs-$npm_package_version/ggiraphjs.min.css",
+    "deploy": "npm run-script deployjs && npm run-script deploycss",
+    "dev": "webpack --mode development && npm run-script deploy",
+    "build": "webpack --mode production && npm run-script deploy"
   },
   "keywords": [],
   "author": "david.gohel@ardata.fr",
@@ -19,9 +22,12 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^3.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "npm": "^6.4.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "path": "^0.12.7",
     "prop-types": "^15.6.2",
     "webpack": "^4.17.1",

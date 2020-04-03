@@ -8,7 +8,7 @@ dependencies:
     src: "htmlwidgets/lib/d3-lasso-0.0.5"
     script: d3-lasso.min.js
   - name: ggiraphjs
-    version: 0.2.0
-    src: "htmlwidgets/lib/ggiraphjs-0.2.0"
+    version: 0.3.0
+    src: "htmlwidgets/lib/ggiraphjs-0.3.0"
     script: ggiraphjs.min.js
-    stylesheet: styles.css
+    stylesheet: ggiraphjs.min.css
