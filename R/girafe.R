@@ -90,12 +90,18 @@ girafe <- function(
   width_svg = 6, height_svg = 5,
   options = list(), ...) {
 
-  canvas_id <- paste("svg", UUIDgenerate(), sep = "_")
   path = tempfile()
-  dsvg(file = path, pointsize = pointsize, standalone = TRUE,
-       width = width_svg, height = height_svg,
-       canvas_id = canvas_id, ...
-  )
+
+  args <- list(...)
+  args$canvas_id <- args$canvas_id %||% paste("svg", UUIDgenerate(), sep = "_")
+  args$file <- path
+  args$width <- width_svg
+  args$height <- height_svg
+  args$pointsize <- pointsize
+  args$standalone <- TRUE
+  args$setdims <- FALSE
+
+  do.call(dsvg, args)
   tryCatch({
     if( !is.null(ggobj) ){
       stopifnot(inherits(ggobj, "ggplot"))
@@ -107,7 +113,7 @@ girafe <- function(
   settings <- merge_options(default_opts(), options)
   x = list( html = readr::read_file(path),
             js = NULL,
-            uid = canvas_id,
+            uid = args$canvas_id,
             ratio = width_svg / height_svg,
             settings = settings
             )
@@ -200,16 +206,12 @@ merge_options <- function(options, args){
   options
 }
 
-
-
-
-
-
-
 girafe_app_paths <- function(){
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
   list.files(example_dir, full.names = TRUE)
 }
+
+
 
 #' Run shiny examples and see corresponding code
 #'
@@ -232,11 +234,4 @@ run_girafe_example <- function(name = "crimes"){
       display.mode = "showcase")
   else warning("package shiny is required to be able to use the function")
 }
-
-
-
-
-
-
-
 
