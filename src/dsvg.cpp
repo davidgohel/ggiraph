@@ -13,6 +13,7 @@
 #include "a_color.h"
 #include <locale>
 #include <sstream>
+#include <regex>
 
 // SVG device metadata
 class DSVG_dev {
@@ -690,35 +691,9 @@ std::string compile_css(const std::string& cls_prefix,
                         const char * data_attr,
                         const char * data_value,
                         const char * css) {
-  std::stringstream cls_s;
-  cls_s << cls_prefix << cls_suffix << canvas_id << "[" << data_attr << " = \"" << data_value << "\"]" ;
-  std::stringstream css_s;
-
-  // we have to live without regex :(
-  size_t slen = strlen(css) + 1 ;
-  char * buffer = new char[slen];
-  strncpy(buffer, css, slen);
-
-  const char * pattern = "_CLASSNAME_";
-  size_t plen = strlen(pattern);
-
-  char * current = buffer;
-  char * pch = strstr (current, pattern);
-  while (pch != NULL)
-  {
-    // discard pattern chars
-    memset(pch, 0, plen);
-    // copy chars from current pos and real classname
-    css_s << current << cls_s.str();
-    // advance current position
-    current = pch + plen;
-    pch = strstr (current, pattern);
-  }
-  // copy the remainder
-  if (current != NULL) {
-    css_s << current;
-  }
-  return css_s.str();
+  std::string cls = cls_prefix + cls_suffix + canvas_id + "[" + data_attr + " = \"" + data_value + "\"]";
+  std::regex pattern("_CLASSNAME_");
+  return std::regex_replace(css, pattern, cls);
 }
 
 
