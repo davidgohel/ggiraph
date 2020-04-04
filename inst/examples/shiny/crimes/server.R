@@ -15,14 +15,17 @@ shinyServer(function(input, output, session) {
   selected_state <- reactive({
     input$plot_selected
   })
+  output$console <- renderPrint({
+    input$plot_hovered
+  })
 
   output$plot <- renderGirafe({
     x <- girafe(code = print(gg_crime),
                 width_svg = 6, height_svg = 8,
                 options = list(
+                  opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;", reactive = TRUE),
                   opts_selection(
-                    type = "multiple", css = "fill:#FF3333;stroke:black;"),
-                  opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;")
+                    type = "multiple", css = "fill:#FF3333;stroke:black;")
                 ))
     x
   })

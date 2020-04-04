@@ -8,6 +8,8 @@ shinyUI(fluidPage(
            ggiraph::girafeOutput("plot")
     ),
     column(width = 5,
+           h4("Hovering states"),
+           verbatimTextOutput("console"),
            h4("Selected states"),
            tableOutput("datatab")
     )
