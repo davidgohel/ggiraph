@@ -2,7 +2,7 @@ Package: ggiraph
 Type: Package
 Title: Make 'ggplot2' Graphics Interactive
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.7.5.002
+Version: 0.7.5.003
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -29,7 +29,7 @@ Imports:
     htmltools,
     Rcpp (>= 0.12.12), 
     gdtools (>= 0.2.1),
-    purrr, rlang, uuid, readr
+    purrr, rlang, uuid
 LinkingTo: Rcpp, gdtools
 Suggests:
     knitr,

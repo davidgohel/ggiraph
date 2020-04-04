@@ -111,7 +111,7 @@ girafe <- function(
   }, finally = dev.off() )
 
   settings <- merge_options(default_opts(), options)
-  x = list( html = readr::read_file(path),
+  x = list( html = paste0(readLines(path, encoding = "UTF-8"), sep = "\n"),
             js = NULL,
             uid = args$canvas_id,
             ratio = width_svg / height_svg,
