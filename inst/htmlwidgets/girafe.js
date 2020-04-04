@@ -20,21 +20,14 @@ HTMLWidgets.widget({
         ]);
         ggobj.addSvg(x.html, x.js);
 
+        const box = d3.select("#" + ggobj.svgid).property("viewBox").baseVal;
         if (!x.settings.sizing.rescale) {
-          var width_ = d3.select(el).style("width");
-          var height_ = d3.select(el).style("height");
-          ggobj.fixSize(width_, height_);
+          ggobj.fixSize(box.width, box.height);
+          d3.select(el).style("width", null).style("height", null);
         } else if( HTMLWidgets.shinyMode ){
           ggobj.autoScale("100%");
           ggobj.IEFixResize(1, 1/x.ratio);
-          var maxWidth = width;
-          var maxHeight = height;
-          try {
-            const box = d3.select("#" + ggobj.svgid).property("viewBox").baseVal;
-            maxWidth = box.width;
-            maxHeight = box.height;
-          } catch (e) {}
-          ggobj.setSizeLimits(maxWidth+'px', 0, maxHeight+'px', 0);
+          ggobj.setSizeLimits(box.width+'px', 0, box.height+'px', 0);
           ggobj.removeContainerLimits();
         } else {
           ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + "%");
