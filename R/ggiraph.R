@@ -3,8 +3,6 @@
 #' @import grid
 #' @import ggplot2
 #' @importFrom grDevices dev.off
-#' @importFrom xml2 read_xml xml_find_all xml_text xml_ns
-#' @importFrom xml2 xml_remove xml_attr xml_attr<-
 
 #' @title Create a ggiraph object
 #'
