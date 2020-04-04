@@ -2,19 +2,24 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_hover}
 \alias{opts_hover}
+\alias{opts_hover_inv}
 \alias{opts_hover_key}
 \alias{opts_hover_theme}
 \title{Hover effect settings}
 \usage{
-opts_hover(css = NULL)
+opts_hover(css = NULL, reactive = FALSE)
 
-opts_hover_key(css = NULL)
+opts_hover_inv(css = NULL)
 
-opts_hover_theme(css = NULL)
+opts_hover_key(css = NULL, reactive = FALSE)
+
+opts_hover_theme(css = NULL, reactive = FALSE)
 }
 \arguments{
 \item{css}{css to associate with elements when they are hovered.
-It must be a scalar character. It can also be constructed with
+It must be a scalar character. It can also be constructed with}
+
+\item{reactive}{if TRUE, in Shiny context, hovering will set Shiny input values.
 \code{\link{girafe_css}}, to give more control over the css for different element types.}
 }
 \description{
@@ -23,6 +28,8 @@ of graphic elements when the user hovers over them with the cursor (mouse pointe
 Use \code{opts_hover} for interactive geometries in panels,
 \code{opts_hover_key} for interactive scales/guides and
 \code{opts_hover_theme} for interactive theme elements.
+Use \code{opts_hover_inv} for the effect on the rest of the geometries,
+while one is hovered (inverted operation).
 }
 \examples{
 library(ggplot2)

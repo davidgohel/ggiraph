@@ -18,7 +18,7 @@ interactive_polyline_grob <- function(...) {
 #' @export
 drawDetails.interactive_polyline_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.polyline, x[grob_argnames(x = x, grob = grid::polylineGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
     if (is.null(x$id) && is.null(x$id.lengths))
@@ -38,7 +38,7 @@ interactive_lines_grob <- function(...) {
 #' @export
 drawDetails.interactive_lines_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.lines, x[grob_argnames(x = x, grob = grid::linesGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
     if (is.null(x$id) && is.null(x$id.lengths))

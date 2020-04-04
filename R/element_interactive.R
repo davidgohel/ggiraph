@@ -71,10 +71,9 @@ element_interactive <- function(element_func,
 #' @return an interactive label object
 #' @export
 label_interactive <- function(label, ...) {
-  stopifnot(is.character(label), length(label) == 1)
   ip <- get_interactive_attrs(list(...))
   structure(
-    as.character(label),
+    label,
     interactive = ip,
     class = c("interactive_label")
   )
@@ -115,13 +114,12 @@ element_grob.interactive_element_text <- function(element,
 
 #' @export
 element_grob.interactive_element <- function(element, ...) {
-  ipar <- attr(element, "ipar")
-  if (is.null(ipar))
-    ipar <- IPAR_NAMES
-  data_attr <- attr(element, "data_attr")
-  if (is.null(data_attr))
-    data_attr <- "theme-id"
-  ip <- get_interactive_attrs(element, ipar = ipar)
+  dots <- list(...)
+  ipar <- dots$ipar %||% attr(element, "ipar") %||% IPAR_NAMES
+  data_attr <- dots$data_attr %||% attr(element, "data_attr") %||% "theme-id"
+  el_ip <- get_interactive_attrs(element, ipar = ipar)
+  dots_ip <- get_interactive_attrs(dots, ipar = ipar)
+  ip <- modify_list(el_ip, dots_ip)
   gr <- NextMethod()
   add_interactive_attrs(gr, ip, ipar = ipar, data_attr = data_attr)
 }

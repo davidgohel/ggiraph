@@ -17,7 +17,7 @@ interactive_points_grob <- function(...) {
 #' @export
 drawDetails.interactive_points_grob <- function(x, recording) {
   dsvg_tracer_on()
-  do.call(grid.points, x[grob_argnames(x = x, grob = grid::pointsGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   interactive_attr_toxml(x = x, ids = ids)
   invisible()

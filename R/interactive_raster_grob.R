@@ -17,10 +17,8 @@ interactive_raster_grob <- function(...) {
 
 #' @export
 drawDetails.interactive_raster_grob <- function(x, recording) {
-  # ugly fix for beeing able to call grid.raster as argument name is raster and not image
-  names(x)[names(x) %in% "raster"] <- "image"
   dsvg_tracer_on()
-  do.call(grid.raster, x[grob_argnames(x = x, grob = grid::rasterGrob)])
+  NextMethod()
   ids <- dsvg_tracer_off()
   interactive_attr_toxml(x = x, ids = ids)
   invisible()

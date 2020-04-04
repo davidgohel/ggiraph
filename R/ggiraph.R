@@ -3,8 +3,6 @@
 #' @import grid
 #' @import ggplot2
 #' @importFrom grDevices dev.off
-#' @importFrom xml2 read_xml xml_find_all xml_text xml_ns
-#' @importFrom xml2 xml_remove xml_attr xml_attr<-
 
 #' @title Create a ggiraph object
 #'
@@ -46,7 +44,6 @@ ggiraph <- function(code, ggobj = NULL,
                     selection_type = "multiple",
                     selected_css = NULL,
                     dep_dir = NULL,
-                    xml_reader_options = list(),
                     ...) {
 
   if( !missing(dep_dir) ){
@@ -54,7 +51,7 @@ ggiraph <- function(code, ggobj = NULL,
   }
 
   x <- girafe(code = code, ggobj = ggobj, pointsize = pointsize,
-         width_svg = width_svg, height_svg = height_svg, xml_reader_options = xml_reader_options, ...)
+         width_svg = width_svg, height_svg = height_svg, ...)
   x <- girafe_options(
     x = x,
     opts_tooltip(css = tooltip_extra_css,

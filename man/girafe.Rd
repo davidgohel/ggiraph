@@ -10,7 +10,6 @@ girafe(
   pointsize = 12,
   width_svg = 6,
   height_svg = 5,
-  xml_reader_options = list(),
   options = list(),
   ...
 )
@@ -26,11 +25,6 @@ be ignored if this argument is supplied.}
 \item{width_svg, height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
 graphic as it will be used to define viewbox attribute of the SVG result.}
-
-\item{xml_reader_options}{read_xml additional arguments to be used
-when parsing the svg result. This feature can be used to parse
-huge svg files by using \code{list(options = "HUGE")} but this
-is not recommanded.}
 
 \item{options}{a list of options for girafe rendering, see
 \code{\link{opts_tooltip}}, \code{\link{opts_hover}}, \code{\link{opts_selection}}, ...}
