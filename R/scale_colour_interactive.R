@@ -4,8 +4,16 @@
 #' \code{\link[ggplot2]{scale_fill_continuous}},
 #' \code{\link[ggplot2]{scale_colour_grey}},
 #' \code{\link[ggplot2]{scale_fill_grey}},
-#' \code{\link[ggplot2]{scale_colour_hue}} and
-#' \code{\link[ggplot2]{scale_fill_hue}}.
+#' \code{\link[ggplot2]{scale_colour_hue}},
+#' \code{\link[ggplot2]{scale_fill_hue}},
+#' \code{\link[ggplot2]{scale_colour_binned}},
+#' \code{\link[ggplot2]{scale_fill_binned}},
+#' \code{\link[ggplot2]{scale_colour_discrete}},
+#' \code{\link[ggplot2]{scale_fill_discrete}},
+#' \code{\link[ggplot2]{scale_colour_date}},
+#' \code{\link[ggplot2]{scale_fill_date}},
+#' \code{\link[ggplot2]{scale_colour_datetime}} and
+#' \code{\link[ggplot2]{scale_fill_datetime}}.
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
@@ -55,3 +63,59 @@ scale_color_hue_interactive <- scale_colour_hue_interactive
 #' @rdname scale_colour_interactive
 scale_fill_hue_interactive <- function(...)
   scale_interactive(scale_fill_hue, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_colour_binned_interactive <- function(...)
+  scale_interactive(scale_colour_binned, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_color_binned_interactive <- scale_colour_binned_interactive
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_fill_binned_interactive <- function(...)
+  scale_interactive(scale_fill_binned, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_colour_discrete_interactive <- function(...)
+  scale_interactive(scale_colour_discrete, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_color_discrete_interactive <- scale_colour_discrete_interactive
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_fill_discrete_interactive <- function(...)
+  scale_interactive(scale_fill_discrete, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_colour_date_interactive <- function(...)
+  scale_interactive(scale_colour_date, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_color_date_interactive <- scale_colour_date_interactive
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_fill_date_interactive <- function(...)
+  scale_interactive(scale_fill_date, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_colour_datetime_interactive <- function(...)
+  scale_interactive(scale_colour_datetime, ...)
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_color_datetime_interactive <- scale_colour_datetime_interactive
+
+#' @export
+#' @rdname scale_colour_interactive
+scale_fill_datetime_interactive <- function(...)
+  scale_interactive(scale_fill_datetime, ...)

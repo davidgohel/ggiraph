@@ -2,7 +2,8 @@
 #' @description These scales are based on
 #' \code{\link[ggplot2]{scale_shape}},
 #' \code{\link[ggplot2]{scale_shape_continuous}},
-#' \code{\link[ggplot2]{scale_shape_discrete}} and
+#' \code{\link[ggplot2]{scale_shape_discrete}},
+#' \code{\link[ggplot2]{scale_shape_binned}} and
 #' \code{\link[ggplot2]{scale_shape_ordinal}}.
 #' See the documentation for those functions for more details.
 #'
@@ -26,6 +27,11 @@ scale_shape_continuous_interactive <- function(...)
 #' @rdname scale_shape_interactive
 scale_shape_discrete_interactive <- function(...)
   scale_interactive(scale_shape_discrete, ...)
+
+#' @export
+#' @rdname scale_shape_interactive
+scale_shape_binned_interactive <- function(...)
+  scale_interactive(scale_shape_binned, ...)
 
 #' @export
 #' @rdname scale_shape_interactive

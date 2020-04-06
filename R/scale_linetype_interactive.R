@@ -1,8 +1,9 @@
 #' @title Create interactive scales for line patterns
 #' @description These scales are based on
 #' \code{\link[ggplot2]{scale_linetype}},
-#' \code{\link[ggplot2]{scale_linetype_continuous}} and
-#' \code{\link[ggplot2]{scale_linetype_discrete}}.
+#' \code{\link[ggplot2]{scale_linetype_continuous}},
+#' \code{\link[ggplot2]{scale_linetype_discrete}} and
+#' \code{\link[ggplot2]{scale_linetype_binned}}.
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
@@ -25,3 +26,8 @@ scale_linetype_continuous_interactive <- function(...)
 #' @rdname scale_linetype_interactive
 scale_linetype_discrete_interactive <- function(...)
   scale_interactive(scale_linetype_discrete, ...)
+
+#' @export
+#' @rdname scale_linetype_interactive
+scale_linetype_binned_interactive <- function(...)
+  scale_interactive(scale_linetype_binned, ...)

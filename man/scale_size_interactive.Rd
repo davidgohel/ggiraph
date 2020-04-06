@@ -2,17 +2,32 @@
 % Please edit documentation in R/scale_size_interactive.R
 \name{scale_size_interactive}
 \alias{scale_size_interactive}
+\alias{scale_size_area_interactive}
 \alias{scale_size_continuous_interactive}
 \alias{scale_size_discrete_interactive}
+\alias{scale_size_binned_interactive}
+\alias{scale_size_binned_area_interactive}
+\alias{scale_size_date_interactive}
+\alias{scale_size_datetime_interactive}
 \alias{scale_size_ordinal_interactive}
 \alias{scale_radius_interactive}
 \title{Create interactive scales for area or radius}
 \usage{
 scale_size_interactive(...)
 
+scale_size_area_interactive(...)
+
 scale_size_continuous_interactive(...)
 
 scale_size_discrete_interactive(...)
+
+scale_size_binned_interactive(...)
+
+scale_size_binned_area_interactive(...)
+
+scale_size_date_interactive(...)
+
+scale_size_datetime_interactive(...)
 
 scale_size_ordinal_interactive(...)
 
@@ -28,8 +43,13 @@ An interactive scale object.
 \description{
 These scales are based on
 \code{\link[ggplot2]{scale_size}},
+\code{\link[ggplot2]{scale_size_area}},
 \code{\link[ggplot2]{scale_size_continuous}},
 \code{\link[ggplot2]{scale_size_discrete}},
+\code{\link[ggplot2]{scale_size_binned}},
+\code{\link[ggplot2]{scale_size_binned_area}},
+\code{\link[ggplot2]{scale_size_date}},
+\code{\link[ggplot2]{scale_size_datetime}},
 \code{\link[ggplot2]{scale_size_ordinal}} and
 \code{\link[ggplot2]{scale_radius}}.
 See the documentation for those functions for more details.
@@ -42,8 +62,9 @@ the type of the guide used.
 The guides do not accept any interactive parameter directly, they receive them from the scales.
 
 \itemize{
-  \item When guide of type `legend` is used, it will be converted to a
-  \code{\link{guide_legend_interactive}} if it's not already.
+  \item When guide of type `legend` or `bins` is used, it will be converted to a
+  \code{\link{guide_legend_interactive}} or \code{\link{guide_bins_interactive}} respectively,
+  if it's not already.
 
   The length of each scale interactive parameter vector should match the length of the breaks.
   It can also be a named vector, where each name should correspond to the same break name.
@@ -52,8 +73,9 @@ The guides do not accept any interactive parameter directly, they receive them f
 
   The interactive parameters here, give interactivity only to the key elements of the guide.
 
-  \item When guide of type `colourbar` is used, it will be converted to a
-  \code{\link{guide_colourbar_interactive}} if it's not already.
+  \item When guide of type `colourbar` or `coloursteps` is used, it will be converted to a
+  \code{\link{guide_colourbar_interactive}} or \code{\link{guide_coloursteps_interactive}}
+  respectively, if it's not already.
 
   The scale interactive parameters in this case should be scalar values and give interactivity
   to the colorbar only.
@@ -74,6 +96,7 @@ Other interactive scale:
 \code{\link{scale_alpha_interactive}()},
 \code{\link{scale_colour_brewer_interactive}()},
 \code{\link{scale_colour_interactive}},
+\code{\link{scale_colour_steps_interactive}()},
 \code{\link{scale_gradient_interactive}},
 \code{\link{scale_linetype_interactive}()},
 \code{\link{scale_manual_interactive}},
