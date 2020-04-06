@@ -8,3 +8,11 @@ p <- v + geom_contour_interactive(aes(
 ))
 x <- girafe(ggobj = p)
 if (interactive()) print(x)
+
+p <- v + geom_contour_filled_interactive(aes(
+  colour = stat(level),
+  fill = stat(level),
+  tooltip = paste("Level:", stat(level))
+))
+x <- girafe(ggobj = p)
+if (interactive()) print(x)

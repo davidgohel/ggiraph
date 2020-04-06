@@ -33,7 +33,10 @@ GeomInteractiveCrossbar <- ggproto(
                         panel_params,
                         coord,
                         fatten = 2.5,
-                        width = NULL) {
+                        width = NULL,
+                        flipped_aes = FALSE) {
+    data <- flip_data(data, flipped_aes)
+
     middle <-
       transform(
         data,
@@ -111,6 +114,8 @@ GeomInteractiveCrossbar <- ggproto(
       )
       box <- copy_interactive_attrs(data, box, 5)
     }
+    box <- flip_data(box, flipped_aes)
+    middle <- flip_data(middle, flipped_aes)
 
     ggname("geom_interactive_crossbar", gTree(
       children = gList(

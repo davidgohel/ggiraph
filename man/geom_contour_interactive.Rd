@@ -2,16 +2,20 @@
 % Please edit documentation in R/geom_contour_interactive.R
 \name{geom_contour_interactive}
 \alias{geom_contour_interactive}
+\alias{geom_contour_filled_interactive}
 \title{Create interactive 2d contours of a 3d surface}
 \usage{
 geom_contour_interactive(...)
+
+geom_contour_filled_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
 plus any of the \code{\link{interactive_parameters}}.}
 }
 \description{
-The geometry is based on \code{\link[ggplot2]{geom_contour}}.
+These geometries are based on \code{\link[ggplot2]{geom_contour}}
+and \code{\link[ggplot2]{geom_contour_filled}}.
 See the documentation for those functions for more details.
 }
 \section{Details for geom_*_interactive functions}{
@@ -34,6 +38,14 @@ library(ggiraph)
 v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
 p <- v + geom_contour_interactive(aes(
   colour = stat(level),
+  tooltip = paste("Level:", stat(level))
+))
+x <- girafe(ggobj = p)
+if (interactive()) print(x)
+
+p <- v + geom_contour_filled_interactive(aes(
+  colour = stat(level),
+  fill = stat(level),
   tooltip = paste("Level:", stat(level))
 ))
 x <- girafe(ggobj = p)
