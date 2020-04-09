@@ -1,3 +1,4 @@
+#' @importFrom rlang abort
 # Include generic helpers from ggplot2
 #' @include utils_ggplot2.R
 #' @include utils_ggplot2_performance.R

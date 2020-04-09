@@ -17,10 +17,10 @@ opts_hover_theme(css = NULL, reactive = FALSE)
 }
 \arguments{
 \item{css}{css to associate with elements when they are hovered.
-It must be a scalar character. It can also be constructed with}
-
-\item{reactive}{if TRUE, in Shiny context, hovering will set Shiny input values.
+It must be a scalar character. It can also be constructed with
 \code{\link{girafe_css}}, to give more control over the css for different element types.}
+
+\item{reactive}{if TRUE, in Shiny context, hovering will set Shiny input values.}
 }
 \description{
 Allows customization of the rendering

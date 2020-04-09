@@ -15,7 +15,7 @@ GeomInteractiveCol <- ggproto(
     gr <- GeomCol$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_panel = function(self, data, panel_params, coord, width = NULL) {
+  draw_panel = function(self, data, panel_params, coord, width = NULL, flipped_aes = FALSE) {
     GeomInteractiveRect$draw_panel(data, panel_params, coord)
   }
 )

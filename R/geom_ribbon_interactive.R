@@ -28,8 +28,16 @@ GeomInteractiveRibbon <- ggproto(
     gr <- GeomRibbon$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_group = function(data, panel_params, coord, na.rm = FALSE) {
-    if (na.rm) data <- data[stats::complete.cases(data[c("x", "ymin", "ymax")]), ]
+  draw_group = function(data,
+                        panel_params,
+                        coord,
+                        na.rm = FALSE,
+                        flipped_aes = FALSE,
+                        outline.type = "both") {
+    data <- flip_data(data, flipped_aes)
+    if (na.rm)
+      data <-
+        data[stats::complete.cases(data[c("x", "ymin", "ymax")]), ]
     data <- data[order(data$group), ]
 
     # Check that aesthetics are constant
@@ -37,7 +45,7 @@ GeomInteractiveRibbon <- ggproto(
     cols <- c("colour", "fill", "size", "linetype", "alpha", ia)
     aes <- unique(data[cols])
     if (nrow(aes) > 1) {
-      stop("Aesthetics can not vary with a ribbon")
+      abort("Aesthetics can not vary with a ribbon")
     }
     aes <- as.list(aes)
     aes <- force_interactive_aes_to_char(aes)
@@ -49,7 +57,8 @@ GeomInteractiveRibbon <- ggproto(
     # has distinct polygon numbers for sequences of non-NA values and NA
     # for NA values in the original data.  Example: c(NA, 2, 2, 2, NA, NA,
     # 4, 4, 4, NA)
-    missing_pos <- !stats::complete.cases(data[c("x", "ymin", "ymax")])
+    missing_pos <-
+      !stats::complete.cases(data[c("x", "ymin", "ymax")])
     ids <- cumsum(missing_pos) + 1
     ids[missing_pos] <- NA
 
@@ -59,18 +68,53 @@ GeomInteractiveRibbon <- ggproto(
       y = c(data$ymax, rev(data$ymin)),
       id = c(ids, rev(ids))
     ))
+
+    positions <- flip_data(positions, flipped_aes)
+
     munched <- coord_munch(coord, positions, panel_params)
 
-    gr <- ggname("geom_ribbon", polygonGrob(
-      munched$x, munched$y, id = munched$id,
+    g_poly <- polygonGrob(
+      munched$x,
+      munched$y,
+      id = munched$id,
       default.units = "native",
       gp = gpar(
         fill = alpha(aes$fill, aes$alpha),
+        col = if (identical(outline.type, "full"))
+          aes$colour
+        else
+          NA
+      )
+    )
+    g_poly <- add_interactive_attrs(g_poly, aes)
+
+    if (identical(outline.type, "full")) {
+      return(ggname("geom_ribbon", g_poly))
+    }
+
+    munched_lines <- munched
+    # increment the IDs of the lower line
+    munched_lines$id <- switch(
+      outline.type,
+      both = munched_lines$id + rep(c(0, max(ids, na.rm = TRUE)), each = length(ids)),
+      upper = munched_lines$id + rep(c(0, NA), each = length(ids)),
+      lower = munched_lines$id + rep(c(NA, 0), each = length(ids)),
+      abort(glue("invalid outline.type: {outline.type}"))
+    )
+    g_lines <- polylineGrob(
+      munched_lines$x,
+      munched_lines$y,
+      id = munched_lines$id,
+      default.units = "native",
+      gp = gpar(
         col = aes$colour,
         lwd = aes$size * .pt,
-        lty = aes$linetype)
-    ))
-    add_interactive_attrs(gr, aes)
+        lty = aes$linetype
+      )
+    )
+    g_lines <- add_interactive_attrs(g_lines, aes)
+
+    ggname("geom_ribbon", grobTree(g_poly, g_lines))
   }
 )
 

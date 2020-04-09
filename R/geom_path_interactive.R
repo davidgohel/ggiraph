@@ -68,7 +68,7 @@ GeomInteractivePath <- ggproto(
     solid_lines <- all(attr$solid)
     constant <- all(attr$constant)
     if (!solid_lines && !constant) {
-      stop(
+      abort(
         "geom_path_interactive: If you are using dotted or dashed lines",
         ", colour, size and linetype must be constant over the line",
         call. = FALSE
@@ -164,7 +164,7 @@ GeomInteractiveStep <-
 
 # Calculate stairsteps
 stairstep <- function(data, direction = "hv") {
-  direction <- match.arg(direction, c("hv", "vh"))
+  direction <- match.arg(direction, c("hv", "vh", "mid"))
   data <- as.data.frame(data)[order(data$x), ]
   n <- nrow(data)
 
@@ -176,12 +176,27 @@ stairstep <- function(data, direction = "hv") {
   if (direction == "vh") {
     xs <- rep(1:n, each = 2)[-2 * n]
     ys <- c(1, rep(2:n, each = 2))
-  } else {
+  } else if (direction == "hv") {
     ys <- rep(1:n, each = 2)[-2 * n]
     xs <- c(1, rep(2:n, each = 2))
+  } else if (direction == "mid") {
+    xs <- rep(1:(n-1), each = 2)
+    ys <- rep(1:n, each = 2)
+  } else {
+    abort("Parameter `direction` is invalid.")
   }
 
-  new_data_frame(c(list(x = data$x[xs],
-                        y = data$y[ys]),
-                   data[xs, setdiff(names(data), c("x", "y"))]))
+  if (direction == "mid") {
+    gaps <- data$x[-1] - data$x[-n]
+    mid_x <- data$x[-n] + gaps/2 # map the mid-point between adjacent x-values
+    x <- c(data$x[1], mid_x[xs], data$x[n])
+    y <- c(data$y[ys])
+    data_attr <- data[c(1,xs,n), setdiff(names(data), c("x", "y"))]
+  } else {
+    x <- data$x[xs]
+    y <- data$y[ys]
+    data_attr <- data[xs, setdiff(names(data), c("x", "y"))]
+  }
+
+  new_data_frame(c(list(x = x, y = y), data_attr))
 }

@@ -2,8 +2,12 @@
 #' @description These scales are based on
 #' \code{\link[ggplot2]{scale_colour_viridis_d}},
 #' \code{\link[ggplot2]{scale_fill_viridis_d}},
-#' \code{\link[ggplot2]{scale_colour_viridis_c}} and
-#' \code{\link[ggplot2]{scale_fill_viridis_c}}.
+#' \code{\link[ggplot2]{scale_colour_viridis_c}},
+#' \code{\link[ggplot2]{scale_fill_viridis_c}},
+#' \code{\link[ggplot2]{scale_colour_viridis_b}},
+#' \code{\link[ggplot2]{scale_fill_viridis_b}},
+#' \code{\link[ggplot2]{scale_colour_ordinal}} and
+#' \code{\link[ggplot2]{scale_fill_ordinal}}.
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
@@ -42,3 +46,31 @@ scale_color_viridis_c_interactive <- scale_colour_viridis_c_interactive
 #' @rdname scale_viridis_interactive
 scale_fill_viridis_c_interactive <- function(...)
   scale_interactive(scale_fill_viridis_c, ...)
+
+#' @export
+#' @rdname scale_viridis_interactive
+scale_colour_viridis_b_interactive <- function(...)
+  scale_interactive(scale_colour_viridis_b, ...)
+
+#' @export
+#' @rdname scale_viridis_interactive
+scale_color_viridis_b_interactive <- scale_colour_viridis_b_interactive
+
+#' @export
+#' @rdname scale_viridis_interactive
+scale_fill_viridis_b_interactive <- function(...)
+  scale_interactive(scale_fill_viridis_b, ...)
+
+#' @export
+#' @rdname scale_viridis_interactive
+scale_colour_ordinal_interactive <- function(...)
+  scale_interactive(scale_colour_ordinal, ...)
+
+#' @export
+#' @rdname scale_viridis_interactive
+scale_color_ordinal_interactive <- scale_colour_ordinal_interactive
+
+#' @export
+#' @rdname scale_viridis_interactive
+scale_fill_ordinal_interactive <- function(...)
+  scale_interactive(scale_fill_ordinal, ...)

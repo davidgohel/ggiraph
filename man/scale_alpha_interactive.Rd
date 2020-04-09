@@ -46,8 +46,9 @@ the type of the guide used.
 The guides do not accept any interactive parameter directly, they receive them from the scales.
 
 \itemize{
-  \item When guide of type `legend` is used, it will be converted to a
-  \code{\link{guide_legend_interactive}} if it's not already.
+  \item When guide of type `legend` or `bins` is used, it will be converted to a
+  \code{\link{guide_legend_interactive}} or \code{\link{guide_bins_interactive}} respectively,
+  if it's not already.
 
   The length of each scale interactive parameter vector should match the length of the breaks.
   It can also be a named vector, where each name should correspond to the same break name.
@@ -56,8 +57,9 @@ The guides do not accept any interactive parameter directly, they receive them f
 
   The interactive parameters here, give interactivity only to the key elements of the guide.
 
-  \item When guide of type `colourbar` is used, it will be converted to a
-  \code{\link{guide_colourbar_interactive}} if it's not already.
+  \item When guide of type `colourbar` or `coloursteps` is used, it will be converted to a
+  \code{\link{guide_colourbar_interactive}} or \code{\link{guide_coloursteps_interactive}}
+  respectively, if it's not already.
 
   The scale interactive parameters in this case should be scalar values and give interactivity
   to the colorbar only.
@@ -77,6 +79,7 @@ See the element_*_interactive section for more details.
 Other interactive scale: 
 \code{\link{scale_colour_brewer_interactive}()},
 \code{\link{scale_colour_interactive}},
+\code{\link{scale_colour_steps_interactive}()},
 \code{\link{scale_gradient_interactive}},
 \code{\link{scale_linetype_interactive}()},
 \code{\link{scale_manual_interactive}},

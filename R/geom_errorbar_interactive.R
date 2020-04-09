@@ -15,33 +15,36 @@ GeomInteractiveErrorbar <- ggproto(
     gr <- GeomErrorbar$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_panel = function(data, panel_params, coord, width = NULL) {
+  draw_panel = function(data,
+                        panel_params,
+                        coord,
+                        width = NULL,
+                        flipped_aes = FALSE) {
+    data <- flip_data(data, flipped_aes)
+    x <- as.vector(rbind(
+      data$xmin,
+      data$xmax,
+      NA,
+      data$x,
+      data$x,
+      NA,
+      data$xmin,
+      data$xmax
+    ))
+    y <- as.vector(rbind(
+      data$ymax,
+      data$ymax,
+      NA,
+      data$ymax,
+      data$ymin,
+      NA,
+      data$ymin,
+      data$ymin
+    ))
     box <- new_data_frame(
       list(
-        x = as.vector(
-          rbind(
-            data$xmin,
-            data$xmax,
-            NA,
-            data$x,
-            data$x,
-            NA,
-            data$xmin,
-            data$xmax
-          )
-        ),
-        y = as.vector(
-          rbind(
-            data$ymax,
-            data$ymax,
-            NA,
-            data$ymax,
-            data$ymin,
-            NA,
-            data$ymin,
-            data$ymin
-          )
-        ),
+        x = x,
+        y = y,
         colour = rep(data$colour, each = 8),
         alpha = rep(data$alpha, each = 8),
         size = rep(data$size, each = 8),
@@ -51,6 +54,7 @@ GeomInteractiveErrorbar <- ggproto(
       )
     )
     box <- copy_interactive_attrs(data, box, each = 8)
+    box <- flip_data(box, flipped_aes)
     GeomInteractivePath$draw_panel(box, panel_params, coord)
   }
 )

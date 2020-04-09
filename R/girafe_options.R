@@ -96,8 +96,8 @@ opts_tooltip <- function(css = NULL,
 #' while one is hovered (inverted operation).
 #' @param css css to associate with elements when they are hovered.
 #' It must be a scalar character. It can also be constructed with
-#' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
 #' \code{\link{girafe_css}}, to give more control over the css for different element types.
+#' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
 #' @examples
 #' library(ggplot2)
 #'

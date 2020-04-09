@@ -27,14 +27,16 @@ GeomInteractiveSmooth <- ggproto(
     gr <- GeomSmooth$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_group = function(data, panel_params, coord, se = FALSE) {
+  draw_group = function(data, panel_params, coord, se = FALSE, flipped_aes = FALSE) {
     ribbon <- transform(data, colour = NA)
     path <- transform(data, alpha = NA)
 
-    has_ribbon <- se && !is.null(data$ymax) && !is.null(data$ymin)
+    ymin = flipped_names(flipped_aes)$ymin
+    ymax = flipped_names(flipped_aes)$ymax
+    has_ribbon <- se && !is.null(data[[ymax]]) && !is.null(data[[ymin]])
 
     gList(
-      if (has_ribbon) GeomInteractiveRibbon$draw_group(ribbon, panel_params, coord),
+      if (has_ribbon) GeomInteractiveRibbon$draw_group(ribbon, panel_params, coord, flipped_aes = flipped_aes),
       GeomInteractiveLine$draw_panel(path, panel_params, coord)
     )
   }
