@@ -497,6 +497,24 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
     set_attr(image, "xmlns:xlink", "http://www.w3.org/1999/xlink");
 }
 
+static SEXP dsvg_setPattern(SEXP pattern, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void dsvg_releasePattern(SEXP ref, pDevDesc dd) {} 
+
+static SEXP dsvg_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void dsvg_releaseClipPath(SEXP ref, pDevDesc dd) {}
+
+static SEXP dsvg_setMask(SEXP path, SEXP ref, pDevDesc dd) {
+    return R_NilValue;
+}
+
+static void dsvg_releaseMask(SEXP ref, pDevDesc dd) {}
+  
 static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
@@ -569,7 +587,14 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
   dd->metricInfo = dsvg_metric_info;
   dd->cap = NULL;
   dd->raster = dsvg_raster;
-
+#if R_GE_version >= 13
+  dd->setPattern      = dsvg_setPattern;
+  dd->releasePattern  = dsvg_releasePattern;
+  dd->setClipPath     = dsvg_setClipPath;
+  dd->releaseClipPath = dsvg_releaseClipPath;
+  dd->setMask         = dsvg_setMask;
+  dd->releaseMask     = dsvg_releaseMask;
+#endif
   // UTF-8 support
   dd->wantSymbolUTF8 = (Rboolean) 1;
   dd->hasTextUTF8 = (Rboolean) 1;
@@ -601,6 +626,10 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
   dd->displayListOn = FALSE;
   dd->haveTransparency = 2;
   dd->haveTransparentBg = 2;
+
+#if R_GE_version >= 13
+  dd->deviceVersion = R_GE_definitions;
+#endif
 
   dd->deviceSpecific = new DSVG_dev(filename, standalone, setdims,
                                     canvas_id,
