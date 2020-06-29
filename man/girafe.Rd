@@ -80,7 +80,7 @@ always respected when the graph is displayed.
 When a girafe graphic is in a Shiny application,
 graphic will be resized according to the arguments \code{width} and
 \code{height} of the function \code{girafeOutput}. Default
-values are '100\%' and '500px'. These arguments determine the
+values are '100\\%' and '500px'. These arguments determine the
 outer bounding box of the graphic (the HTML element that will
 contain the graphic with an aspect ratio).
 
