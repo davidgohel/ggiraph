@@ -1,15 +1,15 @@
 #' @title Create interactive theme elements
 #'
 #' @description
-#' With these functions the user can add interactivity to various \code{\link[ggplot2]{theme}}
+#' With these functions the user can add interactivity to various [theme][ggplot2::theme]
 #' elements.
 #'
-#' They are based on \code{\link[ggplot2]{element_rect}},
-#' \code{\link[ggplot2]{element_line}} and \code{\link[ggplot2]{element_text}}.
+#' They are based on [element_rect][ggplot2::margin],
+#' [element_line][ggplot2::margin] and [element_text][ggplot2::margin]
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the \code{\link{interactive_parameters}}.
+#' plus any of the [interactive_parameters()].
 #'
 #' @inheritSection interactive_parameters Details for element_*_interactive functions
 #' @examples
