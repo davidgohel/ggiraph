@@ -42,11 +42,10 @@ This function produces SVG files (compliant to the current w3 svg XML standard)
 where elements can be made interactive.
 }
 \examples{
-\donttest{
-dsvg()
+fileout <- tempfile(fileext = ".svg")
+dsvg(file = fileout)
 plot(rnorm(10), main="Simple Example", xlab = "", ylab = "")
 dev.off()
-}
 }
 \seealso{
 \code{\link{Devices}}

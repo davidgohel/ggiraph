@@ -17,11 +17,10 @@
 #'   are aliased to the family returned by \code{\link[gdtools]{match_family}()}.
 #' @seealso \code{\link{Devices}}
 #' @examples
-#' \donttest{
-#' dsvg()
+#' fileout <- tempfile(fileext = ".svg")
+#' dsvg(file = fileout)
 #' plot(rnorm(10), main="Simple Example", xlab = "", ylab = "")
 #' dev.off()
-#' }
 #' @keywords device
 #' @useDynLib ggiraph,.registration = TRUE
 #' @importFrom Rcpp sourceCpp
