@@ -137,6 +137,17 @@ girafe(ggobj = gg_scatter,
   ) )
 ```
 
+Another option can be used to alter aspect of non hovered elements. 
+It is very useful to highlight hovered elements when the density 
+of the elements is high by fixing less opacity on the other elements.
+
+```{r}
+girafe(ggobj = gg_scatter, 
+  options = list(
+    opts_hover_inv(css = "opacity:0.1;"),
+    opts_hover(css = "fill:red;")
+  ) )
+```
 
 ### Detailled control
 
