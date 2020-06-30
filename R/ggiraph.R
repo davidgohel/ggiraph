@@ -9,7 +9,7 @@
 #' @description Create an interactive graphic to be used in a web browser.
 #'
 #' This function is maintained for backward compatibility reasons, user shoud
-#' now use function \code{\link{girafe}} and \code{\link{girafe_options}}.
+#' now use function [girafe()] and \code{\link{girafe_options}}.
 #'
 #' @inheritParams girafe
 #' @param width widget width ratio (0 < width <= 1).

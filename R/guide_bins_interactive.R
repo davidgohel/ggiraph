@@ -9,8 +9,7 @@
 #' @examples
 #' # add interactive bins guide to a ggplot -------
 #' @example examples/scale_viridis_guide_bins_interactive.R
-#' @seealso \code{\link{interactive_parameters}}
-#' @seealso \code{\link{girafe}}
+#' @seealso [interactive_parameters()], [girafe()]
 #' @export
 guide_bins_interactive <- function(...)
   guide_interactive(guide_legend, "interactive_bins", ...)

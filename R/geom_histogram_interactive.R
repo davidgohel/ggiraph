@@ -10,12 +10,12 @@
 #' to associate a single tooltip to a set of bins.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the \code{\link{interactive_parameters}}.
+#' plus any of the [interactive_parameters()].
 #' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add interactive histogram -------
 #' @example examples/geom_histogram_interactive.R
-#' @seealso \code{\link{girafe}}
+#' @seealso [girafe()]
 #' @export
 geom_histogram_interactive <- function(...)
   layer_interactive(geom_histogram, ...)

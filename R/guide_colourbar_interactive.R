@@ -9,8 +9,7 @@
 #' @examples
 #' # add interactive colourbar guide to a ggplot -------
 #' @example examples/scale_gradient_guide_colourbar_interactive.R
-#' @seealso \code{\link{interactive_parameters}}
-#' @seealso \code{\link{girafe}}
+#' @seealso [interactive_parameters()], [girafe()]
 #' @export
 guide_colourbar_interactive <- function(...)
   guide_interactive(guide_colourbar, "interactive_colourbar", ...)

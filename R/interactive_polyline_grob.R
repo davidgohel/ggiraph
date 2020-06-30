@@ -6,10 +6,10 @@
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the \code{\link{interactive_parameters}}.
+#' plus any of the [interactive_parameters()].
 #' @return An interactive grob object.
 #' @inheritSection interactive_parameters Details for interactive_*_grob functions
-#' @seealso \code{\link{girafe}}
+#' @seealso [girafe()]
 #' @export
 interactive_polyline_grob <- function(...) {
   grob_interactive(grid::polylineGrob, ...)

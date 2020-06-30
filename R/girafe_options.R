@@ -1,5 +1,5 @@
 #' @title Tooltip settings
-#' @description Settings to be used with \code{\link{girafe}}
+#' @description Settings to be used with [girafe()]
 #' for tooltip customisation.
 #' @param css extra css (added to \code{position: absolute;pointer-events: none;})
 #' used to customize tooltip area.
@@ -377,7 +377,7 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 
 #' @title Set girafe options
 #' @description Defines the animation options related to
-#' a \code{\link{girafe}} object.
+#' a [girafe()] object.
 #' @param x girafe object.
 #' @param ... set of options defined by calls to \code{opts_*} functions or
 #' to sizingPolicy from htmlwidgets (this won't have any effect within a
@@ -405,7 +405,7 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #'   print(x)
 #' }
 #' @export
-#' @seealso \code{\link{girafe}}
+#' @seealso [girafe()]
 #' @family girafe animation options
 girafe_options <- function(x, ...){
   stopifnot(inherits(x, "girafe"))

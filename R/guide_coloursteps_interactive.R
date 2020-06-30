@@ -9,8 +9,7 @@
 #' @examples
 #' # add interactive coloursteps guide to a ggplot -------
 #' @example examples/scale_viridis_guide_coloursteps_interactive.R
-#' @seealso \code{\link{interactive_parameters}}
-#' @seealso \code{\link{girafe}}
+#' @seealso [interactive_parameters()], [girafe()]
 #' @export
 guide_coloursteps_interactive <- function(...)
   guide_interactive(guide_coloursteps, "interactive_coloursteps", ...)

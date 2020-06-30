@@ -15,7 +15,7 @@
 #' @examples
 #' # add interactive theme elements -------
 #' @example examples/element_interactive.R
-#' @seealso \code{\link{girafe}}
+#' @seealso [girafe()]
 #' @name element_interactive
 #' @aliases NULL
 NULL
@@ -67,7 +67,7 @@ element_interactive <- function(element_func,
 #' \code{\link{element_text_interactive}} or via an interactive guide.
 #'
 #' @param label The text for the label (scalar character)
-#' @param ... any of the \code{\link{interactive_parameters}}.
+#' @param ... any of the [interactive_parameters()].
 #' @return an interactive label object
 #' @export
 label_interactive <- function(label, ...) {

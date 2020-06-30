@@ -1,17 +1,16 @@
 #' @title Create interactive reference lines
 #'
 #' @description
-#' These geometries are based on \code{\link[ggplot2]{geom_abline}},
-#' \code{\link[ggplot2]{geom_hline}} and \code{\link[ggplot2]{geom_vline}}.
-#' See the documentation for those functions for more details.
+#' These geometries are based on [geom_abline][ggplot2::geom_abline],
+#' [geom_hline][ggplot2::geom_abline] and [geom_vline][ggplot2::geom_abline].
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the \code{\link{interactive_parameters}}.
+#' plus any of the [interactive_parameters()].
 #' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
 #' # add diagonal interactive reference lines to a ggplot -------
 #' @example examples/geom_abline_interactive.R
-#' @seealso \code{\link{girafe}}
+#' @seealso [girafe()]
 #' @export
 geom_abline_interactive <- function(...)
   layer_interactive(geom_abline, ...)

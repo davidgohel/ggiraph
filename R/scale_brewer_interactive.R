@@ -1,18 +1,18 @@
 #' @title Create interactive colorbrewer scales
 #' @description These scales are based on
-#' \code{\link[ggplot2]{scale_colour_brewer}},
-#' \code{\link[ggplot2]{scale_fill_brewer}},
-#' \code{\link[ggplot2]{scale_colour_distiller}},
-#' \code{\link[ggplot2]{scale_fill_distiller}},
-#' \code{\link[ggplot2]{scale_colour_fermenter}} and
-#' \code{\link[ggplot2]{scale_fill_fermenter}}.
+#' [scale_colour_brewer][ggplot2::scale_colour_brewer],
+#' [scale_fill_brewer][ggplot2::scale_colour_brewer],
+#' [scale_colour_distiller][ggplot2::scale_colour_brewer],
+#' [scale_fill_distiller][ggplot2::scale_colour_brewer],
+#' [scale_colour_fermenter][ggplot2::scale_colour_brewer],
+#' [scale_fill_fermenter][ggplot2::scale_colour_brewer].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the \code{\link{interactive_parameters}}.
+#' plus any of the [interactive_parameters()].
 #' @return An interactive scale object.
 #' @inheritSection interactive_parameters Details for scale_*_interactive and guide_*_interactive functions
-#' @seealso \code{\link{girafe}}
+#' @seealso [girafe()]
 #' @export
 #' @name scale_colour_brewer_interactive
 #' @family interactive scale

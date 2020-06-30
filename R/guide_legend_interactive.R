@@ -12,8 +12,7 @@
 #' @examples
 #' # add interactive continuous legend guide to a ggplot -------
 #' @example examples/scale_viridis_guide_legend_continuous_interactive.R
-#' @seealso \code{\link{interactive_parameters}}
-#' @seealso \code{\link{girafe}}
+#' @seealso [interactive_parameters()], [girafe()]
 #' @export
 guide_legend_interactive <- function(...)
   guide_interactive(guide_legend, "interactive_legend", ...)

@@ -8,7 +8,7 @@
 #' Use \code{geom_zzz_interactive} to create interactive graphical elements.
 #'
 #' Difference from original functions is that some extra aesthetics are understood:
-#' the \code{\link{interactive_parameters}}.
+#' the [interactive_parameters()].
 #'
 #' Tooltips can be displayed when mouse is over graphical elements.
 #'
@@ -151,7 +151,7 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 #' @description Makes a reactive version of girafe
 #' object for use in Shiny.
 #'
-#' @param expr An expression that returns a \code{\link{girafe}} object.
+#' @param expr An expression that returns a [girafe()] object.
 #' @param env The environment in which to evaluate expr.
 #' @param quoted Is \code{expr} a quoted expression
 #' @export
