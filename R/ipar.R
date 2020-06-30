@@ -30,8 +30,8 @@
 #'   \item As aesthetics with the mapping argument (via [aes()]).
 #'   In this way they can be mapped to data columns and apply to a set of geometries.
 #'
-#'   \item As plain arguments into the geom_*_interactive function (see
-#'   [layer()]). In this way they can be set to a scalar value.
+#'   \item As plain arguments into the geom_*_interactive function.
+#'   In this way they can be set to a scalar value.
 #' }
 #'
 #' @section Details for annotate_*_interactive functions:

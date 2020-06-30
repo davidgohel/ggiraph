@@ -44,6 +44,7 @@ It extends ggplot2 with:
 * interactive `geom` functions: `geom_point_interactive()`, `geom_col_interactive`, etc.
 * interactive `scale` functions: `scale_color_continuous_interactive()`, `scale_fill_manual_interactive()`, etc.
 * interactive `guide` functions: `guide_colorbar_interactive()`, `guide_colourbar_interactive()`, `guide_legend_interactive()`.
+* interactive `theme` elements: `element_line_interactive()`, `element_rect_interactive()`, `element_text_interactive()`, `label_interactive`.
 
 These understand three aesthetics to let you add interactivity:
 

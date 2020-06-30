@@ -10,7 +10,7 @@
 #' @examples
 #' # add interactive annotation to a ggplot -------
 #' @example examples/annotate_interactive.R
-#' @seealso [girafe()]
+#' @seealso [girafe()], [interactive_parameters], [annotation_raster_interactive()]
 #' @export
 #' @include utils.R
 annotate_interactive <- function(...)
