@@ -1,7 +1,7 @@
 #' @title Create interactive rectangle grob
 #'
 #' @description
-#' The grob is based on \code{\link[grid]{rectGrob}}.
+#' The grob is based on [rectGrob()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

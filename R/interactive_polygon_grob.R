@@ -1,7 +1,7 @@
 #' @title Create interactive polygon grob
 #'
 #' @description
-#' The grob is based on \code{\link[grid]{polygonGrob}}.
+#' The grob is based on [polygonGrob()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

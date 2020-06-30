@@ -1,8 +1,8 @@
 #' @title Create interactive observations connections
 #'
 #' @description
-#' These geometries are based on \code{\link[ggplot2]{geom_path}},
-#' \code{\link[ggplot2]{geom_line}} and \code{\link[ggplot2]{geom_step}}.
+#' These geometries are based on [geom_path()],
+#' [geom_line()] and [geom_step()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

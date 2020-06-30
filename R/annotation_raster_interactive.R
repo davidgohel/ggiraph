@@ -1,7 +1,7 @@
 #' @title Create interactive raster annotations
 #'
 #' @description
-#' The layer is based on \code{\link[ggplot2]{annotation_raster}}.
+#' The layer is based on [annotation_raster()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

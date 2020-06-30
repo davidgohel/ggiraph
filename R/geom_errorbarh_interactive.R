@@ -1,7 +1,7 @@
 #' Create interactive horizontal error bars
 #'
 #' @description
-#' This geometry is based on \code{\link[ggplot2]{geom_errorbarh}}.
+#' This geometry is based on [geom_errorbarh()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

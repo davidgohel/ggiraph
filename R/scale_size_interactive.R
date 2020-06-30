@@ -1,15 +1,15 @@
 #' @title Create interactive scales for area or radius
 #' @description These scales are based on
-#' [scale_size][ggplot2::scale_size],
-#' [scale_size_area][ggplot2::scale_size],
-#' [scale_size_continuous][ggplot2::scale_size],
-#' [scale_size_discrete][ggplot2::scale_size],
-#' [scale_size_binned][ggplot2::scale_size],
-#' [scale_size_binned_area][ggplot2::scale_size],
-#' [scale_size_date][ggplot2::scale_size],
-#' [scale_size_datetime][ggplot2::scale_size],
-#' [scale_size_ordinal][ggplot2::scale_size] and
-#' [scale_radius][ggplot2::scale_size].
+#' [scale_size()],
+#' [scale_size_area()],
+#' [scale_size_continuous()],
+#' [scale_size_discrete()],
+#' [scale_size_binned()],
+#' [scale_size_binned_area()],
+#' [scale_size_date()],
+#' [scale_size_datetime()],
+#' [scale_size_ordinal()] and
+#' [scale_radius()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

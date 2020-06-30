@@ -1,6 +1,6 @@
 #' @title Create interactive colorsteps guide
 #' @description
-#' The guide is based on \code{\link[ggplot2]{guide_coloursteps}}.
+#' The guide is based on [guide_coloursteps()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function.

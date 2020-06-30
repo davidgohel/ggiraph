@@ -1,7 +1,7 @@
 #' @title Create interactive polygons
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_polygon}}.
+#' The geometry is based on [geom_polygon()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

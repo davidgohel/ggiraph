@@ -1,19 +1,19 @@
 #' @title Create interactive colour scales
 #' @description These scales are based on
-#' [scale_colour_continuous][ggplot2::scale_colour_continuous],
-#' [scale_fill_continuous][ggplot2::scale_colour_continuous],
-#' [scale_colour_grey][ggplot2::scale_colour_grey],
-#' [scale_fill_grey][ggplot2::scale_colour_grey],
-#' [scale_colour_hue][ggplot2::scale_colour_hue],
-#' [scale_fill_hue][ggplot2::scale_colour_hue],
-#' [scale_colour_binned][ggplot2::scale_colour_continuous],
-#' [scale_fill_binned][ggplot2::scale_colour_continuous],
-#' [scale_colour_discrete][ggplot2::scale_colour_discrete],
-#' [scale_fill_discrete][ggplot2::scale_colour_discrete],
-#' [scale_colour_date][ggplot2::scale_colour_gradient],
-#' [scale_fill_date][ggplot2::scale_colour_gradient],
-#' [scale_colour_datetime][ggplot2::scale_colour_gradient] and
-#' [scale_fill_datetime][ggplot2::scale_colour_gradient].
+#' [scale_colour_continuous()],
+#' [scale_fill_continuous()],
+#' [scale_colour_grey()],
+#' [scale_fill_grey()],
+#' [scale_colour_hue()],
+#' [scale_fill_hue()],
+#' [scale_colour_binned()],
+#' [scale_fill_binned()],
+#' [scale_colour_discrete()],
+#' [scale_fill_discrete()],
+#' [scale_colour_date()],
+#' [scale_fill_date()],
+#' [scale_colour_datetime()] and
+#' [scale_fill_datetime()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

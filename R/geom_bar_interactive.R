@@ -1,8 +1,8 @@
 #' @title Create interactive bars
 #'
 #' @description
-#' The geometries are based on [geom_bar][ggplot2::geom_bar]
-#' and [geom_col][ggplot2::geom_bar].
+#' The geometries are based on [geom_bar()]
+#' and [geom_col()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

@@ -1,7 +1,7 @@
 #' @title Create interactive path grob
 #'
 #' @description
-#' The grob is based on \code{\link[grid]{pathGrob}}.
+#' The grob is based on [pathGrob()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

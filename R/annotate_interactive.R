@@ -1,7 +1,7 @@
 #' @title Create interactive annotations
 #'
 #' @description
-#' The layer is based on \code{\link[ggplot2]{annotate}}.
+#' The layer is based on [annotate()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

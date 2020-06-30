@@ -1,7 +1,7 @@
 #' @title Create interactive line segments
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_segment}}.
+#' The geometry is based on [geom_segment()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

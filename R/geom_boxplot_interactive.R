@@ -1,7 +1,7 @@
 #' @title Create interactive boxplot
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_boxplot}}.
+#' The geometry is based on [geom_boxplot()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

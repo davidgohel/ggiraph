@@ -1,11 +1,11 @@
 #' @title Create interactive gradient colour scales
 #' @description These scales are based on
-#' [scale_colour_gradient][ggplot2::scale_colour_gradient],
-#' [scale_fill_gradient][ggplot2::scale_colour_gradient],
-#' [scale_colour_gradient2][ggplot2::scale_colour_gradient],
-#' [scale_fill_gradient2][ggplot2::scale_colour_gradient],
-#' [scale_colour_gradientn][ggplot2::scale_colour_gradient] and
-#' [scale_fill_gradientn][ggplot2::scale_colour_gradient].
+#' [scale_colour_gradient()],
+#' [scale_fill_gradient()],
+#' [scale_colour_gradient2()],
+#' [scale_fill_gradient2()],
+#' [scale_colour_gradientn()] and
+#' [scale_fill_gradientn()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

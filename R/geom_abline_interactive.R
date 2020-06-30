@@ -1,8 +1,8 @@
 #' @title Create interactive reference lines
 #'
 #' @description
-#' These geometries are based on [geom_abline][ggplot2::geom_abline],
-#' [geom_hline][ggplot2::geom_abline] and [geom_vline][ggplot2::geom_abline].
+#' These geometries are based on [geom_abline()],
+#' [geom_hline()] and [geom_vline()].
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters()].

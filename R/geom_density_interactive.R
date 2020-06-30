@@ -1,7 +1,7 @@
 #' @title Create interactive smoothed density estimates
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_density}}.
+#' The geometry is based on [geom_density()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

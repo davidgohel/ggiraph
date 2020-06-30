@@ -1,7 +1,7 @@
 #' @title Create interactive raster grob
 #'
 #' @description
-#' The grob is based on \code{\link[grid]{rasterGrob}}.
+#' The grob is based on [rasterGrob()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

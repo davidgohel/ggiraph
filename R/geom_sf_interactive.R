@@ -1,8 +1,7 @@
 #' @title Create interactive sf objects
 #'
 #' @description
-#' These geometries are based on \code{\link[ggplot2]{geom_sf}},
-#' \code{\link[ggplot2]{geom_sf_label}} and \code{\link[ggplot2]{geom_sf_text}}.
+#' These geometries are based on [geom_sf()], [geom_sf_label()] and [geom_sf_text()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

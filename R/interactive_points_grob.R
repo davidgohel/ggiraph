@@ -1,7 +1,7 @@
 #' @title Create interactive points grob
 #'
 #' @description
-#' The grob is based on \code{\link[grid]{pointsGrob}}.
+#' The grob is based on [pointsGrob()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

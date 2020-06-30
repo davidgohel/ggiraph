@@ -1,7 +1,7 @@
 #' @title Create interactive smoothed conditional means
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_smooth}}.
+#' The geometry is based on [geom_smooth()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

@@ -1,7 +1,7 @@
 #' @title Create interactive contours of a 2d density estimate
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_density_2d}}.
+#' The geometry is based on [geom_density_2d()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

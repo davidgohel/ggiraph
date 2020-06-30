@@ -1,8 +1,7 @@
 #' @title Create interactive ribbons and area plots
 #'
 #' @description
-#' The geometries are based on \code{\link[ggplot2]{geom_ribbon}}
-#' and \code{\link[ggplot2]{geom_area}}.
+#' The geometries are based on [geom_ribbon()] and [geom_area()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

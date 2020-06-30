@@ -1,8 +1,8 @@
 #' @title Create interactive 2d contours of a 3d surface
 #'
 #' @description
-#' These geometries are based on \code{\link[ggplot2]{geom_contour}}
-#' and \code{\link[ggplot2]{geom_contour_filled}}.
+#' These geometries are based on [geom_contour()]
+#' and [geom_contour_filled()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

@@ -1,7 +1,7 @@
 #' @title Create interactive points
 #'
 #' @description
-#' The geometry is based on \code{\link[ggplot2]{geom_point}}.
+#' The geometry is based on [geom_point()].
 #' See the documentation for those functions for more details.
 #'
 #' @note

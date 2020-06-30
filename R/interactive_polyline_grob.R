@@ -1,8 +1,7 @@
 #' @title Create interactive polyline grob
 #'
 #' @description
-#' These grobs are based on \code{\link[grid]{polylineGrob}} and
-#' \code{\link[grid]{linesGrob}}.
+#' These grobs are based on [polylineGrob()] and [linesGrob()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
