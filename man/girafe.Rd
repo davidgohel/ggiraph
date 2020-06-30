@@ -40,7 +40,7 @@ to be used in a web browser. The function should replace function
 Use \code{geom_zzz_interactive} to create interactive graphical elements.
 
 Difference from original functions is that some extra aesthetics are understood:
-the \code{\link{interactive_parameters}}.
+the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 
 Tooltips can be displayed when mouse is over graphical elements.
 

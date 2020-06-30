@@ -23,19 +23,19 @@ scale_alpha_datetime_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \value{
 An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_alpha}},
-\code{\link[ggplot2]{scale_alpha_continuous}},
-\code{\link[ggplot2]{scale_alpha_discrete}},
-\code{\link[ggplot2]{scale_alpha_ordinal}},
-\code{\link[ggplot2]{scale_alpha_date}} and
-\code{\link[ggplot2]{scale_alpha_datetime}}.
+\link[ggplot2:scale_alpha]{scale_alpha},
+\link[ggplot2:scale_alpha]{scale_alpha_continuous},
+\link[ggplot2:scale_alpha]{scale_alpha_discrete},
+\link[ggplot2:scale_alpha]{scale_alpha_ordinal},
+\link[ggplot2:scale_alpha]{scale_alpha_date},
+\link[ggplot2:scale_alpha]{scale_alpha_datetime}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{
@@ -74,7 +74,7 @@ See the element_*_interactive section for more details.
 }
 
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 
 Other interactive scale: 
 \code{\link{scale_colour_brewer_interactive}()},

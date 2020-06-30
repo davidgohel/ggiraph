@@ -8,7 +8,7 @@ geom_errorbarh_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
 This geometry is based on \code{\link[ggplot2]{geom_errorbarh}}.
@@ -52,5 +52,5 @@ x <- girafe(ggobj = g)
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

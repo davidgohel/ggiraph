@@ -8,7 +8,7 @@ annotate_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
 The layer is based on \code{\link[ggplot2]{annotate}}.
@@ -36,5 +36,5 @@ x <- girafe(ggobj = gg, width_svg = 5, height_svg = 4)
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

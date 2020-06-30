@@ -11,7 +11,7 @@ geom_contour_filled_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_contour}}
@@ -54,7 +54,5 @@ if (packageVersion("grid") >= "3.6") {
 }
 }
 \seealso{
-\code{\link{girafe}}
-
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

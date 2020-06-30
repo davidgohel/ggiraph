@@ -8,7 +8,7 @@ geom_quantile_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
 The geometry is based on \code{\link[ggplot2]{geom_quantile}}.
@@ -50,7 +50,5 @@ if (requireNamespace("quantreg", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link{girafe}}
-
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

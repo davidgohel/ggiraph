@@ -35,7 +35,7 @@ scale_radius_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \value{
 An interactive scale object.
@@ -90,7 +90,7 @@ See the element_*_interactive section for more details.
 }
 
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 
 Other interactive scale: 
 \code{\link{scale_alpha_interactive}()},

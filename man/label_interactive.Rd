@@ -9,7 +9,7 @@ label_interactive(label, ...)
 \arguments{
 \item{label}{The text for the label (scalar character)}
 
-\item{...}{any of the \code{\link{interactive_parameters}}.}
+\item{...}{any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \value{
 an interactive label object

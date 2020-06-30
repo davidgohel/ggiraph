@@ -41,7 +41,7 @@ transition associated with tooltip end of display.}
 \item{zindex}{tooltip css z-index, default to 999.}
 }
 \description{
-Settings to be used with \code{\link{girafe}}
+Settings to be used with \code{\link[=girafe]{girafe()}}
 for tooltip customisation.
 }
 \examples{

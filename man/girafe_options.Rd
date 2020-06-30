@@ -15,7 +15,7 @@ shiny context).}
 }
 \description{
 Defines the animation options related to
-a \code{\link{girafe}} object.
+a \code{\link[=girafe]{girafe()}} object.
 }
 \examples{
 library(ggplot2)
@@ -41,7 +41,7 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 
 Other girafe animation options: 
 \code{\link{opts_hover}()},

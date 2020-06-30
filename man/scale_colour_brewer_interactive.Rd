@@ -32,19 +32,19 @@ scale_fill_fermenter_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \value{
 An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_colour_brewer}},
-\code{\link[ggplot2]{scale_fill_brewer}},
-\code{\link[ggplot2]{scale_colour_distiller}},
-\code{\link[ggplot2]{scale_fill_distiller}},
-\code{\link[ggplot2]{scale_colour_fermenter}} and
-\code{\link[ggplot2]{scale_fill_fermenter}}.
+\link[ggplot2:scale_brewer]{scale_colour_brewer},
+\link[ggplot2:scale_brewer]{scale_fill_brewer},
+\link[ggplot2:scale_brewer]{scale_colour_distiller},
+\link[ggplot2:scale_brewer]{scale_fill_distiller},
+\link[ggplot2:scale_brewer]{scale_colour_fermenter},
+\link[ggplot2:scale_brewer]{scale_fill_fermenter}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{
@@ -83,7 +83,7 @@ See the element_*_interactive section for more details.
 }
 
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 
 Other interactive scale: 
 \code{\link{scale_alpha_interactive}()},

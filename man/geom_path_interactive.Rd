@@ -14,7 +14,7 @@ geom_step_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_path}},
@@ -126,5 +126,5 @@ if( interactive() ) print(x)
 
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

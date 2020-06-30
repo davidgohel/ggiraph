@@ -103,5 +103,5 @@ x <- girafe(ggobj = gg_point)
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

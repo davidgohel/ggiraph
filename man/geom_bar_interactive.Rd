@@ -12,11 +12,11 @@ geom_col_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
-The geometries are based on \code{\link[ggplot2]{geom_bar}}
-and \code{\link[ggplot2]{geom_col}}.
+The geometries are based on \link[ggplot2:geom_bar]{geom_bar}
+and \link[ggplot2:geom_bar]{geom_col}.
 See the documentation for those functions for more details.
 }
 \section{Details for geom_*_interactive functions}{
@@ -70,5 +70,5 @@ x <- girafe(ggobj = p)
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

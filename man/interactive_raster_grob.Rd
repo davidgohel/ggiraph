@@ -8,7 +8,7 @@ interactive_raster_grob(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \value{
 An interactive grob object.
@@ -24,7 +24,5 @@ and they can be scalar values or vectors depending on params on base function.
 }
 
 \seealso{
-\code{\link{interactive_parameters}}
-
-\code{\link{girafe}}
+\code{\link[=interactive_parameters]{interactive_parameters()}}, \code{\link[=girafe]{girafe()}}
 }

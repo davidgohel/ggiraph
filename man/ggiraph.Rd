@@ -71,7 +71,7 @@ the current path for temporary files is used.}
 Create an interactive graphic to be used in a web browser.
 
 This function is maintained for backward compatibility reasons, user shoud
-now use function \code{\link{girafe}} and \code{\link{girafe_options}}.
+now use function \code{\link[=girafe]{girafe()}} and \code{\link{girafe_options}}.
 }
 \examples{
 # ggiraph simple example -------

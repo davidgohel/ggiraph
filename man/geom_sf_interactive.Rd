@@ -14,7 +14,7 @@ geom_sf_text_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
 These geometries are based on \code{\link[ggplot2]{geom_sf}},
@@ -77,5 +77,5 @@ if (requireNamespace("sf",
 }
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }

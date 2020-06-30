@@ -15,12 +15,11 @@ geom_vline_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link{interactive_parameters}}.}
+plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
-These geometries are based on \code{\link[ggplot2]{geom_abline}},
-\code{\link[ggplot2]{geom_hline}} and \code{\link[ggplot2]{geom_vline}}.
-See the documentation for those functions for more details.
+These geometries are based on \link[ggplot2:geom_abline]{geom_abline},
+\link[ggplot2:geom_abline]{geom_hline} and \link[ggplot2:geom_abline]{geom_vline}.
 }
 \section{Details for geom_*_interactive functions}{
 
@@ -128,9 +127,9 @@ x <- girafe_options(x = x,
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 
-\code{\link{girafe}}
+\code{\link[=girafe]{girafe()}}
 }
