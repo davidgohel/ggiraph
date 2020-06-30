@@ -13,7 +13,7 @@ guide_legend_interactive(...)
 An interactive guide object.
 }
 \description{
-The guide is based on \code{\link[ggplot2]{guide_legend}}.
+The guide is based on \code{\link[=guide_legend]{guide_legend()}}.
 See the documentation for that function for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{

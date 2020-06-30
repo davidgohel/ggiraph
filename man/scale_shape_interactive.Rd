@@ -27,11 +27,11 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_shape}},
-\code{\link[ggplot2]{scale_shape_continuous}},
-\code{\link[ggplot2]{scale_shape_discrete}},
-\code{\link[ggplot2]{scale_shape_binned}} and
-\code{\link[ggplot2]{scale_shape_ordinal}}.
+\code{\link[=scale_shape]{scale_shape()}},
+\code{\link[=scale_shape_continuous]{scale_shape_continuous()}},
+\code{\link[=scale_shape_discrete]{scale_shape_discrete()}},
+\code{\link[=scale_shape_binned]{scale_shape_binned()}} and
+\code{\link[=scale_shape_ordinal]{scale_shape_ordinal()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{

@@ -11,7 +11,7 @@ annotate_interactive(...)
 plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
-The layer is based on \code{\link[ggplot2]{annotate}}.
+The layer is based on \code{\link[=annotate]{annotate()}}.
 See the documentation for that function for more details.
 }
 \section{Details for annotate_*_interactive functions}{

@@ -14,7 +14,7 @@ plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 An interactive grob object.
 }
 \description{
-The grob is based on \code{\link[grid]{polygonGrob}}.
+The grob is based on \code{\link[=polygonGrob]{polygonGrob()}}.
 See the documentation for that function for more details.
 }
 \section{Details for interactive_*_grob functions}{

@@ -32,11 +32,11 @@ a special set of parameters to these functions.
 
 The interactive parameters can be supplied with two ways:
 \itemize{
-\item As aesthetics with the mapping argument (via \link[ggplot2:aes]{aes}).
+\item As aesthetics with the mapping argument (via \code{\link[=aes]{aes()}}).
 In this way they can be mapped to data columns and apply to a set of geometries.
 
 \item As plain arguments into the geom_*_interactive function (see
-\link[ggplot2:layer]{layer}). In this way they can be set to a scalar value.
+\code{\link[=layer]{layer()}}). In this way they can be set to a scalar value.
 }
 }
 
@@ -87,7 +87,7 @@ The interactive parameters can be supplied as arguments in the relevant function
 and they should be scalar values.
 
 For theme text elements (\code{\link[=element_text_interactive]{element_text_interactive()}}), the interactive parameters
-can also be supplied while setting a label value, via the \link[ggplot2:labs]{labs()} family
+can also be supplied while setting a label value, via the \code{\link[=labs]{labs()}} family
 of functions or when setting a scale/guide title or key label.
 Instead of setting a character value for the element, function
 \code{\link[=label_interactive]{label_interactive()}} can be used to define interactive parameters

@@ -76,20 +76,20 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_colour_continuous}},
-\code{\link[ggplot2]{scale_fill_continuous}},
-\code{\link[ggplot2]{scale_colour_grey}},
-\code{\link[ggplot2]{scale_fill_grey}},
-\code{\link[ggplot2]{scale_colour_hue}},
-\code{\link[ggplot2]{scale_fill_hue}},
-\code{\link[ggplot2]{scale_colour_binned}},
-\code{\link[ggplot2]{scale_fill_binned}},
-\code{\link[ggplot2]{scale_colour_discrete}},
-\code{\link[ggplot2]{scale_fill_discrete}},
-\code{\link[ggplot2]{scale_colour_date}},
-\code{\link[ggplot2]{scale_fill_date}},
-\code{\link[ggplot2]{scale_colour_datetime}} and
-\code{\link[ggplot2]{scale_fill_datetime}}.
+\code{\link[=scale_colour_continuous]{scale_colour_continuous()}},
+\code{\link[=scale_fill_continuous]{scale_fill_continuous()}},
+\code{\link[=scale_colour_grey]{scale_colour_grey()}},
+\code{\link[=scale_fill_grey]{scale_fill_grey()}},
+\code{\link[=scale_colour_hue]{scale_colour_hue()}},
+\code{\link[=scale_fill_hue]{scale_fill_hue()}},
+\code{\link[=scale_colour_binned]{scale_colour_binned()}},
+\code{\link[=scale_fill_binned]{scale_fill_binned()}},
+\code{\link[=scale_colour_discrete]{scale_colour_discrete()}},
+\code{\link[=scale_fill_discrete]{scale_fill_discrete()}},
+\code{\link[=scale_colour_date]{scale_colour_date()}},
+\code{\link[=scale_fill_date]{scale_fill_date()}},
+\code{\link[=scale_colour_datetime]{scale_colour_datetime()}} and
+\code{\link[=scale_fill_datetime]{scale_fill_datetime()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{

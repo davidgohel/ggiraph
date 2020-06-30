@@ -40,12 +40,12 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_colour_gradient}},
-\code{\link[ggplot2]{scale_fill_gradient}},
-\code{\link[ggplot2]{scale_colour_gradient2}},
-\code{\link[ggplot2]{scale_fill_gradient2}},
-\code{\link[ggplot2]{scale_colour_gradientn}} and
-\code{\link[ggplot2]{scale_fill_gradientn}}.
+\code{\link[=scale_colour_gradient]{scale_colour_gradient()}},
+\code{\link[=scale_fill_gradient]{scale_fill_gradient()}},
+\code{\link[=scale_colour_gradient2]{scale_colour_gradient2()}},
+\code{\link[=scale_fill_gradient2]{scale_fill_gradient2()}},
+\code{\link[=scale_colour_gradientn]{scale_colour_gradientn()}} and
+\code{\link[=scale_fill_gradientn]{scale_fill_gradientn()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{

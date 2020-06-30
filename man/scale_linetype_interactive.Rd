@@ -24,10 +24,10 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_linetype}},
-\code{\link[ggplot2]{scale_linetype_continuous}},
-\code{\link[ggplot2]{scale_linetype_discrete}} and
-\code{\link[ggplot2]{scale_linetype_binned}}.
+\code{\link[=scale_linetype]{scale_linetype()}},
+\code{\link[=scale_linetype_continuous]{scale_linetype_continuous()}},
+\code{\link[=scale_linetype_discrete]{scale_linetype_discrete()}} and
+\code{\link[=scale_linetype_binned]{scale_linetype_binned()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{

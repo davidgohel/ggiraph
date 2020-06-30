@@ -49,14 +49,14 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[ggplot2]{scale_colour_viridis_d}},
-\code{\link[ggplot2]{scale_fill_viridis_d}},
-\code{\link[ggplot2]{scale_colour_viridis_c}},
-\code{\link[ggplot2]{scale_fill_viridis_c}},
-\code{\link[ggplot2]{scale_colour_viridis_b}},
-\code{\link[ggplot2]{scale_fill_viridis_b}},
-\code{\link[ggplot2]{scale_colour_ordinal}} and
-\code{\link[ggplot2]{scale_fill_ordinal}}.
+\code{\link[=scale_colour_viridis_d]{scale_colour_viridis_d()}},
+\code{\link[=scale_fill_viridis_d]{scale_fill_viridis_d()}},
+\code{\link[=scale_colour_viridis_c]{scale_colour_viridis_c()}},
+\code{\link[=scale_fill_viridis_c]{scale_fill_viridis_c()}},
+\code{\link[=scale_colour_viridis_b]{scale_colour_viridis_b()}},
+\code{\link[=scale_fill_viridis_b]{scale_fill_viridis_b()}},
+\code{\link[=scale_colour_ordinal]{scale_colour_ordinal()}},
+\code{\link[=scale_fill_ordinal]{scale_fill_ordinal()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{

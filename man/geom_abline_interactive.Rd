@@ -18,18 +18,18 @@ geom_vline_interactive(...)
 plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
-These geometries are based on \link[ggplot2:geom_abline]{geom_abline},
-\link[ggplot2:geom_abline]{geom_hline} and \link[ggplot2:geom_abline]{geom_vline}.
+These geometries are based on \code{\link[=geom_abline]{geom_abline()}},
+\code{\link[=geom_hline]{geom_hline()}} and \code{\link[=geom_vline]{geom_vline()}}.
 }
 \section{Details for geom_*_interactive functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{
-\item As aesthetics with the mapping argument (via \link[ggplot2:aes]{aes}).
+\item As aesthetics with the mapping argument (via \code{\link[=aes]{aes()}}).
 In this way they can be mapped to data columns and apply to a set of geometries.
 
 \item As plain arguments into the geom_*_interactive function (see
-\link[ggplot2:layer]{layer}). In this way they can be set to a scalar value.
+\code{\link[=layer]{layer()}}). In this way they can be set to a scalar value.
 }
 }
 
