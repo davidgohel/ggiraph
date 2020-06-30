@@ -12,15 +12,19 @@ library(knitr)
 opts_chunk$set(message=FALSE)
 ```
 
-One big advantage of package `ggiraph` is to let users select graphical elements 
-on girafe graphics from shiny applications.
+A major advantage of `{ggiraph}` used in a shiny application is the ability to
+collect selections.
+
+The user defines them by clicking on the elements or by defining an area
+surrounding the elements to be selected (lasso selection). It is also possible
+to deselect all or part of an existing selection.
 
 ## Shiny usage 
 
 You will need to use `girafeOutput` in the UI part of the application and 
 `renderGirafe` in the SERVER part.
 
-### The client `ui.R`
+> The client `ui.R`
 
 Instead of a `plotOutput`, use function `girafeOutput`. 
 
@@ -28,7 +32,7 @@ Instead of a `plotOutput`, use function `girafeOutput`.
 girafeOutput("plot")
 ```
 
-### The server `server.R`
+> The server `server.R`
 
 Use function `renderGirafe`.
 
@@ -57,7 +61,7 @@ automatically de-selects the other selected element.
 * `multiple`: the user can select several elements. He can do this by clicking on the elements 
 or by selecting in the toolbar the "lasso selection" menu which allows you to draw a lasso on 
 the graph and select all the elements contained in the lasso. The toolbar also contains 
-an "anti-lazzle selection" menu that allows you to draw a lasso on the graph and de-select 
+an "anti-lasso selection" menu that allows you to draw a lasso on the graph and de-select 
 all the elements contained in the lasso. The click is of course available for unit 
 selections/de-selections.
 * `none`: no selection is allowed in the graph produced by `girafe`.
