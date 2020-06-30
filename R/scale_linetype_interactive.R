@@ -1,9 +1,9 @@
 #' @title Create interactive scales for line patterns
 #' @description These scales are based on
-#' \code{\link[ggplot2]{scale_linetype}},
-#' \code{\link[ggplot2]{scale_linetype_continuous}},
-#' \code{\link[ggplot2]{scale_linetype_discrete}} and
-#' \code{\link[ggplot2]{scale_linetype_binned}}.
+#' [scale_linetype][ggplot2::scale_linetype],
+#' [scale_linetype_continuous][ggplot2::scale_linetype],
+#' [scale_linetype_discrete][ggplot2::scale_linetype] and
+#' [scale_linetype_binned][ggplot2::scale_linetype].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

@@ -1,13 +1,13 @@
 #' @title Create interactive viridis colour scales
 #' @description These scales are based on
-#' \code{\link[ggplot2]{scale_colour_viridis_d}},
-#' \code{\link[ggplot2]{scale_fill_viridis_d}},
-#' \code{\link[ggplot2]{scale_colour_viridis_c}},
-#' \code{\link[ggplot2]{scale_fill_viridis_c}},
-#' \code{\link[ggplot2]{scale_colour_viridis_b}},
-#' \code{\link[ggplot2]{scale_fill_viridis_b}},
-#' \code{\link[ggplot2]{scale_colour_ordinal}} and
-#' \code{\link[ggplot2]{scale_fill_ordinal}}.
+#' [scale_colour_viridis_d][ggplot2::scale_colour_viridis_d],
+#' [scale_fill_viridis_d][ggplot2::scale_colour_viridis_d],
+#' [scale_colour_viridis_c][ggplot2::scale_colour_viridis_d],
+#' [scale_fill_viridis_c][ggplot2::scale_colour_viridis_d],
+#' [scale_colour_viridis_b][ggplot2::scale_colour_viridis_d],
+#' [scale_fill_viridis_b][ggplot2::scale_colour_viridis_d],
+#' [scale_colour_ordinal][ggplot2::scale_colour_viridis_d],
+#' [scale_fill_ordinal][ggplot2::scale_colour_viridis_d].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

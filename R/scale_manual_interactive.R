@@ -1,12 +1,12 @@
 #' @title Create your own interactive discrete scale
 #' @description These scales are based on
-#' \code{\link[ggplot2]{scale_colour_manual}},
-#' \code{\link[ggplot2]{scale_fill_manual}},
-#' \code{\link[ggplot2]{scale_size_manual}},
-#' \code{\link[ggplot2]{scale_shape_manual}},
-#' \code{\link[ggplot2]{scale_linetype_manual}},
-#' \code{\link[ggplot2]{scale_alpha_manual}} and
-#' \code{\link[ggplot2]{scale_discrete_manual}}.
+#' [scale_colour_manual][ggplot2::scale_manual],
+#' [scale_fill_manual][ggplot2::scale_manual],
+#' [scale_size_manual][ggplot2::scale_manual],
+#' [scale_shape_manual][ggplot2::scale_manual],
+#' [scale_linetype_manual][ggplot2::scale_manual],
+#' [scale_alpha_manual][ggplot2::scale_manual] and
+#' [scale_discrete_manual][ggplot2::scale_manual].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

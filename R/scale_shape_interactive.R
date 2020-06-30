@@ -1,10 +1,10 @@
 #' @title Create interactive scales for shapes
 #' @description These scales are based on
-#' \code{\link[ggplot2]{scale_shape}},
-#' \code{\link[ggplot2]{scale_shape_continuous}},
-#' \code{\link[ggplot2]{scale_shape_discrete}},
-#' \code{\link[ggplot2]{scale_shape_binned}} and
-#' \code{\link[ggplot2]{scale_shape_ordinal}}.
+#' [scale_shape][ggplot2::scale_shape],
+#' [scale_shape_continuous][ggplot2::scale_shape],
+#' [scale_shape_discrete][ggplot2::scale_shape],
+#' [scale_shape_binned][ggplot2::scale_shape] and
+#' [scale_shape_ordinal][ggplot2::scale_shape].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
