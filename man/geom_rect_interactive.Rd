@@ -31,8 +31,8 @@ The interactive parameters can be supplied with two ways:
 \item As aesthetics with the mapping argument (via \code{\link[=aes]{aes()}}).
 In this way they can be mapped to data columns and apply to a set of geometries.
 
-\item As plain arguments into the geom_*_interactive function (see
-\code{\link[=layer]{layer()}}). In this way they can be set to a scalar value.
+\item As plain arguments into the geom_*_interactive function.
+In this way they can be set to a scalar value.
 }
 }
 

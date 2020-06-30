@@ -36,5 +36,5 @@ x <- girafe(ggobj = gg, width_svg = 5, height_svg = 4)
 if( interactive() ) print(x)
 }
 \seealso{
-\code{\link[=girafe]{girafe()}}
+\code{\link[=girafe]{girafe()}}, \link{interactive_parameters}, \code{\link[=annotation_raster_interactive]{annotation_raster_interactive()}}
 }
