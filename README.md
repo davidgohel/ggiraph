@@ -27,11 +27,11 @@ elements**, via the following aesthetics:
   - `data_id`: id to be associated with elements (used for hover and
     click actions)
 
-### Why using `{ggiraph}`
+### Why use `{ggiraph}`
 
   - You want to provide your readers with more information than the
     basic information available; you can display a tooltip when the
-    player’s mouse is on a graphical element, you can also visually
+    user’s mouse is on a graphical element, you can also visually
     animate elements with the same attribute when the mouse passes over
     a graphical element, and finally you can link a JavaScript action to
     the click, such as opening a hypertext link.

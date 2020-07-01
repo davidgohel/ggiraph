@@ -339,8 +339,8 @@ opts_toolbar <- function(position = "topright", saveaspng = TRUE, pngname = "dia
 
 #' @title Girafe sizing settings
 #' @description Allows customization of the svg style sizing
-#' @param rescale if FALSE, graphic will not be resized
-#' and the dimensions are exactly those of the container.
+#' @param rescale If FALSE, graphic will not be resized and the dimensions are exactly
+#' those of the svg. If TRUE the graphic will be resize to fit its container
 #' @param width widget width ratio (0 < width <= 1).
 #' @family girafe animation options
 #' @examples

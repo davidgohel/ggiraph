@@ -1,8 +1,9 @@
 ## Test environments
 
-- local OS X install (R 3.6.0)
+- local OS X install (R 4.0.2)
 - ubuntu 14.04 (on travis-ci with release and devel) 
 - winbuilder (older, release and devel)
+- rhub::check_on_solaris()
 
 ## R CMD check results
 

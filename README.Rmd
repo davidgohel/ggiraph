@@ -25,7 +25,7 @@ library(ggiraph)
 <a href="https://github.com/davidgohel/ggiraph"><img src="man/figures/logo.png" alt="ggiraph logo" align="right" /></a>
 
 `{ggiraph}` is a tool that allows you to create dynamic ggplot graphs. This allows you 
-to add tooltips, animations and JavaScript actions to the graphics.The package also 
+to add tooltips, hover effects and JavaScript actions to the graphics.The package also 
 allows the selection of graphical elements when used in shiny applications. 
 
 Interactivity is added to ggplot **geometries, legends and theme elements**, via 
@@ -35,10 +35,10 @@ the following aesthetics:
 * `onclick`: JavaScript function to be executed when elements are clicked. 
 * `data_id`: id to be associated with elements (used for hover and click actions)
 
-### Why using `{ggiraph}`
+### Why use `{ggiraph}`
 
 * You want to provide your readers with more information than the basic information 
-available; you can display a tooltip when the player's mouse is on a graphical element, 
+available; you can display a tooltip when the user's mouse is on a graphical element, 
 you can also visually animate elements with the same attribute when the mouse passes 
 over a graphical element, and finally you can link a JavaScript action to the click, 
 such as opening a hypertext link.
