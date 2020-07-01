@@ -1,26 +1,41 @@
+# ggiraph 0.7.8
+
+## Changes
+
+* update for changes in the R graphics engine (thanks to Dr Paul Murrell)
+
+## Issues
+
+* set max size in shiny to shinyOutput size
+
 # ggiraph 0.7.7
 
 ## Enhancement
+
 * Updated geoms to ggplot2 v3.3.0
 * Added new scales and guides from ggplot2 v3.3.0
 
 # ggiraph 0.7.5
 
 ## Enhancement
+
 * Using tinyxml2 for creating the svg doc
 
 # ggiraph 0.7.1
 
 ## Enhancement
+
 * Refactoring of ggiraphjs, with separate modules for each action context
 * Added shiny messaging for hovered elements
 * Added opts_hover_inv for inverted hover effect
 * Added parameter for exported png filename and set png quality to 1
 
 ## Bug fixes
+
 * misc fixes in interactive geom internals
 
 ## Documentation
+
 * Added a complete shiny example (gender) for selection/hover options/tricks
 
 # ggiraph 0.7.0
