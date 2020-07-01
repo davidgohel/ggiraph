@@ -2,7 +2,7 @@ library(ggiraph)
 shinyUI(fluidPage(
   fluidRow(
     column(
-      width=6,offset = 3,
+      width=12,
       uiOutput("selpoint"),
       girafeOutput("plot")
     )

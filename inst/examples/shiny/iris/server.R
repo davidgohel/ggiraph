@@ -24,9 +24,9 @@ shinyServer(function(input, output, session) {
     value <- selected_car()
     if( !isTruthy(value) )
       value <- "<none>"
-    tags$div(
-      tags$caption("Selected point is:"),
-      tags$strong(value)
+    tags$button(type="button", class="btn btn-danger",
+                "Selected data_id is:",
+                tags$span(class="badge", tags$strong(value) )
     )
 
   })

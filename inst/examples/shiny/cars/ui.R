@@ -1,12 +1,9 @@
 library(ggiraph)
 shinyUI(fluidPage(
-  sidebarLayout(
+  fluidRow(
 
-    sidebarPanel(
-      uiOutput("selpoint")
-    ),
-
-    mainPanel(
+    column(width = 12,
+      uiOutput("selpoint", style = "text-align:center;padding:4pt;"),
       girafeOutput("plot")
     )
   )

@@ -1,14 +1,18 @@
 library(ggplot2)
 library(ggiraph)
-library(maps)
+library(sf)
+library(rnaturalearth)
 
-us <- map_data("state")
+theme_set(theme_minimal())
 
-gg <- ggplot()
-gg <- gg + geom_map_interactive(data=us, map=us,
-                    aes(long, lat, map_id=region, data_id=region, tooltip = region),
-                    color="white", fill = "gray90")
-gg <- gg + coord_map() + theme_void()
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+gg <- ggplot(data = world) +
+  geom_sf_interactive(aes(fill = pop_est, tooltip = name_long, data_id = brk_a3), colour = "transparent") +
+  scale_fill_viridis_c(option = "plasma", trans = "sqrt") +
+  coord_sf(crs = "+init=epsg:3035")
+
+
 
 shinyServer(function(input, output, session) {
 
@@ -20,25 +24,26 @@ shinyServer(function(input, output, session) {
 
   output$plot <- renderGirafe({
     girafe(
-      ggobj = gg, width_svg = 6, height_svg = 4,
+      ggobj = gg, width_svg = 7, height_svg = 7,
       options = list(
         opts_hover(css = "fill:#666666;cursor:pointer;"),
         opts_selection(css = "fill:orange;", type = "multiple"),
-        opts_zoom(max = 3)
+        opts_zoom(max = 9)
       )
     )
   })
-
   output$seltext <- renderUI({
     value <- selected_states()
     if( !isTruthy(value) )
       value <- "<none>"
     value <- paste0(value, collapse = ", ")
-    tags$div(
-      tags$caption("Selected states are:"),
-      tags$strong(value)
+    tags$div(role="alert", class="alert alert-success",
+             tags$h4("Selected states:"),
+             tags$p("Your selection is:"),
+             tags$hr(),
+             tags$p(value)
     )
-  })
 
+  })
 
 })

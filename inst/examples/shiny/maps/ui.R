@@ -2,15 +2,10 @@ library(ggiraph)
 library(shiny)
 shinyUI(fluidPage(
 
-  titlePanel("Select states on the map"),
+  fluidRow(
 
-  sidebarLayout(
-    sidebarPanel(
-      uiOutput("seltext")
-    ),
-
-    mainPanel(
-      girafeOutput("plot")
-    )
+    column(width = 3, uiOutput("seltext")),
+    column(width = 9, girafeOutput("plot"))
   )
+
 ))

@@ -21,7 +21,7 @@ shinyServer(function(input, output, session) {
 
   output$plot <- renderGirafe({
     x <- girafe(code = print(gg_crime),
-                width_svg = 6, height_svg = 8,
+                width_svg = 6, height_svg = 5,
                 options = list(
                   opts_hover(css = "fill:#FF3333;stroke:black;cursor:pointer;", reactive = TRUE),
                   opts_selection(
