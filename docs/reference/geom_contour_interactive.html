@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,10 +47,10 @@
 
 
 <meta property="og:title" content="Create interactive 2d contours of a 3d surface — geom_contour_interactive" />
-<meta property="og:description" content="The geometry is based on geom_contour.
+<meta property="og:description" content="These geometries are based on geom_contour()
+and geom_contour_filled().
 See the documentation for those functions for more details." />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -64,7 +68,7 @@ See the documentation for those functions for more details." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -78,7 +82,7 @@ See the documentation for those functions for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -124,16 +128,19 @@ See the documentation for those functions for more details." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create interactive 2d contours of a 3d surface</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/davidgohel/ggiraph/blob/master/R/geom_contour_interactive.R'><code>R/geom_contour_interactive.R</code></a></small>
     <div class="hidden name"><code>geom_contour_interactive.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The geometry is based on <code><a href='https://ggplot2.tidyverse.org/reference/geom_contour.html'>geom_contour</a></code>.
+    <p>These geometries are based on <code>geom_contour()</code>
+and <code>geom_contour_filled()</code>.
 See the documentation for those functions for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_contour_interactive</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>geom_contour_interactive</span>(<span class='no'>...</span>)
+
+<span class='fu'>geom_contour_filled_interactive</span>(<span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +148,7 @@ See the documentation for those functions for more details.</p>
     <tr>
       <th>...</th>
       <td><p>arguments passed to base function,
-plus any of the <code><a href='ipar.html'>interactive_parameters</a></code>.</p></td>
+plus any of the <code><a href='ipar.html'>interactive_parameters()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -150,16 +157,15 @@ plus any of the <code><a href='ipar.html'>interactive_parameters</a></code>.</p>
     
 
 <p>The interactive parameters can be supplied with two ways:</p><ul>
-<li><p>As aesthetics with the mapping argument (via <code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></code>).
-  In this way they can be mapped to data columns and apply to a set of geometries.</p></li>
-<li><p>As plain arguments into the geom_*_interactive function (see
-  <code><a href='https://ggplot2.tidyverse.org/reference/layer.html'>layer</a></code>). In this way they can be set to a scalar value.</p></li>
+<li><p>As aesthetics with the mapping argument (via <code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes()</a></code>).
+In this way they can be mapped to data columns and apply to a set of geometries.</p></li>
+<li><p>As plain arguments into the geom_*_interactive function.
+In this way they can be set to a scalar value.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='girafe.html'>girafe</a></code></p>
-<p><code><a href='girafe.html'>girafe</a></code></p></div>
+    <div class='dont-index'><p><code><a href='girafe.html'>girafe()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># add interactive contours to a ggplot -------</span>
@@ -168,21 +174,26 @@ plus any of the <code><a href='ipar.html'>interactive_parameters</a></code>.</p>
 
 <span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>faithfuld</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>waiting</span>, <span class='no'>eruptions</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>density</span>))
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>v</span> + <span class='fu'>geom_contour_interactive</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(
-  <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/stat.html'>stat</a></span>(<span class='no'>level</span>),
-  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Level:"</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/stat.html'>stat</a></span>(<span class='no'>level</span>))
+  <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span>(<span class='no'>level</span>),
+  <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Level:"</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span>(<span class='no'>level</span>))
 ))
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>p</span>)
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details-for-geom-interactive-functions">Details for geom_*_interactive functions</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)
 
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span>(<span class='st'>"grid"</span>) <span class='kw'>&gt;=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric_version.html'>numeric_version</a></span>(<span class='st'>"3.6"</span>)) {
+  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>v</span> + <span class='fu'>geom_contour_filled_interactive</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(
+    <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span>(<span class='no'>level</span>),
+    <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span>(<span class='no'>level</span>),
+    <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Level:"</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat</a></span>(<span class='no'>level</span>))
+  ))
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>p</span>)
+  <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)
+}</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -190,11 +201,11 @@ plus any of the <code><a href='ipar.html'>interactive_parameters</a></code>.</p>
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.0 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.8 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
 <script>

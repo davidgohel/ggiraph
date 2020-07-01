@@ -20,13 +20,19 @@
   text-decoration: none;
   font-weight: bold;
 }
-body {
+
+body,p {
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: 12pt;
   line-height: 1.42857143;
   color: #0F0F0F;
   background-color: #fff;
 }
+
+blockquote {
+  font-size: 12pt;
+}
+
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
     color: #fff;
     background-color: #C32900;

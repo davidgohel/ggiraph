@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,8 +47,7 @@
 
 
 <meta property="og:title" content="Function reference" />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -139,6 +142,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -159,6 +167,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -168,7 +181,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="opts_hover.html">opts_hover()</a></code> <code><a href="opts_hover.html">opts_hover_key()</a></code> <code><a href="opts_hover.html">opts_hover_theme()</a></code> </p>
+          <p><code><a href="opts_hover.html">opts_hover()</a></code> <code><a href="opts_hover.html">opts_hover_inv()</a></code> <code><a href="opts_hover.html">opts_hover_key()</a></code> <code><a href="opts_hover.html">opts_hover_theme()</a></code> </p>
         </td>
         <td><p>Hover effect settings</p></td>
       </tr><tr>
@@ -215,6 +228,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -241,6 +259,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -262,7 +285,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="geom_contour_interactive.html">geom_contour_interactive()</a></code> </p>
+          <p><code><a href="geom_contour_interactive.html">geom_contour_interactive()</a></code> <code><a href="geom_contour_interactive.html">geom_contour_filled_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive 2d contours of a 3d surface</p></td>
       </tr><tr>
@@ -381,6 +404,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -390,15 +418,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="scale_colour_brewer_interactive.html">scale_colour_brewer_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_color_brewer_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_fill_brewer_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_colour_distiller_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_color_distiller_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_fill_distiller_interactive()</a></code> </p>
+          <p><code><a href="scale_colour_brewer_interactive.html">scale_colour_brewer_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_color_brewer_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_fill_brewer_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_colour_distiller_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_color_distiller_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_fill_distiller_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_colour_fermenter_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_color_fermenter_interactive()</a></code> <code><a href="scale_colour_brewer_interactive.html">scale_fill_fermenter_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive colorbrewer scales</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="scale_colour_interactive.html">scale_colour_continuous_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_continuous_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_continuous_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_grey_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_grey_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_grey_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_hue_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_hue_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_hue_interactive()</a></code> </p>
+          <p><code><a href="scale_colour_interactive.html">scale_colour_continuous_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_continuous_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_continuous_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_grey_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_grey_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_grey_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_hue_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_hue_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_hue_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_binned_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_binned_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_binned_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_discrete_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_discrete_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_discrete_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_date_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_date_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_date_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_colour_datetime_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_color_datetime_interactive()</a></code> <code><a href="scale_colour_interactive.html">scale_fill_datetime_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive colour scales</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="scale_colour_steps_interactive.html">scale_colour_steps_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_color_steps_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_fill_steps_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_colour_steps2_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_color_steps2_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_fill_steps2_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_colour_stepsn_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_color_stepsn_interactive()</a></code> <code><a href="scale_colour_steps_interactive.html">scale_fill_stepsn_interactive()</a></code> </p>
+        </td>
+        <td><p>Create interactive binned gradient colour scales</p></td>
       </tr><tr>
         
         <td>
@@ -408,7 +442,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="scale_linetype_interactive.html">scale_linetype_interactive()</a></code> <code><a href="scale_linetype_interactive.html">scale_linetype_continuous_interactive()</a></code> <code><a href="scale_linetype_interactive.html">scale_linetype_discrete_interactive()</a></code> </p>
+          <p><code><a href="scale_linetype_interactive.html">scale_linetype_interactive()</a></code> <code><a href="scale_linetype_interactive.html">scale_linetype_continuous_interactive()</a></code> <code><a href="scale_linetype_interactive.html">scale_linetype_discrete_interactive()</a></code> <code><a href="scale_linetype_interactive.html">scale_linetype_binned_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive scales for line patterns</p></td>
       </tr><tr>
@@ -420,27 +454,39 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="scale_shape_interactive.html">scale_shape_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_continuous_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_discrete_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_ordinal_interactive()</a></code> </p>
+          <p><code><a href="scale_shape_interactive.html">scale_shape_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_continuous_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_discrete_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_binned_interactive()</a></code> <code><a href="scale_shape_interactive.html">scale_shape_ordinal_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive scales for shapes</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="scale_size_interactive.html">scale_size_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_continuous_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_discrete_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_ordinal_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_radius_interactive()</a></code> </p>
+          <p><code><a href="scale_size_interactive.html">scale_size_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_area_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_continuous_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_discrete_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_binned_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_binned_area_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_date_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_datetime_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_size_ordinal_interactive()</a></code> <code><a href="scale_size_interactive.html">scale_radius_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive scales for area or radius</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="scale_viridis_interactive.html">scale_colour_viridis_d_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_color_viridis_d_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_fill_viridis_d_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_colour_viridis_c_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_color_viridis_c_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_fill_viridis_c_interactive()</a></code> </p>
+          <p><code><a href="scale_viridis_interactive.html">scale_colour_viridis_d_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_color_viridis_d_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_fill_viridis_d_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_colour_viridis_c_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_color_viridis_c_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_fill_viridis_c_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_colour_viridis_b_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_color_viridis_b_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_fill_viridis_b_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_colour_ordinal_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_color_ordinal_interactive()</a></code> <code><a href="scale_viridis_interactive.html">scale_fill_ordinal_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive viridis colour scales</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="guide_bins_interactive.html">guide_bins_interactive()</a></code> </p>
+        </td>
+        <td><p>Create interactive bins guide</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code> <code><a href="guide_colourbar_interactive.html">guide_colorbar_interactive()</a></code> </p>
         </td>
         <td><p>Create interactive continuous colour bar guide</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code> <code><a href="guide_coloursteps_interactive.html">guide_colorsteps_interactive()</a></code> </p>
+        </td>
+        <td><p>Create interactive colorsteps guide</p></td>
       </tr><tr>
         
         <td>
@@ -455,6 +501,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -484,16 +535,10 @@
     </table>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-make-ggplot-graphics-interactive">Make ggplot2 Graphics Interactive</a></li>
-      <li><a href="#section-customize-girafe-animations">Customize girafe animations</a></li>
-      <li><a href="#section-working-with-shiny">Working with shiny</a></li>
-      <li><a href="#section-interactive-geometries">Interactive geometries</a></li>
-      <li><a href="#section-interactive-scales">Interactive scales</a></li>
-      <li><a href="#section-other-interactive-layers">Other interactive layers</a></li>
-    </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -501,11 +546,11 @@
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.0 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.8 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
 <script>
