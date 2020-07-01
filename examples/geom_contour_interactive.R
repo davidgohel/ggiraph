@@ -9,7 +9,7 @@ p <- v + geom_contour_interactive(aes(
 x <- girafe(ggobj = p)
 if (interactive()) print(x)
 
-if (packageVersion("grid") >= "3.6") {
+if (packageVersion("grid") >= numeric_version("3.6")) {
   p <- v + geom_contour_filled_interactive(aes(
     colour = stat(level),
     fill = stat(level),

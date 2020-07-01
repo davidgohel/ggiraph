@@ -54,112 +54,74 @@ Mouseover points to see where they are located in the other graph.
 girafe( code = print(gg1 + gg2), width_svg = 8, height_svg = 4)
 ```
 
-## Dynamic dendrogram
+## Inversed hovering
 
-[expr.R](./expr.R)
+```{r}
+library(ggplot2)
+library(ggiraph)
+library(data.table)
+library(charlatan)
+
+species <- ch_taxonomic_species(n = 10)
+dat <- lapply(species, function(species, n){
+  data.table(
+    date = as.Date(seq_len(n), origin = "2018-10-25"),
+    sales = cumsum(runif(n, -1, 1)),
+    species = species,
+    name = ch_name(n = n)
+  )
+}, n = 200)
+dat <- rbindlist(dat)
+
+gg <- ggplot(dat, aes(x = date, y = sales, 
+                      colour = species, group = species)) +
+  geom_line_interactive(aes(tooltip = name, data_id = species)) +
+  scale_color_viridis_d() + 
+  theme_minimal() + 
+  labs(title = "move mouse over lines")
+
+x <- girafe(ggobj = gg, width_svg = 8, height_svg = 6,
+  options = list(
+    opts_hover_inv(css = "opacity:0.1;"),
+    opts_hover(css = "stroke-width:2;")
+  ))
+x
+```
+
+
+
+## With package `{ggraph}`
 
 ```{r message=FALSE}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(ggdendro)
-library(purrr)
+library(ggraph)
+library(igraph)
 library(ggiraph)
 
-source("expr.R")
-expr_set_extract[1:4, 4:9]
-```
-
-First compute data for dendrograms
-
-```{r message=FALSE}
-hc <- hclust(dist(expr_set_extract), "ave")
-dhr <- as.dendrogram(hc)
-order_r <- rownames(expr_set_extract)[hc$order]
-
-
-hc <- hclust(dist(t(expr_set_extract)), "ave")
-dhc <- as.dendrogram(hc)
-order_c <- colnames(expr_set_extract)[hc$order]
-
-data_r <- dendro_data(dhr, type = "rectangle")
-data_r <- segment(data_r)
-data_r <- data_r %>%
-  mutate( x_ = y + length(order_c),
-          xend_ = yend + length(order_c),
-          y_ = x,
-          yend_ = xend )
-data_c <- dendro_data(dhc, type = "rectangle")
-data_c <- segment(data_c) %>% mutate(
-  y = y + length(order_r),
-  yend = yend + length(order_r)
+actors <- data.frame(
+  name = c("Alice", "Bob", "Cecil", "David", "Esmeralda"),
+  age = c(48,33,45,34,21),
+  gender = c("F","M","F","M","F")
 )
-```
-
-Create a data.frame from the matrix, then order. 
-
-```{r message=FALSE}
-expr_set <- bind_cols(
-  data_frame(gene = rownames(expr_set_extract)),
-  as.data.frame(expr_set_extract)
+relations <- data.frame(
+  from = c("Bob", "Cecil", "Cecil", "David", "David", "Esmeralda"),
+  to = c("Alice", "Bob", "Alice", "Alice", "Bob", "Alice"),
+  same.dept = c(FALSE,FALSE,TRUE,FALSE,FALSE,TRUE),
+  friendship = c(4,5,5,2,1,1), 
+  advice = c(4,5,5,4,2,3)
 )
-expr_set <- gather(expr_set, variable, measure, -gene)
-expr_set$gene <- factor( expr_set$gene, levels = order_r )
-expr_set$variable <- factor( expr_set$variable, levels = order_c )
-expr_set <- arrange(expr_set, gene, variable)
-```
 
-Add a variable to have tooltips as tables
+g <- graph_from_data_frame(relations, 
+       directed = TRUE, vertices = actors)
 
-```{r}
-str_model <- paste0("<tr><td>gene</td><td>%s</td></tr>", 
-  "<tr><td>variable</td><td>%s</td></tr>", 
-  "<tr><td>measure</td><td>%.03f</td></tr>")
-expr_set$tooltip <- sprintf(str_model, expr_set$gene, 
-                            expr_set$variable, expr_set$measure )
-expr_set$tooltip <- paste0( "<table>", 
-                            expr_set$tooltip, "</table>" )
-head(expr_set)
-```
+z <- ggraph(g, layout = 'linear', circular = TRUE) + 
+  geom_edge_arc(color = "red", edge_width = .2) + 
+  geom_point_interactive(size = 5,
+    mapping = aes(x = x, y = y, data_id = gender,
+                  tooltip = paste0(name, ": ", age, "y.o."))
+  ) + theme_graph()
 
-Create the ggplot using `geom_tile_interactive`
+girafe(ggobj = z, width_svg = 5, height_svg = 5, 
+       options = list(opts_sizing(rescale = FALSE)))
 
-```{r}
-p <- ggplot(data = expr_set, aes(x = variable, y = gene) ) +
-  geom_tile_interactive(aes(fill = measure, tooltip = tooltip), colour = "white") +
-  scale_fill_gradient(low = "white", high = "#BC120A", limits = c(0, 13)) +
-  geom_segment(
-    data = data_c,
-    mapping = aes(x = x, y = yend, xend = xend, yend = y),
-    colour = "gray20", size = .2) +
-  geom_segment(
-    data = data_r,
-    mapping = aes(x = x_, y = y_, xend = xend_, yend = yend_),
-    colour = "gray20", size = .2) +
-  coord_equal()
-```
-
-Theme the object
-
-```{r}
-p <- p + theme_minimal() +
-  theme(
-    legend.position = "right",
-    panel.grid.minor = element_line(color = "transparent"),
-    panel.grid.major = element_line(color = "transparent"),
-    axis.ticks.length	= unit(2, units = "mm"),
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 12),
-    axis.title = element_text(size = 9, colour = "gray30"),
-    axis.text.y = element_text(hjust = 1, size = 5, colour = "gray40"),
-    axis.text.x = element_text(angle = 90, hjust = 1, size = 5, colour = "gray40"),
-    legend.title=element_text(face = "bold", hjust = 0.5, size=8),
-    legend.text=element_text(size=6)
-  )
-```
-
-Use `girafe`
-
-```{r}
-girafe(ggobj = p, width_svg = 8, height_svg = 6)
 ```
 
