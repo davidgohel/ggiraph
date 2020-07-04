@@ -6,7 +6,7 @@ import TooltipHandler from './tooltip.js'
 import HoverHandler from './hover.js'
 import SelectionHandler from './selection.js'
 
-export default class ggiraphjs {
+export default class SVGObject {
 
   constructor(containerid) {
     this.containerid = containerid;
