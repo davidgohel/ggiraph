@@ -10,4 +10,7 @@ revdep
 src/*.o
 src/*.so
 src/*.dll
+node_modules
+package-lock.json
+*.css.js
 .project
