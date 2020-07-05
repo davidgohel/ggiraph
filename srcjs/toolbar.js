@@ -1,5 +1,4 @@
 import * as d3 from 'd3'
-import * as svgtopng from 'save-svg-as-png'
 
 export default class ToolbarHandler {
 
@@ -11,7 +10,8 @@ export default class ToolbarHandler {
     this.position = position;
     this.zoomHandler = zoomHandler;
     this.selectionHandler = selectionHandler;
-    this.saveaspng = saveaspng;
+    // use feature only if save-svg-as-png module is loaded
+    this.saveaspng = saveaspng && typeof saveSvgAsPng === 'function';
     this.pngname = pngname;
   }
 
@@ -94,7 +94,7 @@ export default class ToolbarHandler {
         .attr('title', 'download png')
         .on('click', function () {
           if (typeof Promise !== 'undefined' && Promise.toString().indexOf('[native code]') !== -1) {
-            svgtopng.saveSvgAsPng(document.getElementById(that.svgid), that.pngname + '.png', { encoderOptions: 1 });
+            saveSvgAsPng(document.getElementById(that.svgid), that.pngname + '.png', { encoderOptions: 1 });
           } else {
             console.error('This navigator does not support Promises');
           }
