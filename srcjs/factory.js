@@ -1,10 +1,10 @@
 import SVGObject from './svg.js';
 
 // Returns a factory function for HTMLWidgets
-export function factory() {
+export function factory(shinyMode) {
 
   return function(el, width, height) {
-    const ggobj = new SVGObject(el.id);
+    const ggobj = new SVGObject(el.id, shinyMode);
 
     return {
       renderValue: function(x) {
@@ -23,7 +23,7 @@ export function factory() {
         if (!x.settings.sizing.rescale) {
           ggobj.fixSize(box.width, box.height);
           d3.select(el).style("width", null).style("height", null);
-        } else if( HTMLWidgets.shinyMode ){
+        } else if( shinyMode ){
           ggobj.autoScale("100%");
           ggobj.IEFixResize(1, 1/x.ratio);
           ggobj.setSizeLimits(d3.select(el).style("width"), 0, d3.select(el).style("height"), 0);
@@ -66,7 +66,7 @@ export function factory() {
             reactive: x.settings.hovertheme.reactive,
             invClassPrefix: null
           }
-        ], HTMLWidgets.shinyMode);
+        ]);
 
         ggobj.setupSelection([
           {
@@ -96,7 +96,7 @@ export function factory() {
             only_shiny: x.settings.capturetheme.only_shiny,
             selected: x.settings.capturetheme.selected
           }
-        ], HTMLWidgets.shinyMode);
+        ]);
 
         ggobj.setupZoom(x.settings.zoom.min, x.settings.zoom.max);
         ggobj.setupToolbar('ggiraph-toolbar',

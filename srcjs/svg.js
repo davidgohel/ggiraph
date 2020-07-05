@@ -8,10 +8,11 @@ import SelectionHandler from './selection.js'
 
 export default class SVGObject {
 
-  constructor(containerid) {
+  constructor(containerid, shinyMode) {
     this.containerid = containerid;
     this.svgid = null;
     this.handlers = [];
+    this.shinyMode = shinyMode;
   }
 
   clear() {
@@ -120,13 +121,13 @@ export default class SVGObject {
     } catch (e) { console.error(e) }
   }
 
-  setupHover(hoverItems, shinyMode) {
+  setupHover(hoverItems) {
     // register hover handlers
     for (var i = 0; i < hoverItems.length; i++) {
       const item = hoverItems[i];
       try {
-        const inputId = shinyMode && item.reactive ? this.containerid + item.inputSuffix : null;
-        const messageId = shinyMode && item.reactive ? this.containerid + item.messageSuffix : null;
+        const inputId = this.shinyMode && item.reactive ? this.containerid + item.inputSuffix : null;
+        const messageId = this.shinyMode && item.reactive ? this.containerid + item.messageSuffix : null;
         const handler = new HoverHandler(
           this.svgid, item.classPrefix, item.invClassPrefix, item.attrName,
           inputId, messageId
@@ -137,18 +138,18 @@ export default class SVGObject {
     }
   }
 
-  setupSelection(selectionItems, shinyMode) {
+  setupSelection(selectionItems) {
     // register selection handlers
     for (var i = 0; i < selectionItems.length; i++) {
       const item = selectionItems[i];
       try {
         // only add it in shiny or if only_shiny is false
         // also must have a valid selection type
-        const addHandler = (shinyMode || !item.only_shiny) &&
+        const addHandler = (this.shinyMode || !item.only_shiny) &&
           (item.type == 'single' || item.type == 'multiple');
         if (addHandler) {
-          const inputId = shinyMode ? this.containerid + item.inputSuffix : null;
-          const messageId = shinyMode ? this.containerid + item.messageSuffix : null;
+          const inputId = this.shinyMode ? this.containerid + item.inputSuffix : null;
+          const messageId = this.shinyMode ? this.containerid + item.messageSuffix : null;
           const handler = new SelectionHandler(
             this.svgid, item.classPrefix, item.attrName,
             inputId, messageId,

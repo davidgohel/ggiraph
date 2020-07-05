@@ -1,5 +1,5 @@
 HTMLWidgets.widget({
   name: "girafe",
   type: "output",
-  factory: ggiraphjs.factory()
+  factory: ggiraphjs.factory(HTMLWidgets.shinyMode)
 });
