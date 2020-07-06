@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import * as utils from './utils';
 
 export default class SelectionHandler {
   constructor(
@@ -46,7 +45,7 @@ export default class SelectionHandler {
       Shiny.addCustomMessageHandler(this.shinyMessageId, function (message) {
         if (typeof message === 'string') {
           that.setSelected([message]);
-        } else if (utils.isArray(message)) {
+        } else if (Array.isArray(message)) {
           that.setSelected(message);
         }
       });
@@ -56,7 +55,7 @@ export default class SelectionHandler {
     if (typeof this.initialSelection === 'string') {
       this.setSelected([this.initialSelection]);
     } else if (
-      utils.isArray(this.initialSelection) &&
+      Array.isArray(this.initialSelection) &&
       this.type == 'multiple'
     ) {
       this.setSelected(this.initialSelection);

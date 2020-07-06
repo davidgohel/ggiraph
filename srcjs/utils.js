@@ -38,7 +38,3 @@ export function navigator_id() {
   if ((tem = ua.match(/version\/(\d+)/i)) !== null) M.splice(1, 1, tem[1]);
   return M.join(' ');
 }
-
-export function isArray(x) {
-  return x.constructor.toString().indexOf('Array') > -1;
-}

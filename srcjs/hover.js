@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import * as utils from './utils';
 
 export default class HoverHandler {
   constructor(
@@ -41,7 +40,7 @@ export default class HoverHandler {
       Shiny.addCustomMessageHandler(this.shinyMessageId, function (message) {
         if (typeof message === 'string') {
           that.setHovered([message]);
-        } else if (utils.isArray(message)) {
+        } else if (Array.isArray(message)) {
           that.setHovered(message);
         }
       });
