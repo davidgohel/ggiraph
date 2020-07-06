@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "ggiraph object javascript module",
   "scripts": {
+    "clean": "rm -dfr ../inst/htmlwidgets/lib ../inst/htmlwidgets/girafe.yaml",
     "lintjs": "npx eslint --fix -c .eslintrc.yaml ./*.js ../srcjs/*.js",
     "lintcss": "npx stylelint --fix --config .stylelintrc.yaml ../srcjs/*.css",
     "dev": "webpack --mode development",
