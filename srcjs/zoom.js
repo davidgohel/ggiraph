@@ -27,7 +27,7 @@ export default class ZoomHandler {
     const svgid = this.svgid;
     d3.select('#' + this.containerid).call(
       this.zoomer.on('zoom', function () {
-        d3.select('#' + svgid + ' g').attr('transform', d3.event.transform);
+        d3.select('#' + svgid + ' > g').attr('transform', d3.event.transform);
       })
     );
   }
