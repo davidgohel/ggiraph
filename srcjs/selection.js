@@ -172,7 +172,7 @@ export default class SelectionHandler {
         .closePathSelect(true)
         .closePathDistance(100)
         .items(svgEl.selectAll('*[' + this.attrName + ']'))
-        .targetArea(svgEl)
+        .targetArea(svgEl.select('g'))
         .on('start', lasso_start)
         .on('draw', lasso_draw)
         .on('end', lasso_end);
