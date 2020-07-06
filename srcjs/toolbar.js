@@ -38,12 +38,12 @@ export default class ToolbarHandler {
     const that = this;
     if (this.selectionHandler) {
       const divToolbarSelect = toolbarEl
-        .append('div')
+        .append('xhtml:div')
         .classed(this.clsName + '-block', true)
         .classed('shinyonly', true);
 
       divToolbarSelect
-        .append('a')
+        .append('xhtml:a')
         .classed(this.clsName + '-icon', true)
         .classed('neutral', true)
         .attr('title', 'lasso selection')
@@ -53,7 +53,7 @@ export default class ToolbarHandler {
         .html(ICONS.lasso_on);
 
       divToolbarSelect
-        .append('a')
+        .append('xhtml:a')
         .classed(this.clsName + '-icon', true)
         .classed('drop', true)
         .attr('title', 'lasso deselection')
@@ -65,11 +65,11 @@ export default class ToolbarHandler {
 
     if (this.zoomHandler) {
       const divToolbarZoom = toolbarEl
-        .append('div')
+        .append('xhtml:div')
         .classed(this.clsName + '-block', true);
 
       divToolbarZoom
-        .append('a')
+        .append('xhtml:a')
         .classed(this.clsName + '-icon', true)
         .classed('neutral', true)
         .attr('title', 'pan-zoom reset')
@@ -79,7 +79,7 @@ export default class ToolbarHandler {
         .html(ICONS.pan_zoom_reset);
 
       divToolbarZoom
-        .append('a')
+        .append('xhtml:a')
         .classed(this.clsName + '-icon', true)
         .classed('neutral', true)
         .attr('title', 'activate pan-zoom')
@@ -89,7 +89,7 @@ export default class ToolbarHandler {
         .html(ICONS.zoom_on);
 
       divToolbarZoom
-        .append('a')
+        .append('xhtml:a')
         .classed(this.clsName + '-icon', true)
         .classed('drop', true)
         .attr('title', 'deactivate pan-zoom')
@@ -101,11 +101,11 @@ export default class ToolbarHandler {
 
     if (this.saveaspng) {
       const divToolbarMisc = toolbarEl
-        .append('div')
+        .append('xhtml:div')
         .classed(this.clsName + '-block', true);
 
       divToolbarMisc
-        .append('a')
+        .append('xhtml:a')
         .classed(this.clsName + '-icon', true)
         .classed('neutral', true)
         .attr('title', 'download png')
