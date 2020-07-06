@@ -1,3 +1,6 @@
+/* eslint-env node */
+
+const StylelintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackBeforeBuildPlugin = require('before-build-webpack');
@@ -126,6 +129,16 @@ module.exports = (env, argv) => {
     externals: ['d3'],
     module: {
       rules: [
+        {
+          enforce: 'pre',
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+          options: {
+            configFile: '.eslintrc.yaml',
+            fix: true
+          }
+        },
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -256,6 +269,13 @@ module.exports = (env, argv) => {
       modules: modulePaths
     },
     plugins: [
+      new StylelintPlugin({
+        configFile: '.stylelintrc.yaml',
+        context: sourceDir,
+        files: '*.css',
+        failOnError: true,
+        fix: true
+      }),
       new MiniCssExtractPlugin({
         filename: getLibDestCssFilename(PACKAGE.name),
         ignoreOrder: false
