@@ -26,6 +26,7 @@
     "before-build-webpack": "^0.2.9",
     "concat": "^1.0.3",
     "copy-webpack-plugin": "^6.0.3",
+    "core-js": "^3.6.5",
     "css-loader": "^3.6.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
