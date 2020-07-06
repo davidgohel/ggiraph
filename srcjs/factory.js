@@ -2,43 +2,57 @@ import SVGObject from './svg.js';
 
 // Returns a factory function for HTMLWidgets
 export function factory(shinyMode) {
-
-  return function(el, width, height) {
+  return function (el, width, height) {
     const ggobj = new SVGObject(el.id, shinyMode);
 
     return {
-      renderValue: function(x) {
+      renderValue: function (x) {
         ggobj.clear();
 
         ggobj.setSvgId(x.uid);
         ggobj.addStyle([
           x.settings.tooltip.css,
           x.settings.hoverinv.css,
-          x.settings.hover.css, x.settings.hoverkey.css, x.settings.hovertheme.css,
-          x.settings.capture.css, x.settings.capturekey.css, x.settings.capturetheme.css
+          x.settings.hover.css,
+          x.settings.hoverkey.css,
+          x.settings.hovertheme.css,
+          x.settings.capture.css,
+          x.settings.capturekey.css,
+          x.settings.capturetheme.css
         ]);
         ggobj.addSvg(x.html, x.js);
 
-        const box = d3.select("#" + ggobj.svgid).property("viewBox").baseVal;
+        const box = d3.select('#' + ggobj.svgid).property('viewBox').baseVal;
         if (!x.settings.sizing.rescale) {
           ggobj.fixSize(box.width, box.height);
-          d3.select(el).style("width", null).style("height", null);
-        } else if( shinyMode ){
-          ggobj.autoScale("100%");
-          ggobj.IEFixResize(1, 1/x.ratio);
-          ggobj.setSizeLimits(d3.select(el).style("width"), 0, d3.select(el).style("height"), 0);
+          d3.select(el).style('width', null).style('height', null);
+        } else if (shinyMode) {
+          ggobj.autoScale('100%');
+          ggobj.IEFixResize(1, 1 / x.ratio);
+          ggobj.setSizeLimits(
+            d3.select(el).style('width'),
+            0,
+            d3.select(el).style('height'),
+            0
+          );
           //ggobj.removeContainerLimits();
         } else {
-          ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + "%");
-          ggobj.IEFixResize(x.settings.sizing.width, 1/x.ratio);
-          ggobj.setSizeLimits("unset", "unset", "unset", "unset");
+          ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + '%');
+          ggobj.IEFixResize(x.settings.sizing.width, 1 / x.ratio);
+          ggobj.setSizeLimits('unset', 'unset', 'unset', 'unset');
           ggobj.removeContainerLimits();
         }
 
-        ggobj.setupTooltip("tooltip",
-          x.settings.tooltip.opacity, x.settings.tooltip.offx, x.settings.tooltip.offy,
-          x.settings.tooltip.use_cursor_pos, x.settings.tooltip.usefill, x.settings.tooltip.usestroke,
-          x.settings.tooltip.delay.over, x.settings.tooltip.delay.out
+        ggobj.setupTooltip(
+          'tooltip',
+          x.settings.tooltip.opacity,
+          x.settings.tooltip.offx,
+          x.settings.tooltip.offy,
+          x.settings.tooltip.use_cursor_pos,
+          x.settings.tooltip.usefill,
+          x.settings.tooltip.usestroke,
+          x.settings.tooltip.delay.over,
+          x.settings.tooltip.delay.out
         );
 
         ggobj.setupHover([
@@ -48,7 +62,8 @@ export function factory(shinyMode) {
             inputSuffix: '_hovered',
             messageSuffix: '_hovered_set',
             reactive: x.settings.hover.reactive,
-            invClassPrefix: (x.settings.hoverinv.css.length > 0 ? 'hover_inv' : null)
+            invClassPrefix:
+              x.settings.hoverinv.css.length > 0 ? 'hover_inv' : null
           },
           {
             classPrefix: 'hover_key',
@@ -99,13 +114,15 @@ export function factory(shinyMode) {
         ]);
 
         ggobj.setupZoom(x.settings.zoom.min, x.settings.zoom.max);
-        ggobj.setupToolbar('ggiraph-toolbar',
-          x.settings.toolbar.position, x.settings.toolbar.saveaspng, x.settings.toolbar.pngname);
+        ggobj.setupToolbar(
+          'ggiraph-toolbar',
+          x.settings.toolbar.position,
+          x.settings.toolbar.saveaspng,
+          x.settings.toolbar.pngname
+        );
       },
 
-      resize: function(width, height) {
-      }
-
+      resize: function (width, height) {}
     };
   };
 }
