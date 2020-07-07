@@ -11,6 +11,8 @@ globals:
   d3: readonly
   saveSvgAsPng: readonly
   Shiny: readonly
+  ggiraphjs: readonly
+  HTMLWidgets: readonly
 parserOptions:
   ecmaVersion: 6
   sourceType: module

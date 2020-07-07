@@ -150,7 +150,7 @@ module.exports = (env, argv) => {
                   '@babel/preset-env',
                   {
                     modules: false,
-                    debug: argv.mode == "development",
+                    debug: argv.mode == 'development',
                     useBuiltIns: 'usage',
                     corejs: 3,
                     exclude: ['es.promise']
