@@ -52,7 +52,7 @@ validate_css <- function(css,
   css <- trimws(css)
   if (nchar(css) > 0) {
     tag <- paste0(tag, "._CLASSNAME_", collapse = ", ")
-    css <- paste(tag, "{", css, "}\n")
+    css <- paste(tag, "{", css, "}")
   }
   css
 }
