@@ -11,7 +11,7 @@ export default class HoverHandler {
   ) {
     this.svgid = svgid;
     this.clsName = classPrefix + '_' + svgid;
-    this.invClsName = invClassPrefix + '_' + svgid;
+    this.invClsName = invClassPrefix ? invClassPrefix + '_' + svgid : null;
     this.attrName = attrName;
     this.shinyInputId = shinyInputId;
     this.shinyMessageId = shinyMessageId;
