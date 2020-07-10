@@ -21,7 +21,7 @@
 .ggiraph-toolbar {
   position: absolute;
   background-color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255,.3);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 5px;
   padding-top: 2px;
   opacity: 0;
@@ -74,37 +74,37 @@
 }
 
 .drop {
-  stroke: #E30C37;
-  fill: #E30C37;
+  stroke: #e30c37;
+  fill: #e30c37;
 }
-.drop:hover{
-  stroke: #333333;
-  fill: #333333;
+.drop:hover {
+  stroke: #333;
+  fill: #333;
 }
 .neutral {
-  stroke: #006699;
-  fill: #006699;
+  stroke: #069;
+  fill: #069;
 }
-.neutral:hover{
-  stroke: #333333;
-  fill: #333333;
+.neutral:hover {
+  stroke: #333;
+  fill: #333;
 }
 
 .lasso path {
-  stroke: rgb(80,80,80);
+  stroke: rgb(80, 80, 80);
   stroke-width: 2px;
 }
 
 .lasso .drawn {
-  fill-opacity: .05;
+  fill-opacity: 0.05;
 }
 
 .lasso .loop_close {
   fill: none;
-  stroke-dasharray: 4,4;
+  stroke-dasharray: 4, 4;
 }
 
 .lasso .origin {
-  fill: #333333;
-  fill-opacity: .5;
+  fill: #333;
+  fill-opacity: 0.5;
 }

@@ -1,0 +1,38 @@
+plugins:
+  - prettier
+env:
+  browser: true
+  es6: true
+extends:
+  - eslint:recommended
+  - plugin:prettier/recommended
+  - prettier
+globals:
+  d3: readonly
+  saveSvgAsPng: readonly
+  Shiny: readonly
+  ggiraphjs: readonly
+  HTMLWidgets: readonly
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+rules:
+  indent: [error, 2]
+  linebreak-style: [error, unix]
+  no-multi-spaces: error
+  no-unused-vars:
+    - warn
+    - argsIgnorePattern: ^(.*)$
+  prefer-const: error
+  no-var: error
+  eol-last: [error, always]
+  prettier/prettier:
+    - error
+    - printWidth: 80
+      tabWidth: 2
+      useTabs: false
+      semi: true
+      singleQuote: true
+      trailingComma: none
+      bracketSpacing: true
+      endOfLine: lf

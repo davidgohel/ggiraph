@@ -1,9 +1,15 @@
-import * as d3 from 'd3'
-import * as utils from './utils'
+import * as d3 from 'd3';
 
 export default class SelectionHandler {
-
-  constructor(svgid, classPrefix, attrName, shinyInputId, shinyMessageId, type, initialSelection) {
+  constructor(
+    svgid,
+    classPrefix,
+    attrName,
+    shinyInputId,
+    shinyMessageId,
+    type,
+    initialSelection
+  ) {
     this.svgid = svgid;
     this.clsName = classPrefix + '_' + svgid;
     this.attrName = attrName;
@@ -16,27 +22,30 @@ export default class SelectionHandler {
 
   init() {
     // select elements
-    const elements = d3.select('#' + this.svgid)
+    const elements = d3
+      .select('#' + this.svgid)
       .selectAll('*[' + this.attrName + ']');
     // check selection type
-    if (elements.empty() ||
-        !(this.type == 'single' || this.type == 'multiple')) {
+    if (
+      elements.empty() ||
+      !(this.type == 'single' || this.type == 'multiple')
+    ) {
       // nothing to do here, return false to discard this
       return false;
     }
     const that = this;
 
     // add event listeners
-    elements.each(function() {
-      this.addEventListener("click", that);
+    elements.each(function () {
+      this.addEventListener('click', that);
     });
 
     // add shiny listener
     if (this.shinyMessageId) {
-      Shiny.addCustomMessageHandler(this.shinyMessageId, function(message) {
+      Shiny.addCustomMessageHandler(this.shinyMessageId, function (message) {
         if (typeof message === 'string') {
           that.setSelected([message]);
-        } else if (utils.isArray(message)) {
+        } else if (Array.isArray(message)) {
           that.setSelected(message);
         }
       });
@@ -45,7 +54,10 @@ export default class SelectionHandler {
     // set selections
     if (typeof this.initialSelection === 'string') {
       this.setSelected([this.initialSelection]);
-    } else if (utils.isArray(this.initialSelection) && this.type == 'multiple') {
+    } else if (
+      Array.isArray(this.initialSelection) &&
+      this.type == 'multiple'
+    ) {
       this.setSelected(this.initialSelection);
     }
     // clear mem
@@ -60,17 +72,23 @@ export default class SelectionHandler {
     try {
       d3.select('#' + this.svgid)
         .selectAll('*[' + this.attrName + ']')
-        .each(function() {
-          this.removeEventListener("click", that);
+        .each(function () {
+          this.removeEventListener('click', that);
         });
-    } catch (e) { console.error(e) }
+    } catch (e) {
+      console.error(e);
+    }
     // remove shiny listener
     if (this.shinyMessageId) {
       try {
         // For Shiny the only way to really remove it
         // is to replace it with a void one
-        Shiny.addCustomMessageHandler(this.shinyMessageId, function(message) {});
-      } catch (e) { console.error(e) }
+        Shiny.addCustomMessageHandler(this.shinyMessageId, function (
+          message
+        ) {});
+      } catch (e) {
+        console.error(e);
+      }
     }
     //
     this.dataSelected = [];
@@ -79,8 +97,8 @@ export default class SelectionHandler {
   handleEvent(event) {
     try {
       let dataSel = this.dataSelected;
-      var dataId = event.target.getAttribute(this.attrName);
-      var index = dataSel.indexOf(dataId);
+      const dataId = event.target.getAttribute(this.attrName);
+      const index = dataSel.indexOf(dataId);
       if (this.type == 'multiple') {
         if (index < 0) {
           dataSel.push(dataId);
@@ -95,7 +113,9 @@ export default class SelectionHandler {
         }
       }
       this.setSelected(dataSel);
-    } catch (e) { console.error(e) }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   setSelected(sel) {
@@ -112,7 +132,7 @@ export default class SelectionHandler {
       .selectAll('*[' + this.attrName + '].' + this.clsName)
       .classed(this.clsName, false);
     const that = this;
-    for (var i = 0; i < that.dataSelected.length; i++) {
+    for (let i = 0; i < that.dataSelected.length; i++) {
       svgEl
         .selectAll('*[' + that.attrName + '="' + that.dataSelected[i] + '"]')
         .classed(that.clsName, true);
@@ -123,11 +143,11 @@ export default class SelectionHandler {
     const svgEl = d3.select('#' + this.svgid);
     const that = this;
     let lasso_ = d3.lasso();
-    const lasso_start = function () { };
-    const lasso_draw = function () { };
+    const lasso_start = function () {};
+    const lasso_draw = function () {};
     const lasso_end = function () {
       try {
-        let dataSel = that.dataSelected;
+        const dataSel = that.dataSelected;
         lasso_.selectedItems().each(function (d, i) {
           const dataId = this.getAttribute(that.attrName);
           const index = dataSel.indexOf(dataId);
@@ -138,13 +158,12 @@ export default class SelectionHandler {
           }
         });
 
-        svgEl
-          .on(".dragstart", null)
-          .on(".drag", null)
-          .on(".dragend", null);
+        svgEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
 
         that.setSelected(dataSel);
-      } catch (e) { console.error(e) }
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     try {
@@ -152,12 +171,14 @@ export default class SelectionHandler {
         .closePathSelect(true)
         .closePathDistance(100)
         .items(svgEl.selectAll('*[' + this.attrName + ']'))
-        .targetArea(svgEl)
-        .on("start", lasso_start)
-        .on("draw", lasso_draw)
-        .on("end", lasso_end);
+        .targetArea(svgEl.select('g'))
+        .on('start', lasso_start)
+        .on('draw', lasso_draw)
+        .on('end', lasso_end);
 
       svgEl.call(lasso_);
-    } catch (e) { console.error(e) }
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
