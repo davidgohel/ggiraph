@@ -14,11 +14,15 @@
 #'
 #' @param hover_css Individual css style associate with one or more elements.
 #' This css style is applied when the element is hovered and overrides the default style,
-#' set via [opts_hover()] or [opts_hover_key()].
+#' set via [opts_hover()], [opts_hover_key()] or [opts_hover_theme()].
+#' It can also be constructed with \code{\link{girafe_css}},
+#' to give more control over the css for different element types (see [opts_hover()] note).
 #'
 #' @param selected_css Individual css style associate with one or more elements.
 #' This css style is applied when the element is selected and overrides the default style,
-#' set via [opts_selection()] or [opts_selection_key()].
+#' set via [opts_selection()], [opts_selection_key()] or [opts_selection_theme()].
+#' It can also be constructed with \code{\link{girafe_css}},
+#' to give more control over the css for different element types (see [opts_selection()] note).
 #'
 #' @param data_id Identifier to associate with one or more elements.
 #' This is mandatory parameter if hover and selection interactivity is desired.

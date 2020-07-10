@@ -98,6 +98,12 @@ opts_tooltip <- function(css = NULL,
 #' It must be a scalar character. It can also be constructed with
 #' \code{\link{girafe_css}}, to give more control over the css for different element types.
 #' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
+#' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,
+#' be aware that the browser's CSS engine will apply it also to line elements,
+#' if there are any that use the hovering feature. This will cause an undesired effect.
+#'
+#' To overcome this, supply the argument `css` using \code{\link{girafe_css}},
+#' in order to set the `fill` style only for the desired elements.
 #' @examples
 #' library(ggplot2)
 #'
@@ -175,6 +181,12 @@ opts_hover_theme <- function(css = NULL,
 #' @param only_shiny disable selections if not in a shiny context.
 #' @param selected character vector, id to be selected when the graph will be
 #' initialized.
+#' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,
+#' be aware that the browser's CSS engine will apply it also to line elements,
+#' if there are any that use the selection feature. This will cause an undesired effect.
+#'
+#' To overcome this, supply the argument `css` using \code{\link{girafe_css}},
+#' in order to set the `fill` style only for the desired elements.
 #' @examples
 #' library(ggplot2)
 #'

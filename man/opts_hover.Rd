@@ -31,6 +31,14 @@ Use \code{opts_hover} for interactive geometries in panels,
 Use \code{opts_hover_inv} for the effect on the rest of the geometries,
 while one is hovered (inverted operation).
 }
+\note{
+\strong{IMPORTANT}: When applying a \code{fill} style with the \code{css} argument,
+be aware that the browser's CSS engine will apply it also to line elements,
+if there are any that use the hovering feature. This will cause an undesired effect.
+
+To overcome this, supply the argument \code{css} using \code{\link{girafe_css}},
+in order to set the \code{fill} style only for the desired elements.
+}
 \examples{
 library(ggplot2)
 

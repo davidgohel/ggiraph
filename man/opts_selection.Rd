@@ -47,6 +47,14 @@ Use \code{opts_selection} for interactive geometries in panels,
 \code{opts_selection_key} for interactive scales/guides and
 \code{opts_selection_theme} for interactive theme elements.
 }
+\note{
+\strong{IMPORTANT}: When applying a \code{fill} style with the \code{css} argument,
+be aware that the browser's CSS engine will apply it also to line elements,
+if there are any that use the selection feature. This will cause an undesired effect.
+
+To overcome this, supply the argument \code{css} using \code{\link{girafe_css}},
+in order to set the \code{fill} style only for the desired elements.
+}
 \examples{
 library(ggplot2)
 
