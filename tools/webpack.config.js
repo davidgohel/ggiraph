@@ -199,7 +199,7 @@ module.exports = (env, argv) => {
           let depList = getLibDependencies('d3-bundle').flat();
           depList = [...new Set(depList)]; // unique
           // console.log('d3-bundle dependencies:', depList);
-          // concatenate dependency files to a singöle file
+          // concatenate dependency files to a single file
           const depFiles = depList
             .map((x) => libInfos[x].srcJs)
             .filter((x) => !!x);
