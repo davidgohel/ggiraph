@@ -86,7 +86,7 @@ while one is hovered (inverted operation)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
       </span>
     </div>
 
@@ -169,6 +169,13 @@ It must be a scalar character. It can also be constructed with
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p><strong>IMPORTANT</strong>: When applying a <code>fill</code> style with the <code>css</code> argument,
+be aware that the browser's CSS engine will apply it also to line elements,
+if there are any that use the hovering feature. This will cause an undesired effect.</p>
+<p>To overcome this, supply the argument <code>css</code> using <code><a href='girafe_css.html'>girafe_css</a></code>,
+in order to set the <code>fill</code> style only for the desired elements.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other girafe animation options: 
@@ -207,7 +214,7 @@ It must be a scalar character. It can also be constructed with
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.8 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
