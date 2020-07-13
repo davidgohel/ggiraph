@@ -63,14 +63,22 @@
 
 .ggiraph-toolbar-block {
   display: inline-block;
-  padding-right: 10px;
+}
+.ggiraph-toolbar-block:not(:last-child) {
+  margin-right: 10px;
 }
 
 .ggiraph-toolbar-icon {
-  position: relative;
+  display: inline-block;
   cursor: pointer;
-  box-sizing: border-box;
-  padding-right: 3px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 15pt !important;
+  height: 15pt !important;
+}
+.ggiraph-toolbar-icon:not(:last-child) {
+  margin-right: 3px;
 }
 
 .drop {
