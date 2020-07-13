@@ -1,9 +1,9 @@
 import SVGObject from './svg.js';
 
 // Returns a factory function for HTMLWidgets
-export function factory(shinyMode) {
+export function factory(shinyMode, standaloneMode) {
   return function (el, width, height) {
-    const ggobj = new SVGObject(el.id, shinyMode);
+    const ggobj = new SVGObject(el.id, shinyMode, standaloneMode);
 
     return {
       renderValue: function (x) {
@@ -25,7 +25,8 @@ export function factory(shinyMode) {
         const box = d3.select('#' + ggobj.svgid).property('viewBox').baseVal;
         if (!x.settings.sizing.rescale) {
           ggobj.fixSize(box.width, box.height);
-          d3.select(el).style('width', null).style('height', null);
+          if (!standaloneMode)
+            d3.select(el).style('width', null).style('height', null);
         } else if (shinyMode) {
           ggobj.autoScale('100%');
           ggobj.IEFixResize(1, 1 / x.ratio);

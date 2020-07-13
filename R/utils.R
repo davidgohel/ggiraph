@@ -62,3 +62,9 @@ append_aes <- function(mapping, lst) {
 grob_argnames <- function(x, grob) {
   intersect(names(formals(grob)), names(x))
 }
+
+#' Returns the contents of a file as text
+#' @noRd
+read_file <- function(path) {
+  paste0(readLines(path, encoding = "UTF-8", warn = FALSE), collapse = "\n")
+}

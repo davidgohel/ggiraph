@@ -7,11 +7,12 @@ import HoverHandler from './hover.js';
 import SelectionHandler from './selection.js';
 
 export default class SVGObject {
-  constructor(containerid, shinyMode) {
+  constructor(containerid, shinyMode, standaloneMode) {
     this.containerid = containerid;
     this.svgid = null;
     this.handlers = [];
     this.shinyMode = shinyMode;
+    this.standaloneMode = standaloneMode;
     this.isIE =
       utils.navigator_id() == 'IE 11' ||
       utils.navigator_id().substring(0, 4) === 'MSIE';
@@ -24,9 +25,10 @@ export default class SVGObject {
     }
     this.handlers = [];
 
-    // remove any old style element
-    d3.select('#' + this.containerid + ' style').remove();
-
+    if (!this.standaloneMode) {
+      // remove any old style element
+      d3.select('#' + this.containerid + ' style').remove();
+    }
     // remove any old container element
     d3.select('#' + this.containerid + ' div.girafe_container_std').remove();
   }
@@ -36,18 +38,30 @@ export default class SVGObject {
   }
 
   addStyle(styleArray) {
-    const css = styleArray.join('\n').replace(/SVGID_/g, this.svgid);
+    const css = styleArray.join(' ').replace(/SVGID_/g, this.svgid);
 
     d3.select('#' + this.containerid)
       .append('style')
+      .attr('type', 'text/css')
       .text(css);
   }
 
   addSvg(svg, jsstr) {
-    d3.select('#' + this.containerid)
-      .append('div')
-      .attr('class', 'girafe_container_std')
-      .html(svg);
+    if (this.standaloneMode) {
+      // append a foreignObject to the svg, as a container for tooltip & toolbar
+      d3.select('#' + this.svgid)
+        .append('svg:foreignObject')
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .classed('girafe-svg-foreign-object', true)
+        .style('pointer-events', 'none');
+    } else {
+      // append the svg to container
+      d3.select('#' + this.containerid)
+        .append('div')
+        .attr('class', 'girafe_container_std')
+        .html(svg);
+    }
 
     if (jsstr) {
       const fun_ = utils.parseFunction(jsstr);
@@ -75,10 +89,11 @@ export default class SVGObject {
 
   fixSize(width, height) {
     d3.select('#' + this.svgid).attr('preserveAspectRatio', 'xMidYMin meet');
-    d3.select('#' + this.containerid + ' .girafe_container_std').style(
-      'width',
-      '100%'
-    );
+    if (!this.standaloneMode)
+      d3.select('#' + this.containerid + ' .girafe_container_std').style(
+        'width',
+        '100%'
+      );
     d3.select('#' + this.svgid)
       .attr('width', width)
       .attr('height', height);
@@ -96,7 +111,7 @@ export default class SVGObject {
   }
 
   removeContainerLimits() {
-    if (!this.isIE) {
+    if (!this.standaloneMode && !this.isIE) {
       d3.select('#' + this.containerid)
         .style('width', null)
         .style('height', null);
@@ -128,7 +143,7 @@ export default class SVGObject {
         delayover,
         delayout
       );
-      if (handler.init()) this.handlers.push(handler);
+      if (handler.init(this.standaloneMode)) this.handlers.push(handler);
     } catch (e) {
       console.error(e);
     }
@@ -155,7 +170,7 @@ export default class SVGObject {
           inputId,
           messageId
         );
-        if (handler.init()) this.handlers.push(handler);
+        if (handler.init(this.standaloneMode)) this.handlers.push(handler);
       } catch (e) {
         console.error(e);
       }
@@ -189,7 +204,7 @@ export default class SVGObject {
             item.selected
           );
           // init will return false if there is nothing to select
-          if (handler.init()) this.handlers.push(handler);
+          if (handler.init(this.standaloneMode)) this.handlers.push(handler);
         }
       } catch (e) {
         console.error(e);
@@ -201,7 +216,7 @@ export default class SVGObject {
     // register zoom handler
     try {
       const handler = new ZoomHandler(this.containerid, this.svgid, min, max);
-      if (handler.init()) this.handlers.push(handler);
+      if (handler.init(this.standaloneMode)) this.handlers.push(handler);
     } catch (e) {
       console.error(e);
     }
@@ -236,7 +251,7 @@ export default class SVGObject {
         saveaspng,
         pngname
       );
-      if (handler.init()) this.handlers.push(handler);
+      if (handler.init(this.standaloneMode)) this.handlers.push(handler);
     } catch (e) {
       console.error(e);
     }

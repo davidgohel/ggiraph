@@ -22,25 +22,34 @@ export default class ToolbarHandler {
     this.pngname = pngname;
   }
 
-  init() {
+  init(standaloneMode) {
     // we need at least one of zoom/lasso/savesapng buttons
     if (!(this.zoomHandler || this.selectionHandler || this.saveaspng)) {
       // nothing to do here, return false to discard this
       return false;
     }
 
-    const toolbarEl = d3
-      .select('#' + this.containerid + ' .girafe_container_std')
-      .append('div')
+    let containerEl;
+    if (standaloneMode) {
+      containerEl = d3.select(
+        '#' + this.svgid + ' > foreignObject.girafe-svg-foreign-object'
+      );
+    } else {
+      containerEl = d3.select(
+        '#' + this.containerid + ' .girafe_container_std'
+      );
+    }
+    const toolbarEl = containerEl
+      .append('xhtml:div')
       .classed(this.clsName, true)
-      .classed(this.clsName + '-' + this.position, true);
+      .classed(this.clsName + '-' + this.position, true)
+      .style('pointer-events', 'all');
 
     const that = this;
     if (this.selectionHandler) {
       const divToolbarSelect = toolbarEl
         .append('xhtml:div')
-        .classed(this.clsName + '-block', true)
-        .classed('shinyonly', true);
+        .classed(this.clsName + '-block', true);
 
       divToolbarSelect
         .append('xhtml:a')

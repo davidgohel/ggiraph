@@ -25,7 +25,8 @@ export default class TooltipHandler {
     this.delayout = delayout;
   }
 
-  init() {
+  init(standaloneMode) {
+    this.standaloneMode = standaloneMode;
     // select elements
     const elements = d3.select('#' + this.svgid).selectAll('*[title]');
     // check selection type
@@ -35,11 +36,21 @@ export default class TooltipHandler {
     }
 
     // create tooltip
-    if (d3.select('.' + this.clsName).empty()) {
-      d3.select('body').append('div').attr('class', this.clsName);
+    if (d3.select('div.' + this.clsName).empty()) {
+      let containerEl;
+      if (this.standaloneMode) {
+        containerEl = d3.select(
+          '#' + this.svgid + ' > foreignObject.girafe-svg-foreign-object'
+        );
+      } else {
+        containerEl = d3.select('body');
+      }
+      containerEl
+        .append('xhtml:div')
+        .classed(this.clsName, true)
+        .style('position', 'absolute')
+        .style('opacity', 0);
     }
-    const tooltipEl = d3.select('.' + this.clsName);
-    tooltipEl.style('position', 'absolute').style('opacity', 0);
 
     // add event listeners
     const that = this;
@@ -74,7 +85,11 @@ export default class TooltipHandler {
   handleEvent(event) {
     try {
       let xpos, ypos, xdiff, ydiff, tooltipRect, clientRect;
-      const tooltipEl = d3.select('.' + this.clsName);
+      const tooltipEl = d3.select('div.' + this.clsName);
+      let svgContainerEl = d3.select('#' + this.svgid).node();
+      if (!this.standaloneMode) {
+        svgContainerEl = svgContainerEl.parentNode;
+      }
       if (event.type == 'mouseover') {
         if (this.usefill) {
           tooltipEl.style(
@@ -89,10 +104,7 @@ export default class TooltipHandler {
         // set the tooltip again so that html entities are properly decoded
         tooltipEl.html(tooltipEl.text());
         tooltipRect = tooltipEl.node().getBoundingClientRect();
-        clientRect = d3
-          .select('#' + this.svgid)
-          .node()
-          .parentNode.getBoundingClientRect();
+        clientRect = svgContainerEl.getBoundingClientRect();
         if (this.usecursor) {
           xpos = event.pageX + this.offx;
           xdiff = xpos + tooltipRect.width - (clientRect.x + clientRect.width);
@@ -119,10 +131,7 @@ export default class TooltipHandler {
           .style('opacity', this.opacity);
       } else if (event.type == 'mousemove') {
         tooltipRect = tooltipEl.node().getBoundingClientRect();
-        clientRect = d3
-          .select('#' + this.svgid)
-          .node()
-          .parentNode.getBoundingClientRect();
+        clientRect = svgContainerEl.getBoundingClientRect();
         if (this.usecursor) {
           xpos = event.pageX + this.offx;
           xdiff = xpos + tooltipRect.width - (clientRect.x + clientRect.width);

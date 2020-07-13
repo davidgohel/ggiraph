@@ -111,7 +111,7 @@ girafe <- function(
   }, finally = dev.off() )
 
   settings <- merge_options(default_opts(), options)
-  x = list( html = paste0(readLines(path, encoding = "UTF-8"), collapse = "\n"),
+  x = list( html = read_file(path),
             js = NULL,
             uid = args$canvas_id,
             ratio = width_svg / height_svg,
@@ -234,4 +234,3 @@ run_girafe_example <- function(name = "crimes"){
       display.mode = "showcase")
   else warning("package shiny is required to be able to use the function")
 }
-
