@@ -5,7 +5,7 @@
 #'
 #' @details
 #' The exported svg will include all necessary Javascript scripts and CSS styles,
-#' so that it be fully interactive by itself, when viewed in a browser or
+#' so that it will be fully interactive by itself, when viewed in a browser or
 #' embedded in an HTML document via the `embed`, `object` or `iframe` tag.
 #'
 #' @note
@@ -47,10 +47,32 @@ girafe_export_svg <- function(x, filename, overwrite = FALSE) {
   f <- file(filename, "w")
   tryCatch(
     {
-      # write everything but the closing svg tag
-      writeLines(substring(x$x$html, 1, nchar(x$x$html) - 6), f)
-      x$x$html <- ""
-      x$x$js <- ""
+      # get everything but the closing svg tag
+      svg <- substring(x$x$html, 1, nchar(x$x$html) - 6)
+
+      if (!x$x$settings$sizing$rescale) {
+        # If we don't rescale, set fixed width & height attributes from viewBox.
+        # We do this here instead of waiting javascript to apply the fixed size,
+        # in order to avoid content flashes in embedded svgs
+        viewBox <- regmatches(svg, regexec(
+          "viewBox='(\\d+\\.?\\d*)\\s+(\\d+\\.?\\d*)\\s+(\\d+\\.?\\d*)\\s+(\\d+\\.?\\d*)'",
+          svg
+        ))[[1]]
+        if (length(viewBox) == 5) {
+          svg <- sub(
+            pattern = "viewBox",
+            replacement = paste0("width='", viewBox[4], "' height='", viewBox[5], "' viewBox"),
+            x = svg,
+            fixed = TRUE
+          )
+        }
+      }
+
+      # write to file
+      writeLines(svg, f)
+
+      # not needed anymore
+      x$x$html <- NULL
 
       # include libs
       walk(getDependency("girafe", "ggiraph"), function(d) {

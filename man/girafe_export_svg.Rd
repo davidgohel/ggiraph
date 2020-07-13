@@ -18,7 +18,7 @@ Export a girafe object to a standalone SVG document.
 }
 \details{
 The exported svg will include all necessary Javascript scripts and CSS styles,
-so that it be fully interactive by itself, when viewed in a browser or
+so that it will be fully interactive by itself, when viewed in a browser or
 embedded in an HTML document via the \code{embed}, \code{object} or \code{iframe} tag.
 }
 \note{
