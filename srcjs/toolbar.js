@@ -40,7 +40,7 @@ export default class ToolbarHandler {
       );
     }
     const toolbarEl = containerEl
-      .append('xhtml:div')
+      .insert('xhtml:div', standaloneMode ? ':first-child' : null)
       .classed(this.clsName, true)
       .classed(this.clsName + '-' + this.position, true)
       .style('pointer-events', 'all');
