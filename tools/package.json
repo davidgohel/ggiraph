@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ggiraphjs",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "ggiraph object javascript module",
   "keywords": [],
   "author": "David Gohel <david.gohel@ardata.fr>",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -dfr ../inst/htmlwidgets/lib ../inst/htmlwidgets/girafe.yaml",
-    "lintjs": "npx eslint --fix -c .eslintrc.yaml ../srcjs/*.js ./*.js ../inst/htmlwidgets/*.js",
+    "lintjs": "npx eslint --fix -c .eslintrc.yaml ../srcjs/*.js ./*.js",
     "lintcss": "npx stylelint --fix --config .stylelintrc.yaml ../srcjs/*.css",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
