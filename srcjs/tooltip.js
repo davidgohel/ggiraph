@@ -84,7 +84,7 @@ export default class TooltipHandler {
 
   handleEvent(event) {
     try {
-      let xpos, ypos, xdiff, ydiff, tooltipRect, clientRect;
+      let pos;
       const tooltipEl = d3.select('div.' + this.clsName);
       let svgContainerEl = d3.select('#' + this.svgid).node();
       if (!this.standaloneMode) {
@@ -103,59 +103,104 @@ export default class TooltipHandler {
         tooltipEl.html(event.target.getAttribute('title'));
         // set the tooltip again so that html entities are properly decoded
         tooltipEl.html(tooltipEl.text());
-        tooltipRect = tooltipEl.node().getBoundingClientRect();
-        clientRect = svgContainerEl.getBoundingClientRect();
-        if (this.usecursor) {
-          xpos = event.pageX + this.offx;
-          xdiff = xpos + tooltipRect.width - (clientRect.x + clientRect.width);
-          if (xdiff > 0) {
-            xpos -= xdiff;
-          }
-          ypos = event.pageY + this.offy;
-          ydiff =
-            ypos +
-            tooltipRect.height -
-            (clientRect.y + clientRect.height + window.pageYOffset);
-          if (ydiff > 0) {
-            ypos -= ydiff;
-          }
-        } else {
-          xpos = this.offx + clientRect.left;
-          ypos = document.documentElement.scrollTop + clientRect.y + this.offy;
-        }
+
+        pos = this.calculateTooltipPosition(
+          tooltipEl.node(),
+          svgContainerEl,
+          event
+        );
         tooltipEl
-          .style('left', xpos + 'px')
-          .style('top', ypos + 'px')
+          .style('left', pos[0] + 'px')
+          .style('top', pos[1] + 'px')
           .transition()
           .duration(this.delayover)
           .style('opacity', this.opacity);
       } else if (event.type == 'mousemove') {
-        tooltipRect = tooltipEl.node().getBoundingClientRect();
-        clientRect = svgContainerEl.getBoundingClientRect();
-        if (this.usecursor) {
-          xpos = event.pageX + this.offx;
-          xdiff = xpos + tooltipRect.width - (clientRect.x + clientRect.width);
-          if (xdiff > 0) {
-            xpos -= xdiff;
-          }
-          ypos = event.pageY + this.offy;
-          ydiff =
-            ypos +
-            tooltipRect.height -
-            (clientRect.y + clientRect.height + window.pageYOffset);
-          if (ydiff > 0) {
-            ypos -= ydiff;
-          }
-        } else {
-          xpos = this.offx + clientRect.left;
-          ypos = document.documentElement.scrollTop + clientRect.y + this.offy;
-        }
-        tooltipEl.style('left', xpos + 'px').style('top', ypos + 'px');
+        pos = this.calculateTooltipPosition(
+          tooltipEl.node(),
+          svgContainerEl,
+          event
+        );
+        tooltipEl.style('left', pos[0] + 'px').style('top', pos[1] + 'px');
       } else if (event.type == 'mouseout') {
-        tooltipEl.transition().duration(this.delayout).style('opacity', 0);
+        // move tooltip offscreen on exit
+        pos = [-4000, -4000];
+        tooltipEl
+          .style('left', pos[0] + 'px')
+          .style('top', pos[1] + 'px')
+          .transition()
+          .duration(this.delayout)
+          .style('opacity', 0);
       }
     } catch (e) {
       console.error(e);
     }
+  }
+
+  calculateTooltipPosition(tooltipEl, containerEl, event, standaloneMode) {
+    const tooltipRect = tooltipEl.getBoundingClientRect();
+    const containerRect = containerEl.getBoundingClientRect();
+    let xpos, ypos;
+    if (this.usecursor) {
+      xpos = event.pageX;
+      ypos = event.pageY;
+
+      const maxx = window.innerWidth + window.pageXOffset;
+      const maxy = window.innerHeight + window.pageYOffset;
+      let xoffset = this.offx;
+      let yoffset = this.offy;
+      // needed so that the mouse doesn't fall inside tooltip
+      if (xoffset < 3) xoffset = 3;
+      if (yoffset < 3) yoffset = 3;
+
+      // try setting the tooltip on the right side of the point
+      const rightMargin = xpos + xoffset + tooltipRect.width;
+      if (rightMargin <= maxx) {
+        xpos += xoffset;
+      } else {
+        // try setting the tooltip on the left side of the point
+        const leftMargin = xpos - xoffset - tooltipRect.width;
+        if (leftMargin >= window.pageXOffset) {
+          xpos -= xoffset + tooltipRect.width;
+        } else {
+          // anchor to left
+          xpos = window.pageXOffset;
+        }
+      }
+
+      // try setting the tooltip on the bottom side of the point
+      const bottomMargin = ypos + yoffset + tooltipRect.height;
+      if (bottomMargin <= maxy) {
+        ypos += yoffset;
+      } else {
+        // try setting the tooltip on the top side of the point
+        const topMargin = ypos - yoffset - tooltipRect.height;
+        if (topMargin >= window.pageYOffset) {
+          ypos -= yoffset + tooltipRect.height;
+        } else {
+          // anchor to top
+          ypos = window.pageYOffset;
+        }
+      }
+
+      if (
+        this.standaloneMode &&
+        containerEl.createSVGPoint &&
+        containerEl.getScreenCTM
+      ) {
+        // must convert the position to svg coords
+        const transform = containerEl.getScreenCTM().inverse();
+        let point = containerEl.createSVGPoint();
+        point.x = xpos;
+        point.y = ypos;
+        point = point.matrixTransform(transform);
+        xpos = point.x;
+        ypos = point.y;
+      }
+    } else {
+      xpos = this.offx + containerRect.left;
+      ypos = this.offy + containerRect.top;
+    }
+    return [xpos, ypos];
   }
 }
