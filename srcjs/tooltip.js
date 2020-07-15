@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { svgClientPoint } from './utils';
 
 export default class TooltipHandler {
   constructor(
@@ -138,64 +139,74 @@ export default class TooltipHandler {
   }
 
   calculateTooltipPosition(tooltipEl, containerEl, event, standaloneMode) {
-    const tooltipRect = tooltipEl.getBoundingClientRect();
     const containerRect = containerEl.getBoundingClientRect();
     let xpos, ypos;
     if (this.usecursor) {
-      xpos = event.pageX;
-      ypos = event.pageY;
+      // tooltip dimensions
+      let tooltipWidth, tooltipHeight;
 
-      const maxx = window.innerWidth + window.pageXOffset;
-      const maxy = window.innerHeight + window.pageYOffset;
-      let xoffset = this.offx;
-      let yoffset = this.offy;
-      // needed so that the mouse doesn't fall inside tooltip
-      if (xoffset < 3) xoffset = 3;
-      if (yoffset < 3) yoffset = 3;
+      // boundaries where the tooltip must not cross
+      let minx, miny, maxx, maxy;
 
-      // try setting the tooltip on the right side of the point
-      const rightMargin = xpos + xoffset + tooltipRect.width;
-      if (rightMargin <= maxx) {
+      if (this.standaloneMode) {
+        // current mouse/touch coordinates in local coord system
+        const cp = svgClientPoint(containerEl, event);
+        xpos = cp[0];
+        ypos = cp[1];
+        // boundaries set to foreignObject box
+        const box = tooltipEl.parentElement.getBBox();
+        minx = 0;
+        miny = 0;
+        maxx = box.width;
+        maxy = box.height;
+        // tooltip dimensions
+        tooltipWidth = tooltipEl.offsetWidth;
+        tooltipHeight = tooltipEl.offsetHeight;
+      } else {
+        // current mouse/touch coordinates in page coord system
+        xpos = event.pageX;
+        ypos = event.pageY;
+        // boundaries set to window viewport
+        minx = window.pageXOffset;
+        miny = window.pageYOffset;
+        maxx = window.innerWidth + window.pageXOffset;
+        maxy = window.innerHeight + window.pageYOffset;
+        // tooltip dimensions
+        const tooltipRect = tooltipEl.getBoundingClientRect();
+        tooltipWidth = tooltipRect.width;
+        tooltipHeight = tooltipRect.height;
+      }
+
+      // offset at least 3 pixels away of current position
+      const xoffset = Math.max(this.offx, 3);
+      const yoffset = Math.max(this.offy, 3);
+
+      // calculate horizontal position
+      const spaceRight = maxx - (xpos + xoffset);
+      const spaceLeft = xpos - xoffset - minx;
+      if (spaceRight >= tooltipWidth) {
+        // fits on right
         xpos += xoffset;
+      } else if (spaceLeft >= tooltipWidth) {
+        // fits on left
+        xpos -= xoffset + tooltipWidth;
       } else {
-        // try setting the tooltip on the left side of the point
-        const leftMargin = xpos - xoffset - tooltipRect.width;
-        if (leftMargin >= window.pageXOffset) {
-          xpos -= xoffset + tooltipRect.width;
-        } else {
-          // anchor to left
-          xpos = window.pageXOffset;
-        }
+        // set at middle
+        xpos = Math.max(minx, xpos - tooltipWidth / 2);
       }
 
-      // try setting the tooltip on the bottom side of the point
-      const bottomMargin = ypos + yoffset + tooltipRect.height;
-      if (bottomMargin <= maxy) {
+      // calculate vertical position
+      const spaceBottom = maxy - (ypos + yoffset);
+      const spaceTop = ypos - yoffset - miny;
+      if (spaceBottom >= tooltipHeight) {
+        // fits on bottom
         ypos += yoffset;
+      } else if (spaceTop >= tooltipHeight) {
+        // fits on top
+        ypos -= yoffset + tooltipHeight;
       } else {
-        // try setting the tooltip on the top side of the point
-        const topMargin = ypos - yoffset - tooltipRect.height;
-        if (topMargin >= window.pageYOffset) {
-          ypos -= yoffset + tooltipRect.height;
-        } else {
-          // anchor to top
-          ypos = window.pageYOffset;
-        }
-      }
-
-      if (
-        this.standaloneMode &&
-        containerEl.createSVGPoint &&
-        containerEl.getScreenCTM
-      ) {
-        // must convert the position to svg coords
-        const transform = containerEl.getScreenCTM().inverse();
-        let point = containerEl.createSVGPoint();
-        point.x = xpos;
-        point.y = ypos;
-        point = point.matrixTransform(transform);
-        xpos = point.x;
-        ypos = point.y;
+        // set at middle
+        ypos = Math.max(miny, ypos - tooltipHeight / 2);
       }
     } else {
       xpos = this.offx + containerRect.left;

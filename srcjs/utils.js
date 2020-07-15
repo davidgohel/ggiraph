@@ -38,3 +38,30 @@ export function navigator_id() {
   if ((tem = ua.match(/version\/(\d+)/i)) !== null) M.splice(1, 1, tem[1]);
   return M.join(' ');
 }
+
+// Calculates the local coordinates of a mouse/touch event
+// Adapted from d3 clientPoint
+// node: an svg element
+// event: a d3 event
+export function svgClientPoint(node, event) {
+  const svg = node.ownerSVGElement || node;
+  const rect = node.getBoundingClientRect();
+
+  if (svg.createSVGPoint) {
+    let point = svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    const transform = node.getScreenCTM();
+    if (transform.e === 0) {
+      // firefox omits this
+      transform.e = rect.left;
+    }
+    point = point.matrixTransform(transform.inverse());
+    return [point.x, point.y];
+  }
+
+  return [
+    event.clientX - rect.left - node.clientLeft,
+    event.clientY - rect.top - node.clientTop
+  ];
+}
