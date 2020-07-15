@@ -139,9 +139,13 @@ export default class TooltipHandler {
   }
 
   calculateTooltipPosition(tooltipEl, containerEl, event, standaloneMode) {
-    const containerRect = containerEl.getBoundingClientRect();
     let xpos, ypos;
     if (this.usecursor) {
+      // Calculate tooltip position, preventing collisions and overflow if possible.
+      // First we try to fit the tooltip on right and bottom of the event.
+      // If it doesn't fit we try the opposite direction and negate the passed offset.
+      // Otherwise use the center/middle position.
+
       // tooltip dimensions
       let tooltipWidth, tooltipHeight;
 
@@ -177,40 +181,50 @@ export default class TooltipHandler {
         tooltipHeight = tooltipRect.height;
       }
 
-      // offset at least 3 pixels away of current position
-      const xoffset = Math.max(this.offx, 3);
-      const yoffset = Math.max(this.offy, 3);
-
       // calculate horizontal position
-      const spaceRight = maxx - (xpos + xoffset);
-      const spaceLeft = xpos - xoffset - minx;
+      const spaceRight = maxx - (xpos + this.offx);
+      const spaceLeft = xpos - this.offx - minx;
       if (spaceRight >= tooltipWidth) {
         // fits on right
-        xpos += xoffset;
+        xpos = Math.max(minx, xpos + this.offx);
       } else if (spaceLeft >= tooltipWidth) {
         // fits on left
-        xpos -= xoffset + tooltipWidth;
+        xpos = Math.min(maxx - tooltipWidth, xpos - this.offx - tooltipWidth);
       } else {
         // set at middle
-        xpos = Math.max(minx, xpos - tooltipWidth / 2);
+        xpos = Math.max(
+          minx,
+          Math.min(maxx, xpos + tooltipWidth / 2) - tooltipWidth
+        );
       }
 
       // calculate vertical position
-      const spaceBottom = maxy - (ypos + yoffset);
-      const spaceTop = ypos - yoffset - miny;
+      const spaceBottom = maxy - (ypos + this.offy);
+      const spaceTop = ypos - this.offy - miny;
       if (spaceBottom >= tooltipHeight) {
         // fits on bottom
-        ypos += yoffset;
+        ypos = Math.max(miny, ypos + this.offy);
       } else if (spaceTop >= tooltipHeight) {
         // fits on top
-        ypos -= yoffset + tooltipHeight;
+        ypos = Math.min(maxy - tooltipHeight, ypos - this.offy - tooltipHeight);
       } else {
         // set at middle
-        ypos = Math.max(miny, ypos - tooltipHeight / 2);
+        ypos = Math.max(
+          miny,
+          Math.min(maxy, ypos + tooltipHeight / 2) - tooltipHeight
+        );
       }
     } else {
-      xpos = this.offx + containerRect.left;
-      ypos = this.offy + containerRect.top;
+      // Fixed position
+      if (this.standaloneMode) {
+        xpos = this.offx;
+        ypos = this.offy;
+      } else {
+        const containerRect = containerEl.getBoundingClientRect();
+        const doc = document.documentElement;
+        xpos = this.offx + containerRect.left + doc.scrollLeft;
+        ypos = this.offy + containerRect.top + doc.scrollTop;
+      }
     }
     return [xpos, ypos];
   }
