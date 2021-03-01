@@ -15,7 +15,7 @@ Status](https://img.shields.io/codecov/c/github/davidgohel/ggiraph/master.svg)](
 
 `{ggiraph}` is a tool that allows you to create dynamic ggplot graphs.
 This allows you to add tooltips, animations and JavaScript actions to
-the graphics.The package also allows the selection of graphical elements
+the graphics. The package also allows the selection of graphical elements
 when used in shiny applications.
 
 Interactivity is added to ggplot **geometries, legends and theme
@@ -90,7 +90,7 @@ girafe(ggobj = gg_point)
 ### Available interactive layers
 
 They are several available interactive geometries, scales and other
-ggplot elements. Almost all ggplot2 elements can be made interactives
+ggplot elements. Almost all ggplot2 elements can be made interactive
 with `{ggiraph}`. They are all based on their ggplot version, same goes
 for scales and the few guides: `geom_point_interactive()`,
 `geom_col_interactive()`, `geom_tile_interactive()`,
