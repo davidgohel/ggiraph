@@ -66,7 +66,7 @@ opts_tooltip <- function(css = NULL,
   stopifnot(zindex >= 1)
   zindex <- round(zindex, digits = 0)
 
-  css <- sub("\\}\n$",
+  css <- sub("\\}[\n]*$",
              paste0(
                "; position:absolute;pointer-events:none;",
                sprintf("z-index:%.0f;", zindex),
