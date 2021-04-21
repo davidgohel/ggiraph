@@ -1,41 +1,38 @@
 
 > `{ggiraph}` makes ‘ggplot’ graphics interactive.
 
-[![Travis Build
-Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/davidgohel/ggiraph?branch=master&svg=true)](https://ci.appveyor.com/project/davidgohel/ggiraph)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/davidgohel/ggiraph/master.svg)](https://codecov.io/github/davidgohel/ggiraph?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ggiraph)](https://cran.r-project.org/package=ggiraph)
+[![R build
+status](https://github.com/davidgohel/ggiraph/workflows/R-CMD-check/badge.svg)](https://github.com/davidgohel/ggiraph/actions)
+[![version](https://www.r-pkg.org/badges/version/ggiraph)](https://CRAN.R-project.org/package=ggiraph)
+![cranlogs](https://cranlogs.r-pkg.org/badges/ggiraph) [![codecov test
+coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg)](https://codecov.io/gh/davidgohel/ggiraph)
 
 ## Overview
 
 <a href="https://github.com/davidgohel/ggiraph"><img src="man/figures/logo.png" alt="ggiraph logo" align="right" /></a>
-
 `{ggiraph}` is a tool that allows you to create dynamic ggplot graphs.
-This allows you to add tooltips, animations and JavaScript actions to
-the graphics. The package also allows the selection of graphical elements
-when used in shiny applications.
+This allows you to add tooltips, hover effects and JavaScript actions to
+the graphics. The package also allows the selection of graphical
+elements when used in shiny applications.
 
 Interactivity is added to ggplot **geometries, legends and theme
 elements**, via the following aesthetics:
 
-  - `tooltip`: tooltips to be displayed when mouse is over elements.
-  - `onclick`: JavaScript function to be executed when elements are
+-   `tooltip`: tooltips to be displayed when mouse is over elements.
+-   `onclick`: JavaScript function to be executed when elements are
     clicked.
-  - `data_id`: id to be associated with elements (used for hover and
+-   `data_id`: id to be associated with elements (used for hover and
     click actions)
 
 ### Why use `{ggiraph}`
 
-  - You want to provide your readers with more information than the
+-   You want to provide your readers with more information than the
     basic information available; you can display a tooltip when the
     user’s mouse is on a graphical element, you can also visually
     animate elements with the same attribute when the mouse passes over
     a graphical element, and finally you can link a JavaScript action to
     the click, such as opening a hypertext link.
-  - You want to allow users of a Shiny application to select graphical
+-   You want to allow users of a Shiny application to select graphical
     elements; for example, you can make the points of a scatter plot
     selectable and available as a reactive value from the server part of
     your application. With Shiny, `{ggiraph}` allows interaction with
@@ -55,14 +52,12 @@ elements**, via the following aesthetics:
 
 The things you need to know to create an interactive graphic :
 
-  - Instead of using `geom_point`, use `geom_point_interactive`, instead
+-   Instead of using `geom_point`, use `geom_point_interactive`, instead
     of using `geom_sf`, use `geom_sf_interactive`… Provide at least one
     of the aesthetics `tooltip`, `data_id` and `onclick` to create
     interactive elements.
-  - Call function `girafe` with the ggplot object so that the graphic is
+-   Call function `girafe` with the ggplot object so that the graphic is
     translated as a web interactive graphics.
-
-<!-- end list -->
 
 ``` r
 library(ggplot2)
@@ -80,7 +75,7 @@ girafe(ggobj = gg_point)
 
 ### With Shiny
 
-  - If used within a shiny application, elements associated with an id
+-   If used within a shiny application, elements associated with an id
     (`data_id`) can be selected and manipulated on client and server
     sides. The list of selected values will be stored in in a reactive
     value named `[shiny_id]_selected`.
@@ -124,7 +119,7 @@ The help pages are located at <https://davidgohel.github.io/ggiraph>.
 
 If you have questions about how to use the package, visit Stackoverflow
 and use tags `ggiraph` and `r` [Stackoverflow
-link](https://stackoverflow.com/questions/tagged/ggiraph+r)\! We usually
+link](https://stackoverflow.com/questions/tagged/ggiraph+r)! We usually
 read them and answer when possible.
 
 ## Contributing to the package
@@ -145,10 +140,10 @@ documentation.
 If you want to submit a Pull Request to integrate functions of yours,
 provide if possible:
 
-  - the new function(s) with code and roxygen tags (with examples)
-  - a new section in the appropriate vignette that describes how to use
+-   the new function(s) with code and roxygen tags (with examples)
+-   a new section in the appropriate vignette that describes how to use
     the new function
-  - corresponding tests in directory `tests/testthat`.
+-   corresponding tests in directory `tests/testthat`.
 
 By using rhub (run `rhub::check_for_cran()`), you will see if everything
 is ok. When submitted, the PR will be evaluated automatically on travis

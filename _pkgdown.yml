@@ -3,7 +3,7 @@ destination: docs
 title: ggiraph package
 
 template:
-  package: ardown
+  package: pkgardata
   bootswatch: simplex
 
 home:

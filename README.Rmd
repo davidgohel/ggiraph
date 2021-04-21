@@ -14,17 +14,15 @@ library(ggiraph)
 
 > `{ggiraph}` makes 'ggplot' graphics interactive. 
 
-[![Travis Build Status](https://travis-ci.org/davidgohel/ggiraph.svg?branch=master)](https://travis-ci.org/davidgohel/ggiraph)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/davidgohel/ggiraph?branch=master&svg=true)](https://ci.appveyor.com/project/davidgohel/ggiraph)
-[![Coverage Status](https://img.shields.io/codecov/c/github/davidgohel/ggiraph/master.svg)](https://codecov.io/github/davidgohel/ggiraph?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ggiraph)](https://cran.r-project.org/package=ggiraph)
+[![R build status](https://github.com/davidgohel/ggiraph/workflows/R-CMD-check/badge.svg)](https://github.com/davidgohel/ggiraph/actions)
+[![version](https://www.r-pkg.org/badges/version/ggiraph)](https://CRAN.R-project.org/package=ggiraph)
+![cranlogs](https://cranlogs.r-pkg.org/badges/ggiraph)
+[![codecov test coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg)](https://codecov.io/gh/davidgohel/ggiraph)
 
 
 ## Overview
 
-<a href="https://github.com/davidgohel/ggiraph"><img src="man/figures/logo.png" alt="ggiraph logo" align="right" /></a>
-
-`{ggiraph}` is a tool that allows you to create dynamic ggplot graphs. This allows you 
+<a href="https://github.com/davidgohel/ggiraph"><img src="man/figures/logo.png" alt="ggiraph logo" align="right" /></a> `{ggiraph}` is a tool that allows you to create dynamic ggplot graphs. This allows you 
 to add tooltips, hover effects and JavaScript actions to the graphics. The package also 
 allows the selection of graphical elements when used in shiny applications. 
 

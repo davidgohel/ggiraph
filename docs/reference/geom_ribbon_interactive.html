@@ -81,7 +81,7 @@ See the documentation for those functions for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ See the documentation for those functions for more details." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,13 +132,13 @@ See the documentation for those functions for more details." />
     </div>
 
     <div class="ref-description">
-    <p>The geometries are based on <code>geom_ribbon()</code> and <code>geom_area()</code>.
+    <p>The geometries are based on <code><a href='https://ggplot2.tidyverse.org/reference/geom_ribbon.html'>geom_ribbon()</a></code> and <code><a href='https://ggplot2.tidyverse.org/reference/geom_ribbon.html'>geom_area()</a></code>.
 See the documentation for those functions for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_ribbon_interactive</span>(<span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>geom_ribbon_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>geom_area_interactive</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>geom_area_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,7 +146,7 @@ See the documentation for those functions for more details.</p>
     <tr>
       <th>...</th>
       <td><p>arguments passed to base function,
-plus any of the <code><a href='ipar.html'>interactive_parameters()</a></code>.</p></td>
+plus any of the <code><a href='interactive_parameters.html'>interactive_parameters()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -167,32 +167,33 @@ In this way they can be set to a scalar value.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># add interactive bar -------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggiraph</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://davidgohel.github.io/ggiraph'>ggiraph</a></span><span class='op'>)</span>
 
 <span class='co'># Generate data</span>
-<span class='no'>huron</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>1875</span>:<span class='fl'>1972</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span>(<span class='no'>LakeHuron</span>))
-<span class='no'>h</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>huron</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>year</span>))
+<span class='va'>huron</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fl'>1875</span><span class='op'>:</span><span class='fl'>1972</span>, level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='va'>LakeHuron</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>h</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>huron</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='no'>h</span> +
-  <span class='fu'>geom_ribbon_interactive</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='no'>level</span> - <span class='fl'>1</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='no'>level</span> + <span class='fl'>1</span>),
-                          <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"grey70"</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"ribbon1"</span>, <span class='kw'>data_id</span><span class='kw'>=</span><span class='st'>"ribbon1"</span>,
-                          <span class='kw'>outline.type</span> <span class='kw'>=</span> <span class='st'>"both"</span>,
-                          <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:red;stroke-width:inherit;"</span>) +
-  <span class='fu'><a href='geom_path_interactive.html'>geom_line_interactive</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>level</span>), <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"level"</span>, <span class='kw'>data_id</span><span class='kw'>=</span><span class='st'>"line1"</span>,
-                        <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"stroke:orange;fill:none;"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>g</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe_options.html'>girafe_options</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>,
-                    <span class='fu'><a href='opts_hover.html'>opts_hover</a></span>(<span class='kw'>css</span> <span class='kw'>=</span> <span class='fu'><a href='girafe_css.html'>girafe_css</a></span>(
-                      <span class='kw'>css</span> <span class='kw'>=</span> <span class='st'>"stroke:orange;stroke-width:3px;"</span>,
-                      <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"fill:blue;"</span>
-                    )))
-<span class='kw'>if</span>( <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>() ) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)
+<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='va'>h</span> <span class='op'>+</span>
+  <span class='fu'>geom_ribbon_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>level</span> <span class='op'>-</span> <span class='fl'>1</span>, ymax <span class='op'>=</span> <span class='va'>level</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span>,
+                          fill <span class='op'>=</span> <span class='st'>"grey70"</span>, tooltip <span class='op'>=</span> <span class='st'>"ribbon1"</span>, data_id<span class='op'>=</span><span class='st'>"ribbon1"</span>,
+                          outline.type <span class='op'>=</span> <span class='st'>"both"</span>,
+                          hover_css <span class='op'>=</span> <span class='st'>"stroke:red;stroke-width:inherit;"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_path_interactive.html'>geom_line_interactive</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>level</span><span class='op'>)</span>, tooltip <span class='op'>=</span> <span class='st'>"level"</span>, data_id<span class='op'>=</span><span class='st'>"line1"</span>,
+                        hover_css <span class='op'>=</span> <span class='st'>"stroke:orange;fill:none;"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>g</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe_options.html'>girafe_options</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>,
+                    <span class='fu'><a href='opts_hover.html'>opts_hover</a></span><span class='op'>(</span>css <span class='op'>=</span> <span class='fu'><a href='girafe_css.html'>girafe_css</a></span><span class='op'>(</span>
+                      css <span class='op'>=</span> <span class='st'>"stroke:orange;stroke-width:3px;"</span>,
+                      area <span class='op'>=</span> <span class='st'>"fill:blue;"</span>
+                    <span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='no'>h</span> + <span class='fu'>geom_area_interactive</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>level</span>), <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"area1"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>g</span>)
-<span class='kw'>if</span>( <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>() ) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div></pre>
+<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='va'>h</span> <span class='op'>+</span> <span class='fu'>geom_area_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>level</span><span class='op'>)</span>, tooltip <span class='op'>=</span> <span class='st'>"area1"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>g</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -205,11 +206,11 @@ In this way they can be set to a scalar value.</p></li>
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
 <script>

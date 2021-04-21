@@ -1,11 +1,11 @@
-pandoc: 2.9.2.1
-pkgdown: 1.5.1
+pandoc: 2.11.4
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  customizing: offcran/customizing.html
-  examples: offcran/examples.html
-  shiny: offcran/shiny.html
-  using_ggiraph: offcran/using_ggiraph.html
+  offcran/customizing: customizing.html
+  offcran/examples: examples.html
+  offcran/shiny: shiny.html
+  offcran/using_ggiraph: using_ggiraph.html
   overview: overview.html
-last_built: 2020-07-10T14:48Z
+last_built: 2021-04-21T20:47Z
 

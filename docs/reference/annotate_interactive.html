@@ -81,7 +81,7 @@ See the documentation for that function for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ See the documentation for that function for more details." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,11 +132,11 @@ See the documentation for that function for more details." />
     </div>
 
     <div class="ref-description">
-    <p>The layer is based on <code>annotate()</code>.
+    <p>The layer is based on <code><a href='https://ggplot2.tidyverse.org/reference/annotate.html'>annotate()</a></code>.
 See the documentation for that function for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>annotate_interactive</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>annotate_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,7 +144,7 @@ See the documentation for that function for more details.</p>
     <tr>
       <th>...</th>
       <td><p>arguments passed to base function,
-plus any of the <code><a href='ipar.html'>interactive_parameters()</a></code>.</p></td>
+plus any of the <code><a href='interactive_parameters.html'>interactive_parameters()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -156,22 +156,23 @@ plus any of the <code><a href='ipar.html'>interactive_parameters()</a></code>.</
 and they can be scalar values or vectors depending on params on base function.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='girafe.html'>girafe()</a></code>, <a href='ipar.html'>interactive_parameters</a>, <code><a href='annotation_raster_interactive.html'>annotation_raster_interactive()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='girafe.html'>girafe()</a></code>, <a href='interactive_parameters.html'>interactive_parameters</a>, <code><a href='annotation_raster_interactive.html'>annotation_raster_interactive()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># add interactive annotation to a ggplot -------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggiraph</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://davidgohel.github.io/ggiraph'>ggiraph</a></span><span class='op'>)</span>
 
-<span class='no'>gg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>disp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>qsec</span> )) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(<span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>) +
-  <span class='fu'>annotate_interactive</span>(
-    <span class='st'>"rect"</span>, <span class='kw'>xmin</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fl'>400</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-    <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='st'>"an_id"</span>, <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"a tooltip"</span>,
-    <span class='kw'>ymin</span> <span class='kw'>=</span> <span class='fl'>18</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>.5</span>)
+<span class='va'>gg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>disp</span>, y <span class='op'>=</span> <span class='va'>qsec</span> <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>size<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>annotate_interactive</span><span class='op'>(</span>
+    <span class='st'>"rect"</span>, xmin <span class='op'>=</span> <span class='fl'>100</span>, xmax <span class='op'>=</span> <span class='fl'>400</span>, fill <span class='op'>=</span> <span class='st'>"red"</span>,
+    data_id <span class='op'>=</span> <span class='st'>"an_id"</span>, tooltip <span class='op'>=</span> <span class='st'>"a tooltip"</span>,
+    ymin <span class='op'>=</span> <span class='fl'>18</span>, ymax <span class='op'>=</span> <span class='fl'>20</span>, alpha <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg</span>, <span class='kw'>width_svg</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>height_svg</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='kw'>if</span>( <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>() ) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div></pre>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>gg</span>, width_svg <span class='op'>=</span> <span class='fl'>5</span>, height_svg <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -184,11 +185,11 @@ and they can be scalar values or vectors depending on params on base function.</
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
 <script>
