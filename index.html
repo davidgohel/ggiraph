@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -84,14 +84,14 @@
   <div class="contents col-md-9">
 
 <blockquote>
-<p><code>{ggiraph}</code> makes ‘ggplot’ graphics interactive.</p>
+<p><a href="https://davidgohel.github.io/ggiraph">ggiraph</a> makes ‘ggplot’ graphics interactive.</p>
 </blockquote>
 <p><a href="https://travis-ci.org/davidgohel/ggiraph"><img src="https://travis-ci.org/davidgohel/ggiraph.svg?branch=master" alt="Travis Build Status"></a> <a href="https://ci.appveyor.com/project/davidgohel/ggiraph"><img src="https://ci.appveyor.com/api/projects/status/github/davidgohel/ggiraph?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/davidgohel/ggiraph?branch=master"><img src="https://img.shields.io/codecov/c/github/davidgohel/ggiraph/master.svg" alt="Coverage Status"></a> <a href="https://cran.r-project.org/package=ggiraph"><img src="http://www.r-pkg.org/badges/version/ggiraph" alt="CRAN_Status_Badge"></a></p>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p><a href="https://github.com/davidgohel/ggiraph"><img src="reference/figures/logo.png" alt="ggiraph logo" align="right"></a></p>
-<p><code>{ggiraph}</code> is a tool that allows you to create dynamic ggplot graphs. This allows you to add tooltips, animations and JavaScript actions to the graphics.The package also allows the selection of graphical elements when used in shiny applications.</p>
+<p><a href="https://davidgohel.github.io/ggiraph">ggiraph</a> is a tool that allows you to create dynamic ggplot graphs. This allows you to add tooltips, animations and JavaScript actions to the graphics. The package also allows the selection of graphical elements when used in shiny applications.</p>
 <p>Interactivity is added to ggplot <strong>geometries, legends and theme elements</strong>, via the following aesthetics:</p>
 <ul>
 <li>
@@ -107,11 +107,11 @@
 </h3>
 <ul>
 <li>You want to provide your readers with more information than the basic information available; you can display a tooltip when the user’s mouse is on a graphical element, you can also visually animate elements with the same attribute when the mouse passes over a graphical element, and finally you can link a JavaScript action to the click, such as opening a hypertext link.</li>
-<li>You want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, <code>{ggiraph}</code> allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value.</li>
+<li>You want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, <a href="https://davidgohel.github.io/ggiraph">ggiraph</a> allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value.</li>
 </ul>
 <p><img src="reference/figures/image_girafe.png"></p>
 <blockquote>
-<p>Under the hood, <code>{ggiraph}</code> is an htmlwidget and a ggplot2 extension. It allows graphics to be interactive, by exporting them as SVG documents and using special attributes on the various elements.</p>
+<p>Under the hood, <a href="https://davidgohel.github.io/ggiraph">ggiraph</a> is an htmlwidget and a ggplot2 extension. It allows graphics to be interactive, by exporting them as SVG documents and using special attributes on the various elements.</p>
 </blockquote>
 </div>
 </div>
@@ -126,17 +126,18 @@
 <li>Instead of using <code>geom_point</code>, use <code>geom_point_interactive</code>, instead of using <code>geom_sf</code>, use <code>geom_sf_interactive</code>… Provide at least one of the aesthetics <code>tooltip</code>, <code>data_id</code> and <code>onclick</code> to create interactive elements.</li>
 <li>Call function <code>girafe</code> with the ggplot object so that the graphic is translated as a web interactive graphics.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggiraph</span>)
-<span class="no">data</span> <span class="kw">&lt;-</span> <span class="no">mtcars</span>
-<span class="no">data</span>$<span class="no">carname</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="no">data</span>)
+<!-- end list --><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://davidgohel.github.io/ggiraph">ggiraph</a></span><span class="op">)</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span>
+<span class="va">data</span><span class="op">$</span><span class="va">carname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 
-<span class="no">gg_point</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">data</span>) +
-    <span class="fu"><a href="reference/geom_point_interactive.html">geom_point_interactive</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">wt</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">qsec</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">disp</span>,
-    <span class="kw">tooltip</span> <span class="kw">=</span> <span class="no">carname</span>, <span class="kw">data_id</span> <span class="kw">=</span> <span class="no">carname</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()
+<span class="va">gg_point</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="reference/geom_point_interactive.html">geom_point_interactive</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">qsec</span>, color <span class="op">=</span> <span class="va">disp</span>,
+    tooltip <span class="op">=</span> <span class="va">carname</span>, data_id <span class="op">=</span> <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/girafe.html">girafe</a></span>(<span class="kw">ggobj</span> <span class="kw">=</span> <span class="no">gg_point</span>)</pre></div>
+<span class="fu"><a href="reference/girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg_point</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="with-shiny" class="section level3">
 <h3 class="hasAnchor">
@@ -149,8 +150,8 @@
 <div id="available-interactive-layers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#available-interactive-layers" class="anchor"></a>Available interactive layers</h3>
-<p>They are several available interactive geometries, scales and other ggplot elements. Almost all ggplot2 elements can be made interactives with <code>{ggiraph}</code>. They are all based on their ggplot version, same goes for scales and the few guides: <code><a href="reference/geom_point_interactive.html">geom_point_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_col_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_tile_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_fill_manual_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_discrete_manual_interactive()</a></code>, <code><a href="reference/guide_legend_interactive.html">guide_legend_interactive()</a></code>, …</p>
-<p>You can also make interactive annotations, titles and facets (see <code><a href="reference/ipar.html">help(interactive_parameters)</a></code>).</p>
+<p>They are several available interactive geometries, scales and other ggplot elements. Almost all ggplot2 elements can be made interactive with <a href="https://davidgohel.github.io/ggiraph">ggiraph</a>. They are all based on their ggplot version, same goes for scales and the few guides: <code><a href="reference/geom_point_interactive.html">geom_point_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_col_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_tile_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_fill_manual_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_discrete_manual_interactive()</a></code>, <code><a href="reference/guide_legend_interactive.html">guide_legend_interactive()</a></code>, …</p>
+<p>You can also make interactive annotations, titles and facets (see <code><a href="reference/interactive_parameters.html">help(interactive_parameters)</a></code>).</p>
 </div>
 </div>
 <div id="installation" class="section level2">
@@ -159,11 +160,13 @@
 <blockquote>
 <p>Get development version on github</p>
 </blockquote>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">'davidgohel/ggiraph'</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">'davidgohel/ggiraph'</span><span class="op">)</span></code></pre></div>
 <blockquote>
 <p>Get CRAN version</p>
 </blockquote>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"ggiraph"</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggiraph"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="resources" class="section level2">
 <h2 class="hasAnchor">
@@ -238,11 +241,11 @@
 
       <footer><link href="ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version 0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src="ardata-logo.svg" style="vertical-align:middle;height:24px;"></a>
+  <p>Version 0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src="ardata-logo.svg" style="vertical-align:middle;height:24px;"></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
 <script>

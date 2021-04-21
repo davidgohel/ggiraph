@@ -81,7 +81,7 @@ where elements can be made interactive." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ where elements can be made interactive." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,17 +136,17 @@ where elements can be made interactive." />
 where elements can be made interactive.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dsvg</span>(
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"Rplots.svg"</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>6</span>,
-  <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>6</span>,
-  <span class='kw'>bg</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-  <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-  <span class='kw'>standalone</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>setdims</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>canvas_id</span> <span class='kw'>=</span> <span class='st'>"svg_1"</span>,
-  <span class='kw'>fonts</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>dsvg</span><span class='op'>(</span>
+  file <span class='op'>=</span> <span class='st'>"Rplots.svg"</span>,
+  width <span class='op'>=</span> <span class='fl'>6</span>,
+  height <span class='op'>=</span> <span class='fl'>6</span>,
+  bg <span class='op'>=</span> <span class='st'>"white"</span>,
+  pointsize <span class='op'>=</span> <span class='fl'>12</span>,
+  standalone <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  setdims <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  canvas_id <span class='op'>=</span> <span class='st'>"svg_1"</span>,
+  fonts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,11 +194,12 @@ are aliased to the family returned by <code><a href='https://rdrr.io/pkg/gdtools
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/grDevices/Devices.html'>Devices</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fileout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".svg"</span>)
-<span class='fu'>dsvg</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>fileout</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>), <span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Simple Example"</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>)
-<span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>dev.off</a></span>()</div><div class='output co'>#&gt; pdf 
-#&gt;   2 </div></pre>
+    <pre class="examples"><div class='input'><span class='va'>fileout</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".svg"</span><span class='op'>)</span>
+<span class='fu'>dsvg</span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>fileout</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, main<span class='op'>=</span><span class='st'>"Simple Example"</span>, xlab <span class='op'>=</span> <span class='st'>""</span>, ylab <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>dev.off</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; agg_png 
+#&gt;       2 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -211,11 +212,11 @@ are aliased to the family returned by <code><a href='https://rdrr.io/pkg/gdtools
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
 <script>

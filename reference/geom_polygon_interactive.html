@@ -81,7 +81,7 @@ See the documentation for those functions for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ See the documentation for those functions for more details." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,11 +132,11 @@ See the documentation for those functions for more details." />
     </div>
 
     <div class="ref-description">
-    <p>The geometry is based on <code>geom_polygon()</code>.
+    <p>The geometry is based on <code><a href='https://ggplot2.tidyverse.org/reference/geom_polygon.html'>geom_polygon()</a></code>.
 See the documentation for those functions for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_polygon_interactive</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>geom_polygon_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,7 +144,7 @@ See the documentation for those functions for more details.</p>
     <tr>
       <th>...</th>
       <td><p>arguments passed to base function,
-plus any of the <code><a href='ipar.html'>interactive_parameters()</a></code>.</p></td>
+plus any of the <code><a href='interactive_parameters.html'>interactive_parameters()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -165,53 +165,55 @@ In this way they can be set to a scalar value.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># add interactive polygons to a ggplot -------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggiraph</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://davidgohel.github.io/ggiraph'>ggiraph</a></span><span class='op'>)</span>
 
 <span class='co'># create data</span>
-<span class='no'>ids</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1.1"</span>, <span class='st'>"2.1"</span>, <span class='st'>"1.2"</span>, <span class='st'>"2.2"</span>, <span class='st'>"1.3"</span>, <span class='st'>"2.3"</span>))
+<span class='va'>ids</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1.1"</span>, <span class='st'>"2.1"</span>, <span class='st'>"1.2"</span>, <span class='st'>"2.2"</span>, <span class='st'>"1.3"</span>, <span class='st'>"2.3"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>values</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-        <span class='kw'>id</span> <span class='kw'>=</span> <span class='no'>ids</span>,
-        <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>3.1</span>, <span class='fl'>3.1</span>, <span class='fl'>3.2</span>, <span class='fl'>3.15</span>, <span class='fl'>3.5</span>) )
-<span class='no'>positions</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-        <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>ids</span>, <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-        <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1.1</span>, <span class='fl'>2.2</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0.3</span>, <span class='fl'>1.1</span>, <span class='fl'>2.2</span>, <span class='fl'>1.1</span>, <span class='fl'>1.2</span>, <span class='fl'>2.5</span>, <span class='fl'>1.1</span>, <span class='fl'>0.3</span>,
-                <span class='fl'>0.5</span>, <span class='fl'>1.2</span>, <span class='fl'>2.5</span>, <span class='fl'>1.2</span>, <span class='fl'>1.3</span>, <span class='fl'>2.7</span>, <span class='fl'>1.2</span>, <span class='fl'>0.5</span>, <span class='fl'>0.6</span>, <span class='fl'>1.3</span>),
-        <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.5</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>1.5</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>2.1</span>, <span class='fl'>1.7</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>,
-                <span class='fl'>2.2</span>, <span class='fl'>2.1</span>, <span class='fl'>1.7</span>, <span class='fl'>2.1</span>, <span class='fl'>3.2</span>, <span class='fl'>2.8</span>, <span class='fl'>2.1</span>, <span class='fl'>2.2</span>, <span class='fl'>3.3</span>, <span class='fl'>3.2</span>) )
+<span class='va'>values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='va'>ids</span>,
+  value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>3.1</span>, <span class='fl'>3.1</span>, <span class='fl'>3.2</span>, <span class='fl'>3.15</span>, <span class='fl'>3.5</span><span class='op'>)</span> <span class='op'>)</span>
+<span class='va'>positions</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>ids</span>, each <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>,
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1.1</span>, <span class='fl'>2.2</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0.3</span>, <span class='fl'>1.1</span>, <span class='fl'>2.2</span>, <span class='fl'>1.1</span>, <span class='fl'>1.2</span>, <span class='fl'>2.5</span>, <span class='fl'>1.1</span>, <span class='fl'>0.3</span>,
+    <span class='fl'>0.5</span>, <span class='fl'>1.2</span>, <span class='fl'>2.5</span>, <span class='fl'>1.2</span>, <span class='fl'>1.3</span>, <span class='fl'>2.7</span>, <span class='fl'>1.2</span>, <span class='fl'>0.5</span>, <span class='fl'>0.6</span>, <span class='fl'>1.3</span><span class='op'>)</span>,
+  y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.5</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>1.5</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>2.1</span>, <span class='fl'>1.7</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>,
+    <span class='fl'>2.2</span>, <span class='fl'>2.1</span>, <span class='fl'>1.7</span>, <span class='fl'>2.1</span>, <span class='fl'>3.2</span>, <span class='fl'>2.8</span>, <span class='fl'>2.1</span>, <span class='fl'>2.2</span>, <span class='fl'>3.3</span>, <span class='fl'>3.2</span><span class='op'>)</span> <span class='op'>)</span>
 
-<span class='no'>datapoly</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>values</span>, <span class='no'>positions</span>, <span class='kw'>by</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"id"</span>))
+<span class='va'>datapoly</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>values</span>, <span class='va'>positions</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"id"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>datapoly</span>$<span class='no'>oc</span> <span class='kw'>=</span> <span class='st'>"alert(this.getAttribute(\"data-id\"))"</span>
+<span class='va'>datapoly</span><span class='op'>$</span><span class='va'>oc</span> <span class='op'>=</span> <span class='st'>"alert(this.getAttribute(\"data-id\"))"</span>
 
 <span class='co'># create a ggplot -----</span>
-<span class='no'>gg_poly_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>datapoly</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>( <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span> ) ) +
-        <span class='fu'>geom_polygon_interactive</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>id</span>,
-                <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>oc</span>))
+<span class='va'>gg_poly_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>datapoly</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span> x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span> <span class='op'>)</span> <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_polygon_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>value</span>, group <span class='op'>=</span> <span class='va'>id</span>,
+    tooltip <span class='op'>=</span> <span class='va'>value</span>, data_id <span class='op'>=</span> <span class='va'>value</span>, onclick <span class='op'>=</span> <span class='va'>oc</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># display ------</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg_poly_1</span>)
-<span class='kw'>if</span>( <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>() ) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>gg_poly_1</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span>(<span class='st'>"grid"</span>) <span class='kw'>&gt;=</span> <span class='st'>"3.6"</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span><span class='op'>(</span><span class='st'>"grid"</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='st'>"3.6"</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># As of R version 3.6 geom_polygon() supports polygons with holes</span>
   <span class='co'># Use the subgroup aesthetic to differentiate holes from the main polygon</span>
 
-  <span class='no'>holes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span>(<span class='no'>rbind</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>datapoly</span>, <span class='no'>datapoly</span>$<span class='no'>id</span>), <span class='kw'>function</span>(<span class='no'>df</span>) {
-    <span class='no'>df</span>$<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>$<span class='no'>x</span> + <span class='fl'>0.5</span> * (<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>df</span>$<span class='no'>x</span>) - <span class='no'>df</span>$<span class='no'>x</span>)
-    <span class='no'>df</span>$<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>$<span class='no'>y</span> + <span class='fl'>0.5</span> * (<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>df</span>$<span class='no'>y</span>) - <span class='no'>df</span>$<span class='no'>y</span>)
-    <span class='no'>df</span>
-  }))
-  <span class='no'>datapoly</span>$<span class='no'>subid</span> <span class='kw'>&lt;-</span> <span class='fl'>1L</span>
-  <span class='no'>holes</span>$<span class='no'>subid</span> <span class='kw'>&lt;-</span> <span class='fl'>2L</span>
-  <span class='no'>datapoly</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='no'>datapoly</span>, <span class='no'>holes</span>)
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>datapoly</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>)) +
-    <span class='fu'>geom_polygon_interactive</span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>id</span>, <span class='kw'>subgroup</span> <span class='kw'>=</span> <span class='no'>subid</span>,
-                                 <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='no'>oc</span>))
-  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>p</span>)
-  <span class='kw'>if</span>( <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>() ) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)
-}</div></pre>
+  <span class='va'>holes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>datapoly</span>, <span class='va'>datapoly</span><span class='op'>$</span><span class='va'>id</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>+</span> <span class='fl'>0.5</span> <span class='op'>*</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>
+    <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span> <span class='op'>+</span> <span class='fl'>0.5</span> <span class='op'>*</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>
+    <span class='va'>df</span>
+  <span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>datapoly</span><span class='op'>$</span><span class='va'>subid</span> <span class='op'>&lt;-</span> <span class='fl'>1L</span>
+  <span class='va'>holes</span><span class='op'>$</span><span class='va'>subid</span> <span class='op'>&lt;-</span> <span class='fl'>2L</span>
+  <span class='va'>datapoly</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>datapoly</span>, <span class='va'>holes</span><span class='op'>)</span>
+  <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>datapoly</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_polygon_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>value</span>, group <span class='op'>=</span> <span class='va'>id</span>, subgroup <span class='op'>=</span> <span class='va'>subid</span>,
+                                 tooltip <span class='op'>=</span> <span class='va'>value</span>, data_id <span class='op'>=</span> <span class='va'>value</span>, onclick <span class='op'>=</span> <span class='va'>oc</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
+  <span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -224,11 +226,11 @@ In this way they can be set to a scalar value.</p></li>
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
 <script>

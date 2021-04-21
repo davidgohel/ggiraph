@@ -84,7 +84,7 @@ See the documentation for those functions for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@ See the documentation for those functions for more details." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -137,16 +137,16 @@ See the documentation for those functions for more details." />
     <div class="ref-description">
     <p>With these functions the user can add interactivity to various <a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a>
 elements.</p>
-<p>They are based on <code>element_rect()</code>,
-<code>element_line()</code> and <code>element_text()</code>
+<p>They are based on <code><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_rect()</a></code>,
+<code><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_line()</a></code> and <code><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text()</a></code>
 See the documentation for those functions for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>element_line_interactive</span>(<span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>element_line_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>element_rect_interactive</span>(<span class='no'>...</span>)
+<span class='fu'>element_rect_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>element_text_interactive</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>element_text_interactive</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,7 +154,7 @@ See the documentation for those functions for more details.</p>
     <tr>
       <th>...</th>
       <td><p>arguments passed to base function,
-plus any of the <code><a href='ipar.html'>interactive_parameters()</a></code>.</p></td>
+plus any of the <code><a href='interactive_parameters.html'>interactive_parameters()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -179,65 +179,66 @@ theme parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># add interactive theme elements -------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggiraph</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://davidgohel.github.io/ggiraph'>ggiraph</a></span><span class='op'>)</span>
 
-<span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>qsec</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>16.46</span>, <span class='fl'>17.02</span>, <span class='fl'>18.61</span>, <span class='fl'>19.44</span>, <span class='fl'>17.02</span>, <span class='fl'>20.22</span>
-), <span class='kw'>disp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>160</span>, <span class='fl'>160</span>, <span class='fl'>108</span>, <span class='fl'>258</span>, <span class='fl'>360</span>, <span class='fl'>225</span>), <span class='kw'>carname</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Mazda RX4"</span>,
+<span class='va'>dataset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>qsec <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>16.46</span>, <span class='fl'>17.02</span>, <span class='fl'>18.61</span>, <span class='fl'>19.44</span>, <span class='fl'>17.02</span>, <span class='fl'>20.22</span>
+<span class='op'>)</span>, disp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>160</span>, <span class='fl'>160</span>, <span class='fl'>108</span>, <span class='fl'>258</span>, <span class='fl'>360</span>, <span class='fl'>225</span><span class='op'>)</span>, carname <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Mazda RX4"</span>,
 <span class='st'>"Mazda RX4 Wag"</span>, <span class='st'>"Datsun 710"</span>, <span class='st'>"Hornet 4 Drive"</span>, <span class='st'>"Hornet Sportabout"</span>,
-<span class='st'>"Valiant"</span>), <span class='kw'>wt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2.62</span>, <span class='fl'>2.875</span>, <span class='fl'>2.32</span>, <span class='fl'>3.215</span>, <span class='fl'>3.44</span>, <span class='fl'>3.46</span>)), <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Mazda RX4"</span>,
+<span class='st'>"Valiant"</span><span class='op'>)</span>, wt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.62</span>, <span class='fl'>2.875</span>, <span class='fl'>2.32</span>, <span class='fl'>3.215</span>, <span class='fl'>3.44</span>, <span class='fl'>3.46</span><span class='op'>)</span><span class='op'>)</span>, row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Mazda RX4"</span>,
 <span class='st'>"Mazda RX4 Wag"</span>, <span class='st'>"Datsun 710"</span>, <span class='st'>"Hornet 4 Drive"</span>, <span class='st'>"Hornet Sportabout"</span>,
-<span class='st'>"Valiant"</span>), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
+<span class='st'>"Valiant"</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='st'>"data.frame"</span><span class='op'>)</span>
 
 <span class='co'># plots</span>
-<span class='no'>gg_point</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dataset</span>) +
-  <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(
-    <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>wt</span>,
-    <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>qsec</span>,
-    <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>disp</span>,
-    <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='no'>carname</span>,
-    <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='no'>carname</span>
-  )) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span>() +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(
-    <span class='kw'>plot.title</span> <span class='kw'>=</span> <span class='fu'>element_text_interactive</span>(
-      <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='st'>"plot.title"</span>,
-      <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"plot title"</span>,
-      <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:red;stroke:none;font-size:12pt"</span>
-    ),
-    <span class='kw'>plot.subtitle</span> <span class='kw'>=</span> <span class='fu'>element_text_interactive</span>(
-      <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='st'>"plot.subtitle"</span>,
-      <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"plot subtitle"</span>,
-      <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:none;"</span>
-    ),
-    <span class='kw'>axis.title.x</span> <span class='kw'>=</span> <span class='fu'>element_text_interactive</span>(
-      <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='st'>"axis.title.x"</span>,
-      <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"Description for x axis"</span>,
-      <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:red;stroke:none;"</span>
-    ),
-    <span class='kw'>axis.title.y</span> <span class='kw'>=</span> <span class='fu'>element_text_interactive</span>(
-      <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='st'>"axis.title.y"</span>,
-      <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"Description for y axis"</span>,
-      <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:red;stroke:none;"</span>
-    ),
-    <span class='kw'>panel.grid.major</span> <span class='kw'>=</span> <span class='fu'>element_line_interactive</span>(
-      <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='st'>"panel.grid"</span>,
-      <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"Major grid lines"</span>,
-      <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:none;stroke:red;"</span>
-    )
-  ) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Interactive points example!"</span>,
-    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='label_interactive.html'>label_interactive</a></span>(
+<span class='va'>gg_point</span> <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>dataset</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+    x <span class='op'>=</span> <span class='va'>wt</span>,
+    y <span class='op'>=</span> <span class='va'>qsec</span>,
+    color <span class='op'>=</span> <span class='va'>disp</span>,
+    tooltip <span class='op'>=</span> <span class='va'>carname</span>,
+    data_id <span class='op'>=</span> <span class='va'>carname</span>
+  <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>
+    plot.title <span class='op'>=</span> <span class='fu'>element_text_interactive</span><span class='op'>(</span>
+      data_id <span class='op'>=</span> <span class='st'>"plot.title"</span>,
+      tooltip <span class='op'>=</span> <span class='st'>"plot title"</span>,
+      hover_css <span class='op'>=</span> <span class='st'>"fill:red;stroke:none;font-size:12pt"</span>
+    <span class='op'>)</span>,
+    plot.subtitle <span class='op'>=</span> <span class='fu'>element_text_interactive</span><span class='op'>(</span>
+      data_id <span class='op'>=</span> <span class='st'>"plot.subtitle"</span>,
+      tooltip <span class='op'>=</span> <span class='st'>"plot subtitle"</span>,
+      hover_css <span class='op'>=</span> <span class='st'>"fill:none;"</span>
+    <span class='op'>)</span>,
+    axis.title.x <span class='op'>=</span> <span class='fu'>element_text_interactive</span><span class='op'>(</span>
+      data_id <span class='op'>=</span> <span class='st'>"axis.title.x"</span>,
+      tooltip <span class='op'>=</span> <span class='st'>"Description for x axis"</span>,
+      hover_css <span class='op'>=</span> <span class='st'>"fill:red;stroke:none;"</span>
+    <span class='op'>)</span>,
+    axis.title.y <span class='op'>=</span> <span class='fu'>element_text_interactive</span><span class='op'>(</span>
+      data_id <span class='op'>=</span> <span class='st'>"axis.title.y"</span>,
+      tooltip <span class='op'>=</span> <span class='st'>"Description for y axis"</span>,
+      hover_css <span class='op'>=</span> <span class='st'>"fill:red;stroke:none;"</span>
+    <span class='op'>)</span>,
+    panel.grid.major <span class='op'>=</span> <span class='fu'>element_line_interactive</span><span class='op'>(</span>
+      data_id <span class='op'>=</span> <span class='st'>"panel.grid"</span>,
+      tooltip <span class='op'>=</span> <span class='st'>"Major grid lines"</span>,
+      hover_css <span class='op'>=</span> <span class='st'>"fill:none;stroke:red;"</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Interactive points example!"</span>,
+    subtitle <span class='op'>=</span> <span class='fu'><a href='label_interactive.html'>label_interactive</a></span><span class='op'>(</span>
       <span class='st'>"by ggiraph"</span>,
-      <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='st'>"Click me!"</span>,
-      <span class='kw'>onclick</span> <span class='kw'>=</span> <span class='st'>"window.open(\"https://davidgohel.github.io/ggiraph/\")"</span>,
-      <span class='kw'>hover_css</span> <span class='kw'>=</span> <span class='st'>"fill:magenta;cursor:pointer;"</span>
-    )
-  )
+      tooltip <span class='op'>=</span> <span class='st'>"Click me!"</span>,
+      onclick <span class='op'>=</span> <span class='st'>"window.open(\"https://davidgohel.github.io/ggiraph/\")"</span>,
+      hover_css <span class='op'>=</span> <span class='st'>"fill:magenta;cursor:pointer;"</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span>(<span class='kw'>ggobj</span> <span class='kw'>=</span> <span class='no'>gg_point</span>)
-<span class='kw'>if</span>( <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>() ) <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div></pre>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>gg_point</span><span class='op'>)</span>
+<span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -250,11 +251,11 @@ theme parameters.</p>
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
 <script>
