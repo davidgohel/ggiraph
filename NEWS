@@ -2,6 +2,8 @@
 
 ## Issues
 
+* Improved tooltip positioning and compatibility with xaringan
+
 * Fix issue with tooltip css missing zindex and pointer-events
 
 # ggiraph 0.7.8
