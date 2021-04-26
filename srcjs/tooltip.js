@@ -1,9 +1,11 @@
 import * as d3 from 'd3';
+import { getWindowViewport, getHTMLElementMatrix } from './geom';
 
 export default class TooltipHandler {
   constructor(
     svgid,
     classPrefix,
+    placement,
     opacity,
     offx,
     offy,
@@ -15,6 +17,7 @@ export default class TooltipHandler {
   ) {
     this.svgid = svgid;
     this.clsName = classPrefix + '_' + this.svgid;
+    this.placement = placement;
     this.opacity = opacity;
     this.offx = offx;
     this.offy = offy;
@@ -26,20 +29,30 @@ export default class TooltipHandler {
   }
 
   init() {
+    const svg = d3.select('#' + this.svgid);
     // select elements
-    const elements = d3.select('#' + this.svgid).selectAll('*[title]');
+    const elements = svg.select('g').selectAll('*[title]');
     // check selection type
     if (elements.empty()) {
       // nothing to do here, return false to discard this
       return false;
     }
 
+    // remove any old elements
+    d3.select('.' + this.clsName).remove();
+
     // create tooltip
-    if (d3.select('.' + this.clsName).empty()) {
-      d3.select('body').append('div').attr('class', this.clsName);
+    let containerEl;
+    if (this.placement == 'doc') {
+      containerEl = d3.select('body');
+    } else {
+      containerEl = d3.select(svg.node().parentNode);
     }
-    const tooltipEl = d3.select('.' + this.clsName);
-    tooltipEl.style('position', 'absolute').style('opacity', 0);
+    containerEl
+      .append('xhtml:div')
+      .classed(this.clsName, true)
+      .style('position', 'absolute')
+      .style('opacity', 0);
 
     // add event listeners
     const that = this;
@@ -48,15 +61,18 @@ export default class TooltipHandler {
       this.addEventListener('mousemove', that);
       this.addEventListener('mouseout', that);
     });
+
     // return true to add to list of handLers
     return true;
   }
 
   destroy() {
     const that = this;
+    const svg = d3.select('#' + this.svgid);
     // remove event listeners
     try {
-      d3.select('#' + this.svgid)
+      svg
+        .select('g')
         .selectAll('*[title]')
         .each(function () {
           this.removeEventListener('mouseover', that);
@@ -73,8 +89,15 @@ export default class TooltipHandler {
 
   handleEvent(event) {
     try {
-      let xpos, ypos, xdiff, ydiff, tooltipRect, clientRect;
-      const tooltipEl = d3.select('.' + this.clsName);
+      let pos, tooltipEl;
+      const svg = d3.select('#' + this.svgid);
+
+      if (this.placement == 'svg') {
+        tooltipEl = svg.select('div.' + this.clsName);
+      } else {
+        tooltipEl = d3.select('div.' + this.clsName);
+      }
+
       if (event.type == 'mouseover') {
         if (this.usefill) {
           tooltipEl.style(
@@ -88,65 +111,99 @@ export default class TooltipHandler {
         tooltipEl.html(event.target.getAttribute('title'));
         // set the tooltip again so that html entities are properly decoded
         tooltipEl.html(tooltipEl.text());
-        tooltipRect = tooltipEl.node().getBoundingClientRect();
-        clientRect = d3
-          .select('#' + this.svgid)
-          .node()
-          .parentNode.getBoundingClientRect();
-        if (this.usecursor) {
-          xpos = event.pageX + this.offx;
-          xdiff = xpos + tooltipRect.width - (clientRect.x + clientRect.width);
-          if (xdiff > 0) {
-            xpos -= xdiff;
-          }
-          ypos = event.pageY + this.offy;
-          ydiff =
-            ypos +
-            tooltipRect.height -
-            (clientRect.y + clientRect.height + window.pageYOffset);
-          if (ydiff > 0) {
-            ypos -= ydiff;
-          }
-        } else {
-          xpos = this.offx + clientRect.left;
-          ypos = document.documentElement.scrollTop + clientRect.y + this.offy;
-        }
+
+        pos = this.calculatePosition(tooltipEl, event);
         tooltipEl
-          .style('left', xpos + 'px')
-          .style('top', ypos + 'px')
+          .style('left', pos.x + 'px')
+          .style('top', pos.y + 'px')
           .transition()
           .duration(this.delayover)
           .style('opacity', this.opacity);
       } else if (event.type == 'mousemove') {
-        tooltipRect = tooltipEl.node().getBoundingClientRect();
-        clientRect = d3
-          .select('#' + this.svgid)
-          .node()
-          .parentNode.getBoundingClientRect();
-        if (this.usecursor) {
-          xpos = event.pageX + this.offx;
-          xdiff = xpos + tooltipRect.width - (clientRect.x + clientRect.width);
-          if (xdiff > 0) {
-            xpos -= xdiff;
-          }
-          ypos = event.pageY + this.offy;
-          ydiff =
-            ypos +
-            tooltipRect.height -
-            (clientRect.y + clientRect.height + window.pageYOffset);
-          if (ydiff > 0) {
-            ypos -= ydiff;
-          }
-        } else {
-          xpos = this.offx + clientRect.left;
-          ypos = document.documentElement.scrollTop + clientRect.y + this.offy;
-        }
-        tooltipEl.style('left', xpos + 'px').style('top', ypos + 'px');
+        pos = this.calculatePosition(tooltipEl, event);
+        tooltipEl.style('left', pos.x + 'px').style('top', pos.y + 'px');
       } else if (event.type == 'mouseout') {
         tooltipEl.transition().duration(this.delayout).style('opacity', 0);
       }
     } catch (e) {
       console.error(e);
     }
+  }
+
+  calculatePosition(tooltipEl, event) {
+    let p, matrix;
+    const svgNode = d3.select('#' + this.svgid).node();
+    const tooltipNode = tooltipEl.node();
+    const containerNode = tooltipNode.parentNode;
+    if (this.usecursor) {
+      // Calculate tooltip position, preventing collisions and overflow if possible.
+      // First we try to fit the tooltip on right and bottom of the event.
+      // If it doesn't fit we try the opposite direction and negate the passed offset.
+      // Otherwise we use the center/middle position.
+
+      // tooltip dimensions
+      const tooltipWidth = Math.ceil(tooltipNode.offsetWidth);
+      const tooltipHeight = Math.ceil(tooltipNode.offsetHeight);
+
+      // boundaries where the tooltip must not cross, set to window viewport
+      const viewport = getWindowViewport(svgNode);
+      let minp = new window.DOMPoint(viewport.left, viewport.top);
+      let maxp = new window.DOMPoint(viewport.right, viewport.bottom);
+
+      // current mouse/touch coordinates in document coord system
+      p = new window.DOMPoint(event.pageX, event.pageY);
+
+      if (this.placement != 'doc') {
+        // convert the coords to be relative to the container
+        matrix = getHTMLElementMatrix(containerNode).inverse();
+        p = p.matrixTransform(matrix);
+        minp = minp.matrixTransform(matrix);
+        maxp = maxp.matrixTransform(matrix);
+      }
+
+      // calculate horizontal position
+      const spaceRight = maxp.x - (p.x + this.offx);
+      const spaceLeft = p.x - this.offx - minp.x;
+      if (spaceRight >= tooltipWidth) {
+        // fits on right
+        p.x = Math.max(minp.x, p.x + this.offx);
+      } else if (spaceLeft >= tooltipWidth) {
+        // fits on left
+        p.x = Math.min(maxp.x - tooltipWidth, p.x - this.offx - tooltipWidth);
+      } else {
+        // set at middle
+        p.x = Math.max(
+          minp.x,
+          Math.min(maxp.x, p.x + tooltipWidth / 2) - tooltipWidth
+        );
+      }
+
+      // calculate vertical position
+      const spaceBottom = maxp.y - (p.y + this.offy);
+      const spaceTop = p.y - this.offy - minp.y;
+      if (spaceBottom >= tooltipHeight) {
+        // fits on bottom
+        p.y = Math.max(minp.y, p.y + this.offy);
+      } else if (spaceTop >= tooltipHeight) {
+        // fits on top
+        p.y = Math.min(maxp.y - tooltipHeight, p.y - this.offy - tooltipHeight);
+      } else {
+        // set at middle
+        p.y = Math.max(
+          minp.y,
+          Math.min(maxp.y, p.y + tooltipHeight / 2) - tooltipHeight
+        );
+      }
+    } else {
+      // Fixed position
+      p = new window.DOMPoint(this.offx, this.offy);
+
+      if (this.placement == 'doc') {
+        // correct the position to be relative to the document
+        matrix = getHTMLElementMatrix(containerNode);
+        p = p.matrixTransform(matrix);
+      }
+    }
+    return p;
   }
 }

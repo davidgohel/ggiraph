@@ -105,6 +105,7 @@ export default class SVGObject {
 
   setupTooltip(
     classPrefix,
+    placement,
     opacity,
     offx,
     offy,
@@ -119,6 +120,7 @@ export default class SVGObject {
       const handler = new TooltipHandler(
         this.svgid,
         classPrefix,
+        placement,
         opacity,
         offx,
         offy,

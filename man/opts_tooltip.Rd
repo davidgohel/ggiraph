@@ -14,6 +14,7 @@ opts_tooltip(
   use_stroke = FALSE,
   delay_mouseover = 200,
   delay_mouseout = 500,
+  placement = "auto",
   zindex = 999
 )
 }
@@ -37,6 +38,20 @@ transition associated with tooltip display.}
 
 \item{delay_mouseout}{The duration in milliseconds of the
 transition associated with tooltip end of display.}
+
+\item{placement}{Defines the container used for the tooltip element.
+It can be one of "auto" (default), "doc" or "container".
+\itemize{
+\item doc: the host document's body is used as tooltip container.
+The tooltip may cover areas outside of the svg graphic.
+\item container: the svg container is used as tooltip container.
+In this case the tooltip content may wrap to fit inside the svg bounds.
+It will also conform to the CSS transforms applied to the parent containers
+(like scaling in a slide presentation).
+\item auto: This is the default, ggiraph choses the best option according
+to use cases. Usually it redirects to "doc", however in a \emph{xaringan} context,
+it redirects to "container".
+}}
 
 \item{zindex}{tooltip css z-index, default to 999.}
 }
