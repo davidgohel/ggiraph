@@ -20,7 +20,7 @@ dat <- mtcars
 dat$carname <- row.names(mtcars)
 gg_point = ggplot(data = dat) +
     geom_point_interactive(aes(x = wt, y = qsec, color = disp,
-    tooltip = carname, data_id = carname)) + theme_minimal()
+    tooltip = paste(carname, disp, sep = "\n"), data_id = carname)) + theme_minimal()
 x <- girafe(ggobj = gg_point)
 x
 ```

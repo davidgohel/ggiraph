@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { getWindowViewport, getHTMLElementMatrix } from './geom';
+import { decode } from './utils';
 
 export default class TooltipHandler {
   constructor(
@@ -108,9 +109,8 @@ export default class TooltipHandler {
         if (this.usestroke) {
           tooltipEl.style('border-color', event.target.getAttribute('stroke'));
         }
-        tooltipEl.html(event.target.getAttribute('title'));
-        // set the tooltip again so that html entities are properly decoded
-        tooltipEl.html(tooltipEl.text());
+
+        tooltipEl.html(decode(event.target.getAttribute('title')));
 
         pos = this.calculatePosition(tooltipEl, event);
         tooltipEl
@@ -128,6 +128,12 @@ export default class TooltipHandler {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  decodeContent(txt) {
+    // decodes html encoded text
+    this.decodingTextarea.innerHTML = txt;
+    return this.decodingTextarea.value;
   }
 
   calculatePosition(tooltipEl, event) {

@@ -21,7 +21,7 @@
 #'   The tooltip may cover areas outside of the svg graphic.
 #'   \item container: the svg container is used as tooltip container.
 #'   In this case the tooltip content may wrap to fit inside the svg bounds.
-#'   It will also conform to the CSS transforms applied to the parent containers
+#'   It will also inherit the CSS styles and transforms applied to the parent containers
 #'   (like scaling in a slide presentation).
 #'   \item auto: This is the default, ggiraph choses the best option according
 #'   to use cases. Usually it redirects to "doc", however in a *xaringan* context,
@@ -62,7 +62,7 @@ opts_tooltip <- function(css = NULL,
                          zindex = 999) {
   css <- check_css(
     css = css,
-    default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px",
+    default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left;",
     cls_prefix = "tooltip_",
     name = "opts_tooltip"
   )

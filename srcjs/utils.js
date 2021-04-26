@@ -38,3 +38,10 @@ export function navigator_id() {
   if ((tem = ua.match(/version\/(\d+)/i)) !== null) M.splice(1, 1, tem[1]);
   return M.join(' ');
 }
+
+// decodes html encoded text
+export function decode(t) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = t;
+  return txt.value;
+}
