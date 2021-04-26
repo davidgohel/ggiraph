@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
 import { getWindowViewport, getHTMLElementMatrix } from './geom';
-import { decode } from './utils';
 
 export default class TooltipHandler {
   constructor(
@@ -54,6 +53,12 @@ export default class TooltipHandler {
       .classed(this.clsName, true)
       .style('position', 'absolute')
       .style('opacity', 0);
+
+    // create a textarea to decode content
+    this.decodingTextarea = document.createElementNS(
+      'http://www.w3.org/1999/xhtml',
+      'textarea'
+    );
 
     // add event listeners
     const that = this;
@@ -110,7 +115,7 @@ export default class TooltipHandler {
           tooltipEl.style('border-color', event.target.getAttribute('stroke'));
         }
 
-        tooltipEl.html(decode(event.target.getAttribute('title')));
+        tooltipEl.html(this.decodeContent(event.target.getAttribute('title')));
 
         pos = this.calculatePosition(tooltipEl, event);
         tooltipEl
