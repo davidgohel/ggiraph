@@ -28,6 +28,10 @@
 #' This is mandatory parameter if hover and selection interactivity is desired.
 #' Identifiers are available as reactive input values in Shiny applications.
 #'
+#' @param tooltip_fill Color to use for tooltip background when [opts_tooltip()] `use_fill` is TRUE.
+#' Useful for setting the tooltip background color in [geom_text_interactive()] or
+#' [geom_label_interactive()], when the geom text color may be the same as the tooltip text color.
+#'
 #' @section Details for geom_*_interactive functions:
 #' The interactive parameters can be supplied with two ways:
 #' \itemize{
@@ -106,7 +110,8 @@ IPAR_DEFAULTS <- list(
   tooltip = NULL,
   onclick = NULL,
   hover_css = NULL,
-  selected_css = NULL
+  selected_css = NULL,
+  tooltip_fill = NULL
 )
 
 IPAR_NAMES <- names(IPAR_DEFAULTS)

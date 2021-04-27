@@ -106,10 +106,9 @@ export default class TooltipHandler {
 
       if (event.type == 'mouseover') {
         if (this.usefill) {
-          tooltipEl.style(
-            'background-color',
-            event.target.getAttribute('fill')
-          );
+          let clr = event.target.getAttribute('tooltip_fill');
+          if (!clr) clr = event.target.getAttribute('fill');
+          if (clr) tooltipEl.style('background-color', clr);
         }
         if (this.usestroke) {
           tooltipEl.style('border-color', event.target.getAttribute('stroke'));
