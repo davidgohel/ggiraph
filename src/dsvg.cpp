@@ -37,7 +37,6 @@ public:
   int tracer_is_init;
 
   Rcpp::List system_aliases;
-  Rcpp::List user_aliases;
 
   DSVG_dev(std::string filename_, bool standalone_, bool setdims_,
            std::string canvas_id_,
@@ -57,8 +56,7 @@ public:
       tracer_last_elt(-1),
       tracer_on(0),
       tracer_is_init(0),
-      system_aliases(Rcpp::wrap(aliases_["system"])),
-      user_aliases(Rcpp::wrap(aliases_["user"])) {
+      system_aliases(Rcpp::wrap(aliases_["system"])) {
     file = fopen(R_ExpandFileName(filename.c_str()), "w");
     clipleft = 0.0;
     clipright = width_;
@@ -194,21 +192,13 @@ private:
 };
 
 
-FontSettings get_font_file(const char* family, int face, Rcpp::List user_aliases) {
+FontSettings get_font_file(const char* family, int face) {
   const char* fontfamily = family;
   if (is_symbol(face)) {
     fontfamily = "symbol";
   } else if (strcmp(family, "") == 0) {
     fontfamily = "sans";
   }
-//  std::string alias = fontfile(fontfamily, face, user_aliases);
-//  if (alias.size() > 0) {
-//    FontSettings result = {};
-//    std::strncpy(result.file, alias.c_str(), PATH_MAX);
-//    result.index = 0;
-//    result.n_features = 0;
-//    return result;
-//  }
 
   return locate_font_with_features(fontfamily, is_italic(face), is_bold(face));
 }
@@ -222,7 +212,7 @@ static void dsvg_metric_info(int c, const pGEcontext gc, double* ascent,
     c = -c;
   }
 
-  FontSettings font = get_font_file(gc->fontfamily, gc->fontface, svgd->user_aliases);
+  FontSettings font = get_font_file(gc->fontfamily, gc->fontface);
   int error = glyph_metrics(c, font.file, font.index, gc->ps * gc->cex, 1e4, ascent, descent, width);
 
   if (error != 0) {
@@ -369,7 +359,7 @@ void dsvg_path(double *x, double *y,
 static double dsvg_strwidth_utf8(const char *str, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
-  FontSettings font = get_font_file(gc->fontfamily, gc->fontface, svgd->user_aliases);
+  FontSettings font = get_font_file(gc->fontfamily, gc->fontface);
 
   double width = 0.0;
 
@@ -451,7 +441,7 @@ static void dsvg_text_utf8(double x, double y, const char *str, double rot,
     set_fill(text, gc->col);
   } // black
 
-  std::string font = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases, svgd->user_aliases);
+  std::string font = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases);
   set_attr(text, "font-family", font.c_str());
 
   text->SetText(str);

@@ -30,9 +30,8 @@ inline std::string find_system_alias(std::string& family,
   return out;
 }
 
-std::string fontname(const char* family_, int face,
-                            Rcpp::List const& system_aliases,
-                            Rcpp::List const& user_aliases) {
+std::string fontname(const char* family_, int face, Rcpp::List const& system_aliases) {
+
   std::string family(family_);
   if (face == 5)
     family = "symbol";
