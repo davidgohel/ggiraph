@@ -38,3 +38,12 @@ export function navigator_id() {
   if ((tem = ua.match(/version\/(\d+)/i)) !== null) M.splice(1, 1, tem[1]);
   return M.join(' ');
 }
+
+export function isIE() {
+  const navId = navigator_id();
+  return navId == 'IE 11' || navId.substring(0, 4) === 'MSIE';
+}
+
+export function isMacLike() {
+  return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+}
