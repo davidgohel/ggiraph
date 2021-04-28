@@ -43,18 +43,6 @@ export function factory(shinyMode) {
           ggobj.removeContainerLimits();
         }
 
-        ggobj.setupTooltip(
-          'tooltip',
-          x.settings.tooltip.opacity,
-          x.settings.tooltip.offx,
-          x.settings.tooltip.offy,
-          x.settings.tooltip.use_cursor_pos,
-          x.settings.tooltip.usefill,
-          x.settings.tooltip.usestroke,
-          x.settings.tooltip.delay.over,
-          x.settings.tooltip.delay.out
-        );
-
         ggobj.setupHover([
           {
             classPrefix: 'hover',
@@ -114,11 +102,25 @@ export function factory(shinyMode) {
         ]);
 
         ggobj.setupZoom(x.settings.zoom.min, x.settings.zoom.max);
+
         ggobj.setupToolbar(
           'ggiraph-toolbar',
           x.settings.toolbar.position,
           x.settings.toolbar.saveaspng,
           x.settings.toolbar.pngname
+        );
+
+        ggobj.setupTooltip(
+          'tooltip',
+          x.settings.tooltip.placement,
+          x.settings.tooltip.opacity,
+          x.settings.tooltip.offx,
+          x.settings.tooltip.offy,
+          x.settings.tooltip.use_cursor_pos,
+          x.settings.tooltip.usefill,
+          x.settings.tooltip.usestroke,
+          x.settings.tooltip.delay.over,
+          x.settings.tooltip.delay.out
         );
       },
 

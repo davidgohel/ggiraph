@@ -83,9 +83,10 @@ export default class SelectionHandler {
       try {
         // For Shiny the only way to really remove it
         // is to replace it with a void one
-        Shiny.addCustomMessageHandler(this.shinyMessageId, function (
-          message
-        ) {});
+        Shiny.addCustomMessageHandler(
+          this.shinyMessageId,
+          function (message) {}
+        );
       } catch (e) {
         console.error(e);
       }

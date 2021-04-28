@@ -19,7 +19,7 @@ dapply <- ggplot2:::dapply
 encode_cr <- function(x)
   htmltools::htmlEscape(text = gsub(
     pattern = "\n",
-    replacement = "<br>",
+    replacement = "<br/>",
     x = x
   ),
   attribute = TRUE)

@@ -152,7 +152,7 @@ module.exports = (env, argv) => {
                     modules: false,
                     debug: argv.mode == 'development',
                     useBuiltIns: 'usage',
-                    corejs: 3,
+                    corejs: '3',
                     exclude: ['es.promise']
                   }
                 ]

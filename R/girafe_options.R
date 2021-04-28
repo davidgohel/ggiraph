@@ -14,6 +14,19 @@
 #' @param offx,offy tooltip x and y offset
 #' @param use_fill,use_stroke logical, use fill and stroke properties to
 #' color tooltip.
+#' @param placement Defines the container used for the tooltip element.
+#' It can be one of "auto" (default), "doc" or "container".
+#' \itemize{
+#'   \item doc: the host document's body is used as tooltip container.
+#'   The tooltip may cover areas outside of the svg graphic.
+#'   \item container: the svg container is used as tooltip container.
+#'   In this case the tooltip content may wrap to fit inside the svg bounds.
+#'   It will also inherit the CSS styles and transforms applied to the parent containers
+#'   (like scaling in a slide presentation).
+#'   \item auto: This is the default, ggiraph choses the best option according
+#'   to use cases. Usually it redirects to "doc", however in a *xaringan* context,
+#'   it redirects to "container".
+#' }
 #' @param zindex tooltip css z-index, default to 999.
 #' @examples
 #' library(ggplot2)
@@ -45,10 +58,11 @@ opts_tooltip <- function(css = NULL,
                          use_stroke = FALSE,
                          delay_mouseover = 200,
                          delay_mouseout = 500,
+                         placement = "auto",
                          zindex = 999) {
   css <- check_css(
     css = css,
-    default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px",
+    default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left;",
     cls_prefix = "tooltip_",
     name = "opts_tooltip"
   )
@@ -73,8 +87,19 @@ opts_tooltip <- function(css = NULL,
                "}\n"
              ),
              css)
+
+  stopifnot(placement %in% c("auto", "doc", "container"))
+  if (placement == "auto") {
+    placement <- "doc"
+    is_xaringan <- !is.null(getOption("xaringan.page_number.offset"))
+    if (is_xaringan) {
+      placement <- "container"
+    }
+  }
+
   x <- list(
     css = css,
+    placement = placement,
     offx = offx, offy = offy,
     use_cursor_pos = use_cursor_pos,
     opacity = opacity,

@@ -1,0 +1,26 @@
+---
+title: "ggiraph in xaringan"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r setup, include=FALSE}
+library(xaringan)
+
+```
+
+```{r echo=FALSE}
+library(ggplot2)
+library(ggiraph)
+dat <- mtcars
+dat$carname <- row.names(mtcars)
+gg_point = ggplot(data = dat) +
+    geom_point_interactive(aes(x = wt, y = qsec, color = disp,
+    tooltip = paste(carname, disp, sep = "\n"), data_id = carname)) + theme_minimal()
+x <- girafe(ggobj = gg_point)
+x
+```

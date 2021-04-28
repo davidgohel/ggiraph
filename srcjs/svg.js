@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import * as utils from './utils';
+import { isIE, parseFunction } from './utils';
 import ToolbarHandler from './toolbar.js';
 import ZoomHandler from './zoom.js';
 import TooltipHandler from './tooltip.js';
@@ -12,9 +12,6 @@ export default class SVGObject {
     this.svgid = null;
     this.handlers = [];
     this.shinyMode = shinyMode;
-    this.isIE =
-      utils.navigator_id() == 'IE 11' ||
-      utils.navigator_id().substring(0, 4) === 'MSIE';
   }
 
   clear() {
@@ -40,6 +37,7 @@ export default class SVGObject {
 
     d3.select('#' + this.containerid)
       .append('style')
+      .attr('type', 'text/css')
       .text(css);
   }
 
@@ -50,13 +48,13 @@ export default class SVGObject {
       .html(svg);
 
     if (jsstr) {
-      const fun_ = utils.parseFunction(jsstr);
+      const fun_ = parseFunction(jsstr);
       fun_();
     }
   }
 
   IEFixResize(width, ratio) {
-    if (this.isIE) {
+    if (isIE()) {
       d3.select('#' + this.svgid).classed('girafe_svg_ie', true);
       d3.select('#' + this.containerid + ' div')
         .classed('girafe_container_ie', true)
@@ -83,8 +81,8 @@ export default class SVGObject {
       .attr('width', width)
       .attr('height', height);
     d3.select('#' + this.svgid)
-      .style('width', width)
-      .style('height', height);
+      .style('width', width + 'px')
+      .style('height', height + 'px');
   }
 
   setSizeLimits(width_max, width_min, height_max, height_min) {
@@ -96,7 +94,7 @@ export default class SVGObject {
   }
 
   removeContainerLimits() {
-    if (!this.isIE) {
+    if (!isIE()) {
       d3.select('#' + this.containerid)
         .style('width', null)
         .style('height', null);
@@ -105,6 +103,7 @@ export default class SVGObject {
 
   setupTooltip(
     classPrefix,
+    placement,
     opacity,
     offx,
     offy,
@@ -119,6 +118,7 @@ export default class SVGObject {
       const handler = new TooltipHandler(
         this.svgid,
         classPrefix,
+        placement,
         opacity,
         offx,
         offy,
