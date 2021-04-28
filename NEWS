@@ -1,10 +1,18 @@
 # ggiraph 0.7.9
 
+## Changes
+
+* Improved tooltip positioning and added 'placement' parameter
+
+* Added 'tooltip_fill' interactive attribute
+
 ## Issues
 
-* Improved tooltip positioning and compatibility with xaringan
+* Fixed issue with tooltip fill color in geom_label_interactive
 
-* Fix issue with tooltip css missing zindex and pointer-events
+* Fixed tooltip issues (scaling and markup decoding) in xaringan
+
+* Fixed issue with tooltip css missing zindex and pointer-events
 
 # ggiraph 0.7.8
 
