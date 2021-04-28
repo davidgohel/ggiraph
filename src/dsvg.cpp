@@ -39,8 +39,6 @@ public:
   Rcpp::List system_aliases;
   Rcpp::List user_aliases;
 
-  XPtrCairoContext cc;
-
   DSVG_dev(std::string filename_, bool standalone_, bool setdims_,
            std::string canvas_id_,
            int bg_,
@@ -60,8 +58,7 @@ public:
       tracer_on(0),
       tracer_is_init(0),
       system_aliases(Rcpp::wrap(aliases_["system"])),
-      user_aliases(Rcpp::wrap(aliases_["user"])),
-      cc(gdtools::context_create() ) {
+      user_aliases(Rcpp::wrap(aliases_["user"])) {
     file = fopen(R_ExpandFileName(filename.c_str()), "w");
     clipleft = 0.0;
     clipright = width_;
@@ -204,14 +201,14 @@ FontSettings get_font_file(const char* family, int face, Rcpp::List user_aliases
   } else if (strcmp(family, "") == 0) {
     fontfamily = "sans";
   }
-  std::string alias = fontfile(fontfamily, face, user_aliases);
-  if (alias.size() > 0) {
-    FontSettings result = {};
-    std::strncpy(result.file, alias.c_str(), PATH_MAX);
-    result.index = 0;
-    result.n_features = 0;
-    return result;
-  }
+//  std::string alias = fontfile(fontfamily, face, user_aliases);
+//  if (alias.size() > 0) {
+//    FontSettings result = {};
+//    std::strncpy(result.file, alias.c_str(), PATH_MAX);
+//    result.index = 0;
+//    result.n_features = 0;
+//    return result;
+//  }
 
   return locate_font_with_features(fontfamily, is_italic(face), is_bold(face));
 }
