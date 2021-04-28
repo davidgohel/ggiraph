@@ -25,6 +25,7 @@
 #' @useDynLib ggiraph,.registration = TRUE
 #' @importFrom Rcpp sourceCpp
 #' @importFrom gdtools raster_view
+#' @importFrom systemfonts match_font
 #' @export
 dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
                 pointsize = 12, standalone = TRUE, setdims = TRUE, canvas_id = "svg_1",

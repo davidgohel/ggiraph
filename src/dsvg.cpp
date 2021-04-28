@@ -14,6 +14,7 @@
 #include <locale>
 #include <sstream>
 #include <regex>
+#include <systemfonts.h>
 
 // SVG device metadata
 class DSVG_dev {
@@ -195,33 +196,48 @@ private:
   }
 };
 
+
+FontSettings get_font_file(const char* family, int face, Rcpp::List user_aliases) {
+  const char* fontfamily = family;
+  if (is_symbol(face)) {
+    fontfamily = "symbol";
+  } else if (strcmp(family, "") == 0) {
+    fontfamily = "sans";
+  }
+  std::string alias = fontfile(fontfamily, face, user_aliases);
+  if (alias.size() > 0) {
+    FontSettings result = {};
+    std::strncpy(result.file, alias.c_str(), PATH_MAX);
+    result.index = 0;
+    result.n_features = 0;
+    return result;
+  }
+
+  return locate_font_with_features(fontfamily, is_italic(face), is_bold(face));
+}
+
+
 static void dsvg_metric_info(int c, const pGEcontext gc, double* ascent,
                              double* descent, double* width, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
-  bool Unicode = mbcslocale;
   if (c < 0) {
-    Unicode = TRUE;
     c = -c;
   }
-  char str[16];
-  if (!c) {
-    str[0]='M'; str[1]='g'; str[2]=0;
-  } else if (Unicode) {
-    Rf_ucstoutf8(str, (unsigned int) c);
-  } else {
-    str[0] = (char) c;
-    str[1] = '\0';
+
+  FontSettings font = get_font_file(gc->fontfamily, gc->fontface, svgd->user_aliases);
+  int error = glyph_metrics(c, font.file, font.index, gc->ps * gc->cex, 1e4, ascent, descent, width);
+
+  if (error != 0) {
+    *ascent = 0;
+    *descent = 0;
+    *width = 0;
   }
+  double mod = 72./1e4;
+  *ascent *= mod;
+  *descent *= mod;
+  *width *= mod;
 
-  std::string file = fontfile(gc->fontfamily, gc->fontface, svgd->user_aliases);
-  std::string name = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases, svgd->user_aliases);
-  gdtools::context_set_font(svgd->cc, name, gc->cex * gc->ps, is_bold(gc->fontface), is_italic(gc->fontface), file);
-  FontMetric fm = gdtools::context_extents(svgd->cc, std::string(str));
-
-  *ascent = fm.ascent;
-  *descent = fm.descent;
-  *width = fm.width;
 }
 
 static void dsvg_clip(double x0, double x1, double y0, double y1, pDevDesc dd) {
@@ -356,11 +372,17 @@ void dsvg_path(double *x, double *y,
 static double dsvg_strwidth_utf8(const char *str, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
-  std::string file = fontfile(gc->fontfamily, gc->fontface, svgd->user_aliases);
-  std::string name = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases, svgd->user_aliases);
-  gdtools::context_set_font(svgd->cc, name, gc->cex * gc->ps, is_bold(gc->fontface), is_italic(gc->fontface), file);
-  FontMetric fm = gdtools::context_extents(svgd->cc, std::string(str));
-  return fm.width;
+  FontSettings font = get_font_file(gc->fontfamily, gc->fontface, svgd->user_aliases);
+
+  double width = 0.0;
+
+  int error = string_width(str, font.file, font.index, gc->ps * gc->cex, 1e4, 1, &width);
+
+  if (error != 0) {
+    width = 0.0;
+  }
+
+  return width * 72. / 1e4;
 }
 static double dsvg_strwidth(const char *str, const pGEcontext gc, pDevDesc dd) {
   return dsvg_strwidth_utf8(Rf_translateCharUTF8(Rf_mkChar(str)), gc, dd);
@@ -501,7 +523,7 @@ static SEXP dsvg_setPattern(SEXP pattern, pDevDesc dd) {
     return R_NilValue;
 }
 
-static void dsvg_releasePattern(SEXP ref, pDevDesc dd) {} 
+static void dsvg_releasePattern(SEXP ref, pDevDesc dd) {}
 
 static SEXP dsvg_setClipPath(SEXP path, SEXP ref, pDevDesc dd) {
     return R_NilValue;
@@ -514,7 +536,7 @@ static SEXP dsvg_setMask(SEXP path, SEXP ref, pDevDesc dd) {
 }
 
 static void dsvg_releaseMask(SEXP ref, pDevDesc dd) {}
-  
+
 static void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
