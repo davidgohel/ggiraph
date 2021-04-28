@@ -11,3 +11,5 @@ node_modules
 package-lock.json
 *.css.js
 .project
+configure.log
+src/Makevars

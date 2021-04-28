@@ -6,9 +6,9 @@
 
 #include "utils.h"
 #include "Rcpp.h"
-#include <gdtools.h>
 #include <string.h>
 #include "fonts.h"
+#include "raster.h"
 #include "R_ext/GraphicsEngine.h"
 #include "a_color.h"
 #include <locale>
@@ -475,12 +475,7 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
   if (height < 0)
     height = -height;
 
-  std::vector<unsigned int> raster_(w*h);
-  for ( size_t i = 0 ; i < raster_.size(); i++) {
-    raster_[i] = raster[i] ;
-  }
-
-  std::string base64_str = gdtools::raster_to_str(raster_, w, h, width*(25/6), height*(25/6), interpolate);
+  std::string base64_str = raster_to_string(raster, w, h, width, height, interpolate);
 
   SVGElement* image = svgd->svg_element("image", true);
   set_attr(image, "x", x);
@@ -488,6 +483,11 @@ static void dsvg_raster(unsigned int *raster, int w, int h,
   set_attr(image, "width", width);
   set_attr(image, "height", height);
   set_attr(image, "id", eltid);
+  set_attr(image, "preserveAspectRatio", "none");
+  if (!interpolate) {
+    set_attr(image, "image-rendering", "pixelated");
+  }
+
   set_clip(image, clipid);
 
   if (fabs(rot)>0.001) {

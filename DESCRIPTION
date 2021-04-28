@@ -29,7 +29,7 @@ Imports:
     Rcpp (>= 0.12.12), 
     gdtools (>= 0.2.1), systemfonts,
     purrr, rlang, uuid
-LinkingTo: Rcpp, gdtools, systemfonts
+LinkingTo: Rcpp, systemfonts
 Suggests:
     knitr,
     testthat,

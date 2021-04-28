@@ -1,0 +1,14 @@
+RWINLIB = ../windows/baselibs-3.5.0
+
+PKG_CPPFLAGS = -I${RWINLIB}/include \
+	-DSTRICT_R_HEADERS
+
+PKG_LIBS = -L${RWINLIB}/lib${R_ARCH} -lpng -lz
+
+all: clean winlibs
+
+winlibs:
+	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R" ${VERSION}
+
+clean:
+	rm -f $(OBJECTS)
