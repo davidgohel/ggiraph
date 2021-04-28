@@ -4,10 +4,10 @@ export function getWindowViewport(node) {
   const docElem = doc.documentElement;
   const win = doc.defaultView;
   return new window.DOMRect(
-    win.pageXOffset || docElem.scrollLeft,
-    win.pageYOffset || docElem.scrollTop,
-    docElem.clientWidth,
-    docElem.clientHeight
+    win.pageXOffset || docElem.scrollLeft || 0,
+    win.pageYOffset || docElem.scrollTop || 0,
+    Math.max(docElem.clientWidth || 0, win.innerWidth || 0),
+    Math.max(docElem.clientHeight || 0, win.innerHeight || 0)
   );
 }
 
