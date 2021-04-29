@@ -206,7 +206,6 @@ FontSettings get_font_file(const char* family, int face) {
 
 static void dsvg_metric_info(int c, const pGEcontext gc, double* ascent,
                              double* descent, double* width, pDevDesc dd) {
-  DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
   if (c < 0) {
     c = -c;
@@ -357,7 +356,6 @@ void dsvg_path(double *x, double *y,
 }
 
 static double dsvg_strwidth_utf8(const char *str, const pGEcontext gc, pDevDesc dd) {
-  DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
   FontSettings font = get_font_file(gc->fontfamily, gc->fontface);
 
