@@ -20,7 +20,7 @@ Authors@R: c(
 License: GPL-3
 Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
-SystemRequirements: C++11
+SystemRequirements: C++11, libpng
 Imports:
     grid, ggplot2 (>= 3.3.0),
     htmlwidgets (>= 0.6),
