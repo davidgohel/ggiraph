@@ -1,5 +1,8 @@
 #include <string.h>
 #include "Rcpp.h"
+
+// This code has been copied from the package svglite maintained by Thomas Lin Pedersen
+
 extern "C" {
 #include <png.h>
 }

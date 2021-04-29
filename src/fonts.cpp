@@ -1,4 +1,5 @@
 #include "Rcpp.h"
+#include <systemfonts.h>
 
 bool is_bold(int face) {
   return face == 2 || face == 4;
@@ -44,6 +45,18 @@ std::string fontname(const char* family_, int face, Rcpp::List const& system_ali
     return alias;
   else
     return family;
+}
+
+// This code has been copied from the package svglite maintained by Thomas Lin Pedersen
+FontSettings get_font_file(const char* family, int face) {
+  const char* fontfamily = family;
+  if (is_symbol(face)) {
+    fontfamily = "symbol";
+  } else if (strcmp(family, "") == 0) {
+    fontfamily = "sans";
+  }
+
+  return locate_font_with_features(fontfamily, is_italic(face), is_bold(face));
 }
 
 

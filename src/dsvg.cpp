@@ -14,7 +14,6 @@
 #include <locale>
 #include <sstream>
 #include <regex>
-#include <systemfonts.h>
 
 // SVG device metadata
 class DSVG_dev {
@@ -190,18 +189,6 @@ private:
     }
   }
 };
-
-
-FontSettings get_font_file(const char* family, int face) {
-  const char* fontfamily = family;
-  if (is_symbol(face)) {
-    fontfamily = "symbol";
-  } else if (strcmp(family, "") == 0) {
-    fontfamily = "sans";
-  }
-
-  return locate_font_with_features(fontfamily, is_italic(face), is_bold(face));
-}
 
 
 static void dsvg_metric_info(int c, const pGEcontext gc, double* ascent,
