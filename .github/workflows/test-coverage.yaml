@@ -2,7 +2,10 @@ on:
   push:
     branches:
       - master
-      - newfonts
+  pull_request:
+    branches:
+      - master
+
 
 name: test-coverage
 
