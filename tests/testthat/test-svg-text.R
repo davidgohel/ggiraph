@@ -1,6 +1,5 @@
 context("dsvg text")
 library(xml2)
-library(gdtools)
 
 test_that("cex affects strwidth", {
 

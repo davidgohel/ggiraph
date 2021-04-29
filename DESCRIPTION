@@ -27,7 +27,7 @@ Imports:
     stats,
     htmltools,
     Rcpp (>= 0.12.12), 
-    gdtools (>= 0.2.1), systemfonts,
+    systemfonts,
     purrr, rlang, uuid
 LinkingTo: Rcpp, systemfonts
 Suggests:

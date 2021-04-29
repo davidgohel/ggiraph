@@ -332,10 +332,10 @@ girafe(ggobj = gg_scatter,
 ## Fonts 
 
 When you use specific fonts, you will need that font installed on your system.
-This can be check with package `gdtools` and function `gdtools::font_family_exists()`.
+This can be check with function `font_family_exists()`.
 
 ```{r}
-gdtools::font_family_exists("Roboto")
+font_family_exists("Roboto")
 ```
 
 To use that font in a *girafe* graphic, best is to use the argument `fonts` (see `dsvg()`).
@@ -344,7 +344,7 @@ It's a named list that can contains 4 font family names, one per family type: `s
 
 The following example illustrates how to use font *Roboto* as *sans* family.
 
-```{r eval=gdtools::font_family_exists("Roboto")}
+```{r eval=font_family_exists("Roboto")}
 z <- ggplot(data = iris, 
   mapping = aes(x = Sepal.Length, y = Petal.Width)) +
   geom_point() +
