@@ -48,7 +48,9 @@
 
 <meta property="og:title" content="SVG Graphics Driver — dsvg" />
 <meta property="og:description" content="This function produces SVG files (compliant to the current w3 svg XML standard)
-where elements can be made interactive." />
+where elements can be made interactive.
+In order to generate the output, used fonts must be available on the computer used to create the svg,
+used fonts must also be available on the computer used to render the svg." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -81,7 +83,7 @@ where elements can be made interactive." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.200</span>
       </span>
     </div>
 
@@ -134,6 +136,8 @@ where elements can be made interactive." />
     <div class="ref-description">
     <p>This function produces SVG files (compliant to the current w3 svg XML standard)
 where elements can be made interactive.</p>
+<p>In order to generate the output, used fonts must be available on the computer used to create the svg,
+used fonts must also be available on the computer used to render the svg.</p>
     </div>
 
     <pre class="usage"><span class='fu'>dsvg</span><span class='op'>(</span>
@@ -174,7 +178,7 @@ xml header and default namespace.</p></td>
     </tr>
     <tr>
       <th>setdims</th>
-      <td><p>If TRUE (the default), the svg node will have attributes width &amp; height set</p></td>
+      <td><p>If <code>TRUE</code> (the default), the svg node will have attributes width &amp; height set</p></td>
     </tr>
     <tr>
       <th>canvas_id</th>
@@ -184,14 +188,28 @@ xml header and default namespace.</p></td>
       <th>fonts</th>
       <td><p>Named list of font names to be aliased with
 fonts installed on your system. If unspecified, the R default
-families <code>sans</code>, <code>serif</code>, <code>mono</code> and <code>symbol</code>
-are aliased to the family returned by <code><a href='https://rdrr.io/pkg/gdtools/man/match_family.html'>match_family</a>()</code>.</p></td>
+families "sans", "serif", "mono" and "symbol"
+are aliased to the family returned by <code><a href='match_family.html'>match_family()</a></code>.</p>
+<p>If fonts are available, the default mapping will use these values:</p><table class='table'>
+<tr><td>R family</td><td>Font on Windows</td><td>Font on Unix</td><td>Font on Mac OS</td></tr>
+<tr><td><code>sans</code></td><td>Arial</td><td>DejaVu Sans</td><td>Helvetica</td></tr>
+<tr><td><code>serif</code></td><td>Times New Roman</td><td>DejaVu serif</td><td>Times</td></tr>
+<tr><td><code>mono</code></td><td>Courier</td><td>DejaVu mono</td><td>Courier</td></tr>
+<tr><td><code>symbol</code></td><td>Symbol</td><td>DejaVu Sans</td><td>Symbol</td></tr>
+</table>
+
+
+
+<p>As an example, using <code>fonts = list(sans = "Roboto")</code> would make the
+default font "Roboto" as many ggplot theme are using <code><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal(base_family="")</a></code> or
+<code><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal(base_family="sans")</a></code>.</p>
+<p>You can also use theme_minimal(base_family="Roboto").</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/grDevices/Devices.html'>Devices</a></code></p></div>
+    <div class='dont-index'><p><a href='https://rdrr.io/r/grDevices/Devices.html'>Devices</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>fileout</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".svg"</span><span class='op'>)</span>
@@ -212,7 +230,7 @@ are aliased to the family returned by <code><a href='https://rdrr.io/pkg/gdtools
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.200 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">

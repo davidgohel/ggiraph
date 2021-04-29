@@ -81,7 +81,7 @@ for tooltip customisation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9.200</span>
       </span>
     </div>
 
@@ -146,6 +146,7 @@ for tooltip customisation.</p>
   use_stroke <span class='op'>=</span> <span class='cn'>FALSE</span>,
   delay_mouseover <span class='op'>=</span> <span class='fl'>200</span>,
   delay_mouseout <span class='op'>=</span> <span class='fl'>500</span>,
+  placement <span class='op'>=</span> <span class='st'>"auto"</span>,
   zindex <span class='op'>=</span> <span class='fl'>999</span>
 <span class='op'>)</span></pre>
 
@@ -185,6 +186,21 @@ transition associated with tooltip display.</p></td>
       <th>delay_mouseout</th>
       <td><p>The duration in milliseconds of the
 transition associated with tooltip end of display.</p></td>
+    </tr>
+    <tr>
+      <th>placement</th>
+      <td><p>Defines the container used for the tooltip element.
+It can be one of "auto" (default), "doc" or "container".</p><ul>
+<li><p>doc: the host document's body is used as tooltip container.
+The tooltip may cover areas outside of the svg graphic.</p></li>
+<li><p>container: the svg container is used as tooltip container.
+In this case the tooltip content may wrap to fit inside the svg bounds.
+It will also inherit the CSS styles and transforms applied to the parent containers
+(like scaling in a slide presentation).</p></li>
+<li><p>auto: This is the default, ggiraph choses the best option according
+to use cases. Usually it redirects to "doc", however in a <em>xaringan</em> context,
+it redirects to "container".</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>zindex</th>
@@ -234,7 +250,7 @@ transition associated with tooltip end of display.</p></td>
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9.001 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.9.200 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
