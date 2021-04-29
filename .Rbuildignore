@@ -23,4 +23,4 @@ tests/testthat/test-dom.R
 ^pkgdown$
 ^\.github$
 ^srcjs$
-^tools$
+^tools/packagejs$
