@@ -16,13 +16,24 @@ dapply <- ggplot2:::dapply
 #' Encodes the attribute value designated for tooltip
 #' @importFrom htmltools htmlEscape
 #' @noRd
-encode_cr <- function(x)
-  htmltools::htmlEscape(text = gsub(
-    pattern = "\n",
-    replacement = "<br/>",
-    x = x
-  ),
-  attribute = TRUE)
+encode_cr <- function(x) {
+  newlines_pattern <- "(\r\n|\r|\n)"
+  # quick check to see if we need to replace newline chars
+  # exclude text marked as html with htmltools::HTML
+  replace_newlines <- !inherits(x, "html") && any(grepl(newlines_pattern, x))
+  if (replace_newlines) {
+    x <- sapply(x, function(t) {
+      # text might be markup anyway, check for opening/closing tags at start/end
+      if (grepl(newlines_pattern, t) &&
+          !(grepl("^\\s*<\\w+.*?/?>", t) && grepl("</?\\w+.*?/?>\\s*$", t))) {
+        gsub(newlines_pattern, replacement = "<br/>", x = t)
+      } else {
+        t
+      }
+    })
+  }
+  htmltools::htmlEscape(x, attribute = TRUE)
+}
 
 
 #' @section Geoms:

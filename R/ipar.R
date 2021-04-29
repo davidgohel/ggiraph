@@ -9,6 +9,12 @@
 #' If this is supplied a tooltip is shown when the element is hovered.
 #' Plain text or html is supported.
 #'
+#' To use html markup it is advised to use [htmltools::HTML()] function
+#' in order to mark the text as html markup.
+#' If the text is not marked as html and no opening/closing tags were detected,
+#' then any existing newline characters (`\r\n`, `\r` and `\n`)
+#' are replaced with the `<br/>` tag.
+#'
 #' @param onclick Javascript code to associate with one or more elements.
 #' This code will be executed when the element is clicked.
 #'
