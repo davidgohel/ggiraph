@@ -13,3 +13,4 @@ package-lock.json
 .project
 configure.log
 src/Makevars
+vignettes/offcran/fonts

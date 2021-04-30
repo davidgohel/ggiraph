@@ -30,12 +30,32 @@ default_fontname <- function() {
   def_fonts
 }
 
-
-validate_fonts <- function(system_fonts = list()) {
-  system_fonts <- system_fonts[unlist(lapply(system_fonts, font_family_exists))]
-  missing_fonts <- setdiff(r_font_families, names(system_fonts) )
-  system_fonts[missing_fonts] <- default_fontname()[missing_fonts]
-  system_fonts
+#' @export
+#' @title List of validated default fonts
+#' @description Validates and possibly modifies the fonts to be used as default
+#' value in a graphic according to the fonts available on the machine. It process
+#' elements named "sans", "serif", "mono" and "symbol".
+#' @param fonts Named list of font names to be aliased with
+#' fonts installed on your system. If unspecified, the R default
+#' families "sans", "serif", "mono" and "symbol"
+#' are aliased to the family returned by [match_family()].
+#'
+#' If fonts are available, the default mapping will use these values:
+#'
+#' | R family | Font on Windows    | Font on Unix | Font on Mac OS |
+#' |----------|--------------------|--------------|----------------|
+#' | `sans`   | Arial              | DejaVu Sans  | Helvetica      |
+#' | `serif`  | Times New Roman    | DejaVu serif | Times          |
+#' | `mono`   | Courier            | DejaVu mono  | Courier        |
+#' | `symbol` | Symbol             | DejaVu Sans  | Symbol         |
+#' @return a named list of validated font family names
+#' @seealso [girafe()], [dsvg()]
+#' @keywords internal
+validated_fonts <- function(fonts = list()) {
+  fonts <- fonts[unlist(lapply(fonts, font_family_exists))]
+  missing_fonts <- setdiff(r_font_families, names(fonts) )
+  fonts[missing_fonts] <- default_fontname()[missing_fonts]
+  fonts
 }
 
 
@@ -53,7 +73,7 @@ validate_fonts <- function(system_fonts = list()) {
 #' @export
 #' @importFrom systemfonts match_font system_fonts
 font_family_exists <- function( font_family = "sans" ){
-  datafonts <- system_fonts()
+  datafonts <- fortify_font_db()
   tolower(font_family) %in% tolower(datafonts$family)
 }
 
@@ -69,11 +89,20 @@ font_family_exists <- function( font_family = "sans" ){
 #' @examples
 #' match_family("sans")
 #' match_family("serif")
-#' @importFrom systemfonts match_font system_fonts
+#' @importFrom systemfonts match_font system_fonts registry_fonts
 match_family <- function(font = "sans", bold = TRUE, italic = TRUE, debug = NULL) {
   font <- match_font(font, bold = bold, italic = italic)
-  sysfonts <- system_fonts()
-  match <- which( sysfonts$path %in% font$path )
-  sysfonts$family[match[1]]
+  font_db <- fortify_font_db()
+  match <- which( font_db$path %in% font$path )
+  font_db$family[match[1]]
 }
 
+fortify_font_db <- function(){
+  db_sys <- system_fonts()
+  db_reg <- registry_fonts()
+  nam <- intersect(colnames(db_sys), colnames(db_reg))
+  db_sys <- db_sys[,nam]
+  db_reg <- db_reg[,nam]
+  font_db <- rbind(db_sys, db_reg)
+  font_db
+}

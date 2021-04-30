@@ -48,14 +48,14 @@ dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
                 pointsize = 12, standalone = TRUE, setdims = TRUE, canvas_id = "svg_1",
                 fonts = list()) {
 
-  system_fonts <- validate_fonts( fonts )
+  fonts_list <- validated_fonts( fonts )
 
   invisible(DSVG_(file=file, width=width, height=height, bg=bg,
                   pointsize=pointsize,
                   standalone=standalone,
                   setdims=setdims,
                   canvas_id=canvas_id,
-                  aliases = list(system = system_fonts, user = list())
+                  aliases = list(system = fonts_list)
                   )
             )
 }

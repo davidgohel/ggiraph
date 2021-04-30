@@ -82,7 +82,7 @@
 #'
 #' If this behavior does not fit with your need, I recommand you to use
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
-#' @seealso \code{\link{girafe_options}}
+#' @seealso [girafe_options()], [validated_fonts()], [dsvg()]
 #' @export
 #' @importFrom uuid UUIDgenerate
 girafe <- function(

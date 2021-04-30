@@ -193,12 +193,14 @@ private:
 
 static void dsvg_metric_info(int c, const pGEcontext gc, double* ascent,
                              double* descent, double* width, pDevDesc dd) {
+  DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
   if (c < 0) {
     c = -c;
   }
 
-  FontSettings font = get_font_file(gc->fontfamily, gc->fontface);
+  std::string fontname_ = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases);
+  FontSettings font = get_font_file(fontname_.c_str(), gc->fontface);
   int error = glyph_metrics(c, font.file, font.index, gc->ps * gc->cex, 1e4, ascent, descent, width);
 
   if (error != 0) {
@@ -344,7 +346,10 @@ void dsvg_path(double *x, double *y,
 
 static double dsvg_strwidth_utf8(const char *str, const pGEcontext gc, pDevDesc dd) {
 
-  FontSettings font = get_font_file(gc->fontfamily, gc->fontface);
+  DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  std::string fontname_ = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases);
+
+  FontSettings font = get_font_file(fontname_.c_str(), gc->fontface);
 
   double width = 0.0;
 
