@@ -49,7 +49,7 @@ function getDependencyInfo(name, libInfos) {
   let pkgDir = path.dirname(require.resolve(name));
   let pkgFile = path.join(pkgDir, 'package.json');
   if (!fs.existsSync(pkgFile)) {
-    pkgDir = path.normalize(path.join(pkgDir, './../../'));
+    pkgDir = path.normalize(path.join(pkgDir, './../'));
     pkgFile = path.join(pkgDir, 'package.json');
   }
   if (!fs.existsSync(pkgFile)) {
