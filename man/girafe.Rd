@@ -112,5 +112,5 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link{girafe_options}}
+\code{\link[=girafe_options]{girafe_options()}}, \code{\link[=validated_fonts]{validated_fonts()}}, \code{\link[=dsvg]{dsvg()}}
 }

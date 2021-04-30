@@ -8,6 +8,7 @@
 ^src/Makevars$
 ^examples$
 ^todo\.md$
+^configure\.log$
 ^docs$
 ^_pkgdown\.yml$
 ^README\.Rmd$
@@ -22,4 +23,4 @@ tests/testthat/test-dom.R
 ^pkgdown$
 ^\.github$
 ^srcjs$
-^tools$
+^tools/packagejs$

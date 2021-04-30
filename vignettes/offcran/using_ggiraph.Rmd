@@ -10,6 +10,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r include=FALSE}
+library(knitr)
+opts_chunk$set(message=FALSE)
+```
 
 The **ggiraph** package let R users make **ggplot interactive**. The package 
 is an htmlwidget. The following graphic is produced by calling `girafe()` function 
@@ -17,9 +21,9 @@ with a `ggplot` object.
 
 > Note that `girafe()` should replace `ggiraph()` function that has been refactored. 
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-library(ggplot2)
+```{r echo=FALSE}
 library(ggiraph)
+library(ggplot2)
 theme_set(theme_minimal())
 
 # geom_point_interactive example

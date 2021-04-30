@@ -28,18 +28,36 @@ dsvg(
 \item{standalone}{Produce a stand alone svg file? If \code{FALSE}, omits
 xml header and default namespace.}
 
-\item{setdims}{If TRUE (the default), the svg node will have attributes width & height set}
+\item{setdims}{If \code{TRUE} (the default), the svg node will have attributes width & height set}
 
 \item{canvas_id}{svg id within HTML page.}
 
 \item{fonts}{Named list of font names to be aliased with
 fonts installed on your system. If unspecified, the R default
-families \code{sans}, \code{serif}, \code{mono} and \code{symbol}
-are aliased to the family returned by \code{\link[gdtools]{match_family}()}.}
+families "sans", "serif", "mono" and "symbol"
+are aliased to the family returned by \code{\link[=match_family]{match_family()}}.
+
+If fonts are available, the default mapping will use these values:\tabular{llll}{
+   R family \tab Font on Windows \tab Font on Unix \tab Font on Mac OS \cr
+   \code{sans} \tab Arial \tab DejaVu Sans \tab Helvetica \cr
+   \code{serif} \tab Times New Roman \tab DejaVu serif \tab Times \cr
+   \code{mono} \tab Courier \tab DejaVu mono \tab Courier \cr
+   \code{symbol} \tab Symbol \tab DejaVu Sans \tab Symbol \cr
+}
+
+
+As an example, using \code{fonts = list(sans = "Roboto")} would make the
+default font "Roboto" as many ggplot theme are using \code{theme_minimal(base_family="")} or
+\code{theme_minimal(base_family="sans")}.
+
+You can also use theme_minimal(base_family="Roboto").}
 }
 \description{
 This function produces SVG files (compliant to the current w3 svg XML standard)
 where elements can be made interactive.
+
+In order to generate the output, used fonts must be available on the computer used to create the svg,
+used fonts must also be available on the computer used to render the svg.
 }
 \examples{
 fileout <- tempfile(fileext = ".svg")
@@ -48,6 +66,6 @@ plot(rnorm(10), main="Simple Example", xlab = "", ylab = "")
 dev.off()
 }
 \seealso{
-\code{\link{Devices}}
+\link{Devices}
 }
 \keyword{device}

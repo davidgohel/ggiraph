@@ -53,6 +53,8 @@ navbar:
     href: articles/offcran/customizing.html
   - text: Shiny usage
     href: articles/offcran/shiny.html
+  - text: Fonts
+    href: articles/offcran/fonts.html
   - text: Examples
     href: articles/offcran/examples.html
   - text: Function reference
