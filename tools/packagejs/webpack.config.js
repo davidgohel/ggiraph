@@ -11,8 +11,8 @@ const YAML = require('yaml');
 const path = require('path');
 const fs = require('fs');
 const PACKAGE = require('./package.json');
-const sourceDir = path.resolve(__dirname, '../srcjs');
-const outputDir = path.resolve(__dirname, '../inst');
+const sourceDir = path.resolve(__dirname, '../../srcjs');
+const outputDir = path.resolve(__dirname, '../../inst');
 const modulePaths = require.resolve.paths('webpack');
 
 // dictionary for library dependency info

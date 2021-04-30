@@ -1,6 +1,5 @@
 context("dsvg text")
 library(xml2)
-library(gdtools)
 
 test_that("cex affects strwidth", {
 
@@ -11,7 +10,7 @@ test_that("cex affects strwidth", {
   par(cex = 4)
   w4 <- strwidth("X")
   dev.off()
-  expect_equal(w4 / w1, 4, tol = 1e-4)
+  expect_equal(w4 / w1, 4, tol = 1e-3)
 })
 
 

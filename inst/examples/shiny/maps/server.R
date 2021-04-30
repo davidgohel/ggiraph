@@ -10,7 +10,7 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 gg <- ggplot(data = world) +
   geom_sf_interactive(aes(fill = pop_est, tooltip = name_long, data_id = brk_a3), colour = "transparent") +
   scale_fill_viridis_c(option = "plasma", trans = "sqrt") +
-  coord_sf(crs = "+init=epsg:3035")
+  coord_sf(crs = st_crs('ESRI:54030'))
 
 
 
