@@ -28,7 +28,14 @@ Validates and possibly modifies the fonts to be used as default
 value in a graphic according to the fonts available on the machine. It process
 elements named "sans", "serif", "mono" and "symbol".
 }
+\examples{
+validated_fonts()
+}
 \seealso{
 \code{\link[=girafe]{girafe()}}, \code{\link[=dsvg]{dsvg()}}
+
+Other functions for font management: 
+\code{\link{font_family_exists}()},
+\code{\link{match_family}()}
 }
-\keyword{internal}
+\concept{functions for font management}

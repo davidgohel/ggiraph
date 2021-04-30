@@ -50,7 +50,9 @@ default_fontname <- function() {
 #' | `symbol` | Symbol             | DejaVu Sans  | Symbol         |
 #' @return a named list of validated font family names
 #' @seealso [girafe()], [dsvg()]
-#' @keywords internal
+#' @family functions for font management
+#' @examples
+#' validated_fonts()
 validated_fonts <- function(fonts = list()) {
   fonts <- fonts[unlist(lapply(fonts, font_family_exists))]
   missing_fonts <- setdiff(r_font_families, names(fonts) )
@@ -72,6 +74,7 @@ validated_fonts <- function(fonts = list()) {
 #' font_family_exists("Courier")
 #' @export
 #' @importFrom systemfonts match_font system_fonts
+#' @family functions for font management
 font_family_exists <- function( font_family = "sans" ){
   datafonts <- fortify_font_db()
   tolower(font_family) %in% tolower(datafonts$family)
@@ -90,6 +93,7 @@ font_family_exists <- function( font_family = "sans" ){
 #' match_family("sans")
 #' match_family("serif")
 #' @importFrom systemfonts match_font system_fonts registry_fonts
+#' @family functions for font management
 match_family <- function(font = "sans", bold = TRUE, italic = TRUE, debug = NULL) {
   font <- match_font(font, bold = bold, italic = italic)
   font_db <- fortify_font_db()

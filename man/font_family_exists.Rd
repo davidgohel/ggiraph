@@ -20,3 +20,9 @@ font_family_exists("sans")
 font_family_exists("Arial")
 font_family_exists("Courier")
 }
+\seealso{
+Other functions for font management: 
+\code{\link{match_family}()},
+\code{\link{validated_fonts}()}
+}
+\concept{functions for font management}

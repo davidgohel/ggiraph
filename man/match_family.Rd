@@ -22,3 +22,9 @@ match_family(font = "sans", bold = TRUE, italic = TRUE, debug = NULL)
 match_family("sans")
 match_family("serif")
 }
+\seealso{
+Other functions for font management: 
+\code{\link{font_family_exists}()},
+\code{\link{validated_fonts}()}
+}
+\concept{functions for font management}
