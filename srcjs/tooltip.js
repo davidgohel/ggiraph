@@ -144,7 +144,7 @@ export default class TooltipHandler {
     let p, matrix;
     const svgNode = d3.select('#' + this.svgid).node();
     const tooltipNode = tooltipEl.node();
-    const containerNode = tooltipNode.parentNode;
+    const containerNode = svgNode.parentNode;
     if (this.usecursor) {
       // Calculate tooltip position, preventing collisions and overflow if possible.
       // First we try to fit the tooltip on right and bottom of the event.
