@@ -45,3 +45,12 @@ GeomInteractiveLabel <- ggproto(
     add_interactive_attrs(gr, coords)
   }
 )
+
+#' @export
+makeContent.interactive_label_grob <- function(x) {
+  gr <- NextMethod()
+  for (i in seq_along(gr$children)) {
+    gr$children[[i]] <- add_interactive_attrs(gr$children[[i]], x)
+  }
+  gr
+}
