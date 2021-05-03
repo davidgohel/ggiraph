@@ -7,6 +7,4 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-<meta http-equiv="refresh" content="0; URL='https://davidgohel.github.io/ggiraph'" />
-
-<p>If not automatically redirected, please visit (<a href="https://davidgohel.github.io/ggiraph">https://davidgohel.github.io/ggiraph</a>) for the latest vignette.</p>
+Help pages are available at https://davidgohel.github.io/ggiraph/
