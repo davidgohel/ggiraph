@@ -1,11 +1,13 @@
 # ggiraph 0.7.9
 
+## Enhancement
+
+* New function `geom_dotplot_interactive`.
+
 ## Changes
 
 * Improved tooltip positioning and added 'placement' parameter
-
 * Added 'tooltip_fill' interactive attribute
-
 * move font management from gdtools to systemfonts, also libpng
 is now required as gdtools/cairo is not used anymore. It comes also
 with functions `validated_fonts()` and also `match_family()` and
@@ -14,10 +16,9 @@ with functions `validated_fonts()` and also `match_family()` and
 ## Issues
 
 * Fixed issue with tooltip fill color in geom_label_interactive
-
 * Fixed tooltip issues (scaling and markup decoding) in xaringan
-
 * Fixed issue with tooltip css missing zindex and pointer-events
+
 
 # ggiraph 0.7.8
 
