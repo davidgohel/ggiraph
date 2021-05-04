@@ -38,12 +38,10 @@ GeomInteractiveDotplot <- ggproto(
     gr <- GeomDotplot$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_panel = function (data, panel_params, coord, ...)
+  draw_group = function (data, ...)
   {
-    zz <- GeomDotplot$draw_panel(data, panel_params, coord, ...)
-    coords <- coord$transform(data, panel_params)
-    coords <- force_interactive_aes_to_char(coords)
-    add_interactive_attrs(zz, coords)
+    zz <- GeomDotplot$draw_group(data, ...)
+    add_interactive_attrs(zz, data)
   }
 )
 
