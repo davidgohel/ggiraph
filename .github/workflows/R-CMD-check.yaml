@@ -35,17 +35,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Install XQuartz
-        if: matrix.config.os == 'macOS-latest'
-        env:
-          XQUARTZ_VERSION: 2.7.11
-        run: |
-           curl -fLo /tmp/XQuartz.dmg "https://dl.bintray.com/xquartz/downloads/XQuartz-${XQUARTZ_VERSION}.dmg"
-           sudo hdiutil attach -noverify /tmp/XQuartz.dmg
-           sudo installer -pkg "/Volumes/XQuartz-${XQUARTZ_VERSION}/XQuartz.pkg" -target /
-           sudo hdiutil detach /Volumes/XQuartz-${XQUARTZ_VERSION}
-           rm /tmp/XQuartz.dmg
-
       - name: install freetype2 and imagemagick deps
         if: matrix.config.os == 'macOS-latest'
         run: |
