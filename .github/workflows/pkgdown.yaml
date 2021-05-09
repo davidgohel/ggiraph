@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "gfonts", "tidyverse", "ggthemes", "ggtext", "glue", "tidytuesdayR"))
+          remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "gfonts", "tidyverse", "ggthemes", "ggtext", "glue"))
           remotes::install_github("ardata-fr/pkgardata")
         shell: Rscript {0}
 
