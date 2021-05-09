@@ -10,6 +10,7 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 opts_chunk$set(message=FALSE)
+source("scripts/fonts.R")
 ```
 
 
@@ -46,46 +47,50 @@ To take advantage of "Open Sans", it must be installed on the machine.
 
 You can also use fonts without installing them. You need to have the woff or ttf files. For example, the package [gfonts](https://dreamrs.github.io/gfonts/) will allow us to use the "Open Sans" font from "Google Fonts". 
 
-The following code allows to download the fonts in a `fonts` directory.
 ```{r}
 library(gfonts)
-if(!dir.exists("fonts")) dir.create("fonts")
-variants <- c("regular", "italic", "700", "700italic")
-setup_font(id = "open-sans", output_dir = "fonts", 
-  variants = variants, prefer_local_source = FALSE)
 ```
 
-The following code embeds the font in the HTML document and ensures that the rendering will be possible for the reader even if he does not have the font installed on his machine. If 
-you want to do that by hand, you will need to learn how to create a CSS "font-face".
+The following code allows to download the fonts in a `fonts` directory.
+
+```{r eval=FALSE}
+setup_font(
+  id = "open-sans", 
+  output_dir = "fonts", 
+  variants = c("regular", "italic", "700", "700italic"), 
+  prefer_local_source = FALSE)
+```
+
+The following code embeds the font in the HTML document and ensures that the
+rendering will be possible for the reader even if he does not have the font
+installed on his machine. If you want to do that by hand, you will need to learn
+how to create a CSS "font-face".
 
 ```{r}
-use_font("open-sans", "fonts/css/open-sans.css")
+use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
 ```
 
-Now, we also need to use `systemfonts::register_font()` to allow the use of this font by ggiraph when creating the SVG file. `systemfonts` is now used for font management. Read systemfonts 
-documentation if you need more details.
+Now, we also need to use `systemfonts::register_font()` to allow the use of this
+font by ggiraph when creating the SVG file. `systemfonts` is now used for font
+management. Read systemfonts documentation if you need more details.
 
 ```{r}
 library(systemfonts)
 if(!font_family_exists("Open Sans")){
-
   register_font(name = "Open Sans", 
     plain = list("fonts/fonts/open-sans-v18-latin-regular.woff", 0), 
     bold = list("fonts/fonts/open-sans-v18-latin-700.woff", 0), 
     italic = list("fonts/fonts/open-sans-v18-latin-italic.woff", 0),
     bolditalic = list("fonts/fonts/open-sans-v18-latin-700italic.woff", 0)
   )
-
 }
 ```
 
 And that's it, "Open Sans" can be used: 
 
-
 ```{r}
 font_family_exists("Open Sans")
 ```
-
 
 ## Font usage
 
@@ -119,34 +124,44 @@ ggiraph(ggobj = gg)
 
 ## Complex example
 
-Download fonts with `gfonts`:
+Download fonts with `gfonts` and register the fonts with `systemfonts::register_font()`:
 
-```{r}
-setup_font(id = "comic-neue", output_dir = "fonts", variants = variants, prefer_local_source = FALSE)
-if(!font_family_exists("Comic Neue")){
-  register_font(name = "Comic Neue", 
-    plain = list("fonts/fonts/comic-neue-v2-latin-regular.woff", 0), 
-    bold = list("fonts/fonts/comic-neue-v2-latin-700.woff", 0), 
-    italic = list("fonts/fonts/comic-neue-v2-latin-italic.woff", 0),
-    bolditalic = list("fonts/fonts/comic-neue-v2-latin-700italic.woff", 0)
-  )
-}
+```{r eval=FALSE}
+setup_font(
+  id = "comic-neue", output_dir = "fonts",
+  variants = c("regular", "italic", "700", "700italic"),
+  prefer_local_source = FALSE
+)
 
-setup_font(id = "roboto", output_dir = "fonts", variants = variants, prefer_local_source = FALSE)
-if(!font_family_exists("Roboto")){
-  register_font(name = "Roboto", 
-    plain = list("fonts/fonts/roboto-v27-latin-regular.woff", 0), 
-    bold = list("fonts/fonts/roboto-v27-latin-700.woff", 0), 
-    italic = list("fonts/fonts/roboto-v27-latin-italic.woff", 0),
-    bolditalic = list("fonts/fonts/roboto-v27-latin-700italic.woff", 0)
-  )
-}
+register_font(
+  name = "Comic Neue",
+  plain = list("fonts/fonts/comic-neue-v2-latin-regular.woff", 0),
+  bold = list("fonts/fonts/comic-neue-v2-latin-700.woff", 0),
+  italic = list("fonts/fonts/comic-neue-v2-latin-italic.woff", 0),
+  bolditalic = list("fonts/fonts/comic-neue-v2-latin-700italic.woff", 0)
+)
 
-use_font("comic-neue", "fonts/css/comic-neue.css")
-use_font("roboto", "fonts/css/roboto.css")
+setup_font(
+  id = "roboto", output_dir = "fonts",
+  variants = c("regular", "italic", "700", "700italic"),
+  prefer_local_source = FALSE
+)
+
+register_font(
+  name = "Roboto",
+  plain = list("fonts/fonts/roboto-v27-latin-regular.woff", 0),
+  bold = list("fonts/fonts/roboto-v27-latin-700.woff", 0),
+  italic = list("fonts/fonts/roboto-v27-latin-italic.woff", 0),
+  bolditalic = list("fonts/fonts/roboto-v27-latin-700italic.woff", 0)
+)
 ```
 
+Add the fonts in the R markdown HTML result.
 
+```{r}
+use_font("comic-neue", "fonts/css/comic-neue.css", selector = ".dummy-selector")
+use_font("roboto", "fonts/css/roboto.css", selector = ".dummy-selector")
+```
 
 Create the graphic and use fonts:
 

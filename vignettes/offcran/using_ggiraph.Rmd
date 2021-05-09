@@ -13,31 +13,43 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 opts_chunk$set(message=FALSE)
+source("scripts/fonts.R")
+```
+
+```{r echo=FALSE}
+use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
 ```
 
 The **ggiraph** package let R users make **ggplot interactive**. The package 
 is an htmlwidget. The following graphic is produced by calling `girafe()` function 
 with a `ggplot` object.
 
-> Note that `girafe()` should replace `ggiraph()` function that has been refactored. 
 
-```{r echo=FALSE}
+```{r}
 library(ggiraph)
 library(ggplot2)
-theme_set(theme_minimal())
 
-# geom_point_interactive example
-gg_point_1 <- ggplot(mtcars, aes(x = disp, y = qsec, 
-		color = wt, tooltip = row.names(mtcars), data_id = row.names(mtcars) ) ) + 
-	geom_point_interactive(size=2) + 
-  scale_color_gradient(low = "#F3C899", high = "#8C120A") 
+gg_point_1 <- ggplot(
+  data = mtcars,
+  mapping = aes(
+    x = disp, y = qsec,
+    color = wt, tooltip = row.names(mtcars), data_id = row.names(mtcars)
+  )
+) +
+  geom_point_interactive(size = 2) +
+  scale_color_gradient(low = "#F3C899", high = "#8C120A")
 
-# htmlwidget call
-x <- girafe(ggobj = gg_point_1, width_svg = 6, height_svg = 5)
-x <- girafe_options(x = x,
-    opts_sizing(rescale = FALSE), 
-    opts_tooltip(opacity = .8, css = "background-color:gray;color:white;padding:2px;border-radius:2px;"),
-    opts_hover(css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;") )
+x <- girafe(
+  ggobj = gg_point_1, width_svg = 6, height_svg = 6,
+  options = list(
+    opts_sizing(rescale = FALSE),
+    opts_tooltip(
+      opacity = .8,
+      css = "background-color:gray;color:white;padding:2px;border-radius:2px;"
+    ),
+    opts_hover(css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;")
+  )
+)
 x
 ```
 

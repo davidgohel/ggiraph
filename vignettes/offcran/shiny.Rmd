@@ -7,9 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
 ```{r include=FALSE}
 library(knitr)
 opts_chunk$set(message=FALSE)
+source("scripts/fonts.R")
+```
+
+```{r echo=FALSE}
+use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
 ```
 
 A major advantage of `{ggiraph}` used in a shiny application is the ability to
@@ -117,8 +123,7 @@ library(ggplot2)
 dataset <- mtcars
 dataset$carname <- row.names(dataset)
 gg_scatter <- ggplot(dataset, aes(x = disp, y = qsec, tooltip = carname, data_id = carname, color= wt) ) + 
-	geom_point_interactive(size=3) +
-  theme_minimal()
+	geom_point_interactive(size=3)
 
 girafe(ggobj = gg_scatter, 
   options = list(opts_selection(type = "single", only_shiny = FALSE)) )

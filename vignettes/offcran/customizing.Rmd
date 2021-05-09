@@ -10,6 +10,11 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 opts_chunk$set(message=FALSE)
+source("scripts/fonts.R")
+```
+
+```{r echo=FALSE}
+use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
 ```
 
 You can customize tooltip style, mouse hover effects, toolbar position... 

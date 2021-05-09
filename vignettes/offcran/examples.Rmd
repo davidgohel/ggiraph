@@ -11,6 +11,16 @@ vignette: >
 ---
 
 
+```{r include=FALSE}
+library(knitr)
+opts_chunk$set(message=FALSE)
+source("scripts/fonts.R")
+```
+
+```{r echo=FALSE}
+use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
+```
+
 ## Arrange multiple plots into a grid 
 
 There are two avalaible options to arrange ggiraph outputs into a grid. As 
@@ -26,8 +36,6 @@ library(cowplot)
 mtcars <- mtcars
 mtcars$tooltip <- rownames(mtcars)
 
-theme_set(theme_minimal())
-
 gg1 <- ggplot(mtcars) +
   geom_point_interactive(aes(x = drat, y = wt, color = qsec, 
     tooltip = tooltip, data_id = tooltip ), size = 4) 
@@ -42,7 +50,7 @@ gg2 <- ggplot(mtcars) +
 
 Mouseover points to see where they are located in the other graph.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 girafe( ggobj = plot_grid(gg1, gg2), width_svg = 8, height_svg = 4)
 ```
 
@@ -77,7 +85,6 @@ gg <- ggplot(dat, aes(x = date, y = sales,
                       colour = species, group = species)) +
   geom_line_interactive(aes(tooltip = name, data_id = species)) +
   scale_color_viridis_d() + 
-  theme_minimal() + 
   labs(title = "move mouse over lines")
 
 x <- girafe(ggobj = gg, width_svg = 8, height_svg = 6,
@@ -95,7 +102,7 @@ Thank to Martín Pons (@MartinPonsM) that kindly shared his code with us.
 First of all, we add some code to correctly manage the "Open Sans" fonts 
 that must be embedded in the Web page but also used to generate the graphic.
 
-```{r results='hide', message=FALSE}
+```{r eval=FALSE}
 library(gfonts)
 library(systemfonts)
 
@@ -116,7 +123,7 @@ if(!font_family_exists("Open Sans")){
 ```
 
 ```{r}
-use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy")
+use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
 ```
 
 
