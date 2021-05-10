@@ -70,6 +70,25 @@ element_interactive <- function(element_func,
 #' @param ... any of the [interactive_parameters()].
 #' @return an interactive label object
 #' @export
+#' @examples
+#' library(ggplot2)
+#' library(ggiraph)
+#'
+#' gg_jitter <- ggplot(
+#'   mpg, aes(cyl, hwy, group = cyl)) +
+#'   geom_boxplot() +
+#'   labs(title =
+#'          label_interactive(
+#'            "title",
+#'            data_id = "id_title",
+#'            onclick = "alert(\"title\")",
+#'            tooltip = "title" )
+#'   ) +
+#'   theme(plot.title = element_text_interactive())
+#'
+#' x <- girafe(ggobj = gg_jitter)
+#' if( interactive() ) print(x)
+#' @seealso [interactive_parameters], [labeller_interactive()]
 label_interactive <- function(label, ...) {
   ip <- get_interactive_attrs(list(...))
   structure(

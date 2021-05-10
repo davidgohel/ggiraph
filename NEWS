@@ -3,6 +3,7 @@
 ## Enhancement
 
 * New function `geom_dotplot_interactive`.
+* New function `labeller_interactive` to make strip labels interactive.
 
 ## Changes
 

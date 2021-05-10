@@ -35,6 +35,7 @@ reference:
     - starts_with("guide_")
   - title: Other interactive layers
     contents:
+    - labeller_interactive
     - starts_with("annotate_")
     - annotation_raster_interactive
     - label_interactive
