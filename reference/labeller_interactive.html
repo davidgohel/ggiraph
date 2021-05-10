@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an interactive label — label_interactive • ggiraph package</title>
+<title>Create a interactive strip label — labeller_interactive • ggiraph package</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,12 +46,13 @@
 
 
 
-<meta property="og:title" content="Create an interactive label — label_interactive" />
-<meta property="og:description" content="This function returns an object that can be used as a label
-via the labs() family of functions or
-when setting a scale/guide name/title or key label.
-It passes the interactive parameters to a theme element created via
-element_text_interactive or via an interactive guide." />
+<meta property="og:title" content="Create a interactive strip label — labeller_interactive" />
+<meta property="og:description" content="These function is an helper function
+to let user add interactivity on facet strip text.
+The function adds interactive attributes but does not tell
+to use them, make sure the theme you are using is specifying the use of element_text_interactive
+for strip text,
+for example theme(strip.text = element_text_interactive())" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -132,40 +133,42 @@ element_text_interactive or via an interactive guide." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an interactive label</h1>
-    <small class="dont-index">Source: <a href='https://github.com/davidgohel/ggiraph/blob/master/R/element_interactive.R'><code>R/element_interactive.R</code></a></small>
-    <div class="hidden name"><code>label_interactive.Rd</code></div>
+    <h1>Create a interactive strip label</h1>
+    <small class="dont-index">Source: <a href='https://github.com/davidgohel/ggiraph/blob/master/R/labeller_interactive.R'><code>R/labeller_interactive.R</code></a></small>
+    <div class="hidden name"><code>labeller_interactive.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function returns an object that can be used as a label
-via the <code><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs()</a></code> family of functions or
-when setting a <code>scale</code>/<code>guide</code> name/title or key label.
-It passes the interactive parameters to a theme element created via
-<code><a href='element_interactive.html'>element_text_interactive</a></code> or via an interactive guide.</p>
+    <p>These function is an helper function
+to let user add interactivity on facet strip text.</p>
+<p>The function adds interactive attributes but does not tell
+to use them, make sure the theme you are using is specifying the use of <code>element_text_interactive</code>
+for strip text,
+for example <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme(strip.text = element_text_interactive())</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>label_interactive</span><span class='op'>(</span><span class='va'>label</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>labeller_interactive</span><span class='op'>(</span>
+  <span class='va'>custom_label_func</span>,
+  default_labeller <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/labellers.html'>label_value</a></span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>label</th>
-      <td><p>The text for the label (scalar character)</p></td>
+      <th>custom_label_func</th>
+      <td><p>a function that returns the result
+of <code><a href='label_interactive.html'>label_interactive()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>any of the <code><a href='interactive_parameters.html'>interactive_parameters()</a></code>.</p></td>
+      <th>default_labeller</th>
+      <td><p>a Labeller function, see <code><a href='https://ggplot2.tidyverse.org/reference/labellers.html'>label_value()</a></code></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>an interactive label object</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='interactive_parameters.html'>interactive_parameters</a>, <code><a href='labeller_interactive.html'>labeller_interactive()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='id_label.html'>id_label()</a></code>, <code><a href='label_interactive.html'>label_interactive()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -174,14 +177,9 @@ It passes the interactive parameters to a theme element created via
 <span class='va'>gg_jitter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>
   <span class='va'>mpg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>cyl</span>, <span class='va'>hwy</span>, group <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span>
-         <span class='fu'>label_interactive</span><span class='op'>(</span>
-           <span class='st'>"title"</span>,
-           data_id <span class='op'>=</span> <span class='st'>"id_title"</span>,
-           onclick <span class='op'>=</span> <span class='st'>"alert(\"title\")"</span>,
-           tooltip <span class='op'>=</span> <span class='st'>"title"</span> <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.title <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>manufacturer</span>,
+             labeller <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='va'>id_label</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>strip.text <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>gg_jitter</span><span class='op'>)</span>
 <span class='kw'>if</span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
