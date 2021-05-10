@@ -5,15 +5,18 @@
 \title{Create a interactive strip label}
 \usage{
 labeller_interactive(
-  custom_label_func,
-  default_labeller = ggplot2::label_value
+  custom_label_func = id_label,
+  ...,
+  .default = ggplot2::label_value
 )
 }
 \arguments{
 \item{custom_label_func}{a function that returns the result
 of \code{\link[=label_interactive]{label_interactive()}}.}
 
-\item{default_labeller}{a Labeller function, see \code{\link[=label_value]{label_value()}}}
+\item{...}{optional additional arguments for function \code{custom_label_func}.}
+
+\item{.default}{a Labeller function, see \code{\link[=label_value]{label_value()}}}
 }
 \description{
 These function is an helper function
@@ -36,7 +39,29 @@ gg_jitter <- ggplot(
   theme(strip.text = element_text_interactive())
 
 x <- girafe(ggobj = gg_jitter)
-if( interactive() ) print(x)
+if(interactive()) print(x)
+
+
+lab_custom <- function(z, prefix = "label: ") {
+  label_interactive(label = z, data_id = z, tooltip = paste0(prefix, z))
+}
+
+gg_jitter <- ggplot(diamonds, aes(x = x)) +
+  geom_density() +
+  facet_grid(color ~ cut,
+    labeller = labeller(
+      cut = labeller_interactive(lab_custom, prefix = "cut: "),
+      color = labeller_interactive(lab_custom, prefix = "color: ")
+    )) +
+  theme_light() +
+  theme(
+    strip.text.x = element_text_interactive(),
+    strip.text.y = element_text_interactive()
+  )
+
+x <- girafe(ggobj = gg_jitter, width_svg = 8, height_svg = 5)
+
+if (interactive()) print(x)
 }
 \seealso{
 \code{\link[=id_label]{id_label()}}, \code{\link[=label_interactive]{label_interactive()}}
