@@ -12,6 +12,7 @@ name: test-coverage
 jobs:
   test-coverage:
     runs-on: ubuntu-16.04
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       RSPM: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"

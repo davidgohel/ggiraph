@@ -9,7 +9,7 @@ coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg
 
 ## Overview
 
-<a href="https://github.com/davidgohel/ggiraph"><img src="man/figures/logo.png" alt="ggiraph logo" align="right" /></a>
+<a href="https://github.com/davidgohel/ggiraph/"><img src="man/figures/logo.png" alt="ggiraph logo" align="right" /></a>
 `{ggiraph}` is a tool that allows you to create dynamic ggplot graphs.
 This allows you to add tooltips, hover effects and JavaScript actions to
 the graphics. The package also allows the selection of graphical
