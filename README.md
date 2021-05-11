@@ -113,7 +113,7 @@ install.packages("ggiraph")
 
 ### Online documentation
 
-The help pages are located at <https://davidgohel.github.io/ggiraph>.
+The help pages are located at <https://davidgohel.github.io/ggiraph/>.
 
 ### Getting help
 
