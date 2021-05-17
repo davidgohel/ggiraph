@@ -41,7 +41,7 @@ Suggests:
     xml2 (>= 1.0.0),
     dplyr
 VignetteBuilder: knitr
-URL: https://davidgohel.github.io/ggiraph
+URL: https://davidgohel.github.io/ggiraph/
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
