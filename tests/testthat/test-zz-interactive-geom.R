@@ -26,5 +26,14 @@ test_that("geom_*_interactive is working", {
     geom_aes_par_ipar <- ggiraph:::get_interactive_attrs(result$aes_params)
     geom_aes_par_ipar <- unclass(geom_aes_par_ipar)
     expect_equal(geom_aes_par_ipar, list(onclick="hello"))
+    # check that the parameters in draw_panel|group are the same
+    # between interactive geoms and their parents
+    params <- result$geom$parameters()
+    parent_params <- result$geom$super()$parameters()
+    expect_equal(
+      params, parent_params,
+      label = paste0(class(result$geom)[1], "$parameters()"),
+      expected.label = paste0(class(result$geom$super())[1], "$parameters()")
+    )
   }
 })
