@@ -1,3 +1,15 @@
+# ggiraph 0.7.10
+
+## Enhancement
+
+* Make sure that parameters for panel_draw|group are the same as in ggplot2
+* Updated labeller_interactive so that its usage is more intuitive
+* Updated geoms and utils from latest ggplot2
+
+## Issues
+
+* drop configure script and mimic svglite way of integrating libpng
+
 # ggiraph 0.7.9
 
 ## Enhancement
