@@ -134,7 +134,10 @@ GeomInteractiveArea <- ggproto(
     gr <- GeomArea$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_group = function(data, panel_params, coord, na.rm = FALSE) {
-    GeomInteractiveRibbon$draw_group(data, panel_params, coord, na.rm = na.rm)
+  parameters = function(extra = FALSE) {
+    GeomArea$parameters(extra = extra)
+  },
+  draw_group = function(...) {
+    GeomInteractiveRibbon$draw_group(...)
   }
 )

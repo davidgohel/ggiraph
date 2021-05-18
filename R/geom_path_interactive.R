@@ -137,9 +137,17 @@ geom_line_interactive <- function(...)
 #' @export
 GeomInteractiveLine <- ggproto(
   "GeomInteractiveLine",
-  GeomInteractivePath,
-  setup_data = function(data, params) {
-    data[order(data$PANEL, data$group, data$x), ]
+  GeomLine,
+  default_aes = add_default_interactive_aes(GeomLine),
+  draw_key = function(data, params, size) {
+    gr <- GeomLine$draw_key(data, params, size)
+    add_interactive_attrs(gr, data, data_attr = "key-id")
+  },
+  parameters = function(extra = FALSE) {
+    GeomLine$parameters(extra = extra)
+  },
+  draw_panel = function(data, panel_params, coord, ...) {
+    GeomInteractivePath$draw_panel(data, panel_params, coord, ...)
   }
 )
 
@@ -155,7 +163,12 @@ geom_step_interactive <- function(...)
 GeomInteractiveStep <-
   ggproto(
     "GeomInteractiveStep",
-    GeomInteractivePath,
+    GeomStep,
+    default_aes = add_default_interactive_aes(GeomStep),
+    draw_key = function(data, params, size) {
+      gr <- GeomStep$draw_key(data, params, size)
+      add_interactive_attrs(gr, data, data_attr = "key-id")
+    },
     draw_panel = function(data, panel_params, coord, direction = "hv") {
       data <- dapply(data, "group", stairstep, direction = direction)
       GeomInteractivePath$draw_panel(data, panel_params, coord)
