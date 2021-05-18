@@ -14,3 +14,8 @@ interactive_roundrect_grob <- function(...) {
   grob_interactive(grid::roundrectGrob, ...)
 }
 
+#' @export
+makeContent.interactive_roundrect_grob <- function(x) {
+  gr <- NextMethod()
+  add_interactive_attrs(gr, x)
+}
