@@ -59,8 +59,11 @@ firstUpper <- function(s) {
 }
 
 # from ggplot2 utilities.r
+is.waive <- function(x) inherits(x, "waiver")
+
+# from ggplot2 utilities.r
 empty <- function(df) {
-  is.null(df) || nrow(df) == 0 || ncol(df) == 0
+  is.null(df) || nrow(df) == 0 || ncol(df) == 0 || is.waive(df)
 }
 
 # from ggplot2 utilities.r
