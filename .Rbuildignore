@@ -5,7 +5,6 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^ggiraph\.Rproj$
-^src/Makevars$
 ^examples$
 ^todo\.md$
 ^configure\.log$
