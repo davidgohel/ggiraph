@@ -59,8 +59,11 @@ firstUpper <- function(s) {
 }
 
 # from ggplot2 utilities.r
+is.waive <- function(x) inherits(x, "waiver")
+
+# from ggplot2 utilities.r
 empty <- function(df) {
-  is.null(df) || nrow(df) == 0 || ncol(df) == 0
+  is.null(df) || nrow(df) == 0 || ncol(df) == 0 || is.waive(df)
 }
 
 # from ggplot2 utilities.r
@@ -79,3 +82,23 @@ message_wrap <- function(...) {
 is.zero <- function(x)
   is.null(x) || inherits(x, "zeroGrob")
 
+# from gglpot2 utilities.r
+compact <- function(x) {
+  null <- vapply(x, is.null, logical(1))
+  x[!null]
+}
+
+# from ggplot2 geom.r
+check_aesthetics <- function(x, n) {
+  ns <- vapply(x, length, numeric(1))
+  good <- ns == 1L | ns == n
+
+  if (all(good)) {
+    return()
+  }
+
+  abort(paste0(
+    "Aesthetics must be either length 1 or the same as the data (", n, "):\n",
+    paste(names(which(!good)), collapse = ", ")
+  ))
+}

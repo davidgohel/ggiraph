@@ -27,7 +27,10 @@ GeomInteractiveDensity <- ggproto(
     gr <- GeomDensity$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_group = function(data, panel_params, coord, na.rm = FALSE) {
-    GeomInteractiveArea$draw_group(data, panel_params, coord, na.rm = na.rm)
+  parameters = function(extra = FALSE) {
+    GeomDensity$parameters(extra = extra)
+  },
+  draw_group = function(...) {
+    GeomInteractiveArea$draw_group(...)
   }
 )

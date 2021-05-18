@@ -62,43 +62,67 @@ GeomInteractiveRibbon <- ggproto(
     ids[missing_pos] <- NA
 
     data <- unclass(data) #for faster indexing
-    positions <- new_data_frame(list(
-      x = c(data$x, rev(data$x)),
-      y = c(data$ymax, rev(data$ymin)),
-      id = c(ids, rev(ids))
+
+    # The upper line and lower line need to processed separately (#4023)
+    positions_upper <- new_data_frame(list(
+      x = data$x,
+      y = data$ymax,
+      id = ids
     ))
 
-    positions <- flip_data(positions, flipped_aes)
+    positions_lower <- new_data_frame(list(
+      x = rev(data$x),
+      y = rev(data$ymin),
+      id = rev(ids)
+    ))
 
-    munched <- coord_munch(coord, positions, panel_params)
+    positions_upper <- flip_data(positions_upper, flipped_aes)
+    positions_lower <- flip_data(positions_lower, flipped_aes)
 
+    munched_upper <-
+      coord_munch(coord, positions_upper, panel_params)
+    munched_lower <-
+      coord_munch(coord, positions_lower, panel_params)
+
+    munched_poly <- rbind(munched_upper, munched_lower)
+
+    is_full_outline <- identical(outline.type, "full")
     g_poly <- polygonGrob(
-      munched$x,
-      munched$y,
-      id = munched$id,
+      munched_poly$x,
+      munched_poly$y,
+      id = munched_poly$id,
       default.units = "native",
       gp = gpar(
         fill = alpha(aes$fill, aes$alpha),
-        col = if (identical(outline.type, "full"))
+        col = if (is_full_outline)
           aes$colour
         else
-          NA
+          NA,
+        lwd = if (is_full_outline)
+          aes$size * .pt
+        else
+          0,
+        lty = if (is_full_outline)
+          aes$linetype
+        else
+          1
       )
     )
     g_poly <- add_interactive_attrs(g_poly, aes)
 
-    if (identical(outline.type, "full")) {
+    if (is_full_outline) {
       return(ggname("geom_ribbon", g_poly))
     }
 
-    munched_lines <- munched
-    # increment the IDs of the lower line
-    munched_lines$id <- switch(
+    # Increment the IDs of the lower line so that they will be drawn as separate lines
+    munched_lower$id <- munched_lower$id + max(ids, na.rm = TRUE)
+
+    munched_lines <- switch(
       outline.type,
-      both = munched_lines$id + rep(c(0, max(ids, na.rm = TRUE)), each = length(ids)),
-      upper = munched_lines$id + rep(c(0, NA), each = length(ids)),
-      lower = munched_lines$id + rep(c(NA, 0), each = length(ids)),
-      abort(glue("invalid outline.type: {outline.type}"))
+      both = rbind(munched_upper, munched_lower),
+      upper = munched_upper,
+      lower = munched_lower,
+      abort(paste("invalid outline.type:", outline.type))
     )
     g_lines <- polylineGrob(
       munched_lines$x,
@@ -134,7 +158,10 @@ GeomInteractiveArea <- ggproto(
     gr <- GeomArea$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_group = function(data, panel_params, coord, na.rm = FALSE) {
-    GeomInteractiveRibbon$draw_group(data, panel_params, coord, na.rm = na.rm)
+  parameters = function(extra = FALSE) {
+    GeomArea$parameters(extra = extra)
+  },
+  draw_group = function(...) {
+    GeomInteractiveRibbon$draw_group(...)
   }
 )

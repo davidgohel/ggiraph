@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_dotplot_interactive.R
 \name{geom_dotplot_interactive}
 \alias{geom_dotplot_interactive}
-\title{Create interactive dot plot}
+\title{Create interactive dot plots}
 \usage{
 geom_dotplot_interactive(...)
 }
@@ -27,8 +27,18 @@ In this way they can be set to a scalar value.
 }
 
 \examples{
+# add interactive dot plots to a ggplot -------
 library(ggplot2)
 library(ggiraph)
+
+p <- ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
+  geom_dotplot_interactive(
+    aes(tooltip = row.names(mtcars)),
+    stackgroups = TRUE, binwidth = 1, method = "histodot"
+  )
+
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
 
 gg_point = ggplot(
   data = mtcars,

@@ -22,10 +22,3 @@ drawDetails.interactive_rect_grob <- function(x, recording) {
   interactive_attr_toxml(x = x, ids = ids)
   invisible()
 }
-
-#' @export
-makeContent.interactive_roundrect_grob <- function(x) {
-  gr <- NextMethod()
-  add_interactive_attrs(gr, x)
-}
-

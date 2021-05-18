@@ -27,7 +27,7 @@ GeomInteractiveErrorbarh <- ggproto(
     gr <- GeomErrorbarh$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
   },
-  draw_panel = function(data, panel_params, coord, width = NULL) {
+  draw_panel = function(data, panel_params, coord, height = NULL) {
     box <- new_data_frame(
       list(
         x = as.vector(
