@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a interactive strip label — labeller_interactive • ggiraph package</title>
+<title>Construct interactive labelling specification for facet strips — labeller_interactive • ggiraph package</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,11 @@
 
 
 
-<meta property="og:title" content="Create a interactive strip label — labeller_interactive" />
-<meta property="og:description" content="These function is an helper function
-to let user add interactivity on facet strip text.
-The function adds interactive attributes but does not tell
-to use them, make sure the theme you are using is specifying the use of element_text_interactive
-for strip text,
-for example theme(strip.text = element_text_interactive())" />
+<meta property="og:title" content="Construct interactive labelling specification for facet strips — labeller_interactive" />
+<meta property="og:description" content="This function is a wrapper around labeller() that allows the user to turn
+facet strip labels into interactive labels via label_interactive().
+It requires that the theme()'s strip.text elements are defined as interactive
+theme elements via element_text_interactive(), see details." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -85,7 +83,7 @@ for example theme(strip.text = element_text_interactive())" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
       </span>
     </div>
 
@@ -133,82 +131,186 @@ for example theme(strip.text = element_text_interactive())" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a interactive strip label</h1>
+    <h1>Construct interactive labelling specification for facet strips</h1>
     <small class="dont-index">Source: <a href='https://github.com/davidgohel/ggiraph/blob/master/R/labeller_interactive.R'><code>R/labeller_interactive.R</code></a></small>
     <div class="hidden name"><code>labeller_interactive.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These function is an helper function
-to let user add interactivity on facet strip text.</p>
-<p>The function adds interactive attributes but does not tell
-to use them, make sure the theme you are using is specifying the use of <code>element_text_interactive</code>
-for strip text,
-for example <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme(strip.text = element_text_interactive())</a></code></p>
+    <p>This function is a wrapper around <code><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller()</a></code> that allows the user to turn
+facet strip labels into interactive labels via <code><a href='label_interactive.html'>label_interactive()</a></code>.</p>
+<p>It requires that the <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme()</a></code>'s <code>strip.text</code> elements are defined as interactive
+theme elements via <code><a href='element_interactive.html'>element_text_interactive()</a></code>, see details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>labeller_interactive</span><span class='op'>(</span>
-  custom_label_func <span class='op'>=</span> <span class='va'>id_label</span>,
-  <span class='va'>...</span>,
-  .default <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/labellers.html'>label_value</a></span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>labeller_interactive</span><span class='op'>(</span>.mapping <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>custom_label_func</th>
-      <td><p>a function that returns the result
-of <code><a href='label_interactive.html'>label_interactive()</a></code>.</p></td>
+      <th>.mapping</th>
+      <td><p>set of aesthetic mappings created by <code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes()</a></code> or <code><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_()</a></code>.
+It should provide mappings for any of the <code><a href='interactive_parameters.html'>interactive_parameters()</a></code>.
+In addition it understands a <code>label</code> parameter for creating a new label text.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>optional additional arguments for function <code>custom_label_func</code>.</p></td>
-    </tr>
-    <tr>
-      <th>.default</th>
-      <td><p>a Labeller function, see <code><a href='https://ggplot2.tidyverse.org/reference/labellers.html'>label_value()</a></code></p></td>
+      <td><p>arguments passed to base function <code><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller()</a></code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The aesthetics set provided via <code>.mapping</code> is evaluated against the data provided
+by the ggplot2 facet. This means that the variables for each facet are available
+for using inside the aesthetic mappings. In addition the <code>.label</code> variable provides
+access to the produced label. See the examples.</p>
+<p>The plot's theme is required to have the strip texts as interactive text elements.
+This involves <code>strip.text</code> or individually <code>strip.text.x</code> and <code>strip.text.y</code>:
+<code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme(strip.text.x = element_text_interactive())</a></code>
+<code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme(strip.text.y = element_text_interactive())</a></code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='id_label.html'>id_label()</a></code>, <code><a href='label_interactive.html'>label_interactive()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller()</a></code>, <code><a href='label_interactive.html'>label_interactive()</a></code>, <a href='https://ggplot2.tidyverse.org/reference/labellers.html'>labellers</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://davidgohel.github.io/ggiraph'>ggiraph</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># use interactive labeller</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://davidgohel.github.io/ggiraph/'>ggiraph</a></span><span class='op'>)</span>
 
-<span class='va'>gg_jitter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>
-  <span class='va'>mpg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>cyl</span>, <span class='va'>hwy</span>, group <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>manufacturer</span>,
-             labeller <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='va'>id_label</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>strip.text <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mpg</span>, y <span class='op'>=</span> <span class='va'>wt</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/row.names.html'>row.names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>gg_jitter</span><span class='op'>)</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-
-<span class='va'>lab_custom</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>z</span>, <span class='va'>prefix</span> <span class='op'>=</span> <span class='st'>"label: "</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='label_interactive.html'>label_interactive</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>z</span>, data_id <span class='op'>=</span> <span class='va'>z</span>, tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>prefix</span>, <span class='va'>z</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>gg_jitter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>diamonds</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_grid.html'>facet_grid</a></span><span class='op'>(</span><span class='va'>color</span> <span class='op'>~</span> <span class='va'>cut</span>,
-    labeller <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller</a></span><span class='op'>(</span>
-      cut <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='va'>lab_custom</span>, prefix <span class='op'>=</span> <span class='st'>"cut: "</span><span class='op'>)</span>,
-      color <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='va'>lab_custom</span>, prefix <span class='op'>=</span> <span class='st'>"color: "</span><span class='op'>)</span>
-    <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_light</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+<span class='co'># Always remember to set the theme's strip texts as interactive</span>
+<span class='co'># no need to set any interactive parameters, they'll be assigned from the labels</span>
+<span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='va'>p1</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>
     strip.text.x <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
     strip.text.y <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span>
   <span class='op'>)</span>
 
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>gg_jitter</span>, width_svg <span class='op'>=</span> <span class='fl'>8</span>, height_svg <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='co'># simple facet</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p1</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span>,
+  labeller <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Gear:"</span>, <span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
+<span class='co'># With two vars. When the .multi_line labeller argument is TRUE (default),</span>
+<span class='co'># supply a different labeller for each var</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p1</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>gear</span>, <span class='va'>vs</span><span class='op'>)</span>,
+  labeller <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span>
+    gear <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Gear:"</span>, <span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+    vs <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"VS:"</span>, <span class='va'>vs</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='co'># When the .multi_line argument is FALSE, the labels are joined and</span>
+<span class='co'># the same happens with the data, so we can refer to both variables in the aesthetics!</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p1</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>gear</span>, <span class='va'>vs</span><span class='op'>)</span>,
+  labeller <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Gear: "</span>, <span class='va'>gear</span>, <span class='st'>"\nVS: "</span>, <span class='va'>vs</span><span class='op'>)</span><span class='op'>)</span>,
+    .multi_line <span class='op'>=</span> <span class='cn'>FALSE</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='co'># Example with facet_grid:</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p1</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_grid.html'>facet_grid</a></span><span class='op'>(</span>
+  <span class='va'>vs</span> <span class='op'>+</span> <span class='va'>am</span> <span class='op'>~</span> <span class='va'>gear</span>,
+  labeller <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller</a></span><span class='op'>(</span>
+    gear <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+      tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"gear:"</span>, <span class='va'>gear</span><span class='op'>)</span>, data_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"gear_"</span>, <span class='va'>gear</span><span class='op'>)</span>
+    <span class='op'>)</span><span class='op'>)</span>,
+    vs <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+      tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"VS:"</span>, <span class='va'>vs</span><span class='op'>)</span>, data_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"vs_"</span>, <span class='va'>vs</span><span class='op'>)</span>
+    <span class='op'>)</span><span class='op'>)</span>,
+    am <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+      tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"AM:"</span>, <span class='va'>am</span><span class='op'>)</span>, data_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"am_"</span>, <span class='va'>am</span><span class='op'>)</span>
+    <span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='co'># Same with .rows and .cols and .multi_line = FALSE</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p1</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_grid.html'>facet_grid</a></span><span class='op'>(</span>
+  <span class='va'>vs</span> <span class='op'>+</span> <span class='va'>am</span> <span class='op'>~</span> <span class='va'>gear</span>,
+  labeller <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller</a></span><span class='op'>(</span>
+    .cols <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span>
+      .mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"gear:"</span>, <span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span>,
+    .rows <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"VS: "</span>, <span class='va'>vs</span>, <span class='st'>"\nAM: "</span>, <span class='va'>am</span><span class='op'>)</span><span class='op'>)</span>,
+      .multi_line <span class='op'>=</span> <span class='cn'>FALSE</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='co'># a more complex example</span>
+<span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>msleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sleep_total</span>, y <span class='op'>=</span> <span class='va'>awake</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_point_interactive.html'>geom_point_interactive</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>
+    strip.text.x <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
+    strip.text.y <span class='op'>=</span> <span class='fu'><a href='element_interactive.html'>element_text_interactive</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='co'># character vector as lookup table</span>
+<span class='va'>conservation_status</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+  cd <span class='op'>=</span> <span class='st'>"Conservation Dependent"</span>,
+  en <span class='op'>=</span> <span class='st'>"Endangered"</span>,
+  lc <span class='op'>=</span> <span class='st'>"Least concern"</span>,
+  nt <span class='op'>=</span> <span class='st'>"Near Threatened"</span>,
+  vu <span class='op'>=</span> <span class='st'>"Vulnerable"</span>,
+  domesticated <span class='op'>=</span> <span class='st'>"Domesticated"</span>
+<span class='op'>)</span>
+
+<span class='co'># function to capitalize a string</span>
+<span class='va'>capitalize</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>toupper</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>x</span>
+<span class='op'>}</span>
+
+<span class='co'># function to cut a string and append an ellipsis</span>
+<span class='va'>cut_str</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>width</span> <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>ind</span> <span class='op'>&lt;-</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='va'>width</span>
+  <span class='va'>x</span><span class='op'>[</span><span class='va'>ind</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span><span class='va'>ind</span><span class='op'>]</span>, <span class='fl'>1</span>, <span class='va'>width</span><span class='op'>)</span>, <span class='st'>"..."</span><span class='op'>)</span>
+  <span class='va'>x</span>
+<span class='op'>}</span>
+
+<span class='va'>replace_nas</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='st'>"Not available"</span>, <span class='va'>x</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='co'># in this example we use the '.label' variable to access the produced label</span>
+<span class='co'># and we set the 'label' aesthetic to modify the label</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p2</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_grid.html'>facet_grid</a></span><span class='op'>(</span>
+  <span class='va'>vore</span> <span class='op'>~</span> <span class='va'>conservation</span>,
+  labeller <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labeller.html'>labeller</a></span><span class='op'>(</span>
+    vore <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Vore:"</span>, <span class='fu'>replace_nas</span><span class='op'>(</span><span class='va'>.label</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+      .default <span class='op'>=</span> <span class='va'>capitalize</span>
+    <span class='op'>)</span>,
+    conservation <span class='op'>=</span> <span class='fu'>labeller_interactive</span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+        tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Conservation:\n"</span>, <span class='fu'>replace_nas</span><span class='op'>(</span><span class='va'>.label</span><span class='op'>)</span><span class='op'>)</span>,
+        label <span class='op'>=</span> <span class='fu'>cut_str</span><span class='op'>(</span><span class='va'>.label</span>, <span class='fl'>3</span><span class='op'>)</span>
+      <span class='op'>)</span>,
+      .default <span class='op'>=</span> <span class='va'>conservation_status</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='girafe.html'>girafe</a></span><span class='op'>(</span>ggobj <span class='op'>=</span> <span class='va'>p</span><span class='op'>)</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div></pre>
   </div>
@@ -223,7 +325,7 @@ of <code><a href='label_interactive.html'>label_interactive()</a></code>.</p></t
       <footer>
       <link href="../ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version&nbsp;0.7.9 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
+  <p>Version&nbsp;0.7.10 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src='../ardata-logo.svg' style="vertical-align:middle;height:24px;"/></a>
   </p>
 </div>
 <div class="pkgdown">
