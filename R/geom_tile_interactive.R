@@ -14,6 +14,7 @@ GeomInteractiveTile <- ggproto(
   "GeomInteractiveTile",
   GeomTile,
   default_aes = add_default_interactive_aes(GeomTile),
+  non_missing_aes = c("xmin", "xmax", "ymin", "ymax"),
   draw_key = function(data, params, size) {
     gr <- GeomTile$draw_key(data, params, size)
     add_interactive_attrs(gr, data, data_attr = "key-id")
