@@ -74,6 +74,12 @@ grob_argnames <- function(x, grob) {
   intersect(names(formals(grob)), names(x))
 }
 
+#' Returns the contents of a file as text
+#' @noRd
+read_file <- function(path, ..., encoding = "UTF-8", warn = FALSE) {
+  paste0(readLines(con = path, encoding = encoding, warn = warn, ...), collapse = "\n")
+}
+
 #' Returns the system os (lowercase: windows, osx, linux)
 #' Taken from https://www.r-bloggers.com/2015/06/identifying-the-os-from-r/
 #' @noRd

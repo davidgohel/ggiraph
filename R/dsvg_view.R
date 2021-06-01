@@ -19,7 +19,7 @@ dsvg_view <- function(code, ...) {
            finally = dev.off()
   )
   if( interactive() ){
-    doc <- paste0(readLines(path, encoding = "UTF-8"), collapse = "\n")
+    doc <- read_file(path)
     browsable(HTML(as.character(doc)) )
   }
   else invisible()
