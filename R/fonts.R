@@ -1,14 +1,14 @@
 r_font_families <- c("sans", "serif", "mono", "symbol")
 
 default_fontname <- function() {
-  def_fonts <- if( Sys.info()["sysname"] == "Windows" ){
+  def_fonts <- if( get_os() == "windows" ){
     c(
       sans = "Arial",
       serif = "Times New Roman",
       mono = "Courier New",
       symbol = "Symbol"
     )
-  } else if( Sys.info()["sysname"] == "Darwin" ){
+  } else if( get_os() == "osx" ){
     c(
       sans = "Helvetica",
       serif = "Times",
