@@ -121,5 +121,5 @@ Collate:
     'scale_size_interactive.R'
     'scale_steps_interactive.R'
     'scale_viridis_interactive.R'
-    'svg.R'
     'tracers.R'
+    'utils_css.R'
