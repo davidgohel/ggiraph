@@ -36,7 +36,6 @@ GeomInteractiveSf <- ggproto(
                         linejoin = "round",
                         linemitre = 10,
                         na.rm = TRUE) {
-    data <- force_interactive_aes_to_char(data)
     # call original draw_panel for each data row/geometry
     # this way multi geometries are handled too
     useflatten <-  FALSE

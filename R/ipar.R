@@ -163,17 +163,6 @@ remove_interactive_attrs <- function(x, ipar = IPAR_NAMES) {
   x
 }
 
-#' Ensures that interactive parameters are characters.
-#' @noRd
-force_interactive_aes_to_char <- function(data, ipar = IPAR_NAMES) {
-  for (a in ipar) {
-    if (!is.null(data[[a]]) && !is.character(data[[a]])) {
-      data[[a]] <- as.character(data[[a]])
-    }
-  }
-  data
-}
-
 #' Copies interactive parameters from one object to the other.
 #' and returns the result
 #' @noRd
@@ -318,6 +307,8 @@ interactive_attr_toxml <- function(x,
                           hover_css = check_css_attr(attrValue),
                           selected_css = check_css_attr(attrValue),
                           attrValue)
+      if (!is.character(attrValue))
+        attrValue <- as.character(attrValue)
       attrName <- switch(a,
                          tooltip = "title",
                          data_id = attr_name,

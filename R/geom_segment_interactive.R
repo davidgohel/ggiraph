@@ -59,8 +59,6 @@ GeomInteractiveSegment <- ggproto(
       coord <- coord$transform(data, panel_params)
       arrow.fill <- arrow.fill %||% coord$colour
 
-      coord <- force_interactive_aes_to_char(coord)
-
       gr <- segmentsGrob(
         coord$x,
         coord$y,

@@ -45,8 +45,6 @@ GeomInteractivePolygon <- ggproto(
       first_idx <- !duplicated(munched$group)
       first_rows <- munched[first_idx,]
 
-      munched <- force_interactive_aes_to_char(munched)
-
       gr <- ggname(
         "geom_polygon_interactive",
         polygonGrob(
@@ -76,8 +74,6 @@ GeomInteractivePolygon <- ggproto(
       # are the same within each group.
       first_idx <- !duplicated(munched$group)
       first_rows <- munched[first_idx,]
-
-      munched <- force_interactive_aes_to_char(munched)
 
       args <- list(
         x = munched$x,

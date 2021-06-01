@@ -34,7 +34,6 @@ GeomInteractiveRasterAnn <- ggproto(
     )
     coords <- coord$transform(data, panel_params)
     coords <- coords[1,, drop = FALSE]
-    coords <- force_interactive_aes_to_char(coords)
     add_interactive_attrs(zz, coords)
   }
 )

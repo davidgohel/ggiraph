@@ -41,7 +41,6 @@ GeomInteractiveLabel <- ggproto(
     if (is.null(coords$tooltip_fill)) {
       coords$tooltip_fill <- coords$fill
     }
-    coords <- force_interactive_aes_to_char(coords)
     add_interactive_attrs(gr, coords)
   }
 )

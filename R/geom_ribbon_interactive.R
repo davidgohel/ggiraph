@@ -47,7 +47,6 @@ GeomInteractiveRibbon <- ggproto(
       abort("Aesthetics can not vary with a ribbon")
     }
     aes <- as.list(aes)
-    aes <- force_interactive_aes_to_char(aes)
 
     # Instead of removing NA values from the data and plotting a single
     # polygon, we want to "stop" plotting the polygon whenever we're

@@ -33,7 +33,6 @@ GeomInteractivePoint <- ggproto(
   draw_panel = function(data, panel_params, coord, na.rm = FALSE) {
     zz <- GeomPoint$draw_panel(data, panel_params, coord, na.rm = na.rm)
     coords <- coord$transform(data, panel_params)
-    coords <- force_interactive_aes_to_char(coords)
     add_interactive_attrs(zz, coords)
   }
 )

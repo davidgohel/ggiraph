@@ -50,7 +50,6 @@ GeomInteractiveRect <- ggproto(
       ggname("bar", do.call("grobTree", polys))
     } else {
       coords <- coord$transform(data, panel_params)
-      coords <- force_interactive_aes_to_char(coords)
 
       gr <- ggname(
         "geom_rect_interactive",

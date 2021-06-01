@@ -81,8 +81,6 @@ GeomInteractivePath <- ggproto(
     start <- c(TRUE, group_diff)
     end <-   c(group_diff, TRUE)
 
-    munched <- force_interactive_aes_to_char(munched)
-
     if (!constant) {
       gr <- segmentsGrob(
         munched$x[!end],

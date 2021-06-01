@@ -59,7 +59,6 @@ labeller_interactive <- function(.mapping = NULL, ...) {
         data$.label <- x
         # get all interactive parameters as a data frame
         ip_data <- interactive_to_df(data)
-        ip_data <- force_interactive_aes_to_char(ip_data, ipar = ipar)
 
         # for each factor element
         imap(x, function(x, i) {

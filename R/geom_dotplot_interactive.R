@@ -33,7 +33,6 @@ GeomInteractiveDotplot <- ggproto(
   draw_group = function(data, panel_params, coord, ...) {
     zz <- GeomDotplot$draw_group(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
-    coords <- force_interactive_aes_to_char(coords)
     add_interactive_attrs(zz, coords)
   }
 )
