@@ -4,9 +4,10 @@ grob_interactive <- function(grob_func,
                              ...,
                              cl = NULL,
                              data_attr = "data-id",
-                             ipar = IPAR_NAMES) {
+                             extra_interactive_params = NULL) {
   args <- list(...)
   # We need to get the interactive parameters from the arguments and remove them
+  ipar <- get_default_ipar(extra_interactive_params)
   interactive_params <- get_interactive_attrs(args, ipar = ipar)
   args <- remove_interactive_attrs(args, ipar = ipar)
   # Call default grob function

@@ -5,7 +5,7 @@
 layer_interactive <- function(layer_func,
                               ...,
                               interactive_geom = NULL,
-                              ipar = IPAR_NAMES) {
+                              extra_interactive_params = NULL) {
   args <- list(...)
   # we need to temporarily remove the interactive aesthetics if they exist
   # we could use check.aes = FALSE and check.param = FALSE but no fun there
@@ -15,6 +15,8 @@ layer_interactive <- function(layer_func,
   index <- purrr::detect_index(args, function(x) {
     inherits(x, "uneval")
   })
+
+  ipar <- get_default_ipar(extra_interactive_params)
   # check if it contains interactive aesthetics
   if (index > 0 &&
       has_interactive_attrs(args[[index]], ipar = ipar)) {
@@ -54,6 +56,16 @@ layer_interactive <- function(layer_func,
     if (!is.null(interactive_params)) {
       layer_$aes_params <- append(layer_$aes_params, interactive_params)
     }
+    layer_$geom_params <- append(layer_$geom_params, list(.ipar = ipar))
+
+    # set the defaults for any extra parameter
+    default_aes_names <- names(layer_$geom$default_aes)
+    missing_names <- setdiff(ipar, default_aes_names)
+    if (length(missing_names) > 0) {
+      defaults <- Map(missing_names, f=function(x) NULL)
+      layer_$geom$default_aes <- append_aes(layer_$geom$default_aes, defaults)
+    }
+
     if (is.list(result)) {
       result[[index]] <- layer_
     } else {

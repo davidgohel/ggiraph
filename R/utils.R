@@ -60,6 +60,29 @@ add_default_interactive_aes <- function(geom = Geom,
   append_aes(geom$default_aes, defaults)
 }
 
+#' Override of default parameters function in order to:
+#' - Get the parameters/arguments from super class
+#' - Add the extra .ipar argument
+#' @noRd
+interactive_geom_parameters <- function(self, extra = FALSE) {
+  parent_params <- self$super()$parameters(extra = extra)
+  panel_args <- names(ggproto_formals(self$draw_panel))
+  group_args <- names(ggproto_formals(self$draw_group))
+  if ((".ipar" %in% panel_args || ".ipar" %in% group_args) && !(".ipar" %in% parent_params)) {
+    c(parent_params, ".ipar")
+  } else {
+    parent_params
+  }
+}
+
+#' Override of default draw_key function, in order to add
+#' the interactive attrs
+#' @noRd
+interactive_geom_draw_key <- function(self, data, params, size) {
+  gr <- self$super()$draw_key(data, params, size)
+  add_interactive_attrs(gr, data, data_attr = "key-id", ipar = get_ipar(params))
+}
+
 #' Appends a list of attributes to an aesthetic mapping.
 #' @noRd
 append_aes <- function(mapping, lst) {
