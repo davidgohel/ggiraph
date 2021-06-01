@@ -51,7 +51,7 @@ set_attr = function( ids, attribute, str ){
   if( is.factor(str) )
     str <- as.character( str )
   if( is.factor(attribute) )
-    str <- as.character( attribute )
+    attribute <- as.character( attribute )
 
   stopifnot( is.character(attribute) )
   stopifnot( is.character(str) )
