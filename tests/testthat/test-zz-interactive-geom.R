@@ -29,7 +29,10 @@ test_that("geom_*_interactive is working", {
     # check that the parameters in draw_panel|group are the same
     # between interactive geoms and their parents
     params <- result$geom$parameters()
+    expect_true(".ipar" %in% params)
+    params <- params[params!=".ipar"]
     parent_params <- result$geom$super()$parameters()
+    parent_params <- parent_params[parent_params!=".ipar"]
     expect_equal(
       params, parent_params,
       label = paste0(class(result$geom)[1], "$parameters()"),

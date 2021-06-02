@@ -23,10 +23,8 @@ GeomInteractiveSegment <- ggproto(
   "GeomInteractiveSegment",
   GeomSegment,
   default_aes = add_default_interactive_aes(GeomSegment),
-  draw_key = function(data, params, size) {
-    gr <- GeomSegment$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_panel = function(data,
                         panel_params,
                         coord,
@@ -34,7 +32,8 @@ GeomInteractiveSegment <- ggproto(
                         arrow.fill = NULL,
                         lineend = "butt",
                         linejoin = "round",
-                        na.rm = FALSE) {
+                        na.rm = FALSE, 
+                        .ipar = IPAR_NAMES) {
     data <- remove_missing(
       data,
       na.rm = na.rm,
@@ -75,7 +74,7 @@ GeomInteractiveSegment <- ggproto(
         ),
         arrow = arrow
       )
-      gr <- add_interactive_attrs(gr, coord)
+      gr <- add_interactive_attrs(gr, coord, ipar = .ipar)
       return(gr)
     }
 
@@ -91,6 +90,7 @@ GeomInteractiveSegment <- ggproto(
                                    panel_params,
                                    coord,
                                    arrow = arrow,
-                                   lineend = lineend)
+                                   lineend = lineend, 
+                                   .ipar = .ipar)
   }
 )

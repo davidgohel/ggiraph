@@ -24,10 +24,8 @@ GeomInteractiveSf <- ggproto(
   "GeomInteractiveSf",
   GeomSf,
   default_aes = add_default_interactive_aes(GeomSf),
-  draw_key = function(data, params, size) {
-    gr <- GeomSf$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_panel = function(data,
                         panel_params,
                         coord,
@@ -35,7 +33,8 @@ GeomInteractiveSf <- ggproto(
                         lineend = "butt",
                         linejoin = "round",
                         linemitre = 10,
-                        na.rm = TRUE) {
+                        na.rm = TRUE, 
+                        .ipar = IPAR_NAMES) {
     # call original draw_panel for each data row/geometry
     # this way multi geometries are handled too
     useflatten <-  FALSE
@@ -52,11 +51,11 @@ GeomInteractiveSf <- ggproto(
       if (inherits(gr, "gList")) { # grid v<3.6.0
         useflatten <<- TRUE
         for (i in seq_along(gr)) {
-          gr[[i]] <- add_interactive_attrs(gr[[i]], row)
+          gr[[i]] <- add_interactive_attrs(gr[[i]], row, ipar = .ipar)
         }
         gr
       } else {
-        add_interactive_attrs(gr, row)
+        add_interactive_attrs(gr, row, ipar = .ipar)
       }
     })
     if (useflatten) {

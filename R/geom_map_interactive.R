@@ -23,11 +23,9 @@ GeomInteractiveMap <- ggproto(
   "GeomInteractiveMap",
   GeomMap,
   default_aes = add_default_interactive_aes(GeomMap),
-  draw_key = function(data, params, size) {
-    gr <- GeomMap$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(data, panel_params, coord, map) {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, map, .ipar = IPAR_NAMES) {
     # Only use matching data and map ids
     common <- intersect(data$map_id, map$id)
     data <- data[data$map_id %in% common, , drop = FALSE]
@@ -42,21 +40,17 @@ GeomInteractiveMap <- ggproto(
     # Align data with map
     data_rows <- match(coords$id[!duplicated(grob_id)], data$map_id)
     data <- data[data_rows, , drop = FALSE]
-    run_l <- rle(grob_id)
 
-    args <- list(
-      x = coords$x,
-      y = coords$y,
-      default.units = "native",
-      id = grob_id,
+    gr <- polygonGrob(
+      coords$x, coords$y, default.units = "native", id = grob_id,
       gp = gpar(
-        col = data$colour,
-        fill = alpha(data$fill, data$alpha),
+        col = data$colour, fill = alpha(data$fill, data$alpha),
         lwd = data$size * .pt
       )
     )
 
-    args <- copy_interactive_attrs(data, args, useList = TRUE, run_l$lengths)
-    do.call(interactive_polygon_grob, args)
+    run_l <- rle(grob_id)
+    ip <- copy_interactive_attrs(data, list(), useList = TRUE, run_l$lengths, ipar = .ipar)
+    add_interactive_attrs(gr, ip, ipar = .ipar)
   }
 )

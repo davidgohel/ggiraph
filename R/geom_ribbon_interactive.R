@@ -23,16 +23,15 @@ GeomInteractiveRibbon <- ggproto(
   "GeomInteractiveRibbon",
   GeomRibbon,
   default_aes = add_default_interactive_aes(GeomRibbon),
-  draw_key = function(data, params, size) {
-    gr <- GeomRibbon$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_group = function(data,
                         panel_params,
                         coord,
                         na.rm = FALSE,
                         flipped_aes = FALSE,
-                        outline.type = "both") {
+                        outline.type = "both",
+                        .ipar = IPAR_NAMES) {
     data <- flip_data(data, flipped_aes)
     if (na.rm)
       data <-
@@ -40,7 +39,7 @@ GeomInteractiveRibbon <- ggproto(
     data <- data[order(data$group), ]
 
     # Check that aesthetics are constant
-    ia <- get_interactive_attr_names(data)
+    ia <- get_interactive_attr_names(data, ipar = .ipar)
     cols <- c("colour", "fill", "size", "linetype", "alpha", ia)
     aes <- unique(data[cols])
     if (nrow(aes) > 1) {
@@ -107,7 +106,7 @@ GeomInteractiveRibbon <- ggproto(
           1
       )
     )
-    g_poly <- add_interactive_attrs(g_poly, aes)
+    g_poly <- add_interactive_attrs(g_poly, aes, ipar = .ipar)
 
     if (is_full_outline) {
       return(ggname("geom_ribbon", g_poly))
@@ -134,7 +133,7 @@ GeomInteractiveRibbon <- ggproto(
         lty = aes$linetype
       )
     )
-    g_lines <- add_interactive_attrs(g_lines, aes)
+    g_lines <- add_interactive_attrs(g_lines, aes, ipar = .ipar)
 
     ggname("geom_ribbon", grobTree(g_poly, g_lines))
   }
@@ -153,14 +152,9 @@ GeomInteractiveArea <- ggproto(
   "GeomInteractiveArea",
   GeomArea,
   default_aes = add_default_interactive_aes(GeomArea),
-  draw_key = function(data, params, size) {
-    gr <- GeomArea$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  parameters = function(extra = FALSE) {
-    GeomArea$parameters(extra = extra)
-  },
-  draw_group = function(...) {
-    GeomInteractiveRibbon$draw_group(...)
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_group = function(..., .ipar = IPAR_NAMES) {
+    GeomInteractiveRibbon$draw_group(..., .ipar = .ipar)
   }
 )

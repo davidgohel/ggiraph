@@ -24,11 +24,9 @@ GeomInteractivePolygon <- ggproto(
   "GeomInteractivePolygon",
   GeomPolygon,
   default_aes = add_default_interactive_aes(GeomPolygon),
-  draw_key = function(data, params, size) {
-    gr <- GeomPolygon$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(data, panel_params, coord, rule = "evenodd") {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, rule = "evenodd", .ipar = IPAR_NAMES) {
     n <- nrow(data)
     if (n == 1)
       return(zeroGrob())
@@ -60,7 +58,7 @@ GeomInteractivePolygon <- ggproto(
           )
         )
       )
-      add_interactive_attrs(gr, munched)
+      add_interactive_attrs(gr, munched, ipar = .ipar)
     } else {
       if (utils::packageVersion('grid') < "3.6") {
         abort("Polygons with holes requires R 3.6 or above")
@@ -92,7 +90,7 @@ GeomInteractivePolygon <- ggproto(
       # pathId argument does not exist prior to grid v3.6.0
       # so we dont't call pathGrob directly because travis test fails
       gr <- do.call(pathGrob, args[grob_argnames(x = args, grob = grid::pathGrob)])
-      add_interactive_attrs(gr, munched)
+      add_interactive_attrs(gr, munched, ipar = .ipar)
     }
   }
 )

@@ -23,10 +23,8 @@ GeomInteractiveBoxplot <- ggproto(
   "GeomInteractiveBoxplot",
   GeomBoxplot,
   default_aes = add_default_interactive_aes(GeomBoxplot),
-  draw_key = function(data, params, size) {
-    gr <- GeomBoxplot$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_group = function(data,
                         panel_params,
                         coord,
@@ -40,7 +38,8 @@ GeomInteractiveBoxplot <- ggproto(
                         notch = FALSE,
                         notchwidth = 0.5,
                         varwidth = FALSE,
-                        flipped_aes = FALSE) {
+                        flipped_aes = FALSE, 
+                        .ipar = IPAR_NAMES) {
     data <- flip_data(data, flipped_aes)
     # this may occur when using geom_boxplot(stat = "identity")
     if (nrow(data) != 1) {
@@ -54,7 +53,7 @@ GeomInteractiveBoxplot <- ggproto(
       fill = alpha(data$fill, data$alpha),
       group = data$group
     )
-    common <- copy_interactive_attrs(data, common)
+    common <- copy_interactive_attrs(data, common, ipar = .ipar)
 
     whiskers <- new_data_frame(c(list(
       x = c(data$x, data$x),
@@ -105,7 +104,7 @@ GeomInteractiveBoxplot <- ggproto(
       )
       outliers <- flip_data(outliers, flipped_aes)
       outliers_grob <-
-        GeomInteractivePoint$draw_panel(outliers, panel_params, coord)
+        GeomInteractivePoint$draw_panel(outliers, panel_params, coord, .ipar = .ipar)
     } else {
       outliers_grob <- NULL
     }
@@ -114,8 +113,8 @@ GeomInteractiveBoxplot <- ggproto(
       "geom_boxplot_interactive",
       grobTree(
         outliers_grob,
-        GeomInteractiveSegment$draw_panel(whiskers, panel_params, coord),
-        GeomInteractiveCrossbar$draw_panel(box, fatten = fatten, panel_params, coord, flipped_aes = flipped_aes)
+        GeomInteractiveSegment$draw_panel(whiskers, panel_params, coord, .ipar = .ipar),
+        GeomInteractiveCrossbar$draw_panel(box, fatten = fatten, panel_params, coord, flipped_aes = flipped_aes, .ipar = .ipar)
       )
     )
   }

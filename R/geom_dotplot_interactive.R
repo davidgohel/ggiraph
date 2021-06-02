@@ -23,23 +23,22 @@ GeomInteractiveDotplot <- ggproto(
   "GeomInteractiveDotplot",
   GeomDotplot,
   default_aes = add_default_interactive_aes(GeomDotplot),
-  draw_key = function(data, params, size) {
-    gr <- GeomDotplot$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  parameters = function(extra = FALSE) {
-    GeomDotplot$parameters(extra = extra)
-  },
-  draw_group = function(data, panel_params, coord, ...) {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_group = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
     zz <- GeomDotplot$draw_group(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
-    add_interactive_attrs(zz, coords)
+    add_interactive_attrs(zz, coords, ipar = .ipar)
   }
 )
 
 #' @export
 makeContext.interactive_dotstack_grob <- function(x, recording = TRUE) {
   gr <- NextMethod()
-  gr <- add_interactive_attrs(gr, x)
-  gr
+  add_interactive_attrs(
+    gr,
+    data = get_interactive_data(x),
+    data_attr = get_data_attr(x),
+    ipar = get_ipar(x)
+  )
 }

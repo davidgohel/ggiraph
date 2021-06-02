@@ -24,16 +24,15 @@ GeomInteractiveCrossbar <- ggproto(
   "GeomInteractiveCrossbar",
   GeomCrossbar,
   default_aes = add_default_interactive_aes(GeomCrossbar),
-  draw_key = function(data, params, size) {
-    gr <- GeomCrossbar$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_panel = function(data,
                         panel_params,
                         coord,
                         fatten = 2.5,
                         width = NULL,
-                        flipped_aes = FALSE) {
+                        flipped_aes = FALSE,
+                        .ipar = IPAR_NAMES) {
     data <- flip_data(data, flipped_aes)
 
     middle <-
@@ -95,7 +94,7 @@ GeomInteractiveCrossbar <- ggproto(
           group = rep(seq_len(nrow(data)), 11)
         )
       )
-      box <- copy_interactive_attrs(data, box, 11)
+      box <- copy_interactive_attrs(data, box, 11, ipar = .ipar)
 
     } else {
       # No notch
@@ -111,15 +110,15 @@ GeomInteractiveCrossbar <- ggproto(
           group = rep(seq_len(nrow(data)), 5) # each bar forms it's own group
         )
       )
-      box <- copy_interactive_attrs(data, box, 5)
+      box <- copy_interactive_attrs(data, box, 5, ipar = .ipar)
     }
     box <- flip_data(box, flipped_aes)
     middle <- flip_data(middle, flipped_aes)
 
     ggname("geom_interactive_crossbar", gTree(
       children = gList(
-        GeomInteractivePolygon$draw_panel(box, panel_params, coord),
-        GeomInteractiveSegment$draw_panel(middle, panel_params, coord)
+        GeomInteractivePolygon$draw_panel(box, panel_params, coord, .ipar = .ipar),
+        GeomInteractiveSegment$draw_panel(middle, panel_params, coord, .ipar = .ipar)
       )
     ))
   }

@@ -17,5 +17,10 @@ interactive_roundrect_grob <- function(...) {
 #' @export
 makeContent.interactive_roundrect_grob <- function(x) {
   gr <- NextMethod()
-  add_interactive_attrs(gr, x)
+  add_interactive_attrs(
+    gr,
+    data = get_interactive_data(x),
+    data_attr = get_data_attr(x),
+    ipar = get_ipar(x)
+  )
 }

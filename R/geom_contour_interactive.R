@@ -23,7 +23,8 @@ geom_contour_interactive <- function(...)
 GeomInteractiveContour <- ggproto(
   "GeomInteractiveContour",
   GeomInteractivePath,
-  default_aes = add_default_interactive_aes(GeomContour)
+  default_aes = add_default_interactive_aes(GeomContour),
+  parameters = interactive_geom_parameters
 )
 
 #' @export
