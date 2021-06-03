@@ -30,10 +30,13 @@
 #' @importFrom rlang eval_tidy
 labeller_interactive <- function(.mapping = NULL, ...) {
   # get interactive aesthetics, plus a label parameter
-  ipar = c(IPAR_NAMES, "label")
+  dots <- list(...)
+  extra_interactive_params <- c(dots$extra_interactive_params, "label")
+  ipar <- get_default_ipar(extra_interactive_params)
   ip <- get_interactive_attrs(.mapping, ipar = ipar)
+  dots$extra_interactive_params <- NULL
   # create ggplot2 labeller
-  lbl_fun <- labeller(...)
+  lbl_fun <- do.call(labeller, dots)
 
   # helper to evaluate the aesthetics and return a data frame
   interactive_to_df <- function(data) {
@@ -67,7 +70,7 @@ labeller_interactive <- function(.mapping = NULL, ...) {
             x
           } else {
             # create a label_interactive, applying the interactive parameters
-            args <- list(label = x)
+            args <- list(label = x, extra_interactive_params = extra_interactive_params)
             args <- copy_interactive_attrs(ip_data, args, rows = i, ipar = ipar)
             do.call(label_interactive, args)
           }

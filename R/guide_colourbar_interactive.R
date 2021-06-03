@@ -27,20 +27,26 @@ guide_train.interactive_colourbar <- function(guide,
     return(zz)
 
   # just copy them from scale to trained guide
-  copy_interactive_attrs(scale, zz)
+  ipar = get_ipar(scale)
+  data <- copy_interactive_attrs(scale, list(), ipar = ipar)
+  zz$.interactive <- data
+  zz$.ipar <- ipar
+  zz
 }
 
 #' @export
 #' @importFrom purrr compact
 guide_gengrob.interactive_colourbar <- function(guide, theme) {
   guide_gtable <- NextMethod()
-  data <- compact(guide[IPAR_NAMES])
+  ipar <- get_ipar(guide)
+  data <- get_interactive_data(guide)
   # set them to the bar
   barIndex <- which(guide_gtable$layout$name == "bar")
   guide_gtable$grobs[[barIndex]] <-
     add_interactive_attrs(guide_gtable$grobs[[barIndex]],
                           data,
-                          data_attr = "key-id")
+                          data_attr = "key-id",
+                          ipar = ipar)
 
   # or set them everywhere?
   # guide_gtable$grobs <- lapply(guide_gtable$grobs, function(z) {

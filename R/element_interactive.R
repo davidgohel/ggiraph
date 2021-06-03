@@ -39,9 +39,10 @@ element_text_interactive <- function(...)
 #' @noRd
 element_interactive <- function(element_func,
                                 ...,
-                                ipar = IPAR_NAMES) {
+                                extra_interactive_params = NULL) {
   args <- list(...)
   # We need to get the interactive parameters from the arguments and remove them
+  ipar <- get_default_ipar(extra_interactive_params)
   ip <- get_interactive_attrs(args, ipar = ipar)
   args <- remove_interactive_attrs(args, ipar = ipar)
   # Call default element function
@@ -90,10 +91,13 @@ element_interactive <- function(element_func,
 #' if( interactive() ) print(x)
 #' @seealso [interactive_parameters], [labeller_interactive()]
 label_interactive <- function(label, ...) {
-  ip <- get_interactive_attrs(list(...))
+  dots <- list(...)
+  ipar <- get_default_ipar(dots$extra_interactive_params)
+  ip <- get_interactive_attrs(dots, ipar = ipar)
   structure(
     label,
     interactive = ip,
+    ipar = ipar,
     class = c("interactive_label")
   )
 }
@@ -103,14 +107,14 @@ label_interactive <- function(label, ...) {
 element_grob.interactive_element_text <- function(element,
                                                   label = "",
                                                   ...) {
-  ipar <- attr(element, "ipar")
-  if (is.null(ipar))
-    ipar <- IPAR_NAMES
+  ipar <- get_ipar(element)
   el_ip <- get_interactive_attrs(element, ipar = ipar)
   if (inherits(label, "interactive_label")) {
+    ipar <- unique(c(ipar, get_ipar(label)))
     lbl_ip <- get_interactive_attrs(label, ipar = ipar)
     ip <- modify_list(el_ip, lbl_ip)
     attr(element, "interactive") <- ip
+    attr(element, "ipar") <- ipar
 
   } else if (is.list(label)) {
     # guide labels in continuous scales are passed as a list
@@ -118,6 +122,7 @@ element_grob.interactive_element_text <- function(element,
     # process items
     ip <- lapply(label, function(x) {
       if (inherits(x, "interactive_label")) {
+        ipar <<- unique(c(ipar, get_ipar(x)))
         lbl_ip <- get_interactive_attrs(x, ipar = ipar)
         modify_list(el_ip, lbl_ip)
       } else {
@@ -127,6 +132,7 @@ element_grob.interactive_element_text <- function(element,
     # transpose and convert to character
     ip <- lapply(transpose(ip), as.character)
     attr(element, "interactive") <- ip
+    attr(element, "ipar") <- ipar
   }
   NextMethod()
 }
@@ -134,36 +140,31 @@ element_grob.interactive_element_text <- function(element,
 #' @export
 element_grob.interactive_element <- function(element, ...) {
   dots <- list(...)
-  ipar <- dots$ipar %||% attr(element, "ipar") %||% IPAR_NAMES
-  data_attr <- dots$data_attr %||% attr(element, "data_attr") %||% "theme-id"
+  ipar <- get_ipar(element)
+  data_attr <- get_data_attr(element, "theme-id")
   el_ip <- get_interactive_attrs(element, ipar = ipar)
   dots_ip <- get_interactive_attrs(dots, ipar = ipar)
   ip <- modify_list(el_ip, dots_ip)
   gr <- NextMethod()
-  add_interactive_attrs(gr, ip, ipar = ipar, data_attr = data_attr)
+  zz <- add_interactive_attrs(gr, ip, ipar = ipar, data_attr = data_attr)
+  zz
 }
 
 #' @export
 merge_element.interactive_element <- function(new, old) {
   new <- NextMethod()
 
-  new_attr <- attr(new, "interactive")
-  if (is.null(new_attr))
-    new_attr <- IPAR_DEFAULTS
-  old_attr <- attr(old, "interactive")
-  if (is.null(old_attr))
-    old_attr <- IPAR_DEFAULTS
+  ipar <- unique(c(get_ipar(new), get_ipar(old)))
+  new_data <- get_interactive_data(new)
+  old_data <- get_interactive_data(old)
 
-  # Override NULL properties of new with the values in old
-  # Get logical vector of NULL properties in new
-  idx <- vapply(new_attr, is.null, logical(1))
-  # Get the names of TRUE items
-  idx <- names(idx[idx])
+  missing_names <- setdiff(ipar, names(new_data))
+  if (length(missing_names) > 0) {
+    new_data[missing_names] <- old_data[missing_names]
+  }
 
-  # Update non-NULL items
-  new_attr[idx] <- old_attr[idx]
-
-  attr(new, "interactive") <- new_attr
+  attr(new, "interactive") <- new_data
+  attr(new, "ipar") <- ipar
   new
 }
 

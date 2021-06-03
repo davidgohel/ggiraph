@@ -50,15 +50,12 @@ p4 <- p + scale_fill_viridis_c_interactive(
   name = label_interactive("nlevel", data_id = "nlevel",
                            tooltip = "nlevel"),
   labels = function(breaks) {
-    l <- lapply(breaks, function(br) {
-      label_interactive(
-        as.character(br),
-        data_id = as.character(br),
-        onclick = paste0("alert(\"", as.character(br), "\")"),
-        tooltip = as.character(br)
-      )
-    })
-    l
+    label_interactive(
+      as.character(breaks),
+      data_id = as.character(breaks),
+      onclick = paste0("alert(\"", as.character(breaks), "\")"),
+      tooltip = as.character(breaks)
+    )
   }
 )
 x <- girafe(ggobj = p4)
