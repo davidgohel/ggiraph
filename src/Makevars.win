@@ -1,9 +1,9 @@
-RWINLIB = ../windows/baselibs-3.5.0
+RWINLIB = ../windows/harfbuzz-2.7.4
 
 PKG_CPPFLAGS = -I${RWINLIB}/include \
 	-DSTRICT_R_HEADERS
 
-PKG_LIBS = -L${RWINLIB}/lib${R_ARCH} -lpng -lz
+PKG_LIBS = -L${RWINLIB}/lib${R_ARCH}${CRT} -lpng -lz
 
 all: clean winlibs
 
