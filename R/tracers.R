@@ -66,7 +66,8 @@ set_attr = function( ids, attribute, str ){
   }
 
   if( length(ids) != length(str) ){
-    stop("ids don't have the same length than str (most often, it occurs because of clipping)")
+    warning("ids don't have the same length than str (most often, it occurs because of clipping or because of NAs in data)")
+    return(invisible())
   }
   stopifnot( length(attribute) == 1 )
 
