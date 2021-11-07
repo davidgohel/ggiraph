@@ -26,7 +26,7 @@
 #' selection and lasso anti-selections buttons are available in a toolbar.
 #'
 #' @param code Plotting code to execute
-#' @param ggobj ggplot objet to print. argument \code{code} will
+#' @param ggobj ggplot object to print. Argument \code{code} will
 #' be ignored if this argument is supplied.
 #' @param width_svg,height_svg The width and height of the graphics region in inches.
 #' The default values are 6 and 5 inches. This will define the aspect ratio of the
@@ -80,7 +80,7 @@
 #' width of the graphic within its HTML container. Its height is automatically
 #' adjusted regarding to the argument \code{width} and the aspect ratio.
 #'
-#' If this behavior does not fit with your need, I recommand you to use
+#' If this behavior does not fit with your need, I recommend you to use
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
 #' @seealso [girafe_options()], [validated_fonts()], [dsvg()]
 #' @export

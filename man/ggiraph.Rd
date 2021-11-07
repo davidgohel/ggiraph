@@ -27,7 +27,7 @@ ggiraph(
 \arguments{
 \item{code}{Plotting code to execute}
 
-\item{ggobj}{ggplot objet to print. argument \code{code} will
+\item{ggobj}{ggplot object to print. Argument \code{code} will
 be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
@@ -70,7 +70,7 @@ the current path for temporary files is used.}
 \description{
 Create an interactive graphic to be used in a web browser.
 
-This function is maintained for backward compatibility reasons, user shoud
+This function is maintained for backward compatibility reasons, user should
 now use function \code{\link[=girafe]{girafe()}} and \code{\link{girafe_options}}.
 }
 \examples{
