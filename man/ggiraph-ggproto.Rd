@@ -31,6 +31,7 @@
 \alias{GeomInteractiveContour}
 \alias{GeomInteractiveCrossbar}
 \alias{GeomInteractiveDensity2d}
+\alias{GeomInteractiveDensity2dFilled}
 \alias{GeomInteractiveDensity}
 \alias{GeomInteractiveDotplot}
 \alias{GeomInteractiveErrorbar}

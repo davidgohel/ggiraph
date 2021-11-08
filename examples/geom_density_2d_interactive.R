@@ -20,6 +20,13 @@ x <- girafe_options(x = x,
                     opts_hover(css = "stroke:red;stroke-width:3px;") )
 if (interactive()) print(x)
 
+p <- d + geom_density_2d_filled_interactive(aes(colour = cut, tooltip = cut, data_id = cut),
+                                            contour_var = "count") + facet_wrap(vars(cut))
+x <- girafe(ggobj = p)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke:red;stroke-width:3px;") )
+if (interactive()) print(x)
+
 
 p <- d + stat_density_2d(aes(fill = stat(nlevel),
                              tooltip = paste("nlevel:", stat(nlevel))),

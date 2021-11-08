@@ -3,16 +3,20 @@
 \name{geom_density_2d_interactive}
 \alias{geom_density_2d_interactive}
 \alias{geom_density2d_interactive}
+\alias{geom_density_2d_filled_interactive}
+\alias{geom_density2d_filled_interactive}
 \title{Create interactive contours of a 2d density estimate}
 \usage{
 geom_density_2d_interactive(...)
+
+geom_density_2d_filled_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
 plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
 }
 \description{
-The geometry is based on \code{\link[=geom_density_2d]{geom_density_2d()}}.
+The geometries are based on \code{\link[=geom_density_2d]{geom_density_2d()}} and \code{\link[=geom_density_2d_filled]{geom_density_2d_filled()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for geom_*_interactive functions}{
@@ -46,6 +50,13 @@ d <- ggplot(dsmall, aes(x, y))
 
 
 p <- d + geom_density_2d_interactive(aes(colour = cut, tooltip = cut, data_id = cut))
+x <- girafe(ggobj = p)
+x <- girafe_options(x = x,
+                    opts_hover(css = "stroke:red;stroke-width:3px;") )
+if (interactive()) print(x)
+
+p <- d + geom_density_2d_filled_interactive(aes(colour = cut, tooltip = cut, data_id = cut),
+                                            contour_var = "count") + facet_wrap(vars(cut))
 x <- girafe(ggobj = p)
 x <- girafe_options(x = x,
                     opts_hover(css = "stroke:red;stroke-width:3px;") )
