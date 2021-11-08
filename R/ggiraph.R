@@ -8,7 +8,7 @@
 #'
 #' @description Create an interactive graphic to be used in a web browser.
 #'
-#' This function is maintained for backward compatibility reasons, user shoud
+#' This function is maintained for backward compatibility reasons, user should
 #' now use function [girafe()] and \code{\link{girafe_options}}.
 #'
 #' @inheritParams girafe

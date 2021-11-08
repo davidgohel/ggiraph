@@ -17,7 +17,7 @@ girafe(
 \arguments{
 \item{code}{Plotting code to execute}
 
-\item{ggobj}{ggplot objet to print. argument \code{code} will
+\item{ggobj}{ggplot object to print. Argument \code{code} will
 be ignored if this argument is supplied.}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
@@ -90,7 +90,7 @@ function \code{girafe}. Its value is beeing used to define a relative
 width of the graphic within its HTML container. Its height is automatically
 adjusted regarding to the argument \code{width} and the aspect ratio.
 
-If this behavior does not fit with your need, I recommand you to use
+If this behavior does not fit with your need, I recommend you to use
 package widgetframe that wraps htmlwidgets inside a responsive iframe.
 }
 
