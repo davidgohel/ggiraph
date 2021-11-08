@@ -1,14 +1,14 @@
-#' @title Create interactive line segments
+#' @title Create interactive line segments and curves
 #'
 #' @description
-#' The geometry is based on [geom_segment()].
+#' The geometries are based on [geom_segment()] and [geom_curve()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters()].
 #' @inheritSection interactive_parameters Details for geom_*_interactive functions
 #' @examples
-#' # add interactive segments to a ggplot -------
+#' # add interactive segments and curves to a ggplot -------
 #' @example examples/geom_segment_interactive.R
 #' @seealso [girafe()]
 #' @export

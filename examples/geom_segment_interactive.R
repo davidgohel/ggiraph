@@ -28,3 +28,11 @@ gg_segment_2 = ggplot() +
 
 x <- girafe(ggobj = gg_segment_2)
 if( interactive() ) print(x)
+
+df <- data.frame(x1 = 2.62, x2 = 3.57, y1 = 21.0, y2 = 15.0)
+p <- ggplot(df, aes(x = x1, y = y1, xend = x2, yend = y2)) +
+  geom_curve_interactive(aes(colour = "curve", tooltip=I("curve"))) +
+  geom_segment_interactive(aes(colour = "segment", tooltip=I("segment")))
+
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
