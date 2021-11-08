@@ -3,6 +3,7 @@
 #' [scale_alpha()],
 #' [scale_alpha_continuous()],
 #' [scale_alpha_discrete()],
+#' [scale_alpha_binned()],
 #' [scale_alpha_ordinal()],
 #' [scale_alpha_date()],
 #' [scale_alpha_datetime()].
@@ -28,6 +29,11 @@ scale_alpha_continuous_interactive <- function(...)
 #' @rdname scale_alpha_interactive
 scale_alpha_discrete_interactive <- function(...)
   scale_interactive(scale_alpha_discrete, ...)
+
+#' @export
+#' @rdname scale_alpha_interactive
+scale_alpha_binned_interactive <- function(...)
+  scale_interactive(scale_alpha_binned, ...)
 
 #' @export
 #' @rdname scale_alpha_interactive

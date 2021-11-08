@@ -4,6 +4,7 @@
 \alias{scale_alpha_interactive}
 \alias{scale_alpha_continuous_interactive}
 \alias{scale_alpha_discrete_interactive}
+\alias{scale_alpha_binned_interactive}
 \alias{scale_alpha_ordinal_interactive}
 \alias{scale_alpha_date_interactive}
 \alias{scale_alpha_datetime_interactive}
@@ -14,6 +15,8 @@ scale_alpha_interactive(...)
 scale_alpha_continuous_interactive(...)
 
 scale_alpha_discrete_interactive(...)
+
+scale_alpha_binned_interactive(...)
 
 scale_alpha_ordinal_interactive(...)
 
@@ -33,6 +36,7 @@ These scales are based on
 \code{\link[=scale_alpha]{scale_alpha()}},
 \code{\link[=scale_alpha_continuous]{scale_alpha_continuous()}},
 \code{\link[=scale_alpha_discrete]{scale_alpha_discrete()}},
+\code{\link[=scale_alpha_binned]{scale_alpha_binned()}},
 \code{\link[=scale_alpha_ordinal]{scale_alpha_ordinal()}},
 \code{\link[=scale_alpha_date]{scale_alpha_date()}},
 \code{\link[=scale_alpha_datetime]{scale_alpha_datetime()}}.
