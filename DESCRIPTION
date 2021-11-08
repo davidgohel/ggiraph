@@ -2,7 +2,7 @@ Package: ggiraph
 Type: Package
 Title: Make 'ggplot2' Graphics Interactive
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.8.0.0006
+Version: 0.8.0.0007
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -22,11 +22,11 @@ Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 SystemRequirements: C++11, libpng
 Imports:
-    grid, ggplot2 (>= 3.3.0),
-    htmlwidgets (>= 0.6),
+    grid, ggplot2 (>= 3.3.5),
+    htmlwidgets (>= 1.5),
     stats,
     htmltools,
-    Rcpp (>= 0.12.12), 
+    Rcpp (>= 1.0),
     systemfonts,
     purrr, rlang, uuid
 LinkingTo: Rcpp, systemfonts
@@ -36,9 +36,9 @@ Suggests:
     rmarkdown,
     maps,
     shiny,
-    sf (>= 0.7-3),
+    sf (>= 1.0),
     quantreg,
-    xml2 (>= 1.0.0),
+    xml2 (>= 1.0),
     dplyr
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph/
