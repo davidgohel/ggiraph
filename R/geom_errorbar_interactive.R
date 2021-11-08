@@ -11,15 +11,14 @@ GeomInteractiveErrorbar <- ggproto(
   "GeomInteractiveErrorbar",
   GeomErrorbar,
   default_aes = add_default_interactive_aes(GeomErrorbar),
-  draw_key = function(data, params, size) {
-    gr <- GeomErrorbar$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_panel = function(data,
                         panel_params,
                         coord,
                         width = NULL,
-                        flipped_aes = FALSE) {
+                        flipped_aes = FALSE, 
+                        .ipar = IPAR_NAMES) {
     data <- flip_data(data, flipped_aes)
     x <- as.vector(rbind(
       data$xmin,
@@ -53,8 +52,8 @@ GeomInteractiveErrorbar <- ggproto(
         row.names = 1:(nrow(data) * 8)
       )
     )
-    box <- copy_interactive_attrs(data, box, each = 8)
+    box <- copy_interactive_attrs(data, box, each = 8, ipar = .ipar)
     box <- flip_data(box, flipped_aes)
-    GeomInteractivePath$draw_panel(box, panel_params, coord)
+    GeomInteractivePath$draw_panel(box, panel_params, coord, .ipar = .ipar)
   }
 )

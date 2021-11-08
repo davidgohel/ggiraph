@@ -14,43 +14,28 @@ GeomInteractiveLabel <- ggproto(
   "GeomInteractiveLabel",
   GeomLabel,
   default_aes = add_default_interactive_aes(GeomLabel),
-  draw_key = function(data, params, size) {
-    gr <- GeomLabel$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(self,
-                        data,
-                        panel_params,
-                        coord,
-                        parse = FALSE,
-                        na.rm = FALSE,
-                        label.padding = unit(0.25, "lines"),
-                        label.r = unit(0.15, "lines"),
-                        label.size = 0.25) {
-    gr <- GeomLabel$draw_panel(
-      data,
-      panel_params,
-      coord,
-      parse = parse,
-      na.rm = na.rm,
-      label.padding = label.padding,
-      label.r = label.r,
-      label.size = label.size
-    )
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    gr <- GeomLabel$draw_panel(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
     if (is.null(coords$tooltip_fill)) {
       coords$tooltip_fill <- coords$fill
     }
-    coords <- force_interactive_aes_to_char(coords)
-    add_interactive_attrs(gr, coords)
+    add_interactive_attrs(gr, coords, ipar = .ipar)
   }
 )
 
 #' @export
 makeContent.interactive_label_grob <- function(x) {
   gr <- NextMethod()
+  data <- get_interactive_data(x)
+  data_attr <- get_data_attr(x)
+  ipar <- get_ipar(x)
   for (i in seq_along(gr$children)) {
-    gr$children[[i]] <- add_interactive_attrs(gr$children[[i]], x)
+    gr$children[[i]] <- add_interactive_attrs(
+      gr$children[[i]], data = data, data_attr = data_attr, ipar = ipar
+    )
   }
   gr
 }

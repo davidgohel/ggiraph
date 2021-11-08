@@ -117,6 +117,17 @@ The interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors depending on params on base function.
 }
 
+\section{Custom interactive parameters}{
+
+The argument \code{extra_interactive_params} can be passed to any of the *_interactive functions
+(geoms, grobs, scales, labeller, labels and theme elements),
+It should be a character vector of additional names to be treated as interactive parameters
+when evaluating the aesthetics.
+The values will eventually end up as attributes in the SVG elements of the output.
+
+Intended only for expert use.
+}
+
 \seealso{
 \code{\link[=girafe_options]{girafe_options()}}, \code{\link[=girafe]{girafe()}}
 }

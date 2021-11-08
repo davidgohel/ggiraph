@@ -27,5 +27,6 @@ geom_density2d_interactive <- geom_density_2d_interactive
 GeomInteractiveDensity2d <- ggproto(
   "GeomInteractiveDensity2d",
   GeomInteractivePath,
-  default_aes = add_default_interactive_aes(GeomDensity2d)
+  default_aes = add_default_interactive_aes(GeomDensity2d),
+  parameters = interactive_geom_parameters
 )

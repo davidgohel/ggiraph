@@ -28,15 +28,15 @@ girafe_css <- function(css,
                        line = NULL,
                        area = NULL,
                        image = NULL) {
-  css <- paste0("/*GIRAFE CSS*/", validate_css(css, "css"))
-  css <- paste0(css, validate_css(text, "text", "text"))
-  css <- paste0(css, validate_css(point, "point", "circle"))
-  css <- paste0(css,
-                validate_css(line, "line", c("line", "polyline")))
-  css <- paste0(css,
-                validate_css(area, "line", c("rect", "polygon", "path")))
-  css <- paste0(css, validate_css(image, "image", "image"))
-  css
+  css <- c(
+    paste0("/*GIRAFE CSS*/", validate_css(css, "css")),
+    validate_css(text, "text", "text"),
+    validate_css(point, "point", "circle"),
+    validate_css(line, "line", c("line", "polyline")),
+    validate_css(area, "area", c("rect", "polygon", "path")),
+    validate_css(image, "image", "image")
+  )
+  paste(css[nzchar(css)], collapse = "\n")
 }
 
 #' Helper to check girafe_css argument

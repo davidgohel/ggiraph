@@ -6,6 +6,9 @@ ggname <- function(prefix, grob) {
   grob
 }
 
+# from gglpot2 ggproto.r
+ggproto_formals <- function(x) formals(environment(x)$f)
+
 # from gglpot2 layer.r
 obj_desc <- function(x) {
   if (isS4(x)) {

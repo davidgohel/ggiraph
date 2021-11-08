@@ -2,9 +2,10 @@
 #' @noRd
 scale_interactive <- function(scale_func,
                               ...,
-                              ipar = IPAR_NAMES) {
+                              extra_interactive_params = NULL) {
   args <- list(...)
   # We need to get the interactive parameters from the arguments and remove them
+  ipar <- get_default_ipar(extra_interactive_params)
   interactive_params <- get_interactive_attrs(args, ipar = ipar)
   args <- remove_interactive_attrs(args, ipar = ipar)
   # Call default scale function
@@ -37,20 +38,19 @@ scale_interactive <- function(scale_func,
   } else if (inherits(sc$guide, "interactive_guide")) {
     # ok
   } else if (inherits(sc$guide, "legend")) {
-      class(sc$guide) <- c("interactive_legend", "interactive_guide", class(sc$guide))
+    class(sc$guide) <- c("interactive_legend", "interactive_guide", class(sc$guide))
   } else if (inherits(sc$guide, "bins")) {
     class(sc$guide) <- c("interactive_bins", "interactive_guide", class(sc$guide))
-  } else if (inherits(sc$guide, "colourbar") || inherits(sc$guide, "colorbar")) {
-      class(sc$guide) <- c("interactive_colourbar", "interactive_guide", class(sc$guide))
   } else if (inherits(sc$guide, "coloursteps") || inherits(sc$guide, "colorsteps")) {
     class(sc$guide) <- c("interactive_coloursteps", "interactive_guide", class(sc$guide))
+  } else if (inherits(sc$guide, "colourbar") || inherits(sc$guide, "colorbar")) {
+    class(sc$guide) <- c("interactive_colourbar", "interactive_guide", class(sc$guide))
   } else {
     warning("Only `legend`, 'bins', `colourbar` and `coloursteps` guides are supported for interactivity")
     return(sc)
   }
   # Put back the interactive_params
-  copy_interactive_attrs(interactive_params,
-                         sc,
-                         preserveNames = TRUE,
-                         ipar = ipar)
+  sc <- copy_interactive_attrs(interactive_params, sc, ipar = ipar)
+  sc$.ipar <- ipar
+  sc
 }

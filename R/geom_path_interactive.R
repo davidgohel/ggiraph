@@ -26,10 +26,8 @@ GeomInteractivePath <- ggproto(
   "GeomInteractivePath",
   GeomPath,
   default_aes = add_default_interactive_aes(GeomPath),
-  draw_key = function(data, params, size) {
-    gr <- GeomPath$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
   draw_panel = function(data,
                         panel_params,
                         coord,
@@ -37,7 +35,8 @@ GeomInteractivePath <- ggproto(
                         lineend = "butt",
                         linejoin = "round",
                         linemitre = 10,
-                        na.rm = FALSE) {
+                        na.rm = FALSE, 
+                        .ipar = IPAR_NAMES) {
     if (!anyDuplicated(data$group)) {
       message_wrap(
         "geom_path: Each group consists of only one observation. ",
@@ -81,8 +80,6 @@ GeomInteractivePath <- ggproto(
     start <- c(TRUE, group_diff)
     end <-   c(group_diff, TRUE)
 
-    munched <- force_interactive_aes_to_char(munched)
-
     if (!constant) {
       gr <- segmentsGrob(
         munched$x[!end],
@@ -101,7 +98,7 @@ GeomInteractivePath <- ggproto(
           linemitre = linemitre
         )
       )
-      add_interactive_attrs(gr, munched, rows = !end)
+      add_interactive_attrs(gr, munched, rows = !end, ipar = .ipar)
     } else {
       id <- match(munched$group, unique(munched$group))
       gr <- polylineGrob(
@@ -120,7 +117,7 @@ GeomInteractivePath <- ggproto(
           linemitre = linemitre
         )
       )
-      add_interactive_attrs(gr, munched)
+      add_interactive_attrs(gr, munched, ipar = .ipar)
     }
   }
 )
@@ -139,15 +136,10 @@ GeomInteractiveLine <- ggproto(
   "GeomInteractiveLine",
   GeomLine,
   default_aes = add_default_interactive_aes(GeomLine),
-  draw_key = function(data, params, size) {
-    gr <- GeomLine$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  parameters = function(extra = FALSE) {
-    GeomLine$parameters(extra = extra)
-  },
-  draw_panel = function(data, panel_params, coord, ...) {
-    GeomInteractivePath$draw_panel(data, panel_params, coord, ...)
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    GeomInteractivePath$draw_panel(data, panel_params, coord, ..., .ipar = .ipar)
   }
 )
 
@@ -165,13 +157,11 @@ GeomInteractiveStep <-
     "GeomInteractiveStep",
     GeomStep,
     default_aes = add_default_interactive_aes(GeomStep),
-    draw_key = function(data, params, size) {
-      gr <- GeomStep$draw_key(data, params, size)
-      add_interactive_attrs(gr, data, data_attr = "key-id")
-    },
-    draw_panel = function(data, panel_params, coord, direction = "hv") {
+    parameters = interactive_geom_parameters,
+    draw_key = interactive_geom_draw_key,
+    draw_panel = function(data, panel_params, coord, direction = "hv", .ipar = IPAR_NAMES) {
       data <- dapply(data, "group", stairstep, direction = direction)
-      GeomInteractivePath$draw_panel(data, panel_params, coord)
+      GeomInteractivePath$draw_panel(data, panel_params, coord, .ipar = .ipar)
     }
   )
 

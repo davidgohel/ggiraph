@@ -30,11 +30,9 @@ GeomInteractiveRect <- ggproto(
   "GeomInteractiveRect",
   GeomRect,
   default_aes = add_default_interactive_aes(GeomRect),
-  draw_key = function(data, params, size) {
-    gr <- GeomRect$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(self, data, panel_params, coord, linejoin = "mitre") {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(self, data, panel_params, coord, linejoin = "mitre", .ipar = IPAR_NAMES) {
     if (!coord$is_linear()) {
       aesthetics <- setdiff(names(data),
                             c("x", "y", "xmin", "xmax", "ymin", "ymax"))
@@ -44,13 +42,12 @@ GeomInteractiveRect <- ggproto(
           poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
           aes <- new_data_frame(row[aesthetics])[rep(1, 5), ]
 
-          GeomInteractivePolygon$draw_panel(cbind(poly, aes), panel_params, coord)
+          GeomInteractivePolygon$draw_panel(cbind(poly, aes), panel_params, coord, .ipar = .ipar)
         })
 
       ggname("bar", do.call("grobTree", polys))
     } else {
       coords <- coord$transform(data, panel_params)
-      coords <- force_interactive_aes_to_char(coords)
 
       gr <- ggname(
         "geom_rect_interactive",
@@ -76,7 +73,7 @@ GeomInteractiveRect <- ggproto(
           )
         )
       )
-      add_interactive_attrs(gr, coords)
+      add_interactive_attrs(gr, coords, ipar = .ipar)
     }
   }
 )

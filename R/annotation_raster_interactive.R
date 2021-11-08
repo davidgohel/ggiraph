@@ -23,18 +23,11 @@ GeomInteractiveRasterAnn <- ggproto(
   "GeomInteractiveRasterAnn",
   GeomRasterAnn,
   default_aes = add_default_interactive_aes(GeomRasterAnn),
-  draw_panel = function(data, panel_params, coord, raster,
-                        xmin, xmax, ymin, ymax, interpolate = FALSE) {
-    zz <- GeomRasterAnn$draw_panel(
-      data,
-      panel_params,
-      coord, raster,
-      xmin, xmax, ymin, ymax,
-      interpolate = interpolate
-    )
+  parameters = interactive_geom_parameters,
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    zz <- GeomRasterAnn$draw_panel(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
     coords <- coords[1,, drop = FALSE]
-    coords <- force_interactive_aes_to_char(coords)
-    add_interactive_attrs(zz, coords)
+    add_interactive_attrs(zz, coords, ipar = .ipar)
   }
 )

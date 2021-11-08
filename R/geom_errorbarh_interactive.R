@@ -23,11 +23,10 @@ GeomInteractiveErrorbarh <- ggproto(
   "GeomInteractiveErrorbarh",
   GeomErrorbarh,
   default_aes = add_default_interactive_aes(GeomErrorbarh),
-  draw_key = function(data, params, size) {
-    gr <- GeomErrorbarh$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(data, panel_params, coord, height = NULL) {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, height = NULL, 
+                        .ipar = IPAR_NAMES) {
     box <- new_data_frame(
       list(
         x = as.vector(
@@ -62,7 +61,7 @@ GeomInteractiveErrorbarh <- ggproto(
         row.names = 1:(nrow(data) * 8)
       )
     )
-    box <- copy_interactive_attrs(data, box, each = 8)
-    GeomInteractivePath$draw_panel(box, panel_params, coord)
+    box <- copy_interactive_attrs(data, box, each = 8, ipar = .ipar)
+    GeomInteractivePath$draw_panel(box, panel_params, coord, .ipar = .ipar)
   }
 )

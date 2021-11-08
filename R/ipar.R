@@ -103,6 +103,15 @@
 #' The interactive parameters can be supplied as arguments in the relevant function
 #' and they can be scalar values or vectors depending on params on base function.
 #'
+#' @section Custom interactive parameters:
+#' The argument `extra_interactive_params` can be passed to any of the *_interactive functions
+#' (geoms, grobs, scales, labeller, labels and theme elements),
+#' It should be a character vector of additional names to be treated as interactive parameters
+#' when evaluating the aesthetics.
+#' The values will eventually end up as attributes in the SVG elements of the output.
+#'
+#' Intended only for expert use.
+#'
 #' @seealso [girafe_options()], [girafe()]
 #' @rdname ipar
 #' @name interactive_parameters
@@ -125,17 +134,25 @@ IPAR_NAMES <- names(IPAR_DEFAULTS)
 #' Checks if passed object contains interactive parameters.
 #' @noRd
 has_interactive_attrs <- function(x, ipar = IPAR_NAMES) {
-  for (a in ipar) {
-    if (!is.null(x[[a]]))
-      return(TRUE)
-  }
-  FALSE
+  length(intersect(names(x), ipar)) > 0
 }
 
 #' Returns the names of the interactive parameters that may exist in an object.
 #' @noRd
 get_interactive_attr_names <- function(x, ipar = IPAR_NAMES) {
   intersect(names(x), ipar)
+}
+
+#' Returns the active names of the interactive parameters,
+#' combining the default names with any extra names.
+#' @noRd
+get_default_ipar <- function(extra_names = NULL) {
+  if (is.character(extra_names) && length(extra_names) > 0) {
+    extra_names <- Filter(x = extra_names, function(x) {
+      !is.na(x) && nzchar(trimws(x))
+    })
+  }
+  unique(c(IPAR_NAMES, extra_names))
 }
 
 #' Returns the interactive parameters that may exist in an object
@@ -163,17 +180,6 @@ remove_interactive_attrs <- function(x, ipar = IPAR_NAMES) {
   x
 }
 
-#' Ensures that interactive parameters are characters.
-#' @noRd
-force_interactive_aes_to_char <- function(data, ipar = IPAR_NAMES) {
-  for (a in ipar) {
-    if (!is.null(data[[a]]) && !is.character(data[[a]])) {
-      data[[a]] <- as.character(data[[a]])
-    }
-  }
-  data
-}
-
 #' Copies interactive parameters from one object to the other.
 #' and returns the result
 #' @noRd
@@ -183,25 +189,22 @@ copy_interactive_attrs <- function(src,
                                    useList = FALSE,
                                    rows = NULL,
                                    ipar = IPAR_NAMES) {
+  hasDots <- length(list(...)) > 0
   for (a in ipar) {
     if (!is.null(src[[a]])) {
-      if (is.null(rows) || length(src[[a]]) == 1) {
+      if (length(rows) == 0 || length(src[[a]]) == 1) {
         val <- src[[a]]
       } else {
         val <- src[[a]][rows]
       }
-      nms <- names(val)
       if (is.function(val)) {
         dest[[a]] <- val
+      } else if (hasDots && useList) {
+        dest[[a]] <- unlist(mapply(rep, val, ...))
+      } else if (hasDots) {
+        dest[[a]] <- rep(val, ...)
       } else {
-        val <- as.character(val)
-        if (length(nms) > 0)
-          names(val) <- nms
-        if (useList) {
-          dest[[a]] <- unlist(mapply(rep, val, ...))
-        } else {
-          dest[[a]] <- rep(val, ...)
-        }
+        dest[[a]] <- val
       }
     }
   }
@@ -218,6 +221,13 @@ add_interactive_attrs <- function(gr,
                                   overwrite = TRUE,
                                   data_attr = "data-id",
                                   ipar = IPAR_NAMES) {
+  # check for presence of interactive parameters
+  anames <- Filter(x = get_interactive_attr_names(data, ipar = ipar), function(a) {
+    !is.null(data[[a]])
+  })
+  if (length(anames) == 0)
+    return(gr)
+
   # if passed grob is a gTree, loop through the children
   # note that some grobs (like labelgrob) inherit from gTree,
   # but have no children. So we need to check the children length, first.
@@ -229,14 +239,14 @@ add_interactive_attrs <- function(gr,
       # pass the data as a whole
       for (i in seq_along(gr$children)) {
         gr$children[[i]] <-
-          add_interactive_attrs(
+          do_add_interactive_attrs(
             gr = gr$children[[i]],
             data = data,
             rows = rows,
             cl = cl,
             overwrite = overwrite,
             data_attr = data_attr,
-            ipar = ipar
+            ipar = anames
           )
       }
 
@@ -244,38 +254,64 @@ add_interactive_attrs <- function(gr,
       # pass the correct data row
       for (i in seq_along(gr$children)) {
         gr$children[[i]] <-
-          add_interactive_attrs(
+          do_add_interactive_attrs(
             gr = gr$children[[i]],
             data = data[i, , drop = FALSE],
             rows = rows,
             cl = cl,
             overwrite = overwrite,
             data_attr = data_attr,
-            ipar = ipar
+            ipar = anames
           )
       }
     } else {
       stop("Can't add interactive attrs to gTree", call. = FALSE)
     }
     return(gr)
+
+  } else {
+    do_add_interactive_attrs(
+      gr = gr,
+      data = data,
+      rows = rows,
+      cl = cl,
+      overwrite = overwrite,
+      data_attr = data_attr,
+      ipar = anames
+    )
   }
+}
+
+#' Delegate for add_interactive_attrs
+#' @noRd
+do_add_interactive_attrs <- function(gr,
+                                     data,
+                                     rows = NULL,
+                                     cl = NULL,
+                                     overwrite = TRUE,
+                                     data_attr = "data-id",
+                                     ipar = IPAR_NAMES) {
+
   # check that is a grob
   if (!is.grob(gr) || is.zero(gr))
     return(gr)
   # check if it's interactive grob already
   isInteractive <- length(grep("interactive_", class(gr))) > 0
-  if (is.null(rows)) {
+  ip <- get_interactive_data(gr)
+  if (length(rows) == 0) {
     for (a in ipar) {
-      if (!isInteractive || isTRUE(overwrite) || is.null(gr[[a]]))
-        gr[[a]] <- data[[a]]
+      if (!isInteractive || isTRUE(overwrite) || is.null(ip[[a]]))
+        ip[[a]] <- data[[a]]
     }
   } else {
     for (a in ipar) {
-      if (!isInteractive || isTRUE(overwrite) || is.null(gr[[a]]))
-        gr[[a]] <- data[[a]][rows]
+      if (!isInteractive || isTRUE(overwrite) || is.null(ip[[a]]))
+        ip[[a]] <- data[[a]][rows]
     }
   }
-  gr$data_attr <- data_attr
+  gr$.ipar <- ipar
+  gr$.interactive <- ip
+  gr$.data_attr <- data_attr
 
   if (is.null(cl) && !isInteractive) {
     cl <- paste("interactive", class(gr)[1], "grob", sep = "_")
@@ -289,43 +325,66 @@ add_interactive_attrs <- function(gr,
   gr
 }
 
+get_interactive_data <- function(x, default = list()) {
+  (if(!is.atomic(x)) x$.interactive) %||% attr(x, "interactive") %||% default
+}
+
+get_ipar <- function(x, default = IPAR_NAMES) {
+  ipar <- (if(!is.atomic(x)) x$.ipar) %||% attr(x, "ipar")
+  if (length(ipar) > 0 && is.character(ipar)) {
+    ipar
+  } else {
+    default
+  }
+}
+
+get_data_attr <- function(x, default = "data-id") {
+  data_attr <- (if(!is.atomic(x)) x$.data_attr) %||% attr(x, "data_attr")
+  if (length(data_attr) == 1 && is.character(data_attr)) {
+    data_attr
+  } else {
+    default
+  }
+}
+
 #' Sets the interactive attributtes to the svg output.
 #' @noRd
 interactive_attr_toxml <- function(x,
                                    ids = character(0),
-                                   rows = NULL,
-                                   attr_name = "data-id",
-                                   ipar = IPAR_NAMES) {
+                                   rows = NULL) {
   if (length(ids) < 1)
     return(invisible())
 
-  if (!is.null(x$data_attr)) {
-    attr_name <- x$data_attr
-  }
-  if (is.null(rows)) {
-    for (a in ipar) {
-      if (is.null(rows) && !is.null(x[[a]])) {
-        rows <- seq_along(x[[a]])
-      }
-    }
-  }
+  ip <- get_interactive_data(x)
+  ipar <- get_ipar(x)
+  data_attr <- get_data_attr(x)
+  # check for presence of interactive parameters
+  anames <- Filter(x = get_interactive_attr_names(ip, ipar = ipar), function(a) {
+    !is.null(ip[[a]])
+  })
+  if (length(anames) == 0)
+    return(invisible())
 
-  for (a in ipar) {
-    if (!is.null(x[[a]])) {
-      attrValue <- x[[a]][rows]
-      attrValue <- switch(a,
-                          tooltip = encode_cr(attrValue),
-                          hover_css = check_css_attr(attrValue),
-                          selected_css = check_css_attr(attrValue),
-                          attrValue)
-      attrName <- switch(a,
-                         tooltip = "title",
-                         data_id = attr_name,
-                         a)
-      set_attr(ids = as.integer(ids),
-               str = attrValue,
-               attribute = attrName)
+  for (a in anames) {
+    if (length(rows) == 0) {
+      attrValue <- ip[[a]]
+    } else {
+      attrValue <- ip[[a]][rows]
     }
+    attrValue <- switch(a,
+                        tooltip = encode_cr(attrValue),
+                        hover_css = check_css_attr(attrValue),
+                        selected_css = check_css_attr(attrValue),
+                        attrValue)
+    if (!is.character(attrValue))
+      attrValue <- as.character(attrValue)
+    attrName <- switch(a,
+                       tooltip = "title",
+                       data_id = data_attr,
+                       a)
+    set_attr(ids = as.integer(ids),
+             str = attrValue,
+             attribute = attrName)
   }
   invisible()
 }

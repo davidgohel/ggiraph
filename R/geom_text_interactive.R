@@ -23,26 +23,11 @@ GeomInteractiveText <- ggproto(
   "GeomInteractiveText",
   GeomText,
   default_aes = add_default_interactive_aes(GeomText),
-  draw_key = function(data, params, size) {
-    gr <- GeomText$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(data,
-                        panel_params,
-                        coord,
-                        parse = FALSE,
-                        na.rm = FALSE,
-                        check_overlap = FALSE) {
-    zz <- GeomText$draw_panel(
-      data,
-      panel_params,
-      coord,
-      parse = parse,
-      na.rm = na.rm,
-      check_overlap = check_overlap
-    )
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    zz <- GeomText$draw_panel(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
-    coords <- force_interactive_aes_to_char(coords)
-    add_interactive_attrs(zz, coords)
+    add_interactive_attrs(zz, coords, ipar = .ipar)
   }
 )

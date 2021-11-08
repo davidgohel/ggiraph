@@ -22,5 +22,6 @@ geom_quantile_interactive <- function(...)
 GeomInteractiveQuantile <- ggproto(
   "GeomInteractiveQuantile",
   GeomInteractivePath,
-  default_aes = add_default_interactive_aes(GeomQuantile)
+  default_aes = add_default_interactive_aes(GeomQuantile),
+  parameters = interactive_geom_parameters
 )

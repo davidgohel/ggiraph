@@ -15,11 +15,9 @@ GeomInteractiveVline <- ggproto(
   "GeomInteractiveVline",
   GeomVline,
   default_aes = add_default_interactive_aes(GeomVline),
-  draw_key = function(data, params, size) {
-    gr <- GeomVline$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(data, panel_params, coord) {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, .ipar = IPAR_NAMES) {
     ranges <- coord$backtransform_range(panel_params)
 
     data$x    <- data$xintercept
@@ -27,6 +25,6 @@ GeomInteractiveVline <- ggproto(
     data$y    <- ranges$y[1]
     data$yend <- ranges$y[2]
 
-    GeomInteractiveSegment$draw_panel(unique(data), panel_params, coord)
+    GeomInteractiveSegment$draw_panel(unique(data), panel_params, coord, .ipar = .ipar)
   }
 )

@@ -23,11 +23,9 @@ GeomInteractiveAbline <- ggproto(
   "GeomInteractiveAbline",
   GeomAbline,
   default_aes = add_default_interactive_aes(GeomAbline),
-  draw_key = function(data, params, size) {
-    gr <- GeomAbline$draw_key(data, params, size)
-    add_interactive_attrs(gr, data, data_attr = "key-id")
-  },
-  draw_panel = function(data, panel_params, coord) {
+  parameters = interactive_geom_parameters,
+  draw_key = interactive_geom_draw_key,
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
     ranges <- coord$backtransform_range(panel_params)
 
     if (coord$clip == "on" && coord$is_linear()) {
@@ -41,6 +39,6 @@ GeomInteractiveAbline <- ggproto(
     data$y    <- ranges$x[1] * data$slope + data$intercept
     data$yend <- ranges$x[2] * data$slope + data$intercept
 
-    GeomInteractiveSegment$draw_panel(unique(data), panel_params, coord)
+    GeomInteractiveSegment$draw_panel(unique(data), panel_params, coord, ..., .ipar = .ipar)
   }
 )

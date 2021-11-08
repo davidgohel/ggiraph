@@ -80,13 +80,15 @@ opts_tooltip <- function(css = NULL,
   stopifnot(zindex >= 1)
   zindex <- round(zindex, digits = 0)
 
-  css <- sub("\\}[\n]*$",
-             paste0(
-               "; position:absolute;pointer-events:none;",
-               sprintf("z-index:%.0f;", zindex),
-               "}\n"
-             ),
-             css)
+  css <- trimws(sub(
+    "\\}[\n]*$",
+    paste0(
+      "; position:absolute;pointer-events:none;",
+      sprintf("z-index:%.0f;", zindex),
+      "}\n"
+    ),
+    css
+  ))
 
   stopifnot(placement %in% c("auto", "doc", "container"))
   if (placement == "auto") {

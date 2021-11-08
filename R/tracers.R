@@ -51,7 +51,7 @@ set_attr = function( ids, attribute, str ){
   if( is.factor(str) )
     str <- as.character( str )
   if( is.factor(attribute) )
-    str <- as.character( attribute )
+    attribute <- as.character( attribute )
 
   stopifnot( is.character(attribute) )
   stopifnot( is.character(str) )
@@ -66,7 +66,8 @@ set_attr = function( ids, attribute, str ){
   }
 
   if( length(ids) != length(str) ){
-    stop("ids don't have the same length than str (most often, it occurs because of clipping)")
+    warning("ids don't have the same length than str (most often, it occurs because of clipping or because of NAs in data)")
+    return(invisible())
   }
   stopifnot( length(attribute) == 1 )
 

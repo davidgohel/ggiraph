@@ -43,14 +43,13 @@ p3 <- p + scale_fill_gradient_interactive(
     tooltip = "colourbar"
   ),
   labels = function(breaks) {
-    lapply(breaks, function(br) {
-      label_interactive(
-        as.character(br),
-        data_id = "colourbar",
-        onclick = "alert(\"colourbar\")",
-        tooltip = "colourbar"
-      )
-    })
+    br <- na.omit(breaks)
+    label_interactive(
+      as.character(breaks),
+      data_id = paste0("colourbar", br),
+      onclick = "alert(\"colourbar\")",
+      tooltip = paste0("colourbar", br)
+    )
   }
 )
 x <- girafe(ggobj = p3)
