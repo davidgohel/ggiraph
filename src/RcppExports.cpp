@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // DSVG_
 bool DSVG_(std::string file, double width, double height, std::string bg, int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases);
 RcppExport SEXP _ggiraph_DSVG_(SEXP fileSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP bgSEXP, SEXP pointsizeSEXP, SEXP standaloneSEXP, SEXP setdimsSEXP, SEXP canvas_idSEXP, SEXP aliasesSEXP) {

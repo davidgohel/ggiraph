@@ -43,7 +43,7 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph/
 BugReports: https://github.com/davidgohel/ggiraph/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Collate: 
     'RcppExports.R'
