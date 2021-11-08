@@ -154,10 +154,18 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 #' @param expr An expression that returns a [girafe()] object.
 #' @param env The environment in which to evaluate expr.
 #' @param quoted Is \code{expr} a quoted expression
+#' @param outputArgs A list of arguments to be passed through to the implicit call to [girafeOutput()]
+#' when `renderGirafe` is used in an interactive R Markdown document.
 #' @export
-renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE) {
-	if (!quoted) { expr <- substitute(expr) } # force quoted
-	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
+renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE, outputArgs = list()) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  f <- shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
+  # shinyRenderWidget is missing outputArgs argument
+  # set outputArgs to the result function instead
+  if (inherits(f, "shiny.render.function")) {
+    attr(f, "outputArgs") <- outputArgs
+  }
+  f
 }
 
 default_opts <- function(){

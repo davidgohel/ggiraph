@@ -4,7 +4,7 @@
 \alias{renderGirafe}
 \title{Reactive version of girafe}
 \usage{
-renderGirafe(expr, env = parent.frame(), quoted = FALSE)
+renderGirafe(expr, env = parent.frame(), quoted = FALSE, outputArgs = list())
 }
 \arguments{
 \item{expr}{An expression that returns a \code{\link[=girafe]{girafe()}} object.}
@@ -12,6 +12,9 @@ renderGirafe(expr, env = parent.frame(), quoted = FALSE)
 \item{env}{The environment in which to evaluate expr.}
 
 \item{quoted}{Is \code{expr} a quoted expression}
+
+\item{outputArgs}{A list of arguments to be passed through to the implicit call to \code{\link[=girafeOutput]{girafeOutput()}}
+when \code{renderGirafe} is used in an interactive R Markdown document.}
 }
 \description{
 Makes a reactive version of girafe
