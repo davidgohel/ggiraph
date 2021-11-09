@@ -30,6 +30,7 @@
 \alias{GeomInteractiveBoxplot}
 \alias{GeomInteractiveCol}
 \alias{GeomInteractiveContour}
+\alias{GeomInteractiveContourFilled}
 \alias{GeomInteractiveCrossbar}
 \alias{GeomInteractiveCurve}
 \alias{GeomInteractiveDensity2d}

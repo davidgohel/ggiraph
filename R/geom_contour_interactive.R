@@ -31,4 +31,14 @@ GeomInteractiveContour <- ggproto(
 #' @rdname geom_contour_interactive
 #' @include geom_polygon_interactive.R
 geom_contour_filled_interactive <- function(...)
-  layer_interactive(geom_contour_filled, ..., interactive_geom = GeomInteractivePolygon)
+  layer_interactive(geom_contour_filled, ...)
+
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomInteractiveContourFilled <- ggproto(
+  "GeomInteractiveContourFilled",
+  GeomInteractivePolygon,
+  default_aes = add_default_interactive_aes(GeomContourFilled)
+)
