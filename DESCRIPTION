@@ -2,7 +2,7 @@ Package: ggiraph
 Type: Package
 Title: Make 'ggplot2' Graphics Interactive
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.8.0.0014
+Version: 0.8.0.0016
 Authors@R: c(
     person("David", "Gohel", role = c("aut", "cre"),
     email = "david.gohel@ardata.fr"),
@@ -35,6 +35,7 @@ Suggests:
     testthat,
     rmarkdown,
     maps,
+    hexbin,
     shiny,
     sf (>= 1.0),
     quantreg,
@@ -75,6 +76,7 @@ Collate:
     'geom_errorbar_interactive.R'
     'geom_errorbarh_interactive.R'
     'geom_freqpoly_interactive.R'
+    'geom_hex_interactive.R'
     'geom_histogram_interactive.R'
     'geom_hline_interactive.R'
     'geom_jitter_interactive.R'

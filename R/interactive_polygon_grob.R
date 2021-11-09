@@ -20,8 +20,14 @@ drawDetails.interactive_polygon_grob <- function(x, recording) {
   NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
-    if (is.null(x$id))
-      x$id <- rep(1, length(x$x))
+    if (is.null(x$id)) {
+      if (is.null(x$id.lengths)) {
+        x$id <- rep(1, length(x$x))
+      } else {
+        n <- length(x$id.lengths)
+        x$id <- rep(1L:n, x$id.lengths)
+      }
+    }
     posid = which(!duplicated(x$id))
     interactive_attr_toxml(x = x, ids = ids, rows = posid)
   }

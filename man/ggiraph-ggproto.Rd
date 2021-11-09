@@ -7,15 +7,15 @@
 %   R/geom_crossbar_interactive.R, R/geom_curve_interactive.R,
 %   R/geom_density_2d_interactive.R, R/geom_density_interactive.R,
 %   R/geom_dotplot_interactive.R, R/geom_errorbar_interactive.R,
-%   R/geom_errorbarh_interactive.R, R/geom_hline_interactive.R,
-%   R/geom_label_interactive.R, R/geom_linerange_interactive.R,
-%   R/geom_map_interactive.R, R/geom_point_interactive.R,
-%   R/geom_pointrange_interactive.R, R/geom_quantile_interactive.R,
-%   R/geom_raster_interactive.R, R/geom_ribbon_interactive.R,
-%   R/geom_segment_interactive.R, R/geom_sf_interactive.R,
-%   R/geom_smooth_interactive.R, R/geom_spoke_interactive.R,
-%   R/geom_text_interactive.R, R/geom_tile_interactive.R,
-%   R/geom_vline_interactive.R
+%   R/geom_errorbarh_interactive.R, R/geom_hex_interactive.R,
+%   R/geom_hline_interactive.R, R/geom_label_interactive.R,
+%   R/geom_linerange_interactive.R, R/geom_map_interactive.R,
+%   R/geom_point_interactive.R, R/geom_pointrange_interactive.R,
+%   R/geom_quantile_interactive.R, R/geom_raster_interactive.R,
+%   R/geom_ribbon_interactive.R, R/geom_segment_interactive.R,
+%   R/geom_sf_interactive.R, R/geom_smooth_interactive.R,
+%   R/geom_spoke_interactive.R, R/geom_text_interactive.R,
+%   R/geom_tile_interactive.R, R/geom_vline_interactive.R
 \docType{data}
 \name{GeomInteractive}
 \alias{GeomInteractive}
@@ -38,6 +38,7 @@
 \alias{GeomInteractiveDotplot}
 \alias{GeomInteractiveErrorbar}
 \alias{GeomInteractiveErrorbarh}
+\alias{GeomInteractiveHex}
 \alias{GeomInteractiveHline}
 \alias{GeomInteractiveLabel}
 \alias{GeomInteractiveLinerange}
