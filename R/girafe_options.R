@@ -451,13 +451,68 @@ girafe_options <- function(x, ...){
 
   args <- list(...)
   x$x$settings <- merge_options(x$x$settings, args)
-
-  for (arg in args) {
-    if (all(names(arg) %in% c("defaultWidth", "defaultHeight", "padding", "viewer", "browser", "knitr"))) {
-      x$sizingPolicy <- arg
-    }
-  }
+  x$sizingPolicy <- merge_sizing_policy(x$sizingPolicy, args)
   x
 }
 
+merge_options <- function(options, args){
+  for (arg in args) {
+    if (inherits(arg, "opts_zoom")) {
+      options$zoom <- arg
+    } else if (inherits(arg, "opts_selection")) {
+      options$capture <- arg
+    } else if (inherits(arg, "opts_selection_key")) {
+      options$capturekey <- arg
+    } else if (inherits(arg, "opts_selection_theme")) {
+      options$capturetheme <- arg
+    } else if (inherits(arg, "opts_tooltip")) {
+      options$tooltip <- arg
+    } else if (inherits(arg, "opts_hover")) {
+      options$hover <- arg
+    } else if (inherits(arg, "opts_hover_key")) {
+      options$hoverkey <- arg
+    } else if (inherits(arg, "opts_hover_theme")) {
+      options$hovertheme <- arg
+    } else if (inherits(arg, "opts_hover_inv")) {
+      options$hoverinv <- arg
+    } else if (inherits(arg, "opts_toolbar")) {
+      options$toolbar <- arg
+    } else if (inherits(arg, "opts_sizing")) {
+      options$sizing <- arg
+    }
+  }
+  options
+}
+
+merge_sizing_policy <- function(policy, args) {
+  for (arg in args) {
+    if (is.list(arg) && all(names(arg) %in% c(
+      "defaultWidth", "defaultHeight", "padding",
+      "viewer", "browser", "knitr"
+    ))) {
+      policy <- arg
+    }
+  }
+  policy
+}
+
+default_opts <- function(){
+  list(
+    tooltip = opts_tooltip(),
+    hover = opts_hover(),
+    hoverkey = opts_hover_key(),
+    hovertheme = opts_hover_theme(),
+    hoverinv = opts_hover_inv(),
+    zoom = opts_zoom(),
+    capture = opts_selection(),
+    capturekey = opts_selection_key(),
+    capturetheme = opts_selection_theme(),
+    toolbar = opts_toolbar(),
+    sizing = opts_sizing()
+  )
+}
+
+default_sizing_policy <- function() {
+  sizingPolicy(knitr.figure = TRUE, browser.fill = FALSE)
+}
 

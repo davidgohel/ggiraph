@@ -111,18 +111,20 @@ girafe <- function(
   }, finally = dev.off() )
 
   settings <- merge_options(default_opts(), options)
-  x = list( html = read_file(path),
-            js = NULL,
-            uid = args$canvas_id,
-            ratio = width_svg / height_svg,
-            settings = settings
-            )
+  sizing_policy <- merge_sizing_policy(default_sizing_policy(), options)
+  x <- list(
+    html = read_file(path),
+    js = NULL,
+    uid = args$canvas_id,
+    ratio = width_svg / height_svg,
+    settings = settings
+  )
 
   unlink(path)
 
   createWidget(
     name = 'girafe', x = x, package = 'ggiraph',
-    sizingPolicy = sizingPolicy(knitr.figure = TRUE, browser.fill = FALSE)
+    sizingPolicy = sizing_policy
   )
 
 }
@@ -166,52 +168,6 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE, outputArgs 
     attr(f, "outputArgs") <- outputArgs
   }
   f
-}
-
-default_opts <- function(){
-  settings <- list(
-    tooltip = opts_tooltip(),
-    hover = opts_hover(),
-    hoverkey = opts_hover_key(),
-    hovertheme = opts_hover_theme(),
-    hoverinv = opts_hover_inv(),
-    zoom = opts_zoom(),
-    capture = opts_selection(),
-    capturekey = opts_selection_key(),
-    capturetheme = opts_selection_theme(),
-    toolbar = opts_toolbar(),
-    sizing = opts_sizing()
-  )
-  settings
-}
-
-merge_options <- function(options, args){
-  for (arg in args) {
-    if (inherits(arg, "opts_zoom")) {
-      options$zoom <- arg
-    } else if (inherits(arg, "opts_selection")) {
-      options$capture <- arg
-    } else if (inherits(arg, "opts_selection_key")) {
-      options$capturekey <- arg
-    } else if (inherits(arg, "opts_selection_theme")) {
-      options$capturetheme <- arg
-    } else if (inherits(arg, "opts_tooltip")) {
-      options$tooltip <- arg
-    } else if (inherits(arg, "opts_hover")) {
-      options$hover <- arg
-    } else if (inherits(arg, "opts_hover_key")) {
-      options$hoverkey <- arg
-    } else if (inherits(arg, "opts_hover_theme")) {
-      options$hovertheme <- arg
-    } else if (inherits(arg, "opts_hover_inv")) {
-      options$hoverinv <- arg
-    } else if (inherits(arg, "opts_toolbar")) {
-      options$toolbar <- arg
-    } else if (inherits(arg, "opts_sizing")) {
-      options$sizing <- arg
-    }
-  }
-  options
 }
 
 girafe_app_paths <- function(){
