@@ -1,29 +1,30 @@
 r_font_families <- c("sans", "serif", "mono", "symbol")
+default_fonts <- list(
+  windows = c(
+    sans = "Arial",
+    serif = "Times New Roman",
+    mono = "Courier New",
+    symbol = "Symbol"
+  ),
+  osx = c(
+    sans = "Helvetica",
+    serif = "Times",
+    mono = "Courier",
+    symbol = "Symbol"
+  ),
+  unix = c(
+    sans = "DejaVu Sans",
+    serif = "DejaVu serif",
+    mono = "DejaVu mono",
+    symbol = "DejaVu Sans"
+  )
+)
 
 default_fontname <- function() {
-  def_fonts <- if( get_os() == "windows" ){
-    c(
-      sans = "Arial",
-      serif = "Times New Roman",
-      mono = "Courier New",
-      symbol = "Symbol"
-    )
-  } else if( get_os() == "osx" ){
-    c(
-      sans = "Helvetica",
-      serif = "Times",
-      mono = "Courier",
-      symbol = "Symbol"
-    )
-  } else {
-    c(
-      sans = "DejaVu Sans",
-      serif = "DejaVu serif",
-      mono = "DejaVu mono",
-      symbol = "DejaVu Sans"
-    )
-  }
-
+  os <- get_os()
+  if (!os %in% c("windows", "osx"))
+    os <- "unix"
+  def_fonts <- default_fonts[[os]]
   def_fonts <- def_fonts[unlist(lapply(def_fonts, font_family_exists))]
   missing_fonts <- setdiff(r_font_families, names(def_fonts) )
   def_fonts[missing_fonts] <- lapply(def_fonts[missing_fonts], match_family)
