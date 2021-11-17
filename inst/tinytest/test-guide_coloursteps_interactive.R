@@ -27,6 +27,7 @@ source("setup.R")
         extra_interactive_params = "info"
       ) +
       scale_fill_binned_interactive(
+        breaks = c(25, 50, 75),
         tooltip = "coloursteps",
         info = "scale",
         extra_interactive_params = "info",

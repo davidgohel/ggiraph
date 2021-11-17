@@ -26,6 +26,7 @@ source("setup.R")
         extra_interactive_params = "info"
       ) +
       scale_fill_gradient_interactive(
+        breaks = c(0.25, 0.5, 0.75),
         data_id = "colourbar",
         onclick = "alert(\"colourbar\")",
         tooltip = "colourbar",
