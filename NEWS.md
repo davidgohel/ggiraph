@@ -1,3 +1,26 @@
+# ggiraph 0.8.0
+
+## Enhancement
+* Added tests for tinytest & improved coverage
+* New geom functions: `geom_violin_interactive`, `geom_label_repel_interactive`, `geom_text_repel_interactive`, `geom_contour_filled_interactive`, `geom_hex_interactive`, `geom_spoke_interactive`, `geom_curve_interactive`, `geom_count_interactive`, `geom_bin_2d_interactive`, `geom_density_2d_filled_interactive`.
+* New grob functions: `interactive_curve_grob`.
+* New scale functions: `scale_alpha_binned_interactive`.
+* Added `outputArgs` argument to `renderGirafe`, for controlling svg dimensions in rmarkdown 
+* Demote to warning the error case of setting svg attributes because of mismatched id's.
+* Added support for custom interactive parameters via `extra_interactive_params` argument
+* Miscellaneous refactorings & improvements to internal code
+
+## Changes
+* Switched to `tinytest` for testing
+* Updated dependency for `ggplot2` to version `3.3.5`.
+* Updated libs for Windows build (thanks to Jeroen Ooms)
+
+## Issues
+* Fixed `interactive_points_grob` interactive attributes when shapes with lines are used
+* Fixed issues for `geom_errorbar_interactive`
+* Fixed some typos in documentation
+* Handle NA's in `GeomInteractiveTile`
+
 # ggiraph 0.7.10
 
 ## Enhancement
