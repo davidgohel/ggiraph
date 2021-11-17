@@ -11,10 +11,8 @@ source("setup.R")
 
 {
   doc <- dsvg_doc({
-    s <- seq(from = 0, to = 4)
     gr <- interactive_polygon_grob(
-      x = s,
-      y = s,
+      gp = gpar(fill = "black"),
       tooltip = "tooltip",
       info = "bar",
       extra_interactive_params = "info"

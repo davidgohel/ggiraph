@@ -12,8 +12,7 @@ source("setup.R")
 {
   doc <- dsvg_doc({
     gr <- interactive_roundrect_grob(
-      x = 1,
-      y = 2,
+      gp = gpar(fill = "black"),
       tooltip = "tooltip",
       info = "bar",
       extra_interactive_params = "info"

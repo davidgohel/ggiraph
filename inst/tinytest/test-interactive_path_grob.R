@@ -15,6 +15,7 @@ source("setup.R")
     gr <- interactive_path_grob(
       x = s,
       y = s,
+      gp = gpar(fill = "black"),
       tooltip = "tooltip",
       info = "bar",
       extra_interactive_params = "info"
