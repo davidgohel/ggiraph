@@ -31,13 +31,16 @@ source("setup.R")
 # tracer does not work with non-dsvg device ----
 {
   file <- tempfile(fileext = ".svg")
+  devlength <- length(dev.list())
   tryCatch(
     {
       svg(file)
       ids <- ggiraph:::dsvg_tracer_off()
     },
     finally = {
-      dev.off()
+      if (length(dev.list()) > devlength) {
+        dev.off()
+      }
       unlink(file)
     }
   )
@@ -96,13 +99,16 @@ source("setup.R")
 # set_attr throws error with no dsv device ----
 {
   file <- tempfile(fileext = ".svg")
+  devlength <- length(dev.list())
   expect_error(tryCatch(
     {
       svg(file)
       set_attr(1, "foo", "bar")
     },
     finally = {
-      dev.off()
+      if (length(dev.list()) > devlength) {
+        dev.off()
+      }
       unlink(file)
     }
   ))

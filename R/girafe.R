@@ -101,6 +101,7 @@ girafe <- function(
   args$standalone <- TRUE
   args$setdims <- FALSE
 
+  devlength <- length(dev.list())
   do.call(dsvg, args)
   tryCatch({
     if( !is.null(ggobj) ){
@@ -108,7 +109,11 @@ girafe <- function(
       print(ggobj)
     } else
       code
-  }, finally = dev.off() )
+  }, finally = {
+    if (length(dev.list()) > devlength) {
+      dev.off()
+    }
+  })
 
   settings <- merge_options(default_opts(), options)
   sizing_policy <- merge_sizing_policy(default_sizing_policy(), options)

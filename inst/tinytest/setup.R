@@ -13,6 +13,7 @@ dsvg_doc <- function(expr,
   env <- parent.frame()
   tryCatch(
     {
+      devlength <- length(dev.list())
       tryCatch(
         {
           dsvg(...,
@@ -21,7 +22,11 @@ dsvg_doc <- function(expr,
           )
           eval(expr, envir = env)
         },
-        finally = dev.off()
+        finally = {
+          if (length(dev.list()) > devlength) {
+            dev.off()
+          }
+        }
       )
       suppressWarnings(xml2::read_xml(file))
     },
