@@ -149,3 +149,12 @@ void set_clip(SVGElement* element, const char* clipid) {
   os << "url(#" << clipid << ")";
   set_attr(element, "clip-path", os.str().c_str());
 }
+
+pGEDevDesc get_ge_device(int dn) {
+  pGEDevDesc dev = NULL;
+  // check for valid number because passing dn <= 0 crashes R
+  if (dn > 0) {
+    dev = GEgetDevice(dn);
+  }
+  return dev;
+}

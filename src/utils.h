@@ -24,3 +24,5 @@ SVGText* new_svg_text(const char* str, SVGDocument* doc, const bool cdata = true
 void append_element(SVGElement* child, SVGElement* parent);
 void prepend_element(SVGElement* child, SVGElement* parent);
 const char* svg_attribute(const SVGElement* element, const char * name);
+
+pGEDevDesc get_ge_device(int dn);

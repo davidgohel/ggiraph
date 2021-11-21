@@ -7,7 +7,8 @@ dsvg_doc <- function(expr,
                      ...,
                      file = tempfile(fileext = ".svg"),
                      bg = "transparent",
-                     standalone = FALSE,
+                     standalone = TRUE,
+                     srip_ns = TRUE,
                      canvas_id = "svgid",
                      remove_file = TRUE) {
   env <- parent.frame()
@@ -28,7 +29,11 @@ dsvg_doc <- function(expr,
           }
         }
       )
-      suppressWarnings(xml2::read_xml(file))
+      doc <- xml2::read_xml(file)
+      if (srip_ns) {
+        doc <- xml_ns_strip(doc)
+      }
+      doc
     },
     finally = {
       if (remove_file) {

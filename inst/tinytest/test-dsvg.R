@@ -43,7 +43,7 @@ source("setup.R")
 
 # svg standalone ----------------------------------------------------------
 {
-  doc <- dsvg_doc(standalone = TRUE, {
+  doc <- dsvg_doc(standalone = TRUE, srip_ns = FALSE, {
     plot.new()
   })
   root_node <- xml_root(doc)

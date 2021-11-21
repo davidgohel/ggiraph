@@ -35,7 +35,7 @@ GeomInteractivePath <- ggproto(
                         lineend = "butt",
                         linejoin = "round",
                         linemitre = 10,
-                        na.rm = FALSE, 
+                        na.rm = FALSE,
                         .ipar = IPAR_NAMES) {
     if (!anyDuplicated(data$group)) {
       message_wrap(
@@ -182,11 +182,9 @@ stairstep <- function(data, direction = "hv") {
   } else if (direction == "hv") {
     ys <- rep(1:n, each = 2)[-2 * n]
     xs <- c(1, rep(2:n, each = 2))
-  } else if (direction == "mid") {
+  } else {
     xs <- rep(1:(n-1), each = 2)
     ys <- rep(1:n, each = 2)
-  } else {
-    abort("Parameter `direction` is invalid.")
   }
 
   if (direction == "mid") {

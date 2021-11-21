@@ -7,7 +7,7 @@ image <- matrix(hcl(seq(0, 360, length.out = 50 * 50), 80, 70), nrow = 50)
 
 # raster is set correctly ----
 {
-  doc <- dsvg_doc(standalone = TRUE, {
+  doc <- dsvg_doc(standalone = TRUE, srip_ns = FALSE, {
     plot.new()
     rasterImage(image, 0, 0, 10, 10)
   })
@@ -25,7 +25,7 @@ image <- matrix(hcl(seq(0, 360, length.out = 50 * 50), 80, 70), nrow = 50)
 
 # raster is set correctly with no interpolation ----
 {
-  doc <- dsvg_doc(standalone = TRUE, {
+  doc <- dsvg_doc(standalone = TRUE, srip_ns = FALSE, {
     plot.new()
     rasterImage(image, 0, 0, 10, 10, interpolate = FALSE)
   })
@@ -43,7 +43,7 @@ image <- matrix(hcl(seq(0, 360, length.out = 50 * 50), 80, 70), nrow = 50)
 
 # raster is set correctly with rotation ----
 {
-  doc <- dsvg_doc(standalone = TRUE, {
+  doc <- dsvg_doc(standalone = TRUE, srip_ns = FALSE, {
     plot.new()
     rasterImage(image, 0, 0, 10, 10, angle = 90)
   })

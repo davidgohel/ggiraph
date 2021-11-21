@@ -80,32 +80,21 @@ source("setup.R")
   expect_equal(xml_attr(text, "font-style"), c(NA, NA, "italic", "italic"))
 }
 
-# font sets weight/style ----
+# test with font categories (sans, serif, mono, symbol) ----
 {
-  if (
-    font_family_exists("Arial") &&
-      font_family_exists("Times New Roman") &&
-      font_family_exists("Courier New")
-  ) {
-    doc <- dsvg_doc(
-      fonts = list(
-        sans = "Arial",
-        serif = "Times New Roman",
-        mono = "Courier New"
-      ),
-      expr = {
-        plot.new()
-        text(0.5, 0.1, "a", family = "serif")
-        text(0.5, 0.5, "a", family = "sans")
-        text(0.5, 0.9, "a", family = "mono")
-      }
-    )
-
-    text <- xml_find_all(doc, ".//text")
-    expect_equal(
-      xml_attr(text, "font-family"),
-      c("Times New Roman", "Arial", "Courier New")
-    )
+  fonts <- ggiraph:::default_fontname()
+  for(name in names(fonts)) {
+    if (font_family_exists(fonts[[name]])) {
+      doc <- dsvg_doc(
+        fonts = fonts,
+        expr = {
+          plot.new()
+          text(0.5, 0.1, "a", family = name)
+        }
+      )
+      text <- xml_find_all(doc, ".//text")
+      expect_equal(xml_attr(text, "font-family"), fonts[[name]])
+    }
   }
 }
 

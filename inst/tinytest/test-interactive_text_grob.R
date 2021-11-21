@@ -17,7 +17,7 @@ source("setup.R")
       x = s,
       y = s,
       tooltip = as.character(s),
-      info = "bar",
+      info = rep("bar", 10),
       extra_interactive_params = "info"
     )
     grid.draw(gr)

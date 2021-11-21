@@ -65,15 +65,14 @@ labeller_interactive <- function(.mapping = NULL, ...) {
 
         # for each factor element
         imap(x, function(x, i) {
-          if (inherits(x, "interactive_label")) {
-            # already a label_interactive
-            x
-          } else {
+          lbl <- x
+          if (!inherits(lbl, "interactive_label")) {
             # create a label_interactive, applying the interactive parameters
             args <- list(label = x, extra_interactive_params = extra_interactive_params)
             args <- copy_interactive_attrs(ip_data, args, rows = i, ipar = ipar)
-            do.call(label_interactive, args)
+            lbl <- do.call(label_interactive, args)
           }
+          lbl
         })
       })
     }

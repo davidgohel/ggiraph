@@ -557,8 +557,7 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
                          std::string canvas_id, Rcpp::List aliases) {
 
   pDevDesc dd = (DevDesc*) calloc(1, sizeof(DevDesc));
-  if (dd == NULL)
-    return dd;
+  if (!dd) return dd;
 
   dd->startfill = bg;
   dd->startcol = R_RGB(0, 0, 0);
@@ -641,76 +640,67 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
 bool DSVG_(std::string file, double width, double height, std::string bg,
            int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases) {
 
-  int bg_ = R_GE_str2col(bg.c_str());
-
   R_GE_checkVersionOrDie(R_GE_version);
   R_CheckDeviceAvailable();
   BEGIN_SUSPEND_INTERRUPTS {
     setlocale(LC_NUMERIC, "C");
 
-    pDevDesc dev = dsvg_driver_new(file, bg_, width, height, pointsize, standalone, setdims, canvas_id,
-                                   aliases);
-    if (dev == NULL)
-      Rcpp::stop("Failed to start SVG2 device");
+    rcolor bg_ = R_GE_str2col(bg.c_str());
 
-    pGEDevDesc dd = GEcreateDevDesc(dev);
-    GEaddDevice2(dd, "dsvg_device");
-    GEinitDisplayList(dd);
+    pDevDesc dd = dsvg_driver_new(file, bg_, width, height, pointsize, standalone, setdims, canvas_id,
+                                  aliases);
+    if (!dd) Rf_error("Failed to start DSVG device");
+
+    pGEDevDesc dev = GEcreateDevDesc(dd);
+    GEaddDevice2(dev, "dsvg_device");
+    GEinitDisplayList(dev);
 
   } END_SUSPEND_INTERRUPTS;
 
   return true;
 }
 
-
 // [[Rcpp::export]]
 bool set_tracer_on(int dn) {
-  pGEDevDesc dev= GEgetDevice(dn);
-  if (dev) {
-    DSVG_dev *pd = (DSVG_dev *) dev->dev->deviceSpecific;
-    pd->set_tracer_on();
-  }
+  pGEDevDesc dev = get_ge_device(dn);
+  if (!dev)
+    return false;
+  DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
+  svgd->set_tracer_on();
   return true;
 }
 
 // [[Rcpp::export]]
 bool set_tracer_off(int dn) {
-  pGEDevDesc dev= GEgetDevice(dn);
-  if (dev) {
-    DSVG_dev *pd = (DSVG_dev *) dev->dev->deviceSpecific;
-    pd->set_tracer_off();
-  }
+  pGEDevDesc dev = get_ge_device(dn);
+  if (!dev)
+    return false;
+  DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
+  svgd->set_tracer_off();
   return true;
 }
 
 // [[Rcpp::export]]
 Rcpp::IntegerVector collect_id(int dn) {
-  pGEDevDesc dev= GEgetDevice(dn);
+  Rcpp::IntegerVector empty(0);
+  pGEDevDesc dev = get_ge_device(dn);
+  if (!dev)
+    return empty;
 
-  if (dev) {
-    DSVG_dev *pd = (DSVG_dev *) dev->dev->deviceSpecific;
+  DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
 
-    int first = pd->tracer_first_elt;
-    int last = pd->tracer_last_elt;
-
-    if( first < 0 || last < 0 ){
-      Rcpp::IntegerVector res(0);
-      return res;
-    } else if( first > last ){
-      Rcpp::IntegerVector res(0);
-      return res;
-    }
-
-    int l_ = 1 + last - first;
-
-    Rcpp::IntegerVector res(l_);
-
-    for( int i = first ; i <= last ; i++ ){
-      res[i-first] = i;
-    }
-    return res;
+  int first = svgd->tracer_first_elt;
+  int last = svgd->tracer_last_elt;
+  if (first < 0 || last < 0 || first > last) {
+    return empty;
   }
-  return R_NilValue;
+
+  int l_ = 1 + last - first;
+  Rcpp::IntegerVector result(l_);
+  for (int i = first; i <= last; i++) {
+    result[i-first] = i;
+  }
+  return result;
 }
 
 std::string compile_css(const std::string& cls_prefix,
@@ -726,13 +716,12 @@ std::string compile_css(const std::string& cls_prefix,
 
 
 // [[Rcpp::export]]
-bool add_attribute(int dn, Rcpp::IntegerVector id,
-                   std::vector< std::string > str,
-                   std::string name){
-  int nb_elts = id.size();
-  pGEDevDesc dev= GEgetDevice(dn);
-
-  if (!dev) return false;
+bool add_attribute(int dn, std::string name,
+                   Rcpp::IntegerVector ids, Rcpp::CharacterVector values) {
+  int nb_elts = ids.size();
+  pGEDevDesc dev = get_ge_device(dn);
+  if (!dev)
+    return false;
 
   DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
 
@@ -741,11 +730,11 @@ bool add_attribute(int dn, Rcpp::IntegerVector id,
   std::string cls_prefix("");
 
   for( int i = 0 ; i < nb_elts ; i++ ){
-    if (str[i].length() == 0)
+    if (values[i].size() == 0)
       continue;
 
-    SVGElement* el = svgd->get_svg_element(id[i]);
-    if (el != NULL) {
+    SVGElement* el = svgd->get_svg_element(ids[i]);
+    if (el) {
       const bool isHoverCss = hover.compare(name) == 0;
       const bool isSelectedCss = selected.compare(name) == 0;
       if (isHoverCss || isSelectedCss) {
@@ -756,43 +745,30 @@ bool add_attribute(int dn, Rcpp::IntegerVector id,
         }
         const char * data_id = svg_attribute(el, "data-id");
         if (data_id != NULL) {
-          std::string css = compile_css(cls_prefix,
-                                        "",
-                                        svgd->canvas_id,
-                                        "data-id",
-                                        data_id,
-                                        str[i].c_str());
+          std::string css = compile_css(cls_prefix, "", svgd->canvas_id,
+                                        "data-id", data_id, values[i]);
           if (css.length() > 0)
             svgd->add_css(std::string(cls_prefix + "_data_id_" + data_id), css);
           continue;
         }
         const char * key_id = svg_attribute(el, "key-id");
         if (key_id != NULL) {
-          std::string css = compile_css(cls_prefix,
-                                        "key_",
-                                        svgd->canvas_id,
-                                        "key-id",
-                                        key_id,
-                                        str[i].c_str());
+          std::string css = compile_css(cls_prefix, "key_", svgd->canvas_id,
+                                        "key-id", key_id, values[i]);
           if (css.length() > 0)
             svgd->add_css(std::string(cls_prefix + "_key_id_" + key_id), css);
           continue;
         }
         const char * theme_id = svg_attribute(el, "theme-id");
         if (theme_id != NULL) {
-          std::string css = compile_css(cls_prefix,
-                                        "theme_",
-                                        svgd->canvas_id,
-                                        "theme-id",
-                                        theme_id,
-                                        str[i].c_str());
+          std::string css = compile_css(cls_prefix, "theme_", svgd->canvas_id,
+                                        "theme-id", theme_id, values[i]);
           if (css.length() > 0)
             svgd->add_css(std::string(cls_prefix + "_theme_id_" + theme_id), css);
           continue;
         }
-
       } else {
-        set_attr(el, name.c_str(), str[i].c_str());
+        set_attr(el, name.c_str(), values[i]);
       }
     }
   }

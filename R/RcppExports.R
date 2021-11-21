@@ -17,7 +17,7 @@ collect_id <- function(dn) {
     .Call(`_ggiraph_collect_id`, dn)
 }
 
-add_attribute <- function(dn, id, str, name) {
-    .Call(`_ggiraph_add_attribute`, dn, id, str, name)
+add_attribute <- function(dn, name, ids, values) {
+    .Call(`_ggiraph_add_attribute`, dn, name, ids, values)
 }
 

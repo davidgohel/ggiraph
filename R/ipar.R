@@ -382,9 +382,9 @@ interactive_attr_toxml <- function(x,
                        tooltip = "title",
                        data_id = data_attr,
                        a)
-    set_attr(ids = as.integer(ids),
-             str = attrValue,
-             attribute = attrName)
+    set_attr(name = attrName,
+             ids = as.integer(ids),
+             values = attrValue)
   }
   invisible()
 }

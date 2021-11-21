@@ -19,35 +19,6 @@ source("setup.R")
   expect_equal(circle_id, paste0("svgid_el_", as.character(1:2)))
 }
 
-# tracer does not work with no device ----
-{
-  if (length(dev.list()) == 0) {
-    expect_error(ggiraph:::dsvg_tracer_on())
-    expect_error(ggiraph:::dsvg_tracer_off())
-    expect_error(ggiraph:::set_attr(1, "foo", "bar"))
-  }
-}
-
-# tracer does not work with non-dsvg device ----
-{
-  file <- tempfile()
-  devlength <- length(dev.list())
-  tryCatch(
-    {
-      postscript(file)
-      ids <- ggiraph:::dsvg_tracer_off()
-    },
-    finally = {
-      if (length(dev.list()) > devlength) {
-        dev.off()
-      }
-      unlink(file)
-    }
-  )
-
-  expect_equal(length(ids), 0)
-}
-
 # tracer does not work with if not turned on ----
 {
   doc <- dsvg_doc({
@@ -67,9 +38,9 @@ source("setup.R")
     points(c(0.5, .6), c(.4, .3))
     ids <- ggiraph:::dsvg_tracer_off()
     ggiraph:::set_attr(
+      name = "onclick",
       ids = ids,
-      str = c("alert(1)", "alert(2)"),
-      attribute = "onclick"
+      values = c("alert(1)", "alert(2)")
     )
   })
 
@@ -89,29 +60,11 @@ source("setup.R")
     points(c(0.5, .6), c(.4, .3))
     ids <- ggiraph:::dsvg_tracer_off()
     ggiraph:::set_attr(
+      name = "onclick",
       ids = ids,
-      str = c("alert('1')", "alert('2')"),
-      attribute = "onclick"
+      values = c("alert('1')", "alert('2')")
     )
   }))
-}
-
-# set_attr throws error with no dsv device ----
-{
-  file <- tempfile()
-  devlength <- length(dev.list())
-  expect_error(tryCatch(
-    {
-      postscript(file)
-      set_attr(1, "foo", "bar")
-    },
-    finally = {
-      if (length(dev.list()) > devlength) {
-        dev.off()
-      }
-      unlink(file)
-    }
-  ))
 }
 
 # set_attr throws error with invalid argument types ----
@@ -121,21 +74,21 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = "foo", str = 1)
+    ggiraph:::set_attr(name = "foo", ids = ids, values = 1)
   }))
   expect_error(dsvg_doc({
     plot.new()
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = 1, str = "bar")
+    ggiraph:::set_attr(name = 1, ids = ids, values = "bar")
   }))
   expect_error(dsvg_doc({
     plot.new()
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = "foo", attribute = "foo", str = "bar")
+    ggiraph:::set_attr(name = "foo", ids = "foo", values = "bar")
   }))
 }
 
@@ -146,7 +99,7 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(0.5, .6)
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = factor("foo"), str = factor("bar"))
+    ggiraph:::set_attr(name = factor("foo"), ids = ids, values = factor("bar"))
   })
 
   circle_nodes <- xml_find_all(doc, ".//circle")
@@ -162,7 +115,7 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(0.5, .6)
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = "foo", str = "")
+    ggiraph:::set_attr(name = "foo", ids = ids, values = "")
   })
 
   circle_node <- xml_find_first(doc, ".//circle")
@@ -176,7 +129,7 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6, .7), c(.4, .3, .5))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = c("foo", "foo"), str = "bar")
+    ggiraph:::set_attr(name = c("foo", "foo"), ids = ids, values = "bar")
   }))
 }
 
@@ -187,7 +140,7 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6), c(.4, .3))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = "foo", str = "bar")
+    ggiraph:::set_attr(name = "foo", ids = ids, values = "bar")
   })
   circle_nodes <- xml_find_all(doc, ".//circle")
   expect_equal(length(circle_nodes), 2)
@@ -202,7 +155,7 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6, .7, .8), c(.4, .3, .5, .6))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = "foo", str = c("bar1", "bar2"))
+    ggiraph:::set_attr(name = "foo", ids = ids, values = c("bar1", "bar2"))
   })
   circle_nodes <- xml_find_all(doc, ".//circle")
   expect_equal(length(circle_nodes), 4)
@@ -219,7 +172,7 @@ source("setup.R")
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6, .7), c(.4, .3, .5))
     ids <- ggiraph:::dsvg_tracer_off()
-    ggiraph:::set_attr(ids = ids, attribute = "foo", str = c("bar1", "bar2"))
+    ggiraph:::set_attr(name = "foo", ids = ids, values = c("bar1", "bar2"))
   }))
 }
 
@@ -241,10 +194,10 @@ source("setup.R")
         ggiraph:::dsvg_tracer_on()
         points(0.5, .6)
         ids <- ggiraph:::dsvg_tracer_off()
-        ggiraph:::set_attr(ids = ids, attribute = typename, str = "id")
+        ggiraph:::set_attr(name = typename, ids = ids, values = "id")
         ggiraph:::set_attr(
-          ids = ids, attribute = attrname,
-          str = ggiraph:::check_css_attr("cursor: pointer;")
+          name = attrname, ids = ids,
+          values = ggiraph:::check_css_attr("cursor: pointer;")
         )
       })
       style_node <- xml_find_first(doc, ".//style")
@@ -258,4 +211,50 @@ source("setup.R")
       ))
     }
   }
+}
+
+# tracer does not work with non-dsvg device ----
+{
+  file <- tempfile()
+  devlength <- length(dev.list())
+  tryCatch(
+    {
+      postscript(file)
+      ids <- ggiraph:::dsvg_tracer_off()
+    },
+    finally = {
+      if (length(dev.list()) > devlength) {
+        dev.off()
+      }
+      unlink(file)
+    }
+  )
+  expect_equal(length(ids), 0)
+}
+
+# tracer does not work with non-dsvg device ----
+{
+  file <- tempfile()
+  devlength <- length(dev.list())
+  tryCatch(
+    {
+      postscript(file)
+      result <- ggiraph:::dsvg_tracer_on()
+    },
+    finally = {
+      if (length(dev.list()) > devlength) {
+        dev.off()
+      }
+      unlink(file)
+    }
+  )
+  expect_null(result)
+}
+
+# tracers do not work with no device ----
+{
+  expect_false(ggiraph:::set_tracer_on(0))
+  expect_false(ggiraph:::set_tracer_off(0))
+  expect_equal(length(ggiraph:::collect_id(0)), 0)
+  expect_false(ggiraph:::add_attribute(0, "foo", 1, "bar"))
 }

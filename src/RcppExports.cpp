@@ -63,16 +63,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // add_attribute
-bool add_attribute(int dn, Rcpp::IntegerVector id, std::vector< std::string > str, std::string name);
-RcppExport SEXP _ggiraph_add_attribute(SEXP dnSEXP, SEXP idSEXP, SEXP strSEXP, SEXP nameSEXP) {
+bool add_attribute(int dn, std::string name, Rcpp::IntegerVector ids, Rcpp::CharacterVector values);
+RcppExport SEXP _ggiraph_add_attribute(SEXP dnSEXP, SEXP nameSEXP, SEXP idsSEXP, SEXP valuesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type dn(dnSEXP);
-    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type id(idSEXP);
-    Rcpp::traits::input_parameter< std::vector< std::string > >::type str(strSEXP);
     Rcpp::traits::input_parameter< std::string >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(add_attribute(dn, id, str, name));
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type ids(idsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type values(valuesSEXP);
+    rcpp_result_gen = Rcpp::wrap(add_attribute(dn, name, ids, values));
     return rcpp_result_gen;
 END_RCPP
 }
