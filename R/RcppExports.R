@@ -21,3 +21,7 @@ add_attribute <- function(dn, name, ids, values) {
     .Call(`_ggiraph_add_attribute`, dn, name, ids, values)
 }
 
+non_overlapping_texts <- function(dn, label, x, y, hjust, vjust, rot, fontsize, fontfamily, fontface, lineheight) {
+    .Call(`_ggiraph_non_overlapping_texts`, dn, label, x, y, hjust, vjust, rot, fontsize, fontfamily, fontface, lineheight)
+}
+

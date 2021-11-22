@@ -76,6 +76,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// non_overlapping_texts
+Rcpp::IntegerVector non_overlapping_texts(int dn, Rcpp::RObject label, Rcpp::DoubleVector x, Rcpp::DoubleVector y, Rcpp::DoubleVector hjust, Rcpp::DoubleVector vjust, Rcpp::DoubleVector rot, Rcpp::DoubleVector fontsize, Rcpp::CharacterVector fontfamily, Rcpp::IntegerVector fontface, Rcpp::DoubleVector lineheight);
+RcppExport SEXP _ggiraph_non_overlapping_texts(SEXP dnSEXP, SEXP labelSEXP, SEXP xSEXP, SEXP ySEXP, SEXP hjustSEXP, SEXP vjustSEXP, SEXP rotSEXP, SEXP fontsizeSEXP, SEXP fontfamilySEXP, SEXP fontfaceSEXP, SEXP lineheightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type dn(dnSEXP);
+    Rcpp::traits::input_parameter< Rcpp::RObject >::type label(labelSEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type hjust(hjustSEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type vjust(vjustSEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type rot(rotSEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type fontsize(fontsizeSEXP);
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type fontfamily(fontfamilySEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type fontface(fontfaceSEXP);
+    Rcpp::traits::input_parameter< Rcpp::DoubleVector >::type lineheight(lineheightSEXP);
+    rcpp_result_gen = Rcpp::wrap(non_overlapping_texts(dn, label, x, y, hjust, vjust, rot, fontsize, fontfamily, fontface, lineheight));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ggiraph_DSVG_", (DL_FUNC) &_ggiraph_DSVG_, 9},
@@ -83,6 +104,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ggiraph_set_tracer_off", (DL_FUNC) &_ggiraph_set_tracer_off, 1},
     {"_ggiraph_collect_id", (DL_FUNC) &_ggiraph_collect_id, 1},
     {"_ggiraph_add_attribute", (DL_FUNC) &_ggiraph_add_attribute, 4},
+    {"_ggiraph_non_overlapping_texts", (DL_FUNC) &_ggiraph_non_overlapping_texts, 11},
     {NULL, NULL, 0}
 };
 

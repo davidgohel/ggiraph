@@ -66,8 +66,8 @@ dataset$tooltip = paste0( "cyl: ", dataset$cyl, "<br/>",
 gg_text = ggplot(dataset,
                  aes(x = mpg, y = wt, label = label,
                      color = qsec,
-                     tooltip = tooltip, data_id = label ) ) +
-  geom_text_interactive() +
+                     tooltip = tooltip, data_id = label)) +
+  geom_text_interactive(check_overlap = TRUE) +
   coord_cartesian(xlim = c(0,50))
 
 ## display the plot
