@@ -1,14 +1,15 @@
-#include <string.h>
-#include "Rcpp.h"
-
-// This code has been copied from the package svglite maintained by Thomas Lin Pedersen
+/*
+ * DSVG device - Raster handling
+ */
+#include "dsvg.h"
 
 extern "C" {
 #include <png.h>
 }
 
-const static char encode_lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-const static char pad_character = '=';
+static const char encode_lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static const char pad_character = '=';
+
 std::string base64_encode(const std::uint8_t* buffer, size_t size) {
   std::string encoded_string;
   encoded_string.reserve(((size/3) + (size % 3 > 0)) * 4);
@@ -46,6 +47,8 @@ static void png_memory_write(png_structp  png_ptr, png_bytep data, png_size_t le
   std::vector<uint8_t> *p = (std::vector<uint8_t>*)png_get_io_ptr(png_ptr);
   p->insert(p->end(), data, data + length);
 }
+
+// This code has been copied from the package svglite maintained by Thomas Lin Pedersen
 std::string raster_to_string(unsigned int *raster, int w, int h, double width, double height, bool interpolate) {
   h = h < 0 ? -h : h;
   w = w < 0 ? -w : w;
@@ -119,3 +122,44 @@ std::string raster_to_string(unsigned int *raster, int w, int h, double width, d
   return base64_encode(buffer.data(), buffer.size());
 }
 
+void dsvg_raster(unsigned int *raster, int w, int h, double x, double y,
+                 double width, double height, double rot, Rboolean interpolate,
+                 const pGEcontext gc, pDevDesc dd) {
+  DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  svgd->new_element();
+  const char *clipid = svgd->clip_id.c_str();
+  const char *eltid = svgd->element_id.c_str();
+
+  if (height < 0)
+    height = -height;
+
+  std::string base64_str = raster_to_string(raster, w, h, width, height, interpolate);
+
+  SVGElement* image = svgd->svg_element("image", true);
+  set_attr(image, "x", x);
+  set_attr(image, "y", y - height);
+  set_attr(image, "width", width);
+  set_attr(image, "height", height);
+  set_attr(image, "id", eltid);
+  set_attr(image, "preserveAspectRatio", "none");
+  if (!interpolate) {
+    set_attr(image, "image-rendering", "pixelated");
+  }
+
+  set_clip(image, clipid);
+
+  if (fabs(rot) > 0.001) {
+    std::ostringstream ost;
+    ost.flags(std::ios_base::fixed | std::ios_base::dec);
+    ost.precision(2);
+    ost << "rotate(" << -1.0 * rot << "," << x << "," << y << ")";
+    set_attr(image, "transform", ost.str());
+  }
+
+  std::ostringstream os;
+  os << "data:image/png;base64," << base64_str;
+  set_attr(image, "xlink:href", os.str());
+
+  if (svgd->standalone)
+    set_attr(image, "xmlns:xlink", "http://www.w3.org/1999/xlink");
+}
