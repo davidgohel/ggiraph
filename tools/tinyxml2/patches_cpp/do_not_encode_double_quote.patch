@@ -1,0 +1,14 @@
+--- tmp/tinyxml2.cpp	2021-05-14 23:27:50.318870296 +0200
++++ tmp/tinyxml2.cpp	2021-05-14 23:45:52.219691180 +0200
+@@ -139,9 +139,9 @@
+     char value;
+ };
+
+-static const int NUM_ENTITIES = 5;
++static const int NUM_ENTITIES = 4;
+ static const Entity entities[NUM_ENTITIES] = {
+-    { "quot", 4,	DOUBLE_QUOTE },
++    // { "quot", 4,	DOUBLE_QUOTE },
+     { "amp", 3,		'&'  },
+     { "apos", 4,	SINGLE_QUOTE },
+     { "lt",	2, 		'<'	 },

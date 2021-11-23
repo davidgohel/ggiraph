@@ -1,0 +1,14 @@
+--- tmp/tinyxml2.cpp	2021-05-14 23:27:50.318870296 +0200
++++ tmp/tinyxml2.cpp	2021-05-14 23:43:51.005710431 +0200
+@@ -2730,9 +2730,9 @@
+     TIXMLASSERT( _elementJustOpened );
+     Putc ( ' ' );
+     Write( name );
+-    Write( "=\"" );
++    Write( "='" );
+     PrintString( value, false );
+-    Putc ( '\"' );
++    Putc ( '\'' );
+ }
+
+

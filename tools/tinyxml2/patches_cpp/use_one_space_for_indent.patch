@@ -1,0 +1,11 @@
+--- tmp/tinyxml2.cpp	2021-05-14 23:27:50.318870296 +0200
++++ tmp/tinyxml2.cpp	2021-05-14 23:48:03.674222864 +0200
+@@ -2623,7 +2623,7 @@
+ void XMLPrinter::PrintSpace( int depth )
+ {
+     for( int i=0; i<depth; ++i ) {
+-        Write( "    " );
++        Write( " " );
+     }
+ }
+

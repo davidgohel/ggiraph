@@ -1,0 +1,22 @@
+--- tmp/tinyxml2.cpp	2021-05-14 23:27:50.318870296 +0200
++++ tmp/tinyxml2.cpp	2021-05-14 23:47:03.577077629 +0200
+@@ -2449,8 +2449,8 @@
+         Accept( streamer );
+     }
+     else {
+-        XMLPrinter stdoutStreamer( stdout );
+-        Accept( &stdoutStreamer );
++        // XMLPrinter stdoutStreamer( stdout );
++        // Accept( &stdoutStreamer );
+     }
+ }
+
+@@ -2506,7 +2506,7 @@
+
+ void XMLDocument::PrintError() const
+ {
+-    printf("%s\n", ErrorStr());
++    // printf("%s\n", ErrorStr());
+ }
+
+ const char* XMLDocument::ErrorName() const
