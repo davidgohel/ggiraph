@@ -5,6 +5,10 @@ DSVG_ <- function(filename, width, height, canvas_id, standalone, setdims, point
     .Call(`_ggiraph_DSVG_`, filename, width, height, canvas_id, standalone, setdims, pointsize, bg, aliases)
 }
 
+get_ge_version <- function() {
+    .Call(`_ggiraph_get_ge_version`)
+}
+
 set_tracer_on <- function(dn) {
     .Call(`_ggiraph_set_tracer_on`, dn)
 }

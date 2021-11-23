@@ -36,6 +36,12 @@ typedef unsigned int INDEX;
 INDEX ref_to_index(const SEXP& ref);
 SEXP index_to_ref(const INDEX& index);
 
+/* Checks if supplied SEXP is a function call */
+bool is_function_ref(SEXP& path);
+
+/* Evaluates the function in supplied SEXP */
+void eval_function_ref(SEXP& path, SEXP env = R_GlobalEnv);
+
 /* Returns the current graphics engine version */
 pGEDevDesc get_ge_device(int dn);
 

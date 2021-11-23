@@ -29,6 +29,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// get_ge_version
+Rcpp::IntegerVector get_ge_version();
+RcppExport SEXP _ggiraph_get_ge_version() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(get_ge_version());
+    return rcpp_result_gen;
+END_RCPP
+}
 // set_tracer_on
 bool set_tracer_on(int dn);
 RcppExport SEXP _ggiraph_set_tracer_on(SEXP dnSEXP) {
@@ -100,6 +110,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ggiraph_DSVG_", (DL_FUNC) &_ggiraph_DSVG_, 9},
+    {"_ggiraph_get_ge_version", (DL_FUNC) &_ggiraph_get_ge_version, 0},
     {"_ggiraph_set_tracer_on", (DL_FUNC) &_ggiraph_set_tracer_on, 1},
     {"_ggiraph_set_tracer_off", (DL_FUNC) &_ggiraph_set_tracer_off, 1},
     {"_ggiraph_collect_id", (DL_FUNC) &_ggiraph_collect_id, 1},

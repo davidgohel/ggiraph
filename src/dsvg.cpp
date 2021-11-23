@@ -175,3 +175,9 @@ bool DSVG_(std::string filename,
 
   return true;
 }
+
+// [[Rcpp::export]]
+Rcpp::IntegerVector get_ge_version() {
+  Rcpp::IntegerVector res{ R_GE_version };
+  return res;
+}

@@ -34,8 +34,12 @@ void set_attr(SVGElement* element, const char* name, const double& value);
 void set_fill(SVGElement* element, const int& col);
 void set_stroke(SVGElement* element, const double& width, const int& col,
                 const int& type, const int& join, const int& end);
+void set_stop_color(SVGElement* element, const rcolor& col);
 
 void set_ref(SVGElement* element, const char* name, const std::string& id);
 void set_clip_ref(SVGElement* element, const std::string& clip_id);
+void set_mask_ref(SVGElement* element, const std::string& mask_id);
+void set_fill_ref(SVGElement* element, const std::string& pattern_id);
+void set_filter_ref(SVGElement* element, const std::string& filter_id);
 
 #endif // DSVG_SVG_INCLUDED

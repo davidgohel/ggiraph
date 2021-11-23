@@ -125,6 +125,12 @@ void set_stroke(SVGElement* element, const double& width, const int& col,
   }
 }
 
+void set_stop_color(SVGElement* element, const rcolor& col) {
+  a_color col_(col);
+  set_attr(element, "stop-color", col_.color());
+  set_attr(element, "stop-opacity", col_.opacity());
+}
+
 void set_ref(SVGElement* element, const char* name, const std::string& id) {
   if (!id.empty()) {
     set_attr(element, name, "url(#" + id + ")");
@@ -137,3 +143,14 @@ void set_clip_ref(SVGElement* element, const std::string& clip_id) {
   set_ref(element, "clip-path", clip_id);
 }
 
+void set_mask_ref(SVGElement* element, const std::string& mask_id) {
+  set_ref(element, "mask", mask_id);
+}
+
+void set_fill_ref(SVGElement* element, const std::string& pattern_id) {
+  set_ref(element, "fill", pattern_id);
+}
+
+void set_filter_ref(SVGElement* element, const std::string& filter_id) {
+  set_ref(element, "filter", filter_id);
+}

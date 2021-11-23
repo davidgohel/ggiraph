@@ -6,6 +6,8 @@
 
 #include "interactive.h"
 #include "clip.h"
+#include "mask.h"
+#include "pattern.h"
 #include <stack>
 
 /* helper enum for positioning svg elements inside their parent */
@@ -41,6 +43,10 @@ public:
   InteractiveElements interactives;
   /* indexed clip elements */
   Clips clips;
+  /* indexed mask elements */
+  Masks masks;
+  /* indexed pattern elements */
+  Patterns patterns;
 
   /*
    * Constructor
@@ -130,6 +136,9 @@ public:
   /* Sets the active clip index */
   void use_clip(const INDEX index);
 
+  /* Sets the active mask index */
+  void use_mask(const INDEX index);
+
   /*  Adds a css style */
   void add_css(const std::string key, const std::string value);
 
@@ -209,6 +218,13 @@ private:
     INDEX clip_index;
 
     /*
+     * The context's mask index. Initially it's NULL,
+     * but it can be changed via the 'use_mask' method.
+     * When it's a valid index all subsequent elements, will have a relevant mask attribute set
+     */
+    INDEX mask_index;
+
+    /*
      * Constructor
      *
      * element_          The base element
@@ -240,7 +256,8 @@ private:
       use_grouping(use_grouping_),
       paint_children(paint_children_),
       container(use_grouping_ ? NULL : new Container(element_)),
-      clip_index(NULL_INDEX) {}
+      clip_index(NULL_INDEX),
+      mask_index(NULL_INDEX) {}
   };
 };
 

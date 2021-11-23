@@ -59,6 +59,16 @@ SEXP index_to_ref(const INDEX& index) {
   return ret;
 }
 
+bool is_function_ref(SEXP& path) {
+  return !Rf_isNull(path) && Rf_isFunction(path);
+}
+
+void eval_function_ref(SEXP& path, SEXP env) {
+  SEXP call = Rf_protect(Rf_lang1(path));
+  Rcpp::Rcpp_fast_eval(call, env);
+  Rf_unprotect(1);
+}
+
 pGEDevDesc get_ge_device(int dn) {
   pGEDevDesc dev = NULL;
   // check for valid number because passing dn <= 0 crashes R

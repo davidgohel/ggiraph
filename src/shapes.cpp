@@ -3,6 +3,18 @@
  */
 #include "dsvg.h"
 
+void set_fill_color_or_pattern(SVGElement* element, const pGEcontext gc, DSVG_dev* svgd) {
+#if R_GE_version >= 13
+  if (!Rf_isNull(gc->patternFill)) {
+    set_fill_ref(element, svgd->patterns.make_id(gc->patternFill));
+  } else {
+    set_fill(element, gc->fill);
+  }
+#else
+  set_fill(element, gc->fill);
+#endif
+}
+
 void dsvg_line(double x1, double y1, double x2, double y2,
                const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
@@ -52,7 +64,7 @@ void dsvg_polygon(int n, double *x, double *y,
   set_attr(polygon, "points", os.str());
 
   if (svgd->should_paint()) {
-    set_fill(polygon, gc->fill);
+    set_fill_color_or_pattern(polygon, gc, svgd);
     set_stroke(polygon, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
   }
 }
@@ -77,7 +89,7 @@ void dsvg_path(double *x, double *y, int npoly, int *nper, Rboolean winding,
   set_attr(path, "d", os.str());
 
   if (svgd->should_paint()) {
-    set_fill(path, gc->fill);
+    set_fill_color_or_pattern(path, gc, svgd);
     if (winding)
       set_attr(path, "fill-rule", "nonzero");
     else
@@ -98,7 +110,7 @@ void dsvg_rect(double x0, double y0, double x1, double y1,
   set_attr(rect, "height", fabs(y1 - y0));
 
   if (svgd->should_paint()) {
-    set_fill(rect, gc->fill);
+    set_fill_color_or_pattern(rect, gc, svgd);
     set_stroke(rect, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
   }
 }
@@ -113,7 +125,7 @@ void dsvg_circle(double x, double y, double r,
   set_attr(circle, "r", to_string(r * .75) + "pt");
 
   if (svgd->should_paint()) {
-    set_fill(circle, gc->fill);
+    set_fill_color_or_pattern(circle, gc, svgd);
     set_stroke(circle, gc->lwd, gc->col, gc->lty, gc->ljoin, gc->lend);
   }
 }

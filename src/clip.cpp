@@ -59,10 +59,30 @@ void dsvg_clip(double x0, double x1, double y0, double y1, pDevDesc dd) {
 #if R_GE_version >= 13
 
 SEXP dsvg_set_clip_path(SEXP path, SEXP ref, pDevDesc dd) {
-  return R_NilValue;
+  DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  SEXP newref = R_NilValue;
+
+  // try the passed reference
+  INDEX clip_index = svgd->clips.valid_index(ref);
+  if (!IS_VALID_INDEX(clip_index) && is_function_ref(path)) {
+    // create new clip
+    SVGElement* clip = svgd->svg_definition("clipPath");
+    clip_index = svgd->clips.push(clip);
+    newref = index_to_ref(clip_index);
+    // push a simple definition context
+    svgd->push_definition(clip, false, false);
+    // draw the clip by calling the passed path function
+    eval_function_ref(path);
+    // exit definition context
+    svgd->pop_definition();
+  }
+
+  svgd->use_clip(clip_index);
+  return newref;
 }
 
 void dsvg_release_clip_path(SEXP ref, pDevDesc dd) {
+  // nothing to do here
 }
 
 #endif // R_GE_version >= 13

@@ -16,7 +16,9 @@ DSVG_dev::DSVG_dev(std::string filename_,
     setdims(setdims_),
     system_aliases(Rcpp::wrap(aliases_["system"])),
     interactives(canvas_id_),
-    clips(canvas_id_) {
+    clips(canvas_id_),
+    masks(canvas_id_),
+    patterns(canvas_id_) {
 
   file = fopen(R_ExpandFileName(filename.c_str()), "w");
   if (!file) Rf_error("Failed to open file for writing: \"%s\"", filename.c_str());
@@ -82,8 +84,14 @@ SVGElement* DSVG_dev::svg_element(const char* name, SVGElement* parent) {
   if (!p) p = resolve_parent();
   if (!p) Rf_error("Invalid parent (svg_element)");
   SVGElement* el = create_element(name, p);
-  if (!parent && !is_adding_definition() && interactives.is_tracing()) {
-    interactives.push(el);
+  if (!parent) {
+    if (!is_adding_definition() && interactives.is_tracing()) {
+      interactives.push(el);
+    }
+    ContainerContext* ctx = contexts->top();
+    if (IS_VALID_INDEX(ctx->mask_index)) {
+      set_mask_ref(el, masks.make_id(ctx->mask_index));
+    }
   }
   return el;
 }
@@ -187,6 +195,12 @@ void DSVG_dev::use_clip(const INDEX index) {
   DSVGASSERT(contexts);
   CHECK_STACK_NOT_EMPTY("use_clip");
   contexts->top()->clip_index = index;
+}
+
+void DSVG_dev::use_mask(const INDEX index) {
+  DSVGASSERT(contexts);
+  CHECK_STACK_NOT_EMPTY("use_mask");
+  contexts->top()->mask_index = index;
 }
 
 /************************ Styles ************************/
