@@ -55,7 +55,7 @@ source("setup.R")
     text(0.5, 0.5, "a")
   })
 
-  expect_equal(xml_attr(xml_find_first(doc, ".//text"), "font-size"), "9.00pt")
+  expect_equal(xml_attr(xml_find_first(doc, ".//text"), "font-size"), "9pt")
 }
 
 # cex generates fractional font sizes ----
@@ -65,7 +65,7 @@ source("setup.R")
     text(0.5, 0.5, "a", cex = .1)
   })
 
-  expect_equal(xml_attr(xml_find_first(doc, ".//text"), "font-size"), "0.90pt")
+  expect_equal(xml_attr(xml_find_first(doc, ".//text"), "font-size"), "0.9pt")
 }
 
 # font sets weight/style ----

@@ -126,27 +126,21 @@ void dsvg_raster(unsigned int *raster, int w, int h, double x, double y,
                  double width, double height, double rot, Rboolean interpolate,
                  const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  svgd->new_element();
-  const char *clipid = svgd->clip_id.c_str();
-  const char *eltid = svgd->element_id.c_str();
+  SVGElement* image = svgd->svg_element("image");
 
   if (height < 0)
     height = -height;
 
   std::string base64_str = raster_to_string(raster, w, h, width, height, interpolate);
 
-  SVGElement* image = svgd->svg_element("image", true);
   set_attr(image, "x", x);
   set_attr(image, "y", y - height);
   set_attr(image, "width", width);
   set_attr(image, "height", height);
-  set_attr(image, "id", eltid);
   set_attr(image, "preserveAspectRatio", "none");
   if (!interpolate) {
     set_attr(image, "image-rendering", "pixelated");
   }
-
-  set_clip(image, clipid);
 
   if (fabs(rot) > 0.001) {
     std::ostringstream ost;

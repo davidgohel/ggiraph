@@ -14,9 +14,6 @@ source("setup.R")
 
   expect_equal(length(ids), 2)
   expect_equal(ids, 1:2)
-
-  circle_id <- sapply(xml_find_all(doc, ".//circle"), xml_attr, "id")
-  expect_equal(circle_id, paste0("svgid_el_", as.character(1:2)))
 }
 
 # tracer does not work with if not turned on ----
@@ -212,6 +209,17 @@ source("setup.R")
     }
   }
 }
+# add_attribute gives a warning when element index is not found ----
+{
+  expect_warning(dsvg_doc({
+    plot.new()
+    ggiraph:::dsvg_tracer_on()
+    points(c(0.5), c(.4))
+    ids <- ggiraph:::dsvg_tracer_off()
+    ggiraph:::set_attr(name = "foo", ids = 2, values = "bar")
+  }))
+}
+
 
 # tracer does not work with non-dsvg device ----
 {

@@ -15,12 +15,14 @@ source("setup.R")
 
   expect_equal(
     xml_attr(root_node, "viewBox"),
-    paste0("0 0 ", 6 * 72, ".00 ", 5 * 72, ".00"),
+    paste(0, 0, 6 * 72, 5 * 72),
     info = "svg viewBox is set"
   )
 
-  expect_equal(length(xml_children(root_node)), 1)
-  g_node <- xml_find_first(doc, ".//g")
+  expect_equal(length(xml_children(root_node)), 2)
+  defs_node <- xml_find_first(doc, "/svg/defs")
+  expect_inherits(defs_node, "xml_node")
+  g_node <- xml_find_first(doc, "/svg/g")
   expect_inherits(g_node, "xml_node")
 }
 
@@ -63,7 +65,7 @@ source("setup.R")
   doc <- dsvg_doc(bg = "#123456", {
     plot.new()
   })
-  bg_node <- xml_find_first(doc, ".//*[defs]/rect")
+  bg_node <- xml_find_first(doc, "/svg/g//rect")
   expect_inherits(bg_node, "xml_node")
   expect_equal(xml_attr(bg_node, "fill"), "#123456")
   expect_equal(xml_attr(bg_node, "fill-opacity"), "1")
@@ -71,13 +73,13 @@ source("setup.R")
   doc <- dsvg_doc(bg = "#12345699", {
     plot.new()
   })
-  bg_node <- xml_find_first(doc, ".//*[defs]/rect")
+  bg_node <- xml_find_first(doc, "/svg/g//rect")
   expect_equal(xml_attr(bg_node, "fill-opacity"), "0.6")
 
   doc <- dsvg_doc(bg = "transparent", {
     plot.new()
   })
-  bg_node <- xml_find_first(doc, ".//*[defs]/rect")
+  bg_node <- xml_find_first(doc, "/svg/g//rect")
   expect_inherits(bg_node, "xml_missing")
 }
 

@@ -25,10 +25,8 @@ void dsvg_size(double *left, double *right, double *bottom, double *top,
 
 void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-
-  if (svgd->pageno > 0) {
+  if (svgd->is_init())
     Rf_error("svgd only supports one page");
-  }
 
   SVGElement* root = svgd->svg_root();
   set_attr(root, "id", svgd->canvas_id);
@@ -56,14 +54,14 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
     gc->fill = fill;
     gc->col = col;
   }
-
-  svgd->pageno++;
 }
 
-
-pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
-                         double height, int pointsize, bool standalone, bool setdims,
-                         std::string canvas_id, Rcpp::List aliases) {
+pDevDesc dsvg_driver_new(std::string filename,
+                         double width, double height,
+                         std::string canvas_id,
+                         bool standalone, bool setdims,
+                         int pointsize, rcolor bg,
+                         Rcpp::List aliases) {
 
   pDevDesc dd = (DevDesc*) calloc(1, sizeof(DevDesc));
   if (!dd) return dd;
@@ -138,16 +136,21 @@ pDevDesc dsvg_driver_new(std::string filename, int bg, double width,
   dd->deviceVersion = R_GE_definitions;
 #endif
 
-  dd->deviceSpecific = new DSVG_dev(filename, standalone, setdims,
+  dd->deviceSpecific = new DSVG_dev(filename,
+                                    width * 72, height * 72,
                                     canvas_id,
-                                    bg, aliases,
-                                    width * 72, height * 72);
+                                    standalone, setdims,
+                                    aliases);
   return dd;
 }
 
 // [[Rcpp::export]]
-bool DSVG_(std::string file, double width, double height, std::string bg,
-           int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases) {
+bool DSVG_(std::string filename,
+           double width, double height,
+           std::string canvas_id,
+           bool standalone, bool setdims,
+           int pointsize, std::string bg,
+           Rcpp::List aliases) {
 
   R_GE_checkVersionOrDie(R_GE_version);
   R_CheckDeviceAvailable();
@@ -156,7 +159,11 @@ bool DSVG_(std::string file, double width, double height, std::string bg,
 
     rcolor bg_ = R_GE_str2col(bg.c_str());
 
-    pDevDesc dd = dsvg_driver_new(file, bg_, width, height, pointsize, standalone, setdims, canvas_id,
+    pDevDesc dd = dsvg_driver_new(filename,
+                                  width, height,
+                                  canvas_id,
+                                  standalone, setdims,
+                                  pointsize, bg_,
                                   aliases);
     if (!dd) Rf_error("Failed to start DSVG device");
 

@@ -42,7 +42,7 @@ library(xml2)
 
     expect_equal(
       xml_attr(root_node, "viewBox"),
-      paste0("0 0 ", 10 * 72, ".00 ", 11 * 72, ".00"),
+      paste(0, 0, 10 * 72, 11 * 72),
       info = "svg viewBox is set"
     )
   }

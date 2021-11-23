@@ -11,21 +11,21 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // DSVG_
-bool DSVG_(std::string file, double width, double height, std::string bg, int pointsize, bool standalone, bool setdims, std::string canvas_id, Rcpp::List aliases);
-RcppExport SEXP _ggiraph_DSVG_(SEXP fileSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP bgSEXP, SEXP pointsizeSEXP, SEXP standaloneSEXP, SEXP setdimsSEXP, SEXP canvas_idSEXP, SEXP aliasesSEXP) {
+bool DSVG_(std::string filename, double width, double height, std::string canvas_id, bool standalone, bool setdims, int pointsize, std::string bg, Rcpp::List aliases);
+RcppExport SEXP _ggiraph_DSVG_(SEXP filenameSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP canvas_idSEXP, SEXP standaloneSEXP, SEXP setdimsSEXP, SEXP pointsizeSEXP, SEXP bgSEXP, SEXP aliasesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type file(fileSEXP);
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
     Rcpp::traits::input_parameter< double >::type width(widthSEXP);
     Rcpp::traits::input_parameter< double >::type height(heightSEXP);
-    Rcpp::traits::input_parameter< std::string >::type bg(bgSEXP);
-    Rcpp::traits::input_parameter< int >::type pointsize(pointsizeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type canvas_id(canvas_idSEXP);
     Rcpp::traits::input_parameter< bool >::type standalone(standaloneSEXP);
     Rcpp::traits::input_parameter< bool >::type setdims(setdimsSEXP);
-    Rcpp::traits::input_parameter< std::string >::type canvas_id(canvas_idSEXP);
+    Rcpp::traits::input_parameter< int >::type pointsize(pointsizeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type bg(bgSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type aliases(aliasesSEXP);
-    rcpp_result_gen = Rcpp::wrap(DSVG_(file, width, height, bg, pointsize, standalone, setdims, canvas_id, aliases));
+    rcpp_result_gen = Rcpp::wrap(DSVG_(filename, width, height, canvas_id, standalone, setdims, pointsize, bg, aliases));
     return rcpp_result_gen;
 END_RCPP
 }

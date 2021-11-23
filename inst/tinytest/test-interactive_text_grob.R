@@ -25,8 +25,6 @@ source("setup.R")
 
   nodes <- xml_find_all(doc, ".//text[@info]")
   expect_equal(length(nodes), length(s))
-  ids <- sapply(nodes, xml_attr, "id")
-  expect_equal(ids, paste0("svgid_el_", as.character(seq_along(s))))
   tooltips <- xml_find_all(doc, ".//text[@info][@title]")
   expect_equal(length(tooltips), length(s))
   tooltips <- sapply(tooltips, xml_attr, "title")

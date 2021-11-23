@@ -4,13 +4,43 @@
 #include "dsvg.h"
 #include <regex>
 
+INDEX InteractiveElements::push(SVGElement* el) {
+  const INDEX index = IndexedElements::push(el, false);
+  if (el) {
+    map.insert(std::pair<INDEX, SVGElement*>(index, el));
+    if (tracing) {
+      if (!initialized) {
+        first_index = get_current_index();
+        initialized = true;
+      }
+      last_index = get_current_index();
+    }
+  }
+  return index;
+}
+
+SVGElement* InteractiveElements::find(const INDEX index) const {
+  SVGElement* ret = NULL;
+  std::unordered_map<INDEX, SVGElement*>::const_iterator got = map.find(index);
+  if (got != map.end())
+    ret = got->second;
+  return ret;
+}
+
+void InteractiveElements::trace(const bool on) {
+  tracing = on;
+  initialized = false;
+  first_index = NULL_INDEX;
+  last_index = NULL_INDEX;
+}
+
 // [[Rcpp::export]]
 bool set_tracer_on(int dn) {
   pGEDevDesc dev = get_ge_device(dn);
   if (!dev)
     return false;
   DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
-  svgd->set_tracer_on();
+  svgd->interactives.trace(true);
   return true;
 }
 
@@ -20,7 +50,7 @@ bool set_tracer_off(int dn) {
   if (!dev)
     return false;
   DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
-  svgd->set_tracer_off();
+  svgd->interactives.trace(false);
   return true;
 }
 
@@ -33,16 +63,16 @@ Rcpp::IntegerVector collect_id(int dn) {
 
   DSVG_dev *svgd = (DSVG_dev *) dev->dev->deviceSpecific;
 
-  int first = svgd->tracer_first_elt;
-  int last = svgd->tracer_last_elt;
-  if (first < 0 || last < 0 || first > last) {
+  INDEX first = svgd->interactives.get_first_index();
+  INDEX last = svgd->interactives.get_last_index();
+  if (!IS_VALID_INDEX(first) || !IS_VALID_INDEX(last) || first > last) {
     return empty;
   }
 
-  int l_ = 1 + last - first;
+  INDEX l_ = 1 + last - first;
   Rcpp::IntegerVector result(l_);
-  for (int i = first; i <= last; i++) {
-    result[i-first] = i;
+  for (INDEX i = first; i <= last; i++) {
+    result[i-first] = (int)i;
   }
   return result;
 }
@@ -73,7 +103,8 @@ bool add_attribute(int dn, std::string name,
     if (values[i].size() == 0)
       continue;
 
-    SVGElement* el = svgd->get_svg_element(ids[i]);
+    INDEX index = (INDEX)ids[i];
+    SVGElement* el = svgd->interactives.find(index);
     if (el) {
       const bool isHoverCss = hover.compare(name) == 0;
       const bool isSelectedCss = selected.compare(name) == 0;
@@ -110,6 +141,8 @@ bool add_attribute(int dn, std::string name,
       } else {
         set_attr(el, name.c_str(), values[i]);
       }
+    } else {
+      Rf_warning("Failed to find element with index %d", index);
     }
   }
   return true;

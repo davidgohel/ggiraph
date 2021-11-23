@@ -11,7 +11,6 @@ source("setup.R")
   })
 
   seg_node <- xml_find_first(doc, "//line")
-  expect_equal(xml_attr(seg_node, "fill"), "none")
   expect_equal(xml_attr(seg_node, "stroke"), "#000000")
 }
 

@@ -98,13 +98,7 @@ double dsvg_strwidth(const char *str, const pGEcontext gc, pDevDesc dd) {
 void dsvg_text_utf8(double x, double y, const char *str, double rot,
                            double hadj, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
-  svgd->new_element();
-  const char *clipid = svgd->clip_id.c_str();
-  const char *eltid = svgd->element_id.c_str();
-
-  SVGElement* g = svgd->svg_element("g", false);
-  set_clip(g, clipid);
-  SVGElement* text = svgd->svg_element("text", true, g);
+  SVGElement* text = svgd->svg_element("text");
 
   if (rot == 0) {
     set_attr(text, "x", x);
@@ -116,18 +110,19 @@ void dsvg_text_utf8(double x, double y, const char *str, double rot,
     os << "translate(" << x << "," << y << ") rotate(" << -1.0 * rot << ")";
     set_attr(text, "transform", os.str());
   }
-  set_attr(text, "id", eltid);
   set_attr(text, "font-size", to_string(gc->cex * gc->ps * .75) + "pt");
   if (is_bold(gc->fontface))
     set_attr(text, "font-weight", "bold");
   if (is_italic(gc->fontface))
     set_attr(text, "font-style", "italic");
-  if (gc->col != -16777216) {
-    set_fill(text, gc->col);
-  } // black
-
   std::string font = fontname(gc->fontfamily, gc->fontface, svgd->system_aliases);
   set_attr(text, "font-family", font);
+
+  if (svgd->should_paint()) {
+    if (gc->col != -16777216) {
+      set_fill(text, gc->col);
+    } // black
+  }
 
   text->SetText(str);
 }

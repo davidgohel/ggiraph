@@ -34,6 +34,13 @@ void prepend_element(SVGElement* child, SVGElement* parent) {
   parent->InsertFirstChild(child);
 }
 
+void insert_element_before(SVGElement* child, SVGElement* parent, SVGElement* sibling) {
+  if (sibling->PreviousSibling())
+    parent->InsertAfterChild(sibling->PreviousSibling(), child);
+  else
+    parent->InsertEndChild(child);
+}
+
 const char* svg_attribute(const SVGElement* element, const char* name) {
   const tinyxml2::XMLAttribute* a = element->FindAttribute(name);
   if (a != 0) {
@@ -78,15 +85,9 @@ void set_stroke(SVGElement* element, const double& width, const int& col,
 
   set_attr(element, "stroke-width", width * 72 / 96);
 
-  int lty = type;
-  double lwd = width;
-
-  switch (type) {
-  case LTY_BLANK:
-    break;
-  case LTY_SOLID:
-    break;
-  default:
+  if (type > LTY_SOLID) {
+    int lty = type;
+    double lwd = width;
     std::ostringstream os;
     os << (int) lwd * (lty & 15);
     lty = lty >> 4;
@@ -95,7 +96,6 @@ void set_stroke(SVGElement* element, const double& width, const int& col,
       lty = lty >> 4;
     }
     set_attr(element, "stroke-dasharray", os.str());
-    break;
   }
 
   switch (join) {
@@ -125,8 +125,15 @@ void set_stroke(SVGElement* element, const double& width, const int& col,
   }
 }
 
-void set_clip(SVGElement* element, const char* clipid) {
-  std::ostringstream os;
-  os << "url(#" << clipid << ")";
-  set_attr(element, "clip-path", os.str().c_str());
+void set_ref(SVGElement* element, const char* name, const std::string& id) {
+  if (!id.empty()) {
+    set_attr(element, name, "url(#" + id + ")");
+  } else {
+    set_attr(element, name, "");
+  }
 }
+
+void set_clip_ref(SVGElement* element, const std::string& clip_id) {
+  set_ref(element, "clip-path", clip_id);
+}
+

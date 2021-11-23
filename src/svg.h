@@ -21,6 +21,7 @@ SVGText* new_svg_text(const char* str, SVGDocument* doc, const bool cdata = true
 
 void append_element(SVGElement* child, SVGElement* parent);
 void prepend_element(SVGElement* child, SVGElement* parent);
+void insert_element_before(SVGElement* child, SVGElement* parent, SVGElement* sibling);
 
 const char* svg_attribute(const SVGElement* element, const char* name);
 
@@ -34,6 +35,7 @@ void set_fill(SVGElement* element, const int& col);
 void set_stroke(SVGElement* element, const double& width, const int& col,
                 const int& type, const int& join, const int& end);
 
-void set_clip(SVGElement* element, const char* clipid);
+void set_ref(SVGElement* element, const char* name, const std::string& id);
+void set_clip_ref(SVGElement* element, const std::string& clip_id);
 
 #endif // DSVG_SVG_INCLUDED

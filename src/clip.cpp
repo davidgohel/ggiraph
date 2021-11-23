@@ -3,29 +3,57 @@
  */
 #include "dsvg.h"
 
+INDEX Clips::push(SVGElement* el, const char* key) {
+  const INDEX index = IndexedElements::push(el, true);
+  if (el && key) {
+    map.insert(std::pair<std::string, INDEX>(key, index));
+  }
+  return index;
+}
+
+INDEX Clips::find(const std::string& key) const {
+  std::unordered_map<std::string, INDEX>::const_iterator got = map.find(key);
+  if (got == map.end())
+    return 0;
+  else
+    return got->second;
+}
+
+std::string Clips::make_key(const double& x0, const double& x1,
+                            const double& y0, const double& y1) {
+  const double left = fmin(x0, x1);
+  const double right = fmax(x0, x1);
+  const double top = fmin(y0, y1);
+  const double bottom = fmax(y0, y1);
+  std::ostringstream os;
+  os.flags(std::ios_base::fixed | std::ios_base::dec);
+  os.precision(2);
+  os << left << "|" << right << "|" << top << "|" << bottom;
+  return os.str();
+}
+
 void dsvg_clip(double x0, double x1, double y0, double y1, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
 
-  if (std::abs(x0 - svgd->clipleft) < 0.01 && std::abs(x1 - svgd->clipright) < 0.01 &&
-      std::abs(y0 - svgd->clipbottom) < 0.01 && std::abs(y1 - svgd->cliptop) < 0.01)
-    return;
+  // create a key with the coords
+  const std::string key = Clips::make_key(x0, x1, y0, y1);
+  // try to find an existing clip with this key
+  INDEX clip_index = svgd->clips.find(key);
 
-  svgd->clipleft = x0;
-  svgd->clipright = x1;
-  svgd->clipbottom = y0;
-  svgd->cliptop = y1;
+  if (!IS_VALID_INDEX(clip_index)) {
+    // create new clip
+    SVGElement* clip = svgd->svg_definition("clipPath");
+    // add it to the clips
+    clip_index = svgd->clips.push(clip, key.c_str());
+    // push a simple definition context
+    svgd->push_definition(clip, false, false);
+    // draw the clip
+    dsvg_rect(x0, y0, x1, y1, NULL, dd);
+    // exit definition context
+    svgd->pop_definition();
+  }
 
-  svgd->new_clip();
-
-  const char *clipid = svgd->clip_id.c_str();
-  SVGElement* defs = svgd->svg_element("defs", false);
-  SVGElement* clipPath = svgd->svg_element("clipPath", false, defs);
-  set_attr(clipPath, "id", clipid);
-  SVGElement* rect = svgd->svg_element("rect", false, clipPath);
-  set_attr(rect, "x", std::min(x0, x1));
-  set_attr(rect, "y", std::min(y0, y1));
-  set_attr(rect, "width", std::abs(x1 - x0));
-  set_attr(rect, "height", std::abs(y1 - y0));
+  svgd->use_clip(clip_index);
 }
 
 #if R_GE_version >= 13

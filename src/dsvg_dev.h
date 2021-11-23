@@ -4,184 +4,244 @@
 #ifndef DSVG_DEV_INCLUDED
 #define DSVG_DEV_INCLUDED
 
-#include "svg.h"
-#include "utils.h"
+#include "interactive.h"
+#include "clip.h"
+#include <stack>
+
+/* helper enum for positioning svg elements inside their parent */
+typedef enum {
+  /* insert to bottom */
+  BOTTOM = 0,
+  /* insert to top */
+  TOP = 1,
+  /* insert before sibling */
+  BEFORE = 2
+} EPosition;
 
 /*
  * Class for handling device specific data
  */
 class DSVG_dev {
 public:
-  FILE *file;
-  std::string filename;
-  int pageno;
-  std::string canvas_id;
-  int element_index;
-  std::string element_id;
-  int clip_index;
-  std::string clip_id;
-  double clipleft, clipright, cliptop, clipbottom;
-  bool standalone;
-  bool setdims;
-  /*   */
-  int tracer_first_elt;
-  int tracer_last_elt;
-  int tracer_on;
-  int tracer_is_init;
+  /* the output filename */
+  const std::string filename;
+  /* svg dimensions */
+  const double width;
+  const double height;
+  /* id for the svg */
+  const std::string canvas_id;
+  /* is the svg standalone? */
+  const bool standalone;
+  /* set svg dimension attributes? */
+  const bool setdims;
+  /* font aliases */
+  const Rcpp::List system_aliases;
 
-  Rcpp::List system_aliases;
+  /* indexed interactive elements */
+  InteractiveElements interactives;
+  /* indexed clip elements */
+  Clips clips;
 
-  DSVG_dev(std::string filename_, bool standalone_, bool setdims_,
+  /*
+   * Constructor
+   *
+   * filename_    The filename to use
+   * width_       SVG width in pixels
+   * height_      SVG height in pixels
+   * canvas_id_   SVG id
+   * standalone_  Add XML header?
+   * setdims_     Add dimensions?
+   * aliases_     Font aliases
+   */
+  DSVG_dev(std::string filename_,
+           double width_, double height_,
            std::string canvas_id_,
-           int bg_,
-           Rcpp::List& aliases_,
-           double width_, double height_ ):
-    filename(filename_),
-    pageno(0),
-    canvas_id(canvas_id_),
-    element_index(0),
-    element_id(canvas_id_ + "_el_0"),
-    clip_index(0),
-    clip_id(canvas_id_ + "_cl_0"),
-    standalone(standalone_),
-    setdims(setdims_),
-    tracer_first_elt(-1),
-    tracer_last_elt(-1),
-    tracer_on(0),
-    tracer_is_init(0),
-    system_aliases(Rcpp::wrap(aliases_["system"])) {
-    file = fopen(R_ExpandFileName(filename.c_str()), "w");
-    clipleft = 0.0;
-    clipright = width_;
-    cliptop = 0.0;
-    clipbottom = height_;
-    doc_ = 0;
-    root_ = 0;
-    root_g_ = 0;
-    element_map_ = 0;
-    css_map_ = 0;
-  }
+           bool standalone_, bool setdims_,
+           Rcpp::List& aliases_);
+  ~DSVG_dev();
 
-  bool ok() const {
-    return file != NULL;
-  }
+  /* Returns init status */
+  bool is_init() const;
 
-  void new_element() {
-    element_index++;
-    element_id.assign(canvas_id + "_el_" + to_string(element_index));
-    register_element();
-  }
+  /* Initializes and returns the root SVG element */
+  SVGElement* svg_root();
 
-  void new_clip() {
-    clip_index++;
-    clip_id.assign(canvas_id + "_cl_" + to_string(clip_index));
-  }
+  /*
+   * Creates and returns an SVG element.
+   *
+   * name     The tag name to use
+   * parent   The parent element. If it's not specified, it is resolved internally.
+   *
+   * For most cases leave the parent unset.
+   * It will be added inside the proper parent element according to the current context.
+   * If the tracing is on and we are not inside a definition element,
+   * it will be automatically added to the 'interactives' member.
+   */
+  SVGElement* svg_element(const char* name, SVGElement* parent = NULL);
 
-  void set_tracer_on(){
-    tracer_on = 1;
-    tracer_is_init = 0;
-    tracer_first_elt = -1;
-    tracer_last_elt = -1;
-  }
+  /*
+   * Creates and returns an SVG 'definition' element (clipPath/mask/pattern/etc).
+   * The root defs node is used as its parent.
+   * After its creation it should be added manually inside the proper indexing member
+   * (clips/masks/patterns/etc)
+   *
+   * name     The tag name to use
+   */
+  SVGElement* svg_definition(const char* name);
 
-  void set_tracer_off(){
-    tracer_on = 0;
-    tracer_is_init = 0;
-    tracer_first_elt = -1;
-    tracer_last_elt = -1;
-  }
+  /*
+   * Basic method for creating an SVG element.
+   *
+   * name     The tag name to use
+   * parent   The parent element. If it's specified, the new element is added inside it,
+   * position The position to use for positioning the element
+   * sibling  A sibling to use for position (in case of EPosition::BEFORE or EPosition::AFTER)
+   */
+  SVGElement* create_element(const char* name,
+                             SVGElement* parent,
+                             const EPosition position = EPosition::BOTTOM,
+                             SVGElement* sibling = NULL);
 
-  void register_element() {
-    if( tracer_on > 0 ){
-      if( tracer_is_init < 1 ){
-        tracer_first_elt = element_index;
-        tracer_is_init = 1;
-      }
-      tracer_last_elt = element_index;
-    }
-  }
+  /*
+   * Declares that a new active context should be created, based on a new definition element.
+   * All subsequent elements will be appended somewhere under that element.
+   * Look at ContainerContext class for parameter meaning.
+   */
+  void push_definition(SVGElement* element,
+                       const bool& use_grouping, const bool& paint_children = true);
 
-  SVGElement* svg_root() {
-    if (doc_)
-      return root_;
-    this->doc_ = new_svg_doc(standalone, false);
-    this->root_ = svg_element("svg", false, (SVGElement*)doc_);
-    if (standalone){
-      set_attr(root_, "xmlns", "http://www.w3.org/2000/svg");
-      set_attr(root_, "xmlns:xlink", "http://www.w3.org/1999/xlink");
-    }
-    this->root_g_ = svg_element("g", false, root_);
-    this->element_map_ = new std::unordered_map<int, SVGElement*>();
-    this->css_map_ = new std::unordered_map<std::string, std::string>();
-    return root_;
-  }
+  /*
+   * Declares the exit of the active definition context.
+   */
+  void pop_definition();
 
-  SVGElement* svg_element(const char* name, const bool track, SVGElement* parent = NULL) {
-    SVGElement* el = new_svg_element(name, doc_);
-    if (parent) {
-      append_element(el, parent);
-    } else {
-      append_element(el, root_g_);
-    }
-    if (track) {
-      element_map_->insert(std::pair<int, SVGElement*>(element_index, el));
-    }
-    return el;
-  }
+  /*
+   * Returns true if the active context is a definition
+   */
+  const bool is_adding_definition() const;
 
-  SVGText* svg_text(const char* str, SVGElement* parent = NULL, const bool cdata = true) {
-    SVGText* el = new_svg_text(str, doc_, cdata);
-    if (parent) {
-      append_element((SVGElement*)el, parent);
-    } else {
-      append_element((SVGElement*)el, root_g_);
-    }
-    return el;
-  }
+  /*
+   * Returns true if the elements added in the active context should be painted.
+   * For regular context it will be true, for elements under definition,
+   * it will depend on the 'paint' argument supplied when pushing the definition.
+   */
+  const bool should_paint() const;
 
-  SVGElement* get_svg_element(const int id) {
-    std::unordered_map<int, SVGElement*>::const_iterator got = element_map_->find(id);
-    if ( got == element_map_->end() )
-      return NULL;
-    else
-      return got->second;
-  }
+  /* Sets the active clip index */
+  void use_clip(const INDEX index);
 
-  void add_css(const std::string key, const std::string value) {
-    css_map_->insert(std::pair<std::string, std::string>(key, value));
-  }
-
-  ~DSVG_dev() {
-    if (ok()) {
-      if (doc_) {
-        add_styles();
-        svg_to_file(doc_, file, false);
-        delete(element_map_);
-        delete(css_map_);
-        delete(doc_);
-      }
-      fclose(file);
-    }
-  }
+  /*  Adds a css style */
+  void add_css(const std::string key, const std::string value);
 
 private:
-  SVGDocument* doc_;
-  SVGElement* root_;
-  SVGElement* root_g_;
-  std::unordered_map<int, SVGElement*>* element_map_;
-  std::unordered_map<std::string, std::string>* css_map_;
+  // Helper classes defined later
+  class ContainerContext;
+  class GroupContext;
 
-  void add_styles() {
-    if (css_map_->size() > 0) {
-      SVGElement* styleEl = new_svg_element("style", doc_);
-      prepend_element(styleEl, root_);
-      std::stringstream os;
-      for ( auto it = css_map_->begin(); it != css_map_->end(); ++it ) {
-        os << it->second;
-      }
-      svg_text(os.str().c_str(), styleEl, true);
-    }
-  }
+  /* the output file handle */
+  FILE* file;
+  /* the svg document */
+  SVGDocument* doc;
+  /* the root svg element */
+  SVGElement* root;
+  /* the root g element */
+  SVGElement* root_g;
+  /* the root defs element */
+  SVGElement* root_defs;
+  /*
+   * Stack of contexts (see ContainerContext).
+   * The top of the stack is the active context and
+   * all subsequent elements are added under that.
+   */
+  std::stack<ContainerContext*>* contexts;
+
+  /* returns the element to use as parent in current context */
+  SVGElement* resolve_parent();
+
+  /* a map with all styles */
+  std::unordered_map<std::string, std::string>* css_map;
+  /* adds the css styles in the svg */
+  void add_styles();
+
+  /*
+   * Helper class defining a container structure,
+   * identified by an element (usually g) and a clipPath index
+   */
+  class Container {
+  public:
+    /* container's element, serves as a parent for next elements */
+    SVGElement* element;
+    /* container's clip index */
+    INDEX clip_index;
+
+    /* Constructor */
+    Container(SVGElement* element_, const INDEX clip_index_ = NULL_INDEX) :
+      element(element_), clip_index(clip_index_) {}
+  };
+
+  /*
+   * Class for a container context.
+   */
+  class ContainerContext {
+  public:
+
+    /* base context element, serves as a parent for the containers */
+    SVGElement* element;
+
+    /* flag indicating if this is a definition context */
+    bool is_definition;
+
+    /* flag indicating if this is context uses element grouping */
+    bool use_grouping;
+
+    /* flag indicating if the children elements should get painted */
+    bool paint_children;
+
+    /* pointer to active container */
+    Container* container;
+
+    /*
+     * The context's clip index. Initially it's NULL,
+     * but it can be changed via the 'use_clip' method.
+     * When the context's clip_index is different from the active container's clip_index, then
+     * a new container is created, with the new clip_index (see resolveParent).
+     */
+    INDEX clip_index;
+
+    /*
+     * Constructor
+     *
+     * element_          The base element
+     *
+     * is_definition_    A flag indicating if this is a definition context (under svg/defs)
+     *
+     * use_grouping_     If true, specifies that the base element can contain group (g) elements,
+     *                   and the context is organized by group container elements.
+     *                   All subsequent children will be appended to a group container.
+     *                   If false, then the base element cannot contain group (g) elements,
+     *                   and all subsequent children will be appended directly
+     *                   under the base element.
+     *
+     *                   Contexts for clipPath, filters and gradients need this to be false.
+     *                   Contexts for regular elements, masks and patterns need this to be true.
+     *
+     *                   See 'push_definition' and 'resolveParent'.
+     *
+     * paint_children_   If true, specifies that children elements added to the definition node
+     *                   should get painted (fill/stroke).
+     *                   If false (like in the case of clipPaths), children elements will not get painted.
+     */
+    ContainerContext(SVGElement* element_,
+                     const bool is_definition_,
+                     const bool use_grouping_,
+                     const bool paint_children_) :
+      element(element_),
+      is_definition(is_definition_),
+      use_grouping(use_grouping_),
+      paint_children(paint_children_),
+      container(use_grouping_ ? NULL : new Container(element_)),
+      clip_index(NULL_INDEX) {}
+  };
 };
 
 #endif // DSVG_DEV_INCLUDED
