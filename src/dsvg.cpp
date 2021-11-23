@@ -92,14 +92,7 @@ pDevDesc dsvg_driver_new(std::string filename,
   dd->metricInfo = dsvg_metric_info;
   dd->cap = NULL;
   dd->raster = dsvg_raster;
-#if R_GE_version >= 13
-  dd->setClipPath     = dsvg_set_clip_path;
-  dd->releaseClipPath = dsvg_release_clip_path;
-  dd->setMask         = dsvg_set_mask;
-  dd->releaseMask     = dsvg_release_mask;
-  dd->setPattern      = dsvg_set_pattern;
-  dd->releasePattern  = dsvg_release_pattern;
-#endif
+
   // UTF-8 support
   dd->wantSymbolUTF8 = (Rboolean) 1;
   dd->hasTextUTF8 = (Rboolean) 1;
@@ -133,7 +126,25 @@ pDevDesc dsvg_driver_new(std::string filename,
   dd->haveTransparentBg = 2;
 
 #if R_GE_version >= 13
+  // new GE features: non-rect clipPaths, masks, gradients and patterns
+  dd->setClipPath     = dsvg_set_clip_path;
+  dd->releaseClipPath = dsvg_release_clip_path;
+  dd->setMask         = dsvg_set_mask;
+  dd->releaseMask     = dsvg_release_mask;
+  dd->setPattern      = dsvg_set_pattern;
+  dd->releasePattern  = dsvg_release_pattern;
+
+  // version 13 fully supported
   dd->deviceVersion = R_GE_definitions;
+#endif
+
+#if R_GE_version >= 14
+  // With this flag, all clipping is delegated to device.
+  // No need to do anything special.
+  dd->deviceClip = TRUE;
+
+  // version 14 fully supported
+  dd->deviceVersion = R_GE_deviceClip;
 #endif
 
   dd->deviceSpecific = new DSVG_dev(filename,
