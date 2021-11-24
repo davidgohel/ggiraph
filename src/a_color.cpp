@@ -20,6 +20,10 @@ bool a_color::is_transparent() {
   return (alpha == 0);
 }
 
+bool a_color::has_alpha() {
+  return (alpha < 255);
+}
+
 a_color::a_color (int col):
   col(col) {
   alpha = R_ALPHA(col);
