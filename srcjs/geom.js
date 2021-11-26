@@ -440,22 +440,7 @@ window.DOMPoint.prototype.matrixTransform =
       this[$is2D] = true;
 
       this[$values] = new Float64Array([
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
       ]);
 
       // Parse CSS transformList

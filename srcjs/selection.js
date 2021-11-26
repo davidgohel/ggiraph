@@ -23,7 +23,7 @@ export default class SelectionHandler {
   init() {
     // select elements
     const elements = d3
-      .select('#' + this.svgid)
+      .select('#' + this.svgid + ' > g')
       .selectAll('*[' + this.attrName + ']');
     // check selection type
     if (
@@ -70,7 +70,7 @@ export default class SelectionHandler {
     const that = this;
     // remove event listeners
     try {
-      d3.select('#' + this.svgid)
+      d3.select('#' + this.svgid + ' > g')
         .selectAll('*[' + this.attrName + ']')
         .each(function () {
           this.removeEventListener('click', that);
@@ -128,7 +128,7 @@ export default class SelectionHandler {
   }
 
   refreshSelected() {
-    const svgEl = d3.select('#' + this.svgid);
+    const svgEl = d3.select('#' + this.svgid + ' > g');
     svgEl
       .selectAll('*[' + this.attrName + '].' + this.clsName)
       .classed(this.clsName, false);
@@ -141,7 +141,7 @@ export default class SelectionHandler {
   }
 
   lasso(add) {
-    const svgEl = d3.select('#' + this.svgid);
+    const svgEl = d3.select('#' + this.svgid + ' > g');
     const that = this;
     let lasso_ = d3.lasso();
     const lasso_start = function () {};
@@ -172,7 +172,7 @@ export default class SelectionHandler {
         .closePathSelect(true)
         .closePathDistance(100)
         .items(svgEl.selectAll('*[' + this.attrName + ']'))
-        .targetArea(svgEl.select('g'))
+        .targetArea(svgEl)
         .on('start', lasso_start)
         .on('draw', lasso_draw)
         .on('end', lasso_end);

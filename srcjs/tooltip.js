@@ -31,7 +31,7 @@ export default class TooltipHandler {
   init() {
     const svg = d3.select('#' + this.svgid);
     // select elements
-    const elements = svg.select('g').selectAll('*[title]');
+    const elements = d3.select('#' + this.svgid + ' > g').selectAll('*[title]');
     // check selection type
     if (elements.empty()) {
       // nothing to do here, return false to discard this
@@ -78,7 +78,7 @@ export default class TooltipHandler {
     // remove event listeners
     try {
       svg
-        .select('g')
+        .select('svg>g')
         .selectAll('*[title]')
         .each(function () {
           this.removeEventListener('mouseover', that);

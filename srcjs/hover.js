@@ -21,7 +21,7 @@ export default class HoverHandler {
   init() {
     // select elements
     const elements = d3
-      .select('#' + this.svgid)
+      .select('#' + this.svgid + ' > g')
       .selectAll('*[' + this.attrName + ']');
     if (elements.empty()) {
       // nothing to do here, return false to discard this
@@ -54,7 +54,7 @@ export default class HoverHandler {
     const that = this;
     // remove event listeners
     try {
-      d3.select('#' + this.svgid)
+      d3.select('#' + this.svgid + ' > g')
         .selectAll('*[' + this.attrName + ']')
         .each(function () {
           this.removeEventListener('mouseover', that);
@@ -101,7 +101,7 @@ export default class HoverHandler {
   }
 
   refreshHovered() {
-    const svgEl = d3.select('#' + this.svgid);
+    const svgEl = d3.select('#' + this.svgid + ' > g');
     svgEl
       .selectAll('*[' + this.attrName + '].' + this.clsName)
       .classed(this.clsName, false);
