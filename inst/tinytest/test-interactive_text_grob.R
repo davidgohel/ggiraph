@@ -36,7 +36,7 @@ source("setup.R")
     gr <- interactive_text_grob(
       paste("label", seq_len(6)),
       x = c(0.1, 0.12, 0.2, 0.2, 0.5, 0.55),
-      y = c(0.12, 0.1, 0.2, 0.22, 0.55, 0.55),
+      y = c(0.12, 0.11, 0.2, 0.21, 0.55, 0.55),
       check.overlap = TRUE,
       tooltip = as.character(seq_len(6)),
       info = rep("bar", 6),

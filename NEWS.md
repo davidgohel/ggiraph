@@ -1,6 +1,10 @@
 # ggiraph 0.8.0
 
 ## Enhancement
+* Updated DSVG device version to 14
+* Added support for clipping paths, masks, gradients and patterns
+* Implemented new version of internal DSVG device
+* Refactored cpp code, to smaller files per context
 * Added tests for tinytest & improved coverage
 * New geom functions: `geom_violin_interactive`, `geom_label_repel_interactive`, `geom_text_repel_interactive`, `geom_contour_filled_interactive`, `geom_hex_interactive`, `geom_spoke_interactive`, `geom_curve_interactive`, `geom_count_interactive`, `geom_bin_2d_interactive`, `geom_density_2d_filled_interactive`.
 * New grob functions: `interactive_curve_grob`.
@@ -11,11 +15,13 @@
 * Miscellaneous refactorings & improvements to internal code
 
 ## Changes
+* Updated `tinyxml2` to version `9.0.0`
 * Switched to `tinytest` for testing
 * Updated dependency for `ggplot2` to version `3.3.5`.
 * Updated libs for Windows build (thanks to Jeroen Ooms)
 
 ## Issues
+* Fixed `interactive_text_grob` when check.overlap = TRUE
 * Fixed `interactive_points_grob` interactive attributes when shapes with lines are used
 * Fixed issues for `geom_errorbar_interactive`
 * Fixed some typos in documentation
