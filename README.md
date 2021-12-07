@@ -5,7 +5,7 @@
 status](https://github.com/davidgohel/ggiraph/workflows/R-CMD-check/badge.svg)](https://github.com/davidgohel/ggiraph/actions)
 [![version](https://www.r-pkg.org/badges/version/ggiraph)](https://CRAN.R-project.org/package=ggiraph)
 ![cranlogs](https://cranlogs.r-pkg.org/badges/ggiraph) [![codecov test
-coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg)](https://codecov.io/gh/davidgohel/ggiraph)
+coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg)](https://app.codecov.io/gh/davidgohel/ggiraph)
 
 ## Overview
 
@@ -143,7 +143,7 @@ provide if possible:
 -   the new function(s) with code and roxygen tags (with examples)
 -   a new section in the appropriate vignette that describes how to use
     the new function
--   corresponding tests in directory `tests/testthat`.
+-   corresponding tests in directory `inst/tinytest`.
 
 By using rhub (run `rhub::check_for_cran()`), you will see if everything
 is ok. When submitted, the PR will be evaluated automatically on travis
