@@ -45,7 +45,7 @@ girafe_css <- function(css,
 validate_css <- function(css,
                          name,
                          tag = NULL) {
-  if (is.null(css) || is.na(css))
+  if (is.null(css) || any(is.na(css)))
     css <- ""
   if (!is_scalar_character(css))
     stop(paste0("Argument `", name, "` must be a scalar character"), call. = FALSE)
