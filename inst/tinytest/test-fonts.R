@@ -2,9 +2,17 @@ library(tinytest)
 library(ggiraph)
 source("setup.R")
 
+if (!requireNamespace("shinytest", quietly = TRUE)) {
+  exit_file("package 'shinytest' is not installed")
+}
+
+result <- ggiraph:::fortify_font_db()
+if(!(is.data.frame(result) && nrow(result) > 0)){
+  exit_file("no available font")
+}
+
 # fonts ----
 {
-  result <- ggiraph:::fortify_font_db()
   expect_true(is.data.frame(result) && nrow(result) > 0)
   result <- ggiraph::match_family("sans")
   expect_true(is.character(result) && nzchar(result) > 0)

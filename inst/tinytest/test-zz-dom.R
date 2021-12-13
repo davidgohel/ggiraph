@@ -5,6 +5,9 @@ library(xml2)
 if (!requireNamespace("shinytest", quietly = TRUE)) {
   exit_file("package 'shinytest' is not installed")
 }
+if (!shinytest::dependenciesInstalled()) {
+  exit_file("program 'PhantomJS' is not installed")
+}
 
 # svg is produced when rendered in html ----
 {

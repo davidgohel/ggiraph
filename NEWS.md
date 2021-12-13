@@ -1,6 +1,15 @@
+# ggiraph 0.8.1
+
+## Issues
+
+* skip test `test-zz-dom.R` when 'PhantomJS' is not installed
+* skip tests `test-interactive_text_grob.R` and `test-fonts.R` 
+when no font is detected on the system.
+
 # ggiraph 0.8.0
 
 ## Enhancement
+
 * Updated DSVG device version to 14
 * Added support for clipping paths, masks, gradients and patterns
 * Implemented new version of internal DSVG device
@@ -15,12 +24,14 @@
 * Miscellaneous refactorings & improvements to internal code
 
 ## Changes
+
 * Updated `tinyxml2` to version `9.0.0`
 * Switched to `tinytest` for testing
 * Updated dependency for `ggplot2` to version `3.3.5`.
 * Updated libs for Windows build (thanks to Jeroen Ooms)
 
 ## Issues
+
 * Fixed `interactive_text_grob` when check.overlap = TRUE
 * Fixed `interactive_points_grob` interactive attributes when shapes with lines are used
 * Fixed issues for `geom_errorbar_interactive`

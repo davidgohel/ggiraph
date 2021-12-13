@@ -4,6 +4,11 @@ library(grid)
 library(xml2)
 source("setup.R")
 
+result <- ggiraph:::fortify_font_db()
+if(!(is.data.frame(result) && nrow(result) > 0)){
+  exit_file("no available font")
+}
+
 # interactive_text_grob ----
 {
   eval(test_grob, envir = list(name = "interactive_text_grob"))
