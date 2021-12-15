@@ -146,5 +146,5 @@ provide if possible:
 -   corresponding tests in directory `inst/tinytest`.
 
 By using rhub (run `rhub::check_for_cran()`), you will see if everything
-is ok. When submitted, the PR will be evaluated automatically on travis
-and appveyor and you will be able to see if something broke.
+is ok. When submitted, the PR will be evaluated automatically with
+Github Action and you will be able to see if something broke.
