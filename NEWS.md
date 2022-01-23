@@ -1,3 +1,9 @@
+# ggiraph 0.8.2
+
+## Issues
+
+* fix linetype when line size is less than 1 (#216).
+
 # ggiraph 0.8.1
 
 ## Issues

@@ -89,7 +89,12 @@ void set_stroke(SVGElement* element, const double& width, const int& col,
 
   if (type > LTY_SOLID) {
     int lty = type;
-    double lwd = width;
+
+    double lwd = (width > 1) ? width : 1;
+    // seems lwd needs to be >= 1 so that the stroke-dasharray code works as expected
+    // https://github.com/wch/r-source/blob/master/src/library/grDevices/src/cairo/cairoFns.c#L134
+    // used also by scale_lty here: https://github.com/r-lib/svglite/blob/main/src/devSVG.cpp#L459
+
     std::ostringstream os;
     os << (int) lwd * (lty & 15);
     lty = lty >> 4;
