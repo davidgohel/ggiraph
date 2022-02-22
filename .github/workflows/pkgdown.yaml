@@ -51,6 +51,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          install.packages("stringi", type="source")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "gfonts", "tidyverse", "ggthemes", "ggtext", "glue", "ggh4x"))
           remotes::install_github("ardata-fr/pkgardata")

@@ -26,6 +26,9 @@ reference:
     - renderGirafe
     - girafeOutput
     - run_girafe_example
+    - ggiraphOutput
+    - ggiraph
+    - renderggiraph
   - title: Interactive geometries
     contents:
     - starts_with("geom_")
@@ -33,6 +36,11 @@ reference:
     contents:
     - starts_with("scale_")
     - starts_with("guide_")
+  - title: Fonts
+    contents:
+    - match_family
+    - validated_fonts
+    - font_family_exists
   - title: Other interactive layers
     contents:
     - labeller_interactive
@@ -41,6 +49,9 @@ reference:
     - label_interactive
     - starts_with("element_")
     - element_interactive
+  - title: Grobs
+    contents:
+    - ends_with("_grob")
 
 navbar:
   title: ggiraph
