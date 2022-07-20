@@ -188,7 +188,7 @@ hovers over them. These animations can be configured using the following functio
 
 These functions all have a `css` argument that defines by css instructions 
 the style to use when the mouse passes over them. `css` here 
-is relative to SVG elements. SVG attributes are listed [here](https://developer.mozilla.org/fr/docs/Web/SVG/Attribute). Common 
+is relative to SVG elements. SVG attributes are listed [here](https://developer.mozilla.org/docs/Web/SVG/Attribute). Common 
 properties are: 
 
 * fill: background color 
