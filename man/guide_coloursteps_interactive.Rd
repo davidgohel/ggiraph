@@ -19,7 +19,7 @@ An interactive guide object.
 The guide is based on \code{\link[=guide_coloursteps]{guide_coloursteps()}}.
 See the documentation for that function for more details.
 }
-\section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{
+\section{Details for interactive scale and interactive guide functions}{
 
 For scales, the interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors, depending on the number of breaks (levels) and

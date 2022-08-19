@@ -26,7 +26,7 @@ These geometries are based on \code{\link[=geom_crossbar]{geom_crossbar()}}, \co
 \code{\link[=geom_linerange]{geom_linerange()}} and \code{\link[=geom_pointrange]{geom_pointrange()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

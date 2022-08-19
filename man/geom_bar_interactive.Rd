@@ -19,7 +19,7 @@ The geometries are based on \code{\link[=geom_bar]{geom_bar()}}
 and \code{\link[=geom_col]{geom_col()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

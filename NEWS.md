@@ -1,3 +1,9 @@
+# ggiraph 0.8.3
+
+## Issues
+
+* fix: update Rd content to produce valid HTML5 (for CRAN manuals now using HTML5 format).
+
 # ggiraph 0.8.2
 
 ## Issues

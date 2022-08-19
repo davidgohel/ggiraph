@@ -14,7 +14,7 @@ plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 The geometry is based on \code{\link[=geom_hex]{geom_hex()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

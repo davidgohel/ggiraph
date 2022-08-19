@@ -17,7 +17,7 @@ See the documentation for those functions for more details.
 \note{
 The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be used.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

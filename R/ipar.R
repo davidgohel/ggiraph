@@ -38,7 +38,7 @@
 #' Useful for setting the tooltip background color in [geom_text_interactive()] or
 #' [geom_label_interactive()], when the geom text color may be the same as the tooltip text color.
 #'
-#' @section Details for geom_*_interactive functions:
+#' @section Details for interactive geom functions:
 #' The interactive parameters can be supplied with two ways:
 #' \itemize{
 #'   \item As aesthetics with the mapping argument (via [aes()]).
@@ -52,7 +52,7 @@
 #' The interactive parameters can be supplied as arguments in the relevant function
 #' and they can be scalar values or vectors depending on params on base function.
 #'
-#' @section Details for scale_*_interactive and guide_*_interactive functions:
+#' @section Details for interactive scale and interactive guide functions:
 #' For scales, the interactive parameters can be supplied as arguments in the relevant function
 #' and they can be scalar values or vectors, depending on the number of breaks (levels) and
 #' the type of the guide used.

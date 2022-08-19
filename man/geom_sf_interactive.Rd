@@ -20,7 +20,7 @@ plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 These geometries are based on \code{\link[=geom_sf]{geom_sf()}}, \code{\link[=geom_sf_label]{geom_sf_label()}} and \code{\link[=geom_sf_text]{geom_sf_text()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

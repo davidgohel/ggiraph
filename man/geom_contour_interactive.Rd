@@ -18,7 +18,7 @@ These geometries are based on \code{\link[=geom_contour]{geom_contour()}}
 and \code{\link[=geom_contour_filled]{geom_contour_filled()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

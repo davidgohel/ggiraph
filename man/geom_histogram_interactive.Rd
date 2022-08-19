@@ -23,7 +23,7 @@ This interactive version is only providing a single tooltip per
 group of data (same for \code{data_id}). It means it is only possible
 to associate a single tooltip to a set of bins.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

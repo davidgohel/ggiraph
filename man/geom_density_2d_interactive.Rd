@@ -19,7 +19,7 @@ plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 The geometries are based on \code{\link[=geom_density_2d]{geom_density_2d()}} and \code{\link[=geom_density_2d_filled]{geom_density_2d_filled()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

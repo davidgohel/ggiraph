@@ -5,7 +5,7 @@
 #'
 #' @param ... arguments passed to base function.
 #' @return An interactive guide object.
-#' @inheritSection interactive_parameters Details for scale_*_interactive and guide_*_interactive functions
+#' @inheritSection interactive_parameters Details for interactive scale and interactive guide functions
 #' @examples
 #' # add interactive discrete legend guide to a ggplot -------
 #' @example examples/scale_manual_guide_legend_discrete_interactive.R

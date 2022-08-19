@@ -92,7 +92,7 @@ These scales are based on
 \code{\link[=scale_fill_datetime]{scale_fill_datetime()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{
+\section{Details for interactive scale and interactive guide functions}{
 
 For scales, the interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors, depending on the number of breaks (levels) and

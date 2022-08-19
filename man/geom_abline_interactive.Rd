@@ -21,7 +21,7 @@ plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 These geometries are based on \code{\link[=geom_abline]{geom_abline()}},
 \code{\link[=geom_hline]{geom_hline()}} and \code{\link[=geom_vline]{geom_vline()}}.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

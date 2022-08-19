@@ -24,7 +24,7 @@ svg and make it unreadable in a browser.
 Function \code{geom_tile_interactive} should be used with caution, total number of
 rectangles should be small.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

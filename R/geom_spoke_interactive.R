@@ -7,7 +7,7 @@
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters()].
-#' @inheritSection interactive_parameters Details for geom_*_interactive functions
+#' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive line segments parameterised by location,
 #' # direction and distance to a ggplot -------

@@ -21,7 +21,7 @@ These geometries are based on \code{\link[=geom_path]{geom_path()}},
 \code{\link[=geom_line]{geom_line()}} and \code{\link[=geom_step]{geom_step()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{

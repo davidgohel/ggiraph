@@ -11,7 +11,7 @@
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters()].
-#' @inheritSection interactive_parameters Details for geom_*_interactive functions
+#' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive histogram -------
 #' @example examples/geom_histogram_interactive.R

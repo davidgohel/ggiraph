@@ -34,11 +34,7 @@ be ignored if this argument is supplied.}
 
 \item{width}{widget width ratio (0 < width <= 1).}
 
-\item{width_svg}{The width and height of the graphics region in inches.
-The default values are 6 and 5 inches. This will define the aspect ratio of the
-graphic as it will be used to define viewbox attribute of the SVG result.}
-
-\item{height_svg}{The width and height of the graphics region in inches.
+\item{width_svg, height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
 graphic as it will be used to define viewbox attribute of the SVG result.}
 

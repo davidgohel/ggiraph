@@ -6,7 +6,7 @@
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters()].
-#' @inheritSection interactive_parameters Details for geom_*_interactive functions
+#' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive maps to a ggplot -------
 #' @example examples/geom_map_interactive.R

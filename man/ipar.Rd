@@ -42,7 +42,7 @@ Throughout ggiraph there are functions that add interactivity to ggplot plot ele
 The user can control the various aspects of interactivity by supplying
 a special set of parameters to these functions.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{
@@ -60,7 +60,7 @@ The interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors depending on params on base function.
 }
 
-\section{Details for scale_\emph{\emph{interactive and guide}}_interactive functions}{
+\section{Details for interactive scale and interactive guide functions}{
 
 For scales, the interactive parameters can be supplied as arguments in the relevant function
 and they can be scalar values or vectors, depending on the number of breaks (levels) and

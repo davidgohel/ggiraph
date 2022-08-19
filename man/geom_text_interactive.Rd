@@ -18,7 +18,7 @@ plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
 The geometries are based on \code{\link[=geom_text]{geom_text()}} and \code{\link[=geom_label]{geom_label()}}.
 See the documentation for those functions for more details.
 }
-\section{Details for geom_*_interactive functions}{
+\section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{
