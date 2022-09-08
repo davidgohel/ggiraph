@@ -13,7 +13,7 @@ dependencies:
     src: htmlwidgets/lib/save-svg-as-png-1.4.17
     script: save-svg-as-png.min.js
   - name: ggiraphjs
-    version: 0.4.2
-    src: htmlwidgets/lib/ggiraphjs-0.4.2
+    version: 0.4.3
+    src: htmlwidgets/lib/ggiraphjs-0.4.3
     script: ggiraphjs.min.js
     stylesheet: ggiraphjs.min.css

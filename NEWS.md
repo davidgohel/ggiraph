@@ -1,3 +1,13 @@
+# ggiraph 0.8.4
+
+## Enhancement
+
+* Added opts_selection_inv for inverted selection effect
+
+## Issues
+
+* fix: hover styles should take priority over selection styles.
+
 # ggiraph 0.8.3
 
 ## Issues
