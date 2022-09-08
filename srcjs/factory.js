@@ -17,6 +17,7 @@ export function factory(shinyMode) {
           x.settings.hoverkey.css,
           x.settings.hovertheme.css,
           x.settings.capture.css,
+          x.settings.captureinv.css,
           x.settings.capturekey.css,
           x.settings.capturetheme.css
         ]);
@@ -79,7 +80,9 @@ export function factory(shinyMode) {
             messageSuffix: '_set',
             type: x.settings.capture.type,
             only_shiny: x.settings.capture.only_shiny,
-            selected: x.settings.capture.selected
+            selected: x.settings.capture.selected,
+            invClassPrefix:
+              x.settings.captureinv.css.length > 0 ? 'selected_inv' : null
           },
           {
             classPrefix: 'selected_key',

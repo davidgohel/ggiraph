@@ -2,6 +2,7 @@
 % Please edit documentation in R/girafe_options.R
 \name{opts_selection}
 \alias{opts_selection}
+\alias{opts_selection_inv}
 \alias{opts_selection_key}
 \alias{opts_selection_theme}
 \title{Selection effect settings}
@@ -12,6 +13,8 @@ opts_selection(
   only_shiny = TRUE,
   selected = character(0)
 )
+
+opts_selection_inv(css = NULL)
 
 opts_selection_key(
   css = NULL,
@@ -46,6 +49,8 @@ selected graphic elements.
 Use \code{opts_selection} for interactive geometries in panels,
 \code{opts_selection_key} for interactive scales/guides and
 \code{opts_selection_theme} for interactive theme elements.
+Use \code{opts_selection_inv} for the effect on the rest of the geometries,
+while some are selected (inverted operation).
 }
 \note{
 \strong{IMPORTANT}: When applying a \code{fill} style with the \code{css} argument,
@@ -69,7 +74,7 @@ gg <- ggplot(
 
 x <- girafe(ggobj = gg)
 x <- girafe_options(x,
-  opts_selection(type = "multiple",
+  opts_selection(type = "multiple", only_shiny = FALSE,
     css = "fill:red;stroke:gray;r:5pt;") )
 if( interactive() ) print(x)
 }

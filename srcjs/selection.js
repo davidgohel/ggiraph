@@ -4,6 +4,7 @@ export default class SelectionHandler {
   constructor(
     svgid,
     classPrefix,
+    invClassPrefix,
     attrName,
     shinyInputId,
     shinyMessageId,
@@ -12,6 +13,7 @@ export default class SelectionHandler {
   ) {
     this.svgid = svgid;
     this.clsName = classPrefix + '_' + svgid;
+    this.invClsName = invClassPrefix ? invClassPrefix + '_' + svgid : null;
     this.attrName = attrName;
     this.shinyInputId = shinyInputId;
     this.shinyMessageId = shinyMessageId;
@@ -132,11 +134,21 @@ export default class SelectionHandler {
     svgEl
       .selectAll('*[' + this.attrName + '].' + this.clsName)
       .classed(this.clsName, false);
+    if (this.invClsName) {
+      svgEl
+        .selectAll('*[' + this.attrName + '].' + this.invClsName)
+        .classed(this.invClsName, false);
+    }
     const that = this;
     for (let i = 0; i < that.dataSelected.length; i++) {
       svgEl
         .selectAll('*[' + that.attrName + '="' + that.dataSelected[i] + '"]')
         .classed(that.clsName, true);
+    }
+    if (that.invClsName && that.dataSelected.length > 0) {
+      svgEl
+        .selectAll('*[' + that.attrName + ']:not(.' + that.clsName + ')')
+        .classed(that.invClsName, true);
     }
   }
 

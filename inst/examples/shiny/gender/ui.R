@@ -62,6 +62,14 @@ shinyUI(fluidPage(
     column(
       width = 4,
       checkboxInput(
+        "selection_inv",
+        label = "Selecting some data element(s), makes the rest semi-transparent",
+        value = FALSE
+      )
+    ),
+    column(
+      width = 4,
+      checkboxInput(
         "hover_inv",
         label = "Hovering over one data element, makes the rest semi-transparent",
         value = FALSE

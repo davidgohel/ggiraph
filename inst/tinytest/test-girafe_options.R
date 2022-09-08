@@ -43,13 +43,18 @@ library(ggiraph)
   expect_true(is.list(opts) && length(opts) > 0, info = "opts_selection is non-empty list")
   expect_error(opts_selection(type = "mixed"), info = "check type argument")
 }
+# opts_selection_inv ----
+{
+  opts <- opts_selection_inv()
+  expect_true(is.list(opts) && length(opts) > 0, info = "opts_selection_inv is non-empty list")
+}
 # opts_selection_key ----
 {
   opts <- opts_selection_key()
   expect_true(is.list(opts) && length(opts) > 0, info = "opts_selection_key is non-empty list")
   expect_error(opts_selection_key(type = "mixed"), info = "check type argument")
 }
-# opts_selection_key ----
+# opts_selection_theme ----
 {
   opts <- opts_selection_theme()
   expect_true(is.list(opts) && length(opts) > 0, info = "opts_selection_theme is non-empty list")
@@ -100,6 +105,7 @@ library(ggiraph)
     hoverinv = opts_hover_inv(css = "opacity: 0.5"),
     zoom = opts_zoom(1, 2),
     capture = opts_selection(css = "", type = "none"),
+    captureinv = opts_selection_inv(css = "opacity: 0.5"),
     capturekey = opts_selection_key(css = "", type = "none"),
     capturetheme = opts_selection_theme(css = "", type = "none"),
     toolbar = opts_toolbar(position = "bottom", pngname = "plot"),

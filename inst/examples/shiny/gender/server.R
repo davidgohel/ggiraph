@@ -67,6 +67,7 @@ shinyServer(function(input, output, session) {
         reactive = input$opt_hover_key
       ),
       opts_selection_theme(type = input$opt_selected_theme),
+      opts_selection_inv(css = if (input$selection_inv == TRUE) "opacity:0.3" else ""),
       opts_hover_theme(reactive = input$opt_hover_theme),
       opts_hover_inv(css = if (input$hover_inv == TRUE) "opacity:0.3" else "")
     )

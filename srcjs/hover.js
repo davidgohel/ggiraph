@@ -117,10 +117,10 @@ export default class HoverHandler {
         .selectAll('*[' + that.attrName + '="' + that.dataHovered[i] + '"]')
         .classed(that.clsName, true);
     }
-    if (this.invClsName && this.dataHovered.length > 0) {
+    if (that.invClsName && that.dataHovered.length > 0) {
       svgEl
-        .selectAll('*[' + this.attrName + ']:not(.' + this.clsName + ')')
-        .classed(this.invClsName, true);
+        .selectAll('*[' + that.attrName + ']:not(.' + that.clsName + ')')
+        .classed(that.invClsName, true);
     }
   }
 }

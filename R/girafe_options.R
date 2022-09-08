@@ -200,6 +200,8 @@ opts_hover_theme <- function(css = NULL,
 #' Use \code{opts_selection} for interactive geometries in panels,
 #' \code{opts_selection_key} for interactive scales/guides and
 #' \code{opts_selection_theme} for interactive theme elements.
+#' Use \code{opts_selection_inv} for the effect on the rest of the geometries,
+#' while some are selected (inverted operation).
 #' @param css css to associate with elements when they are selected.
 #' It must be a scalar character. It can also be constructed with
 #' \code{\link{girafe_css}}, to give more control over the css for different element types.
@@ -228,7 +230,7 @@ opts_hover_theme <- function(css = NULL,
 #'
 #' x <- girafe(ggobj = gg)
 #' x <- girafe_options(x,
-#'   opts_selection(type = "multiple",
+#'   opts_selection(type = "multiple", only_shiny = FALSE,
 #'     css = "fill:red;stroke:gray;r:5pt;") )
 #' if( interactive() ) print(x)
 #' @export
@@ -250,6 +252,17 @@ opts_selection <- function(css = NULL,
     selected = selected
   ),
   class = "opts_selection")
+}
+
+#' @export
+#' @rdname opts_selection
+opts_selection_inv <- function(css = NULL) {
+  css <- check_css(css,
+                   default = "",
+                   cls_prefix = "selected_inv_",
+                   name = "opts_selection_inv")
+  structure(list(css = css),
+            class = "opts_selection_inv")
 }
 
 #' @export
@@ -461,6 +474,8 @@ merge_options <- function(options, args){
       options$zoom <- arg
     } else if (inherits(arg, "opts_selection")) {
       options$capture <- arg
+    } else if (inherits(arg, "opts_selection_inv")) {
+      options$captureinv <- arg
     } else if (inherits(arg, "opts_selection_key")) {
       options$capturekey <- arg
     } else if (inherits(arg, "opts_selection_theme")) {
@@ -505,6 +520,7 @@ default_opts <- function(){
     hoverinv = opts_hover_inv(),
     zoom = opts_zoom(),
     capture = opts_selection(),
+    captureinv = opts_selection_inv(),
     capturekey = opts_selection_key(),
     capturetheme = opts_selection_theme(),
     toolbar = opts_toolbar(),

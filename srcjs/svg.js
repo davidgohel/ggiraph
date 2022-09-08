@@ -182,6 +182,7 @@ export default class SVGObject {
           const handler = new SelectionHandler(
             this.svgid,
             item.classPrefix,
+            item.invClassPrefix,
             item.attrName,
             inputId,
             messageId,
