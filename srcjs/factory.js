@@ -12,14 +12,14 @@ export function factory(shinyMode) {
         ggobj.setSvgId(x.uid);
         ggobj.addStyle([
           x.settings.tooltip.css,
-          x.settings.hoverinv.css,
-          x.settings.hover.css,
-          x.settings.hoverkey.css,
-          x.settings.hovertheme.css,
           x.settings.capture.css,
           x.settings.captureinv.css,
           x.settings.capturekey.css,
-          x.settings.capturetheme.css
+          x.settings.capturetheme.css,
+          x.settings.hoverinv.css,
+          x.settings.hover.css,
+          x.settings.hoverkey.css,
+          x.settings.hovertheme.css
         ]);
         ggobj.addSvg(x.html, x.js);
 
