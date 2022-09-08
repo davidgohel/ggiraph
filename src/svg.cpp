@@ -62,25 +62,17 @@ void set_attr(SVGElement* element, const char* name, const double& value) {
 
 void set_fill(SVGElement* element, const int& col) {
   a_color col_(col);
-  if (col_.is_transparent()) {
-    set_attr(element, "fill", "none");
-  } else {
-    set_attr(element, "fill", col_.color());
-    if (col_.has_alpha())
-      set_attr(element, "fill-opacity", col_.opacity());
-  }
+  set_attr(element, "fill", col_.color());
+  if (col_.has_alpha())
+    set_attr(element, "fill-opacity", col_.opacity());
 }
 
 void set_stroke(SVGElement* element, const double& width, const int& col,
                 const int& type, const int& join, const int& end) {
   a_color col_(col);
-  if (col_.is_transparent()) {
-    set_attr(element, "stroke", "none");
-  } else {
-    set_attr(element, "stroke", col_.color());
-    if (col_.has_alpha())
-      set_attr(element, "stroke-opacity", col_.opacity());
-  }
+  set_attr(element, "stroke", col_.color());
+  if (col_.has_alpha())
+    set_attr(element, "stroke-opacity", col_.opacity());
   if (!col_.is_visible() || width < 0.0001 || type < 0) {
     return;
   }
