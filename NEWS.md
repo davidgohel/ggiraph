@@ -6,6 +6,7 @@
 
 ## Issues
 
+* fix: set fill/stroke color to svg elements even if opacity is zero.
 * fix: hover styles should take priority over selection styles.
 
 # ggiraph 0.8.3

@@ -13,15 +13,12 @@ std::string a_color::opacity() {
 }
 
 bool a_color::is_visible() {
-  return (col != NA_INTEGER) && (alpha != 0);
+  // NA color is converted to transparent white
+  return (col != R_TRANWHITE);
 }
 
 bool a_color::is_transparent() {
   return (alpha == 0);
-}
-
-bool a_color::has_alpha() {
-  return (alpha < 255);
 }
 
 a_color::a_color (int col):

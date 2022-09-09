@@ -68,7 +68,7 @@ source("setup.R")
   bg_node <- xml_find_first(doc, "/svg/g//rect")
   expect_inherits(bg_node, "xml_node")
   expect_equal(xml_attr(bg_node, "fill"), "#123456")
-  expect_false(xml_has_attr(bg_node, "fill-opacity"))
+  expect_equal(xml_attr(bg_node, "fill-opacity"), "1")
 
   doc <- dsvg_doc(bg = "#12345699", {
     plot.new()

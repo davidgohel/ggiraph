@@ -38,7 +38,7 @@ source("setup.R")
   expect_equal(xml_attr(svg_node, "stroke"), "#0000FF")
 }
 
-# polygons without border have fill and stroke-opacity 0 ----
+# polygons without border have fill and no stroke ----
 {
   doc <- dsvg_doc({
     plot.new()
@@ -47,8 +47,7 @@ source("setup.R")
 
   svg_node <- xml_find_first(doc, "//polygon")
   expect_equal(xml_attr(svg_node, "fill"), "#FF0000")
-  expect_equal(xml_attr(svg_node, "stroke"), "#FFFFFF")
-  expect_equal(xml_attr(svg_node, "stroke-opacity"), "0")
+  expect_equal(xml_attr(svg_node, "stroke"), "none")
 }
 
 # paths do have fill and stroke ----

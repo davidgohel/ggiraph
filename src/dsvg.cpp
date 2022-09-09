@@ -44,7 +44,7 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   else bg_fill = dd->startfill;
 
   a_color bg_color(bg_fill);
-  if (!bg_color.is_transparent()) {
+  if (bg_color.is_visible()) {
     fill = gc->fill;
     col = gc->col;
     gc->fill = bg_fill;

@@ -62,17 +62,23 @@ void set_attr(SVGElement* element, const char* name, const double& value) {
 
 void set_fill(SVGElement* element, const int& col) {
   a_color col_(col);
-  set_attr(element, "fill", col_.color());
-  if (col_.has_alpha())
+  if (!col_.is_visible()) {
+    set_attr(element, "fill", "none");
+  } else {
+    set_attr(element, "fill", col_.color());
     set_attr(element, "fill-opacity", col_.opacity());
+  }
 }
 
 void set_stroke(SVGElement* element, const double& width, const int& col,
                 const int& type, const int& join, const int& end) {
   a_color col_(col);
-  set_attr(element, "stroke", col_.color());
-  if (col_.has_alpha())
+  if (!col_.is_visible()) {
+    set_attr(element, "stroke", "none");
+  } else {
+    set_attr(element, "stroke", col_.color());
     set_attr(element, "stroke-opacity", col_.opacity());
+  }
   if (!col_.is_visible() || width < 0.0001 || type < 0) {
     return;
   }
@@ -127,8 +133,7 @@ void set_stroke(SVGElement* element, const double& width, const int& col,
 void set_stop_color(SVGElement* element, const rcolor& col) {
   a_color col_(col);
   set_attr(element, "stop-color", col_.color());
-  if (col_.has_alpha())
-    set_attr(element, "stop-opacity", col_.opacity());
+  set_attr(element, "stop-opacity", col_.opacity());
 }
 
 void set_ref(SVGElement* element, const char* name, const std::string& id) {

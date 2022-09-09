@@ -43,7 +43,7 @@ source("setup.R")
   expect_equal(xml_attr(node, "fill-opacity"), "0.25")
 }
 
-# check fill-opacity is set to 0 when necessary ----
+# check fill is set to none when necessary ----
 {
   doc <- dsvg_doc({
     plot.new()
@@ -51,6 +51,5 @@ source("setup.R")
   })
 
   node <- xml_find_first(doc, ".//circle")
-  expect_equal(xml_attr(node, "fill"), "#FFFFFF")
-  expect_equal(xml_attr(node, "fill-opacity"), "0")
+  expect_equal(xml_attr(node, "fill"), "none")
 }
