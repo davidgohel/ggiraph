@@ -17,10 +17,6 @@ bool a_color::is_visible() {
   return (col != R_TRANWHITE);
 }
 
-bool a_color::is_transparent() {
-  return (alpha == 0);
-}
-
 a_color::a_color (int col):
   col(col) {
   alpha = R_ALPHA(col);

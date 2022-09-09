@@ -7,7 +7,6 @@ class a_color {
 public:
   a_color (int);
   bool is_visible();
-  bool is_transparent();
   std::string color();
   std::string opacity();
 
