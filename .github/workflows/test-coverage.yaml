@@ -6,16 +6,14 @@ on:
     branches:
       - master
 
-
 name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: ubuntu-18.04
+    runs-on: macOS-latest
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
     steps:
       - uses: actions/checkout@v2
 
