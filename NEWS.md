@@ -11,6 +11,7 @@
 * fix: hover styles should take priority over selection styles.
 * doc: updated documentation links
 * test: updated some tests to check for required packages
+* test: updated github actions
 
 # ggiraph 0.8.3
 

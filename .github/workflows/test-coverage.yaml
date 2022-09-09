@@ -29,5 +29,5 @@ jobs:
           needs: coverage
 
       - name: Test coverage
-        run: covr::codecov(line_exclusions = c("src/tinyxml2.cpp", "src/tinyxml2.h", "R/utils_ggplot2.R", "R/utils_ggplot2_performance.R"))
+        run: covr::codecov(quiet = FALSE, line_exclusions = c("src/tinyxml2.cpp", "src/tinyxml2.h", "R/utils_ggplot2.R", "R/utils_ggplot2_performance.R"))
         shell: Rscript {0}
