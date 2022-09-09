@@ -12,7 +12,11 @@
 #' @param pointsize default point size.
 #' @param standalone Produce a stand alone svg file? If `FALSE`, omits
 #'   xml header and default namespace.
-#' @param setdims If `TRUE` (the default), the svg node will have attributes width & height set
+#' @param setdims If `TRUE` (the default), the svg node will have attributes width & height set.
+#' @param title A label for accessibility purposes (aria-label/aria-labelledby).
+#' Be aware that when using this, the browser will use it as a tooltip for the whole svg and
+#' it may class with the interactive elements' tooltip.
+#' @param desc A longer description for accessibility purposes (aria-description/aria-describedby).
 #' @param canvas_id svg id within HTML page.
 #' @param fonts Named list of font names to be aliased with
 #' fonts installed on your system. If unspecified, the R default
@@ -41,12 +45,21 @@
 #' dev.off()
 #' @keywords device
 #' @useDynLib ggiraph,.registration = TRUE
+#' @importFrom rlang is_string
 #' @importFrom Rcpp sourceCpp
 #' @importFrom systemfonts match_font
 #' @export
 dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
                  pointsize = 12, standalone = TRUE, setdims = TRUE, canvas_id = "svg_1",
+                 title = NULL, desc = NULL,
                  fonts = list()) {
+
+  if (!is_string(title) || is.na(title) || !nzchar(trimws(title))) {
+    title <- ""
+  }
+  if (!is_string(desc) || is.na(desc) || !nzchar(trimws(desc))) {
+    desc <- ""
+  }
 
   fonts_list <- validated_fonts(fonts)
 
@@ -54,6 +67,7 @@ dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
     filename = file,
     width = width, height = height,
     canvas_id = canvas_id,
+    title = title, desc = desc,
     standalone = standalone, setdims = setdims,
     pointsize = pointsize,
     bg = bg,

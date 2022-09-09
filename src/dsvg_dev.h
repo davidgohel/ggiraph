@@ -32,6 +32,10 @@ public:
   const double height;
   /* id for the svg */
   const std::string canvas_id;
+  /* title for the svg */
+  const std::string title;
+  /* desc for the svg */
+  const std::string desc;
   /* is the svg standalone? */
   const bool standalone;
   /* set svg dimension attributes? */
@@ -55,6 +59,8 @@ public:
    * width_       SVG width in pixels
    * height_      SVG height in pixels
    * canvas_id_   SVG id
+   * title        SVG title
+   * desc         SVG desc
    * standalone_  Add XML header?
    * setdims_     Add dimensions?
    * aliases_     Font aliases
@@ -62,6 +68,7 @@ public:
   DSVG_dev(std::string filename_,
            double width_, double height_,
            std::string canvas_id_,
+           std::string title, std::string desc,
            bool standalone_, bool setdims_,
            Rcpp::List& aliases_);
   ~DSVG_dev();

@@ -11,8 +11,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // DSVG_
-bool DSVG_(std::string filename, double width, double height, std::string canvas_id, bool standalone, bool setdims, int pointsize, std::string bg, Rcpp::List aliases);
-RcppExport SEXP _ggiraph_DSVG_(SEXP filenameSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP canvas_idSEXP, SEXP standaloneSEXP, SEXP setdimsSEXP, SEXP pointsizeSEXP, SEXP bgSEXP, SEXP aliasesSEXP) {
+bool DSVG_(std::string filename, double width, double height, std::string canvas_id, std::string title, std::string desc, bool standalone, bool setdims, int pointsize, std::string bg, Rcpp::List aliases);
+RcppExport SEXP _ggiraph_DSVG_(SEXP filenameSEXP, SEXP widthSEXP, SEXP heightSEXP, SEXP canvas_idSEXP, SEXP titleSEXP, SEXP descSEXP, SEXP standaloneSEXP, SEXP setdimsSEXP, SEXP pointsizeSEXP, SEXP bgSEXP, SEXP aliasesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,12 +20,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type width(widthSEXP);
     Rcpp::traits::input_parameter< double >::type height(heightSEXP);
     Rcpp::traits::input_parameter< std::string >::type canvas_id(canvas_idSEXP);
+    Rcpp::traits::input_parameter< std::string >::type title(titleSEXP);
+    Rcpp::traits::input_parameter< std::string >::type desc(descSEXP);
     Rcpp::traits::input_parameter< bool >::type standalone(standaloneSEXP);
     Rcpp::traits::input_parameter< bool >::type setdims(setdimsSEXP);
     Rcpp::traits::input_parameter< int >::type pointsize(pointsizeSEXP);
     Rcpp::traits::input_parameter< std::string >::type bg(bgSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type aliases(aliasesSEXP);
-    rcpp_result_gen = Rcpp::wrap(DSVG_(filename, width, height, canvas_id, standalone, setdims, pointsize, bg, aliases));
+    rcpp_result_gen = Rcpp::wrap(DSVG_(filename, width, height, canvas_id, title, desc, standalone, setdims, pointsize, bg, aliases));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -109,7 +111,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ggiraph_DSVG_", (DL_FUNC) &_ggiraph_DSVG_, 9},
+    {"_ggiraph_DSVG_", (DL_FUNC) &_ggiraph_DSVG_, 11},
     {"_ggiraph_get_ge_version", (DL_FUNC) &_ggiraph_get_ge_version, 0},
     {"_ggiraph_set_tracer_on", (DL_FUNC) &_ggiraph_set_tracer_on, 1},
     {"_ggiraph_set_tracer_off", (DL_FUNC) &_ggiraph_set_tracer_off, 1},

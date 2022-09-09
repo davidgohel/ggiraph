@@ -6,12 +6,15 @@
 DSVG_dev::DSVG_dev(std::string filename_,
                    double width_, double height_,
                    std::string canvas_id_,
+                   std::string title_, std::string desc_,
                    bool standalone_, bool setdims_,
                    Rcpp::List& aliases_):
     filename(filename_),
     width(width_),
     height(height_),
     canvas_id(canvas_id_),
+    title(title_),
+    desc(desc_),
     standalone(standalone_),
     setdims(setdims_),
     system_aliases(Rcpp::wrap(aliases_["system"])),
@@ -56,6 +59,25 @@ SVGElement* DSVG_dev::svg_root() {
   if (standalone) {
     set_attr(root, "xmlns", "http://www.w3.org/2000/svg");
     set_attr(root, "xmlns:xlink", "http://www.w3.org/1999/xlink");
+  }
+  set_attr(root, "role", "img");
+
+  if (!title.empty()) {
+    SVGElement* titleEl = create_element("title", root);
+    SVGText* titleT = new_svg_text(title.c_str(), doc, false);
+    append_element((SVGElement*)titleT, titleEl);
+    const std::string titleId(canvas_id + "_title");
+    set_attr(titleEl, "id", titleId);
+    set_attr(root, "aria-labelledby", titleId);
+  }
+
+  if (!desc.empty()) {
+    SVGElement* descEl = create_element("desc", root);
+    SVGText* descT = new_svg_text(desc.c_str(), doc, false);
+    append_element((SVGElement*)descT, descEl);
+    const std::string descId(canvas_id + "_desc");
+    set_attr(descEl, "id", descId);
+    set_attr(root, "aria-describedby", descId);
   }
 
   // create main defs element

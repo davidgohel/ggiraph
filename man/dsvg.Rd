@@ -13,6 +13,8 @@ dsvg(
   standalone = TRUE,
   setdims = TRUE,
   canvas_id = "svg_1",
+  title = NULL,
+  desc = NULL,
   fonts = list()
 )
 }
@@ -28,9 +30,15 @@ dsvg(
 \item{standalone}{Produce a stand alone svg file? If \code{FALSE}, omits
 xml header and default namespace.}
 
-\item{setdims}{If \code{TRUE} (the default), the svg node will have attributes width & height set}
+\item{setdims}{If \code{TRUE} (the default), the svg node will have attributes width & height set.}
 
 \item{canvas_id}{svg id within HTML page.}
+
+\item{title}{A label for accessibility purposes (aria-label/aria-labelledby).
+Be aware that when using this, the browser will use it as a tooltip for the whole svg and
+it may class with the interactive elements' tooltip.}
+
+\item{desc}{A longer description for accessibility purposes (aria-description/aria-describedby).}
 
 \item{fonts}{Named list of font names to be aliased with
 fonts installed on your system. If unspecified, the R default

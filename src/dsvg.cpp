@@ -59,6 +59,7 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
 pDevDesc dsvg_driver_new(std::string filename,
                          double width, double height,
                          std::string canvas_id,
+                         std::string title, std::string desc,
                          bool standalone, bool setdims,
                          int pointsize, rcolor bg,
                          Rcpp::List aliases) {
@@ -150,6 +151,7 @@ pDevDesc dsvg_driver_new(std::string filename,
   dd->deviceSpecific = new DSVG_dev(filename,
                                     width * 72, height * 72,
                                     canvas_id,
+                                    title, desc,
                                     standalone, setdims,
                                     aliases);
   return dd;
@@ -159,6 +161,7 @@ pDevDesc dsvg_driver_new(std::string filename,
 bool DSVG_(std::string filename,
            double width, double height,
            std::string canvas_id,
+           std::string title, std::string desc,
            bool standalone, bool setdims,
            int pointsize, std::string bg,
            Rcpp::List aliases) {
@@ -173,6 +176,7 @@ bool DSVG_(std::string filename,
     pDevDesc dd = dsvg_driver_new(filename,
                                   width, height,
                                   canvas_id,
+                                  title, desc,
                                   standalone, setdims,
                                   pointsize, bg_,
                                   aliases);

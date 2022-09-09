@@ -83,6 +83,33 @@ source("setup.R")
   expect_inherits(bg_node, "xml_missing")
 }
 
+# svg title/desc ----------------------------------------------------------
+{
+  doc <- dsvg_doc(title = "title", desc = "desc", {
+    plot.new()
+  })
+  root_node <- xml_root(doc)
+  expect_equal(xml_attr(root_node, "aria-labelledby"), "svgid_title")
+  expect_equal(xml_attr(root_node, "aria-describedby"), "svgid_desc")
+  title_node <- xml_find_first(doc, "/svg/title")
+  expect_equal(xml_attr(title_node, "id"), "svgid_title")
+  expect_equal(xml_text(title_node), "title")
+  desc_node <- xml_find_first(doc, "/svg/desc")
+  expect_equal(xml_attr(desc_node, "id"), "svgid_desc")
+  expect_equal(xml_text(desc_node), "desc")
+
+  doc <- dsvg_doc({
+    plot.new()
+  })
+  root_node <- xml_root(doc)
+  expect_false(xml_has_attr(root_node, "aria-labelledby"))
+  expect_false(xml_has_attr(root_node, "aria-describedby"))
+  title_node <- xml_find_first(doc, "/svg/title")
+  expect_inherits(title_node, "xml_missing")
+  desc_node <- xml_find_first(doc, "/svg/desc")
+  expect_inherits(desc_node, "xml_missing")
+}
+
 # dsvg accepts only one page ----------------------------------------------
 {
   expect_error(

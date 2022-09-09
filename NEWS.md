@@ -2,6 +2,7 @@
 
 ## Enhancement
 
+* Added accessibility elements to the SVG output (title, desc, role)
 * Added opts_selection_inv for inverted selection effect
 
 ## Issues
