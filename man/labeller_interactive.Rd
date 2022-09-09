@@ -8,7 +8,7 @@ labeller_interactive(.mapping = NULL, ...)
 }
 \arguments{
 \item{.mapping}{set of aesthetic mappings created by \code{\link[=aes]{aes()}} or \code{\link[=aes_]{aes_()}}.
-It should provide mappings for any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.
+It should provide mappings for any of the \link{interactive_parameters}.
 In addition it understands a \code{label} parameter for creating a new label text.}
 
 \item{...}{arguments passed to base function \code{\link[=labeller]{labeller()}}}

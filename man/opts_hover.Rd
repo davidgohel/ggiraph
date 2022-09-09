@@ -18,7 +18,7 @@ opts_hover_theme(css = NULL, reactive = FALSE)
 \arguments{
 \item{css}{css to associate with elements when they are hovered.
 It must be a scalar character. It can also be constructed with
-\code{\link{girafe_css}}, to give more control over the css for different element types.}
+\code{\link[=girafe_css]{girafe_css()}}, to give more control over the css for different element types.}
 
 \item{reactive}{if TRUE, in Shiny context, hovering will set Shiny input values.}
 }
@@ -36,7 +36,7 @@ while one is hovered (inverted operation).
 be aware that the browser's CSS engine will apply it also to line elements,
 if there are any that use the hovering feature. This will cause an undesired effect.
 
-To overcome this, supply the argument \code{css} using \code{\link{girafe_css}},
+To overcome this, supply the argument \code{css} using \code{\link[=girafe_css]{girafe_css()}},
 in order to set the \code{fill} style only for the desired elements.
 }
 \examples{

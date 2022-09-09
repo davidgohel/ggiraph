@@ -61,13 +61,13 @@ when widget is in a Shiny application.}
 \item{dep_dir}{Deprecated; the path where the output files are stored. If \code{NULL},
 the current path for temporary files is used.}
 
-\item{...}{arguments passed on to \code{\link{dsvg}}}
+\item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
 }
 \description{
 Create an interactive graphic to be used in a web browser.
 
 This function is maintained for backward compatibility reasons, user should
-now use function \code{\link[=girafe]{girafe()}} and \code{\link{girafe_options}}.
+now use function \code{\link[=girafe]{girafe()}} and \code{\link[=girafe_options]{girafe_options()}}.
 }
 \examples{
 # ggiraph simple example -------

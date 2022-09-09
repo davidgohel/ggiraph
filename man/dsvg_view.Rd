@@ -9,7 +9,7 @@ dsvg_view(code, ...)
 \arguments{
 \item{code}{Plotting code to execute.}
 
-\item{...}{Other arguments passed on to \code{\link{dsvg}}.}
+\item{...}{Other arguments passed on to \code{\link[=dsvg]{dsvg()}}.}
 }
 \description{
 This is useful primarily for testing. Requires the \code{htmltools}

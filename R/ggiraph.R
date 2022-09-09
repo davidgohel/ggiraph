@@ -9,7 +9,7 @@
 #' @description Create an interactive graphic to be used in a web browser.
 #'
 #' This function is maintained for backward compatibility reasons, user should
-#' now use function [girafe()] and \code{\link{girafe_options}}.
+#' now use function [girafe()] and [girafe_options()].
 #'
 #' @inheritParams girafe
 #' @param width widget width ratio (0 < width <= 1).
@@ -24,7 +24,7 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
-#' @param dep_dir Deprecated; the path where the output files are stored. If \code{NULL},
+#' @param dep_dir Deprecated; the path where the output files are stored. If `NULL`,
 #'  the current path for temporary files is used.
 #' @examples
 #' # ggiraph simple example -------
@@ -106,9 +106,9 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #'
 #' @description Makes a reactive version of a ggiraph object for use in Shiny.
 #'
-#' @param expr An expression that returns a \code{\link{ggiraph}} object.
+#' @param expr An expression that returns a [ggiraph()] object.
 #' @param env The environment in which to evaluate expr.
-#' @param quoted Is \code{expr} a quoted expression
+#' @param quoted Is `expr` a quoted expression
 #' @examples
 #' \dontrun{
 #' if( require(shiny) && interactive() ){

@@ -7,7 +7,7 @@
 renderggiraph(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{expr}{An expression that returns a \code{\link{ggiraph}} object.}
+\item{expr}{An expression that returns a \code{\link[=ggiraph]{ggiraph()}} object.}
 
 \item{env}{The environment in which to evaluate expr.}
 

@@ -8,7 +8,7 @@ annotation_raster_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}..}
+plus any of the \link{interactive_parameters}.}
 }
 \description{
 The layer is based on \code{\link[=annotation_raster]{annotation_raster()}}.

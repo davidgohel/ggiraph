@@ -86,8 +86,8 @@ font_family_exists <- function( font_family = "sans" ){
 #' \code{match_family()} returns the best font family match.
 #'
 #' @param font family or face to match.
-#' @param bold Wheter to match a font featuring a \code{bold} face.
-#' @param italic Wheter to match a font featuring an \code{italic} face.
+#' @param bold Wheter to match a font featuring a `bold` face.
+#' @param italic Wheter to match a font featuring an `italic` face.
 #' @param debug deprecated
 #' @export
 #' @examples

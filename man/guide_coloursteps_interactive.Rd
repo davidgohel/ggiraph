@@ -101,5 +101,5 @@ if (interactive()) print(x)
 
 }
 \seealso{
-\code{\link[=interactive_parameters]{interactive_parameters()}}, \code{\link[=girafe]{girafe()}}
+\link{interactive_parameters}, \code{\link[=girafe]{girafe()}}
 }

@@ -27,9 +27,9 @@ The default values are 6 and 5 inches. This will define the aspect ratio of the
 graphic as it will be used to define viewbox attribute of the SVG result.}
 
 \item{options}{a list of options for girafe rendering, see
-\code{\link{opts_tooltip}}, \code{\link{opts_hover}}, \code{\link{opts_selection}}, ...}
+\code{\link[=opts_tooltip]{opts_tooltip()}}, \code{\link[=opts_hover]{opts_hover()}}, \code{\link[=opts_selection]{opts_selection()}}, ...}
 
-\item{...}{arguments passed on to \code{\link{dsvg}}}
+\item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
 }
 \description{
 Create an interactive graphic with a ggplot object
@@ -40,7 +40,7 @@ to be used in a web browser. The function should replace function
 Use \code{geom_zzz_interactive} to create interactive graphical elements.
 
 Difference from original functions is that some extra aesthetics are understood:
-the \code{\link[=interactive_parameters]{interactive_parameters()}}.
+the \link{interactive_parameters}.
 
 Tooltips can be displayed when mouse is over graphical elements.
 
@@ -59,7 +59,7 @@ selection and lasso anti-selections buttons are available in a toolbar.
 }
 \section{Widget options}{
 
-girafe animations can be customized with function \code{\link{girafe_options}}.
+girafe animations can be customized with function \code{\link[=girafe_options]{girafe_options()}}.
 Options are available to customize tooltips, hover effects, zoom effects
 selection effects and toolbar.
 }

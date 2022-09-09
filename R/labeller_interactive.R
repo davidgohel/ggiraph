@@ -21,7 +21,7 @@
 #'
 #' @param ... arguments passed to base function [labeller()]
 #' @param .mapping set of aesthetic mappings created by [aes()] or [aes_()].
-#' It should provide mappings for any of the [interactive_parameters()].
+#' It should provide mappings for any of the [interactive_parameters].
 #' In addition it understands a `label` parameter for creating a new label text.
 #' @examples
 #' # use interactive labeller

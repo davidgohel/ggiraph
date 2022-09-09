@@ -14,7 +14,7 @@ geom_sf_text_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
+plus any of the \link{interactive_parameters}.}
 }
 \description{
 These geometries are based on \code{\link[=geom_sf]{geom_sf()}}, \code{\link[=geom_sf_label]{geom_sf_label()}} and \code{\link[=geom_sf_text]{geom_sf_text()}}.

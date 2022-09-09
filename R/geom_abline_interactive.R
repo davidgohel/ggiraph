@@ -5,7 +5,7 @@
 #' [geom_hline()] and [geom_vline()].
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the [interactive_parameters()].
+#' plus any of the [interactive_parameters].
 #' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add diagonal interactive reference lines to a ggplot -------

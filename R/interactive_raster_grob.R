@@ -5,10 +5,10 @@
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the [interactive_parameters()].
+#' plus any of the [interactive_parameters].
 #' @return An interactive grob object.
 #' @inheritSection interactive_parameters Details for interactive_*_grob functions
-#' @seealso [interactive_parameters()], [girafe()]
+#' @seealso [interactive_parameters], [girafe()]
 #' @export
 interactive_raster_grob <- function(...) {
   grob_interactive(grid::rasterGrob, ...)

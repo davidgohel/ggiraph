@@ -14,7 +14,7 @@ element_text_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
+plus any of the \link{interactive_parameters}.}
 }
 \description{
 With these functions the user can add interactivity to various \link[ggplot2:theme]{theme}

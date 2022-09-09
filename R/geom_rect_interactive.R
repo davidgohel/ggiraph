@@ -7,11 +7,11 @@
 #' @note
 #' Converting a raster to svg elements could inflate dramatically the size of the
 #' svg and make it unreadable in a browser.
-#' Function \code{geom_tile_interactive} should be used with caution, total number of
+#' Function `geom_tile_interactive` should be used with caution, total number of
 #' rectangles should be small.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the [interactive_parameters()].
+#' plus any of the [interactive_parameters].
 #' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive polygons to a ggplot -------

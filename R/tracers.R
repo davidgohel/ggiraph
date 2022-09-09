@@ -36,7 +36,7 @@ dsvg_tracer_off <- function() {
 #' to graphical elements.
 #' @param name name of the attribute to set.
 #' @param ids integer vector of graphical elements identifiers (returned by
-#' \code{\link{dsvg_tracer_off}}).
+#' [dsvg_tracer_off()]).
 #' @param values values to set for the attribute.
 #' @noRd
 set_attr <- function(name, ids, values) {

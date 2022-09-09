@@ -9,7 +9,7 @@
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the [interactive_parameters()].
+#' plus any of the [interactive_parameters].
 #'
 #' @inheritSection interactive_parameters Details for element_*_interactive functions
 #' @examples
@@ -63,12 +63,12 @@ element_interactive <- function(element_func,
 #' @description
 #' This function returns an object that can be used as a label
 #' via the [labs()] family of functions or
-#' when setting a \code{scale}/\code{guide} name/title or key label.
+#' when setting a `scale`/`guide` name/title or key label.
 #' It passes the interactive parameters to a theme element created via
-#' \code{\link{element_text_interactive}} or via an interactive guide.
+#' [element_text_interactive()] or via an interactive guide.
 #'
 #' @param label The text for the label (scalar character)
-#' @param ... any of the [interactive_parameters()].
+#' @param ... any of the [interactive_parameters].
 #' @return an interactive label object
 #' @export
 #' @examples

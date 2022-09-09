@@ -20,13 +20,13 @@ This code will be executed when the element is clicked.}
 \item{hover_css}{Individual css style associate with one or more elements.
 This css style is applied when the element is hovered and overrides the default style,
 set via \code{\link[=opts_hover]{opts_hover()}}, \code{\link[=opts_hover_key]{opts_hover_key()}} or \code{\link[=opts_hover_theme]{opts_hover_theme()}}.
-It can also be constructed with \code{\link{girafe_css}},
+It can also be constructed with \code{\link[=girafe_css]{girafe_css()}},
 to give more control over the css for different element types (see \code{\link[=opts_hover]{opts_hover()}} note).}
 
 \item{selected_css}{Individual css style associate with one or more elements.
 This css style is applied when the element is selected and overrides the default style,
 set via \code{\link[=opts_selection]{opts_selection()}}, \code{\link[=opts_selection_key]{opts_selection_key()}} or \code{\link[=opts_selection_theme]{opts_selection_theme()}}.
-It can also be constructed with \code{\link{girafe_css}},
+It can also be constructed with \code{\link[=girafe_css]{girafe_css()}},
 to give more control over the css for different element types (see \code{\link[=opts_selection]{opts_selection()}} note).}
 
 \item{data_id}{Identifier to associate with one or more elements.

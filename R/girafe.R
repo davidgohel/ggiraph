@@ -2,13 +2,13 @@
 #'
 #' @description Create an interactive graphic with a ggplot object
 #' to be used in a web browser. The function should replace function
-#' \code{ggiraph}.
+#' `ggiraph`.
 #'
 #' @details
-#' Use \code{geom_zzz_interactive} to create interactive graphical elements.
+#' Use `geom_zzz_interactive` to create interactive graphical elements.
 #'
 #' Difference from original functions is that some extra aesthetics are understood:
-#' the [interactive_parameters()].
+#' the [interactive_parameters].
 #'
 #' Tooltips can be displayed when mouse is over graphical elements.
 #'
@@ -26,15 +26,15 @@
 #' selection and lasso anti-selections buttons are available in a toolbar.
 #'
 #' @param code Plotting code to execute
-#' @param ggobj ggplot object to print. Argument \code{code} will
+#' @param ggobj ggplot object to print. Argument `code` will
 #' be ignored if this argument is supplied.
 #' @param width_svg,height_svg The width and height of the graphics region in inches.
 #' The default values are 6 and 5 inches. This will define the aspect ratio of the
 #' graphic as it will be used to define viewbox attribute of the SVG result.
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param options a list of options for girafe rendering, see
-#' \code{\link{opts_tooltip}}, \code{\link{opts_hover}}, \code{\link{opts_selection}}, ...
-#' @param ... arguments passed on to \code{\link{dsvg}}
+#' [opts_tooltip()], [opts_hover()], [opts_selection()], ...
+#' @param ... arguments passed on to [dsvg()]
 #' @examples
 #' library(ggplot2)
 #'
@@ -52,33 +52,33 @@
 #'   print(x)
 #' }
 #' @section Widget options:
-#' girafe animations can be customized with function \code{\link{girafe_options}}.
+#' girafe animations can be customized with function [girafe_options()].
 #' Options are available to customize tooltips, hover effects, zoom effects
 #' selection effects and toolbar.
 #' @section Widget sizing:
 #' girafe graphics are responsive, which mean, they will be resized
 #' according to their container. There are two responsive behavior
 #' implementations: one for Shiny applications and flexdashboard documents
-#' and one for other documents (i.e. R markdown and \code{saveWidget}).
+#' and one for other documents (i.e. R markdown and `saveWidget`).
 #'
 #' Graphics are created by an R graphic device (i.e pdf, png, svg here) and
 #' need arguments width and height to define a graphic region.
-#' Arguments \code{width_svg} and \code{height_svg} are used as corresponding
+#' Arguments `width_svg` and `height_svg` are used as corresponding
 #' values. They are defining the aspect ratio of the graphic. This proportion is
 #' always respected when the graph is displayed.
 #'
 #' When a girafe graphic is in a Shiny application,
-#' graphic will be resized according to the arguments \code{width} and
-#' \code{height} of the function \code{girafeOutput}. Default
+#' graphic will be resized according to the arguments `width` and
+#' `height` of the function `girafeOutput`. Default
 #' values are '100\%' and '500px'. These arguments determine the
 #' outer bounding box of the graphic (the HTML element that will
 #' contain the graphic with an aspect ratio).
 #'
 #' When a girafe graphic is in an R markdown document (producing an HTML
-#' document), the graphic will be resized according to the argument \code{width} of the
-#' function \code{girafe}. Its value is beeing used to define a relative
+#' document), the graphic will be resized according to the argument `width` of the
+#' function `girafe`. Its value is beeing used to define a relative
 #' width of the graphic within its HTML container. Its height is automatically
-#' adjusted regarding to the argument \code{width} and the aspect ratio.
+#' adjusted regarding to the argument `width` and the aspect ratio.
 #'
 #' If this behavior does not fit with your need, I recommend you to use
 #' package widgetframe that wraps htmlwidgets inside a responsive iframe.
@@ -160,7 +160,7 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 #'
 #' @param expr An expression that returns a [girafe()] object.
 #' @param env The environment in which to evaluate expr.
-#' @param quoted Is \code{expr} a quoted expression
+#' @param quoted Is `expr` a quoted expression
 #' @param outputArgs A list of arguments to be passed through to the implicit call to [girafeOutput()]
 #' when `renderGirafe` is used in an interactive R Markdown document.
 #' @export

@@ -116,20 +116,20 @@ opts_tooltip <- function(css = NULL,
 #' @title Hover effect settings
 #' @description Allows customization of the rendering
 #' of graphic elements when the user hovers over them with the cursor (mouse pointer).
-#' Use \code{opts_hover} for interactive geometries in panels,
-#' \code{opts_hover_key} for interactive scales/guides and
-#' \code{opts_hover_theme} for interactive theme elements.
-#' Use \code{opts_hover_inv} for the effect on the rest of the geometries,
+#' Use `opts_hover` for interactive geometries in panels,
+#' `opts_hover_key` for interactive scales/guides and
+#' `opts_hover_theme` for interactive theme elements.
+#' Use `opts_hover_inv` for the effect on the rest of the geometries,
 #' while one is hovered (inverted operation).
 #' @param css css to associate with elements when they are hovered.
 #' It must be a scalar character. It can also be constructed with
-#' \code{\link{girafe_css}}, to give more control over the css for different element types.
+#' [girafe_css()], to give more control over the css for different element types.
 #' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
 #' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,
 #' be aware that the browser's CSS engine will apply it also to line elements,
 #' if there are any that use the hovering feature. This will cause an undesired effect.
 #'
-#' To overcome this, supply the argument `css` using \code{\link{girafe_css}},
+#' To overcome this, supply the argument `css` using [girafe_css()],
 #' in order to set the `fill` style only for the desired elements.
 #' @examples
 #' library(ggplot2)
@@ -197,14 +197,14 @@ opts_hover_theme <- function(css = NULL,
 #' @title Selection effect settings
 #' @description Allows customization of the rendering of
 #' selected graphic elements.
-#' Use \code{opts_selection} for interactive geometries in panels,
-#' \code{opts_selection_key} for interactive scales/guides and
-#' \code{opts_selection_theme} for interactive theme elements.
-#' Use \code{opts_selection_inv} for the effect on the rest of the geometries,
+#' Use `opts_selection` for interactive geometries in panels,
+#' `opts_selection_key` for interactive scales/guides and
+#' `opts_selection_theme` for interactive theme elements.
+#' Use `opts_selection_inv` for the effect on the rest of the geometries,
 #' while some are selected (inverted operation).
 #' @param css css to associate with elements when they are selected.
 #' It must be a scalar character. It can also be constructed with
-#' \code{\link{girafe_css}}, to give more control over the css for different element types.
+#' [girafe_css()], to give more control over the css for different element types.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param only_shiny disable selections if not in a shiny context.
@@ -214,7 +214,7 @@ opts_hover_theme <- function(css = NULL,
 #' be aware that the browser's CSS engine will apply it also to line elements,
 #' if there are any that use the selection feature. This will cause an undesired effect.
 #'
-#' To overcome this, supply the argument `css` using \code{\link{girafe_css}},
+#' To overcome this, supply the argument `css` using [girafe_css()],
 #' in order to set the `fill` style only for the desired elements.
 #' @examples
 #' library(ggplot2)
@@ -352,7 +352,7 @@ opts_zoom <- function(min = 1, max = 1){
 #' @param saveaspng set to TRUE to propose the 'save as png' button.
 #' @param pngname the default basename (without .png extension) to use for the png file.
 #' @note
-#' \code{saveaspng} relies on JavaScript promises, so any browsers that don't natively
+#' `saveaspng` relies on JavaScript promises, so any browsers that don't natively
 #' support the standard Promise object will need to have a polyfill (e.g.
 #' Internet Explorer with version less than 11 will need it).
 #' @examples

@@ -1,10 +1,10 @@
 #' Run plotting code and view svg in RStudio Viewer or web broswer.
 #'
-#' This is useful primarily for testing. Requires the \code{htmltools}
+#' This is useful primarily for testing. Requires the `htmltools`
 #' package.
 #'
 #' @param code Plotting code to execute.
-#' @param ... Other arguments passed on to \code{\link{dsvg}}.
+#' @param ... Other arguments passed on to [dsvg()].
 #' @export
 #' @examples
 #' \donttest{

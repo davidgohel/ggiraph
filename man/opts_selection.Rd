@@ -33,7 +33,7 @@ opts_selection_theme(
 \arguments{
 \item{css}{css to associate with elements when they are selected.
 It must be a scalar character. It can also be constructed with
-\code{\link{girafe_css}}, to give more control over the css for different element types.}
+\code{\link[=girafe_css]{girafe_css()}}, to give more control over the css for different element types.}
 
 \item{type}{selection mode ("single", "multiple", "none")
 when widget is in a Shiny application.}
@@ -57,7 +57,7 @@ while some are selected (inverted operation).
 be aware that the browser's CSS engine will apply it also to line elements,
 if there are any that use the selection feature. This will cause an undesired effect.
 
-To overcome this, supply the argument \code{css} using \code{\link{girafe_css}},
+To overcome this, supply the argument \code{css} using \code{\link[=girafe_css]{girafe_css()}},
 in order to set the \code{fill} style only for the desired elements.
 }
 \examples{

@@ -7,7 +7,7 @@
 #' @note The `ggrepel` package is required for these geometries
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the [interactive_parameters()].
+#' plus any of the [interactive_parameters].
 #' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive repulsive texts to a ggplot -------

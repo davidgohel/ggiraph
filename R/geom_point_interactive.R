@@ -8,7 +8,7 @@
 #' The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be used.
 #'
 #' @param ... arguments passed to base function,
-#' plus any of the [interactive_parameters()].
+#' plus any of the [interactive_parameters].
 #' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive points to a ggplot -------

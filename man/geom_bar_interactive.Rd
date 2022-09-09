@@ -12,7 +12,7 @@ geom_col_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
+plus any of the \link{interactive_parameters}.}
 }
 \description{
 The geometries are based on \code{\link[=geom_bar]{geom_bar()}}

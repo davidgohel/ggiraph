@@ -42,7 +42,7 @@ encode_cr <- function(x) {
 #' contains a `GeomInteractive*` object (like `GeomInteractivePoint`). The `Geom*`
 #' object is responsible for rendering the data in the plot.
 #'
-#' See \code{\link{Geom}} for more information.
+#' See [Geom][ggplot2::Geom()] for more information.
 #' @rdname ggiraph-ggproto
 #' @format NULL
 #' @usage NULL

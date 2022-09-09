@@ -42,7 +42,7 @@ scale_fill_ordinal_interactive(...)
 }
 \arguments{
 \item{...}{arguments passed to base function,
-plus any of the \code{\link[=interactive_parameters]{interactive_parameters()}}.}
+plus any of the \link{interactive_parameters}.}
 }
 \value{
 An interactive scale object.
