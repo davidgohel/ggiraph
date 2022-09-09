@@ -2,6 +2,9 @@ library(tinytest)
 library(ggiraph)
 library(xml2)
 
+if (!interactive()) {
+  exit_file("dom test skipped")
+}
 if (!requireNamespace("shinytest", quietly = TRUE)) {
   exit_file("package 'shinytest' is not installed")
 }
