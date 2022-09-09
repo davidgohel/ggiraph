@@ -17,10 +17,12 @@ library(xml2)
   expect_inherits(result, "shiny.tag.list")
 }
 
-# renderggiraph ----
-{
-  result <- renderggiraph(ggiraph({
-    print(ggplot())
-  }))
-  expect_inherits(result, "shiny.render.function")
+if (requireNamespace("httpuv", quietly = TRUE)) {
+  # renderggiraph ----
+  {
+    result <- renderggiraph(ggiraph({
+      print(ggplot())
+    }))
+    expect_inherits(result, "shiny.render.function")
+  }
 }

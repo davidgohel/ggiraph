@@ -58,10 +58,12 @@ library(xml2)
   expect_inherits(result, "shiny.tag.list")
 }
 
-# renderGirafe ----
-{
-  result <- renderGirafe(girafe(ggobj = ggplot()))
-  expect_inherits(result, "shiny.render.function")
+if (requireNamespace("httpuv", quietly = TRUE)) {
+  # renderGirafe ----
+  {
+    result <- renderGirafe(girafe(ggobj = ggplot()))
+    expect_inherits(result, "shiny.render.function")
+  }
 }
 
 # girafe_app_paths ----
