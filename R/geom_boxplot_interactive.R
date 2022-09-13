@@ -1,19 +1,67 @@
+
+outlier_ipar <- paste0("outlier.", IPAR_NAMES)
+
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+StatInteractiveBoxplot <- ggproto(
+  "StatInteractiveBoxplot", StatBoxplot,
+  compute_group = function(data, scales, width = NULL, na.rm = FALSE,
+                           coef = 1.5, flipped_aes = FALSE) {
+    # compute boxplot data
+    df <- StatBoxplot$compute_group(data, scales,
+                                    width = width, na.rm = na.rm,
+                                    coef = coef, flipped_aes = flipped_aes
+    )
+    # add outlier aesthetics
+    if (length(df$outliers[[1]])) {
+      outlier_indices <- which(data$y %in% df$outliers[[1]])
+      outlier_colnames <- intersect(colnames(data), outlier_ipar)
+      if (length(outlier_colnames)) {
+        for (name in outlier_colnames) {
+          df[[name]] <- list(data[[name]][outlier_indices])
+        }
+      }
+    }
+    df
+  }
+)
+
 #' @title Create interactive boxplot
 #'
 #' @description
 #' The geometry is based on [geom_boxplot()].
-#' See the documentation for those functions for more details.
+#' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters].
+#' @details
+#' You can supply `interactive parameters` for the outlier points by prefixing them
+#' with `outlier.` prefix. For example: aes(outlier.tooltip = 'bla', outlier.data_id = 'blabla').
+#'
+#' IMPORTANT: when supplying outlier interactive parameters,
+#' the correct `group` aesthetic *must* be also supplied. Otherwise the default group calculation
+#' will be incorrect, which will result in an incorrect plot.
 #' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
 #' # add interactive boxplot -------
 #' @example examples/geom_boxplot_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_boxplot_interactive  <- function(...)
-  layer_interactive(geom_boxplot, ...)
+geom_boxplot_interactive <- function(...) {
+  args <- list(...)
+  if ("extra_interactive_params" %in% names(args)) {
+    args$extra_interactive_params <- c(args$extra_interactive_params, outlier_ipar)
+  } else {
+    args$extra_interactive_params <- outlier_ipar
+  }
+  if (!"stat" %in% names(args)) {
+    args$stat <- StatInteractiveBoxplot
+  }
+  args$layer_func <- geom_boxplot
+  do.call(layer_interactive, args)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -22,7 +70,10 @@ geom_boxplot_interactive  <- function(...)
 GeomInteractiveBoxplot <- ggproto(
   "GeomInteractiveBoxplot",
   GeomBoxplot,
-  default_aes = add_default_interactive_aes(GeomBoxplot),
+  default_aes = append_aes(
+    GeomBoxplot$default_aes,
+    c(IPAR_DEFAULTS, rlang::set_names(IPAR_DEFAULTS, outlier_ipar))
+  ),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
   draw_group = function(data,
@@ -38,7 +89,7 @@ GeomInteractiveBoxplot <- ggproto(
                         notch = FALSE,
                         notchwidth = 0.5,
                         varwidth = FALSE,
-                        flipped_aes = FALSE, 
+                        flipped_aes = FALSE,
                         .ipar = IPAR_NAMES) {
     data <- flip_data(data, flipped_aes)
     # this may occur when using geom_boxplot(stat = "identity")
@@ -53,6 +104,8 @@ GeomInteractiveBoxplot <- ggproto(
       fill = alpha(data$fill, data$alpha),
       group = data$group
     )
+
+    .ipar <- setdiff(.ipar, outlier_ipar)
     common <- copy_interactive_attrs(data, common, ipar = .ipar)
 
     whiskers <- new_data_frame(c(list(
@@ -86,7 +139,6 @@ GeomInteractiveBoxplot <- ggproto(
       outl <- list(
         y = data$outliers[[1]],
         x = data$x[1],
-        tooltip = formatC(data$outliers[[1]]),
         colour = outlier.colour %||% data$colour[1],
         fill = outlier.fill %||% data$fill[1],
         shape = outlier.shape %||% data$shape[1],
@@ -95,9 +147,14 @@ GeomInteractiveBoxplot <- ggproto(
         fill = NA,
         alpha = outlier.alpha %||% data$alpha[1]
       )
-      if (!is.null(data$data_id[1])) {
-        outl$data_id <- data$data_id[1]
+      outlier_colnames <- intersect(colnames(data), outlier_ipar)
+      if (length(outlier_colnames)) {
+        for (name in outlier_colnames) {
+          unprefixed_name <- sub("outlier.", "", name)
+          outl[[unprefixed_name]] <- data[[name]][[1]]
+        }
       }
+
       outliers <- new_data_frame(
         outl,
         n = length(data$outliers[[1]])

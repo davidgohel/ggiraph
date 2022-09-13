@@ -28,6 +28,7 @@
 \alias{GeomInteractivePolygon}
 \alias{GeomInteractiveRect}
 \alias{GeomInteractiveBar}
+\alias{StatInteractiveBoxplot}
 \alias{GeomInteractiveBoxplot}
 \alias{GeomInteractiveCol}
 \alias{GeomInteractiveContour}

@@ -12,7 +12,15 @@ plus any of the \link{interactive_parameters}.}
 }
 \description{
 The geometry is based on \code{\link[=geom_boxplot]{geom_boxplot()}}.
-See the documentation for those functions for more details.
+See the documentation for that function for more details.
+}
+\details{
+You can supply \verb{interactive parameters} for the outlier points by prefixing them
+with \code{outlier.} prefix. For example: aes(outlier.tooltip = 'bla', outlier.data_id = 'blabla').
+
+IMPORTANT: when supplying outlier interactive parameters,
+the correct \code{group} aesthetic \emph{must} be also supplied. Otherwise the default group calculation
+will be incorrect, which will result in an incorrect plot.
 }
 \section{Details for interactive geom functions}{
 
@@ -31,19 +39,61 @@ In this way they can be set to a scalar value.
 library(ggplot2)
 library(ggiraph)
 
-p <- ggplot(mpg,
-  aes(x = class, y = hwy, tooltip = class)) +
+p <- ggplot(mpg, aes(x = class, y = hwy, tooltip = class)) +
   geom_boxplot_interactive()
 
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) print(x)
 
-p <- ggplot(mpg, aes(x = drv, y = hwy, tooltip = class, fill = class, data_id=class)) +
-  geom_boxplot_interactive(outlier.colour = "red") +
-  guides(fill = "none") + theme_minimal()
+p <- ggplot(mpg) +
+  geom_boxplot_interactive(
+    aes(
+      x = drv, y = hwy,
+      fill = class,
+      data_id = class,
+      tooltip = after_stat({
+        paste0(
+          "class: ", .data$fill,
+          "\nQ1: ", prettyNum(.data$ymin),
+          "\nQ3: ", prettyNum(.data$ymax),
+          "\nmedian: ", prettyNum(.data$middle)
+        )
+      })
+    ),
+    outlier.colour = "red"
+  ) +
+  guides(fill = "none") +
+  theme_minimal()
 
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) print(x)
+
+
+p <- ggplot(mpg) +
+  geom_boxplot_interactive(
+    aes(
+      x = drv, y = hwy,
+      fill = class, group = paste(drv, class),
+      data_id = class,
+      tooltip = after_stat({
+        paste0(
+          "class: ", .data$fill,
+          "\nQ1: ", prettyNum(.data$ymin),
+          "\nQ3: ", prettyNum(.data$ymax),
+          "\nmedian: ", prettyNum(.data$middle)
+        )
+      }),
+      outlier.tooltip = paste(
+        "I am an outlier!\nhwy:", hwy, "\ndrv:", drv, "\nclass:", class
+      )
+    ),
+    outlier.colour = "red"
+  ) +
+  guides(fill = "none") +
+  theme_minimal()
+
+x <- girafe(ggobj = p)
+if (interactive()) print(x)
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

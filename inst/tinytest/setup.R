@@ -82,7 +82,7 @@ test_geom_layer <- expression({
   geom_aes_par_ipar <- unclass(ggiraph:::get_interactive_attrs(result$aes_params))
   expect_equal(geom_aes_par_ipar, list(onclick = "hello"), info = name)
   # has the layer geom params the .ipar element?
-  expect_identical(result$geom_params$.ipar, ggiraph:::IPAR_NAMES)
+  expect_true(all(ggiraph:::IPAR_NAMES %in% result$geom_params$.ipar))
   # test extra_interactive_params
   args[[1]] <- aes(foo = "bar")
   args$extra_interactive_params <- "foo"
@@ -90,7 +90,7 @@ test_geom_layer <- expression({
   if (is.list(result)) {
     result <- result[[1]]
   }
-  expect_identical(result$geom_params$.ipar, c(ggiraph:::IPAR_NAMES, "foo"))
+  expect_true(all(c(ggiraph:::IPAR_NAMES, "foo") %in% result$geom_params$.ipar))
   geom_mapping <- unclass(result$mapping)
   expect_identical(geom_mapping$foo, "bar", info = name)
 })
