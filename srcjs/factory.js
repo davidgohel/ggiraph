@@ -125,6 +125,8 @@ export function factory(shinyMode) {
           x.settings.tooltip.delay.over,
           x.settings.tooltip.delay.out
         );
+
+        ggobj.setupMouse();
       },
 
       resize: function (width, height) {}

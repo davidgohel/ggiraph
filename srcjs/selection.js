@@ -19,28 +19,30 @@ export default class SelectionHandler {
     this.shinyMessageId = shinyMessageId;
     this.type = type;
     this.initialSelection = initialSelection;
+    this.nodeIds = [];
     this.dataSelected = [];
   }
 
   init() {
+    if (this.type !== 'single' && this.type !== 'multiple') {
+      // invalid type, return false to discard this
+      return false;
+    }
+    const rootNode = document.getElementById(this.svgid + '_rootg');
     // select elements
-    const elements = d3
-      .select('#' + this.svgid + ' > g')
-      .selectAll('*[' + this.attrName + ']');
-    // check selection type
-    if (
-      elements.empty() ||
-      !(this.type == 'single' || this.type == 'multiple')
-    ) {
+    const nodes = rootNode.querySelectorAll('*[' + this.attrName + ']');
+    if (!nodes.length) {
       // nothing to do here, return false to discard this
       return false;
     }
     const that = this;
 
-    // add event listeners
-    elements.each(function () {
-      this.addEventListener('click', that);
-    });
+    // store ids
+    this.nodeIds = Array(nodes.length);
+    let n = 0;
+    nodes.forEach(function (node) {
+      this.nodeIds[n++] = node.id;
+    }, this);
 
     // add shiny listener
     if (this.shinyMessageId) {
@@ -69,17 +71,9 @@ export default class SelectionHandler {
   }
 
   destroy() {
-    const that = this;
-    // remove event listeners
-    try {
-      d3.select('#' + this.svgid + ' > g')
-        .selectAll('*[' + this.attrName + ']')
-        .each(function () {
-          this.removeEventListener('click', that);
-        });
-    } catch (e) {
-      console.error(e);
-    }
+    this.nodeIds = [];
+    this.dataSelected = [];
+
     // remove shiny listener
     if (this.shinyMessageId) {
       try {
@@ -93,87 +87,101 @@ export default class SelectionHandler {
         console.error(e);
       }
     }
-    //
-    this.dataSelected = [];
   }
 
-  handleEvent(event) {
+  clear() {
+    this.setSelected([]);
+  }
+
+  isValidTarget(target) {
+    return (
+      target instanceof SVGGraphicsElement && target.hasAttribute(this.attrName)
+    );
+  }
+
+  applyOn(target) {
     try {
-      let dataSel = this.dataSelected;
-      const dataId = event.target.getAttribute(this.attrName);
-      const index = dataSel.indexOf(dataId);
-      if (this.type == 'multiple') {
-        if (index < 0) {
-          dataSel.push(dataId);
+      if (this.isValidTarget(target)) {
+        const dataId = target.getAttribute(this.attrName);
+        let selected = Array.from(this.dataSelected);
+        const index = selected.indexOf(dataId);
+        if (this.type == 'multiple') {
+          if (index < 0) {
+            selected.push(dataId);
+          } else {
+            selected.splice(index, 1);
+          }
         } else {
-          dataSel.splice(index, 1);
+          if (index < 0) {
+            selected = [dataId];
+          } else {
+            selected = [];
+          }
         }
-      } else {
-        if (index < 0) {
-          dataSel = [dataId];
-        } else {
-          dataSel = [];
-        }
+        this.setSelected(selected);
+        return true;
       }
-      this.setSelected(dataSel);
     } catch (e) {
       console.error(e);
     }
+    return false;
   }
 
-  setSelected(sel) {
-    this.dataSelected = sel;
-    this.refreshSelected();
-    if (this.shinyInputId) {
-      Shiny.onInputChange(this.shinyInputId, this.dataSelected);
+  setSelected(selected) {
+    if (
+      this.dataSelected.length !== selected.length ||
+      !this.dataSelected.every((item) => selected.includes(item))
+    ) {
+      this.dataSelected = selected;
+      this.refreshSelected();
+      if (this.shinyInputId) {
+        Shiny.onInputChange(this.shinyInputId, this.dataSelected);
+      }
     }
   }
 
   refreshSelected() {
-    const svgEl = d3.select('#' + this.svgid + ' > g');
-    svgEl
-      .selectAll('*[' + this.attrName + '].' + this.clsName)
-      .classed(this.clsName, false);
-    if (this.invClsName) {
-      svgEl
-        .selectAll('*[' + this.attrName + '].' + this.invClsName)
-        .classed(this.invClsName, false);
-    }
-    const that = this;
-    for (let i = 0; i < that.dataSelected.length; i++) {
-      svgEl
-        .selectAll('*[' + that.attrName + '="' + that.dataSelected[i] + '"]')
-        .classed(that.clsName, true);
-    }
-    if (that.invClsName && that.dataSelected.length > 0) {
-      svgEl
-        .selectAll('*[' + that.attrName + ']:not(.' + that.clsName + ')')
-        .classed(that.invClsName, true);
-    }
+    let node, selected, element;
+    this.nodeIds.forEach(function (id) {
+      node = document.getElementById(id);
+      if (node) {
+        selected = this.dataSelected.includes(node.getAttribute(this.attrName));
+        element = d3.select(node);
+        element.classed(this.clsName, selected);
+        if (this.invClsName) {
+          if (this.dataSelected.length) {
+            element.classed(this.invClsName, !selected);
+          } else {
+            element.classed(this.invClsName, false);
+          }
+        }
+      }
+    }, this);
   }
 
   lasso(add) {
-    const svgEl = d3.select('#' + this.svgid + ' > g');
+    const targetEl = d3.select('#' + this.svgid + '_rootg');
     const that = this;
     let lasso_ = d3.lasso();
     const lasso_start = function () {};
     const lasso_draw = function () {};
     const lasso_end = function () {
       try {
-        const dataSel = that.dataSelected;
+        const selected = Array.from(that.dataSelected);
         lasso_.selectedItems().each(function (d, i) {
           const dataId = this.getAttribute(that.attrName);
-          const index = dataSel.indexOf(dataId);
+          const index = selected.indexOf(dataId);
           if (index < 0 && add) {
-            dataSel.push(dataId);
+            selected.push(dataId);
           } else if (index >= 0 && !add) {
-            dataSel.splice(index, 1);
+            selected.splice(index, 1);
           }
         });
 
-        svgEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
+        targetEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
+        targetEl.selectAll('g.lasso').remove();
 
-        that.setSelected(dataSel);
+        that.setSelected(selected);
       } catch (e) {
         console.error(e);
       }
@@ -183,13 +191,13 @@ export default class SelectionHandler {
       lasso_ = lasso_
         .closePathSelect(true)
         .closePathDistance(100)
-        .items(svgEl.selectAll('*[' + this.attrName + ']'))
-        .targetArea(svgEl)
+        .items(targetEl.selectAll('*[' + this.attrName + ']'))
+        .targetArea(targetEl)
         .on('start', lasso_start)
         .on('draw', lasso_draw)
         .on('end', lasso_end);
 
-      svgEl.call(lasso_);
+      targetEl.call(lasso_);
     } catch (e) {
       console.error(e);
     }
