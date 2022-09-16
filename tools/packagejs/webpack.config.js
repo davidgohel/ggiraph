@@ -182,6 +182,19 @@ module.exports = (env, argv) => {
         ]
       }),
 
+      // copy flatbush and minimize it
+      new CopyPlugin({
+        patterns: [
+          {
+            from: libInfos['flatbush'].srcJs,
+            to: getLibDestJsFilename('flatbush'),
+            transform(content, path) {
+              return UglifyJS.minify(content.toString()).code.toString();
+            }
+          }
+        ]
+      }),
+
       // copy d3-lasso
       new CopyPlugin({
         patterns: [

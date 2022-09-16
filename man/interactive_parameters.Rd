@@ -36,6 +36,9 @@ Identifiers are available as reactive input values in Shiny applications.}
 \item{tooltip_fill}{Color to use for tooltip background when \code{\link[=opts_tooltip]{opts_tooltip()}} \code{use_fill} is TRUE.
 Useful for setting the tooltip background color in \code{\link[=geom_text_interactive]{geom_text_interactive()}} or
 \code{\link[=geom_label_interactive]{geom_label_interactive()}}, when the geom text color may be the same as the tooltip text color.}
+
+\item{hover_nearest}{Set to TRUE to apply the hover effect on the nearest element
+while moving the mouse. In this case it is mandatory to also set the \code{data_id} parameter}
 }
 \description{
 Throughout ggiraph there are functions that add interactivity to ggplot plot elements.

@@ -6,6 +6,7 @@ import TooltipHandler from './tooltip.js';
 import HoverHandler from './hover.js';
 import SelectionHandler from './selection.js';
 import MouseHandler from './mouse.js';
+import NearestHandler from './nearest.js';
 
 export default class SVGObject {
   constructor(containerid, shinyMode) {
@@ -135,9 +136,14 @@ export default class SVGObject {
     }
   }
 
-  setupHover(hoverItems) {
+  setupHover(hoverItems, nearest_distance) {
     let handler, inputId, messageId;
     try {
+      const attrNames = hoverItems.map((x) => x.attrName);
+      if (attrNames.length) {
+        handler = new NearestHandler(this.svgid, attrNames, nearest_distance);
+        if (handler.init()) this.handlers.push(handler);
+      }
       // register hover handlers
       hoverItems.forEach(function (item) {
         inputId =
@@ -196,6 +202,9 @@ export default class SVGObject {
   setupMouse() {
     // register mouse handler
     try {
+      const nearestHandler = this.handlers.find(
+        (h) => h instanceof NearestHandler
+      );
       const tooltipHandler = this.handlers.find(
         (h) => h instanceof TooltipHandler
       );
@@ -207,6 +216,7 @@ export default class SVGObject {
       );
       const handler = new MouseHandler(
         this.svgid,
+        nearestHandler,
         tooltipHandler,
         hoverHandlers,
         selectionHandlers

@@ -143,4 +143,6 @@ library(ggiraph)
   policy <- htmlwidgets::sizingPolicy(defaultWidth = 500, defaultHeight = 500)
   result <- girafe_options(g, policy)
   expect_identical(result$sizingPolicy, policy, info = "sizingPolicy set")
+  expect_error(opts_hover(nearest_distance = "50"), info = "nearest_distance")
+  expect_error(opts_hover(nearest_distance = -15), info = "nearest_distance")
 }

@@ -1,6 +1,13 @@
 export default class MouseHandler {
-  constructor(svgid, tooltipHandler, hoverHandlers, selectionHandlers) {
+  constructor(
+    svgid,
+    nearestHandler,
+    tooltipHandler,
+    hoverHandlers,
+    selectionHandlers
+  ) {
     this.svgid = svgid;
+    this.nearestHandler = nearestHandler;
     this.tooltipHandler = tooltipHandler;
     this.hoverHandlers = hoverHandlers;
     this.selectionHandlers = selectionHandlers;
@@ -51,6 +58,8 @@ export default class MouseHandler {
     try {
       const target = event.target;
       const mousePos = new DOMPoint(event.pageX, event.pageY);
+      let handled = false,
+        nearest = null;
       if (event.type === 'mouseout') {
         if (this.svgid !== target.id) {
           this.mouseOnHandlers.forEach(function (h) {
@@ -66,7 +75,19 @@ export default class MouseHandler {
       } else if (event.type === 'mousemove') {
         if (this.svgid !== target.id) {
           if (this.tooltipHandler) {
-            this.tooltipHandler.applyOn(target, mousePos);
+            handled = this.tooltipHandler.applyOn(target, mousePos);
+          }
+        }
+        if (this.nearestHandler && !handled) {
+          nearest = this.nearestHandler.applyOn(target, mousePos);
+          if (nearest) {
+            this.mouseOnHandlers.forEach(function (h) {
+              h.applyOn(nearest, mousePos);
+            });
+          } else {
+            this.mouseOnHandlers.forEach(function (h) {
+              h.clear();
+            });
           }
         }
       } else if (event.type === 'click') {

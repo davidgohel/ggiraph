@@ -46,6 +46,148 @@ export function getHTMLElementMatrix(node) {
   return matrix;
 }
 
+export function distanceToPointSquared(p1, p2) {
+  return Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2);
+}
+
+export function distanceToPoint(p1, p2) {
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+}
+
+export function distanceToCircle(p, circle) {
+  return distanceToPoint(p, circle) - circle.r;
+}
+
+export function distanceToSegment(p, p1, p2) {
+  // code adapted from lib GEOS, Distance::pointToSegment
+  if (p1.x === p2.x && p1.y === p2.y) {
+    return distanceToPoint(p, p1);
+  }
+  const ds = distanceToPointSquared(p1, p2);
+
+  const r = ((p.x - p1.x) * (p2.x - p1.x) + (p.y - p1.y) * (p2.y - p1.y)) / ds;
+  if (r <= 0.0) {
+    return distanceToPoint(p, p1);
+  } else if (r >= 1.0) {
+    return distanceToPoint(p, p2);
+  }
+
+  const s = ((p1.y - p.y) * (p2.x - p1.x) - (p1.x - p.x) * (p2.y - p1.y)) / ds;
+  return Math.abs(s) * Math.sqrt(ds);
+}
+
+export function distanceToSegments(p, points) {
+  let min_distance = Infinity,
+    distance,
+    j;
+  if (points.length > 1) {
+    for (let i = 0; i < points.length; i++) {
+      j = i + 1;
+      if (j == points.length) j = 0;
+      distance = distanceToSegment(p, points[i], points[j]);
+      if (distance <= min_distance) {
+        min_distance = distance;
+      }
+    }
+  }
+  return min_distance;
+}
+
+export function segmentsIntersect(p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y) {
+  let result = false;
+  const denom = (p4y - p3y) * (p2x - p1x) - (p4x - p3x) * (p2y - p1y);
+  let num_a = (p4x - p3x) * (p1y - p3y) - (p4y - p3y) * (p1x - p3x);
+  let num_b = (p2x - p1x) * (p1y - p3y) - (p2y - p1y) * (p1x - p3x);
+  /* If the lines are parallel ... */
+  if (denom == 0) {
+    /* If the lines are coincident ... */
+    if (num_a == 0) {
+      /* If the lines are vertical ... */
+      if (p1x == p2x) {
+        /* Compare y-values */
+        if (
+          !(
+            (p1y < p3y && Math.max(p1y, p2y) < Math.min(p3y, p4y)) ||
+            (p3y < p1y && Math.max(p3y, p4y) < Math.min(p1y, p2y))
+          )
+        )
+          result = true;
+      } else {
+        /* Compare x-values */
+        if (
+          !(
+            (p1x < p3x && Math.max(p1x, p2x) < Math.min(p3x, p4x)) ||
+            (p3x < p1x && Math.max(p3x, p4x) < Math.min(p1x, p2x))
+          )
+        )
+          result = true;
+      }
+    }
+  } else {
+    /* ... otherwise, calculate where the lines intersect */
+    num_a = num_a / denom;
+    num_b = num_b / denom;
+    /* Check for overlap */
+    if (num_a > 0 && num_a < 1 && num_b > 0 && num_b < 1) result = true;
+  }
+  return result;
+}
+
+export function rectIntersectsShape(r, points) {
+  const rp1x = r.x;
+  const rp1y = r.y;
+  const rp2x = r.x + r.width;
+  const rp2y = r.y + r.height;
+  if (
+    points.find((p) => p.x >= rp1x && p.x <= rp2x && p.y >= rp1y && p.y <= rp2y)
+  ) {
+    // if any point inside the rect
+    return true;
+  } else if (points.length === 1 && points[0].r) {
+    const p = points[0];
+    const dx = Math.abs(p.x - (r.x + r.width / 2));
+    const dy = Math.abs(p.y - (r.y + r.height / 2));
+
+    if (dx > r.width / 2 + p.r) return false;
+    if (dy > r.height / 2 + p.r) return false;
+    if (dx <= r.width / 2) return true;
+    if (dy <= r.height / 2) return true;
+
+    const dsq = (dx - r.width / 2) ^ (2 + (dy - r.height / 2)) ^ 2;
+    return dsq <= (p.r ^ 2);
+  } else if (points.length > 1) {
+    let i, j;
+    for (i = 0; i < points.length; i++) {
+      j = i + 1;
+      if (j == points.length) j = 0;
+      if (
+        segmentsIntersect(
+          rp1x,
+          rp1y,
+          rp2x,
+          rp2y,
+          points[i].x,
+          points[i].y,
+          points[j].x,
+          points[j].y
+        )
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+export function rectIntersectsRect(r1, r2) {
+  return (
+    r1.x < r2.x + r2.width &&
+    r1.x + r1.width > r2.x &&
+    r1.y < r2.y + r2.height &&
+    r1.y + r1.height > r2.y
+  );
+}
+
 // Geometry polyfills adapted from:
 // https://github.com/jarek-foksa/geometry-polyfill/blob/master/geometry-polyfill.js
 // Only the necessary methods for this project are kept
