@@ -178,4 +178,76 @@ gg <- ggplot(dat, aes(drat, carname)) +
 ggiraph(ggobj = gg, fonts = list(sans = "Open Sans"))
 ```
 
+## Shiny illustration
+
+Below an example of a simple shiny application that 
+use a specific font and embed it in the application.
+
+```{r eval=FALSE}
+library(systemfonts)
+library(ggiraph)
+library(ggplot2)
+library(shiny)
+
+
+if (!dir.exists("www")) {
+  dir.create("www")
+  library(gfonts)
+  setup_font(
+    id = "ms-madi",
+    output_dir = "www",
+    variants = "regular",
+    prefer_local_source = FALSE)
+}
+
+if(!font_family_exists("Ms Madi")){
+  register_font(name = "Ms Madi",
+                plain = list("www/fonts/ms-madi-v2-latin-regular.woff", 0)
+  )
+}
+
+ui <- fluidPage(
+
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("num_rows",
+                        "Number of rows:",
+                        min = 15,
+                        max = 32,
+                        value = 20),
+            verbatimTextOutput("verbat")
+        ),
+
+        mainPanel(
+          tags$link(
+            rel = "stylesheet",
+            href="css/ms-madi.css"
+          ),
+          girafeOutput("custofontplot")
+        )
+    )
+)
+
+server <- function(input, output) {
+
+    output$custofontplot <- renderGirafe({
+        # generate bins based on input$bins from ui.R
+      dat <- mtcars[seq_len(input$num_rows),]
+      dat$carname <- row.names(dat)
+
+      gg <- ggplot(dat, aes(drat, carname)) +
+        geom_point() +
+        theme_minimal(base_family = "Ms Madi")
+
+      girafe(ggobj = gg)
+    })
+
+    output$verbat <- renderPrint({
+      fs::dir_tree(".")
+    })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
 
