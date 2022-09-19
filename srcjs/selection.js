@@ -169,6 +169,9 @@ export default class SelectionHandler {
     const lasso_draw = function () {};
     const lasso_end = function () {
       try {
+        targetEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
+        targetEl.selectAll('g.lasso').remove();
+
         const selected = Array.from(that.dataSelected);
         lasso_.selectedItems().each(function (d, i) {
           const dataId = this.getAttribute(that.attrName);
@@ -179,9 +182,6 @@ export default class SelectionHandler {
             selected.splice(index, 1);
           }
         });
-
-        targetEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
-        targetEl.selectAll('g.lasso').remove();
 
         that.setSelected(selected);
       } catch (e) {

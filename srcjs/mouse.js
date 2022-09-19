@@ -33,8 +33,10 @@ export default class MouseHandler {
     // add listeners
     const svgNode = document.getElementById(this.svgid);
     svgNode.addEventListener('mouseover', this, true);
-    svgNode.addEventListener('mousemove', this, true);
+    svgNode.addEventListener('mousemove', this);
     svgNode.addEventListener('mouseout', this, true);
+    svgNode.addEventListener('mousedown', this, true);
+    svgNode.addEventListener('wheel', this, true);
     svgNode.addEventListener('click', this, true);
 
     // return true to add to list of handLers
@@ -48,6 +50,8 @@ export default class MouseHandler {
       svgNode.removeEventListener('mouseover', this);
       svgNode.removeEventListener('mousemove', this);
       svgNode.removeEventListener('mouseout', this);
+      svgNode.removeEventListener('mousedown', this);
+      svgNode.removeEventListener('wheel', this);
       svgNode.removeEventListener('click', this);
     } catch (e) {
       console.error(e);
@@ -63,11 +67,11 @@ export default class MouseHandler {
         this.mouseOnHandlers.forEach(function (h) {
           h.clear();
         });
-      } else if (event.type === 'mouseover') {
+      } else if (event.type === 'mouseover' && !event.buttons) {
         this.mouseOnHandlers.forEach(function (h) {
           h.applyOn(target, event);
         });
-      } else if (event.type === 'mousemove') {
+      } else if (event.type === 'mousemove' && !event.buttons) {
         if (this.svgid !== target.id) {
           if (this.tooltipHandler) {
             handled = this.tooltipHandler.applyOn(target, event);
@@ -84,6 +88,10 @@ export default class MouseHandler {
               h.clear();
             });
           }
+        }
+      } else if (event.type === 'mousedown' || event.type === 'wheel') {
+        if (this.tooltipHandler) {
+          this.tooltipHandler.clear(event);
         }
       } else if (event.type === 'click') {
         if (this.svgid !== target.id) {
