@@ -165,10 +165,13 @@ export default class SelectionHandler {
     const targetEl = d3.select('#' + this.svgid + '_rootg');
     const that = this;
     let lasso_ = d3.lasso();
-    const lasso_start = function () {};
+    const lasso_start = function () {
+      targetEl.style('cursor', 'crosshair');
+    };
     const lasso_draw = function () {};
     const lasso_end = function () {
       try {
+        targetEl.style('cursor', 'auto');
         targetEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
         targetEl.selectAll('g.lasso').remove();
 

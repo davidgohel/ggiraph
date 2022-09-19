@@ -25,9 +25,16 @@ export default class ZoomHandler {
   zoomOn() {
     const targetEl = d3.select('#' + this.svgid + '_rootg');
     d3.select('#' + this.svgid).call(
-      this.zoomer.on('zoom', function () {
-        targetEl.attr('transform', d3.event.transform);
-      })
+      this.zoomer
+        .on('start', function () {
+          targetEl.style('cursor', 'move');
+        })
+        .on('zoom', function () {
+          targetEl.attr('transform', d3.event.transform);
+        })
+        .on('end', function () {
+          targetEl.style('cursor', 'auto');
+        })
     );
   }
 
