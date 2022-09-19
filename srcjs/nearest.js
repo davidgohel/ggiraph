@@ -56,7 +56,7 @@ export default class NearestHandler {
     // construct spatial index
     this.spatialIndex = new Flatbush(nodes.length);
     const svgNode = rootNode.ownerSVGElement;
-    const tosvg = svgNode.getCTM().inverse();
+    const tosvg = rootNode.getCTM().inverse();
     let tonode, box, boxpoints, extent;
     let n = 0;
     this.nodeIds = Array(nodes.length);
@@ -142,11 +142,12 @@ export default class NearestHandler {
     return target instanceof SVGGraphicsElement;
   }
 
-  applyOn(target, mousePos) {
+  applyOn(target, event) {
     try {
       if (!this.isValidTarget(target)) {
         return null;
       }
+      let mousePos = new DOMPoint(event.clientX, event.clientY);
       const svgNode = document.getElementById(this.svgid);
       const rootNode = document.getElementById(this.svgid + '_rootg');
       if (svgNode === target) {

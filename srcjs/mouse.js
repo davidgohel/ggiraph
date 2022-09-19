@@ -57,32 +57,27 @@ export default class MouseHandler {
   handleEvent(event) {
     try {
       const target = event.target;
-      const mousePos = new DOMPoint(event.pageX, event.pageY);
       let handled = false,
         nearest = null;
       if (event.type === 'mouseout') {
-        if (this.svgid !== target.id) {
-          this.mouseOnHandlers.forEach(function (h) {
-            h.clear();
-          });
-        }
+        this.mouseOnHandlers.forEach(function (h) {
+          h.clear();
+        });
       } else if (event.type === 'mouseover') {
-        if (this.svgid !== target.id) {
-          this.mouseOnHandlers.forEach(function (h) {
-            h.applyOn(target, mousePos);
-          });
-        }
+        this.mouseOnHandlers.forEach(function (h) {
+          h.applyOn(target, event);
+        });
       } else if (event.type === 'mousemove') {
         if (this.svgid !== target.id) {
           if (this.tooltipHandler) {
-            handled = this.tooltipHandler.applyOn(target, mousePos);
+            handled = this.tooltipHandler.applyOn(target, event);
           }
         }
         if (this.nearestHandler && !handled) {
-          nearest = this.nearestHandler.applyOn(target, mousePos);
+          nearest = this.nearestHandler.applyOn(target, event);
           if (nearest) {
             this.mouseOnHandlers.forEach(function (h) {
-              h.applyOn(nearest, mousePos);
+              h.applyOn(nearest, event);
             });
           } else {
             this.mouseOnHandlers.forEach(function (h) {
@@ -93,7 +88,7 @@ export default class MouseHandler {
       } else if (event.type === 'click') {
         if (this.svgid !== target.id) {
           this.selectionHandlers.forEach(function (h) {
-            h.applyOn(target);
+            h.applyOn(target, event);
           });
         }
       }

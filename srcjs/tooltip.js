@@ -79,12 +79,17 @@ export default class TooltipHandler {
   }
 
   isValidTarget(target) {
-    return target instanceof SVGGraphicsElement && target.hasAttribute('title');
+    return (
+      target instanceof SVGGraphicsElement &&
+      !(target instanceof SVGSVGElement) &&
+      target.hasAttribute('title')
+    );
   }
 
-  applyOn(target, mousePos) {
+  applyOn(target, event) {
     try {
       if (this.isValidTarget(target)) {
+        const mousePos = new DOMPoint(event.pageX, event.pageY);
         const svgNode = target.ownerSVGElement;
         const tooltipEl = d3.select('div.' + this.clsName);
         let tooltipPos;

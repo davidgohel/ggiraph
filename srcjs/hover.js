@@ -81,11 +81,13 @@ export default class HoverHandler {
 
   isValidTarget(target) {
     return (
-      target instanceof SVGGraphicsElement && target.hasAttribute(this.attrName)
+      target instanceof SVGGraphicsElement &&
+      !(target instanceof SVGSVGElement) &&
+      target.hasAttribute(this.attrName)
     );
   }
 
-  applyOn(target) {
+  applyOn(target, event) {
     try {
       if (this.isValidTarget(target)) {
         if (target.id !== this.lastTargetId) {
