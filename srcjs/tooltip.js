@@ -1,5 +1,9 @@
 import * as d3 from 'd3';
-import { getWindowViewport, getHTMLElementMatrix } from './geom';
+import {
+  getWindowViewport,
+  getHTMLElementMatrix,
+  rectIntersectsRect
+} from './geom';
 
 export default class TooltipHandler {
   constructor(
@@ -90,11 +94,15 @@ export default class TooltipHandler {
     try {
       if (this.isValidTarget(target)) {
         const mousePos = new DOMPoint(event.pageX, event.pageY);
-        const svgNode = target.ownerSVGElement;
         const tooltipEl = d3.select('div.' + this.clsName);
         let tooltipPos;
         if (target.id === this.lastTargetId) {
-          tooltipPos = this.calculatePosition(tooltipEl, svgNode, mousePos);
+          tooltipPos = this.calculatePosition(
+            tooltipEl,
+            target,
+            mousePos,
+            event.fromNearest
+          );
           tooltipEl
             .style('left', tooltipPos.x + 'px')
             .style('top', tooltipPos.y + 'px');
@@ -110,7 +118,12 @@ export default class TooltipHandler {
           }
           tooltipEl.html(this.decodeContent(target.getAttribute('title')));
 
-          tooltipPos = this.calculatePosition(tooltipEl, svgNode, mousePos);
+          tooltipPos = this.calculatePosition(
+            tooltipEl,
+            target,
+            mousePos,
+            event.fromNearest
+          );
           tooltipEl
             .style('left', tooltipPos.x + 'px')
             .style('top', tooltipPos.y + 'px')
@@ -132,8 +145,9 @@ export default class TooltipHandler {
     return this.decodingTextarea.value;
   }
 
-  calculatePosition(tooltipEl, svgNode, mousePos) {
+  calculatePosition(tooltipEl, target, mousePos, checkTargetCollision) {
     let p, matrix;
+    const svgNode = target.ownerSVGElement;
     const tooltipNode = tooltipEl.node();
     const containerNode = svgNode.parentNode;
     if (this.usecursor) {
@@ -162,39 +176,68 @@ export default class TooltipHandler {
         maxp = maxp.matrixTransform(matrix);
       }
 
-      // calculate horizontal position
+      // target node bounding rect
+      const brect = target.getBoundingClientRect();
+
+      // calculate possible horizontal positions
+      const possibleX = [];
       const spaceRight = maxp.x - (p.x + this.offx);
       const spaceLeft = p.x - this.offx - minp.x;
       if (spaceRight >= tooltipWidth) {
         // fits on right
-        p.x = Math.max(minp.x, p.x + this.offx);
-      } else if (spaceLeft >= tooltipWidth) {
+        possibleX.push(Math.max(minp.x, p.x + this.offx));
+      }
+      if (spaceLeft >= tooltipWidth) {
         // fits on left
-        p.x = Math.min(maxp.x - tooltipWidth, p.x - this.offx - tooltipWidth);
-      } else {
-        // set at middle
-        p.x = Math.max(
-          minp.x,
-          Math.min(maxp.x, p.x + tooltipWidth / 2) - tooltipWidth
+        possibleX.push(
+          Math.min(maxp.x - tooltipWidth, p.x - this.offx - tooltipWidth)
         );
       }
+      // set at middle, as fallback
+      possibleX.push(
+        Math.max(
+          minp.x,
+          Math.min(maxp.x, p.x + tooltipWidth / 2) - tooltipWidth
+        )
+      );
 
-      // calculate vertical position
+      // calculate possible vertical positions
+      const possibleY = [];
       const spaceBottom = maxp.y - (p.y + this.offy);
       const spaceTop = p.y - this.offy - minp.y;
       if (spaceBottom >= tooltipHeight) {
         // fits on bottom
-        p.y = Math.max(minp.y, p.y + this.offy);
-      } else if (spaceTop >= tooltipHeight) {
+        possibleY.push(Math.max(minp.y, p.y + this.offy));
+      }
+      if (spaceTop >= tooltipHeight) {
         // fits on top
-        p.y = Math.min(maxp.y - tooltipHeight, p.y - this.offy - tooltipHeight);
-      } else {
-        // set at middle
-        p.y = Math.max(
-          minp.y,
-          Math.min(maxp.y, p.y + tooltipHeight / 2) - tooltipHeight
+        possibleY.push(
+          Math.min(maxp.y - tooltipHeight, p.y - this.offy - tooltipHeight)
         );
       }
+      // set at middle, as fallback
+      possibleY.push(
+        Math.max(
+          minp.y,
+          Math.min(maxp.y, p.y + tooltipHeight / 2) - tooltipHeight
+        )
+      );
+
+      // combine them into possible tooltip rects
+      const possibleRects = [];
+      possibleX.forEach(function (x) {
+        possibleY.forEach(function (y) {
+          possibleRects.push(new DOMRect(x, y, tooltipWidth, tooltipHeight));
+        });
+      });
+
+      // find the first rect that does not intersect with target's rect
+      let found = undefined;
+      if (checkTargetCollision)
+        found = possibleRects.find((r) => !rectIntersectsRect(r, brect));
+      if (!found) found = possibleRects[0];
+      p.x = found.x;
+      p.y = found.y;
     } else {
       // Fixed position
       p = new DOMPoint(this.offx, this.offy);

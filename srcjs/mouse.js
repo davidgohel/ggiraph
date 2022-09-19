@@ -78,6 +78,7 @@ export default class MouseHandler {
           }
         }
         if (this.nearestHandler && !handled) {
+          event.fromNearest = true;
           nearest = this.nearestHandler.applyOn(target, event);
           if (nearest) {
             this.mouseOnHandlers.forEach(function (h) {
