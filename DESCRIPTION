@@ -16,6 +16,8 @@ Authors@R: c(
     comment = "saveSvgAsPng js library"), 
     person("Lee", "Thomason", role = c("cph"),
     comment = "TinyXML2"), 
+    person("Vladimir", "Agafonkin", role = c("cph"),
+    comment = "Flatbush"), 
     person("Eric", "Book", role = c("ctb"),
     comment = "hline and vline geoms")
     )
