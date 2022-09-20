@@ -116,7 +116,7 @@ SVGElement* DSVG_dev::svg_element(const char* name, SVGElement* parent) {
   if (!parent) {
     if (!is_adding_definition() && interactives.is_tracing()) {
       interactives.push(el);
-    } else {
+    } else if (!is_adding_definition()) {
       // non-interactive element
       // set the class 'nomouse' to ignore pointer events
       if (

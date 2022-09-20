@@ -62,6 +62,8 @@ export default class NearestHandler {
     const svgNode = rootNode.ownerSVGElement;
     const tosvg = rootNode.getCTM().inverse();
     let tonode, box, boxpoints, extent;
+    const clipIds = new Set();
+    let clip;
     let n = 0;
     this.nodeIds = Array(nodes.length);
     nodes.forEach(function (node) {
@@ -111,6 +113,13 @@ export default class NearestHandler {
         drawObject(node.gpoints, svgNode, node.id + '_points');
       }
       node.grect = getExtentRect(extent, svgNode);
+
+      clip = node.parentElement.getAttribute('clip-path');
+      if (clip) {
+        clipIds.add(clip.replace(/url\(#|\)/g, ''));
+      } else {
+        clipIds.add(rootNode.id);
+      }
     }, this);
 
     // build spatial index
@@ -133,6 +142,49 @@ export default class NearestHandler {
       );
     }
 
+    // store clips: areas where we should act
+    if (clipIds.size == 0) {
+      clipIds.add(rootNode.id);
+    }
+    // we create the clips only if the whole plot area has not been added
+    if (!clipIds.has(rootNode.id)) {
+      this.clips = Array.from(clipIds.values())
+        .map((id) => document.getElementById(id))
+        .map(function (clip) {
+          return (
+            Array
+              // loop clip children
+              .from(clip.childNodes)
+              .filter((node) => node instanceof SVGGraphicsElement)
+              .map(function (node) {
+                tonode = node.getCTM();
+                box = node.getBBox();
+                // firefox returns empty box
+                if (box.width === 0 || box.height === 0) {
+                  if (node instanceof SVGRectElement) {
+                    box.x = node.x.baseVal.value;
+                    box.y = node.y.baseVal.value;
+                    box.width = node.width.baseVal.value;
+                    box.height = node.height.baseVal.value;
+                  } else {
+                    return null;
+                  }
+                }
+                boxpoints = extractPoints(box).map((p) =>
+                  p.matrixTransform(tonode).matrixTransform(tosvg)
+                );
+                return getExtentRect(getExtent(boxpoints), svgNode);
+              })
+              .flat()
+              .filter((o) => !!o)
+          );
+        })
+        .flat();
+      if (!this.clips.length) this.clips = null;
+    } else {
+      this.clips = null;
+    }
+
     // return true to add to list of handLers
     return true;
   }
@@ -140,6 +192,7 @@ export default class NearestHandler {
   destroy() {
     this.spatialIndex = null;
     this.nodeIds = null;
+    this.clips = null;
   }
 
   isValidTarget(target) {
@@ -160,6 +213,13 @@ export default class NearestHandler {
       // get mouse position in svg coord space
       mousePos = mousePos.matrixTransform(target.getScreenCTM().inverse());
       if (this.debug) drawObject([mousePos], svgNode, svgNode.id + '_mouse');
+
+      // check that we are inside an active clip area
+      if (
+        this.clips &&
+        !this.clips.find((r) => rectIntersectsShape(r, [mousePos]))
+      )
+        return null;
 
       // get maximum 10 nearest elements from the index
       let neighbors = this.spatialIndex
