@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import {
   getWindowViewport,
   getHTMLElementMatrix,
-  rectIntersectsRect
+  rectContainsRect
 } from './geom';
 
 export default class TooltipHandler {
@@ -97,12 +97,7 @@ export default class TooltipHandler {
         const tooltipEl = d3.select('div.' + this.clsName);
         let tooltipPos;
         if (target.id === this.lastTargetId) {
-          tooltipPos = this.calculatePosition(
-            tooltipEl,
-            target,
-            mousePos,
-            event.fromNearest
-          );
+          tooltipPos = this.calculatePosition(tooltipEl, target, mousePos);
           tooltipEl
             .style('left', tooltipPos.x + 'px')
             .style('top', tooltipPos.y + 'px');
@@ -118,12 +113,7 @@ export default class TooltipHandler {
           }
           tooltipEl.html(this.decodeContent(target.getAttribute('title')));
 
-          tooltipPos = this.calculatePosition(
-            tooltipEl,
-            target,
-            mousePos,
-            event.fromNearest
-          );
+          tooltipPos = this.calculatePosition(tooltipEl, target, mousePos);
           tooltipEl
             .style('left', tooltipPos.x + 'px')
             .style('top', tooltipPos.y + 'px')
@@ -145,7 +135,7 @@ export default class TooltipHandler {
     return this.decodingTextarea.value;
   }
 
-  calculatePosition(tooltipEl, target, mousePos, checkTargetCollision) {
+  calculatePosition(tooltipEl, target, mousePos) {
     let p, matrix;
     const svgNode = target.ownerSVGElement;
     const tooltipNode = tooltipEl.node();
@@ -231,10 +221,8 @@ export default class TooltipHandler {
         });
       });
 
-      // find the first rect that does not intersect with target's rect
-      let found = undefined;
-      if (checkTargetCollision)
-        found = possibleRects.find((r) => !rectIntersectsRect(r, brect));
+      // find the first rect that does not contain the target's rect
+      let found = possibleRects.find((r) => !rectContainsRect(r, brect));
       if (!found) found = possibleRects[0];
       p.x = found.x;
       p.y = found.y;

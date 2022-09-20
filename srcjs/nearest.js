@@ -4,11 +4,15 @@ import {
   distanceToCircle,
   distanceToSegments,
   rectIntersectsRect,
-  rectIntersectsShape
+  rectIntersectsShape,
+  extractPoints,
+  getExtent,
+  getExtentRect,
+  getRect,
+  drawObject
 } from './geom';
 
 // TODO:
-// tooltip should not cover the nearest element
 // take stroke width into account if possible
 
 export default class NearestHandler {
@@ -226,145 +230,4 @@ export default class NearestHandler {
     }
     return null;
   }
-}
-
-function extractPoints(obj) {
-  let points, p, plist, i, d, m;
-  const rePathCoords = new RegExp('([\\d\\.]+) ([\\d\\.]+)', 'g');
-  if (obj instanceof SVGRect || obj instanceof DOMRect) {
-    return [
-      new DOMPoint(obj.x, obj.y),
-      new DOMPoint(obj.x + obj.width, obj.y),
-      new DOMPoint(obj.x + obj.width, obj.y + obj.height),
-      new DOMPoint(obj.x, obj.y + obj.height)
-    ];
-  } else if (obj instanceof SVGRectElement || obj instanceof SVGImageElement) {
-    return [
-      new DOMPoint(obj.x.baseVal.value, obj.y.baseVal.value),
-      new DOMPoint(
-        obj.x.baseVal.value + obj.width.baseVal.value,
-        obj.y.baseVal.value
-      ),
-      new DOMPoint(
-        obj.x.baseVal.value + obj.width.baseVal.value,
-        obj.y.baseVal.value + obj.height.baseVal.value
-      ),
-      new DOMPoint(
-        obj.x.baseVal.value,
-        obj.y.baseVal.value + obj.height.baseVal.value
-      )
-    ];
-  } else if (obj instanceof SVGCircleElement) {
-    p = new DOMPoint(obj.cx.baseVal.value, obj.cy.baseVal.value);
-    p.r = obj.r.baseVal.value;
-    return [p];
-  } else if (obj instanceof SVGLineElement) {
-    points = [
-      new DOMPoint(obj.x1.baseVal.value, obj.y1.baseVal.value),
-      new DOMPoint(obj.x2.baseVal.value, obj.y2.baseVal.value)
-    ];
-    points.shape = 'polyline';
-    return points;
-  } else if (
-    obj instanceof SVGPolylineElement ||
-    obj instanceof SVGPolygonElement
-  ) {
-    points = [];
-    plist = obj.points;
-    for (i = 0; i < plist.length; i++) {
-      p = plist.getItem(i);
-      if (!(p instanceof DOMPoint)) {
-        p = new DOMPoint(p.x, p.y);
-      }
-      points.push(p);
-    }
-    points.shape = obj instanceof SVGPolylineElement ? 'polyline' : 'polygon';
-    return points;
-  } else if (obj instanceof SVGPathElement) {
-    points = [];
-    d = obj.getAttribute('d');
-    while ((m = rePathCoords.exec(d)) !== null) {
-      points.push(new DOMPoint(parseFloat(m[1]), parseFloat(m[2])));
-    }
-    return points;
-  } else {
-    throw (
-      'Error in extractPoints: unimplemented object type: ' +
-      Object.prototype.toString.call(obj)
-    );
-  }
-}
-
-function getExtent(points) {
-  const xx = points.map((p) => p.x);
-  const yy = points.map((p) => p.y);
-  return {
-    minx: Math.min.apply(null, xx),
-    maxx: Math.max.apply(null, xx),
-    miny: Math.min.apply(null, yy),
-    maxy: Math.max.apply(null, yy)
-  };
-}
-
-function getExtentRect(extent, svgNode) {
-  const rect = svgNode.createSVGRect();
-  rect.x = extent.minx;
-  rect.y = extent.miny;
-  rect.width = extent.maxx - extent.minx;
-  rect.height = extent.maxy - extent.miny;
-  return rect;
-}
-
-function getRect(points, svgNode) {
-  return getExtentRect(getExtent(points), svgNode);
-}
-
-function buffer(rect, buffer) {
-  rect.x -= buffer;
-  rect.y -= buffer;
-  rect.width += buffer * 2;
-  rect.height += buffer * 2;
-  return rect;
-}
-
-function drawObject(obj, parent, id, fill = '#ff000033', stroke = '#ff0000') {
-  const svgns = 'http://www.w3.org/2000/svg';
-  let el = document.getElementById(id);
-  let name;
-  if (Array.isArray(obj) && obj.length === 1) {
-    obj = obj[0];
-  }
-  if (!el) {
-    name = obj.shape || 'polygon';
-    if (obj instanceof SVGPoint || obj instanceof DOMPoint) {
-      name = 'circle';
-    } else if (obj instanceof SVGRect || obj instanceof DOMRect) {
-      name = 'rect';
-    }
-    el = document.createElementNS(svgns, name);
-    el.setAttribute('id', id);
-    if (name !== 'polyline') el.setAttribute('fill', fill);
-    el.setAttribute('stroke', stroke);
-    el.setAttribute('style', 'pointer-events: none;');
-    parent.appendChild(el);
-  } else {
-    name = el.localName;
-  }
-  if (name === 'circle') {
-    el.setAttribute('cx', obj.x);
-    el.setAttribute('cy', obj.y);
-    el.setAttribute('r', obj.r || '3pt');
-  } else if (name === 'rect') {
-    el.setAttribute('x', obj.x);
-    el.setAttribute('y', obj.y);
-    el.setAttribute('width', obj.width);
-    el.setAttribute('height', obj.height);
-  } else if (name === 'polygon' || name === 'polyline') {
-    let str = '';
-    obj.forEach(function (p) {
-      str += p.x + ' ' + p.y + ' ';
-    });
-    el.setAttribute('points', str);
-  }
-  return el;
 }
