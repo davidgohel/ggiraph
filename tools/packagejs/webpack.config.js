@@ -126,7 +126,10 @@ module.exports = (env, argv) => {
       library: PACKAGE.name,
       libraryTarget: 'umd'
     },
-    externals: ['d3','flatbush'],
+    externals: {
+      d3: 'd3',
+      flatbush: 'Flatbush'
+    },
     module: {
       rules: [
         {

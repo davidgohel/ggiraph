@@ -144,6 +144,10 @@ export default class SVGObject {
         handler = new NearestHandler(this.svgid, attrNames, nearest_distance);
         if (handler.init()) this.handlers.push(handler);
       }
+    } catch (e) {
+      console.error(e);
+    }
+    try {
       // register hover handlers
       hoverItems.forEach(function (item) {
         inputId =
