@@ -5,7 +5,7 @@
 #include <regex>
 
 INDEX InteractiveElements::push(SVGElement* el) {
-  const INDEX index = IndexedElements::push(el, false);
+  const INDEX index = IndexedElements::push(el);
   if (el) {
     map.insert(std::pair<INDEX, SVGElement*>(index, el));
     if (tracing) {

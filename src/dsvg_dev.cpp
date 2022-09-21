@@ -60,33 +60,40 @@ SVGElement* DSVG_dev::svg_root() {
     set_attr(root, "xmlns", "http://www.w3.org/2000/svg");
     set_attr(root, "xmlns:xlink", "http://www.w3.org/1999/xlink");
   }
+  set_attr(root, "class", "ggiraph-svg");
   set_attr(root, "role", "img");
+
+  std::string id;
 
   if (!title.empty()) {
     SVGElement* titleEl = create_element("title", root);
     SVGText* titleT = new_svg_text(title.c_str(), doc, false);
     append_element((SVGElement*)titleT, titleEl);
-    const std::string titleId(canvas_id + "_title");
-    set_attr(titleEl, "id", titleId);
-    set_attr(root, "aria-labelledby", titleId);
+    id.assign(canvas_id + "_title");
+    set_attr(titleEl, "id", id);
+    set_attr(root, "aria-labelledby", id);
   }
 
   if (!desc.empty()) {
     SVGElement* descEl = create_element("desc", root);
     SVGText* descT = new_svg_text(desc.c_str(), doc, false);
     append_element((SVGElement*)descT, descEl);
-    const std::string descId(canvas_id + "_desc");
-    set_attr(descEl, "id", descId);
-    set_attr(root, "aria-describedby", descId);
+    id.assign(canvas_id + "_desc");
+    set_attr(descEl, "id", id);
+    set_attr(root, "aria-describedby", id);
   }
 
   // create main defs element
   // all definitions (clips, masks, gradients, etc) will go here
   root_defs = create_element("defs", root);
+  id.assign(canvas_id + "_defs");
+  set_attr(root_defs, "id", id);
 
   // create main g element
   // all regular elements will go here
   root_g = create_element("g", root);
+  id.assign(canvas_id + "_rootg");
+  set_attr(root_g, "id", id);
 
   // initialize contexts stack
   contexts = new std::stack<ContainerContext*>();
@@ -109,6 +116,21 @@ SVGElement* DSVG_dev::svg_element(const char* name, SVGElement* parent) {
   if (!parent) {
     if (!is_adding_definition() && interactives.is_tracing()) {
       interactives.push(el);
+    } else {
+      // non-interactive element
+      // set the class 'nomouse' to ignore pointer events
+      if (
+        strcmp(name, "line") == 0 ||
+        strcmp(name, "polyline") == 0 ||
+        strcmp(name, "polygon") == 0 ||
+        strcmp(name, "path") == 0 ||
+        strcmp(name, "rect") == 0 ||
+        strcmp(name, "circle") == 0 ||
+        strcmp(name, "text") == 0 ||
+        strcmp(name, "image") == 0
+      ) {
+        set_attr(el, "class", "nomouse");
+      }
     }
     ContainerContext* ctx = contexts->top();
     if (IS_VALID_INDEX(ctx->mask_index)) {

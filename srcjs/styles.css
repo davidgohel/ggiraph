@@ -108,3 +108,7 @@
   fill: #333;
   fill-opacity: 0.5;
 }
+
+.nomouse {
+  pointer-events: none;
+}
