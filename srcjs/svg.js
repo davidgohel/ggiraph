@@ -5,6 +5,8 @@ import ZoomHandler from './zoom.js';
 import TooltipHandler from './tooltip.js';
 import HoverHandler from './hover.js';
 import SelectionHandler from './selection.js';
+import MouseHandler from './mouse.js';
+import NearestHandler from './nearest.js';
 
 export default class SVGObject {
   constructor(containerid, shinyMode) {
@@ -134,20 +136,29 @@ export default class SVGObject {
     }
   }
 
-  setupHover(hoverItems) {
-    // register hover handlers
-    for (let i = 0; i < hoverItems.length; i++) {
-      const item = hoverItems[i];
-      try {
-        const inputId =
+  setupHover(hoverItems, nearest_distance) {
+    let handler, inputId, messageId;
+    try {
+      const attrNames = hoverItems.map((x) => x.attrName);
+      if (attrNames.length) {
+        handler = new NearestHandler(this.svgid, attrNames, nearest_distance);
+        if (handler.init()) this.handlers.push(handler);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      // register hover handlers
+      hoverItems.forEach(function (item) {
+        inputId =
           this.shinyMode && item.reactive
             ? this.containerid + item.inputSuffix
             : null;
-        const messageId =
+        messageId =
           this.shinyMode && item.reactive
             ? this.containerid + item.messageSuffix
             : null;
-        const handler = new HoverHandler(
+        handler = new HoverHandler(
           this.svgid,
           item.classPrefix,
           item.invClassPrefix,
@@ -156,30 +167,24 @@ export default class SVGObject {
           messageId
         );
         if (handler.init()) this.handlers.push(handler);
-      } catch (e) {
-        console.error(e);
-      }
+      }, this);
+    } catch (e) {
+      console.error(e);
     }
   }
 
   setupSelection(selectionItems) {
-    // register selection handlers
-    for (let i = 0; i < selectionItems.length; i++) {
-      const item = selectionItems[i];
-      try {
+    let handler, inputId, messageId;
+    try {
+      // register selection handlers
+      selectionItems.forEach(function (item) {
         // only add it in shiny or if only_shiny is false
-        // also must have a valid selection type
-        const addHandler =
-          (this.shinyMode || !item.only_shiny) &&
-          (item.type == 'single' || item.type == 'multiple');
-        if (addHandler) {
-          const inputId = this.shinyMode
-            ? this.containerid + item.inputSuffix
-            : null;
-          const messageId = this.shinyMode
+        if (this.shinyMode || !item.only_shiny) {
+          inputId = this.shinyMode ? this.containerid + item.inputSuffix : null;
+          messageId = this.shinyMode
             ? this.containerid + item.messageSuffix
             : null;
-          const handler = new SelectionHandler(
+          handler = new SelectionHandler(
             this.svgid,
             item.classPrefix,
             item.invClassPrefix,
@@ -192,16 +197,44 @@ export default class SVGObject {
           // init will return false if there is nothing to select
           if (handler.init()) this.handlers.push(handler);
         }
-      } catch (e) {
-        console.error(e);
-      }
+      }, this);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setupMouse() {
+    // register mouse handler
+    try {
+      const nearestHandler = this.handlers.find(
+        (h) => h instanceof NearestHandler
+      );
+      const tooltipHandler = this.handlers.find(
+        (h) => h instanceof TooltipHandler
+      );
+      const hoverHandlers = this.handlers.filter(
+        (h) => h instanceof HoverHandler
+      );
+      const selectionHandlers = this.handlers.filter(
+        (h) => h instanceof SelectionHandler
+      );
+      const handler = new MouseHandler(
+        this.svgid,
+        nearestHandler,
+        tooltipHandler,
+        hoverHandlers,
+        selectionHandlers
+      );
+      if (handler.init()) this.handlers.push(handler);
+    } catch (e) {
+      console.error(e);
     }
   }
 
   setupZoom(min, max) {
     // register zoom handler
     try {
-      const handler = new ZoomHandler(this.containerid, this.svgid, min, max);
+      const handler = new ZoomHandler(this.svgid, min, max);
       if (handler.init()) this.handlers.push(handler);
     } catch (e) {
       console.error(e);

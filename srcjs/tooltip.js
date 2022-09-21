@@ -1,5 +1,9 @@
 import * as d3 from 'd3';
-import { getWindowViewport, getHTMLElementMatrix } from './geom';
+import {
+  getWindowViewport,
+  getHTMLElementMatrix,
+  rectContainsRect
+} from './geom';
 
 export default class TooltipHandler {
   constructor(
@@ -26,14 +30,13 @@ export default class TooltipHandler {
     this.usestroke = usestroke;
     this.delayover = delayover;
     this.delayout = delayout;
+    this.lastTargetId = null;
   }
 
   init() {
-    const svg = d3.select('#' + this.svgid);
-    // select elements
-    const elements = d3.select('#' + this.svgid + ' > g').selectAll('*[title]');
-    // check selection type
-    if (elements.empty()) {
+    const rootNode = document.getElementById(this.svgid + '_rootg');
+    // check if an alement with title is found
+    if (!rootNode.querySelector('*[title]')) {
       // nothing to do here, return false to discard this
       return false;
     }
@@ -46,7 +49,7 @@ export default class TooltipHandler {
     if (this.placement == 'doc') {
       containerEl = d3.select('body');
     } else {
-      containerEl = d3.select(svg.node().parentNode);
+      containerEl = d3.select(rootNode.ownerSVGElement.parentNode);
     }
     containerEl
       .append('xhtml:div')
@@ -60,78 +63,70 @@ export default class TooltipHandler {
       'textarea'
     );
 
-    // add event listeners
-    const that = this;
-    elements.each(function () {
-      this.addEventListener('mouseover', that);
-      this.addEventListener('mousemove', that);
-      this.addEventListener('mouseout', that);
-    });
-
     // return true to add to list of handLers
     return true;
   }
 
   destroy() {
-    const that = this;
-    const svg = d3.select('#' + this.svgid);
-    // remove event listeners
-    try {
-      svg
-        .select('svg>g')
-        .selectAll('*[title]')
-        .each(function () {
-          this.removeEventListener('mouseover', that);
-          this.removeEventListener('mousemove', that);
-          this.removeEventListener('mouseout', that);
-        });
-    } catch (e) {
-      console.error(e);
-    }
+    this.lastTargetId = null;
 
     // remove element
     d3.select('.' + this.clsName).remove();
   }
 
-  handleEvent(event) {
+  clear() {
+    if (this.lastTargetId) {
+      this.lastTargetId = null;
+      const tooltipEl = d3.select('div.' + this.clsName);
+      tooltipEl.transition().duration(this.delayout).style('opacity', 0);
+    }
+  }
+
+  isValidTarget(target) {
+    return (
+      target instanceof SVGGraphicsElement &&
+      !(target instanceof SVGSVGElement) &&
+      target.hasAttribute('title')
+    );
+  }
+
+  applyOn(target, event) {
     try {
-      let pos, tooltipEl;
-      const svg = d3.select('#' + this.svgid);
+      if (this.isValidTarget(target)) {
+        const mousePos = new DOMPoint(event.pageX, event.pageY);
+        const tooltipEl = d3.select('div.' + this.clsName);
+        let tooltipPos;
+        if (target.id === this.lastTargetId) {
+          tooltipPos = this.calculatePosition(tooltipEl, target, mousePos);
+          tooltipEl
+            .style('left', tooltipPos.x + 'px')
+            .style('top', tooltipPos.y + 'px');
+        } else {
+          this.lastTargetId = target.id;
+          if (this.usefill) {
+            let clr = target.getAttribute('tooltip_fill');
+            if (!clr) clr = target.getAttribute('fill');
+            if (clr) tooltipEl.style('background-color', clr);
+          }
+          if (this.usestroke) {
+            tooltipEl.style('border-color', target.getAttribute('stroke'));
+          }
+          tooltipEl.html(this.decodeContent(target.getAttribute('title')));
 
-      if (this.placement == 'svg') {
-        tooltipEl = svg.select('div.' + this.clsName);
-      } else {
-        tooltipEl = d3.select('div.' + this.clsName);
-      }
-
-      if (event.type == 'mouseover') {
-        if (this.usefill) {
-          let clr = event.target.getAttribute('tooltip_fill');
-          if (!clr) clr = event.target.getAttribute('fill');
-          if (clr) tooltipEl.style('background-color', clr);
+          tooltipPos = this.calculatePosition(tooltipEl, target, mousePos);
+          tooltipEl
+            .style('left', tooltipPos.x + 'px')
+            .style('top', tooltipPos.y + 'px')
+            .transition()
+            .duration(this.delayover)
+            .style('opacity', this.opacity);
         }
-        if (this.usestroke) {
-          tooltipEl.style('border-color', event.target.getAttribute('stroke'));
-        }
-
-        tooltipEl.html(this.decodeContent(event.target.getAttribute('title')));
-
-        pos = this.calculatePosition(tooltipEl, event);
-        tooltipEl
-          .style('left', pos.x + 'px')
-          .style('top', pos.y + 'px')
-          .transition()
-          .duration(this.delayover)
-          .style('opacity', this.opacity);
-      } else if (event.type == 'mousemove') {
-        pos = this.calculatePosition(tooltipEl, event);
-        tooltipEl.style('left', pos.x + 'px').style('top', pos.y + 'px');
-      } else if (event.type == 'mouseout') {
-        tooltipEl.transition().duration(this.delayout).style('opacity', 0);
+        return true;
       }
     } catch (e) {
       console.error(e);
     }
+    return false;
   }
 
   decodeContent(txt) {
@@ -140,14 +135,14 @@ export default class TooltipHandler {
     return this.decodingTextarea.value;
   }
 
-  calculatePosition(tooltipEl, event) {
+  calculatePosition(tooltipEl, target, mousePos) {
     let p, matrix;
-    const svgNode = d3.select('#' + this.svgid).node();
+    const svgNode = target.ownerSVGElement;
     const tooltipNode = tooltipEl.node();
     const containerNode = svgNode.parentNode;
     if (this.usecursor) {
       // Calculate tooltip position, preventing collisions and overflow if possible.
-      // First we try to fit the tooltip on right and bottom of the event.
+      // First we try to fit the tooltip on right and bottom of the mouse position.
       // If it doesn't fit we try the opposite direction and negate the passed offset.
       // Otherwise we use the center/middle position.
 
@@ -157,11 +152,11 @@ export default class TooltipHandler {
 
       // boundaries where the tooltip must not cross, set to window viewport
       const viewport = getWindowViewport(svgNode);
-      let minp = new window.DOMPoint(viewport.left, viewport.top);
-      let maxp = new window.DOMPoint(viewport.right, viewport.bottom);
+      let minp = new DOMPoint(viewport.left, viewport.top);
+      let maxp = new DOMPoint(viewport.right, viewport.bottom);
 
       // current mouse/touch coordinates in document coord system
-      p = new window.DOMPoint(event.pageX, event.pageY);
+      p = mousePos;
 
       if (this.placement != 'doc') {
         // convert the coords to be relative to the container
@@ -171,42 +166,69 @@ export default class TooltipHandler {
         maxp = maxp.matrixTransform(matrix);
       }
 
-      // calculate horizontal position
+      // target node bounding rect
+      const brect = target.getBoundingClientRect();
+
+      // calculate possible horizontal positions
+      const possibleX = [];
       const spaceRight = maxp.x - (p.x + this.offx);
       const spaceLeft = p.x - this.offx - minp.x;
       if (spaceRight >= tooltipWidth) {
         // fits on right
-        p.x = Math.max(minp.x, p.x + this.offx);
-      } else if (spaceLeft >= tooltipWidth) {
+        possibleX.push(Math.max(minp.x, p.x + this.offx));
+      }
+      if (spaceLeft >= tooltipWidth) {
         // fits on left
-        p.x = Math.min(maxp.x - tooltipWidth, p.x - this.offx - tooltipWidth);
-      } else {
-        // set at middle
-        p.x = Math.max(
-          minp.x,
-          Math.min(maxp.x, p.x + tooltipWidth / 2) - tooltipWidth
+        possibleX.push(
+          Math.min(maxp.x - tooltipWidth, p.x - this.offx - tooltipWidth)
         );
       }
+      // set at middle, as fallback
+      possibleX.push(
+        Math.max(
+          minp.x,
+          Math.min(maxp.x, p.x + tooltipWidth / 2) - tooltipWidth
+        )
+      );
 
-      // calculate vertical position
+      // calculate possible vertical positions
+      const possibleY = [];
       const spaceBottom = maxp.y - (p.y + this.offy);
       const spaceTop = p.y - this.offy - minp.y;
       if (spaceBottom >= tooltipHeight) {
         // fits on bottom
-        p.y = Math.max(minp.y, p.y + this.offy);
-      } else if (spaceTop >= tooltipHeight) {
+        possibleY.push(Math.max(minp.y, p.y + this.offy));
+      }
+      if (spaceTop >= tooltipHeight) {
         // fits on top
-        p.y = Math.min(maxp.y - tooltipHeight, p.y - this.offy - tooltipHeight);
-      } else {
-        // set at middle
-        p.y = Math.max(
-          minp.y,
-          Math.min(maxp.y, p.y + tooltipHeight / 2) - tooltipHeight
+        possibleY.push(
+          Math.min(maxp.y - tooltipHeight, p.y - this.offy - tooltipHeight)
         );
       }
+      // set at middle, as fallback
+      possibleY.push(
+        Math.max(
+          minp.y,
+          Math.min(maxp.y, p.y + tooltipHeight / 2) - tooltipHeight
+        )
+      );
+
+      // combine them into possible tooltip rects
+      const possibleRects = [];
+      possibleX.forEach(function (x) {
+        possibleY.forEach(function (y) {
+          possibleRects.push(new DOMRect(x, y, tooltipWidth, tooltipHeight));
+        });
+      });
+
+      // find the first rect that does not contain the target's rect
+      let found = possibleRects.find((r) => !rectContainsRect(r, brect));
+      if (!found) found = possibleRects[0];
+      p.x = found.x;
+      p.y = found.y;
     } else {
       // Fixed position
-      p = new window.DOMPoint(this.offx, this.offy);
+      p = new DOMPoint(this.offx, this.offy);
 
       if (this.placement == 'doc') {
         // correct the position to be relative to the document

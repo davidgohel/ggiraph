@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ggiraphjs",
-  "version": "0.4.3",
+  "version": "0.4.5",
   "description": "ggiraph object javascript module",
   "keywords": [],
   "author": "David Gohel <david.gohel@ardata.fr>",
@@ -19,6 +19,7 @@
   "dependencies": {
     "d3": "^5.16.0",
     "d3-lasso": "0.0.5",
+    "flatbush": "^4.0.0",
     "save-svg-as-png": "^1.4.17"
   },
   "devDependencies": {

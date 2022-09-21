@@ -1,8 +1,7 @@
 import * as d3 from 'd3';
 
 export default class ZoomHandler {
-  constructor(containerid, svgid, min, max) {
-    this.containerid = containerid;
+  constructor(svgid, min, max) {
     this.svgid = svgid;
     this.min = min;
     this.max = max;
@@ -24,22 +23,26 @@ export default class ZoomHandler {
   }
 
   zoomOn() {
-    const svgid = this.svgid;
-    d3.select('#' + this.containerid).call(
-      this.zoomer.on('zoom', function () {
-        d3.select('#' + svgid + ' > g').attr('transform', d3.event.transform);
-      })
+    const targetEl = d3.select('#' + this.svgid + '_rootg');
+    d3.select('#' + this.svgid).call(
+      this.zoomer
+        .on('start', function () {
+          targetEl.style('cursor', 'move');
+        })
+        .on('zoom', function () {
+          targetEl.attr('transform', d3.event.transform);
+        })
+        .on('end', function () {
+          targetEl.style('cursor', 'auto');
+        })
     );
   }
 
   zoomIdentity() {
-    d3.select('#' + this.containerid).call(
-      this.zoomer.transform,
-      d3.zoomIdentity
-    );
+    d3.select('#' + this.svgid).call(this.zoomer.transform, d3.zoomIdentity);
   }
 
   zoomOff() {
-    d3.select('#' + this.containerid).call(this.zoomer.on('zoom', null));
+    d3.select('#' + this.svgid).call(this.zoomer.on('zoom', null));
   }
 }

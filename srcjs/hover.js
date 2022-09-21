@@ -15,27 +15,29 @@ export default class HoverHandler {
     this.attrName = attrName;
     this.shinyInputId = shinyInputId;
     this.shinyMessageId = shinyMessageId;
+    this.nodeIds = [];
     this.dataHovered = [];
+    this.lastTargetId = null;
   }
 
   init() {
+    const rootNode = document.getElementById(this.svgid + '_rootg');
     // select elements
-    const elements = d3
-      .select('#' + this.svgid + ' > g')
-      .selectAll('*[' + this.attrName + ']');
-    if (elements.empty()) {
+    const nodes = rootNode.querySelectorAll('*[' + this.attrName + ']');
+    if (!nodes.length) {
       // nothing to do here, return false to discard this
       return false;
     }
-    const that = this;
 
-    // add event listeners
-    elements.each(function () {
-      this.addEventListener('mouseover', that);
-      this.addEventListener('mouseout', that);
-    });
+    // store ids
+    this.nodeIds = Array(nodes.length);
+    let n = 0;
+    nodes.forEach(function (node) {
+      this.nodeIds[n++] = node.id;
+    }, this);
 
     // add shiny listener
+    const that = this;
     if (this.shinyMessageId) {
       Shiny.addCustomMessageHandler(this.shinyMessageId, function (message) {
         if (typeof message === 'string') {
@@ -51,18 +53,8 @@ export default class HoverHandler {
   }
 
   destroy() {
-    const that = this;
-    // remove event listeners
-    try {
-      d3.select('#' + this.svgid + ' > g')
-        .selectAll('*[' + this.attrName + ']')
-        .each(function () {
-          this.removeEventListener('mouseover', that);
-          this.removeEventListener('mouseout', that);
-        });
-    } catch (e) {
-      console.error(e);
-    }
+    this.lastTargetId = null;
+    this.nodeIds = [];
 
     // remove shiny listener
     if (this.shinyMessageId) {
@@ -80,47 +72,65 @@ export default class HoverHandler {
     this.dataHovered = [];
   }
 
-  handleEvent(event) {
+  clear() {
+    if (this.lastTargetId) {
+      this.lastTargetId = null;
+      this.setHovered([]);
+    }
+  }
+
+  isValidTarget(target) {
+    return (
+      target instanceof SVGGraphicsElement &&
+      !(target instanceof SVGSVGElement) &&
+      target.hasAttribute(this.attrName)
+    );
+  }
+
+  applyOn(target, event) {
     try {
-      if (event.type == 'mouseover') {
-        this.setHovered([event.target.getAttribute(this.attrName)]);
-      } else if (event.type == 'mouseout') {
-        this.setHovered([]);
+      if (this.isValidTarget(target)) {
+        if (target.id !== this.lastTargetId) {
+          this.lastTargetId = target.id;
+          this.setHovered([target.getAttribute(this.attrName)]);
+        }
+        return true;
       }
     } catch (e) {
       console.error(e);
     }
+    return false;
   }
 
   setHovered(hovered) {
-    this.dataHovered = hovered;
-    this.refreshHovered();
-    if (this.shinyInputId) {
-      Shiny.onInputChange(this.shinyInputId, this.dataHovered);
+    if (
+      this.dataHovered.length !== hovered.length ||
+      !this.dataHovered.every((item) => hovered.includes(item))
+    ) {
+      this.dataHovered = hovered;
+      this.refreshHovered();
+      if (this.shinyInputId) {
+        Shiny.onInputChange(this.shinyInputId, this.dataHovered);
+      }
     }
   }
 
   refreshHovered() {
-    const svgEl = d3.select('#' + this.svgid + ' > g');
-    svgEl
-      .selectAll('*[' + this.attrName + '].' + this.clsName)
-      .classed(this.clsName, false);
-    if (this.invClsName) {
-      svgEl
-        .selectAll('*[' + this.attrName + '].' + this.invClsName)
-        .classed(this.invClsName, false);
-    }
-
-    const that = this;
-    for (let i = 0; i < that.dataHovered.length; i++) {
-      svgEl
-        .selectAll('*[' + that.attrName + '="' + that.dataHovered[i] + '"]')
-        .classed(that.clsName, true);
-    }
-    if (that.invClsName && that.dataHovered.length > 0) {
-      svgEl
-        .selectAll('*[' + that.attrName + ']:not(.' + that.clsName + ')')
-        .classed(that.invClsName, true);
-    }
+    let node, hovered, element;
+    this.nodeIds.forEach(function (id) {
+      node = document.getElementById(id);
+      if (node) {
+        hovered = this.dataHovered.includes(node.getAttribute(this.attrName));
+        element = d3.select(node);
+        element.classed(this.clsName, hovered);
+        if (this.invClsName) {
+          if (this.dataHovered.length) {
+            element.classed(this.invClsName, !hovered);
+          } else {
+            element.classed(this.invClsName, false);
+          }
+        }
+      }
+    }, this);
   }
 }

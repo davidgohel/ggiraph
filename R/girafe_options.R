@@ -125,6 +125,11 @@ opts_tooltip <- function(css = NULL,
 #' It must be a scalar character. It can also be constructed with
 #' [girafe_css()], to give more control over the css for different element types.
 #' @param reactive if TRUE, in Shiny context, hovering will set Shiny input values.
+#' @param nearest_distance a scalar positive number defining the maximum distance to use
+#' when using the `hover_nearest` [interactive parameter][interactive_parameters] feature.
+#' By default (`NULL`) it's set to `Infinity` which means that there is no distance limit.
+#' Setting it to 50, for example, it will hover the nearest element that has
+#' at maximum 50 SVG units (pixels) distance from the mouse cursor.
 #' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,
 #' be aware that the browser's CSS engine will apply it also to line elements,
 #' if there are any that use the hovering feature. This will cause an undesired effect.
@@ -150,12 +155,21 @@ opts_tooltip <- function(css = NULL,
 #' @export
 #' @family girafe animation options
 opts_hover <- function(css = NULL,
-                       reactive = FALSE) {
+                       reactive = FALSE,
+                       nearest_distance = NULL) {
+  if (!is.null(nearest_distance)) {
+    if (!(
+      rlang::is_scalar_integer(nearest_distance) ||
+      rlang::is_scalar_double(nearest_distance)
+    ) || is.nan(nearest_distance) || is.na(nearest_distance) || nearest_distance < 0) {
+      stop("`nearest_distance` must be a scalar positive number or NULL", call. = FALSE)
+    }
+  }
   css <- check_css(css,
                    default = "fill:orange;stroke:gray;",
                    cls_prefix = "hover_",
                    name = "opts_hover")
-  structure(list(css = css, reactive = reactive),
+  structure(list(css = css, reactive = reactive, nearest_distance = nearest_distance),
             class = "opts_hover")
 }
 

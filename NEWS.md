@@ -2,6 +2,8 @@
 
 ## Enhancement
 
+* New feature: hover nearest element on mouse movement
+* Improved javascript performance (mouse event handling)
 * Added interactive parameters for outlier points in geom_boxplot_interactive
 * Added accessibility elements to the SVG output (title, desc, role)
 * Added opts_selection_inv for inverted selection effect

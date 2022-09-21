@@ -41,7 +41,8 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   a_color bg_temp(gc->fill);
   if (bg_temp.is_visible())
     bg_fill = gc->fill;
-  else bg_fill = dd->startfill;
+  else
+    bg_fill = dd->startfill;
 
   a_color bg_color(bg_fill);
   if (bg_color.is_visible()) {
@@ -53,6 +54,24 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
     dsvg_rect(0, 0, dd->right, dd->bottom, gc, dd);
     gc->fill = fill;
     gc->col = col;
+
+    // get the root g
+    SVGElement* child = root->LastChildElement();
+    if (child) {
+      // get the container g
+      child = child->FirstChildElement();
+      if (child) {
+        // get the background rect we just created
+        child = child->FirstChildElement();
+        if (child) {
+          // set id
+          set_attr(child, "id", svgd->canvas_id + "_bg");
+          // remove its class nomouse
+          // because lasso selection needs a surface with pointer events on
+          child->DeleteAttribute("class");
+        }
+      }
+    }
   }
 }
 
