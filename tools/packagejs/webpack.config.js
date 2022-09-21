@@ -126,7 +126,10 @@ module.exports = (env, argv) => {
       library: PACKAGE.name,
       libraryTarget: 'umd'
     },
-    externals: ['d3'],
+    externals: {
+      d3: 'd3',
+      flatbush: 'Flatbush'
+    },
     module: {
       rules: [
         {
@@ -169,7 +172,7 @@ module.exports = (env, argv) => {
       modules: modulePaths
     },
     plugins: [
-      // copy save-svg-as-png and minimize it
+      // copy libs
       new CopyPlugin({
         patterns: [
           {
@@ -178,16 +181,17 @@ module.exports = (env, argv) => {
             transform(content, path) {
               return UglifyJS.minify(content.toString()).code.toString();
             }
-          }
-        ]
-      }),
-
-      // copy d3-lasso
-      new CopyPlugin({
-        patterns: [
+          },
           {
             from: libInfos['d3-lasso'].srcJs,
             to: getLibDestJsFilename('d3-lasso')
+          },
+          {
+            from: libInfos['flatbush'].srcJs,
+            to: getLibDestJsFilename('flatbush'),
+            transform(content, path) {
+              return UglifyJS.minify(content.toString()).code.toString();
+            }
           }
         ]
       }),
@@ -215,6 +219,7 @@ module.exports = (env, argv) => {
               'd3-bundle',
               'd3-lasso',
               'save-svg-as-png',
+              'flatbush',
               PACKAGE.name
             ].map((x) => {
               const i = libInfos[x];

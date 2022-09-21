@@ -7,7 +7,7 @@
 \alias{opts_hover_theme}
 \title{Hover effect settings}
 \usage{
-opts_hover(css = NULL, reactive = FALSE)
+opts_hover(css = NULL, reactive = FALSE, nearest_distance = NULL)
 
 opts_hover_inv(css = NULL)
 
@@ -21,6 +21,12 @@ It must be a scalar character. It can also be constructed with
 \code{\link[=girafe_css]{girafe_css()}}, to give more control over the css for different element types.}
 
 \item{reactive}{if TRUE, in Shiny context, hovering will set Shiny input values.}
+
+\item{nearest_distance}{a scalar positive number defining the maximum distance to use
+when using the \code{hover_nearest} \link[=interactive_parameters]{interactive parameter} feature.
+By default (\code{NULL}) it's set to \code{Infinity} which means that there is no distance limit.
+Setting it to 50, for example, it will hover the nearest element that has
+at maximum 50 SVG units (pixels) distance from the mouse cursor.}
 }
 \description{
 Allows customization of the rendering

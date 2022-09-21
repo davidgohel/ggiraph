@@ -97,6 +97,8 @@ bool add_attribute(int dn, std::string name,
   std::string hover("hover_css");
   std::string selected("selected_css");
   std::string cls_prefix("");
+  std::string nearest("hover_nearest");
+  std::string true_value("TRUE");
 
   int nb_elts = ids.size();
   for (int i = 0; i < nb_elts; i++) {
@@ -106,6 +108,7 @@ bool add_attribute(int dn, std::string name,
     INDEX index = (INDEX)ids[i];
     SVGElement* el = svgd->interactives.find(index);
     if (el) {
+      const bool isHoverNearest = nearest.compare(name) == 0;
       const bool isHoverCss = hover.compare(name) == 0;
       const bool isSelectedCss = selected.compare(name) == 0;
       if (isHoverCss || isSelectedCss) {
@@ -137,6 +140,10 @@ bool add_attribute(int dn, std::string name,
           if (css.length() > 0)
             svgd->add_css(std::string(cls_prefix + "_theme_id_" + theme_id), css);
           continue;
+        }
+      } else if (isHoverNearest) {
+        if (true_value.compare(values[i]) == 0) {
+          set_attr(el, "nearest", "true");
         }
       } else {
         set_attr(el, name.c_str(), values[i]);

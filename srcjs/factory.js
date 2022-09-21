@@ -44,33 +44,36 @@ export function factory(shinyMode) {
           ggobj.removeContainerLimits();
         }
 
-        ggobj.setupHover([
-          {
-            classPrefix: 'hover',
-            attrName: 'data-id',
-            inputSuffix: '_hovered',
-            messageSuffix: '_hovered_set',
-            reactive: x.settings.hover.reactive,
-            invClassPrefix:
-              x.settings.hoverinv.css.length > 0 ? 'hover_inv' : null
-          },
-          {
-            classPrefix: 'hover_key',
-            attrName: 'key-id',
-            inputSuffix: '_key_hovered',
-            messageSuffix: '_key_hovered_set',
-            reactive: x.settings.hoverkey.reactive,
-            invClassPrefix: null
-          },
-          {
-            classPrefix: 'hover_theme',
-            attrName: 'theme-id',
-            inputSuffix: '_theme_hovered',
-            messageSuffix: '_theme_hovered_set',
-            reactive: x.settings.hovertheme.reactive,
-            invClassPrefix: null
-          }
-        ]);
+        ggobj.setupHover(
+          [
+            {
+              classPrefix: 'hover',
+              attrName: 'data-id',
+              inputSuffix: '_hovered',
+              messageSuffix: '_hovered_set',
+              reactive: x.settings.hover.reactive,
+              invClassPrefix:
+                x.settings.hoverinv.css.length > 0 ? 'hover_inv' : null
+            },
+            {
+              classPrefix: 'hover_key',
+              attrName: 'key-id',
+              inputSuffix: '_key_hovered',
+              messageSuffix: '_key_hovered_set',
+              reactive: x.settings.hoverkey.reactive,
+              invClassPrefix: null
+            },
+            {
+              classPrefix: 'hover_theme',
+              attrName: 'theme-id',
+              inputSuffix: '_theme_hovered',
+              messageSuffix: '_theme_hovered_set',
+              reactive: x.settings.hovertheme.reactive,
+              invClassPrefix: null
+            }
+          ],
+          x.settings.hover.nearest_distance
+        );
 
         ggobj.setupSelection([
           {

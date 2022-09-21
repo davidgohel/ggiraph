@@ -12,8 +12,12 @@ dependencies:
     version: 1.4.17
     src: htmlwidgets/lib/save-svg-as-png-1.4.17
     script: save-svg-as-png.min.js
+  - name: flatbush
+    version: 4.0.0
+    src: htmlwidgets/lib/flatbush-4.0.0
+    script: flatbush.min.js
   - name: ggiraphjs
-    version: 0.4.4
-    src: htmlwidgets/lib/ggiraphjs-0.4.4
+    version: 0.4.5
+    src: htmlwidgets/lib/ggiraphjs-0.4.5
     script: ggiraphjs.min.js
     stylesheet: ggiraphjs.min.css

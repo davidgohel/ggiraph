@@ -95,11 +95,13 @@ export default class SelectionHandler {
 
   isValidTarget(target) {
     return (
-      target instanceof SVGGraphicsElement && target.hasAttribute(this.attrName)
+      target instanceof SVGGraphicsElement &&
+      !(target instanceof SVGSVGElement) &&
+      target.hasAttribute(this.attrName)
     );
   }
 
-  applyOn(target) {
+  applyOn(target, event) {
     try {
       if (this.isValidTarget(target)) {
         const dataId = target.getAttribute(this.attrName);
@@ -163,10 +165,16 @@ export default class SelectionHandler {
     const targetEl = d3.select('#' + this.svgid + '_rootg');
     const that = this;
     let lasso_ = d3.lasso();
-    const lasso_start = function () {};
+    const lasso_start = function () {
+      targetEl.style('cursor', 'crosshair');
+    };
     const lasso_draw = function () {};
     const lasso_end = function () {
       try {
+        targetEl.style('cursor', 'auto');
+        targetEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
+        targetEl.selectAll('g.lasso').remove();
+
         const selected = Array.from(that.dataSelected);
         lasso_.selectedItems().each(function (d, i) {
           const dataId = this.getAttribute(that.attrName);
@@ -177,9 +185,6 @@ export default class SelectionHandler {
             selected.splice(index, 1);
           }
         });
-
-        targetEl.on('.dragstart', null).on('.drag', null).on('.dragend', null);
-        targetEl.selectAll('g.lasso').remove();
 
         that.setSelected(selected);
       } catch (e) {

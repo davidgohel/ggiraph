@@ -38,6 +38,9 @@
 #' Useful for setting the tooltip background color in [geom_text_interactive()] or
 #' [geom_label_interactive()], when the geom text color may be the same as the tooltip text color.
 #'
+#' @param hover_nearest Set to TRUE to apply the hover effect on the nearest element
+#' while moving the mouse. In this case it is mandatory to also set the `data_id` parameter
+#'
 #' @section Details for interactive geom functions:
 #' The interactive parameters can be supplied with two ways:
 #' \itemize{
@@ -126,7 +129,8 @@ IPAR_DEFAULTS <- list(
   onclick = NULL,
   hover_css = NULL,
   selected_css = NULL,
-  tooltip_fill = NULL
+  tooltip_fill = NULL,
+  hover_nearest = NULL
 )
 
 IPAR_NAMES <- names(IPAR_DEFAULTS)
