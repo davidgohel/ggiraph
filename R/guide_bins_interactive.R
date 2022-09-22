@@ -25,3 +25,10 @@ guide_train.interactive_bins <- function(guide,
 
   copy_interactive_attrs_from_scale(zz, scale)
 }
+
+#' @export
+guide_geom.interactive_bins <- function(guide,
+                                        layers,
+                                        default_mapping) {
+  check_guide_key_geoms(NextMethod())
+}

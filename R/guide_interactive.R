@@ -47,6 +47,8 @@ copy_interactive_attrs_from_scale <- function(guide, scale, ipar = get_ipar(scal
   key <- guide$key
   breaks <- scale$get_breaks()
 
+  key_ipar = c()
+
   # copy attributes from scale to key
   if (length(breaks) > 0) {
     # process the interactive params one by one and check for names
@@ -54,6 +56,7 @@ copy_interactive_attrs_from_scale <- function(guide, scale, ipar = get_ipar(scal
     # with or without named vectors
     for (a in ipar) {
       if (!is.null(scale[[a]])) {
+        key_ipar <- c(key_ipar, a)
         # check if it's function
         if (is.function(scale[[a]])) {
           scale[[a]] <- do.call(scale[[a]], list(breaks))
@@ -79,6 +82,7 @@ copy_interactive_attrs_from_scale <- function(guide, scale, ipar = get_ipar(scal
         }
       }
     }
+    ipar = key_ipar
     # handle labels
     # continuous scales break the label_interactive struct
     if (!scale$is_discrete()) {
@@ -126,6 +130,25 @@ copy_interactive_attrs_from_scale <- function(guide, scale, ipar = get_ipar(scal
   # })
   guide$key <- key
   guide$.ipar <- ipar
+  guide
+}
+
+# checks that all key ipar is in guide$geoms data
+check_guide_key_geoms <- function(guide) {
+  if (!is.null(guide)) {
+    ipar = get_ipar(guide)
+    guide$geoms <- lapply(guide$geoms, function(g) {
+      missing_names <- setdiff(ipar, names(g$data))
+      missing_names <- intersect(missing_names, names(guide$key))
+      if (length(missing_names)) {
+        for (name in missing_names) {
+          g$data[[name]] <- guide$key[[name]]
+        }
+      }
+      g
+    })
+  }
+
   guide
 }
 

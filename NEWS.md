@@ -10,6 +10,7 @@
 
 ## Issues
 
+* fix: issue with broken interactivity on discrete guides
 * fix: issue with geom_segment_interactive and polar coords
 * fix: set fill/stroke color to svg elements even if opacity is zero.
 * fix: hover styles should take priority over selection styles.
