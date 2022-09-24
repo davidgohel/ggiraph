@@ -12,6 +12,10 @@ export default class PngHandler {
     );
   }
 
+  destroy() {
+    this.fonts = null;
+  }
+
   getButtons() {
     const that = this;
     return [
