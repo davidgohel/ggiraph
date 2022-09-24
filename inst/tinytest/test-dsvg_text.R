@@ -96,6 +96,16 @@ source("setup.R")
       expect_equal(xml_attr(text, "font-family"), fonts[[name]])
     }
   }
+
+  doc <- dsvg_doc({
+    plot.new()
+    text(0.5, 0.5, "a", family="foo")
+    text(0.5, 1, "a", family="")
+  })
+
+  text <- xml_find_all(doc, ".//text")
+  expect_equal(xml_attr(text[1], "font-family"), "foo")
+  expect_true(nzchar(xml_attr(text[2], "font-family")))
 }
 
 # a symbol has width greater than 0 ----

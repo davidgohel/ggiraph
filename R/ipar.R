@@ -269,7 +269,7 @@ add_interactive_attrs <- function(gr,
           )
       }
     } else {
-      stop("Can't add interactive attrs to gTree", call. = FALSE)
+      abort("Can't add interactive attrs to gTree", call = NULL)
     }
     return(gr)
 

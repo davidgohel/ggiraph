@@ -1,4 +1,4 @@
-#' @importFrom rlang abort
+#' @importFrom rlang abort arg_match is_named
 # Include generic helpers from ggplot2
 #' @include utils_ggplot2.R
 #' @include utils_ggplot2_performance.R
@@ -121,3 +121,22 @@ get_os <- function() {
   }
   tolower(os)
 }
+
+#' @importFrom rlang is_string
+is_valid_string <- function(x) {
+  is_string(x) && nzchar(x)
+}
+is_valid_string_non_empty <- function(x) {
+  is_valid_string(x) && nzchar(trimws(x))
+}
+
+#' @importFrom rlang is_scalar_integer is_scalar_double
+is_valid_number <- function(x) {
+  (is_scalar_integer(x) || is_scalar_double(x)) && !is.na(x) && !is.nan(x)
+}
+
+#' @importFrom rlang is_scalar_logical
+is_valid_logical <- function(x) {
+  is_scalar_logical(x) && !is.na(x)
+}
+

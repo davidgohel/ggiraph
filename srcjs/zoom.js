@@ -1,10 +1,10 @@
 import * as d3 from 'd3';
 
 export default class ZoomHandler {
-  constructor(svgid, min, max) {
+  constructor(svgid, options) {
     this.svgid = svgid;
-    this.min = min;
-    this.max = max;
+    this.min = options.min;
+    this.max = options.max;
     this.zoomer = null;
   }
 

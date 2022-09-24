@@ -5,23 +5,21 @@ import ZoomHandler from './zoom.js';
 import TooltipHandler from './tooltip.js';
 import HoverHandler from './hover.js';
 import SelectionHandler from './selection.js';
-import MouseHandler from './mouse.js';
+import { MouseHandler, EVENT_TYPES } from './mouse.js';
 import NearestHandler from './nearest.js';
 
 export default class SVGObject {
   constructor(containerid, shinyMode) {
     this.containerid = containerid;
     this.svgid = null;
-    this.handlers = [];
+    this.handlers = new Map();
     this.shinyMode = shinyMode;
   }
 
   clear() {
     // clear all handlers
-    for (let i = 0; i < this.handlers.length; i++) {
-      this.handlers[i].destroy();
-    }
-    this.handlers = [];
+    this.handlers.forEach((h) => h.destroy());
+    this.handlers.clear();
 
     // remove any old style element
     d3.select('#' + this.containerid + ' style').remove();
@@ -103,99 +101,95 @@ export default class SVGObject {
     }
   }
 
-  setupTooltip(
-    classPrefix,
-    placement,
-    opacity,
-    offx,
-    offy,
-    usecursor,
-    usefill,
-    usestroke,
-    delayover,
-    delayout
-  ) {
+  setupTooltip(options) {
     // register tooltip handler
     try {
-      const handler = new TooltipHandler(
-        this.svgid,
-        classPrefix,
-        placement,
-        opacity,
-        offx,
-        offy,
-        usecursor,
-        usefill,
-        usestroke,
-        delayover,
-        delayout
-      );
-      if (handler.init()) this.handlers.push(handler);
+      options.classPrefix = 'tooltip';
+      const handler = new TooltipHandler(this.svgid, options);
+      if (handler.init()) this.handlers.set('tooltip', handler);
     } catch (e) {
       console.error(e);
     }
   }
 
-  setupHover(hoverItems, nearest_distance) {
-    let handler, inputId, messageId;
+  setupHover(hover, hover_inv, hover_key, hover_theme) {
+    hover.classPrefix = 'hover_data';
+    hover.attrName = 'data-id';
+    hover.shinyInputSuffix = '_hovered';
+    hover.shinyMessageSuffix = '_hovered_set';
+    hover.invClassPrefix = hover_inv.css.length > 0 ? 'hover_inv' : null;
+    hover_key.classPrefix = 'hover_key';
+    hover_key.attrName = 'key-id';
+    hover_key.shinyInputSuffix = '_key_hovered';
+    hover_key.shinyMessageSuffix = '_key_hovered_set';
+    hover_theme.classPrefix = 'hover_theme';
+    hover_theme.attrName = 'theme-id';
+    hover_theme.shinyInputSuffix = '_theme_hovered';
+    hover_theme.shinyMessageSuffix = '_theme_hovered_set';
+
+    const hoverItems = [hover, hover_key, hover_theme];
+    let handler;
+    // register hover handlers
     try {
-      const attrNames = hoverItems.map((x) => x.attrName);
-      if (attrNames.length) {
-        handler = new NearestHandler(this.svgid, attrNames, nearest_distance);
-        if (handler.init()) this.handlers.push(handler);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    try {
-      // register hover handlers
-      hoverItems.forEach(function (item) {
-        inputId =
-          this.shinyMode && item.reactive
-            ? this.containerid + item.inputSuffix
+      hoverItems.forEach(function (options) {
+        options.shinyInputId =
+          this.shinyMode && options.reactive
+            ? this.containerid + options.shinyInputSuffix
             : null;
-        messageId =
-          this.shinyMode && item.reactive
-            ? this.containerid + item.messageSuffix
+        options.shinyMessageId =
+          this.shinyMode && options.reactive
+            ? this.containerid + options.shinyMessageSuffix
             : null;
-        handler = new HoverHandler(
-          this.svgid,
-          item.classPrefix,
-          item.invClassPrefix,
-          item.attrName,
-          inputId,
-          messageId
-        );
-        if (handler.init()) this.handlers.push(handler);
+        handler = new HoverHandler(this.svgid, options);
+        if (handler.init()) this.handlers.set(options.classPrefix, handler);
       }, this);
     } catch (e) {
       console.error(e);
     }
+    // register nearest handler
+    try {
+      handler = new NearestHandler(
+        this.svgid,
+        [hover.attrName],
+        hover.nearest_distance
+      );
+      if (handler.init()) this.handlers.set('nearest', handler);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  setupSelection(selectionItems) {
-    let handler, inputId, messageId;
+  setupSelection(select, select_inv, select_key, select_theme) {
+    select.classPrefix = 'select_data';
+    select.attrName = 'data-id';
+    select.shinyInputSuffix = '_selected';
+    select.shinyMessageSuffix = '_set';
+    select.invClassPrefix = select_inv.css.length > 0 ? 'select_inv' : null;
+    select_key.classPrefix = 'select_key';
+    select_key.attrName = 'key-id';
+    select_key.shinyInputSuffix = '_key_selected';
+    select_key.shinyMessageSuffix = '_key_set';
+    select_theme.classPrefix = 'select_theme';
+    select_theme.attrName = 'theme-id';
+    select_theme.shinyInputSuffix = '_theme_selected';
+    select_theme.shinyMessageSuffix = '_theme_set';
+
+    const selectionItems = [select, select_key, select_theme];
+    let handler;
+    // register selection handlers
     try {
-      // register selection handlers
-      selectionItems.forEach(function (item) {
+      selectionItems.forEach(function (options) {
         // only add it in shiny or if only_shiny is false
-        if (this.shinyMode || !item.only_shiny) {
-          inputId = this.shinyMode ? this.containerid + item.inputSuffix : null;
-          messageId = this.shinyMode
-            ? this.containerid + item.messageSuffix
+        if (this.shinyMode || !options.only_shiny) {
+          options.shinyInputId = this.shinyMode
+            ? this.containerid + options.shinyInputSuffix
             : null;
-          handler = new SelectionHandler(
-            this.svgid,
-            item.classPrefix,
-            item.invClassPrefix,
-            item.attrName,
-            inputId,
-            messageId,
-            item.type,
-            item.selected
-          );
+          options.shinyMessageId = this.shinyMode
+            ? this.containerid + options.shinyMessageSuffix
+            : null;
+          handler = new SelectionHandler(this.svgid, options);
           // init will return false if there is nothing to select
-          if (handler.init()) this.handlers.push(handler);
+          if (handler.init()) this.handlers.set(options.classPrefix, handler);
         }
       }, this);
     } catch (e) {
@@ -206,71 +200,66 @@ export default class SVGObject {
   setupMouse() {
     // register mouse handler
     try {
-      const nearestHandler = this.handlers.find(
-        (h) => h instanceof NearestHandler
-      );
-      const tooltipHandler = this.handlers.find(
-        (h) => h instanceof TooltipHandler
-      );
-      const hoverHandlers = this.handlers.filter(
-        (h) => h instanceof HoverHandler
-      );
-      const selectionHandlers = this.handlers.filter(
-        (h) => h instanceof SelectionHandler
-      );
+      // a map with arrays of the handlers that should act on each event
+      const mouseHandlers = new Map();
+      EVENT_TYPES.forEach((type) => mouseHandlers.set(type, []));
+
+      this.handlers.forEach(function (h) {
+        if (h instanceof TooltipHandler) {
+          mouseHandlers.get('mouseover').push(h);
+          mouseHandlers.get('mouseout').push(h);
+          mouseHandlers.get('mousemove').push(h);
+          mouseHandlers.get('mousedown').push(h);
+          mouseHandlers.get('wheel').push(h);
+          mouseHandlers.get('nearest').push(h);
+        } else if (h instanceof HoverHandler) {
+          mouseHandlers.get('mouseover').push(h);
+          mouseHandlers.get('mouseout').push(h);
+          mouseHandlers.get('nearest').push(h);
+        } else if (h instanceof SelectionHandler) {
+          mouseHandlers.get('click').push(h);
+        }
+      });
+
       const handler = new MouseHandler(
         this.svgid,
-        nearestHandler,
-        tooltipHandler,
-        hoverHandlers,
-        selectionHandlers
+        mouseHandlers,
+        this.handlers.get('nearest')
       );
-      if (handler.init()) this.handlers.push(handler);
+      if (handler.init()) this.handlers.set('mouse', handler);
     } catch (e) {
       console.error(e);
     }
   }
 
-  setupZoom(min, max) {
+  setupZoom(options) {
     // register zoom handler
     try {
-      const handler = new ZoomHandler(this.svgid, min, max);
-      if (handler.init()) this.handlers.push(handler);
+      const handler = new ZoomHandler(this.svgid, options);
+      if (handler.init()) this.handlers.set('zoom', handler);
     } catch (e) {
       console.error(e);
     }
   }
 
-  setupToolbar(className, position, saveaspng, pngname) {
+  setupToolbar(options) {
     // register toolbar handler
     try {
       // for zoom tools, we need the active zoom handler if exists
-      let zoomHandler = null;
+      const zoomHandler = this.handlers.get('zoom');
       // for lasso tools, we only need the active data selection handler if exists
-      let selectionHandler = null;
-      for (let i = 0; i < this.handlers.length; i++) {
-        const h = this.handlers[i];
-        if (h instanceof ZoomHandler) {
-          zoomHandler = h;
-        } else if (
-          h instanceof SelectionHandler &&
-          h.attrName == 'data-id' &&
-          h.type == 'multiple'
-        ) {
-          selectionHandler = h;
-        }
-      }
+      let selectionHandler = this.handlers.get('select_data');
+      if (selectionHandler && selectionHandler.type !== 'multiple')
+        selectionHandler = null;
+      options.clsName = 'ggiraph-toolbar';
       const handler = new ToolbarHandler(
         this.containerid,
         this.svgid,
-        className,
-        position,
+        options,
         zoomHandler,
-        selectionHandler,
-        saveaspng,
-        pngname
+        selectionHandler
       );
-      if (handler.init()) this.handlers.push(handler);
+      if (handler.init()) this.handlers.set('toolbar', handler);
     } catch (e) {
       console.error(e);
     }

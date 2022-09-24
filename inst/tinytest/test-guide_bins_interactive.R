@@ -19,7 +19,7 @@ source("setup.R")
   doc <- dsvg_plot(
     ggplot(mtcars) +
       geom_point_interactive(
-        aes(disp, mpg, size = hp, tooltip = paste(disp, mpg), data_id = paste0(disp, mpg), info = I("test")),
+        aes(disp, mpg, size = hp, info = I("test")),
         extra_interactive_params = "info"
       ) +
       scale_size_binned_interactive(

@@ -4,7 +4,11 @@
 \alias{opts_toolbar}
 \title{Toolbar settings}
 \usage{
-opts_toolbar(position = "topright", saveaspng = TRUE, pngname = "diagram")
+opts_toolbar(
+  position = c("topright", "top", "bottom", "topleft", "bottomleft", "bottomright"),
+  saveaspng = TRUE,
+  pngname = "diagram"
+)
 }
 \arguments{
 \item{position}{one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'}

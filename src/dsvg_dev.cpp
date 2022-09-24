@@ -94,6 +94,7 @@ SVGElement* DSVG_dev::svg_root() {
   root_g = create_element("g", root);
   id.assign(canvas_id + "_rootg");
   set_attr(root_g, "id", id);
+  set_attr(root_g, "class", "ggiraph-svg-rootg");
 
   // initialize contexts stack
   contexts = new std::stack<ContainerContext*>();
@@ -116,21 +117,6 @@ SVGElement* DSVG_dev::svg_element(const char* name, SVGElement* parent) {
   if (!parent) {
     if (!is_adding_definition() && interactives.is_tracing()) {
       interactives.push(el);
-    } else if (!is_adding_definition()) {
-      // non-interactive element
-      // set the class 'nomouse' to ignore pointer events
-      if (
-        strcmp(name, "line") == 0 ||
-        strcmp(name, "polyline") == 0 ||
-        strcmp(name, "polygon") == 0 ||
-        strcmp(name, "path") == 0 ||
-        strcmp(name, "rect") == 0 ||
-        strcmp(name, "circle") == 0 ||
-        strcmp(name, "text") == 0 ||
-        strcmp(name, "image") == 0
-      ) {
-        set_attr(el, "class", "nomouse");
-      }
     }
     ContainerContext* ctx = contexts->top();
     if (IS_VALID_INDEX(ctx->mask_index)) {

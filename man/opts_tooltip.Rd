@@ -14,7 +14,7 @@ opts_tooltip(
   use_stroke = FALSE,
   delay_mouseover = 200,
   delay_mouseout = 500,
-  placement = "auto",
+  placement = c("auto", "doc", "container"),
   zindex = 999
 )
 }

@@ -1,24 +1,17 @@
 import * as d3 from 'd3';
 
 export default class SelectionHandler {
-  constructor(
-    svgid,
-    classPrefix,
-    invClassPrefix,
-    attrName,
-    shinyInputId,
-    shinyMessageId,
-    type,
-    initialSelection
-  ) {
+  constructor(svgid, options) {
     this.svgid = svgid;
-    this.clsName = classPrefix + '_' + svgid;
-    this.invClsName = invClassPrefix ? invClassPrefix + '_' + svgid : null;
-    this.attrName = attrName;
-    this.shinyInputId = shinyInputId;
-    this.shinyMessageId = shinyMessageId;
-    this.type = type;
-    this.initialSelection = initialSelection;
+    this.clsName = options.classPrefix + '_' + svgid;
+    this.invClsName = options.invClassPrefix
+      ? options.invClassPrefix + '_' + svgid
+      : null;
+    this.attrName = options.attrName;
+    this.shinyInputId = options.shinyInputId;
+    this.shinyMessageId = options.shinyMessageId;
+    this.type = options.type;
+    this.initialSelection = options.selected;
     this.nodeIds = [];
     this.dataSelected = [];
   }

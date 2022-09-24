@@ -47,8 +47,8 @@ validate_css <- function(css,
                          tag = NULL) {
   if (is.null(css) || any(is.na(css)))
     css <- ""
-  if (!is_scalar_character(css))
-    stop(paste0("Argument `", name, "` must be a scalar character"), call. = FALSE)
+  if (!is_string(css))
+    abort(paste0("Argument `", name, "` must be a scalar character"), call = NULL)
   css <- trimws(css)
   if (nchar(css) > 0) {
     tag <- paste0(tag, "._CLASSNAME_", collapse = ", ")
@@ -68,8 +68,8 @@ check_css <- function(css,
                       filter = NULL) {
   if (is.null(css)) {
     css <- default
-  } else if (!is_scalar_character(css)) {
-    stop(name, ": css must be a scalar character", call. = FALSE)
+  } else if (!is_string(css)) {
+    abort(name, ": css must be a scalar character", call = NULL)
   }
   pattern = "\\/\\*GIRAFE CSS\\*\\/"
   if (!grepl(pattern, css)) {

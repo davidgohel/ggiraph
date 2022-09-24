@@ -73,42 +73,56 @@
   padding-right: 3px;
 }
 
-.drop {
+.ggiraph-toolbar-icon.drop {
   stroke: #e30c37;
   fill: #e30c37;
 }
-.drop:hover {
+.ggiraph-toolbar-icon.drop:hover {
   stroke: #333;
   fill: #333;
 }
-.neutral {
+.ggiraph-toolbar-icon.neutral {
   stroke: #069;
   fill: #069;
 }
-.neutral:hover {
+.ggiraph-toolbar-icon.neutral:hover {
   stroke: #333;
   fill: #333;
 }
 
-.lasso path {
+.ggiraph-svg .lasso path {
   stroke: rgb(80, 80, 80);
   stroke-width: 2px;
 }
 
-.lasso .drawn {
+.ggiraph-svg .lasso .drawn {
   fill-opacity: 0.05;
 }
 
-.lasso .loop_close {
+.ggiraph-svg .lasso .loop_close {
   fill: none;
   stroke-dasharray: 4, 4;
 }
 
-.lasso .origin {
+.ggiraph-svg .lasso .origin {
   fill: #333;
   fill-opacity: 0.5;
 }
 
-.nomouse {
+/* disable pointer events for non-interactive elements */
+.ggiraph-svg .ggiraph-svg-rootg circle:not([id]),
+.ggiraph-svg .ggiraph-svg-rootg image:not([id]),
+.ggiraph-svg .ggiraph-svg-rootg line:not([id]),
+.ggiraph-svg .ggiraph-svg-rootg path:not([id]),
+.ggiraph-svg .ggiraph-svg-rootg polygon:not([id]),
+.ggiraph-svg .ggiraph-svg-rootg polyline:not([id]),
+.ggiraph-svg .ggiraph-svg-rootg rect:not([id]):not(.ggiraph-svg-bg),
+.ggiraph-svg .ggiraph-svg-rootg text:not([id]) {
   pointer-events: none;
+}
+
+/* default cursor for interactive elements */
+.ggiraph-svg .ggiraph-svg-rootg [id] {
+  pointer-events: all;
+  cursor: default;
 }

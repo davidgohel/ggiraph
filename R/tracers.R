@@ -54,7 +54,7 @@ set_attr <- function(name, ids, values) {
     stopifnot(is.character(values))
     stopifnot(is.numeric(ids))
     if (any(grepl(pattern = "'", values))) {
-      stop("Attribute values cannot contain single quote \"'\".")
+      abort("Attribute values cannot contain single quote \"'\".", call = NULL)
     }
 
     if (length(values) == 1 && length(ids) > 1) {

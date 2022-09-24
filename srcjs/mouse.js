@@ -1,43 +1,46 @@
-export default class MouseHandler {
-  constructor(
-    svgid,
-    nearestHandler,
-    tooltipHandler,
-    hoverHandlers,
-    selectionHandlers
-  ) {
+export const EVENT_TYPES = [
+  'mouseover',
+  'mouseout',
+  'mousemove',
+  'mousedown',
+  'wheel',
+  'click',
+  'nearest'
+];
+
+export class MouseHandler {
+  constructor(svgid, handlers, nearestHandler) {
     this.svgid = svgid;
+    this.handlers = handlers;
     this.nearestHandler = nearestHandler;
-    this.tooltipHandler = tooltipHandler;
-    this.hoverHandlers = hoverHandlers;
-    this.selectionHandlers = selectionHandlers;
   }
 
   init() {
-    if (
-      !this.tooltipHandler &&
-      !this.hoverHandlers.length &&
-      !this.selectionHandlers.length
-    ) {
-      // nothing to do here, return false to discard this
+    // get active event types
+    this.event_types = EVENT_TYPES
+      // filter out nearest
+      .filter((key) => key !== 'nearest')
+      // filter out empty
+      .filter((key) => this.handlers.get(key) && this.handlers.get(key).length);
+
+    if (!this.event_types.length) {
       return false;
     }
 
-    // an array with the handlers that should act on mouseover/mouseout
-    this.mouseOnHandlers = [];
-    if (this.tooltipHandler) {
-      this.mouseOnHandlers.push(this.tooltipHandler);
+    // check if we need the nearest handler
+    if (
+      !(this.handlers.get('nearest') && this.handlers.get('nearest').length)
+    ) {
+      this.nearestHandler = null;
     }
-    this.mouseOnHandlers = this.mouseOnHandlers.concat(this.hoverHandlers);
 
     // add listeners
     const svgNode = document.getElementById(this.svgid);
-    svgNode.addEventListener('mouseover', this, true);
-    svgNode.addEventListener('mousemove', this);
-    svgNode.addEventListener('mouseout', this, true);
-    svgNode.addEventListener('mousedown', this, true);
-    svgNode.addEventListener('wheel', this, true);
-    svgNode.addEventListener('click', this, true);
+    let use_capture;
+    this.event_types.forEach(function (type) {
+      use_capture = type !== 'mousemove';
+      svgNode.addEventListener(type, this, use_capture);
+    }, this);
 
     // return true to add to list of handLers
     return true;
@@ -47,12 +50,9 @@ export default class MouseHandler {
     // remove event listeners
     try {
       const svgNode = document.getElementById(this.svgid);
-      svgNode.removeEventListener('mouseover', this);
-      svgNode.removeEventListener('mousemove', this);
-      svgNode.removeEventListener('mouseout', this);
-      svgNode.removeEventListener('mousedown', this);
-      svgNode.removeEventListener('wheel', this);
-      svgNode.removeEventListener('click', this);
+      this.event_types.forEach(function (type) {
+        svgNode.removeEventListener(type, this);
+      }, this);
     } catch (e) {
       console.error(e);
     }
@@ -64,41 +64,32 @@ export default class MouseHandler {
       let handled = false,
         nearest = null;
       if (event.type === 'mouseout') {
-        this.mouseOnHandlers.forEach(function (h) {
-          h.clear();
-        });
+        this.handlers.get(event.type).forEach((h) => h.clear(event));
       } else if (event.type === 'mouseover' && !event.buttons) {
-        this.mouseOnHandlers.forEach(function (h) {
-          h.applyOn(target, event);
-        });
+        this.handlers.get(event.type).forEach((h) => h.applyOn(target, event));
       } else if (event.type === 'mousemove' && !event.buttons) {
         if (this.svgid !== target.id) {
-          if (this.tooltipHandler) {
-            handled = this.tooltipHandler.applyOn(target, event);
-          }
+          handled = this.handlers
+            .get(event.type)
+            .map((h) => h.applyOn(target, event))
+            .find((result) => !!result);
         }
         if (this.nearestHandler && !handled) {
           event.fromNearest = true;
           nearest = this.nearestHandler.applyOn(target, event);
           if (nearest) {
-            this.mouseOnHandlers.forEach(function (h) {
-              h.applyOn(nearest, event);
-            });
+            this.handlers
+              .get('nearest')
+              .forEach((h) => h.applyOn(nearest, event));
           } else {
-            this.mouseOnHandlers.forEach(function (h) {
-              h.clear();
-            });
+            this.handlers.get('nearest').forEach((h) => h.clear(event));
           }
         }
       } else if (event.type === 'mousedown' || event.type === 'wheel') {
-        if (this.tooltipHandler) {
-          this.tooltipHandler.clear(event);
-        }
+        this.handlers.get(event.type).forEach((h) => h.clear(event));
       } else if (event.type === 'click') {
         if (this.svgid !== target.id) {
-          this.selectionHandlers.forEach(function (h) {
-            h.applyOn(target, event);
-          });
+          this.handlers.get(event.type).map((h) => h.applyOn(target, event));
         }
       }
     } catch (e) {

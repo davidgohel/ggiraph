@@ -86,10 +86,10 @@ find_interactive_class <- function(geom, env = parent.frame()) {
       name <- "bar"
     }
   } else {
-    stop("`geom` must be either a string or a Geom* object, ",
+    abort("`geom` must be either a string or a Geom* object, ",
          "not ",
          obj_desc(geom),
-         call. = FALSE)
+         call = NULL)
   }
   if (!startsWith(name, "Geom")) {
     name <- paste0("Geom", camelize(name, first = TRUE))
@@ -99,10 +99,10 @@ find_interactive_class <- function(geom, env = parent.frame()) {
   }
   obj <- find_global(name, env = env)
   if (is.null(obj) || !inherits(obj, "Geom")) {
-    stop("Can't find interactive geom function called \"",
+    abort("Can't find interactive geom function called \"",
          geom,
          "\"",
-         call. = FALSE)
+         call = NULL)
   } else {
     obj
   }

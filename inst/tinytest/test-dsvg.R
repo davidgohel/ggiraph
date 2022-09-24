@@ -120,3 +120,16 @@ source("setup.R")
     info = "dsvg accepts only one page"
   )
 }
+
+# dsvg arguments ----------------------------------------------
+{
+  expect_error(dsvg(file = NULL), info = "check file argument")
+  expect_error(dsvg(width = -5), info = "check width argument")
+  expect_error(dsvg(height = -5), info = "check height argument")
+  expect_error(dsvg(bg = NA), info = "check bg argument")
+  expect_error(dsvg(pointsize = 0), info = "check pointsize argument")
+  expect_error(dsvg(standalone = NULL), info = "check standalone argument")
+  expect_error(dsvg(setdims = NULL), info = "check setdims argument")
+  expect_error(dsvg(canvas_id = NULL), info = "check canvas_id argument")
+  expect_error(dsvg(fonts = NULL), info = "check fonts argument")
+}

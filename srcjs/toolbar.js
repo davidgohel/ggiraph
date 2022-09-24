@@ -1,25 +1,16 @@
 import * as d3 from 'd3';
 
 export default class ToolbarHandler {
-  constructor(
-    containerid,
-    svgid,
-    classname,
-    position,
-    zoomHandler,
-    selectionHandler,
-    saveaspng,
-    pngname
-  ) {
+  constructor(containerid, svgid, options, zoomHandler, selectionHandler) {
     this.containerid = containerid;
     this.svgid = svgid;
-    this.clsName = classname;
-    this.position = position;
+    this.clsName = options.clsName;
+    this.position = options.position;
     this.zoomHandler = zoomHandler;
     this.selectionHandler = selectionHandler;
     // use feature only if save-svg-as-png module is loaded
-    this.saveaspng = saveaspng && typeof saveSvgAsPng === 'function';
-    this.pngname = pngname;
+    this.saveaspng = options.saveaspng && typeof saveSvgAsPng === 'function';
+    this.pngname = options.pngname;
   }
 
   init() {

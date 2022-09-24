@@ -54,11 +54,38 @@ dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
                  title = NULL, desc = NULL,
                  fonts = list()) {
 
-  if (!is_string(title) || is.na(title) || !nzchar(trimws(title))) {
+  if (!is_valid_string_non_empty(file)) {
+    abort("`file` must be a non-empty scalar character", call = NULL)
+  }
+  if (!is_valid_number(width) || width <= 0) {
+    abort("`width` must be a scalar positive number", call = NULL)
+  }
+  if (!is_valid_number(height) || height <= 0) {
+    abort("`width` must be a scalar positive number", call = NULL)
+  }
+  if (!is_valid_string_non_empty(bg)) {
+    abort("`bg` must be a non-empty scalar character", call = NULL)
+  }
+  if (!is_valid_number(pointsize) || pointsize <= 0) {
+    abort("`pointsize` must be a scalar positive number", call = NULL)
+  }
+  if (!is_valid_logical(standalone)) {
+    abort("`standalone` must be a scalar logical", call = NULL)
+  }
+  if (!is_valid_logical(setdims)) {
+    abort("`setdims` must be a scalar logical", call = NULL)
+  }
+  if (!is_valid_string_non_empty(canvas_id)) {
+    abort("`canvas_id` must be a non-empty scalar character", call = NULL)
+  }
+  if (!is_valid_string_non_empty(title)) {
     title <- ""
   }
-  if (!is_string(desc) || is.na(desc) || !nzchar(trimws(desc))) {
+  if (!is_valid_string_non_empty(desc)) {
     desc <- ""
+  }
+  if (!is.list(fonts)) {
+    abort("`fonts` must be a list", call = NULL)
   }
 
   fonts_list <- validated_fonts(fonts)

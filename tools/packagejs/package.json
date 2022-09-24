@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ggiraphjs",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "ggiraph object javascript module",
   "keywords": [],
   "author": "David Gohel <david.gohel@ardata.fr>",

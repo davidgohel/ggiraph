@@ -175,17 +175,14 @@ source("setup.R")
 
 # attributes with style css work ----
 {
-  attrs <- c("hover", "selected")
+  attrs <- c("hover", "select")
   types <- c("data", "key", "theme")
 
   for (type in types) {
     for (attr in attrs) {
       typename <- paste0(type, "-id")
       attrname <- paste0(attr, "_css")
-      suffix <- "_"
-      if (type != "data") {
-        suffix <- paste0(suffix, type, "_")
-      }
+      suffix <- paste0("_", type, "_")
       doc <- dsvg_doc({
         plot.new()
         ggiraph:::dsvg_tracer_on()

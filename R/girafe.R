@@ -93,19 +93,25 @@ girafe <- function(
   path = tempfile()
 
   args <- list(...)
-  args$canvas_id <- args$canvas_id %||% paste("svg", UUIDgenerate(), sep = "_")
+  args$canvas_id <- args$canvas_id %||% paste("svg", gsub('-', '_', UUIDgenerate()), sep = "_")
   args$file <- path
   args$width <- width_svg
   args$height <- height_svg
   args$pointsize <- pointsize
   args$standalone <- TRUE
   args$setdims <- FALSE
+  # we need a surface with pointer events
+  if (identical(args$bg, "transparent")) {
+    args$bg <- "#fffffffd"
+  }
 
   devlength <- length(dev.list())
   do.call(dsvg, args)
   tryCatch({
-    if( !is.null(ggobj) ){
-      stopifnot(inherits(ggobj, "ggplot"))
+    if (!is.null(ggobj)) {
+      if (!inherits(ggobj, "ggplot")) {
+        abort("`ggobj` must be a ggplot2 plot", call = NULL)
+      }
       print(ggobj)
     } else
       code
@@ -193,8 +199,8 @@ run_girafe_example <- function(name = "crimes"){
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
   apps <- girafe_app_paths()
   if( !name %in% basename(apps) ){
-    stop("could not find app named ", shQuote(name), " in the following list: ",
-         paste0(shQuote(basename(apps)), collapse = ", ")
+    abort("could not find app named ", shQuote(name), " in the following list: ",
+         paste0(shQuote(basename(apps)), collapse = ", "), call = NULL
     )
   }
   if(requireNamespace("shiny"))

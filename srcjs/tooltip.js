@@ -6,30 +6,18 @@ import {
 } from './geom';
 
 export default class TooltipHandler {
-  constructor(
-    svgid,
-    classPrefix,
-    placement,
-    opacity,
-    offx,
-    offy,
-    usecursor,
-    usefill,
-    usestroke,
-    delayover,
-    delayout
-  ) {
+  constructor(svgid, options) {
     this.svgid = svgid;
-    this.clsName = classPrefix + '_' + this.svgid;
-    this.placement = placement;
-    this.opacity = opacity;
-    this.offx = offx;
-    this.offy = offy;
-    this.usecursor = usecursor;
-    this.usefill = usefill;
-    this.usestroke = usestroke;
-    this.delayover = delayover;
-    this.delayout = delayout;
+    this.clsName = options.classPrefix + '_' + this.svgid;
+    this.placement = options.placement;
+    this.opacity = options.opacity;
+    this.offx = options.offx;
+    this.offy = options.offy;
+    this.use_cursor_pos = options.use_cursor_pos;
+    this.use_fill = options.use_fill;
+    this.use_stroke = options.use_stroke;
+    this.delay_over = options.delay_over;
+    this.delay_out = options.delay_out;
     this.lastTargetId = null;
   }
 
@@ -78,7 +66,7 @@ export default class TooltipHandler {
     if (this.lastTargetId) {
       this.lastTargetId = null;
       const tooltipEl = d3.select('div.' + this.clsName);
-      tooltipEl.transition().duration(this.delayout).style('opacity', 0);
+      tooltipEl.transition().duration(this.delay_out).style('opacity', 0);
     }
   }
 
@@ -103,12 +91,12 @@ export default class TooltipHandler {
             .style('top', tooltipPos.y + 'px');
         } else {
           this.lastTargetId = target.id;
-          if (this.usefill) {
+          if (this.use_fill) {
             let clr = target.getAttribute('tooltip_fill');
             if (!clr) clr = target.getAttribute('fill');
             if (clr) tooltipEl.style('background-color', clr);
           }
-          if (this.usestroke) {
+          if (this.use_stroke) {
             tooltipEl.style('border-color', target.getAttribute('stroke'));
           }
           tooltipEl.html(this.decodeContent(target.getAttribute('title')));
@@ -118,7 +106,7 @@ export default class TooltipHandler {
             .style('left', tooltipPos.x + 'px')
             .style('top', tooltipPos.y + 'px')
             .transition()
-            .duration(this.delayover)
+            .duration(this.delay_over)
             .style('opacity', this.opacity);
         }
         return true;
@@ -140,7 +128,7 @@ export default class TooltipHandler {
     const svgNode = target.ownerSVGElement;
     const tooltipNode = tooltipEl.node();
     const containerNode = svgNode.parentNode;
-    if (this.usecursor) {
+    if (this.use_cursor_pos) {
       // Calculate tooltip position, preventing collisions and overflow if possible.
       // First we try to fit the tooltip on right and bottom of the mouse position.
       // If it doesn't fit we try the opposite direction and negate the passed offset.

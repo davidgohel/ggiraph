@@ -17,7 +17,7 @@ dependencies:
     src: htmlwidgets/lib/flatbush-4.0.0
     script: flatbush.min.js
   - name: ggiraphjs
-    version: 0.4.5
-    src: htmlwidgets/lib/ggiraphjs-0.4.5
+    version: 0.4.6
+    src: htmlwidgets/lib/ggiraphjs-0.4.6
     script: ggiraphjs.min.js
     stylesheet: ggiraphjs.min.css

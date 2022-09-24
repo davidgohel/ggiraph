@@ -1,20 +1,15 @@
 import * as d3 from 'd3';
 
 export default class HoverHandler {
-  constructor(
-    svgid,
-    classPrefix,
-    invClassPrefix,
-    attrName,
-    shinyInputId,
-    shinyMessageId
-  ) {
+  constructor(svgid, options) {
     this.svgid = svgid;
-    this.clsName = classPrefix + '_' + svgid;
-    this.invClsName = invClassPrefix ? invClassPrefix + '_' + svgid : null;
-    this.attrName = attrName;
-    this.shinyInputId = shinyInputId;
-    this.shinyMessageId = shinyMessageId;
+    this.clsName = options.classPrefix + '_' + svgid;
+    this.invClsName = options.invClassPrefix
+      ? options.invClassPrefix + '_' + svgid
+      : null;
+    this.attrName = options.attrName;
+    this.shinyInputId = options.shinyInputId;
+    this.shinyMessageId = options.shinyMessageId;
     this.nodeIds = [];
     this.dataHovered = [];
     this.lastTargetId = null;

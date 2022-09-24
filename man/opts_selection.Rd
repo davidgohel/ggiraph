@@ -9,7 +9,7 @@
 \usage{
 opts_selection(
   css = NULL,
-  type = "multiple",
+  type = c("multiple", "single", "none"),
   only_shiny = TRUE,
   selected = character(0)
 )
@@ -18,14 +18,14 @@ opts_selection_inv(css = NULL)
 
 opts_selection_key(
   css = NULL,
-  type = "single",
+  type = c("single", "multiple", "none"),
   only_shiny = TRUE,
   selected = character(0)
 )
 
 opts_selection_theme(
   css = NULL,
-  type = "single",
+  type = c("single", "multiple", "none"),
   only_shiny = TRUE,
   selected = character(0)
 )

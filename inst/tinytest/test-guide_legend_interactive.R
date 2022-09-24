@@ -26,7 +26,7 @@ source("setup.R")
       geom_bar_interactive(
         stat = "identity",
         extra_interactive_params = "info",
-        aes(tooltip = name, data_id = name, info = I("test"))
+        aes(info = I("test"))
       ) +
       scale_fill_manual_interactive(
         guide = guide_legend(),

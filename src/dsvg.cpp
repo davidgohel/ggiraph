@@ -64,11 +64,8 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
         // get the background rect we just created
         child = child->FirstChildElement();
         if (child) {
-          // set id
-          set_attr(child, "id", svgd->canvas_id + "_bg");
-          // remove its class nomouse
-          // because lasso selection needs a surface with pointer events on
-          child->DeleteAttribute("class");
+          // set class
+          set_attr(child, "class", "ggiraph-svg-bg");
         }
       }
     }
