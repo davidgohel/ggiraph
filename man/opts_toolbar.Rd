@@ -7,15 +7,46 @@
 opts_toolbar(
   position = c("topright", "top", "bottom", "topleft", "bottomleft", "bottomright"),
   saveaspng = TRUE,
-  pngname = "diagram"
+  pngname = "diagram",
+  tooltips = NULL,
+  hidden = NULL,
+  delay_mouseover = 200,
+  delay_mouseout = 500
 )
 }
 \arguments{
-\item{position}{one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'}
+\item{position}{Position of the toolbar relative to the plot.
+One of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'}
 
-\item{saveaspng}{set to TRUE to propose the 'save as png' button.}
+\item{saveaspng}{Show (TRUE) or hide (FALSE) the 'download png' button.}
 
-\item{pngname}{the default basename (without .png extension) to use for the png file.}
+\item{pngname}{The default basename (without .png extension) to use for the png file.}
+
+\item{tooltips}{A named list with tooltip labels for the buttons,
+for adapting to other language. Passing NULL will use the default tooltips:
+
+list(
+lasso_select = 'lasso selection',
+lasso_deselect = 'lasso deselection',
+zoom_on = 'activate pan/zoom',
+zoom_off = 'deactivate pan/zoom',
+zoom_rect = 'zoom with rectangle',
+zoom_reset = 'reset pan/zoom',
+saveaspng = 'download png'
+)}
+
+\item{hidden}{A character vector with the names of the buttons or button groups to be hidden
+from the toolbar.
+
+Valid button groups: selection, zoom, misc
+
+Valid button names: lasso_select, lasso_deselect, zoom_onoff, zoom_rect, zoom_reset, saveaspng}
+
+\item{delay_mouseover}{The duration in milliseconds of the
+transition associated with toolbar display.}
+
+\item{delay_mouseout}{The duration in milliseconds of the
+transition associated with toolbar end of display.}
 }
 \description{
 Allows customization of the toolbar

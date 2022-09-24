@@ -169,6 +169,11 @@ library(ggiraph)
   expect_equal(opts$max, 1, info = "check max argument")
 
   expect_error(opts_zoom(min = 0.5, max = 0.4), info = "max > min")
+
+  expect_error(opts_zoom(duration = "200"), info = "check duration argument")
+  expect_error(opts_zoom(duration = -50), info = "check duration argument")
+  opts <- opts_zoom(duration = 50)
+  expect_equal(opts$duration, 50, info = "check duration argument")
 }
 
 # opts_toolbar ----
@@ -180,13 +185,31 @@ library(ggiraph)
   opts <- opts_toolbar(position = "top")
   expect_equal(opts$position, "top", info = "check position argument")
 
-  expect_error(opts_toolbar(saveaspng = NA), info = "check saveaspng argument")
-  opts <- opts_toolbar(saveaspng = FALSE)
-  expect_equal(opts$saveaspng, FALSE, info = "check saveaspng argument")
-
   expect_error(opts_toolbar(pngname = NULL), info = "check pngname argument")
   opts <- opts_toolbar(pngname = "foo")
   expect_equal(opts$pngname, "foo", info = "check pngname argument")
+
+  expect_error(opts_toolbar(tooltips = "b"), info = "check tooltips argument")
+  expect_error(opts_toolbar(tooltips = list("b")), info = "check tooltips argument")
+  opts <- opts_toolbar(tooltips = list("a"="b"))
+  expect_equal(opts$tooltips, list("a"="b"), info = "check tooltips argument")
+
+  expect_error(opts_toolbar(saveaspng = NA), info = "check saveaspng argument")
+  expect_error(opts_toolbar(hidden = TRUE), info = "check hidden argument")
+  opts <- opts_toolbar(hidden = "selection")
+  expect_equal(opts$hidden, "selection", info = "check hidden argument")
+  opts <- opts_toolbar(saveaspng = FALSE)
+  expect_equal(opts$hidden, "saveaspng", info = "check saveaspng/hidden argument")
+
+  expect_error(opts_toolbar(delay_mouseover = "200"), info = "check delay_mouseover argument")
+  expect_error(opts_toolbar(delay_mouseover = -50), info = "check delay_mouseover argument")
+  opts <- opts_toolbar(delay_mouseover = 50)
+  expect_equal(opts$delay_over, 50, info = "check delay_mouseover argument")
+
+  expect_error(opts_toolbar(delay_mouseout = "200"), info = "check delay_mouseout argument")
+  expect_error(opts_toolbar(delay_mouseout = -50), info = "check delay_mouseout argument")
+  opts <- opts_toolbar(delay_mouseout = 50)
+  expect_equal(opts$delay_out, 50, info = "check delay_mouseout argument")
 }
 
 # opts_sizing ----

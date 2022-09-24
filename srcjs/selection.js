@@ -82,6 +82,32 @@ export default class SelectionHandler {
     }
   }
 
+  getButtons() {
+    const that = this;
+    return [
+      {
+        key: 'lasso_select',
+        block: 'selection',
+        class: 'neutral',
+        tooltip: 'lasso selection',
+        icon: "<svg xmlns='http://www.w3.org/2000/svg' role='img' viewBox='0 0 230 230'><g><ellipse ry='65.5' rx='86.5' cy='94' cx='115.5' stroke-width='20' fill='transparent'/><ellipse ry='11.500001' rx='10.5' cy='153' cx='91.5' stroke-width='20' fill='transparent'/><line y2='210.5' x2='105' y1='164.5' x1='96' stroke-width='20'/></g></svg>",
+        onclick: function () {
+          that.lasso(true);
+        }
+      },
+      {
+        key: 'lasso_deselect',
+        block: 'selection',
+        class: 'drop',
+        tooltip: 'lasso deselection',
+        icon: "<svg xmlns='http://www.w3.org/2000/svg' role='img' viewBox='0 0 230 230'><g><ellipse ry='65.5' rx='86.5' cy='94' cx='115.5' stroke-width='20' fill='transparent'/><ellipse ry='11.500001' rx='10.5' cy='153' cx='91.5' stroke-width='20' fill='transparent'/><line y2='210.5' x2='105' y1='164.5' x1='96' stroke-width='20'/></g></svg>",
+        onclick: function () {
+          that.lasso(false);
+        }
+      }
+    ];
+  }
+
   clear() {
     this.setSelected([]);
   }

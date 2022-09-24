@@ -4,12 +4,14 @@
 \alias{opts_zoom}
 \title{Zoom settings}
 \usage{
-opts_zoom(min = 1, max = 1)
+opts_zoom(min = 1, max = 1, duration = 300)
 }
 \arguments{
 \item{min}{minimum zoom factor}
 
 \item{max}{maximum zoom factor}
+
+\item{duration}{duration of the zoom transitions, in milliseconds}
 }
 \description{
 Allows customization of the zoom.

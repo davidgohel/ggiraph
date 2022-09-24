@@ -362,6 +362,7 @@ opts_selection_theme <- function(css = NULL,
 #' @description Allows customization of the zoom.
 #' @param min minimum zoom factor
 #' @param max maximum zoom factor
+#' @param duration duration of the zoom transitions, in milliseconds
 #' @examples
 #' library(ggplot2)
 #'
@@ -380,7 +381,7 @@ opts_selection_theme <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_zoom <- function(min = 1, max = 1){
+opts_zoom <- function(min = 1, max = 1, duration = 300){
   if (!is_valid_number(min) || min <= 0.2) {
     abort("`min` must be a scalar number, >= 0.2", call = NULL)
   }
@@ -390,10 +391,14 @@ opts_zoom <- function(min = 1, max = 1){
   if (max < min) {
     abort("`max` must be bigger than `min`", call = NULL)
   }
+  if (!is_valid_number(duration) || duration < 0) {
+    abort("`duration` must be a scalar positive number", call = NULL)
+  }
 
   x <- list(
     min = min,
-    max = max
+    max = max,
+    duration = duration
   )
   class(x) <- "opts_zoom"
   x
@@ -401,9 +406,35 @@ opts_zoom <- function(min = 1, max = 1){
 
 #' @title Toolbar settings
 #' @description Allows customization of the toolbar
-#' @param position one of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'
-#' @param saveaspng set to TRUE to propose the 'save as png' button.
-#' @param pngname the default basename (without .png extension) to use for the png file.
+#'
+#' @param position Position of the toolbar relative to the plot.
+#' One of 'top', 'bottom', 'topleft', 'topright', 'bottomleft', 'bottomright'
+#' @param saveaspng Show (TRUE) or hide (FALSE) the 'download png' button.
+#' @param pngname The default basename (without .png extension) to use for the png file.
+#' @param delay_mouseover The duration in milliseconds of the
+#' transition associated with toolbar display.
+#' @param delay_mouseout The duration in milliseconds of the
+#' transition associated with toolbar end of display.
+#' @param tooltips A named list with tooltip labels for the buttons,
+#' for adapting to other language. Passing NULL will use the default tooltips:
+#'
+#' list(
+#'   lasso_select = 'lasso selection',
+#'   lasso_deselect = 'lasso deselection',
+#'   zoom_on = 'activate pan/zoom',
+#'   zoom_off = 'deactivate pan/zoom',
+#'   zoom_rect = 'zoom with rectangle',
+#'   zoom_reset = 'reset pan/zoom',
+#'   saveaspng = 'download png'
+#' )
+#'
+#' @param hidden A character vector with the names of the buttons or button groups to be hidden
+#' from the toolbar.
+#'
+#' Valid button groups: selection, zoom, misc
+#'
+#' Valid button names: lasso_select, lasso_deselect, zoom_onoff, zoom_rect, zoom_reset, saveaspng
+#'
 #' @note
 #' `saveaspng` relies on JavaScript promises, so any browsers that don't natively
 #' support the standard Promise object will need to have a polyfill (e.g.
@@ -428,7 +459,12 @@ opts_zoom <- function(min = 1, max = 1){
 #' @family girafe animation options
 opts_toolbar <- function(position = c("topright", "top", "bottom",
                                       "topleft",  "bottomleft", "bottomright"),
-                         saveaspng = TRUE, pngname = "diagram"){
+                         saveaspng = TRUE,
+                         pngname = "diagram",
+                         tooltips = NULL,
+                         hidden = NULL,
+                         delay_mouseover = 200,
+                         delay_mouseout = 500) {
   position = arg_match(position, error_call = NULL)
   if (!is_valid_logical(saveaspng)) {
     abort("`saveaspng` must be a scalar logical", call = NULL)
@@ -436,11 +472,32 @@ opts_toolbar <- function(position = c("topright", "top", "bottom",
   if (!is_valid_string_non_empty(pngname)) {
     abort("`pngname` must be a non-empty scalar character", call = NULL)
   }
+  if (!is.null(tooltips) && !(is.list(tooltips) && is_named(tooltips))) {
+    abort("`tooltips` must be a named list or NULL", call = NULL)
+  }
+  if (is.null(hidden)) {
+    hidden = character()
+  }
+  if (!is.character(hidden)) {
+    abort("`hidden` must be a character vector", call = NULL)
+  }
+  if (isFALSE(saveaspng) && !"saveaspng" %in% hidden) {
+    hidden = c(hidden, "saveaspng")
+  }
+  if (!is_valid_number(delay_mouseover) || delay_mouseover < 0) {
+    abort("`delay_mouseover` must be a scalar positive number", call = NULL)
+  }
+  if (!is_valid_number(delay_mouseout) || delay_mouseout < 0) {
+    abort("`delay_mouseout` must be a scalar positive number", call = NULL)
+  }
 
   x <- list(
     position = position,
-    saveaspng = saveaspng,
-    pngname = pngname
+    pngname = pngname,
+    tooltips = tooltips,
+    hidden = hidden,
+    delay_over = delay_mouseover,
+    delay_out = delay_mouseout
   )
   class(x) <- "opts_toolbar"
   x

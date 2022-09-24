@@ -2,6 +2,9 @@
 
 ## Enhancement
 
+* Added tooltips argument to opts_toolbar for internationalization purposes
+* Added hidden argument to opts_toolbar for hiding buttons/button groups
+* Added zoom by rectangle feature and zoom related improvements
 * New feature: hover nearest element on mouse movement
 * Improved javascript performance (mouse event handling)
 * Added interactive parameters for outlier points in geom_boxplot_interactive

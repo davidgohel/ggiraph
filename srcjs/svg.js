@@ -7,6 +7,7 @@ import HoverHandler from './hover.js';
 import SelectionHandler from './selection.js';
 import { MouseHandler, EVENT_TYPES } from './mouse.js';
 import NearestHandler from './nearest.js';
+import PngHandler from './png.js';
 
 export default class SVGObject {
   constructor(containerid, shinyMode) {
@@ -218,6 +219,9 @@ export default class SVGObject {
           mouseHandlers.get('nearest').push(h);
         } else if (h instanceof SelectionHandler) {
           mouseHandlers.get('click').push(h);
+        } else if (h instanceof ToolbarHandler) {
+          mouseHandlers.get('mouseover').push(h);
+          mouseHandlers.get('mouseout').push(h);
         }
       });
 
@@ -243,23 +247,32 @@ export default class SVGObject {
   }
 
   setupToolbar(options) {
+    // register png handler
+    let handler;
+    try {
+      if (!options.hidden.includes('saveaspng')) {
+        handler = new PngHandler(this.svgid, { pngname: options.pngname });
+        if (handler.init()) this.handlers.set('png', handler);
+      }
+    } catch (e) {
+      console.error(e);
+    }
     // register toolbar handler
     try {
-      // for zoom tools, we need the active zoom handler if exists
-      const zoomHandler = this.handlers.get('zoom');
-      // for lasso tools, we only need the active data selection handler if exists
-      let selectionHandler = this.handlers.get('select_data');
-      if (selectionHandler && selectionHandler.type !== 'multiple')
-        selectionHandler = null;
+      const providers = [];
+      this.handlers.forEach(function (h) {
+        if (
+          h instanceof PngHandler ||
+          h instanceof ZoomHandler ||
+          (h instanceof SelectionHandler &&
+            h.attrName == 'data-id' &&
+            h.type == 'multiple')
+        )
+          providers.push(h);
+      });
       options.clsName = 'ggiraph-toolbar';
-      const handler = new ToolbarHandler(
-        this.containerid,
-        this.svgid,
-        options,
-        zoomHandler,
-        selectionHandler
-      );
-      if (handler.init()) this.handlers.set('toolbar', handler);
+      handler = new ToolbarHandler(this.containerid, this.svgid, options);
+      if (handler.init(providers)) this.handlers.set('toolbar', handler);
     } catch (e) {
       console.error(e);
     }

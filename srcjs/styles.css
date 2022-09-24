@@ -23,9 +23,8 @@
   background-color: rgb(255, 255, 255);
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 5px;
-  padding-top: 2px;
+  padding: 2px;
   opacity: 0;
-  transition: opacity 0.3s ease 0s;
 }
 .ggiraph-toolbar-top {
   text-align: center;
@@ -63,14 +62,26 @@
 
 .ggiraph-toolbar-block {
   display: inline-block;
-  padding-right: 10px;
+}
+.ggiraph-toolbar-block:not(:last-child) {
+  margin-right: 10px;
 }
 
 .ggiraph-toolbar-icon {
-  position: relative;
+  display: inline-block;
   cursor: pointer;
-  box-sizing: border-box;
-  padding-right: 3px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 15pt;
+  height: 15pt;
+}
+.ggiraph-toolbar-icon:not(:last-child) {
+  margin-right: 3px;
+}
+
+.ggiraph-toolbar-icon svg {
+  pointer-events: none;
 }
 
 .ggiraph-toolbar-icon.drop {
@@ -92,7 +103,7 @@
 
 .ggiraph-svg .lasso path {
   stroke: rgb(80, 80, 80);
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 .ggiraph-svg .lasso .drawn {
@@ -107,6 +118,12 @@
 .ggiraph-svg .lasso .origin {
   fill: #333;
   fill-opacity: 0.5;
+}
+
+.ggiraph-svg .dragrect rect {
+  stroke: rgb(80, 80, 80);
+  stroke-width: 1px;
+  fill-opacity: 0.05;
 }
 
 /* disable pointer events for non-interactive elements */
