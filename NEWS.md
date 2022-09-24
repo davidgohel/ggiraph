@@ -13,6 +13,7 @@
 
 ## Issues
 
+* fix: issue with incorrect font used on png export
 * fix: issue with broken interactivity on discrete guides
 * fix: issue with geom_segment_interactive and polar coords
 * fix: set fill/stroke color to svg elements even if opacity is zero.
