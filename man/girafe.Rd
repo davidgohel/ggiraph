@@ -8,8 +8,8 @@ girafe(
   code,
   ggobj = NULL,
   pointsize = 12,
-  width_svg = 6,
-  height_svg = 5,
+  width_svg = NULL,
+  height_svg = NULL,
   options = list(),
   ...
 )
@@ -24,7 +24,11 @@ be ignored if this argument is supplied.}
 
 \item{width_svg, height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
-graphic as it will be used to define viewbox attribute of the SVG result.}
+graphic as it will be used to define viewbox attribute of the SVG result.
+
+If you use \code{girafe()} in an 'R Markdown' document, we
+recommend not using these arguments so that the knitr
+options \code{fig.width} and \code{fig.height} are used instead.}
 
 \item{options}{a list of options for girafe rendering, see
 \code{\link[=opts_tooltip]{opts_tooltip()}}, \code{\link[=opts_hover]{opts_hover()}}, \code{\link[=opts_selection]{opts_selection()}}, ...}
