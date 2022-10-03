@@ -138,8 +138,7 @@
   pointer-events: none;
 }
 
-/* default cursor for interactive elements */
+/* default pointer events for interactive elements */
 .ggiraph-svg .ggiraph-svg-rootg [id] {
   pointer-events: all;
-  cursor: default;
 }
