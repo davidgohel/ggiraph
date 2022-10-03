@@ -10,6 +10,9 @@
 * Added interactive parameters for outlier points in geom_boxplot_interactive
 * Added accessibility elements to the SVG output (title, desc, role)
 * Added opts_selection_inv for inverted selection effect
+* Added `set_girafe_defaults()`, `girafe_defaults()` and `init_girafe_defaults()` 
+to set some default girafe options automatically. Also in R Markdown, svg default 
+width and height are set to knitr chunk options `fig.width` and `fig.height`.
 
 ## Issues
 
