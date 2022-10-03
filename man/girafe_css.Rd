@@ -44,3 +44,6 @@ girafe_css(
   image = "outline:2px red"
 )
 }
+\seealso{
+\code{\link[=girafe_css_bicolor]{girafe_css_bicolor()}}, \code{\link[=girafe]{girafe()}}
+}

@@ -63,6 +63,8 @@ x <- girafe_options(x,
 if( interactive() ) print(x)
 }
 \seealso{
+\code{\link[=girafe_css]{girafe_css()}}, \code{\link[=girafe_css_bicolor]{girafe_css_bicolor()}}
+
 Other girafe animation options: 
 \code{\link{girafe_defaults}()},
 \code{\link{girafe_options}()},

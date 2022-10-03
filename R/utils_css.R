@@ -10,6 +10,7 @@
 #' @param image Override style for image elements (svg:image)
 #'
 #' @return css as scalar character
+#' @seealso [girafe_css_bicolor()], [girafe()]
 #' @examples
 #' library(ggiraph)
 #'
@@ -38,6 +39,63 @@ girafe_css <- function(css,
   )
   paste(css[nzchar(css)], collapse = "\n")
 }
+
+#' @export
+#' @title Helper for a 'girafe' css string
+#'
+#' @description It allows the creation of a css set of individual
+#' styles for animation of 'girafe' elements. The used model is
+#' based on a simple pattern that works *most of the time* for
+#' girafe hover effects and selection effects.
+#'
+#' It sets properties based on a primary and a secondary color.
+#'
+#' @param primary,secondary colors used to define animations of
+#' fill and stroke properties with text, lines, areas, points
+#' and images in 'girafe' outputs.
+#' @examples
+#' library(ggplot2)
+#' library(ggiraph)
+#'
+#' dat <- mtcars
+#' dat$id <- "id"
+#' dat$label <- "a line"
+#' dat <- dat[order(dat$wt), ]
+#'
+#' p <- ggplot(
+#'   data = dat,
+#'   mapping = aes(
+#'     x = wt, y = mpg, data_id = id, tooltip = label)) +
+#'   geom_line_interactive(color = "white", size  = .75,
+#'                         hover_nearest = TRUE) +
+#'   theme_dark() +
+#'   theme(plot.background = element_rect(fill="black"),
+#'         panel.background = element_rect(fill="black"),
+#'         text = element_text(colour = "white"),
+#'         axis.text = element_text(colour = "white")
+#'         )
+#'
+#' x <- girafe(
+#'   ggobj = p,
+#'   options = list(
+#'     opts_hover(
+#'       css = girafe_css_bicolor(
+#'         primary = "yellow", secondary = "black"))
+#' ))
+#' if (interactive()) print(x)
+#' @seealso [girafe_css()], [girafe()]
+girafe_css_bicolor <- function(primary = "orange", secondary = "gray"){
+  girafe_css(
+    css = sprintf("fill:%s;stroke:%s;cursor:pointer;", primary, secondary),
+    text = sprintf("stroke:none;fill:%s;", primary),
+    line = sprintf("fill:none;stroke:%s;", primary),
+    area = sprintf("fill:%s;stroke:none;", primary),
+    point = sprintf("fill:%s;stroke:%s;", primary, secondary),
+    image = sprintf("stroke:%s;", primary)
+  )
+}
+
+
 
 #' Helper to check girafe_css argument
 #' @noRd

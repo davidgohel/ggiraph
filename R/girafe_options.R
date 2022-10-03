@@ -175,6 +175,7 @@ opts_tooltip <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
+#' @seealso [girafe_css()], [girafe_css_bicolor()]
 opts_hover <- function(css = NULL,
                        reactive = FALSE,
                        nearest_distance = NULL) {
@@ -277,6 +278,7 @@ opts_hover_theme <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
+#' @seealso [girafe_css()], [girafe_css_bicolor()]
 opts_selection <- function(css = NULL,
                            type = c("multiple", "single", "none"),
                            only_shiny = TRUE,
@@ -570,7 +572,7 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #'   print(x)
 #' }
 #' @export
-#' @seealso [girafe()]
+#' @seealso [girafe()], [girafe_css()], [girafe_css_bicolor()]
 #' @family girafe animation options
 girafe_options <- function(x, ...){
   if(!inherits(x, "girafe")) {
