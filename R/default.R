@@ -1,20 +1,23 @@
 #' @include girafe_options.R fonts.R utils_css.R
 girafe_global <- new.env(parent = emptyenv())
 
+css_default_hover <- girafe_css_bicolor(primary = "orange", secondary = "black")
+css_default_selection <- girafe_css_bicolor(primary = "red", secondary = "black")
+
 default_girafe_settings <- list(
   fonts = default_fontname(),
   opts_sizing = opts_sizing(width = 1),
   opts_tooltip = opts_tooltip(
     css = "padding:5px;background:black;color:white;border-radius:2px;text-align:left;",
     offx = 10, offy = 10),
-  opts_hover = opts_hover(),
-  opts_hover_key = opts_hover_key(),
-  opts_hover_theme = opts_hover_theme(),
-  opts_hover_inv = opts_hover_inv(),
-  opts_selection = opts_selection(),
+  opts_hover = opts_hover(css = css_default_hover, reactive = TRUE),
+  opts_hover_key = opts_hover_key(css = css_default_hover, reactive = TRUE),
+  opts_hover_theme = opts_hover_theme(css = css_default_hover, reactive = TRUE),
+  opts_hover_inv = opts_hover_inv(css = ""),
+  opts_selection = opts_selection(css = css_default_selection),
   opts_selection_inv = opts_selection_inv(),
-  opts_selection_key = opts_selection_key(),
-  opts_selection_theme = opts_selection_theme(),
+  opts_selection_key = opts_selection_key(css = css_default_selection),
+  opts_selection_theme = opts_selection_theme(css = css_default_selection),
   opts_zoom = opts_zoom(),
   opts_toolbar = opts_toolbar()
 )
