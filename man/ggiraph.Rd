@@ -36,7 +36,11 @@ be ignored if this argument is supplied.}
 
 \item{width_svg, height_svg}{The width and height of the graphics region in inches.
 The default values are 6 and 5 inches. This will define the aspect ratio of the
-graphic as it will be used to define viewbox attribute of the SVG result.}
+graphic as it will be used to define viewbox attribute of the SVG result.
+
+If you use \code{girafe()} in an 'R Markdown' document, we
+recommend not using these arguments so that the knitr
+options \code{fig.width} and \code{fig.height} are used instead.}
 
 \item{tooltip_extra_css}{extra css (added to \code{position: absolute;pointer-events: none;})
 used to customize tooltip area.}

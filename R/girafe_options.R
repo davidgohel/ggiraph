@@ -175,6 +175,7 @@ opts_tooltip <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
+#' @seealso [girafe_css()], [girafe_css_bicolor()]
 opts_hover <- function(css = NULL,
                        reactive = FALSE,
                        nearest_distance = NULL) {
@@ -277,6 +278,7 @@ opts_hover_theme <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
+#' @seealso [girafe_css()], [girafe_css_bicolor()]
 opts_selection <- function(css = NULL,
                            type = c("multiple", "single", "none"),
                            only_shiny = TRUE,
@@ -570,7 +572,7 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #'   print(x)
 #' }
 #' @export
-#' @seealso [girafe()]
+#' @seealso [girafe()], [girafe_css()], [girafe_css_bicolor()]
 #' @family girafe animation options
 girafe_options <- function(x, ...){
   if(!inherits(x, "girafe")) {
@@ -628,18 +630,18 @@ merge_sizing_policy <- function(policy, args) {
 
 default_opts <- function(){
   list(
-    tooltip = opts_tooltip(),
-    hover = opts_hover(),
-    hover_inv = opts_hover_inv(),
-    hover_key = opts_hover_key(),
-    hover_theme = opts_hover_theme(),
-    select = opts_selection(),
-    select_inv = opts_selection_inv(),
-    select_key = opts_selection_key(),
-    select_theme = opts_selection_theme(),
-    zoom = opts_zoom(),
-    toolbar = opts_toolbar(),
-    sizing = opts_sizing()
+    tooltip = girafe_defaults("opts_tooltip"),
+    hover = girafe_defaults("opts_hover"),
+    hover_inv = girafe_defaults("opts_hover_inv"),
+    hover_key = girafe_defaults("opts_hover_key"),
+    hover_theme = girafe_defaults("opts_hover_theme"),
+    select = girafe_defaults("opts_selection"),
+    select_inv = girafe_defaults("opts_selection_inv"),
+    select_key = girafe_defaults("opts_selection_key"),
+    select_theme = girafe_defaults("opts_selection_theme"),
+    zoom = girafe_defaults("opts_zoom"),
+    toolbar = girafe_defaults("opts_toolbar"),
+    sizing = girafe_defaults("opts_sizing")
   )
 }
 

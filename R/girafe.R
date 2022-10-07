@@ -31,6 +31,10 @@
 #' @param width_svg,height_svg The width and height of the graphics region in inches.
 #' The default values are 6 and 5 inches. This will define the aspect ratio of the
 #' graphic as it will be used to define viewbox attribute of the SVG result.
+#'
+#' If you use `girafe()` in an 'R Markdown' document, we
+#' recommend not using these arguments so that the knitr
+#' options `fig.width` and `fig.height` are used instead.
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param options a list of options for girafe rendering, see
 #' [opts_tooltip()], [opts_hover()], [opts_selection()], ...
@@ -87,10 +91,18 @@
 #' @importFrom uuid UUIDgenerate
 girafe <- function(
   code, ggobj = NULL,  pointsize = 12,
-  width_svg = 6, height_svg = 5,
+  width_svg = NULL, height_svg = NULL,
   options = list(), ...) {
 
   path = tempfile()
+
+  if (is.null(width_svg)) {
+    width_svg <- default_width(default = 6)
+  }
+  if (is.null(height_svg)) {
+    height_svg <- default_height(default = 5)
+  }
+
 
   args <- list(...)
   args$canvas_id <- args$canvas_id %||% paste("svg", gsub('-', '_', UUIDgenerate()), sep = "_")
