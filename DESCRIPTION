@@ -26,7 +26,7 @@ Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 SystemRequirements: C++11, libpng
 Imports:
-    grid, ggplot2 (>= 3.3.5),
+    grid, ggplot2 (>= 3.4.0),
     htmlwidgets (>= 1.5),
     stats,
     htmltools,
@@ -138,3 +138,4 @@ Collate:
     'scale_steps_interactive.R'
     'scale_viridis_interactive.R'
     'tracers.R'
+Remotes: tidyverse/ggplot2

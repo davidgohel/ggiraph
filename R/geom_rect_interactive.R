@@ -61,7 +61,7 @@ GeomInteractiveRect <- ggproto(
           gp = gpar(
             col = coords$colour,
             fill = alpha(coords$fill, coords$alpha),
-            lwd = coords$size * .pt,
+            lwd = coords$linewidth * .pt,
             lty = coords$linetype,
             linejoin = linejoin,
             # `lineend` is a workaround for Windows and intentionally kept unexposed
