@@ -21,6 +21,7 @@
 geom_rect_interactive <- function(...)
   layer_interactive(geom_rect, ...)
 
+#' @importFrom vctrs vec_cbind
 #' @rdname ggiraph-ggproto
 #' @format NULL
 #' @usage NULL
@@ -32,7 +33,7 @@ GeomInteractiveRect <- ggproto(
   default_aes = add_default_interactive_aes(GeomRect),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord, linejoin = "mitre", .ipar = IPAR_NAMES) {
+  draw_panel = function(self, data, panel_params, coord, lineend = "butt", linejoin = "mitre", .ipar = IPAR_NAMES) {
     if (!coord$is_linear()) {
       aesthetics <- setdiff(names(data),
                             c("x", "y", "xmin", "xmax", "ymin", "ymax"))
@@ -40,9 +41,10 @@ GeomInteractiveRect <- ggproto(
       polys <-
         lapply(split(data, seq_len(nrow(data))), function(row) {
           poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
-          aes <- new_data_frame(row[aesthetics])[rep(1, 5), ]
+          aes <- row[rep(1,5), aesthetics]
 
-          GeomInteractivePolygon$draw_panel(cbind(poly, aes), panel_params, coord, .ipar = .ipar)
+          GeomInteractivePolygon$draw_panel(vec_cbind(poly, aes), panel_params, coord,
+                                            lineend = lineend, linejoin = linejoin, .ipar = .ipar)
         })
 
       ggname("bar", do.call("grobTree", polys))
@@ -64,12 +66,7 @@ GeomInteractiveRect <- ggproto(
             lwd = coords$linewidth * .pt,
             lty = coords$linetype,
             linejoin = linejoin,
-            # `lineend` is a workaround for Windows and intentionally kept unexposed
-            # as an argument. (c.f. https://github.com/tidyverse/ggplot2/issues/3037#issuecomment-457504667)
-            lineend = if (identical(linejoin, "round"))
-              "round"
-            else
-              "square"
+            lineend = lineend
           )
         )
       )

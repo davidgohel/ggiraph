@@ -50,7 +50,7 @@ element_interactive <- function(element_func,
   # Store the params, as an attribute of the structure.
   # if we set them straight inside, ggplot resets their value
   # and gives errors at the time of rendering because of theme inheritance.
-  # By setting them as an atrribute they are preserved.
+  # By setting them as an attribute they are preserved.
   attr(struct, "interactive") <- ip
   attr(struct, "ipar") <- ipar
   class(struct) <- c(paste("interactive", class(struct)[1], sep = "_"),

@@ -32,7 +32,8 @@ Imports:
     htmltools,
     Rcpp (>= 1.0),
     systemfonts,
-    purrr, rlang, uuid
+    purrr, rlang, uuid, 
+    vctrs
 LinkingTo: Rcpp, systemfonts
 Suggests:
     knitr,

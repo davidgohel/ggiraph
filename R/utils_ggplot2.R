@@ -118,3 +118,9 @@ rename <- function(x, replace) {
   names(x)[match(old_names, current_names)] <- as.vector(replace)
   x
 }
+
+
+unique0 <- function(x, ...) if (is.null(x)) x else vctrs::vec_unique(x, ...)
+
+#' @importFrom vctrs data_frame
+data_frame0 <- function(...) data_frame(..., .name_repair = "minimal")
