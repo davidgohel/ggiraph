@@ -25,7 +25,9 @@ GeomInteractiveMap <- ggproto(
   default_aes = add_default_interactive_aes(GeomMap),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(data, panel_params, coord, map, .ipar = IPAR_NAMES) {
+  draw_panel = function(data, panel_params, coord, lineend = "butt",
+                        linejoin = "round", linemitre = 10,
+                        map, .ipar = IPAR_NAMES) {
     # Only use matching data and map ids
     common <- intersect(data$map_id, map$id)
     data <- data[data$map_id %in% common, , drop = FALSE]
@@ -45,7 +47,10 @@ GeomInteractiveMap <- ggproto(
       coords$x, coords$y, default.units = "native", id = grob_id,
       gp = gpar(
         col = data$colour, fill = alpha(data$fill, data$alpha),
-        lwd = data$size * .pt
+        lwd = data$linewidth * .pt,
+        lineend = lineend,
+        linejoin = linejoin,
+        linemitre = linemitre
       )
     )
 

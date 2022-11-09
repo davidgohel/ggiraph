@@ -3,7 +3,7 @@ library(ggiraph)
 
 v <- ggplot(faithfuld, aes(waiting, eruptions, z = density))
 p <- v + geom_contour_interactive(aes(
-  colour = stat(level),
+  colour = after_stat(level),
   tooltip = paste("Level:", after_stat(level))
 ))
 x <- girafe(ggobj = p)

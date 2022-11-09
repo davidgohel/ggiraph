@@ -41,8 +41,8 @@ library(ggplot2)
 library(ggiraph)
 
 p <- ggplot(diamonds, aes(carat)) +
-  geom_histogram_interactive(bins=30, aes(tooltip = ..count..,
-                             data_id = carat) )
+  geom_histogram_interactive(bins=30, aes(tooltip = after_stat(count),
+                                          group = 1L) )
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)
 

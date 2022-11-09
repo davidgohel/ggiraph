@@ -17,7 +17,7 @@ GeomInteractiveTile <- ggproto(
   non_missing_aes = c("xmin", "xmax", "ymin", "ymax"),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
-    GeomInteractiveRect$draw_panel(data, panel_params, coord, ..., .ipar = .ipar)
+  draw_panel = function(self, data, panel_params, coord, lineend = "butt", linejoin = "mitre", ..., .ipar = IPAR_NAMES) {
+    GeomInteractiveRect$draw_panel(data, panel_params, coord, lineend = lineend, linejoin = linejoin, ..., .ipar = .ipar)
   }
 )
