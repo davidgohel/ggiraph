@@ -33,7 +33,7 @@ Imports:
     Rcpp (>= 1.0),
     systemfonts,
     purrr, rlang, uuid, 
-    vctrs
+    vctrs, glue
 LinkingTo: Rcpp, systemfonts
 Suggests:
     knitr,
