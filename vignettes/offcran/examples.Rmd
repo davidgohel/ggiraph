@@ -281,7 +281,11 @@ g_inter <- girafe(
       use_stroke = FALSE, 
       css = "padding:5pt;font-family: Open Sans;color:white"),
     opts_hover_inv(css = "opacity:0.5"), 
-    opts_hover(css = "fill:#4c6061;")
+    opts_hover(
+      css = girafe_css(
+        css = "fill:#4c6061;",
+        text = "stroke:none;fill:white;fill-opacity:1;"
+      ))
   )
 )
 g_inter
@@ -290,66 +294,25 @@ g_inter
 
 ## Facets and interactive strip labels
 
-We will use package ggh4x to make nice nested facets.
+You must use `labeller_interactive()` with `facet_wrap_interactive()` 
+or `facet_grid_interactive()` to process the labels:
 
 ```{r}
-library(ggplot2)
-library(ggiraph)
-library(ggh4x)
-```
+p1 <- ggplot(mtcars, aes(x = mpg, y = wt)) +
+  geom_point_interactive(aes(tooltip = row.names(mtcars))) +
+  theme_minimal() + 
+  theme(strip.background = element_rect_interactive(fill="white", color = "transparent"))
 
-We need to use `labeller_interactive()` to make 
-interactive strip labels.
-
-Let's create the theme object.
-
-```{r}
-my_theme <- theme(
-  text = element_text_interactive(),
-  panel.spacing = unit(0, "npc"),
-  strip.switch.pad.grid = unit(0, "cm"),
-  strip.text = element_text_interactive(color = "white"),
-  strip.background = element_rect(fill = "black", colour = "white"),
-  strip.placement = "outside",
-  axis.text.x = element_blank(), 
-  panel.grid = element_blank(),
-  panel.grid.major.y = element_line(colour = "#CCCCCC66"),
-  panel.background = element_blank(),
-  axis.ticks.x = element_blank(),
-  axis.line.y = element_line()
+p <- p1 + facet_wrap_interactive(interactive_on = "rect",
+  vars(vs, am),
+  labeller = labeller_interactive(
+    vs = labeller_interactive(vs=label_both, aes(
+      tooltip = paste("VS:", vs), data_id = paste0("vs_", vs), info = "strip1"
+    ), extra_interactive_params = "info"),
+    am = labeller_interactive(am=label_both, aes(
+      tooltip = paste("AM:", am), data_id = paste0("am_", am), info = "strip2"
+    ), extra_interactive_params = "info")
+  )
 )
+girafe(ggobj = p, width_svg = 8, height_svg = 8)
 ```
-
-You must use `labeller_interactive()` to process the labels:
-
-```{r}
-gg_jitter <- ggplot(diamonds, aes(y = z)) +
-  geom_boxplot_interactive(aes(data_id=color, tooltip=color)) +
-  facet_nested(~ cut + color ,
-    switch = "x", scales = "free_x",
-    labeller = labeller(
-      cut = labeller_interactive(aes(tooltip = paste("cut:", cut))),
-      color = labeller_interactive(aes(tooltip = paste("color:", color)))
-    )
-  ) + 
-  coord_cartesian(ylim = c(0, 9)) +
-  labs(x = "", y = "") + 
-  my_theme
-```
-
-Finally, let's create the girafe object:
-
-```{r}
-girafe(
-  ggobj = gg_jitter, 
-  options = list(
-    opts_hover(css = "fill:#5eba7d88;cursor:pointer;"),
-    opts_hover_theme(css = "fill:red;cursor:pointer;"),
-    opts_selection(css = "fill:#5eba7d;cursor:pointer;", only_shiny = FALSE, selected = "J"),
-    opts_tooltip(css = "background-color:white;padding:5px;border-radius:2px;border: black 1px solid;color:black;")
-  ),
-  width_svg = 8, 
-  height_svg = 5
-)
-```
-

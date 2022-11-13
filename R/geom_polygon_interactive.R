@@ -26,7 +26,8 @@ GeomInteractivePolygon <- ggproto(
   default_aes = add_default_interactive_aes(GeomPolygon),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(data, panel_params, coord, rule = "evenodd", .ipar = IPAR_NAMES) {
+  draw_panel = function(data, panel_params, coord, rule = "evenodd",
+                        lineend = "butt", linejoin = "round", linemitre = 10, .ipar = IPAR_NAMES) {
     n <- nrow(data)
     if (n == 1)
       return(zeroGrob())
@@ -53,8 +54,11 @@ GeomInteractivePolygon <- ggproto(
           gp = gpar(
             col = first_rows$colour,
             fill = alpha(first_rows$fill, first_rows$alpha),
-            lwd = first_rows$size * .pt,
-            lty = first_rows$linetype
+            lwd = first_rows$linewidth * .pt,
+            lty = first_rows$linetype,
+            lineend = lineend,
+            linejoin = linejoin,
+            linemitre = linemitre
           )
         )
       )
@@ -72,7 +76,6 @@ GeomInteractivePolygon <- ggproto(
       # are the same within each group.
       first_idx <- !duplicated(munched$group)
       first_rows <- munched[first_idx,]
-
       args <- list(
         x = munched$x,
         y = munched$y,
@@ -83,8 +86,11 @@ GeomInteractivePolygon <- ggproto(
         gp = gpar(
           col = first_rows$colour,
           fill = alpha(first_rows$fill, first_rows$alpha),
-          lwd = first_rows$size * .pt,
-          lty = first_rows$linetype
+          lwd = first_rows$linewidth * .pt,
+          lty = first_rows$linetype,
+          lineend = lineend,
+          linejoin = linejoin,
+          linemitre = linemitre
         )
       )
       # pathId argument does not exist prior to grid v3.6.0

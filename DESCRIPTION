@@ -26,13 +26,14 @@ Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 SystemRequirements: C++11, libpng
 Imports:
-    grid, ggplot2 (>= 3.3.5),
+    grid, ggplot2 (>= 3.4.0),
     htmlwidgets (>= 1.5),
     stats,
     htmltools,
     Rcpp (>= 1.0),
     systemfonts,
-    purrr, rlang, uuid
+    purrr, rlang, uuid, 
+    vctrs
 LinkingTo: Rcpp, systemfonts
 Suggests:
     knitr,
@@ -66,6 +67,7 @@ Collate:
     'dsvg.R'
     'dsvg_view.R'
     'element_interactive.R'
+    'facet_interactive.R'
     'geom_abline_interactive.R'
     'geom_path_interactive.R'
     'geom_polygon_interactive.R'
@@ -138,3 +140,4 @@ Collate:
     'scale_steps_interactive.R'
     'scale_viridis_interactive.R'
     'tracers.R'
+Remotes: tidyverse/ggplot2

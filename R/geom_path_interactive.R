@@ -60,7 +60,7 @@ GeomInteractivePath <- ggproto(
       linetype <- unique(df$linetype)
       new_data_frame(list(
         solid = identical(linetype, 1) || identical(linetype, "solid"),
-        constant = nrow(unique(df[, c("alpha", "colour", "size", "linetype")])) == 1
+        constant = nrow(unique(df[, c("alpha", "colour", "linewidth", "linetype")])) == 1
       ),
       n = 1)
     })
@@ -91,7 +91,7 @@ GeomInteractivePath <- ggproto(
         gp = gpar(
           col = alpha(munched$colour, munched$alpha)[!end],
           fill = alpha(munched$colour, munched$alpha)[!end],
-          lwd = munched$size[!end] * .pt,
+          lwd = munched$linewidth[!end] * .pt,
           lty = munched$linetype[!end],
           lineend = lineend,
           linejoin = linejoin,
@@ -110,7 +110,7 @@ GeomInteractivePath <- ggproto(
         gp = gpar(
           col = alpha(munched$colour, munched$alpha)[start],
           fill = alpha(munched$colour, munched$alpha)[start],
-          lwd = munched$size[start] * .pt,
+          lwd = munched$linewidth[start] * .pt,
           lty = munched$linetype[start],
           lineend = lineend,
           linejoin = linejoin,

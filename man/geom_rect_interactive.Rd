@@ -59,7 +59,7 @@ gg_rect = ggplot() +
 		mapping = aes(xmin = x1, xmax = x2,
 			ymin = y1, ymax = y2, fill = t,
 			tooltip = tooltip, onclick = oc, data_id = uid ),
-		color="black", alpha=0.5) +
+		color="black", alpha=0.5, linejoin = "bevel", lineend = "round") +
 	geom_text(data=dataset,
 			aes(x = x1 + ( x2 - x1 ) / 2, y = y1 + ( y2 - y1 ) / 2,
 					label = r ),

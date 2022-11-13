@@ -25,6 +25,12 @@ width and height are set to knitr chunk options `fig.width` and `fig.height`.
 * test: updated some tests to check for required packages
 * test: updated github actions
 
+## Changes
+
+* Update internals for 'ggplot2' version `3.4.0`. 
+* Now `facet_wrap_interactive()` or `facet_grid_interactive()` need to 
+be used to let the facets be interactives (see also `labeller_interactive()`).
+
 # ggiraph 0.8.3
 
 ## Issues
