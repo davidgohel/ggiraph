@@ -4,11 +4,16 @@
 \alias{facet_grid_interactive}
 \title{Create interactive grid facets}
 \usage{
-facet_grid_interactive(...)
+facet_grid_interactive(..., interactive_on = "text")
 }
 \arguments{
 \item{...}{arguments passed to base function and
 \code{\link[=labeller_interactive]{labeller_interactive()}} for argument \code{labeller}.}
+
+\item{interactive_on}{one of 'text' (only strip text are
+made interactive), 'rect' (only strip rectangles are
+made interactive) or 'both' (strip text and rectangles are
+made interactive).}
 }
 \value{
 An interactive facetting object.
