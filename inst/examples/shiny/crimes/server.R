@@ -5,7 +5,8 @@ crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
 gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault, color = UrbanPop )) +
   geom_point_interactive(
-    aes( data_id = state, tooltip = state), size = 3 ) +
+    aes( data_id = state, tooltip = state), size = 3,
+    hover_nearest = TRUE) +
   scale_colour_gradient(low = "#999999", high = "orange") +
   theme_minimal()
 

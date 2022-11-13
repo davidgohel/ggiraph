@@ -12,7 +12,7 @@ vignette: >
 
 ```{r include=FALSE}
 library(knitr)
-opts_chunk$set(message=FALSE)
+opts_chunk$set(message=FALSE, fig.width=8, fig.height = 6)
 source("scripts/fonts.R")
 ```
 
@@ -28,7 +28,13 @@ with a `ggplot` object.
 ```{r}
 library(ggiraph)
 library(ggplot2)
-
+set_girafe_defaults(
+  opts_tooltip = opts_tooltip(
+      opacity = 1,
+      css = "background-color:#333333;color:white;padding:3px;border-radius:2px;"
+    ), 
+  opts_hover = opts_hover(css = "fill:magenta;stroke:black;cursor:pointer;r:5px;")
+)
 gg_point_1 <- ggplot(
   data = mtcars,
   mapping = aes(
@@ -36,20 +42,10 @@ gg_point_1 <- ggplot(
     color = wt, tooltip = row.names(mtcars), data_id = row.names(mtcars)
   )
 ) +
-  geom_point_interactive(size = 2) +
-  scale_color_gradient(low = "#F3C899", high = "#8C120A")
+  geom_point_interactive(size = 3, hover_nearest = TRUE) +
+  scale_color_gradient(low = "gray", high = "#8C120A")
 
-x <- girafe(
-  ggobj = gg_point_1, width_svg = 6, height_svg = 6,
-  options = list(
-    opts_sizing(rescale = FALSE),
-    opts_tooltip(
-      opacity = .8,
-      css = "background-color:gray;color:white;padding:2px;border-radius:2px;"
-    ),
-    opts_hover(css = "fill:#1279BF;stroke:#1279BF;cursor:pointer;")
-  )
-)
+x <- girafe(ggobj = gg_point_1)
 x
 ```
 
@@ -57,12 +53,13 @@ x
 
 It extends ggplot2 with:
 
-* interactive `geom` functions: `geom_point_interactive()`, `geom_col_interactive`, etc.
-* interactive `scale` functions: `scale_color_continuous_interactive()`, `scale_fill_manual_interactive()`, etc.
-* interactive `guide` functions: `guide_colorbar_interactive()`, `guide_colourbar_interactive()`, `guide_legend_interactive()`.
-* interactive `theme` elements: `element_line_interactive()`, `element_rect_interactive()`, `element_text_interactive()`, `label_interactive`.
+- interactive `geom` functions: `geom_point_interactive()`, `geom_col_interactive`, etc.
+- interactive `scale` functions: `scale_color_continuous_interactive()`, `scale_fill_manual_interactive()`, etc.
+- interactive `facet` functions: `facet_wrap_interactive()` and `facet_grid_interactive()` that both work with `labeller_interactive()`.
+- interactive `guide` functions: `guide_colorbar_interactive()`, `guide_colourbar_interactive()`, `guide_legend_interactive()`.
+- interactive `theme` elements: `element_line_interactive()`, `element_rect_interactive()`, `element_text_interactive()`, `label_interactive`.
 
-These understand three aesthetics to let you add interactivity:
+These understand three main aesthetics to let you add interactivity:
 
 * `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements. 
 * `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic 
@@ -84,7 +81,7 @@ g <- ggplot(mpg, aes( x = displ, y = cty, color = hwy) )
 The first example shows how to add a tooltip:
 
 ```{r message=FALSE}
-my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 2) 
+my_gg <- g + geom_point_interactive(aes(tooltip = model), size = 3) 
 girafe(code = print(my_gg) )
 ```
 
@@ -93,24 +90,57 @@ girafe(code = print(my_gg) )
 Now let's add an hover effect. **Elements associated with a `data_id` will be 
 animated upon mouse over.**
 
+Option `hover_nearest=TRUE` make the hover effect applied on the 
+nearest element while moving the mouse. In this case it is 
+mandatory to also set the `data_id` parameter.
+
+Note that `data_id` can also be reused within a shiny application as a reactive value. 
+
 ```{r message=FALSE}
-my_gg <- g + geom_point_interactive(
-    aes(tooltip = model, data_id = model), size = 2) 
+my_gg <- g + geom_point_interactive(hover_nearest = TRUE,
+    aes(tooltip = model, data_id = model), size = 3) 
 x <- girafe(code = print(my_gg))
 x
 ```
 
-> Note that `data-id` can also be reused within a shiny application as a reactive value. 
+
+## Interactive faceting
+
+By using `facet_wrap_interactive()` and `labeller_interactive`,
+it is possible to make the strips interactive.
+
+```{r}
+dat <- mtcars
+dat$carname <- row.names(dat)
+p1 <- ggplot(dat, aes(x = mpg, y = qsec, tooltip = carname, data_id = carname)) +
+  geom_point_interactive(hover_nearest = TRUE, size = 3) + 
+  theme_light() +
+  
+  facet_wrap_interactive(ncol = 2,interactive_on = "rect",
+    vars(vs),
+    labeller = labeller_interactive(aes(
+        tooltip = paste("this is vs", vs), data_id = vs
+      ))
+  )
+
+girafe(ggobj = p1)
+```
+
 
 ## Click actions
 
 ### Within shiny
 
-When working with shiny, you can use the `data_id` aesthetic to associate points, polygons 
-and other graphical elements with a value that will be available in a reactive context. 
-This makes it possible to click on an element and trigger an action. 
-Note that in this case, `onclick` should not be used, both onclick 
-and data_id will need the "click" event. [Read more about shiny integration](./shiny.html)...
+When working with shiny, you can use the `data_id` aesthetic to associate
+points, polygons and other graphical elements with a value that will be
+available in a reactive context. This makes it possible to click on an element
+and trigger an action. (Note that in this case, `onclick` should not be used,
+both `onclick` and `data_id` will need the "click" event.) 
+
+`data_id` aesthetic is a great and easy way to trigger actions when an element 
+such as a point or a region on a map is clicked. The selected `data_id` for elements in panels,
+scales and themes are stored in 3 different reactive values. [Read more about shiny
+integration](./shiny.html).
 
 ### Using onclick
 
@@ -125,11 +155,18 @@ crimes$onclick <- sprintf("window.open(\"%s%s\")",
   "http://en.wikipedia.org/wiki/", as.character(crimes$state) )
 
 gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault, color = UrbanPop )) + 
-  geom_point_interactive(
+  geom_point_interactive(hover_nearest = TRUE,
     aes( data_id = state, tooltip = state, onclick = onclick ), size = 3 ) + 
   scale_colour_gradient(low = "#999999", high = "#FF3333")
 
-girafe(ggobj = gg_crime)
+girafe(ggobj = gg_crime, 
+       options = list(
+         opts_hover = opts_hover(css = "fill:gray;stroke:black;cursor:pointer;r:6px;")
+       ))
 ```
 
+
+```{r include=FALSE}
+init_girafe_defaults()
+```
 
