@@ -140,4 +140,3 @@ Collate:
     'scale_steps_interactive.R'
     'scale_viridis_interactive.R'
     'tracers.R'
-Remotes: tidyverse/ggplot2
