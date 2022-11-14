@@ -29,6 +29,7 @@ jobs:
 
       - name: Install other dependencies
         run: |
+          install.packages("remotes")
           remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "gfonts", "tidyverse", "ggthemes", "ggtext"))
           remotes::install_github("ardata-fr/pkgardata")
         shell: Rscript {0}
