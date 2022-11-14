@@ -7,53 +7,29 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: "contains(github.event.head_commit.message, 'sitedeploy')"
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          r-version: release
+          use-public-rspm: true
 
-      - name: Install system dependencies
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
+      - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install pkgdown system dependencies
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          sysreqs="export DEBIAN_FRONTEND=noninteractive; apt-get -y update && apt-get install -y pandoc pandoc-citeproc libssl-dev libharfbuzz-dev make libxml2-dev libfribidi-dev libcurl4-openssl-dev libtiff-dev libpng-dev"
-          sudo -s eval "$sysreqs"
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: >
+            any::rcmdcheck
+          needs: check
 
-      - name: Install dependencies
+      - name: Install other dependencies
         run: |
-          install.packages("stringi", type="source")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "gfonts", "tidyverse", "ggthemes", "ggtext", "glue", "ggh4x"))
+          remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "gfonts", "tidyverse", "ggthemes", "ggtext"))
           remotes::install_github("ardata-fr/pkgardata")
         shell: Rscript {0}
 
