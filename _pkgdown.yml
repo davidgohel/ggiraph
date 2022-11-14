@@ -21,6 +21,10 @@ reference:
     - girafe_css
     - starts_with("opts_")
     - girafe_options
+    - set_girafe_defaults
+    - girafe_defaults
+    - init_girafe_defaults
+    - girafe_css_bicolor
   - title: Working with shiny
     contents:
     - renderGirafe
@@ -36,6 +40,10 @@ reference:
     contents:
     - starts_with("scale_")
     - starts_with("guide_")
+  - title: Interactive facets
+    contents:
+    - starts_with("facet_")
+    - labeller_interactive
   - title: Fonts
     contents:
     - match_family
@@ -43,7 +51,6 @@ reference:
     - font_family_exists
   - title: Other interactive layers
     contents:
-    - labeller_interactive
     - starts_with("annotate_")
     - annotation_raster_interactive
     - label_interactive

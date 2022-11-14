@@ -28,10 +28,13 @@ GeomInteractiveRibbon <- ggproto(
   draw_group = function(data,
                         panel_params,
                         coord,
+                        lineend = "butt",
+                        linejoin = "round", linemitre = 10,
                         na.rm = FALSE,
                         flipped_aes = FALSE,
                         outline.type = "both",
                         .ipar = IPAR_NAMES) {
+
     data <- flip_data(data, flipped_aes)
     if (na.rm)
       data <-
@@ -40,7 +43,7 @@ GeomInteractiveRibbon <- ggproto(
 
     # Check that aesthetics are constant
     ia <- get_interactive_attr_names(data, ipar = .ipar)
-    cols <- c("colour", "fill", "size", "linetype", "alpha", ia)
+    cols <- c("colour", "fill", "linewidth", "linetype", "alpha", ia)
     aes <- unique(data[cols])
     if (nrow(aes) > 1) {
       abort("Aesthetics can not vary with a ribbon")
@@ -60,6 +63,9 @@ GeomInteractiveRibbon <- ggproto(
     ids[missing_pos] <- NA
 
     data <- unclass(data) #for faster indexing
+
+    # In case the data comes from stat_align
+    upper_keep <- if (is.null(data$align_padding)) TRUE else !data$align_padding
 
     # The upper line and lower line need to processed separately (#4023)
     positions_upper <- new_data_frame(list(
@@ -97,7 +103,7 @@ GeomInteractiveRibbon <- ggproto(
         else
           NA,
         lwd = if (is_full_outline)
-          aes$size * .pt
+          aes$linewidth * .pt
         else
           0,
         lty = if (is_full_outline)
@@ -129,7 +135,7 @@ GeomInteractiveRibbon <- ggproto(
       default.units = "native",
       gp = gpar(
         col = aes$colour,
-        lwd = aes$size * .pt,
+        lwd = aes$linewidth * .pt,
         lty = aes$linetype
       )
     )

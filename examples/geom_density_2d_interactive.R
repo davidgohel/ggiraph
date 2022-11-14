@@ -5,7 +5,7 @@ m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
   geom_point_interactive(aes(tooltip = paste("Waiting:", waiting, "\neruptions:", eruptions))) +
   xlim(0.5, 6) +
   ylim(40, 110)
-p <- m + geom_density_2d_interactive(aes(tooltip = paste("Level:", stat(level))))
+p <- m + geom_density_2d_interactive(aes(tooltip = paste("Level:", after_stat(level))))
 x <- girafe(ggobj = p)
 if (interactive()) print(x)
 

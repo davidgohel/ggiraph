@@ -3,7 +3,7 @@
 
 std::string a_color::color() {
   char buf[ 100 ];
-  sprintf( buf, "#%02X%02X%02X", R_RED(col), R_GREEN(col), R_BLUE(col));
+  snprintf( buf, 100, "#%02X%02X%02X", R_RED(col), R_GREEN(col), R_BLUE(col));
   std::string str = buf;
   return str;
 }
