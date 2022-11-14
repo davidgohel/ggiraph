@@ -13,13 +13,20 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 opts_chunk$set(message=FALSE, fig.width=8, fig.height = 6)
-source("scripts/fonts.R")
+library(usefonts)
+library(ggiraph)
+library(ggplot2)
+add_font("Open Sans")
+set_girafe_defaults(fonts = list(sans = "Open Sans"))
+theme_set(
+  theme_minimal(base_family = "Open Sans")
+)
 ```
+
 
 ```{r echo=FALSE}
-use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
+addFontHtmlDependency(font = "Open Sans")
 ```
-
 The **ggiraph** package let R users make **ggplot interactive**. The package 
 is an htmlwidget. The following graphic is produced by calling `girafe()` function 
 with a `ggplot` object.
@@ -114,7 +121,6 @@ dat <- mtcars
 dat$carname <- row.names(dat)
 p1 <- ggplot(dat, aes(x = mpg, y = qsec, tooltip = carname, data_id = carname)) +
   geom_point_interactive(hover_nearest = TRUE, size = 3) + 
-  theme_light() +
   
   facet_wrap_interactive(ncol = 2,interactive_on = "rect",
     vars(vs),

@@ -10,12 +10,9 @@ vignette: >
 
 ```{r include=FALSE}
 library(knitr)
+library(usefonts)
+add_font("Open Sans")
 opts_chunk$set(message=FALSE)
-source("scripts/fonts.R")
-```
-
-```{r echo=FALSE}
-use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
 ```
 
 A major advantage of `{ggiraph}` used in a shiny application is the ability to
