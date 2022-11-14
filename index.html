@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ggiraph package</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.8.4</span>
       </span>
     </div>
 
@@ -68,8 +70,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/davidgohel/ggiraph">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/davidgohel/ggiraph" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -87,13 +89,13 @@
   <div class="contents col-md-9">
 
 <blockquote>
-<p><a href="https://davidgohel.github.io/ggiraph/">ggiraph</a> makes ‘ggplot’ graphics interactive.</p>
+<p><a href="https://davidgohel.github.io/ggiraph/" class="external-link">ggiraph</a> makes ‘ggplot’ graphics interactive.</p>
 </blockquote>
-<p><a href="https://github.com/davidgohel/ggiraph/actions"><img src="https://github.com/davidgohel/ggiraph/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://CRAN.R-project.org/package=ggiraph"><img src="https://www.r-pkg.org/badges/version/ggiraph" alt="version"></a> <img src="https://cranlogs.r-pkg.org/badges/ggiraph" alt="cranlogs"><a href="https://codecov.io/gh/davidgohel/ggiraph"><img src="https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg" alt="codecov test coverage"></a></p>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><a href="https://github.com/davidgohel/ggiraph/"><img src="reference/figures/logo.png" alt="ggiraph logo" align="right"></a> <a href="https://davidgohel.github.io/ggiraph/">ggiraph</a> is a tool that allows you to create dynamic ggplot graphs. This allows you to add tooltips, hover effects and JavaScript actions to the graphics. The package also allows the selection of graphical elements when used in shiny applications.</p>
+<p><a href="https://github.com/davidgohel/ggiraph/actions" class="external-link"><img src="https://github.com/davidgohel/ggiraph/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://CRAN.R-project.org/package=ggiraph" class="external-link"><img src="https://www.r-pkg.org/badges/version/ggiraph" alt="version"></a> <img src="https://cranlogs.r-pkg.org/badges/ggiraph" alt="cranlogs"><a href="https://app.codecov.io/gh/davidgohel/ggiraph" class="external-link"><img src="https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg" alt="codecov test coverage"></a></p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p><a href="https://github.com/davidgohel/ggiraph/" class="external-link"><img src="reference/figures/logo.png" alt="ggiraph logo" align="right"></a> <a href="https://davidgohel.github.io/ggiraph/" class="external-link">ggiraph</a> is a tool that allows you to create dynamic ggplot graphs. This allows you to add tooltips, hover effects and JavaScript actions to the graphics. The package also allows the selection of graphical elements when used in shiny applications.</p>
 <p>Interactivity is added to ggplot <strong>geometries, legends and theme elements</strong>, via the following aesthetics:</p>
 <ul>
 <li>
@@ -103,106 +105,106 @@
 <li>
 <code>data_id</code>: id to be associated with elements (used for hover and click actions)</li>
 </ul>
-<div id="why-use-ggiraph" class="section level3">
-<h3 class="hasAnchor">
-<a href="#why-use-ggiraph" class="anchor"></a>Why use <code>{ggiraph}</code>
+<div class="section level3">
+<h3 id="why-use-ggiraph">Why use <code>{ggiraph}</code>
+<a class="anchor" aria-label="anchor" href="#why-use-ggiraph"></a>
 </h3>
 <ul>
 <li>You want to provide your readers with more information than the basic information available; you can display a tooltip when the user’s mouse is on a graphical element, you can also visually animate elements with the same attribute when the mouse passes over a graphical element, and finally you can link a JavaScript action to the click, such as opening a hypertext link.</li>
-<li>You want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, <a href="https://davidgohel.github.io/ggiraph/">ggiraph</a> allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value.</li>
+<li>You want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, <a href="https://davidgohel.github.io/ggiraph/" class="external-link">ggiraph</a> allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value.</li>
 </ul>
 <p><img src="reference/figures/image_girafe.png"></p>
 <blockquote>
-<p>Under the hood, <a href="https://davidgohel.github.io/ggiraph/">ggiraph</a> is an htmlwidget and a ggplot2 extension. It allows graphics to be interactive, by exporting them as SVG documents and using special attributes on the various elements.</p>
+<p>Under the hood, <a href="https://davidgohel.github.io/ggiraph/" class="external-link">ggiraph</a> is an htmlwidget and a ggplot2 extension. It allows graphics to be interactive, by exporting them as SVG documents and using special attributes on the various elements.</p>
 </blockquote>
 </div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<div id="with-r-and-r-markdown" class="section level3">
-<h3 class="hasAnchor">
-<a href="#with-r-and-r-markdown" class="anchor"></a>With R and R Markdown</h3>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="section level3">
+<h3 id="with-r-and-r-markdown">With R and R Markdown<a class="anchor" aria-label="anchor" href="#with-r-and-r-markdown"></a>
+</h3>
 <p>The things you need to know to create an interactive graphic :</p>
 <ul>
 <li>Instead of using <code>geom_point</code>, use <code>geom_point_interactive</code>, instead of using <code>geom_sf</code>, use <code>geom_sf_interactive</code>… Provide at least one of the aesthetics <code>tooltip</code>, <code>data_id</code> and <code>onclick</code> to create interactive elements.</li>
 <li>Call function <code>girafe</code> with the ggplot object so that the graphic is translated as a web interactive graphics.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://davidgohel.github.io/ggiraph/">ggiraph</a></span><span class="op">)</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span>
-<span class="va">data</span><span class="op">$</span><span class="va">carname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-
-<span class="va">gg_point</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="reference/geom_point_interactive.html">geom_point_interactive</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">qsec</span>, color <span class="op">=</span> <span class="va">disp</span>,
-    tooltip <span class="op">=</span> <span class="va">carname</span>, data_id <span class="op">=</span> <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu"><a href="reference/girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg_point</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://davidgohel.github.io/ggiraph/" class="external-link">ggiraph</a></span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span>
+<span><span class="va">data</span><span class="op">$</span><span class="va">carname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gg_point</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="reference/geom_point_interactive.html">geom_point_interactive</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">qsec</span>, color <span class="op">=</span> <span class="va">disp</span>,</span>
+<span>    tooltip <span class="op">=</span> <span class="va">carname</span>, data_id <span class="op">=</span> <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg_point</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="with-shiny" class="section level3">
-<h3 class="hasAnchor">
-<a href="#with-shiny" class="anchor"></a>With Shiny</h3>
+<div class="section level3">
+<h3 id="with-shiny">With Shiny<a class="anchor" aria-label="anchor" href="#with-shiny"></a>
+</h3>
 <ul>
 <li>If used within a shiny application, elements associated with an id (<code>data_id</code>) can be selected and manipulated on client and server sides. The list of selected values will be stored in in a reactive value named <code>[shiny_id]_selected</code>.</li>
 </ul>
 <p><img src="reference/figures/shiny_girafe.png"></p>
 </div>
-<div id="available-interactive-layers" class="section level3">
-<h3 class="hasAnchor">
-<a href="#available-interactive-layers" class="anchor"></a>Available interactive layers</h3>
-<p>They are several available interactive geometries, scales and other ggplot elements. Almost all ggplot2 elements can be made interactive with <a href="https://davidgohel.github.io/ggiraph/">ggiraph</a>. They are all based on their ggplot version, same goes for scales and the few guides: <code><a href="reference/geom_point_interactive.html">geom_point_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_col_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_tile_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_fill_manual_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_discrete_manual_interactive()</a></code>, <code><a href="reference/guide_legend_interactive.html">guide_legend_interactive()</a></code>, …</p>
+<div class="section level3">
+<h3 id="available-interactive-layers">Available interactive layers<a class="anchor" aria-label="anchor" href="#available-interactive-layers"></a>
+</h3>
+<p>They are several available interactive geometries, scales and other ggplot elements. Almost all ggplot2 elements can be made interactive with <a href="https://davidgohel.github.io/ggiraph/" class="external-link">ggiraph</a>. They are all based on their ggplot version, same goes for scales and the few guides: <code><a href="reference/geom_point_interactive.html">geom_point_interactive()</a></code>, <code><a href="reference/geom_bar_interactive.html">geom_col_interactive()</a></code>, <code><a href="reference/geom_rect_interactive.html">geom_tile_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_fill_manual_interactive()</a></code>, <code><a href="reference/scale_manual_interactive.html">scale_discrete_manual_interactive()</a></code>, <code><a href="reference/guide_legend_interactive.html">guide_legend_interactive()</a></code>, …</p>
 <p>You can also make interactive annotations, titles and facets (see <code><a href="reference/interactive_parameters.html">help(interactive_parameters)</a></code>).</p>
 </div>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <blockquote>
 <p>Get development version on github</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'davidgohel/ggiraph'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'davidgohel/ggiraph'</span><span class="op">)</span></span></code></pre></div>
 <blockquote>
 <p>Get CRAN version</p>
 </blockquote>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggiraph"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggiraph"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="resources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#resources" class="anchor"></a>Resources</h2>
-<div id="online-documentation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#online-documentation" class="anchor"></a>Online documentation</h3>
-<p>The help pages are located at <a href="https://davidgohel.github.io/ggiraph/" class="uri">https://davidgohel.github.io/ggiraph/</a>.</p>
+<div class="section level2">
+<h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
+</h2>
+<div class="section level3">
+<h3 id="online-documentation">Online documentation<a class="anchor" aria-label="anchor" href="#online-documentation"></a>
+</h3>
+<p>The help pages are located at <a href="https://davidgohel.github.io/ggiraph/" class="external-link uri">https://davidgohel.github.io/ggiraph/</a>.</p>
 </div>
-<div id="getting-help" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getting-help" class="anchor"></a>Getting help</h3>
-<p>If you have questions about how to use the package, visit Stackoverflow and use tags <code>ggiraph</code> and <code>r</code> <a href="https://stackoverflow.com/questions/tagged/ggiraph+r">Stackoverflow link</a>! We usually read them and answer when possible.</p>
+<div class="section level3">
+<h3 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h3>
+<p>If you have questions about how to use the package, visit Stackoverflow and use tags <code>ggiraph</code> and <code>r</code> <a href="https://stackoverflow.com/questions/tagged/ggiraph+r" class="external-link">Stackoverflow link</a>! We usually read them and answer when possible.</p>
 </div>
 </div>
-<div id="contributing-to-the-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing-to-the-package" class="anchor"></a>Contributing to the package</h2>
-<div id="bug-reports" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bug-reports" class="anchor"></a>Bug reports</h3>
-<p>When you file a <a href="https://github.com/davidgohel/ggiraph/issues">bug report</a>, please spend some time making it easy for me to follow and reproduce. The more time you spend on making the bug report coherent, the more time I can dedicate to investigate the bug as opposed to the bug report.</p>
+<div class="section level2">
+<h2 id="contributing-to-the-package">Contributing to the package<a class="anchor" aria-label="anchor" href="#contributing-to-the-package"></a>
+</h2>
+<div class="section level3">
+<h3 id="bug-reports">Bug reports<a class="anchor" aria-label="anchor" href="#bug-reports"></a>
+</h3>
+<p>When you file a <a href="https://github.com/davidgohel/ggiraph/issues" class="external-link">bug report</a>, please spend some time making it easy for me to follow and reproduce. The more time you spend on making the bug report coherent, the more time I can dedicate to investigate the bug as opposed to the bug report.</p>
 </div>
-<div id="contributing-to-the-package-development" class="section level3">
-<h3 class="hasAnchor">
-<a href="#contributing-to-the-package-development" class="anchor"></a>Contributing to the package development</h3>
+<div class="section level3">
+<h3 id="contributing-to-the-package-development">Contributing to the package development<a class="anchor" aria-label="anchor" href="#contributing-to-the-package-development"></a>
+</h3>
 <p>A great way to start is to contribute an example or improve the documentation.</p>
 <p>If you want to submit a Pull Request to integrate functions of yours, provide if possible:</p>
 <ul>
 <li>the new function(s) with code and roxygen tags (with examples)</li>
 <li>a new section in the appropriate vignette that describes how to use the new function</li>
-<li>corresponding tests in directory <code>tests/testthat</code>.</li>
+<li>corresponding tests in directory <code>inst/tinytest</code>.</li>
 </ul>
-<p>By using rhub (run <code>rhub::check_for_cran()</code>), you will see if everything is ok. When submitted, the PR will be evaluated automatically on travis and appveyor and you will be able to see if something broke.</p>
+<p>By using rhub (run <code>rhub::check_for_cran()</code>), you will see if everything is ok. When submitted, the PR will be evaluated automatically with Github Action and you will be able to see if something broke.</p>
 </div>
 </div>
 
@@ -210,32 +212,41 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ggiraph">https://​cloud.r-project.org/​package=ggiraph</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/davidgohel/ggiraph/">https://​github.com/​davidgohel/​ggiraph/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/davidgohel/ggiraph/issues">https://​github.com/​davidgohel/​ggiraph/​issues</a>
-</li>
-<li>Visit <a href="https://www.ardata.fr"><img alt="ardata" src="https://www.ardata.fr/img/ardata-logo.svg" width="70"></a> website at <br><a href="https://www.ardata.fr">https://​www.ardata.fr</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=ggiraph" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/davidgohel/ggiraph/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/davidgohel/ggiraph/issues" class="external-link">Report a bug</a></li>
+<li>
+<a href="https://www.ardata.fr" class="external-link">Visit </a><a href="https://www.ardata.fr" class="external-link"><img alt="ardata" src="https://www.ardata.fr/img/ardata-logo.svg" width="70"></a> website</li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing ggiraph</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>David Gohel <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Panagiotis Skintzos <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
@@ -243,26 +254,20 @@
 
       <footer><link href="ardata.css" rel="stylesheet">
 <div class="author">
-  <p>Version 0.7.10 - Developed by David Gohel, Panagiotis Skintzos - proudly brought to you by <a href="http://www.ardata.fr"><img alt="ardata" src="ardata-logo.svg" style="vertical-align:middle;height:24px;"></a>
+  <p>Version 0.8.4 - Developed by  - proudly brought to you by <a href="http://www.ardata.fr" class="external-link"><img alt="ardata" src="ardata-logo.svg" style="vertical-align:middle;height:24px;"></a>
   </p>
 </div>
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> .</p>
 </div>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-48354045-1', 'auto');
-  ga('send', 'pageview');
-</script></footer>
+      </footer>
 </div>
 
   
 
+
+  
 
   </body>
 </html>
