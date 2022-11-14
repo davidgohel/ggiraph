@@ -9,12 +9,27 @@ vignette: >
 
 ```{r include=FALSE}
 library(knitr)
+library(htmltools)
+library(usefonts)
+library(ggplot2)
+library(ggiraph)
 opts_chunk$set(message=FALSE)
-source("scripts/fonts.R")
+
+add_font("Open Sans")
+
+set_girafe_defaults(fonts = list(sans = "Open Sans"))
+
+theme_set(
+  theme_minimal(base_family = "Open Sans") +
+    theme(
+      plot.background	= element_blank(),
+      panel.background = element_blank()
+    )
+)
 ```
 
 ```{r echo=FALSE}
-use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
+addFontHtmlDependency(font = "Open Sans")
 ```
 
 You can customize tooltip style, mouse hover effects, toolbar position... 
@@ -32,11 +47,7 @@ gg_scatter <- ggplot(dataset,
     aes(x = disp, y = qsec, tooltip = carname, 
         data_id = carname, color= wt) ) + 
 	geom_point_interactive(size=3) + 
-  labs(title = "mouse over points") + 
-  theme_minimal() + theme(
-    plot.background	= element_blank(),
-    panel.background = element_blank()
-  )
+  labs(title = "mouse over points")
 ```
 
 ## Size options

@@ -9,8 +9,9 @@ vignette: >
 
 ```{r include=FALSE}
 library(knitr)
+library(htmltools)
+library(usefonts)
 opts_chunk$set(message=FALSE)
-source("scripts/fonts.R")
 ```
 
 
@@ -45,20 +46,18 @@ font_family_exists("Open Sans")
 
 To take advantage of "Open Sans", it must be installed on the machine. 
 
-You can also use fonts without installing them. You need to have the woff or ttf files. For example, the package [gfonts](https://dreamrs.github.io/gfonts/) will allow us to use the "Open Sans" font from "Google Fonts". 
+You can also use fonts without installing them. You need to have the ttf files. For example, the package [usefonts](https://github.com/ardata-fr/usefonts/) allows us to use the "Open Sans" font. 
 
 ```{r}
-library(gfonts)
+# remotes::install_github("ardata-fr/usefonts")
+library(usefonts)
 ```
 
-The following code allows to download the fonts in a `fonts` directory.
+The following code allows to register a font that can then be used 
+by 'ggiraph' graphic engine.
 
 ```{r eval=FALSE}
-setup_font(
-  id = "open-sans", 
-  output_dir = "fonts", 
-  variants = c("regular", "italic", "700", "700italic"), 
-  prefer_local_source = FALSE)
+add_font("Open Sans")
 ```
 
 The following code embeds the font in the HTML document and ensures that the
@@ -67,29 +66,23 @@ installed on his machine. If you want to do that by hand, you will need to learn
 how to create a CSS "font-face".
 
 ```{r}
-use_font("open-sans", "fonts/css/open-sans.css", selector = ".dummy-selector")
+addFontHtmlDependency(font = "Open Sans")
 ```
 
-Now, we also need to use `systemfonts::register_font()` to allow the use of this
-font by ggiraph when creating the SVG file. `systemfonts` is now used for font
+`add_font()` use `systemfonts::register_font()` to allow the use of a
+font by ggiraph when creating the SVG file. `systemfonts` is can be used for font
 management. Read systemfonts documentation if you need more details.
 
-```{r}
+```{r eval=FALSE}
 library(systemfonts)
 if(!font_family_exists("Open Sans")){
   register_font(name = "Open Sans", 
-    plain = list("fonts/fonts/open-sans-v18-latin-regular.woff", 0), 
-    bold = list("fonts/fonts/open-sans-v18-latin-700.woff", 0), 
-    italic = list("fonts/fonts/open-sans-v18-latin-italic.woff", 0),
-    bolditalic = list("fonts/fonts/open-sans-v18-latin-700italic.woff", 0)
+    plain = list("fonts/open-sans-v18-latin-regular.woff", 0), 
+    bold = list("fonts/open-sans-v18-latin-700.woff", 0), 
+    italic = list("fonts/open-sans-v18-latin-italic.woff", 0),
+    bolditalic = list("fonts/open-sans-v18-latin-700italic.woff", 0)
   )
 }
-```
-
-And that's it, "Open Sans" can be used: 
-
-```{r}
-font_family_exists("Open Sans")
 ```
 
 ## Font usage
@@ -124,43 +117,18 @@ ggiraph(ggobj = gg)
 
 ## Complex example
 
-Download fonts with `gfonts` and register the fonts with `systemfonts::register_font()`:
+Register the fonts with `add_font()`:
 
-```{r eval=FALSE}
-setup_font(
-  id = "comic-neue", output_dir = "fonts",
-  variants = c("regular", "italic", "700", "700italic"),
-  prefer_local_source = FALSE
-)
-
-register_font(
-  name = "Comic Neue",
-  plain = list("fonts/fonts/comic-neue-v2-latin-regular.woff", 0),
-  bold = list("fonts/fonts/comic-neue-v2-latin-700.woff", 0),
-  italic = list("fonts/fonts/comic-neue-v2-latin-italic.woff", 0),
-  bolditalic = list("fonts/fonts/comic-neue-v2-latin-700italic.woff", 0)
-)
-
-setup_font(
-  id = "roboto", output_dir = "fonts",
-  variants = c("regular", "italic", "700", "700italic"),
-  prefer_local_source = FALSE
-)
-
-register_font(
-  name = "Roboto",
-  plain = list("fonts/fonts/roboto-v27-latin-regular.woff", 0),
-  bold = list("fonts/fonts/roboto-v27-latin-700.woff", 0),
-  italic = list("fonts/fonts/roboto-v27-latin-italic.woff", 0),
-  bolditalic = list("fonts/fonts/roboto-v27-latin-700italic.woff", 0)
-)
+```{r}
+add_font("Roboto")
+add_font("Fira Code")
 ```
 
 Add the fonts in the R markdown HTML result.
 
-```{r}
-use_font("comic-neue", "fonts/css/comic-neue.css", selector = ".dummy-selector")
-use_font("roboto", "fonts/css/roboto.css", selector = ".dummy-selector")
+```{r echo=FALSE}
+addFontHtmlDependency(font = "Roboto")
+addFontHtmlDependency(font = "Fira Code")
 ```
 
 Create the graphic and use fonts:
@@ -168,9 +136,9 @@ Create the graphic and use fonts:
 ```{r}
 gg <- ggplot(dat, aes(drat, carname)) + 
   geom_point() + 
-  geom_text(data = dat[1:3,], aes(label = carname), color="orange", family = "Comic Neue")+
+  geom_text(data = dat[1:3,], aes(label = carname), color="orange", size = 5, family = "Fira Code")+
   theme_minimal(base_family = "sans") + 
-  theme(axis.title = element_text(family = "Roboto", face = "bold"),
+  theme(axis.title = element_text(family = "Roboto"),
         axis.text.x = element_text(face = "italic"),
         axis.text.y = element_text(face = "bold")
         ) 
@@ -188,11 +156,10 @@ library(systemfonts)
 library(ggiraph)
 library(ggplot2)
 library(shiny)
-
+library(gfonts)
 
 if (!dir.exists("www")) {
   dir.create("www")
-  library(gfonts)
   setup_font(
     id = "ms-madi",
     output_dir = "www",
