@@ -618,10 +618,7 @@ merge_options <- function(options, args){
 
 merge_sizing_policy <- function(policy, args) {
   for (arg in args) {
-    if (is.list(arg) && all(names(arg) %in% c(
-      "defaultWidth", "defaultHeight", "padding",
-      "viewer", "browser", "knitr"
-    ))) {
+    if (is.list(arg) && all(names(arg) %in% names(htmlwidgets::sizingPolicy()))) {
       policy <- arg
     }
   }
