@@ -1,3 +1,15 @@
+# ggiraph 0.8.6
+
+## Issues
+
+- Fix missing inclusion of <cstdint> in `src/raster.cpp`.
+
+# ggiraph 0.8.5
+
+## Issues
+
+- Make girafe_options() more robust to changes in htmlwidgets::sizingPolicy()
+
 # ggiraph 0.8.4
 
 ## Enhancement

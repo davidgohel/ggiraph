@@ -6,6 +6,7 @@
 extern "C" {
 #include <png.h>
 }
+#include <cstdint>
 
 static const char encode_lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static const char pad_character = '=';
