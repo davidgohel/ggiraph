@@ -41,6 +41,7 @@ jobs:
           remotes::install_github("ardata-fr/pkgardata")
         shell: Rscript {0}
 
+
       - name: "Install 'Google Fonts'"
         run: |
           fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Open Sans'))")
