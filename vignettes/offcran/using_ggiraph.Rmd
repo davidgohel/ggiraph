@@ -12,21 +12,28 @@ vignette: >
 
 ```{r include=FALSE}
 library(knitr)
-opts_chunk$set(message=FALSE, fig.width=8, fig.height = 6)
-library(usefonts)
 library(ggiraph)
 library(ggplot2)
-add_font("Open Sans")
-set_girafe_defaults(fonts = list(sans = "Open Sans"))
-theme_set(
-  theme_minimal(base_family = "Open Sans")
-)
+opts_chunk$set(message=FALSE, eval=require("gdtools", quietly = TRUE))
 ```
-
 
 ```{r echo=FALSE}
-addFontHtmlDependency(font = "Open Sans")
+if (require("gdtools", quietly = TRUE)) {
+  register_gfont("Open Sans")
+
+set_girafe_defaults(fonts = list(sans = "Open Sans"))
+
+theme_set(
+  theme_minimal(base_family = "Open Sans") +
+    theme(
+      plot.background	= element_blank(),
+      panel.background = element_blank()
+    )
+)
+}
+addGFontHtmlDependency(family = "Open Sans")
 ```
+
 The **ggiraph** package let R users make **ggplot interactive**. The package 
 is an htmlwidget. The following graphic is produced by calling `girafe()` function 
 with a `ggplot` object.

@@ -10,12 +10,14 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 library(htmltools)
-library(usefonts)
 library(ggplot2)
 library(ggiraph)
-opts_chunk$set(message=FALSE)
+opts_chunk$set(message=FALSE, eval=require("gdtools", quietly = TRUE))
+```
 
-add_font("Open Sans")
+```{r echo=FALSE}
+if (require("gdtools", quietly = TRUE)) {
+  register_gfont("Open Sans")
 
 set_girafe_defaults(fonts = list(sans = "Open Sans"))
 
@@ -26,11 +28,10 @@ theme_set(
       panel.background = element_blank()
     )
 )
+}
+addGFontHtmlDependency(family = "Open Sans")
 ```
 
-```{r echo=FALSE}
-addFontHtmlDependency(font = "Open Sans")
-```
 
 You can customize tooltip style, mouse hover effects, toolbar position... 
 This requires usage of `css` instructions and options. The function `girafe` has 
