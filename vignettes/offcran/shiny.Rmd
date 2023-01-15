@@ -10,9 +10,26 @@ vignette: >
 
 ```{r include=FALSE}
 library(knitr)
-library(usefonts)
-add_font("Open Sans")
-opts_chunk$set(message=FALSE)
+library(ggplot2)
+library(ggiraph)
+opts_chunk$set(message=FALSE, eval=require("gdtools", quietly = TRUE))
+```
+
+```{r echo=FALSE}
+if (require("gdtools", quietly = TRUE)) {
+  register_gfont("Open Sans")
+
+set_girafe_defaults(fonts = list(sans = "Open Sans"))
+
+theme_set(
+  theme_minimal(base_family = "Open Sans") +
+    theme(
+      plot.background	= element_blank(),
+      panel.background = element_blank()
+    )
+)
+}
+addGFontHtmlDependency(family = "Open Sans")
 ```
 
 A major advantage of `{ggiraph}` used in a shiny application is the ability to

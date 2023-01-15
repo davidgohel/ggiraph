@@ -11,6 +11,7 @@ jobs:
     if: "contains(github.event.head_commit.message, 'sitedeploy')"
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GDTOOLS_CACHE_DIR: "/usr/share/fonts/gfonts/"
     steps:
       - uses: actions/checkout@v2
 
@@ -23,17 +24,35 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: >
-            any::rcmdcheck
-          needs: check
+          extra-packages: |
+            any::cowplot
+            any::patchwork
+            any::ggtext
+            any::pkgdown
+            any::data.table
+            any::charlatan
+            any::tidyverse
+            any::ggthemes
+            any::remotes
 
       - name: Install other dependencies
         run: |
-          install.packages("remotes")
-          remotes::install_cran(c("pkgdown", "cowplot", "patchwork", "data.table", "charlatan", "tidyverse", "ggthemes", "ggtext"))
+          remotes::install_github("ardata-fr/gdtools")
           remotes::install_github("ardata-fr/pkgardata")
-          remotes::install_github("ardata-fr/usefonts")
         shell: Rscript {0}
+
+      - name: "Install 'Google Fonts'"
+        run: |
+          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Open Sans'))")
+          sudo -s eval "$fontreq"
+          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Roboto'))")
+          sudo -s eval "$fontreq"
+          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Fira Code'))")
+          sudo -s eval "$fontreq"
+          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Ms Madi'))")
+          sudo -s eval "$fontreq"
+        shell: bash
+
 
       - name: Install package
         run: R CMD INSTALL .

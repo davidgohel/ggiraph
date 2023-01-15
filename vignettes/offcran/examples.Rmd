@@ -13,11 +13,14 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 library(htmltools)
-library(usefonts)
 library(ggplot2)
 library(ggiraph)
-opts_chunk$set(message=FALSE)
-add_font("Open Sans")
+opts_chunk$set(message=FALSE, eval=require("gdtools", quietly = TRUE))
+```
+
+```{r echo=FALSE}
+if (require("gdtools", quietly = TRUE)) {
+  register_gfont("Open Sans")
 
 set_girafe_defaults(fonts = list(sans = "Open Sans"))
 
@@ -28,10 +31,8 @@ theme_set(
       panel.background = element_blank()
     )
 )
-```
-
-```{r echo=FALSE}
-addFontHtmlDependency(font = "Open Sans")
+}
+addGFontHtmlDependency(family = "Open Sans")
 ```
 
 ## Arrange multiple plots into a grid 

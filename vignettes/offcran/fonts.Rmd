@@ -10,8 +10,26 @@ vignette: >
 ```{r include=FALSE}
 library(knitr)
 library(htmltools)
-library(usefonts)
-opts_chunk$set(message=FALSE)
+library(ggplot2)
+library(ggiraph)
+opts_chunk$set(message=FALSE, eval=require("gdtools", quietly = TRUE))
+```
+
+```{r echo=FALSE}
+if (require("gdtools", quietly = TRUE)) {
+  register_gfont("Open Sans")
+
+set_girafe_defaults(fonts = list(sans = "Open Sans"))
+
+theme_set(
+  theme_minimal(base_family = "Open Sans") +
+    theme(
+      plot.background	= element_blank(),
+      panel.background = element_blank()
+    )
+)
+}
+addGFontHtmlDependency(family = "Open Sans")
 ```
 
 
@@ -46,18 +64,17 @@ font_family_exists("Open Sans")
 
 To take advantage of "Open Sans", it must be installed on the machine. 
 
-You can also use fonts without installing them. You need to have the ttf files. For example, the package [usefonts](https://github.com/ardata-fr/usefonts/) allows us to use the "Open Sans" font. 
+You can also use fonts without installing them. You need to have the ttf files. For example, the package [gdtools](https://cran.r-project.org/package=gdtools) allows to use any 'Google Fonts', here the "Open Sans" font. 
 
 ```{r}
-# remotes::install_github("ardata-fr/usefonts")
-library(usefonts)
+library(gdtools)
 ```
 
 The following code allows to register a font that can then be used 
 by 'ggiraph' graphic engine.
 
 ```{r eval=FALSE}
-add_font("Open Sans")
+register_gfont("Open Sans")
 ```
 
 The following code embeds the font in the HTML document and ensures that the
@@ -66,10 +83,10 @@ installed on his machine. If you want to do that by hand, you will need to learn
 how to create a CSS "font-face".
 
 ```{r}
-addFontHtmlDependency(font = "Open Sans")
+addGFontHtmlDependency(family = "Open Sans")
 ```
 
-`add_font()` use `systemfonts::register_font()` to allow the use of a
+`register_gfont()` use `systemfonts::register_font()` to allow the use of a
 font by ggiraph when creating the SVG file. `systemfonts` is can be used for font
 management. Read systemfonts documentation if you need more details.
 
@@ -120,15 +137,14 @@ ggiraph(ggobj = gg)
 Register the fonts with `add_font()`:
 
 ```{r}
-add_font("Roboto")
-add_font("Fira Code")
+register_gfont("Roboto")
+register_gfont("Fira Code")
 ```
 
 Add the fonts in the R markdown HTML result.
 
-```{r echo=FALSE}
-addFontHtmlDependency(font = "Roboto")
-addFontHtmlDependency(font = "Fira Code")
+```{r}
+addGFontHtmlDependency(family = c("Roboto", "Fira Code"))
 ```
 
 Create the graphic and use fonts:
@@ -152,66 +168,34 @@ Below an example of a simple shiny application that
 use a specific font and embed it in the application.
 
 ```{r eval=FALSE}
-library(systemfonts)
 library(ggiraph)
 library(ggplot2)
 library(shiny)
-library(gfonts)
+library(gdtools)
 
-if (!dir.exists("www")) {
-  dir.create("www")
-  setup_font(
-    id = "ms-madi",
-    output_dir = "www",
-    variants = "regular",
-    prefer_local_source = FALSE)
-}
-
-if(!font_family_exists("Ms Madi")){
-  register_font(name = "Ms Madi",
-                plain = list("www/fonts/ms-madi-v2-latin-regular.woff", 0)
-  )
-}
+register_gfont("Ms Madi")
 
 ui <- fluidPage(
-
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("num_rows",
-                        "Number of rows:",
-                        min = 15,
-                        max = 32,
-                        value = 20),
-            verbatimTextOutput("verbat")
-        ),
-
-        mainPanel(
-          tags$link(
-            rel = "stylesheet",
-            href="css/ms-madi.css"
-          ),
-          girafeOutput("custofontplot")
-        )
-    )
+  sidebarLayout(
+    sidebarPanel(
+      addGFontHtmlDependency(family = c("Ms Madi")),
+      sliderInput("num_rows", "Number of rows:",
+        min = 15, max = 32, value = 20)
+    ),
+    mainPanel(girafeOutput("custofontplot"))
+  )
 )
 
 server <- function(input, output) {
+  output$custofontplot <- renderGirafe({
+    dat <- mtcars[seq_len(input$num_rows), ]
+    dat$carname <- row.names(dat)
+    gg <- ggplot(dat, aes(drat, carname)) +
+      geom_point() +
+      theme_minimal(base_family = "Ms Madi")
 
-    output$custofontplot <- renderGirafe({
-        # generate bins based on input$bins from ui.R
-      dat <- mtcars[seq_len(input$num_rows),]
-      dat$carname <- row.names(dat)
-
-      gg <- ggplot(dat, aes(drat, carname)) +
-        geom_point() +
-        theme_minimal(base_family = "Ms Madi")
-
-      girafe(ggobj = gg)
-    })
-
-    output$verbat <- renderPrint({
-      fs::dir_tree(".")
-    })
+    girafe(ggobj = gg)
+  })
 }
 
 # Run the application
