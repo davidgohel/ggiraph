@@ -38,6 +38,7 @@
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param options a list of options for girafe rendering, see
 #' [opts_tooltip()], [opts_hover()], [opts_selection()], ...
+#' @param dependencies Additional widget HTML dependencies, see [htmlwidgets::createWidget()].
 #' @param ... arguments passed on to [dsvg()]
 #' @examples
 #' library(ggplot2)
@@ -92,7 +93,7 @@
 girafe <- function(
   code, ggobj = NULL,  pointsize = 12,
   width_svg = NULL, height_svg = NULL,
-  options = list(), ...) {
+  options = list(), dependencies = NULL, ...) {
 
   path = tempfile()
 
@@ -147,7 +148,8 @@ girafe <- function(
 
   createWidget(
     name = 'girafe', x = x, package = 'ggiraph',
-    sizingPolicy = sizing_policy
+    sizingPolicy = sizing_policy,
+    dependencies = dependencies
   )
 
 }

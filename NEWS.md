@@ -1,5 +1,10 @@
 # ggiraph 0.8.6
 
+## features
+
+- Function `girafe()` gains new argument `dependencies` that pass additional
+widget HTML dependencies to `htmlwidgets::createWidget()`.
+
 ## Issues
 
 - Fix missing inclusion of <cstdint> in `src/raster.cpp`.

@@ -11,6 +11,7 @@ girafe(
   width_svg = NULL,
   height_svg = NULL,
   options = list(),
+  dependencies = NULL,
   ...
 )
 }
@@ -32,6 +33,8 @@ options \code{fig.width} and \code{fig.height} are used instead.}
 
 \item{options}{a list of options for girafe rendering, see
 \code{\link[=opts_tooltip]{opts_tooltip()}}, \code{\link[=opts_hover]{opts_hover()}}, \code{\link[=opts_selection]{opts_selection()}}, ...}
+
+\item{dependencies}{Additional widget HTML dependencies, see \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}.}
 
 \item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
 }
