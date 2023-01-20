@@ -1,6 +1,6 @@
 ## Test environments
 
-* local R installation, R 4.2.0
+* local R installation, R 4.2.2
 * Ubuntu, mac-os and windows with R release
 * win-builder (older, release and devel)
 
