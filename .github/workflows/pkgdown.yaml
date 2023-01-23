@@ -28,6 +28,7 @@ jobs:
           extra-packages: >
             any::rcmdcheck
           needs: check
+          working-directory: vignettes/book/
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
