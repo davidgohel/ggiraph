@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Ms Madi';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/ms-madi-v2-latin-ext_latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''), local(''),
+       url('../fonts/ms-madi-v2-latin-ext_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/ms-madi-v2-latin-ext_latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/ms-madi-v2-latin-ext_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/ms-madi-v2-latin-ext_latin-regular.svg#\1') format('svg'); /* Legacy iOS */
+}

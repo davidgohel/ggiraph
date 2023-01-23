@@ -1,0 +1,247 @@
+[
+  {
+    "objectID": "index.html#what-is-ggiraph",
+    "href": "index.html#what-is-ggiraph",
+    "title": "ggiraph-book",
+    "section": "What is ‘ggiraph’",
+    "text": "What is ‘ggiraph’\nThe ‘ggiraph’ package lets you create dynamic and interactive graphics:\n\ndynamic with animations and tooltips in HTML documents produced by Quarto or ‘R Markdown’,\ninteractive in ‘shiny’ applications where events/interactions with ggiraph graphic are made available as reactive values.\n\nPackage ‘ggiraph’ is a ‘ggplot2’ extension, you can use your ‘ggplot’ skills but must only use functions whose names are ‘ggplot’ functions suffixed with ’_interactive’.\nThe package is also containing an R graphic device dedicated to SVG, it’s beeing used to produce ‘ggiraph’ graphics but can be used to produce standard SVG graphics.\n‘ggiraph’ is an ‘htmlwidget’ and a ‘ggplot2’ extension. Its main purpose is to work easily in ‘shiny’ applications and HTML documents produced with ‘R Markdown’ and ‘Quarto’."
+  },
+  {
+    "objectID": "index.html#why-using-ggiraph",
+    "href": "index.html#why-using-ggiraph",
+    "title": "ggiraph-book",
+    "section": "Why using ‘ggiraph’",
+    "text": "Why using ‘ggiraph’\n\nYou want to provide your readers with more information than the basic information available; you can display a tooltip when the user’s mouse is on a graphical element, you can also visually animate elements with the same attribute when the mouse passes over a graphical element, and finally you can link a JavaScript action to the click, such as opening a hypertext link.\nYou want to allow users of a Shiny application to select graphical elements; for example, you can make the points of a scatter plot selectable and available as a reactive value from the server part of your application. With Shiny, ‘ggiraph’ allows interaction with graph elements, legends elements, titles and ggplot theme elements from the server part; each selection is available as a reactive value."
+  },
+  {
+    "objectID": "index.html#dow-does-it-work",
+    "href": "index.html#dow-does-it-work",
+    "title": "ggiraph-book",
+    "section": "Dow does it work",
+    "text": "Dow does it work\nIt extends ggplot2 with:\n\ninteractive geom functions: geom_point_interactive(), geom_col_interactive, etc.\ninteractive scale functions: scale_color_continuous_interactive(), scale_fill_manual_interactive(), etc.\ninteractive facet functions: facet_wrap_interactive() and facet_grid_interactive() that both work with labeller_interactive().\ninteractive guide functions: guide_colorbar_interactive(), guide_colourbar_interactive(), guide_legend_interactive().\ninteractive theme elements: element_line_interactive(), element_rect_interactive(), element_text_interactive(), label_interactive.\n\nThese understand three main aesthetics to let you add interactivity:\n\ntooltip: column of dataset that contains tooltips to be displayed when mouse is over elements.\ndata_id: column of dataset that contains id to be associated with elements. This aesthetic is mandatory when you want to use an hover effect or when you want to enable selection of points in shiny applications.\nonclick: column of dataset that contains javascript function to be executed when elements are clicked.\n\nLet’s prepare a ggplot object with the mpg dataset.\n\nlibrary(ggplot2)\nlibrary(ggiraph)\ng <- ggplot(mpg, aes(x = displ, y = cty))\n\nThe first example shows how to add a tooltip:\n\nmy_gg <- g + \n  geom_point_interactive(aes(tooltip = model, data_id = model), \n    size = 3, hover_nearest = TRUE)\ngirafe(ggobj = my_gg)"
+  },
+  {
+    "objectID": "starting.html#interactive-geoms",
+    "href": "starting.html#interactive-geoms",
+    "title": "1  Start with ggiraph",
+    "section": "1.1 Interactive geoms",
+    "text": "1.1 Interactive geoms\nThe following example use column ‘carname’ as tooltip value and as identifier for animations. The following ‘ggiraph’ features are used: - Elements associated with a tooltip are animated upon mouse over with the corresponding tooltip. - Elements associated with a data_id are animated upon mouse over. Note that data_id can also be reused within a shiny application as a reactive value. - Option hover_nearest=TRUE makes the hover effect applied on the nearest element while moving the mouse (in this case it is mandatory to also set the data_id parameter).\n\nlibrary(ggiraph)\nlibrary(tidyverse)\n\nmtcars_db <- rownames_to_column(mtcars, var = \"carname\")\n\ngg <- ggplot(\n  data = mtcars_db,\n  mapping = aes(\n    x = disp, y = qsec,\n    # here we add iteractive aesthetics\n    tooltip = carname, data_id = carname\n  )\n) +\n  geom_point_interactive(\n    size = 3, hover_nearest = TRUE\n  )\n\n# turn as girafe\ngirafe(ggobj = gg)\n\n\n\n\n\nThe same principle applies to all usual ggplot geometries. Let’s illustrate now with an interactive bar chart. The bars are animated according to their values in column ‘cut’.\n\np1 <- ggplot(\n  data = diamonds,\n  mapping = aes(x = color, fill = cut, data_id = cut)\n) +\n  geom_bar_interactive(\n    aes(tooltip = sprintf(\"%s: %.0f\", fill, after_stat(count))),\n    size = 3\n  )\n\ngirafe(ggobj = p1)"
+  },
+  {
+    "objectID": "starting.html#interactive-scales",
+    "href": "starting.html#interactive-scales",
+    "title": "1  Start with ggiraph",
+    "section": "1.2 Interactive scales",
+    "text": "1.2 Interactive scales\nScales can also be made interactive with many ‘scale’ functions, for example scale_fill_manual_interactive():\n\np1 <- p1 + scale_fill_manual_interactive(\n  values = c(\n    Fair = \"#0072B2\", Good = \"#009E73\",\n    \"Very Good\" = \"yellow\", \"Premium\" = \"orange\",\n    \"Ideal\" = \"red\"\n  ),\n  data_id = function(x) x, tooltip = function(x) x\n)\n\ngirafe(ggobj = p1)"
+  },
+  {
+    "objectID": "starting.html#interactive-faceting",
+    "href": "starting.html#interactive-faceting",
+    "title": "1  Start with ggiraph",
+    "section": "1.3 Interactive faceting",
+    "text": "1.3 Interactive faceting\nBy using facet_wrap_interactive() and labeller_interactive, it is possible to make the strips interactive.\nThe following code add interactivity on text of strips instead of background of strips because we use the transparent theme.\n\np2 <- p1 + facet_wrap_interactive(\n  ncol = 2, interactive_on = \"text\",\n  vars(clarity),\n  labeller = labeller_interactive(aes(\n    tooltip = paste(\"this is clarity\", clarity), data_id = clarity\n  ))\n)\n\ngirafe(ggobj = p2)\n\n\n\n\n\nThis feature is handy in shiny applications where users can click on a strip to operate calculations only on the corresponding subset."
+  },
+  {
+    "objectID": "starting.html#interactive-themes",
+    "href": "starting.html#interactive-themes",
+    "title": "1  Start with ggiraph",
+    "section": "1.4 Interactive themes",
+    "text": "1.4 Interactive themes\n\np2 <- p1 + labs(title = \"This is an interactive title\") +\n  theme(\n    plot.title = element_text_interactive(\n      data_id = \"plot.title\",\n      tooltip = \"plot title\",\n      hover_css = \"fill:red;stroke:none;\"\n    )\n  )\ngirafe(\n  ggobj = p2,\n  options = list(opts_toolbar(saveaspng = FALSE), opts_zoom(max = 1))\n)"
+  },
+  {
+    "objectID": "starting.html#click-actions-with-javascript",
+    "href": "starting.html#click-actions-with-javascript",
+    "title": "1  Start with ggiraph",
+    "section": "1.5 Click actions with JavaScript",
+    "text": "1.5 Click actions with JavaScript\nClick actions must be a string column in the dataset containing valid javascript instructions. The onclick argument can be used to specify a JavaScript function that should be executed when a point, bar or any graphical element is clicked.\nHere is an example of how you might use the onclick argument in the ggiraph package:\n\nlibrary(flextable)\nlibrary(ggiraph)\ncrimes <- readRDS(file = \"data/crimes.RDS\")\ncrimes\n\n\nMurderAssaultUrbanPopRapestatenumericintegerintegernumericcharacter13.22365821.2alabama...10.02634844.5alaska...8.12948031.0arizona...8.81905019.5arkansas...9.02769140.6california...7.92047838.7colorado...3.31107711.1connecticut...5.92387215.8delaware...15.43358031.9florida...17.42116025.8georgia...n: 50\n\nlibrary(htmltools)\n\ngg_crime <- ggplot(crimes, aes(x = Murder, y = Assault)) +\n  geom_point_interactive(\n    hover_nearest = TRUE,\n    aes(\n      tooltip = state,\n      onclick = sprintf(\"window.open(\\\"http://en.wikipedia.org/wiki/%s\\\")\", state),\n      data_id = state\n    ),\n    size = 3\n  )\n\ngirafe(ggobj = gg_crime)"
+  },
+  {
+    "objectID": "starting.html#events-within-shiny",
+    "href": "starting.html#events-within-shiny",
+    "title": "1  Start with ggiraph",
+    "section": "1.6 Events within shiny",
+    "text": "1.6 Events within shiny\nWhen working with shiny, you can use the data_id aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. This makes it possible to click on an element and trigger an action. ‘ggiraph’ provides a reactive value with click and with hovering actions.\ndata_id aesthetic is a great and easy way to trigger actions when an element such as a point or a region on a map is clicked. The selected data_id for elements in panels, scales and themes are stored in 3 different reactive values. [Read more about shiny integration] in #shiny."
+  },
+  {
+    "objectID": "starting.html#arrange-multiple-plots-into-a-grid",
+    "href": "starting.html#arrange-multiple-plots-into-a-grid",
+    "title": "1  Start with ggiraph",
+    "section": "1.7 Arrange multiple plots into a grid",
+    "text": "1.7 Arrange multiple plots into a grid\nThere are two avalaible options to arrange ggiraph outputs into a grid. As ‘ggiraph’ is a ‘ggplot’ extensions, package cowplot and patchwork can be used seamlessly to arrange plots in a grid before calling girafe().\n\nlibrary(patchwork)\n\nmtcars_db <- mtcars |>\n  rownames_to_column(var = \"carname\")\n\ngg1 <- ggplot(mtcars_db) +\n  geom_point_interactive(\n    aes(\n      x = drat, y = wt, color = qsec,\n      tooltip = carname, data_id = carname\n    ),\n    hover_nearest = TRUE, size = 3\n  )\n\ngg2 <- ggplot(mtcars_db) +\n  geom_point_interactive(\n    aes(\n      x = qsec, y = disp, color = mpg,\n      tooltip = carname, data_id = carname\n    ),\n    hover_nearest = TRUE, size = 3\n  )\n\nMouseover points to see where they are located in the other graph.\n\ngirafe(code = print(gg1 + gg2))"
+  },
+  {
+    "objectID": "ggiraph-simple-use.html",
+    "href": "ggiraph-simple-use.html",
+    "title": "Makes ggplot dynamic",
+    "section": "",
+    "text": "Most users do not want to use shiny but simply add some dynamic effects to their ggplot graphics in order to display some tooltips, and/or add some highlighting effects to the elements under the mouse cursor.\nThis part of the book gives you an overview of the main options available to add dynamic effects to a ‘ggplot’ object and to define overall appearance.\nWe want you to understand:\n\nhow to animate and customize animations in Section 2.3 and tooltips in Section 2.2,\nhow to set up the toolbar in Chapter 5,\nhow to easily manage the fonts used in Chapter 3,\nhow to size the graphic in Chapter 4."
+  },
+  {
+    "objectID": "customize.html#sec-global-opt",
+    "href": "customize.html#sec-global-opt",
+    "title": "2  Customizing girafe animations",
+    "section": "2.1 Global option definition",
+    "text": "2.1 Global option definition\nDefault values are frequently used when creating “girafe” objects. It is recommended to specify them only once in the R session in order to obtain homogeneous interactive graphics.\nWhen a ‘girafe’ is created (when function girafe() is called), some default values are used as the css for hover effects or css for tooltips.\nUser can read them with function get_flextable_defaults().\n\nz <- girafe_defaults()\nz$opts_hover$css\n\n[1] \".hover_data_SVGID_ { fill:#f24f26;stroke:#333333;cursor:pointer; }\\ntext.hover_data_SVGID_ { stroke:none;fill:#f24f26; }\\ncircle.hover_data_SVGID_ { fill:#f24f26;stroke:#333333; }\\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:#f24f26; }\\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:#f24f26;stroke:none; }\\nimage.hover_data_SVGID_ { stroke:#f24f26; }\"\n\n\nThese default properties will be used when creating the graphics. They can be updated with function set_girafe_defaults().\nTo set global options that apply to all graphics and get homogeneous interactive behavior and design, call set_girafe_defaults() at the beginning of your R Markdown document or R script.\n\ncss_default_hover <- girafe_css_bicolor(primary = \"yellow\", secondary = \"red\")\n\nset_girafe_defaults(\n  opts_hover = opts_hover(css = css_default_hover),\n  opts_zoom = opts_zoom(min = 1, max = 4),\n  opts_tooltip = opts_tooltip(css = \"padding:3px;background-color:#333333;color:white;\"),\n  opts_sizing = opts_sizing(rescale = TRUE),\n  opts_toolbar = opts_toolbar(saveaspng = FALSE, position = \"bottom\", delay_mouseout = 5000)\n)\n\ngirafe(ggobj = gg_scatter)"
+  },
+  {
+    "objectID": "customize.html#sec-tooltip-opt",
+    "href": "customize.html#sec-tooltip-opt",
+    "title": "2  Customizing girafe animations",
+    "section": "2.2 Tooltip options",
+    "text": "2.2 Tooltip options\nTooltip visual aspect and position can be defined with function opts_tooltip().\n\n2.2.1 Tooltip position\nThe arguments offx and offy of function opts_tooltip() are used to offset tooltip position. Default offset is 10 pixels horizontally to the mouse position (offx=10) and 0 pixels vertically (offy=0).\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_tooltip(offx = 20, offy = 20)\n  )\n)\n\n\n\n\n\nIf argument use_cursor_pos is set to FALSE, the tooltip will be fixed at offx and offy.\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(opts_tooltip(\n    offx = 60,\n    offy = 60, use_cursor_pos = FALSE\n  ))\n)\n\n\n\n\n\n\n\n2.2.2 Tooltip style\nThe function opts_tooltip() has an argument named css. It can be used to add css declarations to customize tooltip rendering.\n\nEach css declaration includes a property name and an associated value. Property names and values are separated by colons and name-value pairs always end with a semicolon. For example color:gray;text-align:center;. Common properties are :\n\n\n\nbackground-color: background color\ncolor: elements color\nborder-style, border-width, border-color: border properties\nwidth, height: size of tooltip\npadding: space around content\nopacity: background opacity (default to 0.9)\n\n\nLet’s add a pink rectangle with round borders and a few other details to make it nice:\n\ntooltip_css <- \"background-color:#d8118c;color:white;padding:5px;border-radius:3px;\"\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_tooltip(css = tooltip_css, opacity = 1),\n    opts_sizing(width = .7)\n  )\n)\n\n\n\n\n\nDo not surround css value by curly braces, girafe function takes care of that.\n\n\n2.2.3 Auto coloring\nIn function opts_tooltip(), set argument use_fill to TRUE and the background color of tooltip will always use use elements’fill property to color tooltip. Argument use_stroke is to be used to apply the same to the border color of the tooltip.\n\ngirafe(\n  ggobj = gg_scatter + scale_color_viridis_c(),\n  options = list(\n    opts_tooltip(use_fill = TRUE),\n    opts_sizing(width = .7)\n  )\n)\n\n\n\n\n\nPackage ggiraph enable elements to be dynamic when mouse is hovering over them. This is possible when an element is associated with a data_id.\nThe dynamic aspect of elements can be defined with css code by the user. There are several ways to define these settings."
+  },
+  {
+    "objectID": "customize.html#sec-hover-opt",
+    "href": "customize.html#sec-hover-opt",
+    "title": "2  Customizing girafe animations",
+    "section": "2.3 Hover effects",
+    "text": "2.3 Hover effects\nThe elements that are associated with a data_id are animated when the mouse hovers over them. Clicks and hover actions on these elements are also available as reactive values in shiny applications.\nThese animations can be configured using the following functions:\n\nopts_hover() for the animation of panel elements\nopts_hover_key() for the animation of the elements of the legends\nopts_hover_theme() for the animation of the elements of the theme\n\nThese functions all have a css argument that defines via CSS instructions the style to use when the mouse passes over them. css here is relative to SVG elements. SVG attributes are listed here. Common properties are:\n\nfill: background color\nstroke: color\nstroke-width: border width\nr: circle radius (no effect if Firefox is used).\n\nTo fill elements in yellow and add a black stroke, opts_hover call should be used as below:\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_hover(css = \"fill:yellow;stroke:black;stroke-width:3px;\")\n  )\n)\n\n\n\n\n\nAnother option can be used to alter aspect of non hovered elements. It is very useful to highlight hovered elements when the density of the elements is high by fixing less opacity on the other elements.\n\ndat <- readRDS(\"data/species-ts.RDS\")\n\ngg <- ggplot(dat, aes(x = date, y = score, \n                      colour = species, group = species)) +\n  geom_line_interactive(aes(tooltip = species, data_id = species)) +\n  scale_color_viridis_d() + \n  labs(title = \"move mouse over lines\")\n\nx <- girafe(ggobj = gg, width_svg = 8, height_svg = 6,\n  options = list(\n    opts_hover_inv(css = \"opacity:0.1;\"),\n    opts_hover(css = \"stroke-width:2;\")\n  ))\nx\n\n\n\n\n\n\n2.3.1 Detailled control\nNow there are cases where css expressions will have to be configured with more caution.\nLet’s have a look at the following example ; if you put your mouse hover points or text, you will see that the animation is not adapted to the text. Text should instead be animated with another css property.\n\ngg <- ggplot(head(mtcars_db), aes(\n  x = disp, y = qsec, label = carname,\n  data_id = carname, color = wt\n)) +\n  geom_text_interactive(vjust = 2) +\n  theme_minimal()\n\ngirafe(\n  ggobj = gg,\n  options = list(\n    opts_hover(css = \"fill:red;stroke:black;\")\n  )\n)\n\n\n\n\n\nFunction girafe_css is to be used in that case, it allows to specify individual styles for various SVG elements.\n\ngirafe(\n  ggobj = gg,\n  options = list(\n    opts_hover(\n      css = girafe_css(\n        css = \"fill:purple;stroke:black;\",\n        text = \"stroke:none;fill:red;\"\n      )\n    )\n  )\n)"
+  },
+  {
+    "objectID": "customize.html#sec-zoom-opt",
+    "href": "customize.html#sec-zoom-opt",
+    "title": "2  Customizing girafe animations",
+    "section": "2.4 Zoom",
+    "text": "2.4 Zoom\nYou can activate zoom; set zoom_max (maximum zoom factor) to a value greater than 1. If the argument is greater than 1, a toolbar will appear when mouse will be over the graphic.\nClick on the icons in the toolbar to activate or desactivate the zoom.\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_sizing(width = .7),\n    opts_zoom(max = 5)\n  )\n)"
+  },
+  {
+    "objectID": "fonts.html#font-usage",
+    "href": "fonts.html#font-usage",
+    "title": "3  Fonts management",
+    "section": "3.1 Font usage",
+    "text": "3.1 Font usage\nTo use that font in a girafe graphic, two options are available.\nUse the argument fonts (see ?dsvg). It’s a named list that can contains 4 font family names, one per family type: sans, serif, mono and symbol where you should map with the font family names you’d like to use for each face. This is a default configuration. If you manipulate font families in ggplot, then other fonts can of course be used.\n\ndat <- mtcars\ndat$carname <- row.names(dat)\n\ngg <- ggplot(dat, aes(drat, carname)) + \n  geom_point() + \n  theme_minimal(base_family = \"sans\")\n\nvalidated_fonts(list(sans = \"Open Sans\"))\n\n$sans\n[1] \"Open Sans\"\n\n$serif\n[1] \"DejaVu serif\"\n\n$mono\n[1] \"DejaVu Sans\"\n\n$symbol\n[1] \"DejaVu Sans\"\n\nggiraph(ggobj = gg, fonts = list(sans = \"Open Sans\"))\n\n\n\n\n\nOr use ggplot2 usual features related to fonts, i.e. element_text(family = \"Arial\"), theme_minimal(base_family = \"Arial\"), geom_text(family = \"Arial\")…\n\ngg <- ggplot(dat, aes(drat, carname)) + \n  geom_point() + \n  theme_minimal(base_family = \"Open Sans\")\n\nggiraph(ggobj = gg)"
+  },
+  {
+    "objectID": "fonts.html#example",
+    "href": "fonts.html#example",
+    "title": "3  Fonts management",
+    "section": "3.2 Example",
+    "text": "3.2 Example\nRegister 2 fonts with register_gfont():\n\nregister_gfont(\"Roboto\")\n\n[1] TRUE\n\nregister_gfont(\"Ms Madi\")\n\n[1] TRUE\n\n\nAdd the fonts in the R markdown HTML result as HTML dependencies.\n\naddGFontHtmlDependency(family = c(\"Roboto\", \"Ms Madi\"))\n\n\n\n\nCreate the graphic and use fonts…\n\ngg <- ggplot(dat, aes(drat, carname)) + \n  geom_point() + \n  geom_text_interactive(data = dat[2:3,], \n            mapping = aes(label = carname, tooltip = carname), \n            color=\"red\", size = 10, \n            family = \"Ms Madi\")+\n  theme_minimal(base_family = \"sans\") + \n  theme(\n    axis.text.x = element_text(face = \"italic\"),\n    axis.text.y = element_text(family = \"Roboto\", face = \"bold\")\n  ) \n\nggiraph(ggobj = gg, fonts = list(sans = \"Open Sans\"))"
+  },
+  {
+    "objectID": "fonts.html#shiny-illustration",
+    "href": "fonts.html#shiny-illustration",
+    "title": "3  Fonts management",
+    "section": "3.3 Shiny illustration",
+    "text": "3.3 Shiny illustration\nBelow an example of a simple shiny application that use a specific font and embed it in the application.\n\nlibrary(ggiraph)\nlibrary(ggplot2)\nlibrary(shiny)\nlibrary(gdtools)\n\nregister_gfont(\"Ms Madi\")\n\nui <- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      addGFontHtmlDependency(family = c(\"Ms Madi\")),\n      sliderInput(\"num_rows\", \"Number of rows:\",\n        min = 15, max = 32, value = 20)\n    ),\n    mainPanel(girafeOutput(\"custofontplot\"))\n  )\n)\n\nserver <- function(input, output) {\n  output$custofontplot <- renderGirafe({\n    dat <- mtcars[seq_len(input$num_rows), ]\n    dat$carname <- row.names(dat)\n    gg <- ggplot(dat, aes(drat, carname)) +\n      geom_point() +\n      theme_minimal(base_family = \"Ms Madi\")\n\n    girafe(ggobj = gg)\n  })\n}\n\n# Run the application\nshinyApp(ui = ui, server = server)"
+  },
+  {
+    "objectID": "size.html#ggiraph-and-its-aspect-ratio",
+    "href": "size.html#ggiraph-and-its-aspect-ratio",
+    "title": "4  Sizing",
+    "section": "4.1 ggiraph and its aspect ratio",
+    "text": "4.1 ggiraph and its aspect ratio\nThe width and height of the graphics region are defined in inches with arguments width_svg and height_svg. The default values are 6 and 5 inches. The ratio width/height defines the aspect ratio of the graphic. It is used to define viewbox attribute of the SVG result and to produce the original SVG file.\n\n4.1.1 Resizing with a fixed aspect ratio\nThe displayed graphics can be resized only in relation to the width and inside the HTML container. Once the graphic is produced, two options are available, allow resizing or freeze the size of the displayed graphic to its exact size.\nIf you want to change the aspect ratio, it has to be be done in the girafe() function call using the width_svg and height_svg arguments.\nIf you use girafe() in an ‘R Markdown’ document, we recommend to let these arguments unset; the knitr options fig.width and fig.height are used instead."
+  },
+  {
+    "objectID": "size.html#adjusting-the-width-or-not",
+    "href": "size.html#adjusting-the-width-or-not",
+    "title": "4  Sizing",
+    "section": "4.2 Adjusting the width or not",
+    "text": "4.2 Adjusting the width or not\nBy default the size of the graph is automatically adjusted to 100% of the width of the web page containing it. Graphic will be resized if its container is resized.\nThis behavior can be controlled by using the opts_sizing() function:\n\nThe percentage of the width to be used can be defined with the width parameter which takes a value between 0 and 1.\nThe resizing can also be cancelled using argument rescale=FALSE. In this case, the use of width will have no effect.\n\nWe will use the following graphic to illustrate opts_sizing():\n\nlibrary(tidyverse)\nmtcars_db <- rownames_to_column(mtcars, var = \"carname\")\n\ngg_scatter <- ggplot(\n  data = mtcars_db,\n  mapping = aes(\n    x = disp, y = qsec, color = wt,\n    # here we add iteractive aesthetics\n    tooltip = carname, data_id = carname\n  )\n) +\n  geom_point_interactive(\n    size = 3, hover_nearest = TRUE\n  )\n\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(opts_sizing(rescale = TRUE, width = .5))\n)\n\n\n\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(opts_sizing(rescale = FALSE))\n)"
+  },
+  {
+    "objectID": "size.html#the-flexdashboard-case",
+    "href": "size.html#the-flexdashboard-case",
+    "title": "4  Sizing",
+    "section": "4.3 The flexdashboard case",
+    "text": "4.3 The flexdashboard case\n‘ggiraph’ and its aspect ratio are causing headaches for users who have chosen to integrate it into a ‘flexdashboard’.\nIt most often can be solved by defining an aspect ratio close to the one of its container.\nIf not perfect solution, that is the only we can recommand. ‘ggiraph’ was not designed to fit in height and width to its HTML container. This is a limitation to consider and you should not expect any change in behavior in this direction soon."
+  },
+  {
+    "objectID": "toolbar.html#position",
+    "href": "toolbar.html#position",
+    "title": "5  Toolbar",
+    "section": "5.1 Position",
+    "text": "5.1 Position\nToolbar position can be defined with function opts_toolbar() and argument position.\n\nlibrary(tidyverse)\nmtcars_db <- rownames_to_column(mtcars, var = \"carname\")\n\ngg_scatter <- ggplot(\n  data = mtcars_db,\n  mapping = aes(\n    x = disp, y = qsec, color = wt,\n    tooltip = carname, data_id = carname\n  )\n) +\n  geom_point_interactive(\n    size = 3, hover_nearest = TRUE\n  )\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_toolbar(position = \"bottom\")\n  )\n)"
+  },
+  {
+    "objectID": "toolbar.html#download-button",
+    "href": "toolbar.html#download-button",
+    "title": "5  Toolbar",
+    "section": "5.2 Download button",
+    "text": "5.2 Download button\nUsers can download a PNG screenshot of the ggiraph object. ‘save as png’ button can be desactivated by using argument saveaspng.\nIt relies on JavaScript promises, so any browsers that don’t natively support the standard Promise object will need to have a polyfill (e.g. Internet Explorer with version less than 11 will need it).\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_toolbar(position = \"top\", saveaspng = FALSE)\n  )\n)\n\n\n\n\n\nArgument pngname can be used to change the name of the png file.\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_toolbar(position = \"top\", delay_mouseout = 3000, pngname = \"ggiraph-download\")\n  )\n)"
+  },
+  {
+    "objectID": "toolbar.html#labels",
+    "href": "toolbar.html#labels",
+    "title": "5  Toolbar",
+    "section": "5.3 Labels",
+    "text": "5.3 Labels\nIt is possible to change the tooltip labels for the buttons of the toolbar by using the argument tooltips. This can be handy when a language other than English is used.\n\ngirafe(\n  ggobj = gg_scatter,\n  options = list(\n    opts_toolbar(\n      position = \"top\",\n      tooltips = list(\n        zoom_on = \"activattion du pan/zoom\",\n        zoom_off = \"désactivation du pan/zoom\",\n        zoom_rect = \"zoom en rectangle\",\n        zoom_reset = \"reset pan/zoom\",\n        saveaspng = \"télécharger en png\"\n      )\n    )\n  )\n)"
+  },
+  {
+    "objectID": "examples.html#ceo-departures",
+    "href": "examples.html#ceo-departures",
+    "title": "6  Examples",
+    "section": "6.1 CEO departures",
+    "text": "6.1 CEO departures\nThank to Martín Pons that kindly shared his code with us.\nThe following code is an adaptation of Martin’s script (https://github.com/MartinPons/tidytuesday_MartinPons/blob/master/2021-17/ceos.R).\nThe following packages will be used:\n\nlibrary(ggtext)\nlibrary(tidyr)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggiraph)\nlibrary(glue)\n\nFirst let’s define some color variables and labels to make the ggplot code lighter and get a clear script.\n\nvoluntary_col <- \"#894843\"\ninvoluntary_col <- \"#887d74\"\nbg_color <- \"#D7E0DA\"\nfont_color <- \"#1f3225\"\nhover_color <- \"#4c6061\"\n\ntitle <- \"CEO DEPARTURES\"\n\nsubtitle <- glue(\"CEO **<span style = 'color:{voluntary_col}'>voluntary</span>** and \n**<span style= 'color:{involuntary_col}'>involuntary</span>** departures \nin the 20 *S&P 1500* firms<br>with most CEO rotation between 1993 and 2018\")\n\ncaption <- \"Data comes from Gentry et al. Facilitated by DatalsPlural. Visualization by Martín Pons | @MartinPonsM\"\n\nThe ggplot theme defined below is used to produce the graphic:\n\ndepartures_theme <- theme(\n  text = element_text(color = font_color, family = \"Open Sans\"),\n  plot.title = element_text(hjust = 0.5),\n  plot.subtitle = element_textbox(halign = .5, hjust = .5, family = \"Open Sans\", size = 8),\n  plot.caption = element_text(size = 6, hjust = .9),\n  plot.background = element_rect(fill = bg_color, color = bg_color),\n  panel.background = element_rect(fill = bg_color, color = bg_color),\n  axis.title = element_blank(),\n  axis.text.y = element_blank(),\n  axis.ticks = element_blank(),\n  panel.grid = element_blank()\n)\n\nThe data is read and an aggregation is computed.\n\ndepartures <- readRDS('data/departures.RDS')\ndepartures\n\n\nconamemain_causetooltipfyearcharacterfactorgluenumericBARRICK GOLD voluntaryFirm: BARRICK GOLD CEO: Peter Munk C.C.Year: 1997Motive: Voluntary turnover1997BARRICK GOLD voluntaryFirm: BARRICK GOLD CEO: Peter Munk C.C.Year: 2008Motive: Departure following a marger adquisition2008BARRICK GOLD voluntaryFirm: BARRICK GOLD CEO: Gregory C. WilkinsYear: 2007Motive: Health Concerns2007DANAvoluntaryFirm: DANACEO: Southwood J. MorcottYear: 1998Motive: Voluntary turnover1998n: 148\n\n# get number of voluntary and involuntary departures\ndeparture_firms_main_cause <- departures %>%\n  count(coname, main_cause) %>%\n  pivot_wider(\n    names_from = main_cause, values_from = n,\n    values_fill = 0) %>% \n  mutate(\n    firm_label = glue(\"{coname}:\\nVoluntary departures: {voluntary}\\nInvoluntary departures: {involuntary}\")\n  )\ndeparture_firms_main_cause\n\n\nconamevoluntaryinvoluntaryfirm_labelcharacterintegerintegerglueBARNES & NOBLE43BARNES & NOBLE:Voluntary departures: 4Involuntary departures: 3BARRICK GOLD 53BARRICK GOLD :Voluntary departures: 5Involuntary departures: 3BIOLASE25BIOLASE:Voluntary departures: 2Involuntary departures: 5CALLAWAY GOLF CO43CALLAWAY GOLF CO:Voluntary departures: 4Involuntary departures: 3n: 20\n\n\nIt’s now easy to produce the code that will create the interactive (or static) ggplot graphic.\n\ngg_departures <- ggplot(data = departures, mapping = aes(fyear)) +\n  geom_col_interactive(\n    mapping = aes(y = 1, fill = main_cause, \n                  tooltip = tooltip, data_id = coname),\n    color = bg_color, linewidth = 1, show.legend = FALSE) +\n  geom_text_interactive(\n    data = departure_firms_main_cause, \n    aes(x = 1994, y = 9.2, label = firm_label, data_id = coname),\n    color = hover_color, size = 2.5, hjust = \"left\", alpha = 0) +\n  labs(title = title, subtitle = subtitle, caption = caption) +\n  scale_fill_manual(values = c(voluntary_col, involuntary_col)) +\n  scale_x_continuous(labels = formatC, breaks = seq(1995, 2015, by=5)) +\n  departures_theme +\n  coord_equal()\n\nNow let’s convert the static graphic to a dynamic graphic:\n\ngirafe(\n  ggobj = gg_departures, \n  bg = bg_color,\n  options = list(\n    opts_tooltip(\n      opacity = 0.8, use_fill = TRUE,\n      use_stroke = FALSE, \n      css = \"padding:5pt;font-family: Open Sans;font-size:1rem;color:white\"),\n    opts_hover_inv(css = \"opacity:0.4\"), \n    opts_toolbar(saveaspng = FALSE),\n    opts_zoom(max = 1),\n    opts_hover(\n      css = girafe_css(\n        css = glue(\"fill:{font_color};\"),\n        text = glue(\"stroke:none;fill:{font_color};fill-opacity:1;\")\n      ))\n  )\n)"
+  },
+  {
+    "objectID": "extra-ipar.html#controling-svg-identifier",
+    "href": "extra-ipar.html#controling-svg-identifier",
+    "title": "7  Advanced customization",
+    "section": "7.1 Controling svg identifier",
+    "text": "7.1 Controling svg identifier\nIt is possible to control the value of the SVG ID produced. In this case, the value must be assigned to the canvas_id argument in the call to girafe() which will be passed to the ggiraph::dsvg() function.\n\ngirafe(ggobj = p1, canvas_id = \"myid\")"
+  },
+  {
+    "objectID": "extra-ipar.html#adding-attributes-to-interactive-elements",
+    "href": "extra-ipar.html#adding-attributes-to-interactive-elements",
+    "title": "7  Advanced customization",
+    "section": "7.2 Adding attributes to interactive elements",
+    "text": "7.2 Adding attributes to interactive elements\nAdding attributes to interactive elements is an advanced option that can be used to add a class name or any attribute.\n\np1 <- ggplot(\n  data = diamonds, \n  mapping = aes(x = color, fill = cut, data_id = cut)) +\n  geom_bar_interactive(\n    aes(tooltip = sprintf(\"%s: %.0f\", fill, after_stat(count))),\n    size = 3, `data-blah`=\"myclass\", extra_interactive_params = c(\"data-blah\"),\n    onclick = \"alert(this.getAttribute(\\\"data-blah\\\"));\")\ngirafe(ggobj = p1)"
+  },
+  {
+    "objectID": "ggiraph-shiny.html",
+    "href": "ggiraph-shiny.html",
+    "title": "Makes ggplot interactive",
+    "section": "",
+    "text": "A major advantage of ‘ggiraph’ used in a shiny application is the ability to collect selections. The user defines them by clicking on the elements or by defining an area surrounding the elements to be selected (lasso selection).\nIt is also possible to deselect all or part of an existing selection. The selection can be made by the user in several steps. It is possible to select a set of elements, deselect some of them and select another set of elements.\nHover events can also be used as reactive.\nInteractive feature with shiny are all available in the body of the graphic but also in the legend and the titles."
+  },
+  {
+    "objectID": "selections.html#type-of-selection",
+    "href": "selections.html#type-of-selection",
+    "title": "8  Configuring selections",
+    "section": "8.1 Type of selection",
+    "text": "8.1 Type of selection\nThe selection type can take several values: single, multiple or none.\n\nsingle: the user can only select one element. The click allows its selection if it is not selected, or its de-selection if it is already selected. Clicking on an unselected element automatically de-selects the other selected element.\nmultiple: the user can select several elements. He can do this by clicking on the elements or by selecting in the toolbar the “lasso selection” menu which allows you to draw a lasso on the graph and select all the elements contained in the lasso. The toolbar also contains an “anti-lasso selection” menu that allows you to draw a lasso on the graph and de-select all the elements contained in the lasso. The click is of course available for unit selections/de-selections.\nnone: no selection is allowed in the graph produced by girafe.\n\nAll these options can be configured with the following functions:\n\nopts_selection(): relative to panel selections\nopts_selection_key(): relative to legend selections\nopts_selection_theme(): relative to theme elements selections\n\nThe following code is enabling single selection in the panel:\n\nlibrary(tidyverse)\nmtcars_db <- rownames_to_column(mtcars, var = \"carname\")\n\ngg_scatter <- ggplot(\n  data = mtcars_db, \n  mapping = aes(\n    x = disp, y = qsec, tooltip = carname, \n    data_id = carname, color= wt)) +\n    geom_point_interactive(size=3)\n\ngirafe(ggobj = gg_scatter, \n  options = list(\n    opts_selection(\n      type = \"single\", \n      only_shiny = FALSE))\n)\n\n\n\n\n\nNote that we used only_shiny = FALSE so that selections can be seen in the page, in shiny applications, you don’t have to set this argument to FALSE."
+  },
+  {
+    "objectID": "selections.html#initial-selection",
+    "href": "selections.html#initial-selection",
+    "title": "8  Configuring selections",
+    "section": "8.2 Initial selection",
+    "text": "8.2 Initial selection\nSometimes, it can be useful to pre-select some elements. This can be done by using the argument selected of function opts_selection (or opts_selection_key or opts_selection_theme).\n\npreselection <- mtcars_db$carname[1:5]\ngirafe(ggobj = gg_scatter, \n  options = list(\n    opts_selection(\n      selected = preselection, \n      type = \"multiple\", \n      only_shiny = FALSE\n    )\n  )\n)"
+  },
+  {
+    "objectID": "shiny.html#shiny-usage",
+    "href": "shiny.html#shiny-usage",
+    "title": "9  Shiny and ggiraph reactive values",
+    "section": "9.1 Shiny usage",
+    "text": "9.1 Shiny usage\n\nRegister used fonts with register_gfont()\nadd a call to addGFontHtmlDependency(family = c(...)) in the ui part\nadd a placeholder for the ‘ggiraph’ graphic in the ui part with girafeOutput(\"plot\").\nadd a render component in the server part with renderGirafe(girafe(ggobj = ...)).\n\n\n9.1.1 Selection as a reactive value\nThree reactive values are available:\n\nthe selection of the data_id of the panel, selected elements will be captured in the input reactive value girafeid_selected (name of the input id of the reactive output value + _selected).\nthe selection of the data_id of the legend elements, selected elements will be captured in the input reactive value girafeid_key_selected (name of the input id of the reactive output value + _key_selected).\nthe selection of the data_id of the theme elements, selected elements will be captured in the input reactive value girafeid_theme_selected (name of the input id of the reactive output value + _theme_selected).\n\n\ninput$plot_selected\ninput$plot_key_selected\ninput$plot_theme_selected\n\n\n\n9.1.2 Update selected values from Shiny\nYou can also modify theses values by using the session$sendCustomMessage method with type girafeid_set (name of the input id of the reactive output value + _set).\n\n# delete selections\nsession$sendCustomMessage(type = 'plot_set', message = character(0))\nsession$sendCustomMessage(type = 'plot_key_set', message = character(0))\nsession$sendCustomMessage(type = 'plot_theme_set', message = character(0))"
+  },
+  {
+    "objectID": "shiny-examples.html#panel-selections-usage-server-side",
+    "href": "shiny-examples.html#panel-selections-usage-server-side",
+    "title": "10  Shiny examples",
+    "section": "10.1 Panel selections usage (server side)",
+    "text": "10.1 Panel selections usage (server side)\n\nrun_girafe_example(\"crimes\")"
+  },
+  {
+    "objectID": "shiny-examples.html#legend-selections-usage-server-side",
+    "href": "shiny-examples.html#legend-selections-usage-server-side",
+    "title": "10  Shiny examples",
+    "section": "10.2 Legend selections usage (server side)",
+    "text": "10.2 Legend selections usage (server side)\n\nrun_girafe_example(\"click_scale\")"
+  },
+  {
+    "objectID": "shiny-examples.html#onclick-actions-client-side.",
+    "href": "shiny-examples.html#onclick-actions-client-side.",
+    "title": "10  Shiny examples",
+    "section": "10.3 onclick actions (client side).",
+    "text": "10.3 onclick actions (client side).\n\nrun_girafe_example(\"DT\")"
+  },
+  {
+    "objectID": "shiny-examples.html#girafe-reactivity-showoff",
+    "href": "shiny-examples.html#girafe-reactivity-showoff",
+    "title": "10  Shiny examples",
+    "section": "10.4 Girafe reactivity showoff",
+    "text": "10.4 Girafe reactivity showoff\n\nrun_girafe_example(\"gender\")"
+  }
+]

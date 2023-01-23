@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.124">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>ggiraph-book - 5  Toolbar</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="./">
+<link href="./examples.html" rel="next">
+<link href="./size.html" rel="prev">
+<link href="./assets/img/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link href="site_libs/open-sans-0.3.0/css/open-sans.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script><script src="site_libs/d3-bundle-5.16.0/d3-bundle.min.js"></script><script src="site_libs/d3-lasso-0.0.5/d3-lasso.min.js"></script><script src="site_libs/save-svg-as-png-1.4.17/save-svg-as-png.min.js"></script><script src="site_libs/flatbush-4.0.0/flatbush.min.js"></script><link href="site_libs/ggiraphjs-0.4.6/ggiraphjs.min.css" rel="stylesheet">
+<script src="site_libs/ggiraphjs-0.4.6/ggiraphjs.min.js"></script><script src="site_libs/girafe-binding-0.8.6/girafe.js"></script><meta name="twitter:title" content="ggiraph-book - 5  Toolbar">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">5</span>  <span class="chapter-title">Toolbar</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">ggiraph-book</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ardata-fr/ggiraph-book/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+<li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./starting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>  <span class="chapter-title">Start with ggiraph</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./ggiraph-simple-use.html" class="sidebar-item-text sidebar-link">Makes ggplot dynamic</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./customize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>  <span class="chapter-title">Customizing girafe animations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fonts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>  <span class="chapter-title">Fonts management</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./size.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>  <span class="chapter-title">Sizing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./toolbar.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>  <span class="chapter-title">Toolbar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>  <span class="chapter-title">Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./extra-ipar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>  <span class="chapter-title">Advanced customization</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./ggiraph-shiny.html" class="sidebar-item-text sidebar-link">Makes ggplot interactive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selections.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>  <span class="chapter-title">Configuring selections</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shiny.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>  <span class="chapter-title">Shiny and ggiraph reactive values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shiny-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>  <span class="chapter-title">Shiny examples</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#position" id="toc-position" class="nav-link active" data-scroll-target="#position"><span class="toc-section-number">5.1</span>  Position</a></li>
+  <li><a href="#download-button" id="toc-download-button" class="nav-link" data-scroll-target="#download-button"><span class="toc-section-number">5.2</span>  Download button</a></li>
+  <li><a href="#labels" id="toc-labels" class="nav-link" data-scroll-target="#labels"><span class="toc-section-number">5.3</span>  Labels</a></li>
+  </ul></nav>
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-toolbar" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">5</span>  <span class="chapter-title">Toolbar</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><div class="cell">
+<div class="cell-output-display">
+<style></style>
+</div>
+</div>
+<p>A toolbar is added by default to the graphs at the top right. It contains by default the download button for the PNG version of the graph.</p>
+<p>It can contain other elements depending on the options used. If a zoom has been configured, the zoom options will be added to it. If a selection is configured and the graph is in a shiny application, the selection options will be added to it, i.e. selection and anti-selection.</p>
+<p><code><a href="https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html">opts_toolbar()</a></code> is used to customize the toolbar, it accepts many arguments. The most noteworthy are detailled below.</p>
+<section id="position" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="position">
+<span class="header-section-number">5.1</span> Position</h2>
+<p>Toolbar position can be defined with function <code><a href="https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html">opts_toolbar()</a></code> and argument <code>position</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="va">mtcars_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span><span class="op">(</span><span class="va">mtcars</span>, var <span class="op">=</span> <span class="st">"carname"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gg_scatter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">mtcars_db</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">disp</span>, y <span class="op">=</span> <span class="va">qsec</span>, color <span class="op">=</span> <span class="va">wt</span>,</span>
+<span>    tooltip <span class="op">=</span> <span class="va">carname</span>, data_id <span class="op">=</span> <span class="va">carname</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/geom_point_interactive.html">geom_point_interactive</a></span><span class="op">(</span></span>
+<span>    size <span class="op">=</span> <span class="fl">3</span>, hover_nearest <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/girafe.html">girafe</a></span><span class="op">(</span></span>
+<span>  ggobj <span class="op">=</span> <span class="va">gg_scatter</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html">opts_toolbar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f102fa897a84136fd8d5" style="width:100%;height:541px;"></div>
+<script type="application/json" data-for="htmlwidget-f102fa897a84136fd8d5">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='img' id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d' viewBox='0 0 432 360'>\n <defs id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_defs'>\n  <clipPath id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_c2'>\n   <rect x='33.72' y='5.48' width='343.09' height='322.47'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n  <\/g>\n  <g clip-path='url(#svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_c2)'>\n   <polyline points='33.72,295.84 376.81,295.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,226.04 376.81,226.04' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,156.24 376.81,156.24' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,86.45 376.81,86.45' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,16.65 376.81,16.65' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='110.70,327.95 110.70,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='188.50,327.95 188.50,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='266.30,327.95 266.30,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='344.10,327.95 344.10,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,260.94 376.81,260.94' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,191.14 376.81,191.14' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,121.35 376.81,121.35' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,51.55 376.81,51.55' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='71.80,327.95 71.80,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='149.60,327.95 149.60,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='227.40,327.95 227.40,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='305.20,327.95 305.20,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e1' cx='118.48' cy='244.89' r='2.67pt' fill='#254E72' fill-opacity='1' stroke='#254E72' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4' data-id='Mazda RX4' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e2' cx='118.48' cy='225.35' r='2.67pt' fill='#29567D' fill-opacity='1' stroke='#29567D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4 Wag' data-id='Mazda RX4 Wag' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e3' cx='78.02' cy='169.86' r='2.67pt' fill='#204465' fill-opacity='1' stroke='#204465' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Datsun 710' data-id='Datsun 710' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e4' cx='194.72' cy='140.89' r='2.67pt' fill='#2E618C' fill-opacity='1' stroke='#2E618C' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet 4 Drive' data-id='Hornet 4 Drive' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e5' cx='274.08' cy='225.35' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet Sportabout' data-id='Hornet Sportabout' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e6' cx='169.05' cy='113.67' r='2.67pt' fill='#336A98' fill-opacity='1' stroke='#336A98' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Valiant' data-id='Valiant' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e7' cx='274.08' cy='266.53' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Duster 360' data-id='Duster 360' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e8' cx='108.13' cy='121.35' r='2.67pt' fill='#2E618B' fill-opacity='1' stroke='#2E618B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 240D' data-id='Merc 240D' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e9' cx='103.54' cy='20.14' r='2.67pt' fill='#2D5F89' fill-opacity='1' stroke='#2D5F89' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 230' data-id='Merc 230' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e10' cx='124.39' cy='180.67' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280' data-id='Merc 280' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e11' cx='124.39' cy='159.73' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280C' data-id='Merc 280C' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e12' cx='208.57' cy='212.08' r='2.67pt' fill='#3D7FB4' fill-opacity='1' stroke='#3D7FB4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SE' data-id='Merc 450SE' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e13' cx='208.57' cy='205.1' r='2.67pt' fill='#3773A4' fill-opacity='1' stroke='#3773A4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SL' data-id='Merc 450SL' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e14' cx='208.57' cy='191.14' r='2.67pt' fill='#3875A6' fill-opacity='1' stroke='#3875A6' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SLC' data-id='Merc 450SLC' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e15' cx='361.22' cy='191.84' r='2.67pt' fill='#53AAEE' fill-opacity='1' stroke='#53AAEE' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Cadillac Fleetwood' data-id='Cadillac Fleetwood' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e16' cx='351.88' cy='197.43' r='2.67pt' fill='#56B1F7' fill-opacity='1' stroke='#56B1F7' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lincoln Continental' data-id='Lincoln Continental' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e17' cx='336.32' cy='211.39' r='2.67pt' fill='#55AEF3' fill-opacity='1' stroke='#55AEF3' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Chrysler Imperial' data-id='Chrysler Imperial' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e18' cx='55.23' cy='139.84' r='2.67pt' fill='#1E405F' fill-opacity='1' stroke='#1E405F' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat 128' data-id='Fiat 128' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e19' cx='52.89' cy='173' r='2.67pt' fill='#152E47' fill-opacity='1' stroke='#152E47' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Honda Civic' data-id='Honda Civic' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e20' cx='49.32' cy='124.84' r='2.67pt' fill='#183550' fill-opacity='1' stroke='#183550' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corolla' data-id='Toyota Corolla' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e21' cx='87.44' cy='121' r='2.67pt' fill='#22496B' fill-opacity='1' stroke='#22496B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corona' data-id='Toyota Corona' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e22' cx='241.4' cy='230.58' r='2.67pt' fill='#346C9A' fill-opacity='1' stroke='#346C9A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Dodge Challenger' data-id='Dodge Challenger' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e23' cx='230.51' cy='215.57' r='2.67pt' fill='#326996' fill-opacity='1' stroke='#326996' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='AMC Javelin' data-id='AMC Javelin' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e24' cx='266.3' cy='281.53' r='2.67pt' fill='#3977A9' fill-opacity='1' stroke='#3977A9' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Camaro Z28' data-id='Camaro Z28' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e25' cx='305.2' cy='224.3' r='2.67pt' fill='#3977AA' fill-opacity='1' stroke='#3977AA' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Pontiac Firebird' data-id='Pontiac Firebird' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e26' cx='55.46' cy='159.73' r='2.67pt' fill='#1A3854' fill-opacity='1' stroke='#1A3854' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat X1-9' data-id='Fiat X1-9' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e27' cx='87.59' cy='236.51' r='2.67pt' fill='#1D3E5D' fill-opacity='1' stroke='#1D3E5D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Porsche 914-2' data-id='Porsche 914-2' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e28' cx='67.99' cy='229.53' r='2.67pt' fill='#132B43' fill-opacity='1' stroke='#132B43' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lotus Europa' data-id='Lotus Europa' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e29' cx='267.08' cy='313.29' r='2.67pt' fill='#2E608A' fill-opacity='1' stroke='#2E608A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ford Pantera L' data-id='Ford Pantera L' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e30' cx='106.81' cy='278.39' r='2.67pt' fill='#275378' fill-opacity='1' stroke='#275378' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ferrari Dino' data-id='Ferrari Dino' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e31' cx='228.18' cy='309.8' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Maserati Bora' data-id='Maserati Bora' nearest='true'/>\n   <circle id='svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_e32' cx='88.14' cy='170.2' r='2.67pt' fill='#275379' fill-opacity='1' stroke='#275379' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Volvo 142E' data-id='Volvo 142E' nearest='true'/>\n  <\/g>\n  <g clip-path='url(#svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d_c1)'>\n   <text x='18.72' y='264.08' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>16<\/text>\n   <text x='18.72' y='194.28' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>18<\/text>\n   <text x='18.72' y='124.48' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>20<\/text>\n   <text x='18.72' y='54.69' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>22<\/text>\n   <text x='64.25' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>100<\/text>\n   <text x='142.05' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>200<\/text>\n   <text x='219.85' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>300<\/text>\n   <text x='297.65' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>400<\/text>\n   <text x='194.52' y='351.87' font-size='8.25pt' font-family='Open Sans'>disp<\/text>\n   <text transform='translate(13.33,178.43) rotate(-90.00)' font-size='8.25pt' font-family='Open Sans'>qsec<\/text>\n   <image x='393.25' y='131.51' width='17.28' height='86.4' preserveAspectRatio='none' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAEsCAYAAAACUNnVAAAAmElEQVQ4ja2UQRLDMAgDd3hk/tnX5agcknFaCoa0vnkMCEnGsL12GQhDYDpPwoDrpBFlRDWi/9Wu6AHC9FkLYLrzlhD3oJ3mDvRHRYy7IC8A7bCK8gpWKYDzeQVArDcDyD2YAnSofZvzaOA6Q7Oahp/dmRuVTQ0xU5TGP2o8Waool1obVuv1q8qP9xPvg633XlGLDtfIhNUBcBeA5ss0BXMAAAAASUVORK5CYII=' xmlns:xlink='http://www.w3.org/1999/xlink'/>\n   <text x='416.01' y='210.18' font-size='6.6pt' font-family='Open Sans'>2<\/text>\n   <text x='416.01' y='188.16' font-size='6.6pt' font-family='Open Sans'>3<\/text>\n   <text x='416.01' y='166.14' font-size='6.6pt' font-family='Open Sans'>4<\/text>\n   <text x='416.01' y='144.13' font-size='6.6pt' font-family='Open Sans'>5<\/text>\n   <text x='393.25' y='124.7' font-size='8.25pt' font-family='Open Sans'>wt<\/text>\n   <line x1='393.25' y1='207.04' x2='396.7' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='185.02' x2='396.7' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='163' x2='396.7' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='140.99' x2='396.7' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='207.04' x2='410.53' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='185.02' x2='410.53' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='163' x2='410.53' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='140.99' x2='410.53' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_ba255cca_42fb_487e_b97a_bfd3eb6cd54d","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:#f24f26;stroke:#333333;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:#f24f26; }\ncircle.hover_data_SVGID_ { fill:#f24f26;stroke:#333333; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:#f24f26; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:#f24f26;stroke:none; }\nimage.hover_data_SVGID_ { stroke:#f24f26; }","reactive":true},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":4,"duration":300},"toolbar":{"position":"bottom","pngname":"diagram","tooltips":null,"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":false,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section><section id="download-button" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="download-button">
+<span class="header-section-number">5.2</span> Download button</h2>
+<p>Users can download a PNG screenshot of the ggiraph object. ‘save as png’ button can be desactivated by using argument <code>saveaspng</code>.<br>
+It relies on JavaScript promises, so any browsers that don’t natively support the standard Promise object will need to have a polyfill (e.g. Internet Explorer with version less than 11 will need it).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/girafe.html">girafe</a></span><span class="op">(</span></span>
+<span>  ggobj <span class="op">=</span> <span class="va">gg_scatter</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html">opts_toolbar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"top"</span>, saveaspng <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-caf669f0fb7d6fe5df81" style="width:100%;height:541px;"></div>
+<script type="application/json" data-for="htmlwidget-caf669f0fb7d6fe5df81">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='img' id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8' viewBox='0 0 432 360'>\n <defs id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_defs'>\n  <clipPath id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_c2'>\n   <rect x='33.72' y='5.48' width='343.09' height='322.47'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n  <\/g>\n  <g clip-path='url(#svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_c2)'>\n   <polyline points='33.72,295.84 376.81,295.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,226.04 376.81,226.04' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,156.24 376.81,156.24' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,86.45 376.81,86.45' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,16.65 376.81,16.65' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='110.70,327.95 110.70,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='188.50,327.95 188.50,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='266.30,327.95 266.30,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='344.10,327.95 344.10,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,260.94 376.81,260.94' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,191.14 376.81,191.14' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,121.35 376.81,121.35' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,51.55 376.81,51.55' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='71.80,327.95 71.80,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='149.60,327.95 149.60,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='227.40,327.95 227.40,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='305.20,327.95 305.20,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e1' cx='118.48' cy='244.89' r='2.67pt' fill='#254E72' fill-opacity='1' stroke='#254E72' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4' data-id='Mazda RX4' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e2' cx='118.48' cy='225.35' r='2.67pt' fill='#29567D' fill-opacity='1' stroke='#29567D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4 Wag' data-id='Mazda RX4 Wag' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e3' cx='78.02' cy='169.86' r='2.67pt' fill='#204465' fill-opacity='1' stroke='#204465' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Datsun 710' data-id='Datsun 710' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e4' cx='194.72' cy='140.89' r='2.67pt' fill='#2E618C' fill-opacity='1' stroke='#2E618C' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet 4 Drive' data-id='Hornet 4 Drive' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e5' cx='274.08' cy='225.35' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet Sportabout' data-id='Hornet Sportabout' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e6' cx='169.05' cy='113.67' r='2.67pt' fill='#336A98' fill-opacity='1' stroke='#336A98' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Valiant' data-id='Valiant' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e7' cx='274.08' cy='266.53' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Duster 360' data-id='Duster 360' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e8' cx='108.13' cy='121.35' r='2.67pt' fill='#2E618B' fill-opacity='1' stroke='#2E618B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 240D' data-id='Merc 240D' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e9' cx='103.54' cy='20.14' r='2.67pt' fill='#2D5F89' fill-opacity='1' stroke='#2D5F89' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 230' data-id='Merc 230' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e10' cx='124.39' cy='180.67' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280' data-id='Merc 280' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e11' cx='124.39' cy='159.73' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280C' data-id='Merc 280C' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e12' cx='208.57' cy='212.08' r='2.67pt' fill='#3D7FB4' fill-opacity='1' stroke='#3D7FB4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SE' data-id='Merc 450SE' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e13' cx='208.57' cy='205.1' r='2.67pt' fill='#3773A4' fill-opacity='1' stroke='#3773A4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SL' data-id='Merc 450SL' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e14' cx='208.57' cy='191.14' r='2.67pt' fill='#3875A6' fill-opacity='1' stroke='#3875A6' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SLC' data-id='Merc 450SLC' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e15' cx='361.22' cy='191.84' r='2.67pt' fill='#53AAEE' fill-opacity='1' stroke='#53AAEE' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Cadillac Fleetwood' data-id='Cadillac Fleetwood' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e16' cx='351.88' cy='197.43' r='2.67pt' fill='#56B1F7' fill-opacity='1' stroke='#56B1F7' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lincoln Continental' data-id='Lincoln Continental' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e17' cx='336.32' cy='211.39' r='2.67pt' fill='#55AEF3' fill-opacity='1' stroke='#55AEF3' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Chrysler Imperial' data-id='Chrysler Imperial' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e18' cx='55.23' cy='139.84' r='2.67pt' fill='#1E405F' fill-opacity='1' stroke='#1E405F' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat 128' data-id='Fiat 128' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e19' cx='52.89' cy='173' r='2.67pt' fill='#152E47' fill-opacity='1' stroke='#152E47' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Honda Civic' data-id='Honda Civic' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e20' cx='49.32' cy='124.84' r='2.67pt' fill='#183550' fill-opacity='1' stroke='#183550' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corolla' data-id='Toyota Corolla' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e21' cx='87.44' cy='121' r='2.67pt' fill='#22496B' fill-opacity='1' stroke='#22496B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corona' data-id='Toyota Corona' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e22' cx='241.4' cy='230.58' r='2.67pt' fill='#346C9A' fill-opacity='1' stroke='#346C9A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Dodge Challenger' data-id='Dodge Challenger' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e23' cx='230.51' cy='215.57' r='2.67pt' fill='#326996' fill-opacity='1' stroke='#326996' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='AMC Javelin' data-id='AMC Javelin' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e24' cx='266.3' cy='281.53' r='2.67pt' fill='#3977A9' fill-opacity='1' stroke='#3977A9' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Camaro Z28' data-id='Camaro Z28' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e25' cx='305.2' cy='224.3' r='2.67pt' fill='#3977AA' fill-opacity='1' stroke='#3977AA' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Pontiac Firebird' data-id='Pontiac Firebird' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e26' cx='55.46' cy='159.73' r='2.67pt' fill='#1A3854' fill-opacity='1' stroke='#1A3854' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat X1-9' data-id='Fiat X1-9' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e27' cx='87.59' cy='236.51' r='2.67pt' fill='#1D3E5D' fill-opacity='1' stroke='#1D3E5D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Porsche 914-2' data-id='Porsche 914-2' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e28' cx='67.99' cy='229.53' r='2.67pt' fill='#132B43' fill-opacity='1' stroke='#132B43' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lotus Europa' data-id='Lotus Europa' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e29' cx='267.08' cy='313.29' r='2.67pt' fill='#2E608A' fill-opacity='1' stroke='#2E608A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ford Pantera L' data-id='Ford Pantera L' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e30' cx='106.81' cy='278.39' r='2.67pt' fill='#275378' fill-opacity='1' stroke='#275378' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ferrari Dino' data-id='Ferrari Dino' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e31' cx='228.18' cy='309.8' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Maserati Bora' data-id='Maserati Bora' nearest='true'/>\n   <circle id='svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_e32' cx='88.14' cy='170.2' r='2.67pt' fill='#275379' fill-opacity='1' stroke='#275379' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Volvo 142E' data-id='Volvo 142E' nearest='true'/>\n  <\/g>\n  <g clip-path='url(#svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8_c1)'>\n   <text x='18.72' y='264.08' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>16<\/text>\n   <text x='18.72' y='194.28' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>18<\/text>\n   <text x='18.72' y='124.48' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>20<\/text>\n   <text x='18.72' y='54.69' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>22<\/text>\n   <text x='64.25' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>100<\/text>\n   <text x='142.05' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>200<\/text>\n   <text x='219.85' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>300<\/text>\n   <text x='297.65' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>400<\/text>\n   <text x='194.52' y='351.87' font-size='8.25pt' font-family='Open Sans'>disp<\/text>\n   <text transform='translate(13.33,178.43) rotate(-90.00)' font-size='8.25pt' font-family='Open Sans'>qsec<\/text>\n   <image x='393.25' y='131.51' width='17.28' height='86.4' preserveAspectRatio='none' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAEsCAYAAAACUNnVAAAAmElEQVQ4ja2UQRLDMAgDd3hk/tnX5agcknFaCoa0vnkMCEnGsL12GQhDYDpPwoDrpBFlRDWi/9Wu6AHC9FkLYLrzlhD3oJ3mDvRHRYy7IC8A7bCK8gpWKYDzeQVArDcDyD2YAnSofZvzaOA6Q7Oahp/dmRuVTQ0xU5TGP2o8Waool1obVuv1q8qP9xPvg633XlGLDtfIhNUBcBeA5ss0BXMAAAAASUVORK5CYII=' xmlns:xlink='http://www.w3.org/1999/xlink'/>\n   <text x='416.01' y='210.18' font-size='6.6pt' font-family='Open Sans'>2<\/text>\n   <text x='416.01' y='188.16' font-size='6.6pt' font-family='Open Sans'>3<\/text>\n   <text x='416.01' y='166.14' font-size='6.6pt' font-family='Open Sans'>4<\/text>\n   <text x='416.01' y='144.13' font-size='6.6pt' font-family='Open Sans'>5<\/text>\n   <text x='393.25' y='124.7' font-size='8.25pt' font-family='Open Sans'>wt<\/text>\n   <line x1='393.25' y1='207.04' x2='396.7' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='185.02' x2='396.7' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='163' x2='396.7' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='140.99' x2='396.7' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='207.04' x2='410.53' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='185.02' x2='410.53' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='163' x2='410.53' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='140.99' x2='410.53' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_9dbf711d_bdf6_498e_90be_a58ded2e55d8","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:#f24f26;stroke:#333333;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:#f24f26; }\ncircle.hover_data_SVGID_ { fill:#f24f26;stroke:#333333; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:#f24f26; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:#f24f26;stroke:none; }\nimage.hover_data_SVGID_ { stroke:#f24f26; }","reactive":true},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":4,"duration":300},"toolbar":{"position":"top","pngname":"diagram","tooltips":null,"hidden":"saveaspng","delay_over":200,"delay_out":500},"sizing":{"rescale":false,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Argument <code>pngname</code> can be used to change the name of the png file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/girafe.html">girafe</a></span><span class="op">(</span></span>
+<span>  ggobj <span class="op">=</span> <span class="va">gg_scatter</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html">opts_toolbar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"top"</span>, delay_mouseout <span class="op">=</span> <span class="fl">3000</span>, pngname <span class="op">=</span> <span class="st">"ggiraph-download"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8aad91960ed2ff9248a6" style="width:100%;height:541px;"></div>
+<script type="application/json" data-for="htmlwidget-8aad91960ed2ff9248a6">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='img' id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0' viewBox='0 0 432 360'>\n <defs id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_defs'>\n  <clipPath id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_c2'>\n   <rect x='33.72' y='5.48' width='343.09' height='322.47'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n  <\/g>\n  <g clip-path='url(#svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_c2)'>\n   <polyline points='33.72,295.84 376.81,295.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,226.04 376.81,226.04' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,156.24 376.81,156.24' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,86.45 376.81,86.45' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,16.65 376.81,16.65' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='110.70,327.95 110.70,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='188.50,327.95 188.50,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='266.30,327.95 266.30,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='344.10,327.95 344.10,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,260.94 376.81,260.94' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,191.14 376.81,191.14' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,121.35 376.81,121.35' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,51.55 376.81,51.55' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='71.80,327.95 71.80,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='149.60,327.95 149.60,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='227.40,327.95 227.40,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='305.20,327.95 305.20,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e1' cx='118.48' cy='244.89' r='2.67pt' fill='#254E72' fill-opacity='1' stroke='#254E72' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4' data-id='Mazda RX4' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e2' cx='118.48' cy='225.35' r='2.67pt' fill='#29567D' fill-opacity='1' stroke='#29567D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4 Wag' data-id='Mazda RX4 Wag' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e3' cx='78.02' cy='169.86' r='2.67pt' fill='#204465' fill-opacity='1' stroke='#204465' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Datsun 710' data-id='Datsun 710' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e4' cx='194.72' cy='140.89' r='2.67pt' fill='#2E618C' fill-opacity='1' stroke='#2E618C' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet 4 Drive' data-id='Hornet 4 Drive' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e5' cx='274.08' cy='225.35' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet Sportabout' data-id='Hornet Sportabout' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e6' cx='169.05' cy='113.67' r='2.67pt' fill='#336A98' fill-opacity='1' stroke='#336A98' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Valiant' data-id='Valiant' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e7' cx='274.08' cy='266.53' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Duster 360' data-id='Duster 360' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e8' cx='108.13' cy='121.35' r='2.67pt' fill='#2E618B' fill-opacity='1' stroke='#2E618B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 240D' data-id='Merc 240D' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e9' cx='103.54' cy='20.14' r='2.67pt' fill='#2D5F89' fill-opacity='1' stroke='#2D5F89' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 230' data-id='Merc 230' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e10' cx='124.39' cy='180.67' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280' data-id='Merc 280' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e11' cx='124.39' cy='159.73' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280C' data-id='Merc 280C' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e12' cx='208.57' cy='212.08' r='2.67pt' fill='#3D7FB4' fill-opacity='1' stroke='#3D7FB4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SE' data-id='Merc 450SE' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e13' cx='208.57' cy='205.1' r='2.67pt' fill='#3773A4' fill-opacity='1' stroke='#3773A4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SL' data-id='Merc 450SL' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e14' cx='208.57' cy='191.14' r='2.67pt' fill='#3875A6' fill-opacity='1' stroke='#3875A6' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SLC' data-id='Merc 450SLC' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e15' cx='361.22' cy='191.84' r='2.67pt' fill='#53AAEE' fill-opacity='1' stroke='#53AAEE' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Cadillac Fleetwood' data-id='Cadillac Fleetwood' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e16' cx='351.88' cy='197.43' r='2.67pt' fill='#56B1F7' fill-opacity='1' stroke='#56B1F7' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lincoln Continental' data-id='Lincoln Continental' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e17' cx='336.32' cy='211.39' r='2.67pt' fill='#55AEF3' fill-opacity='1' stroke='#55AEF3' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Chrysler Imperial' data-id='Chrysler Imperial' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e18' cx='55.23' cy='139.84' r='2.67pt' fill='#1E405F' fill-opacity='1' stroke='#1E405F' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat 128' data-id='Fiat 128' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e19' cx='52.89' cy='173' r='2.67pt' fill='#152E47' fill-opacity='1' stroke='#152E47' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Honda Civic' data-id='Honda Civic' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e20' cx='49.32' cy='124.84' r='2.67pt' fill='#183550' fill-opacity='1' stroke='#183550' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corolla' data-id='Toyota Corolla' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e21' cx='87.44' cy='121' r='2.67pt' fill='#22496B' fill-opacity='1' stroke='#22496B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corona' data-id='Toyota Corona' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e22' cx='241.4' cy='230.58' r='2.67pt' fill='#346C9A' fill-opacity='1' stroke='#346C9A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Dodge Challenger' data-id='Dodge Challenger' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e23' cx='230.51' cy='215.57' r='2.67pt' fill='#326996' fill-opacity='1' stroke='#326996' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='AMC Javelin' data-id='AMC Javelin' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e24' cx='266.3' cy='281.53' r='2.67pt' fill='#3977A9' fill-opacity='1' stroke='#3977A9' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Camaro Z28' data-id='Camaro Z28' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e25' cx='305.2' cy='224.3' r='2.67pt' fill='#3977AA' fill-opacity='1' stroke='#3977AA' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Pontiac Firebird' data-id='Pontiac Firebird' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e26' cx='55.46' cy='159.73' r='2.67pt' fill='#1A3854' fill-opacity='1' stroke='#1A3854' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat X1-9' data-id='Fiat X1-9' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e27' cx='87.59' cy='236.51' r='2.67pt' fill='#1D3E5D' fill-opacity='1' stroke='#1D3E5D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Porsche 914-2' data-id='Porsche 914-2' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e28' cx='67.99' cy='229.53' r='2.67pt' fill='#132B43' fill-opacity='1' stroke='#132B43' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lotus Europa' data-id='Lotus Europa' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e29' cx='267.08' cy='313.29' r='2.67pt' fill='#2E608A' fill-opacity='1' stroke='#2E608A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ford Pantera L' data-id='Ford Pantera L' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e30' cx='106.81' cy='278.39' r='2.67pt' fill='#275378' fill-opacity='1' stroke='#275378' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ferrari Dino' data-id='Ferrari Dino' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e31' cx='228.18' cy='309.8' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Maserati Bora' data-id='Maserati Bora' nearest='true'/>\n   <circle id='svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_e32' cx='88.14' cy='170.2' r='2.67pt' fill='#275379' fill-opacity='1' stroke='#275379' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Volvo 142E' data-id='Volvo 142E' nearest='true'/>\n  <\/g>\n  <g clip-path='url(#svg_e7083268_b315_4a49_ad01_e2e6524e7fb0_c1)'>\n   <text x='18.72' y='264.08' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>16<\/text>\n   <text x='18.72' y='194.28' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>18<\/text>\n   <text x='18.72' y='124.48' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>20<\/text>\n   <text x='18.72' y='54.69' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>22<\/text>\n   <text x='64.25' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>100<\/text>\n   <text x='142.05' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>200<\/text>\n   <text x='219.85' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>300<\/text>\n   <text x='297.65' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>400<\/text>\n   <text x='194.52' y='351.87' font-size='8.25pt' font-family='Open Sans'>disp<\/text>\n   <text transform='translate(13.33,178.43) rotate(-90.00)' font-size='8.25pt' font-family='Open Sans'>qsec<\/text>\n   <image x='393.25' y='131.51' width='17.28' height='86.4' preserveAspectRatio='none' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAEsCAYAAAACUNnVAAAAmElEQVQ4ja2UQRLDMAgDd3hk/tnX5agcknFaCoa0vnkMCEnGsL12GQhDYDpPwoDrpBFlRDWi/9Wu6AHC9FkLYLrzlhD3oJ3mDvRHRYy7IC8A7bCK8gpWKYDzeQVArDcDyD2YAnSofZvzaOA6Q7Oahp/dmRuVTQ0xU5TGP2o8Waool1obVuv1q8qP9xPvg633XlGLDtfIhNUBcBeA5ss0BXMAAAAASUVORK5CYII=' xmlns:xlink='http://www.w3.org/1999/xlink'/>\n   <text x='416.01' y='210.18' font-size='6.6pt' font-family='Open Sans'>2<\/text>\n   <text x='416.01' y='188.16' font-size='6.6pt' font-family='Open Sans'>3<\/text>\n   <text x='416.01' y='166.14' font-size='6.6pt' font-family='Open Sans'>4<\/text>\n   <text x='416.01' y='144.13' font-size='6.6pt' font-family='Open Sans'>5<\/text>\n   <text x='393.25' y='124.7' font-size='8.25pt' font-family='Open Sans'>wt<\/text>\n   <line x1='393.25' y1='207.04' x2='396.7' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='185.02' x2='396.7' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='163' x2='396.7' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='140.99' x2='396.7' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='207.04' x2='410.53' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='185.02' x2='410.53' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='163' x2='410.53' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='140.99' x2='410.53' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_e7083268_b315_4a49_ad01_e2e6524e7fb0","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:#f24f26;stroke:#333333;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:#f24f26; }\ncircle.hover_data_SVGID_ { fill:#f24f26;stroke:#333333; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:#f24f26; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:#f24f26;stroke:none; }\nimage.hover_data_SVGID_ { stroke:#f24f26; }","reactive":true},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":4,"duration":300},"toolbar":{"position":"top","pngname":"ggiraph-download","tooltips":null,"hidden":[],"delay_over":200,"delay_out":3000},"sizing":{"rescale":false,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section><section id="labels" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="labels">
+<span class="header-section-number">5.3</span> Labels</h2>
+<p>It is possible to change the tooltip labels for the buttons of the toolbar by using the argument <code>tooltips</code>. This can be handy when a language other than English is used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/girafe.html">girafe</a></span><span class="op">(</span></span>
+<span>  ggobj <span class="op">=</span> <span class="va">gg_scatter</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html">opts_toolbar</a></span><span class="op">(</span></span>
+<span>      position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>      tooltips <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>        zoom_on <span class="op">=</span> <span class="st">"activattion du pan/zoom"</span>,</span>
+<span>        zoom_off <span class="op">=</span> <span class="st">"désactivation du pan/zoom"</span>,</span>
+<span>        zoom_rect <span class="op">=</span> <span class="st">"zoom en rectangle"</span>,</span>
+<span>        zoom_reset <span class="op">=</span> <span class="st">"reset pan/zoom"</span>,</span>
+<span>        saveaspng <span class="op">=</span> <span class="st">"télécharger en png"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-754eb56469a92f259395" style="width:100%;height:541px;"></div>
+<script type="application/json" data-for="htmlwidget-754eb56469a92f259395">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='img' id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3' viewBox='0 0 432 360'>\n <defs id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_defs'>\n  <clipPath id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_c2'>\n   <rect x='33.72' y='5.48' width='343.09' height='322.47'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n  <\/g>\n  <g clip-path='url(#svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_c2)'>\n   <polyline points='33.72,295.84 376.81,295.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,226.04 376.81,226.04' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,156.24 376.81,156.24' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,86.45 376.81,86.45' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,16.65 376.81,16.65' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='110.70,327.95 110.70,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='188.50,327.95 188.50,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='266.30,327.95 266.30,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='344.10,327.95 344.10,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,260.94 376.81,260.94' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,191.14 376.81,191.14' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,121.35 376.81,121.35' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='33.72,51.55 376.81,51.55' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='71.80,327.95 71.80,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='149.60,327.95 149.60,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='227.40,327.95 227.40,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='305.20,327.95 305.20,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e1' cx='118.48' cy='244.89' r='2.67pt' fill='#254E72' fill-opacity='1' stroke='#254E72' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4' data-id='Mazda RX4' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e2' cx='118.48' cy='225.35' r='2.67pt' fill='#29567D' fill-opacity='1' stroke='#29567D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Mazda RX4 Wag' data-id='Mazda RX4 Wag' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e3' cx='78.02' cy='169.86' r='2.67pt' fill='#204465' fill-opacity='1' stroke='#204465' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Datsun 710' data-id='Datsun 710' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e4' cx='194.72' cy='140.89' r='2.67pt' fill='#2E618C' fill-opacity='1' stroke='#2E618C' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet 4 Drive' data-id='Hornet 4 Drive' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e5' cx='274.08' cy='225.35' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Hornet Sportabout' data-id='Hornet Sportabout' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e6' cx='169.05' cy='113.67' r='2.67pt' fill='#336A98' fill-opacity='1' stroke='#336A98' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Valiant' data-id='Valiant' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e7' cx='274.08' cy='266.53' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Duster 360' data-id='Duster 360' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e8' cx='108.13' cy='121.35' r='2.67pt' fill='#2E618B' fill-opacity='1' stroke='#2E618B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 240D' data-id='Merc 240D' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e9' cx='103.54' cy='20.14' r='2.67pt' fill='#2D5F89' fill-opacity='1' stroke='#2D5F89' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 230' data-id='Merc 230' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e10' cx='124.39' cy='180.67' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280' data-id='Merc 280' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e11' cx='124.39' cy='159.73' r='2.67pt' fill='#326997' fill-opacity='1' stroke='#326997' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 280C' data-id='Merc 280C' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e12' cx='208.57' cy='212.08' r='2.67pt' fill='#3D7FB4' fill-opacity='1' stroke='#3D7FB4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SE' data-id='Merc 450SE' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e13' cx='208.57' cy='205.1' r='2.67pt' fill='#3773A4' fill-opacity='1' stroke='#3773A4' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SL' data-id='Merc 450SL' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e14' cx='208.57' cy='191.14' r='2.67pt' fill='#3875A6' fill-opacity='1' stroke='#3875A6' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Merc 450SLC' data-id='Merc 450SLC' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e15' cx='361.22' cy='191.84' r='2.67pt' fill='#53AAEE' fill-opacity='1' stroke='#53AAEE' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Cadillac Fleetwood' data-id='Cadillac Fleetwood' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e16' cx='351.88' cy='197.43' r='2.67pt' fill='#56B1F7' fill-opacity='1' stroke='#56B1F7' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lincoln Continental' data-id='Lincoln Continental' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e17' cx='336.32' cy='211.39' r='2.67pt' fill='#55AEF3' fill-opacity='1' stroke='#55AEF3' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Chrysler Imperial' data-id='Chrysler Imperial' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e18' cx='55.23' cy='139.84' r='2.67pt' fill='#1E405F' fill-opacity='1' stroke='#1E405F' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat 128' data-id='Fiat 128' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e19' cx='52.89' cy='173' r='2.67pt' fill='#152E47' fill-opacity='1' stroke='#152E47' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Honda Civic' data-id='Honda Civic' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e20' cx='49.32' cy='124.84' r='2.67pt' fill='#183550' fill-opacity='1' stroke='#183550' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corolla' data-id='Toyota Corolla' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e21' cx='87.44' cy='121' r='2.67pt' fill='#22496B' fill-opacity='1' stroke='#22496B' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Toyota Corona' data-id='Toyota Corona' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e22' cx='241.4' cy='230.58' r='2.67pt' fill='#346C9A' fill-opacity='1' stroke='#346C9A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Dodge Challenger' data-id='Dodge Challenger' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e23' cx='230.51' cy='215.57' r='2.67pt' fill='#326996' fill-opacity='1' stroke='#326996' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='AMC Javelin' data-id='AMC Javelin' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e24' cx='266.3' cy='281.53' r='2.67pt' fill='#3977A9' fill-opacity='1' stroke='#3977A9' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Camaro Z28' data-id='Camaro Z28' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e25' cx='305.2' cy='224.3' r='2.67pt' fill='#3977AA' fill-opacity='1' stroke='#3977AA' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Pontiac Firebird' data-id='Pontiac Firebird' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e26' cx='55.46' cy='159.73' r='2.67pt' fill='#1A3854' fill-opacity='1' stroke='#1A3854' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Fiat X1-9' data-id='Fiat X1-9' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e27' cx='87.59' cy='236.51' r='2.67pt' fill='#1D3E5D' fill-opacity='1' stroke='#1D3E5D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Porsche 914-2' data-id='Porsche 914-2' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e28' cx='67.99' cy='229.53' r='2.67pt' fill='#132B43' fill-opacity='1' stroke='#132B43' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Lotus Europa' data-id='Lotus Europa' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e29' cx='267.08' cy='313.29' r='2.67pt' fill='#2E608A' fill-opacity='1' stroke='#2E608A' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ford Pantera L' data-id='Ford Pantera L' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e30' cx='106.81' cy='278.39' r='2.67pt' fill='#275378' fill-opacity='1' stroke='#275378' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Ferrari Dino' data-id='Ferrari Dino' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e31' cx='228.18' cy='309.8' r='2.67pt' fill='#356E9D' fill-opacity='1' stroke='#356E9D' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Maserati Bora' data-id='Maserati Bora' nearest='true'/>\n   <circle id='svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_e32' cx='88.14' cy='170.2' r='2.67pt' fill='#275379' fill-opacity='1' stroke='#275379' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round' title='Volvo 142E' data-id='Volvo 142E' nearest='true'/>\n  <\/g>\n  <g clip-path='url(#svg_e04b8157_3f72_4f1a_bc81_752f14b93af3_c1)'>\n   <text x='18.72' y='264.08' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>16<\/text>\n   <text x='18.72' y='194.28' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>18<\/text>\n   <text x='18.72' y='124.48' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>20<\/text>\n   <text x='18.72' y='54.69' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>22<\/text>\n   <text x='64.25' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>100<\/text>\n   <text x='142.05' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>200<\/text>\n   <text x='219.85' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>300<\/text>\n   <text x='297.65' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>400<\/text>\n   <text x='194.52' y='351.87' font-size='8.25pt' font-family='Open Sans'>disp<\/text>\n   <text transform='translate(13.33,178.43) rotate(-90.00)' font-size='8.25pt' font-family='Open Sans'>qsec<\/text>\n   <image x='393.25' y='131.51' width='17.28' height='86.4' preserveAspectRatio='none' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAEsCAYAAAACUNnVAAAAmElEQVQ4ja2UQRLDMAgDd3hk/tnX5agcknFaCoa0vnkMCEnGsL12GQhDYDpPwoDrpBFlRDWi/9Wu6AHC9FkLYLrzlhD3oJ3mDvRHRYy7IC8A7bCK8gpWKYDzeQVArDcDyD2YAnSofZvzaOA6Q7Oahp/dmRuVTQ0xU5TGP2o8Waool1obVuv1q8qP9xPvg633XlGLDtfIhNUBcBeA5ss0BXMAAAAASUVORK5CYII=' xmlns:xlink='http://www.w3.org/1999/xlink'/>\n   <text x='416.01' y='210.18' font-size='6.6pt' font-family='Open Sans'>2<\/text>\n   <text x='416.01' y='188.16' font-size='6.6pt' font-family='Open Sans'>3<\/text>\n   <text x='416.01' y='166.14' font-size='6.6pt' font-family='Open Sans'>4<\/text>\n   <text x='416.01' y='144.13' font-size='6.6pt' font-family='Open Sans'>5<\/text>\n   <text x='393.25' y='124.7' font-size='8.25pt' font-family='Open Sans'>wt<\/text>\n   <line x1='393.25' y1='207.04' x2='396.7' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='185.02' x2='396.7' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='163' x2='396.7' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='393.25' y1='140.99' x2='396.7' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='207.04' x2='410.53' y2='207.04' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='185.02' x2='410.53' y2='185.02' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='163' x2='410.53' y2='163' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n   <line x1='407.07' y1='140.99' x2='410.53' y2='140.99' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.37' stroke-linejoin='round' stroke-linecap='butt'/>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_e04b8157_3f72_4f1a_bc81_752f14b93af3","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:#f24f26;stroke:#333333;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:#f24f26; }\ncircle.hover_data_SVGID_ { fill:#f24f26;stroke:#333333; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:#f24f26; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:#f24f26;stroke:none; }\nimage.hover_data_SVGID_ { stroke:#f24f26; }","reactive":true},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":4,"duration":300},"toolbar":{"position":"top","pngname":"diagram","tooltips":{"zoom_on":"activattion du pan/zoom","zoom_off":"désactivation du pan/zoom","zoom_rect":"zoom en rectangle","zoom_reset":"reset pan/zoom","saveaspng":"télécharger en png"},"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":false,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./size.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>  <span class="chapter-title">Sizing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./examples.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>  <span class="chapter-title">Examples</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">The ggiraph book was written by David Gohel.</div>   
+    <div class="nav-footer-right">package ‘ggiraph’ is proudly brought to you by <a href="http://www.ardata.fr" class="external-link"><img alt="ardata" src="assets/img/ardata-logo.svg" style="vertical-align:middle;height:24px;"></a>.</div>
+  </div>
+</footer>
+</body>
+</html>

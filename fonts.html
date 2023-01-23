@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.124">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>ggiraph-book - 3  Fonts management</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="./">
+<link href="./size.html" rel="next">
+<link href="./customize.html" rel="prev">
+<link href="./assets/img/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link href="site_libs/open-sans-0.3.0/css/open-sans.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script><script src="site_libs/d3-bundle-5.16.0/d3-bundle.min.js"></script><script src="site_libs/d3-lasso-0.0.5/d3-lasso.min.js"></script><script src="site_libs/save-svg-as-png-1.4.17/save-svg-as-png.min.js"></script><script src="site_libs/flatbush-4.0.0/flatbush.min.js"></script><link href="site_libs/ggiraphjs-0.4.6/ggiraphjs.min.css" rel="stylesheet">
+<script src="site_libs/ggiraphjs-0.4.6/ggiraphjs.min.js"></script><script src="site_libs/girafe-binding-0.8.6/girafe.js"></script><link href="site_libs/roboto-0.3.0/css/roboto.css" rel="stylesheet">
+<link href="site_libs/ms-madi-0.3.0/css/ms-madi.css" rel="stylesheet">
+<meta name="twitter:title" content="ggiraph-book - 3  Fonts management">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">3</span>  <span class="chapter-title">Fonts management</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">ggiraph-book</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ardata-fr/ggiraph-book/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+<li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./starting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>  <span class="chapter-title">Start with ggiraph</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./ggiraph-simple-use.html" class="sidebar-item-text sidebar-link">Makes ggplot dynamic</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./customize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>  <span class="chapter-title">Customizing girafe animations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fonts.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>  <span class="chapter-title">Fonts management</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./size.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>  <span class="chapter-title">Sizing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./toolbar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>  <span class="chapter-title">Toolbar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>  <span class="chapter-title">Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./extra-ipar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>  <span class="chapter-title">Advanced customization</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./ggiraph-shiny.html" class="sidebar-item-text sidebar-link">Makes ggplot interactive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selections.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>  <span class="chapter-title">Configuring selections</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shiny.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>  <span class="chapter-title">Shiny and ggiraph reactive values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shiny-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>  <span class="chapter-title">Shiny examples</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#font-usage" id="toc-font-usage" class="nav-link active" data-scroll-target="#font-usage"><span class="toc-section-number">3.1</span>  Font usage</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="toc-section-number">3.2</span>  Example</a></li>
+  <li><a href="#shiny-illustration" id="toc-shiny-illustration" class="nav-link" data-scroll-target="#shiny-illustration"><span class="toc-section-number">3.3</span>  Shiny illustration</a></li>
+  </ul></nav>
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-fonts" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">3</span>  <span class="chapter-title">Fonts management</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><div class="cell">
+<div class="cell-output-display">
+<style></style>
+</div>
+</div>
+<p>The production of a ggplot graph must be done using an “R graphics device”. There are two types of “R graphics devices”: vector and bitmap devices. The ggiraph package generates <code>SVG</code> files, XML files containing scalable vector graphics instructions; <code>SVG</code> supports animations and interactivity.</p>
+<p>For this purpose, fonts are used, in particular to determine the size and position of graphic elements. For textual representations, the name of the font used is associated with the text.</p>
+<p>Font management is mandatory if you want to produce and distribute your ‘ggiraph’ graphics:</p>
+<ul>
+<li>It is necessary that the font is available at the time of production on the machine which produces the graphic,</li>
+<li>it is also necessary to make sure that this font is made available to the reader of the web page which will receive this graphic. If the font is not available in the web page hosting the interactive graphic, the text will appear badly positioned.</li>
+</ul>
+<p>If you do not specify the fonts to use, default fonts will be chosen for you, some available on the machine. You can use the <code><a href="https://davidgohel.github.io/ggiraph/reference/validated_fonts.html">validated_fonts()</a></code> function to see these values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/validated_fonts.html">validated_fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sans
+[1] "DejaVu Sans"
+
+$serif
+[1] "DejaVu serif"
+
+$mono
+[1] "DejaVu Sans"
+
+$symbol
+[1] "DejaVu Sans"</code></pre>
+</div>
+</div>
+<p>In order to use a specific font, it must be available on your system. This can be checked with the <code><a href="https://davidgohel.github.io/ggiraph/reference/font_family_exists.html">font_family_exists()</a></code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/font_family_exists.html">font_family_exists</a></span><span class="op">(</span><span class="st">"Open Sans"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>You can also use fonts without installing them. You need to have the ttf files. The package <a href="https://cran.r-project.org/package=gdtools">gdtools</a> let use any ‘Google Fonts’. The following code:</p>
+<ul>
+<li>registers “Open Sans” font so that it can then be used by ‘ggiraph’ graphic engine. (Note it should work also with ‘ragg’ and ‘svglite’);</li>
+<li>embeds the font in the HTML document (and ensures that the rendering will be possible for the reader even if he does not have the font installed on his machine).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gdtools</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/register_gfont.html">register_gfont</a></span><span class="op">(</span><span class="st">"Open Sans"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/addGFontHtmlDependency.html">addGFontHtmlDependency</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Open Sans"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<style></style>
+</div>
+</div>
+<p><code><a href="https://rdrr.io/pkg/gdtools/man/register_gfont.html">register_gfont()</a></code> use <code><a href="https://rdrr.io/pkg/systemfonts/man/register_font.html">systemfonts::register_font()</a></code> to allow the use of a font by ggiraph when creating the SVG file. <code>systemfonts</code> is can be used for font management. Read systemfonts documentation if you need more details.</p>
+<section id="font-usage" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="font-usage">
+<span class="header-section-number">3.1</span> Font usage</h2>
+<p>To use that font in a <em>girafe</em> graphic, two options are available.</p>
+<p>Use the argument <code>fonts</code> (see <code><a href="https://davidgohel.github.io/ggiraph/reference/dsvg.html">?dsvg</a></code>). It’s a named list that can contains 4 font family names, one per family type: <code>sans</code>, <code>serif</code>, <code>mono</code> and <code>symbol</code> where you should map with the font family names you’d like to use for each face. This is a default configuration. If you manipulate font families in ggplot, then other fonts can of course be used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">carname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">drat</span>, <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"sans"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/validated_fonts.html">validated_fonts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sans <span class="op">=</span> <span class="st">"Open Sans"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sans
+[1] "Open Sans"
+
+$serif
+[1] "DejaVu serif"
+
+$mono
+[1] "DejaVu Sans"
+
+$symbol
+[1] "DejaVu Sans"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/ggiraph.html">ggiraph</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg</span>, fonts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sans <span class="op">=</span> <span class="st">"Open Sans"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-73f946485e699b43195e" style="width:100%;height:557px;"></div>
+<script type="application/json" data-for="htmlwidget-73f946485e699b43195e">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='img' id='svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4' viewBox='0 0 432 360'>\n <defs id='svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_defs'>\n  <clipPath id='svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_c2'>\n   <rect x='102.81' y='5.48' width='323.71' height='322.47'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n  <\/g>\n  <g clip-path='url(#svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_c2)'>\n   <polyline points='116.17,327.95 116.17,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='183.98,327.95 183.98,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='251.78,327.95 251.78,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='319.59,327.95 319.59,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='387.40,327.95 387.40,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,321.94 426.52,321.94' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,311.93 426.52,311.93' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,301.91 426.52,301.91' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,291.90 426.52,291.90' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,281.88 426.52,281.88' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,271.87 426.52,271.87' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,261.85 426.52,261.85' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,251.84 426.52,251.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,241.82 426.52,241.82' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,231.81 426.52,231.81' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,221.79 426.52,221.79' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,211.78 426.52,211.78' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,201.77 426.52,201.77' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,191.75 426.52,191.75' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,181.74 426.52,181.74' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,171.72 426.52,171.72' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,161.71 426.52,161.71' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,151.69 426.52,151.69' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,141.68 426.52,141.68' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,131.66 426.52,131.66' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,121.65 426.52,121.65' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,111.63 426.52,111.63' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,101.62 426.52,101.62' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,91.60 426.52,91.60' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,81.59 426.52,81.59' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,71.58 426.52,71.58' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,61.56 426.52,61.56' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,51.55 426.52,51.55' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,41.53 426.52,41.53' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,31.52 426.52,31.52' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,21.50 426.52,21.50' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='102.81,11.49 426.52,11.49' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='150.07,327.95 150.07,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='217.88,327.95 217.88,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='285.69,327.95 285.69,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='353.49,327.95 353.49,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='421.30,327.95 421.30,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='272.13' cy='151.69' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='272.13' cy='141.68' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='265.34' cy='281.88' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='160.92' cy='201.77' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='170.42' cy='191.75' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='117.53' cy='21.5' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='178.55' cy='261.85' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='243.65' cy='121.65' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='274.84' cy='131.66' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='274.84' cy='111.63' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='274.84' cy='101.62' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='159.57' cy='91.6' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='159.57' cy='81.59' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='159.57' cy='71.58' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='140.58' cy='311.93' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='150.07' cy='181.74' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='181.26' cy='291.9' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='296.54' cy='241.82' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='411.81' cy='211.78' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='315.52' cy='41.53' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='245' cy='31.52' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='117.53' cy='271.87' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='170.42' cy='321.94' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='249.07' cy='301.91' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='160.92' cy='61.56' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='296.54' cy='231.81' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='344' cy='51.55' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='254.5' cy='171.72' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='315.52' cy='221.79' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='234.15' cy='251.84' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='223.3' cy='161.71' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='300.6' cy='11.49' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n  <\/g>\n  <g clip-path='url(#svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4_c1)'>\n   <text x='50.17' y='325.08' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>AMC Javelin<\/text>\n   <text x='21.46' y='315.07' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Cadillac Fleetwood<\/text>\n   <text x='48.15' y='305.05' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Camaro Z28<\/text>\n   <text x='27.88' y='295.04' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Chrysler Imperial<\/text>\n   <text x='51.11' y='285.02' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Datsun 710<\/text>\n   <text x='24.91' y='275.01' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Dodge Challenger<\/text>\n   <text x='52.86' y='264.99' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Duster 360<\/text>\n   <text x='48.94' y='254.98' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Ferrari Dino<\/text>\n   <text x='65.71' y='244.96' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Fiat 128<\/text>\n   <text x='62.83' y='234.95' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Fiat X1-9<\/text>\n   <text x='37.78' y='224.93' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Ford Pantera L<\/text>\n   <text x='49.57' y='214.92' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Honda Civic<\/text>\n   <text x='37.91' y='204.9' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Hornet 4 Drive<\/text>\n   <text x='20.42' y='194.89' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Hornet Sportabout<\/text>\n   <text x='18.72' y='184.88' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Lincoln Continental<\/text>\n   <text x='43.55' y='174.86' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Lotus Europa<\/text>\n   <text x='40.37' y='164.85' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Maserati Bora<\/text>\n   <text x='52.85' y='154.83' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Mazda RX4<\/text>\n   <text x='32.78' y='144.82' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Mazda RX4 Wag<\/text>\n   <text x='59.84' y='134.8' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 230<\/text>\n   <text x='53.46' y='124.79' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 240D<\/text>\n   <text x='59.84' y='114.77' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 280<\/text>\n   <text x='54.3' y='104.76' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 280C<\/text>\n   <text x='50.13' y='94.74' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 450SE<\/text>\n   <text x='50.43' y='84.73' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 450SL<\/text>\n   <text x='44.88' y='74.71' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Merc 450SLC<\/text>\n   <text x='33.29' y='64.7' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Pontiac Firebird<\/text>\n   <text x='39.73' y='54.69' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Porsche 914-2<\/text>\n   <text x='38.69' y='44.67' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Toyota Corolla<\/text>\n   <text x='37.73' y='34.66' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Toyota Corona<\/text>\n   <text x='69.89' y='24.64' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Valiant<\/text>\n   <text x='53.17' y='14.63' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>Volvo 142E<\/text>\n   <text x='143.89' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>3.0<\/text>\n   <text x='211.69' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>3.5<\/text>\n   <text x='279.5' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>4.0<\/text>\n   <text x='347.3' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>4.5<\/text>\n   <text x='415.11' y='339.16' font-size='6.6pt' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>5.0<\/text>\n   <text x='254.04' y='351.87' font-size='8.25pt' font-family='Open Sans'>drat<\/text>\n   <text transform='translate(13.33,189.26) rotate(-90.00)' font-size='8.25pt' font-family='Open Sans'>carname<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_17379746_0379_4c3f_a10f_7fb4c2c1e7e4","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":0,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:orange;stroke:gray; }","reactive":false,"nearest_distance":null},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:gray; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":1,"duration":300},"toolbar":{"position":"top","pngname":"diagram","tooltips":null,"hidden":"saveaspng","delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":0.75}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Or use ggplot2 usual features related to fonts, i.e. <code>element_text(family = "Arial")</code>, <code>theme_minimal(base_family = "Arial")</code>, <code>geom_text(family = "Arial")</code>…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">drat</span>, <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Open Sans"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/ggiraph.html">ggiraph</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg</span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section id="example" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="example">
+<span class="header-section-number">3.2</span> Example</h2>
+<p>Register 2 fonts with <code><a href="https://rdrr.io/pkg/gdtools/man/register_gfont.html">register_gfont()</a></code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/register_gfont.html">register_gfont</a></span><span class="op">(</span><span class="st">"Roboto"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/register_gfont.html">register_gfont</a></span><span class="op">(</span><span class="st">"Ms Madi"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Add the fonts in the R markdown HTML result as HTML dependencies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/addGFontHtmlDependency.html">addGFontHtmlDependency</a></span><span class="op">(</span>family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Roboto"</span>, <span class="st">"Ms Madi"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<style></style>
+</div>
+</div>
+<p>Create the graphic and use fonts…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">drat</span>, <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/geom_text_interactive.html">geom_text_interactive</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>,<span class="op">]</span>, </span>
+<span>            mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">carname</span>, tooltip <span class="op">=</span> <span class="va">carname</span><span class="op">)</span>, </span>
+<span>            color<span class="op">=</span><span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>            family <span class="op">=</span> <span class="st">"Ms Madi"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"sans"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span>,</span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Roboto"</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/ggiraph.html">ggiraph</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg</span>, fonts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sans <span class="op">=</span> <span class="st">"Open Sans"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-af9cee0818fa2f3fcac2" style="width:100%;height:557px;"></div>
+<script type="application/json" data-for="htmlwidget-af9cee0818fa2f3fcac2">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='img' id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456' viewBox='0 0 432 360'>\n <defs id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_defs'>\n  <clipPath id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_c2'>\n   <rect x='100.29' y='5.48' width='326.24' height='322.47'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n  <\/g>\n  <g clip-path='url(#svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_c2)'>\n   <polyline points='113.75,327.95 113.75,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='182.08,327.95 182.08,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='250.42,327.95 250.42,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='318.75,327.95 318.75,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='387.09,327.95 387.09,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.53' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,321.94 426.52,321.94' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,311.93 426.52,311.93' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,301.91 426.52,301.91' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,291.90 426.52,291.90' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,281.88 426.52,281.88' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,271.87 426.52,271.87' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,261.85 426.52,261.85' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,251.84 426.52,251.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,241.82 426.52,241.82' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,231.81 426.52,231.81' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,221.79 426.52,221.79' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,211.78 426.52,211.78' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,201.77 426.52,201.77' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,191.75 426.52,191.75' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,181.74 426.52,181.74' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,171.72 426.52,171.72' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,161.71 426.52,161.71' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,151.69 426.52,151.69' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,141.68 426.52,141.68' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,131.66 426.52,131.66' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,121.65 426.52,121.65' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,111.63 426.52,111.63' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,101.62 426.52,101.62' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,91.60 426.52,91.60' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,81.59 426.52,81.59' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,71.58 426.52,71.58' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,61.56 426.52,61.56' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,51.55 426.52,51.55' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,41.53 426.52,41.53' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,31.52 426.52,31.52' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,21.50 426.52,21.50' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='100.29,11.49 426.52,11.49' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='147.92,327.95 147.92,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='216.25,327.95 216.25,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='284.59,327.95 284.59,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='352.92,327.95 352.92,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='421.26,327.95 421.26,5.48' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='270.92' cy='151.69' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='270.92' cy='141.68' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='264.09' cy='281.88' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='158.85' cy='201.77' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='168.42' cy='191.75' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='115.11' cy='21.5' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='176.62' cy='261.85' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='242.22' cy='121.65' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='273.65' cy='131.66' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='273.65' cy='111.63' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='273.65' cy='101.62' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='157.48' cy='91.6' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='157.48' cy='81.59' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='157.48' cy='71.58' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='138.35' cy='311.93' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='147.92' cy='181.74' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='179.35' cy='291.9' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='295.52' cy='241.82' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='411.69' cy='211.78' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='314.65' cy='41.53' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='243.59' cy='31.52' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='115.11' cy='271.87' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='168.42' cy='321.94' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='247.69' cy='301.91' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='158.85' cy='61.56' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='295.52' cy='231.81' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='343.36' cy='51.55' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='253.15' cy='171.72' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='314.65' cy='221.79' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='232.65' cy='251.84' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='221.72' cy='161.71' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <circle cx='299.62' cy='11.49' r='1.47pt' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='0.71' stroke-linejoin='round' stroke-linecap='round'/>\n   <text id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_e1' x='177.23' y='151.52' font-size='21.34pt' font-family='Ms Madi' fill='#FF0000' fill-opacity='1' title='Mazda RX4 Wag'>Mazda RX4 Wag<\/text>\n   <text id='svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_e2' x='206.89' y='291.72' font-size='21.34pt' font-family='Ms Madi' fill='#FF0000' fill-opacity='1' title='Datsun 710'>Datsun 710<\/text>\n  <\/g>\n  <g clip-path='url(#svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456_c1)'>\n   <text x='45.35' y='325.07' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>AMC Javelin<\/text>\n   <text x='20.41' y='315.05' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Cadillac Fleetwood<\/text>\n   <text x='46.75' y='305.04' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Camaro Z28<\/text>\n   <text x='27.54' y='295.03' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Chrysler Imperial<\/text>\n   <text x='50.25' y='285.01' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Datsun 710<\/text>\n   <text x='24.98' y='275' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Dodge Challenger<\/text>\n   <text x='51.92' y='264.98' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Duster 360<\/text>\n   <text x='48.96' y='254.97' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Ferrari Dino<\/text>\n   <text x='63.18' y='244.95' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Fiat 128<\/text>\n   <text x='59.23' y='234.94' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Fiat X1-9<\/text>\n   <text x='37.27' y='224.92' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Ford Pantera L<\/text>\n   <text x='47.91' y='214.91' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Honda Civic<\/text>\n   <text x='38.4' y='204.89' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Hornet 4 Drive<\/text>\n   <text x='22.04' y='194.88' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Hornet Sportabout<\/text>\n   <text x='18.72' y='184.86' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Lincoln Continental<\/text>\n   <text x='43.28' y='174.85' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Lotus Europa<\/text>\n   <text x='39.71' y='164.84' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Maserati Bora<\/text>\n   <text x='50.34' y='154.82' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Mazda RX4<\/text>\n   <text x='30.71' y='144.81' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Mazda RX4 Wag<\/text>\n   <text x='57.76' y='134.79' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 230<\/text>\n   <text x='52.05' y='124.78' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 240D<\/text>\n   <text x='57.76' y='114.76' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 280<\/text>\n   <text x='52' y='104.75' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 280C<\/text>\n   <text x='47.41' y='94.73' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 450SE<\/text>\n   <text x='47.59' y='84.72' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 450SL<\/text>\n   <text x='41.83' y='74.7' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Merc 450SLC<\/text>\n   <text x='32.4' y='64.69' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Pontiac Firebird<\/text>\n   <text x='36.91' y='54.67' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Porsche 914-2<\/text>\n   <text x='37.36' y='44.66' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Toyota Corolla<\/text>\n   <text x='37.11' y='34.65' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Toyota Corona<\/text>\n   <text x='67.6' y='24.63' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Valiant<\/text>\n   <text x='50.59' y='14.62' font-size='6.6pt' font-weight='bold' font-family='Roboto' fill='#4D4D4D' fill-opacity='1'>Volvo 142E<\/text>\n   <text x='141.96' y='339.16' font-size='6.6pt' font-style='italic' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>3.0<\/text>\n   <text x='210.3' y='339.16' font-size='6.6pt' font-style='italic' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>3.5<\/text>\n   <text x='278.64' y='339.16' font-size='6.6pt' font-style='italic' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>4.0<\/text>\n   <text x='346.97' y='339.16' font-size='6.6pt' font-style='italic' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>4.5<\/text>\n   <text x='415.31' y='339.16' font-size='6.6pt' font-style='italic' font-family='Open Sans' fill='#4D4D4D' fill-opacity='1'>5.0<\/text>\n   <text x='252.77' y='351.87' font-size='8.25pt' font-family='Open Sans'>drat<\/text>\n   <text transform='translate(13.33,189.26) rotate(-90.00)' font-size='8.25pt' font-family='Open Sans'>carname<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_7c6d9d53_d82b_44cb_97b7_d62d5391f456","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":0,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:orange;stroke:gray; }","reactive":false,"nearest_distance":null},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:gray; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":1,"duration":300},"toolbar":{"position":"top","pngname":"diagram","tooltips":null,"hidden":"saveaspng","delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":0.75}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section><section id="shiny-illustration" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="shiny-illustration">
+<span class="header-section-number">3.3</span> Shiny illustration</h2>
+<p>Below an example of a simple shiny application that use a specific font and embed it in the application.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://davidgohel.github.io/ggiraph/">ggiraph</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gdtools</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/register_gfont.html">register_gfont</a></span><span class="op">(</span><span class="st">"Ms Madi"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/gdtools/man/addGFontHtmlDependency.html">addGFontHtmlDependency</a></span><span class="op">(</span>family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ms Madi"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"num_rows"</span>, <span class="st">"Number of rows:"</span>,</span>
+<span>        min <span class="op">=</span> <span class="fl">15</span>, max <span class="op">=</span> <span class="fl">32</span>, value <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">mainPanel</a></span><span class="op">(</span><span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/girafeOutput.html">girafeOutput</a></span><span class="op">(</span><span class="st">"custofontplot"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">custofontplot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/renderGirafe.html">renderGirafe</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">mtcars</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">num_rows</span><span class="op">)</span>, <span class="op">]</span></span>
+<span>    <span class="va">dat</span><span class="op">$</span><span class="va">carname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span>    <span class="va">gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">drat</span>, <span class="va">carname</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Ms Madi"</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="fu"><a href="https://davidgohel.github.io/ggiraph/reference/girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Run the application</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./customize.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>  <span class="chapter-title">Customizing girafe animations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./size.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>  <span class="chapter-title">Sizing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">The ggiraph book was written by David Gohel.</div>   
+    <div class="nav-footer-right">package ‘ggiraph’ is proudly brought to you by <a href="http://www.ardata.fr" class="external-link"><img alt="ardata" src="assets/img/ardata-logo.svg" style="vertical-align:middle;height:24px;"></a>.</div>
+  </div>
+</footer>
+</body>
+</html>
