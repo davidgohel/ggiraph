@@ -1,0 +1,79 @@
+# Configuring selections {#sec-selection}
+
+{{< include _init.qmd >}}
+
+The graphics produced by `girafe()` from a shiny application allows you to
+retrieve the element selections made by users.
+
+Elements associated with `data_id` can be selected and the selection (the
+`data_id` value) is available in the client and the server side of the
+application. **The selected identifiers will be the values mapped by the
+aesthetic `data_id`**.
+
+## Type of selection
+
+The selection type can take several values: `single`, `multiple` or `none`.
+
+  - `single`: the user can only select one element. The click allows its
+    selection if it is not selected, or its de-selection if it is already
+    selected. Clicking on an unselected element automatically de-selects the
+    other selected element.
+  - `multiple`: the user can select several elements. He can do this by clicking
+    on the elements or by selecting in the toolbar the "lasso selection" menu
+    which allows you to draw a lasso on the graph and select all the elements
+    contained in the lasso. The toolbar also contains an "anti-lasso selection"
+    menu that allows you to draw a lasso on the graph and de-select all the
+    elements contained in the lasso. The click is of course available for unit
+    selections/de-selections.
+  - `none`: no selection is allowed in the graph produced by `girafe`.
+
+All these options can be configured with the following functions:
+
+  - `opts_selection()`: relative to panel selections
+  - `opts_selection_key()`: relative to legend selections
+  - `opts_selection_theme()`: relative to theme elements selections
+
+The following code is enabling `single` selection in the panel:
+
+```{r}
+library(tidyverse)
+mtcars_db <- rownames_to_column(mtcars, var = "carname")
+
+gg_scatter <- ggplot(
+  data = mtcars_db, 
+  mapping = aes(
+    x = disp, y = qsec, tooltip = carname, 
+    data_id = carname, color= wt)) +
+	geom_point_interactive(size=3)
+
+girafe(ggobj = gg_scatter, 
+  options = list(
+    opts_selection(
+      type = "single", 
+      only_shiny = FALSE))
+)
+```
+
+Note that we used `only_shiny = FALSE` so that selections can be seen in the
+page, in shiny applications, you don't have to set this argument to
+FALSE.
+
+## Initial selection
+
+Sometimes, it can be useful to pre-select some elements. This can be done by
+using the argument `selected` of function `opts_selection` (or
+`opts_selection_key` or `opts_selection_theme`).
+
+```{r}
+preselection <- mtcars_db$carname[1:5]
+girafe(ggobj = gg_scatter, 
+  options = list(
+    opts_selection(
+      selected = preselection, 
+      type = "multiple", 
+      only_shiny = FALSE
+    )
+  )
+)
+```
+

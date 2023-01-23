@@ -11,4 +11,3 @@ node_modules
 package-lock.json
 *.css.js
 .project
-vignettes/offcran/fonts

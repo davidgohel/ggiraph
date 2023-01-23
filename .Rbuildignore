@@ -13,7 +13,7 @@
 ^README\.Rmd$
 ^revdep$
 ^visualtests$
-^vignettes/offcran$
+^vignettes/book$
 ^cran-comments\.md$
 ^revdep$
 ^inst/javascript$

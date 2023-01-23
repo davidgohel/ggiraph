@@ -1,0 +1,16 @@
+# Makes ggplot interactive {.unnumbered}
+
+{{< include _init.qmd >}}
+
+A major advantage of 'ggiraph' used in a shiny application is the ability to
+collect selections. The user defines them by clicking on the elements or by
+defining an area surrounding the elements to be selected (lasso selection).
+
+It is also possible to deselect all or part of an existing selection. The
+selection can be made by the user in several steps. It is possible to select a
+set of elements, deselect some of them and select another set of elements.
+
+Hover events can also be used as reactive.
+
+Interactive feature with shiny are all available in the body of the graphic but
+also in the legend and the titles.
