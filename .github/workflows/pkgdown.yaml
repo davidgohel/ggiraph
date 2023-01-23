@@ -53,3 +53,4 @@ jobs:
           FOLDER: vignettes/book/_book/
           TARGET_FOLDER: '.' # The folder the action should deploy.
           CLEAN: true
+

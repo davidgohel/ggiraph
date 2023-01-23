@@ -11,7 +11,7 @@ License: GPL-3
 LazyData: TRUE
 Imports: tidyverse, knitr, flextable, officer, htmltools, 
  patchwork, systemfonts, palmerpenguins, gdtools, ggiraph, 
- ggtext, glue, downlit
+ ggtext, glue, downlit, flextable
 Encoding: UTF-8
 VignetteBuilder: knitr
 Remotes: davidgohel/ggiraph
