@@ -1,0 +1,102 @@
+# Toolbar {#sec-toolbar}
+
+{{< include _init.qmd >}}
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.height = 5, fig.width = 6)
+set_girafe_defaults(
+  opts_sizing = opts_sizing(rescale = FALSE)
+)
+```
+
+
+A toolbar is added by default to the graphs at the top right. It contains by
+default the download button for the PNG version of the graph.
+
+It can contain other elements depending on the options used. If a zoom has been
+configured, the zoom options will be added to it. If a selection is configured
+and the graph is in a shiny application, the selection options will be added to
+it, i.e. selection and anti-selection.
+
+`opts_toolbar()` is used to customize the toolbar, it accepts many arguments. 
+The most noteworthy are detailled below.
+
+## Position
+
+Toolbar position can be defined with function `opts_toolbar()` and argument
+`position`.
+
+```{r}
+library(tidyverse)
+mtcars_db <- rownames_to_column(mtcars, var = "carname")
+
+gg_scatter <- ggplot(
+  data = mtcars_db,
+  mapping = aes(
+    x = disp, y = qsec, color = wt,
+    tooltip = carname, data_id = carname
+  )
+) +
+  geom_point_interactive(
+    size = 3, hover_nearest = TRUE
+  )
+
+girafe(
+  ggobj = gg_scatter,
+  options = list(
+    opts_toolbar(position = "bottom")
+  )
+)
+```
+
+## Download button
+
+Users can download a PNG screenshot of the ggiraph object.
+'save as png' button can be desactivated by using argument `saveaspng`.  
+It relies on JavaScript promises, so any browsers that don't natively
+support the standard Promise object will need to have a polyfill (e.g. Internet
+Explorer with version less than 11 will need it).
+
+```{r}
+girafe(
+  ggobj = gg_scatter,
+  options = list(
+    opts_toolbar(position = "top", saveaspng = FALSE)
+  )
+)
+```
+
+Argument `pngname` can be used to change the name of the png file.
+
+```{r}
+girafe(
+  ggobj = gg_scatter,
+  options = list(
+    opts_toolbar(position = "top", delay_mouseout = 3000, pngname = "ggiraph-download")
+  )
+)
+```
+
+## Labels
+
+It is possible to change the tooltip labels for the buttons of the toolbar by
+using the argument `tooltips`. This can be handy when a language other than 
+English is used.
+
+```{r}
+girafe(
+  ggobj = gg_scatter,
+  options = list(
+    opts_toolbar(
+      position = "top",
+      tooltips = list(
+        zoom_on = "activattion du pan/zoom",
+        zoom_off = "désactivation du pan/zoom",
+        zoom_rect = "zoom en rectangle",
+        zoom_reset = "reset pan/zoom",
+        saveaspng = "télécharger en png"
+      )
+    )
+  )
+)
+```

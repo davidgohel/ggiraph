@@ -1,0 +1,205 @@
+# Start with ggiraph
+
+{{< include _init.qmd >}}
+
+Any 'ggplot' graphic can be turned into a  'ggiraph' graphic by calling `girafe()` function.
+
+It extends ggplot2 with:
+
+-   interactive `geom` functions: `geom_point_interactive()`, `geom_col_interactive`, etc.
+-   interactive `scale` functions: `scale_color_continuous_interactive()`, `scale_fill_manual_interactive()`, etc.
+-   interactive `facet` functions: `facet_wrap_interactive()` and `facet_grid_interactive()` that both work with `labeller_interactive()`.
+-   interactive `guide` functions: `guide_colorbar_interactive()`, `guide_colourbar_interactive()`, `guide_legend_interactive()`.
+-   interactive `theme` elements: `element_line_interactive()`, `element_rect_interactive()`, `element_text_interactive()`, `label_interactive`.
+
+These understand three main aesthetics to let you add interactivity:
+
+-   `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements.
+-   `data_id`: column of dataset that contains id to be associated with elements. **This aesthetic is mandatory when you want to use an hover effect or when you want to enable selection of points in shiny applications.**
+-   `onclick`: column of dataset that contains javascript function to be executed when elements are clicked.
+
+## Interactive geoms
+
+The following example use column 'carname' as tooltip value and as identifier for 
+animations. The following 'ggiraph' features are used:
+- Elements associated with a `tooltip` are animated upon mouse over with the corresponding tooltip.
+- Elements associated with a `data_id` are animated upon mouse over. Note that `data_id` can also be reused within a shiny application as a reactive value.
+- Option `hover_nearest=TRUE` makes the hover effect applied on the nearest element while moving the mouse (in this case it is mandatory to also set the `data_id` parameter).
+
+
+```{r}
+library(ggiraph)
+library(tidyverse)
+
+mtcars_db <- rownames_to_column(mtcars, var = "carname")
+
+gg <- ggplot(
+  data = mtcars_db,
+  mapping = aes(
+    x = disp, y = qsec,
+    # here we add iteractive aesthetics
+    tooltip = carname, data_id = carname
+  )
+) +
+  geom_point_interactive(
+    size = 3, hover_nearest = TRUE
+  )
+
+# turn as girafe
+girafe(ggobj = gg)
+```
+
+The same principle applies to all usual ggplot geometries. 
+Let's illustrate now with an interactive bar chart. The bars
+are animated according to their values in column 'cut'.
+
+```{r}
+p1 <- ggplot(
+  data = diamonds,
+  mapping = aes(x = color, fill = cut, data_id = cut)
+) +
+  geom_bar_interactive(
+    aes(tooltip = sprintf("%s: %.0f", fill, after_stat(count))),
+    size = 3
+  )
+
+girafe(ggobj = p1)
+```
+
+## Interactive scales
+
+Scales can also be made interactive with many 'scale' functions,
+for example `scale_fill_manual_interactive()`:
+
+```{r}
+p1 <- p1 + scale_fill_manual_interactive(
+  values = c(
+    Fair = "#0072B2", Good = "#009E73",
+    "Very Good" = "yellow", "Premium" = "orange",
+    "Ideal" = "red"
+  ),
+  data_id = function(x) x, tooltip = function(x) x
+)
+
+girafe(ggobj = p1)
+```
+
+
+## Interactive faceting
+
+By using `facet_wrap_interactive()` and `labeller_interactive`, it is possible to make the strips interactive. 
+
+The following code add interactivity on text of strips instead of background of strips 
+because we use the transparent theme.
+
+```{r fig.height=9, fig.width=9}
+p2 <- p1 + facet_wrap_interactive(
+  ncol = 2, interactive_on = "text",
+  vars(clarity),
+  labeller = labeller_interactive(aes(
+    tooltip = paste("this is clarity", clarity), data_id = clarity
+  ))
+)
+
+girafe(ggobj = p2)
+```
+
+This feature is handy in shiny applications where users can click on a 
+strip to operate calculations only on the corresponding subset.
+
+## Interactive themes
+
+```{r}
+p2 <- p1 + labs(title = "This is an interactive title") +
+  theme(
+    plot.title = element_text_interactive(
+      data_id = "plot.title",
+      tooltip = "plot title",
+      hover_css = "fill:red;stroke:none;"
+    )
+  )
+girafe(
+  ggobj = p2,
+  options = list(opts_toolbar(saveaspng = FALSE), opts_zoom(max = 1))
+)
+```
+
+## Click actions with JavaScript
+
+Click actions must be a string column in the dataset containing valid javascript instructions.
+The `onclick` argument can be used to specify a JavaScript function 
+that should be executed when a point, bar or any graphical element is clicked.
+
+Here is an example of how you might use the onclick argument in the ggiraph package:
+
+```{r ft_short_strings=TRUE, ft_short_size=20}
+library(flextable)
+library(ggiraph)
+crimes <- readRDS(file = "data/crimes.RDS")
+crimes
+
+library(htmltools)
+
+gg_crime <- ggplot(crimes, aes(x = Murder, y = Assault)) +
+  geom_point_interactive(
+    hover_nearest = TRUE,
+    aes(
+      tooltip = state,
+      onclick = sprintf("window.open(\"http://en.wikipedia.org/wiki/%s\")", state),
+      data_id = state
+    ),
+    size = 3
+  )
+
+girafe(ggobj = gg_crime)
+```
+
+
+## Events within shiny
+
+When working with shiny, you can use the `data_id` aesthetic to associate points, polygons and other graphical elements with a value that will be available in a reactive context. This makes it possible to click on an element and trigger an action. 'ggiraph' provides a reactive value with click and with hovering actions.
+
+`data_id` aesthetic is a great and easy way to trigger actions when an element such as a point or a region on a map is clicked. The selected `data_id` for elements in panels, scales and themes are stored in 3 different reactive values. [Read more about shiny integration] in #shiny.
+
+
+## Arrange multiple plots into a grid
+
+There are two avalaible options to arrange ggiraph outputs into a grid. As
+'ggiraph' is a 'ggplot' extensions, package `cowplot` and `patchwork` can be
+used seamlessly to arrange plots in a grid before calling `girafe()`. 
+
+```{r message=FALSE}
+library(patchwork)
+
+mtcars_db <- mtcars |>
+  rownames_to_column(var = "carname")
+
+gg1 <- ggplot(mtcars_db) +
+  geom_point_interactive(
+    aes(
+      x = drat, y = wt, color = qsec,
+      tooltip = carname, data_id = carname
+    ),
+    hover_nearest = TRUE, size = 3
+  )
+
+gg2 <- ggplot(mtcars_db) +
+  geom_point_interactive(
+    aes(
+      x = qsec, y = disp, color = mpg,
+      tooltip = carname, data_id = carname
+    ),
+    hover_nearest = TRUE, size = 3
+  )
+```
+
+Mouseover points to see where they are located in the other graph.
+
+```{r fig.width=8, fig.height=5}
+girafe(code = print(gg1 + gg2))
+```
+
+
+```{r include=FALSE}
+init_girafe_defaults()
+```

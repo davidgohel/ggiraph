@@ -1,0 +1,68 @@
+
+
+```{r include=FALSE}
+library(knitr)
+library(flextable)
+library(officer)
+library(magrittr)
+library(data.table)
+library(htmltools)
+library(scales)
+library(ggplot2)
+library(grid)
+library(patchwork)
+library(dplyr)
+library(tibble)
+library(systemfonts)
+library(palmerpenguins)
+library(gdtools)
+library(ggiraph)
+
+opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  # fig.path = "static/img/figs/",
+  fig.width = 7, fig.height = 6,
+  ft.tabcolsep = 4,
+  ft.arraystretch = 1.5,
+  ft.shadow = FALSE)
+
+
+set_flextable_defaults(
+  font.family = "Open Sans",
+  font.size = 11, line_spacing = 1.5,
+  padding = 2,
+  big.mark = "",
+  decimal.mark = ".",
+  theme_fun = theme_vanilla,
+  background.color = "white",
+  scroll = list()
+)
+
+flextable_defaults <- get_flextable_defaults()
+use_df_printer()
+
+reset_flextable_defaults <- function(){
+  do.call(set_flextable_defaults, flextable_defaults)
+}
+
+gdtools::register_gfont(family = "Ms Madi")
+gdtools::register_gfont(family = "Open Sans")
+gdtools::register_gfont(family = "Roboto")
+
+css_default_hover <- girafe_css_bicolor(primary = "#f24f26", secondary = "#333333")
+
+set_girafe_defaults(
+  opts_hover = opts_hover(css = css_default_hover, reactive = TRUE),
+  opts_zoom = opts_zoom(min = 1, max = 4),
+  opts_sizing = opts_sizing(rescale = TRUE),
+  opts_toolbar = opts_toolbar(saveaspng = FALSE, position = "top")
+)
+theme_set(
+  theme_minimal(base_family = "Open Sans")
+)
+```
+
+```{r echo=FALSE}
+addGFontHtmlDependency(family = "Open Sans")
+```

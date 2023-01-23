@@ -1,68 +1,58 @@
 on:
   push:
-    branches:
-      - master
+    branches: [main, master]
   pull_request:
-    branches:
-      - master
+    branches: [main, master]
+  workflow_dispatch:
 
-name: pkgdown
+name: quarto-book
 
 jobs:
-  pkgdown:
+  quarto-book:
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, 'sitedeploy')"
+    if: "!contains(github.event.head_commit.message, 'sitedeploy')"
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      GDTOOLS_CACHE_DIR: "/usr/share/fonts/gfonts/"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version: release
           use-public-rspm: true
-
-      - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |
-            any::cowplot
-            any::patchwork
-            any::ggtext
-            any::pkgdown
-            any::data.table
-            any::charlatan
-            any::tidyverse
-            any::ggthemes
-            any::remotes
+          cache-version: 2
+          extra-packages: >
+            any::rcmdcheck
+          needs: check
+          working-directory: vignettes/book/
 
-      - name: Install other dependencies
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          # To install LaTeX to build PDF book
+          tinytex: true
+          version: pre-release
+
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          path: vignettes/book
+      - name: Automatic Linking
         run: |
-          remotes::install_github("davidgohel/gdtools")
-          remotes::install_github("ardata-fr/pkgardata")
+          for(z in list.files(path = 'vignettes/book/_book', pattern = '\\.html', full.names = TRUE)) {downlit::downlit_html_path(in_path = z, out_path = z)}
         shell: Rscript {0}
 
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: vignettes/book/_book/
+          TARGET_FOLDER: '.' # The folder the action should deploy.
+          CLEAN: true
 
-      - name: "Install 'Google Fonts'"
-        run: |
-          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Open Sans'))")
-          sudo -s eval "$fontreq"
-          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Roboto'))")
-          sudo -s eval "$fontreq"
-          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Fira Code'))")
-          sudo -s eval "$fontreq"
-          fontreq=$(Rscript -e "cat(gdtools::install_gfont_script(family = 'Ms Madi'))")
-          sudo -s eval "$fontreq"
-        shell: bash
-
-
-      - name: Install package
-        run: R CMD INSTALL .
-
-      - name: Deploy package
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE, clean = TRUE)'

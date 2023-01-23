@@ -1,0 +1,120 @@
+# Examples
+
+{{< include _init.qmd >}}
+
+
+## CEO departures
+
+Thank to Martín Pons that kindly shared his code with us.
+
+The following code is an adaptation of Martin's script (https://github.com/MartinPons/tidytuesday_MartinPons/blob/master/2021-17/ceos.R).
+
+The following packages will be used:
+
+```{r message=FALSE}
+library(ggtext)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(ggiraph)
+library(glue)
+```
+
+First let's define some color variables and labels 
+to make the ggplot code lighter and get a clear script.
+
+```{r}
+voluntary_col <- "#894843"
+involuntary_col <- "#887d74"
+bg_color <- "#D7E0DA"
+font_color <- "#1f3225"
+hover_color <- "#4c6061"
+
+title <- "CEO DEPARTURES"
+
+subtitle <- glue("CEO **<span style = 'color:{voluntary_col}'>voluntary</span>** and 
+**<span style= 'color:{involuntary_col}'>involuntary</span>** departures 
+in the 20 *S&P 1500* firms<br>with most CEO rotation between 1993 and 2018")
+
+caption <- "Data comes from Gentry et al. Facilitated by DatalsPlural. Visualization by Martín Pons | @MartinPonsM"
+```
+
+
+
+The ggplot theme defined below is used to produce the graphic:
+
+```{r}
+departures_theme <- theme(
+  text = element_text(color = font_color, family = "Open Sans"),
+  plot.title = element_text(hjust = 0.5),
+  plot.subtitle = element_textbox(halign = .5, hjust = .5, family = "Open Sans", size = 8),
+  plot.caption = element_text(size = 6, hjust = .9),
+  plot.background = element_rect(fill = bg_color, color = bg_color),
+  panel.background = element_rect(fill = bg_color, color = bg_color),
+  axis.title = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks = element_blank(),
+  panel.grid = element_blank()
+)
+```
+
+The data is read and an aggregation is computed.
+
+```{r ft_max_row=4}
+departures <- readRDS('data/departures.RDS')
+departures
+# get number of voluntary and involuntary departures
+departure_firms_main_cause <- departures %>%
+  count(coname, main_cause) %>%
+  pivot_wider(
+    names_from = main_cause, values_from = n,
+    values_fill = 0) %>% 
+  mutate(
+    firm_label = glue("{coname}:\nVoluntary departures: {voluntary}\nInvoluntary departures: {involuntary}")
+  )
+departure_firms_main_cause
+```
+
+It's now easy to produce the code that will create 
+the interactive (or static) ggplot graphic.
+
+```{r dev.args=list(bg = bg_color)}
+gg_departures <- ggplot(data = departures, mapping = aes(fyear)) +
+  geom_col_interactive(
+    mapping = aes(y = 1, fill = main_cause, 
+                  tooltip = tooltip, data_id = coname),
+    color = bg_color, linewidth = 1, show.legend = FALSE) +
+  geom_text_interactive(
+    data = departure_firms_main_cause, 
+    aes(x = 1994, y = 9.2, label = firm_label, data_id = coname),
+    color = hover_color, size = 2.5, hjust = "left", alpha = 0) +
+  labs(title = title, subtitle = subtitle, caption = caption) +
+  scale_fill_manual(values = c(voluntary_col, involuntary_col)) +
+  scale_x_continuous(labels = formatC, breaks = seq(1995, 2015, by=5)) +
+  departures_theme +
+  coord_equal()
+```
+
+Now let's convert the static graphic to a dynamic graphic:
+
+```{r}
+girafe(
+  ggobj = gg_departures, 
+  bg = bg_color,
+  options = list(
+    opts_tooltip(
+      opacity = 0.8, use_fill = TRUE,
+      use_stroke = FALSE, 
+      css = "padding:5pt;font-family: Open Sans;font-size:1rem;color:white"),
+    opts_hover_inv(css = "opacity:0.4"), 
+    opts_toolbar(saveaspng = FALSE),
+    opts_zoom(max = 1),
+    opts_hover(
+      css = girafe_css(
+        css = glue("fill:{font_color};"),
+        text = glue("stroke:none;fill:{font_color};fill-opacity:1;")
+      ))
+  )
+)
+```
+
