@@ -10,7 +10,6 @@ name: quarto-book
 jobs:
   quarto-book:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'sitedeploy')"
     # Only restrict concurrency for non-PR jobs
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
