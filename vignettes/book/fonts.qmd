@@ -57,7 +57,7 @@ gg <- ggplot(dat, aes(drat, carname)) +
 
 validated_fonts(list(sans = "Open Sans"))
 
-ggiraph(ggobj = gg, fonts = list(sans = "Open Sans"))
+girafe(ggobj = gg, fonts = list(sans = "Open Sans"))
 ```
 
 Or use ggplot2 usual features related to fonts, i.e. `element_text(family = "Arial")`, 
@@ -68,7 +68,7 @@ gg <- ggplot(dat, aes(drat, carname)) +
   geom_point() + 
   theme_minimal(base_family = "Open Sans")
 
-ggiraph(ggobj = gg)
+girafe(ggobj = gg)
 ```
 
 ## Example
@@ -101,7 +101,7 @@ gg <- ggplot(dat, aes(drat, carname)) +
     axis.text.y = element_text(family = "Roboto", face = "bold")
   ) 
 
-ggiraph(ggobj = gg, fonts = list(sans = "Open Sans"))
+girafe(ggobj = gg, fonts = list(sans = "Open Sans"))
 ```
 
 ## Shiny illustration
