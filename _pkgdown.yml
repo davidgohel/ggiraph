@@ -1,10 +1,22 @@
-destination: docs
+url: https://davidgohel.github.io/ggiraph/
+
+authors:
+  David Gohel:
+    href: https://www.ardata.fr
 
 title: ggiraph package
 
+development:
+  mode: auto
+
 template:
-  package: pkgardata
+  bootstrap: 5
+  theme: breeze-light
   bootswatch: simplex
+  bslib:
+    pkgdown-nav-height: 100px
+    base_font:
+      google: "Open Sans"
 
 home:
   links:
@@ -70,16 +82,8 @@ navbar:
   left:
   - text: Home
     href: index.html
-  - text: Using ggiraph
-    href: articles/offcran/using_ggiraph.html
-  - text: Customizing girafe objects
-    href: articles/offcran/customizing.html
-  - text: Shiny usage
-    href: articles/offcran/shiny.html
-  - text: Fonts
-    href: articles/offcran/fonts.html
-  - text: Examples
-    href: articles/offcran/examples.html
+  - text: ggiraph-book
+    href: https://www.ardata.fr/ggiraph-book/
   - text: Function reference
     href: reference/index.html
   right:
