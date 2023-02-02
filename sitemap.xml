@@ -1,285 +1,285 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/404.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/overview.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/articles/overview.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/annotate_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/annotate_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/annotation_raster_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/annotation_raster_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/dsvg.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/dsvg.html</loc>
   </url>
   <url>
-    <loc>/reference/dsvg_view.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/dsvg_view.html</loc>
   </url>
   <url>
-    <loc>/reference/element_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/element_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/facet_grid_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/facet_grid_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/facet_wrap_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/facet_wrap_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/font_family_exists.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/font_family_exists.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_abline_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_abline_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_bar_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_bar_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_bin_2d_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_bin_2d_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_boxplot_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_boxplot_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_contour_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_contour_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_count_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_count_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_crossbar_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_crossbar_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_density_2d_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_density_2d_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_density_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_density_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_dotplot_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_dotplot_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_errorbarh_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_errorbarh_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_hex_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_hex_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_histogram_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_histogram_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_jitter_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_jitter_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_map_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_map_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_path_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_path_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_point_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_point_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_polygon_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_polygon_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_quantile_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_quantile_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_raster_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_raster_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_rect_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_rect_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_ribbon_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_ribbon_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_segment_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_segment_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_sf_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_sf_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_smooth_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_smooth_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_spoke_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_spoke_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_text_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_text_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_text_repel_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_text_repel_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/geom_violin_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/geom_violin_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/ggiraph-ggproto.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/ggiraph-ggproto.html</loc>
   </url>
   <url>
-    <loc>/reference/ggiraph.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/ggiraph.html</loc>
   </url>
   <url>
-    <loc>/reference/ggiraphOutput.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/ggiraphOutput.html</loc>
   </url>
   <url>
-    <loc>/reference/girafe.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/girafe.html</loc>
   </url>
   <url>
-    <loc>/reference/girafeOutput.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/girafeOutput.html</loc>
   </url>
   <url>
-    <loc>/reference/girafe_css.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/girafe_css.html</loc>
   </url>
   <url>
-    <loc>/reference/girafe_css_bicolor.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/girafe_css_bicolor.html</loc>
   </url>
   <url>
-    <loc>/reference/girafe_defaults.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/girafe_defaults.html</loc>
   </url>
   <url>
-    <loc>/reference/girafe_options.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/girafe_options.html</loc>
   </url>
   <url>
-    <loc>/reference/guide_bins_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/guide_bins_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/guide_colourbar_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/guide_colourbar_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/guide_coloursteps_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/guide_coloursteps_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/guide_legend_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/guide_legend_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/init_girafe_defaults.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/init_girafe_defaults.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_circle_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_circle_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_curve_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_curve_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_parameters.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_path_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_path_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_points_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_points_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_polygon_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_polygon_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_polyline_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_polyline_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_raster_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_raster_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_rect_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_rect_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_roundrect_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_roundrect_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_segments_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_segments_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/interactive_text_grob.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/interactive_text_grob.html</loc>
   </url>
   <url>
-    <loc>/reference/label_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/label_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/labeller_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/labeller_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/match_family.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/match_family.html</loc>
   </url>
   <url>
-    <loc>/reference/opts_hover.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/opts_hover.html</loc>
   </url>
   <url>
-    <loc>/reference/opts_selection.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/opts_selection.html</loc>
   </url>
   <url>
-    <loc>/reference/opts_sizing.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/opts_sizing.html</loc>
   </url>
   <url>
-    <loc>/reference/opts_toolbar.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/opts_toolbar.html</loc>
   </url>
   <url>
-    <loc>/reference/opts_tooltip.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/opts_tooltip.html</loc>
   </url>
   <url>
-    <loc>/reference/opts_zoom.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/opts_zoom.html</loc>
   </url>
   <url>
-    <loc>/reference/renderGirafe.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/renderGirafe.html</loc>
   </url>
   <url>
-    <loc>/reference/renderggiraph.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/renderggiraph.html</loc>
   </url>
   <url>
-    <loc>/reference/run_girafe_example.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/run_girafe_example.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_alpha_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_alpha_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_colour_brewer_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_colour_brewer_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_colour_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_colour_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_colour_steps_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_colour_steps_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_gradient_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_gradient_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_linetype_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_linetype_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_manual_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_manual_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_shape_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_shape_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_size_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_size_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/scale_viridis_interactive.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/scale_viridis_interactive.html</loc>
   </url>
   <url>
-    <loc>/reference/set_girafe_defaults.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/set_girafe_defaults.html</loc>
   </url>
   <url>
-    <loc>/reference/validated_fonts.html</loc>
+    <loc>https://davidgohel.github.io/ggiraph/reference/validated_fonts.html</loc>
   </url>
 </urlset>
