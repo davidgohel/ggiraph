@@ -15,6 +15,9 @@ ggiraphOutput(outputId, width = "100\%", height = "500px")
 }
 \description{
 Render a ggiraph within an application page.
+
+This function is now deprecated, users should
+now use function \code{\link[=girafeOutput]{girafeOutput()}}.
 }
 \examples{
 \dontrun{

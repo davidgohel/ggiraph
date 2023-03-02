@@ -15,6 +15,9 @@ renderggiraph(expr, env = parent.frame(), quoted = FALSE)
 }
 \description{
 Makes a reactive version of a ggiraph object for use in Shiny.
+
+This function is now deprecated, users should
+now use function \code{\link[=renderGirafe]{renderGirafe()}}.
 }
 \examples{
 \dontrun{

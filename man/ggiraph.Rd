@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggiraph.R
 \name{ggiraph}
 \alias{ggiraph}
-\title{Create a ggiraph object}
+\title{Create a ggiraph object (deprecated)}
 \usage{
 ggiraph(
   code,
@@ -70,8 +70,8 @@ the current path for temporary files is used.}
 \description{
 Create an interactive graphic to be used in a web browser.
 
-This function is maintained for backward compatibility reasons, user should
-now use function \code{\link[=girafe]{girafe()}} and \code{\link[=girafe_options]{girafe_options()}}.
+This function is now deprected, users should
+now use function \code{\link[=girafe]{girafe()}}.
 }
 \examples{
 # ggiraph simple example -------

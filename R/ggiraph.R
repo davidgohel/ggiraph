@@ -4,12 +4,12 @@
 #' @import ggplot2
 #' @importFrom grDevices dev.off
 
-#' @title Create a ggiraph object
+#' @title Create a ggiraph object (deprecated)
 #'
 #' @description Create an interactive graphic to be used in a web browser.
 #'
-#' This function is maintained for backward compatibility reasons, user should
-#' now use function [girafe()] and [girafe_options()].
+#' This function is now deprected, users should
+#' now use function [girafe()].
 #'
 #' @inheritParams girafe
 #' @param width widget width ratio (0 < width <= 1).
@@ -45,7 +45,7 @@ ggiraph <- function(code, ggobj = NULL,
                     selected_css = NULL,
                     dep_dir = NULL,
                     ...) {
-
+  .Deprecated(new = "girafe")
   if( !missing(dep_dir) ){
     warning("argument `dep_dir` has been deprecated.")
   }
@@ -78,6 +78,8 @@ ggiraph <- function(code, ggobj = NULL,
 #' @title Create a ggiraph output element
 #' @description Render a ggiraph within an application page.
 #'
+#' This function is now deprecated, users should
+#' now use function [girafeOutput()].
 #' @param outputId output variable to read the ggiraph from.
 #' @param width widget width
 #' @param height widget height
@@ -94,11 +96,7 @@ ggiraph <- function(code, ggobj = NULL,
 #' }
 #' @export
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
-  # if( "auto" %in% height )
-  #   stop("'height:auto' is not supported", call. = FALSE)
-  # if( "auto" %in% width )
-  #   stop("'width:auto' is not supported", call. = FALSE)
-
+  .Deprecated(new = "girafeOutput")
   shinyWidgetOutput(outputId, 'girafe', package = 'ggiraph', width = width, height = height)
 }
 
@@ -106,6 +104,8 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #'
 #' @description Makes a reactive version of a ggiraph object for use in Shiny.
 #'
+#' This function is now deprecated, users should
+#' now use function [renderGirafe()].
 #' @param expr An expression that returns a [ggiraph()] object.
 #' @param env The environment in which to evaluate expr.
 #' @param quoted Is `expr` a quoted expression
@@ -118,7 +118,8 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #' }
 #' @export
 renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
-	if (!quoted) { expr <- substitute(expr) } # force quoted
+  .Deprecated(new = "renderGirafe")
+  if (!quoted) { expr <- substitute(expr) } # force quoted
 	shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
 }
 
