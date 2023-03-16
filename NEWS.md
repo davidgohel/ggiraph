@@ -4,6 +4,11 @@
 
 - deprecation of `ggiraph()`, `ggiraphOutput()` and `renderggiraph()`.
 
+## Issues 
+
+- grid makeContext for CRAN check
+- drop cpp11 requirement
+
 # ggiraph 0.8.6
 
 ## features

@@ -33,7 +33,8 @@ GeomInteractiveDotplot <- ggproto(
 )
 
 #' @export
-makeContext.interactive_dotstack_grob <- function(x, recording = TRUE) {
+#' @importFrom grid makeContext
+makeContext.interactive_dotstack_grob <- function(x) {
   gr <- NextMethod()
   add_interactive_attrs(
     gr,
