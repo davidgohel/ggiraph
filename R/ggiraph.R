@@ -21,6 +21,7 @@
 #' @param dep_dir Deprecated; the path where the output files are stored. If `NULL`,
 #'  the current path for temporary files is used.
 #' @export
+#' @keywords internal
 ggiraph <- function(code, ggobj = NULL,
                     pointsize = 12,
                     width = .75,
@@ -86,6 +87,7 @@ ggiraph <- function(code, ggobj = NULL,
 #' }
 #' }
 #' @export
+#' @keywords internal
 ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
   .Deprecated(new = "girafeOutput")
   shinyWidgetOutput(outputId, 'girafe', package = 'ggiraph', width = width, height = height)
@@ -108,6 +110,7 @@ ggiraphOutput <- function(outputId, width = "100%", height = "500px"){
 #' }
 #' }
 #' @export
+#' @keywords internal
 renderggiraph <- function(expr, env = parent.frame(), quoted = FALSE) {
   .Deprecated(new = "renderGirafe")
   if (!quoted) { expr <- substitute(expr) } # force quoted

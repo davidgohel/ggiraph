@@ -28,7 +28,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            any::gdtools
+            any::pkgdown
 
       - name: "Install 'Google Fonts'"
         run: |

@@ -73,3 +73,4 @@ Create an interactive graphic to be used in a web browser.
 This function is now deprecated, users should
 now use function \code{\link[=girafe]{girafe()}}.
 }
+\keyword{internal}

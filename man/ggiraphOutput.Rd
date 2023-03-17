@@ -31,3 +31,4 @@ if( require(shiny) && interactive() ){
 }
 }
 }
+\keyword{internal}
