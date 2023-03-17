@@ -1,3 +1,4 @@
+#' @importFrom htmltools htmlDependency
 #' @title Create a girafe object
 #'
 #' @description Create an interactive graphic with a ggplot object
@@ -51,7 +52,7 @@
 #'     tooltip = carname, data_id = carname) ) +
 #'   geom_point_interactive() + theme_minimal()
 #'
-#' x <- girafe(ggobj = gg_point, width = 0.7)
+#' x <- girafe(ggobj = gg_point)
 #'
 #' if(interactive()){
 #'   print(x)
@@ -156,6 +157,10 @@ girafe <- function(
 
 
 
+#' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget
+#' @import grid
+#' @import ggplot2
+#' @importFrom grDevices dev.off
 #' @title Create a girafe output element
 #' @description Render a girafe within an application page.
 #'

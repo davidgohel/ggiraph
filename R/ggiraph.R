@@ -1,14 +1,8 @@
-#' @importFrom htmltools htmlDependency
-#' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget
-#' @import grid
-#' @import ggplot2
-#' @importFrom grDevices dev.off
-
 #' @title Create a ggiraph object (deprecated)
 #'
 #' @description Create an interactive graphic to be used in a web browser.
 #'
-#' This function is now deprected, users should
+#' This function is now deprecated, users should
 #' now use function [girafe()].
 #'
 #' @inheritParams girafe
@@ -26,9 +20,6 @@
 #' @param selected_css css to apply when element is selected (shiny only).
 #' @param dep_dir Deprecated; the path where the output files are stored. If `NULL`,
 #'  the current path for temporary files is used.
-#' @examples
-#' # ggiraph simple example -------
-#' @example examples/geom_point_interactive.R
 #' @export
 ggiraph <- function(code, ggobj = NULL,
                     pointsize = 12,
@@ -45,27 +36,27 @@ ggiraph <- function(code, ggobj = NULL,
                     selected_css = NULL,
                     dep_dir = NULL,
                     ...) {
-  .Deprecated(new = "girafe")
+  message("Function `ggiraph()` is replaced by `girafe()` and will be removed soon.")
   if( !missing(dep_dir) ){
     warning("argument `dep_dir` has been deprecated.")
   }
 
   x <- girafe(code = code, ggobj = ggobj, pointsize = pointsize,
-         width_svg = width_svg, height_svg = height_svg, ...)
+              width_svg = width_svg, height_svg = height_svg, ...)
   x <- girafe_options(
     x = x,
     opts_tooltip(css = tooltip_extra_css,
-                opacity = tooltip_opacity,
-                use_cursor_pos = TRUE,
-                offx = tooltip_offx, offy = tooltip_offy,
-                delay_mouseover = 200, delay_mouseout = 500,
-                zindex = tooltip_zindex),
+                 opacity = tooltip_opacity,
+                 use_cursor_pos = TRUE,
+                 offx = tooltip_offx, offy = tooltip_offy,
+                 delay_mouseover = 200, delay_mouseout = 500,
+                 zindex = tooltip_zindex),
     opts_zoom(min = 1, max = zoom_max),
     opts_selection(type = selection_type, css = selected_css),
     opts_toolbar(position = "top", saveaspng = FALSE),
     opts_hover(css = hover_css),
     opts_sizing(rescale = TRUE, width = width)
-    )
+  )
 
   # fix for package ceterisParibus unit tests
   class(x) <- unique( c(class(x), "ggiraph"))

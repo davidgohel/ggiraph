@@ -112,7 +112,7 @@ gg_point = ggplot( data = dataset,
     tooltip = carname, data_id = carname) ) +
   geom_point_interactive() + theme_minimal()
 
-x <- girafe(ggobj = gg_point, width = 0.7)
+x <- girafe(ggobj = gg_point)
 
 if(interactive()){
   print(x)
