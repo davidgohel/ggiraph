@@ -1,3 +1,9 @@
+# ggiraph 0.8.8
+
+## Issues 
+
+- ensure compatibility with upcoming ggplot2 v3.4.3
+
 # ggiraph 0.8.7
 
 ## Changes

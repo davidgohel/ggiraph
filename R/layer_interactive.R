@@ -19,7 +19,7 @@ layer_interactive <- function(layer_func,
   ipar <- get_default_ipar(extra_interactive_params)
   # check if it contains interactive aesthetics
   if (index > 0 &&
-      has_interactive_attrs(args[[index]], ipar = ipar)) {
+    has_interactive_attrs(args[[index]], ipar = ipar)) {
     interactive_mapping <-
       get_interactive_attrs(args[[index]], ipar = ipar)
     args[[index]] <-
@@ -62,7 +62,7 @@ layer_interactive <- function(layer_func,
     default_aes_names <- names(layer_$geom$default_aes)
     missing_names <- setdiff(ipar, default_aes_names)
     if (length(missing_names) > 0) {
-      defaults <- Map(missing_names, f=function(x) NULL)
+      defaults <- Map(missing_names, f = function(x) NULL)
       layer_$geom$default_aes <- append_aes(layer_$geom$default_aes, defaults)
     }
 
@@ -75,34 +75,36 @@ layer_interactive <- function(layer_func,
   result
 }
 
-#' Finds an interactive geom class derived from a ggplot2 geom class.
+#' Finds an interactive class derived from a ggplot2 geom/guide class.
 #' @noRd
-find_interactive_class <- function(geom, env = parent.frame()) {
-  if (inherits(geom, "Geom")) {
-    name <- class(geom)[1]
-  } else if (is.character(geom) && length(geom) == 1) {
-    name <- geom
+find_interactive_class <- function(gg, baseclass = c("Geom", "Guide"), env = parent.frame()) {
+  baseclass <- arg_match(baseclass)
+  if (inherits(gg, baseclass)) {
+    name <- class(gg)[1]
+  } else if (is.character(gg) && length(gg) == 1) {
+    name <- gg
     if (name == "histogram") {
       name <- "bar"
     }
   } else {
-    abort("`geom` must be either a string or a Geom* object, ",
-         "not ",
-         obj_desc(geom),
-         call = NULL)
+    abort(
+      paste0("`gg` must be either a string or a ", baseclass, "* object, not ", obj_desc(gg)),
+      call = NULL
+    )
   }
-  if (!startsWith(name, "Geom")) {
-    name <- paste0("Geom", camelize(name, first = TRUE))
+  if (!startsWith(name, baseclass)) {
+    name <- paste0(baseclass, camelize(name, first = TRUE))
   }
-  if (!startsWith(name, "GeomInteractive")) {
-    name <- sub("Geom", "GeomInteractive", name)
+  baseinteractive <- paste0(baseclass, "Interactive")
+  if (!startsWith(name, baseinteractive)) {
+    name <- sub(baseclass, baseinteractive, name)
   }
   obj <- find_global(name, env = env)
-  if (is.null(obj) || !inherits(obj, "Geom")) {
-    abort("Can't find interactive geom function called \"",
-         geom,
-         "\"",
-         call = NULL)
+  if (is.null(obj) || !inherits(obj, baseclass)) {
+    abort(
+      paste0("Can't find interactive ", baseclass, " function based on ", as_label(gg)),
+      call = NULL
+    )
   } else {
     obj
   }

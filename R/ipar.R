@@ -61,25 +61,24 @@
 #' the type of the guide used.
 #' The guides do not accept any interactive parameter directly, they receive them from the scales.
 #'
-#' \itemize{
-#'   \item When guide of type `legend` or `bins` is used, it will be converted to a
-#'   [guide_legend_interactive()] or [guide_bins_interactive()] respectively,
-#'   if it's not already.
+#' When guide of type `legend`, `bins`, `colourbar` or `coloursteps` is used,
+#' it will be converted to a [guide_legend_interactive()], [guide_bins_interactive()],
+#' [guide_colourbar_interactive()] or [guide_coloursteps_interactive()] respectively,
+#' if it's not already.
 #'
-#'   The length of each scale interactive parameter vector should match the length of the breaks.
-#'   It can also be a named vector, where each name should correspond to the same break name.
-#'   It can also be defined as function that takes the breaks as input and returns a named or
-#'   unnamed vector of values as output.
+#' The length of each scale interactive parameter vector should match the length of the breaks.
+#' It can also be a named vector, where each name should correspond to the same break name.
+#' It can also be defined as function that takes the breaks as input and returns a named or
+#' unnamed vector of values as output.
 #'
-#'   The interactive parameters here, give interactivity only to the key elements of the guide.
+#' For binned guides like `bins` and `coloursteps` the breaks include the label breaks and the limits.
+#' The number of bins will be one less than the number of breaks and the interactive parameters can be
+#' constructed for each bin separately (look at the examples).
+#' For `colourbar` guide in raster mode, the breaks vector, is scalar 1 always, meaning the interactive
+#' parameters should be scalar too. For `colourbar` guide in non-raster mode, the bar is drawn using
+#' rectangles, and the breaks are the midpoints of each rectangle.
 #'
-#'   \item When guide of type `colourbar` or `coloursteps` is used, it will be converted to a
-#'   [guide_colourbar_interactive()] or [guide_coloursteps_interactive()]
-#'   respectively, if it's not already.
-#'
-#'   The scale interactive parameters in this case should be scalar values and give interactivity
-#'   to the colorbar only.
-#' }
+#' The interactive parameters here, give interactivity only to the key elements of the guide.
 #'
 #' To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
 #' the relevant theme elements or relevant guide arguments can be used.
