@@ -108,7 +108,7 @@ copy_interactive_attrs_from_scale <- function(guide, scale, ipar = get_ipar(scal
           ), lbl_ip[[i]])
           do.call(label_interactive, args)
         })
-        if (guide$reverse) {
+        if (guide$reverse %||% guide$params$reverse) {
           labels <- rev(labels)
         }
         key$.label <- labels
@@ -138,10 +138,10 @@ copy_interactive_attrs_from_scale <- function(guide, scale, ipar = get_ipar(scal
 }
 
 # checks that all key ipar is in guide$geoms data
-check_guide_key_geoms <- function(guide) {
+check_guide_key_geoms <- function(guide, field = "geoms") {
   if (!is.null(guide)) {
     ipar = get_ipar(guide)
-    guide$geoms <- lapply(guide$geoms, function(g) {
+    guide[[field]] <- lapply(guide[[field]], function(g) {
       missing_names <- setdiff(ipar, names(g$data))
       missing_names <- intersect(missing_names, names(guide$key))
       if (length(missing_names)) {
@@ -170,3 +170,4 @@ ggproto_guide_interactive <- function(guide) {
     }
   )
 }
+
