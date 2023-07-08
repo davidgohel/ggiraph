@@ -17,6 +17,25 @@
 guide_legend_interactive <- function(...)
   guide_interactive(guide_legend, "interactive_legend", ...)
 
+ggproto_legend_interactive <- function(guide) {
+  force(guide)
+  ggproto(
+    NULL, guide,
+    train = function(params, scale, aesthetic = NULL, ...) {
+      out <- guide$train(params, scale, aesthetic, ...)
+      if (!is.null(out)) {
+        out <- copy_interactive_attrs_from_scale(out, scale)
+      }
+      out
+    },
+    get_layer_key = function(params, layers) {
+      out <- guide$get_layer_key(params, layers)
+      out <- check_guide_key_geoms(out, "decor")
+      out
+    }
+  )
+}
+
 #' @export
 #' @importFrom purrr imap
 guide_train.interactive_legend <- function(guide,

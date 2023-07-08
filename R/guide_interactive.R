@@ -152,3 +152,17 @@ check_guide_key_geoms <- function(guide) {
   guide
 }
 
+ggproto_guide_interactive <- function(guide) {
+  force(guide)
+  ggproto(
+    "GuideInteractive", guide,
+    override_elements = function(params, elements, theme) {
+      elements <- guide$override_elements(params, elements, theme)
+      elements$title <- as_interactive_element_text(elements$title)
+      attr(elements$title, "data_attr") <- "key-id"
+      elements$text <- as_interactive_element_text(elements$text)
+      attr(elements$text, "data_attr") <- "key-id"
+      elements
+    }
+  )
+}

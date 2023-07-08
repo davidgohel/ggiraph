@@ -14,6 +14,34 @@
 guide_colourbar_interactive <- function(...)
   guide_interactive(guide_colourbar, "interactive_colourbar", ...)
 
+ggproto_colourbar_interactive <- function(guide) {
+  force(guide)
+  ggproto(
+    NULL, guide,
+    train = function(params, scale, aesthetic = NULL, ...) {
+      out <- guide$train(params, scale, aesthetic, ...)
+      if (!is.null(out)) {
+        out$.ipar <- ipar <- get_ipar(scale)
+        out$.interactive <- copy_interactive_attrs(scale, list(), ipar = ipar)
+      }
+      out
+    },
+    draw = function(theme, params) {
+      gtable <- guide$draw(theme, params)
+      ipar <- get_ipar(params)
+      data <- get_interactive_data(params)
+      # set them to the bar
+      barIndex <- which(gtable$layout$name == "bar")
+      gtable$grobs[[barIndex]] <-
+        add_interactive_attrs(gtable$grobs[[barIndex]],
+                              data,
+                              data_attr = "key-id",
+                              ipar = ipar)
+      gtable
+    }
+  )
+}
+
 #' @export
 #' @rdname guide_colourbar_interactive
 guide_colorbar_interactive <- guide_colourbar_interactive
