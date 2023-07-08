@@ -6,8 +6,12 @@ guide_interactive <- function(guide_func,
   args <- list(...)
   # Call default guide function
   guide <- do.call(guide_func, args)
-  class(guide) <- c(cl, "interactive_guide", class(guide))
-  guide
+  if (inherits(guide, "Guide")) {
+    return(ggproto_guide_interactive(guide))
+  } else {
+    class(guide) <- c(cl, "interactive_guide", class(guide))
+    guide
+  }
 }
 
 #' @export

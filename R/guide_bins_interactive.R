@@ -11,8 +11,15 @@
 #' @example examples/scale_viridis_guide_bins_interactive.R
 #' @seealso [interactive_parameters], [girafe()]
 #' @export
-guide_bins_interactive <- function(...)
-  guide_interactive(guide_legend, "interactive_bins", ...)
+guide_bins_interactive <- function(...) {
+  guide <- guide_interactive(guide_legend, "interactive_bins", ...)
+  if (!inherits(guide, "Guide")) {
+    return(guide)
+  } else {
+    ggproto_legend_interactive(guide)
+  }
+}
+
 
 #' @export
 #' @importFrom purrr imap

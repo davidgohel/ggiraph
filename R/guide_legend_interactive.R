@@ -14,8 +14,14 @@
 #' @example examples/scale_viridis_guide_legend_continuous_interactive.R
 #' @seealso [interactive_parameters], [girafe()]
 #' @export
-guide_legend_interactive <- function(...)
-  guide_interactive(guide_legend, "interactive_legend", ...)
+guide_legend_interactive <- function(...) {
+  guide <- guide_interactive(guide_legend, "interactive_legend", ...)
+  if (!inherits(guide, "Guide")) {
+    return(guide)
+  } else {
+    ggproto_legend_interactive(guide)
+  }
+}
 
 ggproto_legend_interactive <- function(guide) {
   force(guide)

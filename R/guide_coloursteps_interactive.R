@@ -11,8 +11,15 @@
 #' @example examples/scale_viridis_guide_coloursteps_interactive.R
 #' @seealso [interactive_parameters], [girafe()]
 #' @export
-guide_coloursteps_interactive <- function(...)
-  guide_interactive(guide_coloursteps, "interactive_coloursteps", ...)
+guide_coloursteps_interactive <- function(...) {
+  guide <- guide_interactive(guide_coloursteps, "interactive_coloursteps", ...)
+  if (!inherits(guide, "Guide")) {
+    return(guide)
+  } else {
+    ggproto_colourbar_interactive(guide)
+  }
+}
+
 
 #' @export
 #' @rdname guide_coloursteps_interactive

@@ -11,8 +11,14 @@
 #' @example examples/scale_gradient_guide_colourbar_interactive.R
 #' @seealso [interactive_parameters], [girafe()]
 #' @export
-guide_colourbar_interactive <- function(...)
-  guide_interactive(guide_colourbar, "interactive_colourbar", ...)
+guide_colourbar_interactive <- function(..., .guide = NULL) {
+  guide <- guide_interactive(guide_colourbar, "interactive_colourbar", ...)
+  if (!inherits(guide, "Guide")) {
+    return(guide)
+  } else {
+    ggproto_colourbar_interactive(guide)
+  }
+}
 
 ggproto_colourbar_interactive <- function(guide) {
   force(guide)
