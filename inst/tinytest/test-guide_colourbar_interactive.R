@@ -13,7 +13,11 @@ source("setup.R")
   scale <- scale_colour_continuous_interactive(
     guide = guide_colourbar(), tooltip = "tooltip"
   )
-  result <- guide_train(guide = scale$guide, scale = scale, aesthetic = "colour")
+  if (inherits(scale$guide, "Guide")) {
+    result <- scale$guide$train(scale$guide$params, scale, aesthetic = "colour")
+  } else {
+    result <- guide_train(guide = scale$guide, scale = scale, aesthetic = "colour")
+  }
   expect_null(result)
 }
 {

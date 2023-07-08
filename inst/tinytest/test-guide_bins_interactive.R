@@ -12,7 +12,11 @@ source("setup.R")
   scale <- scale_size_binned_interactive(
     guide = guide_bins(), tooltip = "tooltip"
   )
-  result <- guide_train(guide = scale$guide, scale = scale, aesthetic = "size")
+  if (inherits(scale$guide, "Guide")) {
+    result <- scale$guide$train(scale$guide$params, scale, aesthetic = "size")
+  } else {
+    result <- guide_train(guide = scale$guide, scale = scale, aesthetic = "size")
+  }
   expect_null(result)
 }
 {
