@@ -32,7 +32,7 @@ scale_interactive <- function(scale_func,
       # the name could be a guide set by guides() and it might be interactive, but also it might not.
       # should we display a warning here?
     }
-  } else if (inherits(sc$guide, "guide_none")) {
+  } else if (inherits(sc$guide, c("guide_none", "GuideNone"))) {
     # exit
     return(sc)
   } else if (inherits(sc$guide, "interactive_guide")) {
@@ -45,6 +45,25 @@ scale_interactive <- function(scale_func,
     class(sc$guide) <- c("interactive_coloursteps", "interactive_guide", class(sc$guide))
   } else if (inherits(sc$guide, "colourbar") || inherits(sc$guide, "colorbar")) {
     class(sc$guide) <- c("interactive_colourbar", "interactive_guide", class(sc$guide))
+  } else if (inherits(sc$guide, "Guide")) {
+    if (!inherits(sc$guide, "GuideInteractive")) {
+      classes <- paste0("Guide", c("Legend", "Bins", "Colourbar", "Coloursteps"))
+      inherit <- inherits(sc$guide, classes, which = TRUE)
+      if (sum(inherit != 0) > 0) {
+        inherit <- which(inherit == min(inherit[inherit != 0]))
+        guide <- ggproto_guide_interactive(sc$guide)
+        sc$guide <- switch(
+          inherit,
+          ggproto_legend_interactive(guide),
+          ggproto_legend_interactive(guide),
+          ggproto_colourbar_interactive(guide),
+          ggproto_colourbar_interactive(guide)
+        )
+      } else {
+        warning("Only `legend`, 'bins', `colourbar` and `coloursteps` guides are supported for interactivity")
+        return(sc)
+      }
+    }
   } else {
     warning("Only `legend`, 'bins', `colourbar` and `coloursteps` guides are supported for interactivity")
     return(sc)
