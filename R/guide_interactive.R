@@ -101,9 +101,9 @@ interactive_guide_train <- function(params, scale, breaks,
       params$.ipar <- ipar
       params$.interactive <- idata
 
-      # continuous scales break the label_interactive struct
+      # continuous scales might break the label_interactive struct
       # and we need to replace the labels
-      if (is.numeric(label_breaks) && !inherits(key$.label, "interactive_label")) {
+      if (is.numeric(label_breaks)) {
         labels <- scale$get_labels(label_breaks)
         if (inherits(labels, "interactive_label")) {
           if (length(labels) != nrow(key)) {

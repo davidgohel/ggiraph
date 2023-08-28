@@ -30,9 +30,6 @@ GuideInteractiveBins <- ggproto(
     }
     params
   },
-  get_bin_breaks = function() {
-
-  },
   override_elements = function(params, elements, theme) {
     elements <- GuideBins$override_elements(params, elements, theme)
     interactive_guide_override_elements(elements)
