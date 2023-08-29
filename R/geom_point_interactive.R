@@ -31,6 +31,53 @@ GeomInteractivePoint <- ggproto(
   draw_panel = function(self, data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
     zz <- GeomPoint$draw_panel(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
-    add_interactive_attrs(zz, coords, ipar = .ipar)
+    x <- add_interactive_attrs(zz, coords, ipar = .ipar)
+
+    shapes <- unique(x$pch)
+    shape_index <- shapes %in% shapes_with_lines
+
+    if (length(shapes) > 1 && any(shape_index)) {
+      # if some shapes contain lines, split the grob to multiple ones:
+      # one grob for all points without these shapes and then
+      # a grob for each different shape
+      shapes_with_lines_present <- intersect(shapes, shapes_with_lines)
+      grobs <- lapply(c(NA, shapes_with_lines_present), function(shape) {
+        partialPointGrob(x, pch = shape)
+      })
+      gTree(children = do.call(gList, grobs))
+    } else {
+      x
+    }
   }
 )
+
+shapes_with_lines <- c(3, 4, 7, 8, 9, 10, 11, 12, 13, 14)
+
+partialPointGrob <- function(gr, pch = NA) {
+  if (is.na(pch)) {
+    index <- !(gr$pch %in% shapes_with_lines)
+  } else {
+    index <- gr$pch %in% pch
+  }
+  if (!any(index)) {
+    return(zeroGrob())
+  }
+  gr$name <- paste0(gr$name, ".", pch)
+  for (m in c("x", "y", "pch", "size")) {
+    if (length(gr[[m]]) > 1) {
+      gr[[m]] <- gr[[m]][index]
+    }
+  }
+  for (m in c("col", "fill", "fontsize", "lwd")) {
+    if (length(gr$gp[[m]]) > 1) {
+      gr$gp[[m]] <- gr$gp[[m]][index]
+    }
+  }
+  ipar <- get_ipar(gr)
+  for (m in ipar) {
+    if (length(gr$.interactive[[m]]) > 1) {
+      gr$.interactive[[m]] <- gr$.interactive[[m]][index]
+    }
+  }
+  gr
+}
