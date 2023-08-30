@@ -1,3 +1,9 @@
+# ggiraph 0.8.8
+
+## Issues 
+
+- Fix issue with interactive points when shapes with lines are used (#252).
+
 # ggiraph 0.8.7
 
 ## Changes
