@@ -61,7 +61,7 @@ dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
     abort("`width` must be a scalar positive number", call = NULL)
   }
   if (!is_valid_number(height) || height <= 0) {
-    abort("`width` must be a scalar positive number", call = NULL)
+    abort("`height` must be a scalar positive number", call = NULL)
   }
   if (!is_valid_string_non_empty(bg)) {
     abort("`bg` must be a non-empty scalar character", call = NULL)
