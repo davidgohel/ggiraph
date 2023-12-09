@@ -10,6 +10,7 @@
 #include "pattern.h"
 #include <stack>
 
+
 /* helper enum for positioning svg elements inside their parent */
 typedef enum {
   /* insert to bottom */
