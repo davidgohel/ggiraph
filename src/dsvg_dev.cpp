@@ -1,7 +1,7 @@
 #include "dsvg_dev.h"
 
 #define CHECK_STACK_NOT_EMPTY(note) \
-  if (contexts->size() < 1) Rf_error("Invalid contexts stack state (%S)", note);
+  if (contexts->size() < 1) Rf_error("Invalid contexts stack state (%s)", note);
 
 DSVG_dev::DSVG_dev(std::string filename_,
                    double width_, double height_,

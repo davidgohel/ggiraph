@@ -3,6 +3,7 @@
 ## Issues 
 
 - Fix issue with interactive points when shapes with lines are used (#252).
+- correct `Rf_error("... (%S)", note);` to  `Rf_error("... (%s)", note);`
 
 # ggiraph 0.8.7
 
