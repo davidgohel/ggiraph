@@ -60,7 +60,7 @@ set.seed(4393)
 dsmall <- diamonds[sample(nrow(diamonds), 1000),]
 p <- ggplot(dsmall, aes(x, y)) +
   stat_density_2d(aes(
-    fill = stat(nlevel),
+    fill = after_stat(nlevel),
     tooltip = paste("nlevel:", after_stat(nlevel))
   ),
   geom = "interactive_polygon") +

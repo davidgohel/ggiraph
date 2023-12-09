@@ -52,7 +52,7 @@ p <- ggplot(diamonds, aes(carat, fill = cut)) +
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)
 
-p <- ggplot(diamonds, aes(carat, stat(count), fill = cut)) +
+p <- ggplot(diamonds, aes(carat, after_stat(count), fill = cut)) +
   geom_density_interactive(aes(tooltip=cut, data_id=cut), position = "fill")
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)
