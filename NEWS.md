@@ -1,3 +1,9 @@
+# ggiraph 0.8.9
+
+## Changes
+
+- adapt to ggplot '3.5.0'
+
 # ggiraph 0.8.8
 
 ## Issues 

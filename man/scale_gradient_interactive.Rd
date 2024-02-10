@@ -55,9 +55,9 @@ and they can be scalar values or vectors, depending on the number of breaks (lev
 the type of the guide used.
 The guides do not accept any interactive parameter directly, they receive them from the scales.
 
-\itemize{
-\item When guide of type \code{legend} or \code{bins} is used, it will be converted to a
-\code{\link[=guide_legend_interactive]{guide_legend_interactive()}} or \code{\link[=guide_bins_interactive]{guide_bins_interactive()}} respectively,
+When guide of type \code{legend}, \code{bins}, \code{colourbar} or \code{coloursteps} is used,
+it will be converted to a \code{\link[=guide_legend_interactive]{guide_legend_interactive()}}, \code{\link[=guide_bins_interactive]{guide_bins_interactive()}},
+\code{\link[=guide_colourbar_interactive]{guide_colourbar_interactive()}} or \code{\link[=guide_coloursteps_interactive]{guide_coloursteps_interactive()}} respectively,
 if it's not already.
 
 The length of each scale interactive parameter vector should match the length of the breaks.
@@ -65,15 +65,14 @@ It can also be a named vector, where each name should correspond to the same bre
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.
 
+For binned guides like \code{bins} and \code{coloursteps} the breaks include the label breaks and the limits.
+The number of bins will be one less than the number of breaks and the interactive parameters can be
+constructed for each bin separately (look at the examples).
+For \code{colourbar} guide in raster mode, the breaks vector, is scalar 1 always, meaning the interactive
+parameters should be scalar too. For \code{colourbar} guide in non-raster mode, the bar is drawn using
+rectangles, and the breaks are the midpoints of each rectangle.
+
 The interactive parameters here, give interactivity only to the key elements of the guide.
-
-\item When guide of type \code{colourbar} or \code{coloursteps} is used, it will be converted to a
-\code{\link[=guide_colourbar_interactive]{guide_colourbar_interactive()}} or \code{\link[=guide_coloursteps_interactive]{guide_coloursteps_interactive()}}
-respectively, if it's not already.
-
-The scale interactive parameters in this case should be scalar values and give interactivity
-to the colorbar only.
-}
 
 To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
 the relevant theme elements or relevant guide arguments can be used.
@@ -95,9 +94,11 @@ p <- ggplot(df, aes(x, y, fill = z, tooltip = "tooltip")) +
   geom_raster_interactive()
 
 # add an interactive scale (guide is colourbar)
-p1 <- p + scale_fill_gradient_interactive(data_id = "colourbar",
-                                          onclick = "alert(\"colourbar\")",
-                                          tooltip = "colourbar")
+p1 <- p + scale_fill_gradient_interactive(
+  data_id = "colourbar",
+  onclick = "alert(\"colourbar\")",
+  tooltip = "colourbar"
+)
 x <- girafe(ggobj = p1)
 if (interactive()) print(x)
 
@@ -114,8 +115,10 @@ p2 <- p + scale_fill_gradient_interactive(
   )
 )
 x <- girafe(ggobj = p2)
-x <- girafe_options(x,
-                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
+x <- girafe_options(
+  x,
+  opts_hover_key(girafe_css("stroke:red", text = "stroke:none;fill:red"))
+)
 if (interactive()) print(x)
 
 # make the legend labels interactive
@@ -130,18 +133,19 @@ p3 <- p + scale_fill_gradient_interactive(
     tooltip = "colourbar"
   ),
   labels = function(breaks) {
-    br <- na.omit(breaks)
-    label_interactive(
-      as.character(breaks),
-      data_id = paste0("colourbar", br),
+    lapply(breaks, function(abreak) label_interactive(
+      as.character(abreak),
+      data_id = paste0("colourbar", abreak),
       onclick = "alert(\"colourbar\")",
-      tooltip = paste0("colourbar", br)
-    )
+      tooltip = paste0("colourbar", abreak)
+    ))
   }
 )
 x <- girafe(ggobj = p3)
-x <- girafe_options(x,
-                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
+x <- girafe_options(
+  x,
+  opts_hover_key(girafe_css("stroke:red", text = "stroke:none;fill:red"))
+)
 if (interactive()) print(x)
 
 # also via the guide
@@ -165,8 +169,10 @@ p4 <- p + scale_fill_gradient_interactive(
   )
 )
 x <- girafe(ggobj = p4)
-x <- girafe_options(x,
-                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
+x <- girafe_options(
+  x,
+  opts_hover_key(girafe_css("stroke:red", text = "stroke:none;fill:red"))
+)
 if (interactive()) print(x)
 
 # make the legend background interactive
@@ -178,8 +184,10 @@ p5 <- p4 + theme(
   )
 )
 x <- girafe(ggobj = p5)
-x <- girafe_options(x,
-                    opts_hover_key(girafe_css("stroke:red", text="stroke:none;fill:red")))
+x <- girafe_options(
+  x,
+  opts_hover_key(girafe_css("stroke:red", text = "stroke:none;fill:red"))
+)
 if (interactive()) print(x)
 }
 \seealso{

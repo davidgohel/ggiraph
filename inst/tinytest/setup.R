@@ -162,9 +162,9 @@ test_grob <- expression({
 test_guide <- expression({
   result <- do.call(name, list())
   # is guide?
-  expect_inherits(result, "guide", info = "result inherits guide")
+  expect_inherits(result, "Guide", info = "result inherits guide")
   # is interactive_guide?
-  expect_inherits(result, "interactive_guide", info = "result inherits interactive_guide")
+  expect_true(startsWith(head(class(result), 1), "GuideInteractive"), info = "result inherits interactive guide")
 })
 
 test_scale <- expression({

@@ -28,6 +28,7 @@
 #' @example examples/labeller_interactive.R
 #' @seealso [labeller()], [label_interactive()], [labellers]
 #' @importFrom rlang eval_tidy
+#' @importFrom purrr imap
 labeller_interactive <- function(.mapping = NULL, ...) {
   # get interactive aesthetics, plus a label parameter
   dots <- list(...)

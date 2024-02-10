@@ -16,7 +16,9 @@
 %   R/geom_segment_interactive.R, R/geom_sf_interactive.R,
 %   R/geom_smooth_interactive.R, R/geom_spoke_interactive.R,
 %   R/geom_text_interactive.R, R/geom_tile_interactive.R,
-%   R/geom_violin_interactive.R, R/geom_vline_interactive.R
+%   R/geom_violin_interactive.R, R/geom_vline_interactive.R,
+%   R/guide_bins_interactive.R, R/guide_colourbar_interactive.R,
+%   R/guide_coloursteps_interactive.R, R/guide_legend_interactive.R
 \docType{data}
 \name{GeomInteractive}
 \alias{GeomInteractive}
@@ -62,6 +64,10 @@
 \alias{GeomInteractiveTile}
 \alias{GeomInteractiveViolin}
 \alias{GeomInteractiveVline}
+\alias{GuideInteractiveBins}
+\alias{GuideInteractiveColourbar}
+\alias{GuideInteractiveColoursteps}
+\alias{GuideInteractiveLegend}
 \title{ggproto classes for ggiraph}
 \description{
 ggproto classes for ggiraph
