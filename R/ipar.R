@@ -228,8 +228,9 @@ add_interactive_attrs <- function(gr,
   anames <- Filter(x = get_interactive_attr_names(data, ipar = ipar), function(a) {
     !is.null(data[[a]])
   })
-  if (length(anames) == 0)
+  if (length(anames) == 0) {
     return(gr)
+  }
 
   # if passed grob is a gTree, loop through the children
   # note that some grobs (like labelgrob) inherit from gTree,
@@ -252,7 +253,6 @@ add_interactive_attrs <- function(gr,
             ipar = anames
           )
       }
-
     } else if (children_len == data_len) {
       # pass the correct data row
       for (i in seq_along(gr$children)) {
@@ -271,7 +271,6 @@ add_interactive_attrs <- function(gr,
       abort("Can't add interactive attrs to gTree", call = NULL)
     }
     return(gr)
-
   } else {
     do_add_interactive_attrs(
       gr = gr,
@@ -294,22 +293,24 @@ do_add_interactive_attrs <- function(gr,
                                      overwrite = TRUE,
                                      data_attr = "data-id",
                                      ipar = IPAR_NAMES) {
-
   # check that is a grob
-  if (!is.grob(gr) || is.zero(gr))
+  if (!is.grob(gr) || is.zero(gr)) {
     return(gr)
+  }
   # check if it's interactive grob already
   isInteractive <- length(grep("interactive_", class(gr))) > 0
   ip <- get_interactive_data(gr)
   if (length(rows) == 0) {
     for (a in ipar) {
-      if (!isInteractive || isTRUE(overwrite) || is.null(ip[[a]]))
+      if (!isInteractive || isTRUE(overwrite) || is.null(ip[[a]])) {
         ip[[a]] <- data[[a]]
+      }
     }
   } else {
     for (a in ipar) {
-      if (!isInteractive || isTRUE(overwrite) || is.null(ip[[a]]))
+      if (!isInteractive || isTRUE(overwrite) || is.null(ip[[a]])) {
         ip[[a]] <- data[[a]][rows]
+      }
     }
   }
   gr$.ipar <- ipar
@@ -329,11 +330,11 @@ do_add_interactive_attrs <- function(gr,
 }
 
 get_interactive_data <- function(x, default = list()) {
-  (if(!is.atomic(x)) x$.interactive) %||% attr(x, "interactive") %||% default
+  (if (!is.atomic(x)) x$.interactive) %||% attr(x, "interactive") %||% default
 }
 
 get_ipar <- function(x, default = IPAR_NAMES) {
-  ipar <- (if(!is.atomic(x)) x$.ipar) %||% attr(x, "ipar")
+  ipar <- (if (!is.atomic(x)) x$.ipar) %||% attr(x, "ipar")
   if (length(ipar) > 0 && is.character(ipar)) {
     ipar
   } else {
@@ -342,7 +343,7 @@ get_ipar <- function(x, default = IPAR_NAMES) {
 }
 
 get_data_attr <- function(x, default = "data-id") {
-  data_attr <- (if(!is.atomic(x)) x$.data_attr) %||% attr(x, "data_attr")
+  data_attr <- (if (!is.atomic(x)) x$.data_attr) %||% attr(x, "data_attr")
   if (length(data_attr) == 1 && is.character(data_attr)) {
     data_attr
   } else {
@@ -355,8 +356,9 @@ get_data_attr <- function(x, default = "data-id") {
 interactive_attr_toxml <- function(x,
                                    ids = character(0),
                                    rows = NULL) {
-  if (length(ids) < 1)
+  if (length(ids) < 1) {
     return(invisible())
+  }
 
   ip <- get_interactive_data(x)
   ipar <- get_ipar(x)
@@ -365,8 +367,9 @@ interactive_attr_toxml <- function(x,
   anames <- Filter(x = get_interactive_attr_names(ip, ipar = ipar), function(a) {
     !is.null(ip[[a]])
   })
-  if (length(anames) == 0)
+  if (length(anames) == 0) {
     return(invisible())
+  }
 
   for (a in anames) {
     if (length(rows) == 0) {
@@ -375,19 +378,24 @@ interactive_attr_toxml <- function(x,
       attrValue <- ip[[a]][rows]
     }
     attrValue <- switch(a,
-                        tooltip = encode_cr(attrValue),
-                        hover_css = check_css_attr(attrValue),
-                        selected_css = check_css_attr(attrValue),
-                        attrValue)
-    if (!is.character(attrValue))
+      tooltip = encode_cr(attrValue),
+      hover_css = check_css_attr(attrValue),
+      selected_css = check_css_attr(attrValue),
+      attrValue
+    )
+    if (!is.character(attrValue)) {
       attrValue <- as.character(attrValue)
+    }
     attrName <- switch(a,
-                       tooltip = "title",
-                       data_id = data_attr,
-                       a)
-    set_attr(name = attrName,
-             ids = as.integer(ids),
-             values = attrValue)
+      tooltip = "title",
+      data_id = data_attr,
+      a
+    )
+    set_attr(
+      name = attrName,
+      ids = as.integer(ids),
+      values = attrValue
+    )
   }
   invisible()
 }
