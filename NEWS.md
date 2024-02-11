@@ -2,7 +2,8 @@
 
 ## Changes
 
-- adapt to ggplot '3.5.0'
+- adapt guides to ggplot '3.5.0'
+- deprecate ggiraph
 
 # ggiraph 0.8.8
 

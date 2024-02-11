@@ -20,7 +20,6 @@ ggiraph(
   zoom_max = 1,
   selection_type = "multiple",
   selected_css = NULL,
-  dep_dir = NULL,
   ...
 )
 }
@@ -61,9 +60,6 @@ used to customize tooltip area.}
 when widget is in a Shiny application.}
 
 \item{selected_css}{css to apply when element is selected (shiny only).}
-
-\item{dep_dir}{Deprecated; the path where the output files are stored. If \code{NULL},
-the current path for temporary files is used.}
 
 \item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
 }

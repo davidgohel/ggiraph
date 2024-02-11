@@ -18,8 +18,6 @@
 #' @param selection_type row selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
 #' @param selected_css css to apply when element is selected (shiny only).
-#' @param dep_dir Deprecated; the path where the output files are stored. If `NULL`,
-#'  the current path for temporary files is used.
 #' @export
 #' @keywords internal
 ggiraph <- function(code, ggobj = NULL,
@@ -35,12 +33,8 @@ ggiraph <- function(code, ggobj = NULL,
                     zoom_max = 1,
                     selection_type = "multiple",
                     selected_css = NULL,
-                    dep_dir = NULL,
                     ...) {
-  message("Function `ggiraph()` is replaced by `girafe()` and will be removed soon.")
-  if( !missing(dep_dir) ){
-    warning("argument `dep_dir` has been deprecated.")
-  }
+  .Deprecated(new = "girafe", old = "ggiraph")
 
   x <- girafe(code = code, ggobj = ggobj, pointsize = pointsize,
               width_svg = width_svg, height_svg = height_svg, ...)
