@@ -53,7 +53,7 @@ URL: https://davidgohel.github.io/ggiraph/
 BugReports: https://github.com/davidgohel/ggiraph/issues
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
-Remotes::tidyverse/ggplot2#5592
+Remotes: tidyverse/ggplot2@rc/3.5.0
 Collate: 
     'RcppExports.R'
     'ipar.R'
