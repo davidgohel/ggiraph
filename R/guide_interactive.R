@@ -122,7 +122,51 @@ interactive_guide_train <- function(params, scale, breaks,
   params
 }
 
-parse_binned_breaks <- ggplot2:::parse_binned_breaks
+parse_binned_breaks = function(
+    scale, breaks = scale$get_breaks(),
+    even.steps = TRUE) {
+
+  breaks <- breaks[!is.na(breaks)]
+  if (length(breaks) == 0) {
+    return(NULL)
+  }
+  breaks <- sort(breaks)
+  if (is.numeric(breaks)) {
+    limits <- scale$get_limits()
+    if (!is.numeric(scale$breaks)) {
+      breaks <- breaks[!breaks %in% limits]
+    }
+    all_breaks <- unique0(c(limits[1], breaks, limits[2]))
+    bin_at <- all_breaks[-1] - diff(all_breaks) / 2
+  } else {
+    if (isFALSE(even.steps)) {
+      cli::cli_warn(paste0(
+        "{.code even.steps = FALSE} is not supported when used with a ",
+        "discrete scale."
+      ))
+    }
+    bin_at <- breaks
+    nums   <- as.character(breaks)
+    nums   <- strsplit(gsub("\\(|\\)|\\[|\\]", "", nums), ",\\s?")
+    nums   <- as.numeric(unlist(nums, FALSE, FALSE))
+
+    if (anyNA(nums)) {
+      cli::cli_abort(c(
+        "Breaks are not formatted correctly for a bin legend.",
+        "i" = "Use {.code (<lower>, <upper>]} format to indicate bins."
+      ))
+    }
+    all_breaks <- nums[c(1, seq_along(breaks) * 2)]
+    limits     <- all_breaks[ c(1, length(all_breaks))]
+    breaks     <- all_breaks[-c(1, length(all_breaks))]
+  }
+  list(
+    breaks = breaks,
+    limits = limits,
+    bin_at = bin_at
+  )
+}
+
 
 #' Parse binned breaks of interactive guide
 #' @details

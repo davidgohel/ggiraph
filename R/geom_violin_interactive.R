@@ -79,4 +79,19 @@ GeomInteractiveViolin <- ggproto(
   }
 )
 
-create_quantile_segment_frame <- ggplot2:::create_quantile_segment_frame
+create_quantile_segment_frame <- function(data, draw_quantiles) {
+  dens <- cumsum(data$density) / sum(data$density)
+  ecdf <- stats::approxfun(dens, data$y, ties = "ordered")
+  ys <- ecdf(draw_quantiles) # these are all the y-values for quantiles
+
+  # Get the violin bounds for the requested quantiles.
+  violin.xminvs <- (stats::approxfun(data$y, data$xminv))(ys)
+  violin.xmaxvs <- (stats::approxfun(data$y, data$xmaxv))(ys)
+
+  # We have two rows per segment drawn. Each segment gets its own group.
+  data_frame0(
+    x = vctrs::vec_interleave(violin.xminvs, violin.xmaxvs),
+    y = rep(ys, each = 2),
+    group = rep(ys, each = 2)
+  )
+}
