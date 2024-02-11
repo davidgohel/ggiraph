@@ -13,14 +13,14 @@ library(xml2)
 
 # ggiraphOutput ----
 {
-  result <- ggiraphOutput("foo")
+  result <- girafeOutput("foo")
   expect_inherits(result, "shiny.tag.list")
 }
 
 if (requireNamespace("httpuv", quietly = TRUE)) {
   # renderggiraph ----
   {
-    result <- renderggiraph(ggiraph({
+    result <- renderGirafe(ggiraph({
       print(ggplot())
     }))
     expect_inherits(result, "shiny.render.function")
