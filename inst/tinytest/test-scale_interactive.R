@@ -15,7 +15,7 @@ scale_func <- scale_color_discrete_interactive
   expect_null(scale$tooltip)
   scale <- scale_func(guide = "guide_none", tooltip = "tooltip")
   expect_null(scale$tooltip)
-  scale <- scale_func(guide = guide_none(), tooltip = "tooltip")
+  expect_warning(scale <- scale_func(guide = guide_none(), tooltip = "tooltip"))
   expect_null(scale$tooltip)
 }
 
@@ -29,13 +29,13 @@ scale_func <- scale_color_discrete_interactive
 # scale_interactive with guide as guide object, is working ----
 {
   scale <- scale_func(guide = guide_legend(), tooltip = "tooltip")
-  expect_inherits(scale$guide, c("interactive_guide", "interactive_legend"))
+  expect_inherits(scale$guide, "GuideInteractiveLegend")
   scale <- scale_func(guide = guide_bins(), tooltip = "tooltip")
-  expect_inherits(scale$guide, c("interactive_guide", "interactive_bins"))
+  expect_inherits(scale$guide, "GuideInteractiveBins")
   scale <- scale_func(guide = guide_colorsteps(), tooltip = "tooltip")
-  expect_inherits(scale$guide, c("interactive_guide", "interactive_coloursteps"))
+  expect_inherits(scale$guide, "GuideInteractiveColoursteps")
   scale <- scale_func(guide = guide_colourbar(), tooltip = "tooltip")
-  expect_inherits(scale$guide, c("interactive_guide", "interactive_colourbar"))
+  expect_inherits(scale$guide, "GuideInteractiveColourbar")
 }
 
 # scale_interactive with unsupported guide, is working ----

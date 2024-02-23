@@ -171,6 +171,7 @@ GeomInteractiveBoxplot <- ggproto(
                         outlier.alpha = NULL,
                         notch = FALSE,
                         notchwidth = 0.5,
+                        staplewidth = 0,
                         varwidth = FALSE,
                         flipped_aes = FALSE,
                         .ipar = IPAR_NAMES) {
@@ -242,10 +243,30 @@ GeomInteractiveBoxplot <- ggproto(
       outliers_grob <- NULL
     }
 
+    if (staplewidth != 0) {
+      staples <- data_frame0(
+        x    = rep((data$xmin - data$x) * staplewidth + data$x, 2),
+        xend = rep((data$xmax - data$x) * staplewidth + data$x, 2),
+        y    = c(data$ymax, data$ymin),
+        yend = c(data$ymax, data$ymin),
+        alpha = c(NA_real_, NA_real_),
+        !!!common,
+        .size = 2
+      )
+      staples <- flip_data(staples, flipped_aes)
+      staple_grob <- GeomInteractiveSegment$draw_panel(
+        staples, panel_params, coord,
+        lineend = lineend, .ipar = .ipar
+      )
+    } else {
+      staple_grob <- NULL
+    }
+
     ggname(
       "geom_boxplot_interactive",
       grobTree(
         outliers_grob,
+        staple_grob,
         GeomInteractiveSegment$draw_panel(whiskers, panel_params, coord, lineend = lineend, .ipar = .ipar),
         GeomInteractiveCrossbar$draw_panel(box, fatten = fatten, panel_params, coord,
                                            lineend = lineend,

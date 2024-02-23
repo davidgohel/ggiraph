@@ -11,47 +11,50 @@
 #' @example examples/scale_gradient_guide_colourbar_interactive.R
 #' @seealso [interactive_parameters], [girafe()]
 #' @export
-guide_colourbar_interactive <- function(...)
-  guide_interactive(guide_colourbar, "interactive_colourbar", ...)
+guide_colourbar_interactive <- function(...) {
+  guide_interactive(guide_colourbar, ...)
+}
 
 #' @export
 #' @rdname guide_colourbar_interactive
 guide_colorbar_interactive <- guide_colourbar_interactive
 
+#' @rdname ggiraph-ggproto
+#' @format NULL
+#' @usage NULL
 #' @export
-guide_train.interactive_colourbar <- function(guide,
-                                              scale,
-                                              aesthetic = NULL) {
-  zz <- NextMethod()
-  if (is.null(zz))
-    return(zz)
-
-  # just copy them from scale to trained guide
-  ipar = get_ipar(scale)
-  data <- copy_interactive_attrs(scale, list(), ipar = ipar)
-  zz$.interactive <- data
-  zz$.ipar <- ipar
-  zz
-}
-
-#' @export
-#' @importFrom purrr compact
-guide_gengrob.interactive_colourbar <- function(guide, theme) {
-  guide_gtable <- NextMethod()
-  ipar <- get_ipar(guide)
-  data <- get_interactive_data(guide)
-  # set them to the bar
-  barIndex <- which(guide_gtable$layout$name == "bar")
-  guide_gtable$grobs[[barIndex]] <-
-    add_interactive_attrs(guide_gtable$grobs[[barIndex]],
-                          data,
-                          data_attr = "key-id",
-                          ipar = ipar)
-
-  # or set them everywhere?
-  # guide_gtable$grobs <- lapply(guide_gtable$grobs, function(z) {
-  #   # some grobs may already be set interactive, from theme elements
-  #   add_interactive_attrs(z, data, data_attr = "key-id", overwrite = FALSE)
-  # })
-  guide_gtable
-}
+GuideInteractiveColourbar <- ggproto(
+  "GuideInteractiveColourbar", GuideColourbar,
+  train = function(self, params = self$params, scale, aesthetic = NULL, ...) {
+    parent <- ggproto_parent(GuideColourbar, self)
+    params <- parent$train(params = params, scale = scale, aesthetic = aesthetic, ...)
+    if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
+      breaks <- Filter(is.finite, scale$get_breaks())
+      label_breaks <- breaks
+      if (isTRUE(params$raster)) {
+        breaks <- 1
+      } else {
+        breaks <- params$decor$value
+      }
+      params <- interactive_guide_train(params, scale, breaks, label_breaks = label_breaks)
+    }
+    params
+  },
+  override_elements = function(params, elements, theme) {
+    elements <- GuideColourbar$override_elements(params, elements, theme)
+    interactive_guide_override_elements(elements)
+  },
+  build_decor = function(decor, grobs, elements, params) {
+    result <- GuideColourbar$build_decor(decor, grobs, elements, params)
+    ipar <- get_ipar(params)
+    idata <- get_interactive_data(params)
+    if (length(idata)) {
+      result$bar <- add_interactive_attrs(result$bar,
+        idata,
+        data_attr = "key-id",
+        ipar = ipar
+      )
+    }
+    result
+  }
+)

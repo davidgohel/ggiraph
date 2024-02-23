@@ -22,20 +22,21 @@ GeomInteractiveLabel <- ggproto(
     if (is.null(coords$tooltip_fill)) {
       coords$tooltip_fill <- coords$fill
     }
-    add_interactive_attrs(gr, coords, ipar = .ipar)
+    for (i in seq_along(gr$children)) {
+      for (j in seq_along(gr$children[[i]]$children)) {
+        if (inherits(gr$children[[i]]$children[[j]], "roundrect")) {
+          gr$children[[i]]$children[[j]] <- add_interactive_attrs(
+            gr$children[[i]]$children[[j]],
+            data = coords[i, ], ipar = .ipar
+          )
+        } else if (inherits(gr$children[[i]]$children[[j]], "titleGrob")) {
+          gr$children[[i]]$children[[j]]$children[[1]] <- add_interactive_attrs(
+            gr$children[[i]]$children[[j]]$children[[1]],
+            data = coords[i, ], ipar = .ipar
+          )
+        }
+      }
+    }
+    gr
   }
 )
-
-#' @export
-makeContent.interactive_label_grob <- function(x) {
-  gr <- NextMethod()
-  data <- get_interactive_data(x)
-  data_attr <- get_data_attr(x)
-  ipar <- get_ipar(x)
-  for (i in seq_along(gr$children)) {
-    gr$children[[i]] <- add_interactive_attrs(
-      gr$children[[i]], data = data, data_attr = data_attr, ipar = ipar
-    )
-  }
-  gr
-}

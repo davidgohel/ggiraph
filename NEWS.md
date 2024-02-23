@@ -1,3 +1,10 @@
+# ggiraph 0.8.9
+
+## Changes
+
+- adapt guides to ggplot '3.5.0'
+- deprecate ggiraph
+
 # ggiraph 0.8.8
 
 ## Issues 

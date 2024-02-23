@@ -17,17 +17,19 @@ GeomInteractivePointrange <- ggproto(
                         panel_params,
                         coord,
                         fatten = 4,
-                        flipped_aes = FALSE, 
+                        flipped_aes = FALSE,
+                        na.rm = FALSE,
                         .ipar = IPAR_NAMES) {
-    if (is.null(data[[flipped_names(flipped_aes)$y]]))
+    if (is.null(data[[flipped_names(flipped_aes)$y]])) {
       return(
-        GeomInteractiveLinerange$draw_panel(data, panel_params, coord, flipped_aes = flipped_aes, .ipar = .ipar)
+        GeomInteractiveLinerange$draw_panel(data, panel_params, coord, flipped_aes = flipped_aes, na.rm = na.rm, .ipar = .ipar)
       )
+    }
 
     ggname("geom_pointrange", gTree(
       children = gList(
-        GeomInteractiveLinerange$draw_panel(data, panel_params, coord, flipped_aes = flipped_aes, .ipar = .ipar),
-        GeomInteractivePoint$draw_panel(transform(data, size = size * fatten), panel_params, coord, .ipar = .ipar)
+        GeomInteractiveLinerange$draw_panel(data, panel_params, coord, flipped_aes = flipped_aes, na.rm = na.rm, .ipar = .ipar),
+        GeomInteractivePoint$draw_panel(transform(data, size = size * fatten), panel_params, coord, na.rm = na.rm, .ipar = .ipar)
       )
     ))
   }

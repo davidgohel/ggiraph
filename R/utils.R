@@ -3,12 +3,6 @@
 #' @include utils_ggplot2.R
 #' @include utils_ggplot2_performance.R
 
-# FIXME
-# dapply is in ggplot2/compat-plyr.R, but if we include that file,
-# it causes more issues as it depends ggplot2 globals.
-# dapply is only used in GeomInteractivePath.
-dapply <- ggplot2:::dapply
-
 # Include parameters
 #' @include ipar.R
 

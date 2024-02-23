@@ -37,88 +37,39 @@ GeomInteractivePath <- ggproto(
                         linemitre = 10,
                         na.rm = FALSE,
                         .ipar = IPAR_NAMES) {
-    if (!anyDuplicated(data$group)) {
-      message_wrap(
-        "geom_path: Each group consists of only one observation. ",
-        "Do you need to adjust the group aesthetic?"
-      )
+    gr <- GeomPath$draw_panel(
+      data = data,
+      panel_params = panel_params,
+      coord = coord,
+      arrow = arrow,
+      lineend = lineend,
+      linejoin = linejoin,
+      linemitre = linemitre,
+      na.rm = na.rm)
+
+    if (inherits(gr, "zeroGrob")) {
+      return(gr)
     }
 
     # must be sorted on group
     data <- data[order(data$group), , drop = FALSE]
     munched <- coord_munch(coord, data, panel_params)
-
-    # Silently drop lines with less than two points, preserving order
     rows <-
       stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
     munched <- munched[rows >= 2, ]
-    if (nrow(munched) < 2)
-      return(zeroGrob())
-
-    # Work out whether we should use lines or segments
-    attr <- dapply(munched, "group", function(df) {
-      linetype <- unique(df$linetype)
-      new_data_frame(list(
-        solid = identical(linetype, 1) || identical(linetype, "solid"),
-        constant = nrow(unique(df[, c("alpha", "colour", "linewidth", "linetype")])) == 1
-      ),
-      n = 1)
-    })
-    solid_lines <- all(attr$solid)
-    constant <- all(attr$constant)
-    if (!solid_lines && !constant) {
-      abort(
-        "geom_path_interactive: If you are using dotted or dashed lines",
-        ", colour, size and linetype must be constant over the line",
-        call. = FALSE
-      )
-    }
 
     # Work out grouping variables for grobs
     n <- nrow(munched)
-    group_diff <- munched$group[-1] != munched$group[-n]
-    start <- c(TRUE, group_diff)
-    end <-   c(group_diff, TRUE)
+    constant <- length(gr$x0) == n
 
     if (!constant) {
-      gr <- segmentsGrob(
-        munched$x[!end],
-        munched$y[!end],
-        munched$x[!start],
-        munched$y[!start],
-        default.units = "native",
-        arrow = arrow,
-        gp = gpar(
-          col = alpha(munched$colour, munched$alpha)[!end],
-          fill = alpha(munched$colour, munched$alpha)[!end],
-          lwd = munched$linewidth[!end] * .pt,
-          lty = munched$linetype[!end],
-          lineend = lineend,
-          linejoin = linejoin,
-          linemitre = linemitre
-        )
-      )
+      group_diff <- munched$group[-1] != munched$group[-n]
+      end <- c(group_diff, TRUE)
       add_interactive_attrs(gr, munched, rows = !end, ipar = .ipar)
     } else {
-      id <- match(munched$group, unique(munched$group))
-      gr <- polylineGrob(
-        munched$x,
-        munched$y,
-        id = id,
-        default.units = "native",
-        arrow = arrow,
-        gp = gpar(
-          col = alpha(munched$colour, munched$alpha)[start],
-          fill = alpha(munched$colour, munched$alpha)[start],
-          lwd = munched$linewidth[start] * .pt,
-          lty = munched$linetype[start],
-          lineend = lineend,
-          linejoin = linejoin,
-          linemitre = linemitre
-        )
-      )
       add_interactive_attrs(gr, munched, ipar = .ipar)
     }
+
   }
 )
 
@@ -160,7 +111,10 @@ GeomInteractiveStep <-
     parameters = interactive_geom_parameters,
     draw_key = interactive_geom_draw_key,
     draw_panel = function(data, panel_params, coord, direction = "hv", .ipar = IPAR_NAMES) {
-      data <- dapply(data, "group", stairstep, direction = direction)
+      ldata <- split(data, data$group)
+      ldata <- lapply(ldata, stairstep, direction = direction)
+      data <- do.call(rbind, ldata)
+      row.names(data) <- NULL
       GeomInteractivePath$draw_panel(data, panel_params, coord, .ipar = .ipar)
     }
   )
@@ -199,5 +153,5 @@ stairstep <- function(data, direction = "hv") {
     data_attr <- data[xs, setdiff(names(data), c("x", "y"))]
   }
 
-  new_data_frame(c(list(x = x, y = y), data_attr))
+  data_frame0(x = x, y = y, data_attr)
 }
