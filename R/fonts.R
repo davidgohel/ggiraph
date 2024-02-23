@@ -111,3 +111,20 @@ fortify_font_db <- function(){
   font_db <- rbind(db_sys, db_reg)
   font_db
 }
+
+list_theme_fonts <- function(gg) {
+  element_text_set <- Filter(f = function(x) inherits(x, "element_text") && !is.null(x$family), gg[["theme"]])
+  fonts <- vapply(
+    X = element_text_set,
+    FUN = function(x) {
+      z <- x$family
+      if (isTRUE(all.equal(z, ""))) "sans"
+      else z
+    },
+    FUN.VALUE = NA_character_,
+    USE.NAMES = FALSE
+  )
+  fonts <- setdiff(unique(fonts), c("sans", "serif", "mono", "symbol"))
+  fonts
+}
+

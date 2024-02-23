@@ -119,13 +119,30 @@ girafe <- function(
     args$bg <- "#fffffffd"
   }
 
+  if (!is.null(ggobj)) {
+    if (!inherits(ggobj, "ggplot")) {
+      cli::cli_abort(c(
+        "{.code ggobj} must be a {.code ggplot2} object."
+      ))
+    }
+
+    family_list <- list_theme_fonts(ggobj)
+    for (font in family_list) {
+      ffe <- font_family_exists(font)
+      if (!ffe) {
+        cli::cli_abort(c(
+          sprintf("Font family '%s' has not been found on your system or is not registered.", font),
+          "i" = "You can use a google font with {.code gdtools::register_gfont()}.",
+          "i" = "You can use any font with {.code systemfonts::register_font()}."
+        ))
+      }
+    }
+  }
+
   devlength <- length(dev.list())
   do.call(dsvg, args)
   tryCatch({
     if (!is.null(ggobj)) {
-      if (!inherits(ggobj, "ggplot")) {
-        abort("`ggobj` must be a ggplot2 plot", call = NULL)
-      }
       print(ggobj)
     } else
       code

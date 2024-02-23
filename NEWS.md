@@ -4,6 +4,7 @@
 
 - adapt guides to ggplot '3.5.0'
 - deprecate ggiraph
+- A font check is now done with theme settings (only when argument `ggobj` is used)
 
 # ggiraph 0.8.8
 
