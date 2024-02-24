@@ -113,6 +113,7 @@ fortify_font_db <- function(){
 }
 
 list_theme_fonts <- function(gg) {
+  if(is.null(names(gg)) || is.null(gg[["theme"]])) return(character())
   element_text_set <- Filter(f = function(x) inherits(x, "element_text") && !is.null(x$family), gg[["theme"]])
   fonts <- vapply(
     X = element_text_set,
