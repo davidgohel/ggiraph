@@ -116,7 +116,7 @@ girafe <- function(
   args$setdims <- FALSE
   # we need a surface with pointer events
   if (identical(args$bg, "transparent")) {
-    args$bg <- "#fffffffd"
+    args$bg <- "#ffffff01"
   }
 
   if (!is.null(ggobj)) {

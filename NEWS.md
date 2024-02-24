@@ -6,6 +6,12 @@
 - deprecate ggiraph
 - A font check is now done with theme settings (only when argument `ggobj` is used)
 
+## Issues 
+
+- When `bg` is set to 'transparent', it's been transformed to almost 
+transparent '#ffffff01'.
+
+
 # ggiraph 0.8.8
 
 ## Issues 
