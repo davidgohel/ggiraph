@@ -22,7 +22,7 @@ See the documentation for those functions for more details."><meta property="og:
     
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,20 +104,22 @@ plus any of the <a href="interactive_parameters.html">interactive_parameters</a>
 and they can be scalar values or vectors, depending on the number of breaks (levels) and
 the type of the guide used.
 The guides do not accept any interactive parameter directly, they receive them from the scales.</p>
-<ul><li><p>When guide of type <code>legend</code> or <code>bins</code> is used, it will be converted to a
-<code><a href="guide_legend_interactive.html">guide_legend_interactive()</a></code> or <code><a href="guide_bins_interactive.html">guide_bins_interactive()</a></code> respectively,
+<p>When guide of type <code>legend</code>, <code>bins</code>, <code>colourbar</code> or <code>coloursteps</code> is used,
+it will be converted to a <code><a href="guide_legend_interactive.html">guide_legend_interactive()</a></code>, <code><a href="guide_bins_interactive.html">guide_bins_interactive()</a></code>,
+<code><a href="guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code> or <code><a href="guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code> respectively,
 if it's not already.</p>
 <p>The length of each scale interactive parameter vector should match the length of the breaks.
 It can also be a named vector, where each name should correspond to the same break name.
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.</p>
-<p>The interactive parameters here, give interactivity only to the key elements of the guide.</p></li>
-<li><p>When guide of type <code>colourbar</code> or <code>coloursteps</code> is used, it will be converted to a
-<code><a href="guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code> or <code><a href="guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code>
-respectively, if it's not already.</p>
-<p>The scale interactive parameters in this case should be scalar values and give interactivity
-to the colorbar only.</p></li>
-</ul><p>To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
+<p>For binned guides like <code>bins</code> and <code>coloursteps</code> the breaks include the label breaks and the limits.
+The number of bins will be one less than the number of breaks and the interactive parameters can be
+constructed for each bin separately (look at the examples).
+For <code>colourbar</code> guide in raster mode, the breaks vector, is scalar 1 always, meaning the interactive
+parameters should be scalar too. For <code>colourbar</code> guide in non-raster mode, the bar is drawn using
+rectangles, and the breaks are the midpoints of each rectangle.</p>
+<p>The interactive parameters here, give interactivity only to the key elements of the guide.</p>
+<p>To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
 the relevant theme elements or relevant guide arguments can be used.
 The <code>guide</code> arguments <code>title.theme</code> and <code>label.theme</code> can be defined as
 <code>element_text_interactive</code> (in fact, they will be converted to that if they are not

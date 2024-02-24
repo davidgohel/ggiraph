@@ -12,7 +12,7 @@ See the documentation for that function for more details."><meta property="og:im
     
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,20 +82,22 @@ See the documentation for that function for more details.</p>
 and they can be scalar values or vectors, depending on the number of breaks (levels) and
 the type of the guide used.
 The guides do not accept any interactive parameter directly, they receive them from the scales.</p>
-<ul><li><p>When guide of type <code>legend</code> or <code>bins</code> is used, it will be converted to a
-<code><a href="guide_legend_interactive.html">guide_legend_interactive()</a></code> or <code><a href="guide_bins_interactive.html">guide_bins_interactive()</a></code> respectively,
+<p>When guide of type <code>legend</code>, <code>bins</code>, <code>colourbar</code> or <code>coloursteps</code> is used,
+it will be converted to a <code><a href="guide_legend_interactive.html">guide_legend_interactive()</a></code>, <code><a href="guide_bins_interactive.html">guide_bins_interactive()</a></code>,
+<code>guide_colourbar_interactive()</code> or <code><a href="guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code> respectively,
 if it's not already.</p>
 <p>The length of each scale interactive parameter vector should match the length of the breaks.
 It can also be a named vector, where each name should correspond to the same break name.
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.</p>
-<p>The interactive parameters here, give interactivity only to the key elements of the guide.</p></li>
-<li><p>When guide of type <code>colourbar</code> or <code>coloursteps</code> is used, it will be converted to a
-<code>guide_colourbar_interactive()</code> or <code><a href="guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code>
-respectively, if it's not already.</p>
-<p>The scale interactive parameters in this case should be scalar values and give interactivity
-to the colorbar only.</p></li>
-</ul><p>To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
+<p>For binned guides like <code>bins</code> and <code>coloursteps</code> the breaks include the label breaks and the limits.
+The number of bins will be one less than the number of breaks and the interactive parameters can be
+constructed for each bin separately (look at the examples).
+For <code>colourbar</code> guide in raster mode, the breaks vector, is scalar 1 always, meaning the interactive
+parameters should be scalar too. For <code>colourbar</code> guide in non-raster mode, the bar is drawn using
+rectangles, and the breaks are the midpoints of each rectangle.</p>
+<p>The interactive parameters here, give interactivity only to the key elements of the guide.</p>
+<p>To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
 the relevant theme elements or relevant guide arguments can be used.
 The <code>guide</code> arguments <code>title.theme</code> and <code>label.theme</code> can be defined as
 <code>element_text_interactive</code> (in fact, they will be converted to that if they are not
@@ -120,9 +122,11 @@ See the element_*_interactive section for more details.</p>
 <span class="r-in"><span>  <span class="fu"><a href="geom_raster_interactive.html">geom_raster_interactive</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># add an interactive scale (guide is colourbar)</span></span></span>
-<span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="scale_gradient_interactive.html">scale_fill_gradient_interactive</a></span><span class="op">(</span>data_id <span class="op">=</span> <span class="st">"colourbar"</span>,</span></span>
-<span class="r-in"><span>                                          onclick <span class="op">=</span> <span class="st">"alert(\"colourbar\")"</span>,</span></span>
-<span class="r-in"><span>                                          tooltip <span class="op">=</span> <span class="st">"colourbar"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="scale_gradient_interactive.html">scale_fill_gradient_interactive</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data_id <span class="op">=</span> <span class="st">"colourbar"</span>,</span></span>
+<span class="r-in"><span>  onclick <span class="op">=</span> <span class="st">"alert(\"colourbar\")"</span>,</span></span>
+<span class="r-in"><span>  tooltip <span class="op">=</span> <span class="st">"colourbar"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">p1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -139,8 +143,10 @@ See the element_*_interactive section for more details.</p>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">p2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                    <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text<span class="op">=</span><span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text <span class="op">=</span> <span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># make the legend labels interactive</span></span></span>
@@ -155,18 +161,19 @@ See the element_*_interactive section for more details.</p>
 <span class="r-in"><span>    tooltip <span class="op">=</span> <span class="st">"colourbar"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">breaks</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">br</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">breaks</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="label_interactive.html">label_interactive</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">breaks</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      data_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"colourbar"</span>, <span class="va">br</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">breaks</span>, <span class="kw">function</span><span class="op">(</span><span class="va">abreak</span><span class="op">)</span> <span class="fu"><a href="label_interactive.html">label_interactive</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">abreak</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      data_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"colourbar"</span>, <span class="va">abreak</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      onclick <span class="op">=</span> <span class="st">"alert(\"colourbar\")"</span>,</span></span>
-<span class="r-in"><span>      tooltip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"colourbar"</span>, <span class="va">br</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>      tooltip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"colourbar"</span>, <span class="va">abreak</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">p3</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                    <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text<span class="op">=</span><span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text <span class="op">=</span> <span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># also via the guide</span></span></span>
@@ -190,8 +197,10 @@ See the element_*_interactive section for more details.</p>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">p4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                    <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text<span class="op">=</span><span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text <span class="op">=</span> <span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># make the legend background interactive</span></span></span>
@@ -203,8 +212,10 @@ See the element_*_interactive section for more details.</p>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">p5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>                    <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text<span class="op">=</span><span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="opts_hover.html">opts_hover_key</a></span><span class="op">(</span><span class="fu"><a href="girafe_css.html">girafe_css</a></span><span class="op">(</span><span class="st">"stroke:red"</span>, text <span class="op">=</span> <span class="st">"stroke:none;fill:red"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
