@@ -10,4 +10,8 @@ There were no ERROR, WARNING or NOTE.
 
 ## Reverse dependencies
 
-There are no new issue related to ggiraph.
+There is a new issue related to ggiraph with package 'vlda' because
+`ggiraphOutput()` has been deprecated in favor of `girafeOutput()`.
+Author of 'vlda' was notified almost a year ago that this 
+function would be deprecated (https://github.com/pnuwon/vlda/issues/1).
+
