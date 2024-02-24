@@ -61,7 +61,7 @@ SVGElement* DSVG_dev::svg_root() {
     set_attr(root, "xmlns:xlink", "http://www.w3.org/1999/xlink");
   }
   set_attr(root, "class", "ggiraph-svg");
-  set_attr(root, "role", "img");
+  set_attr(root, "role", "graphics-document");
 
   std::string id;
 

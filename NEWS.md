@@ -10,7 +10,7 @@
 
 - When `bg` is set to 'transparent', it's been transformed to almost 
 transparent '#ffffff01'.
-
+- Enable screen-readers to read <text> items - set svg role to 'graphics-document'
 
 # ggiraph 0.8.8
 
