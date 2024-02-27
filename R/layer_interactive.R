@@ -1,12 +1,13 @@
 #' Calls a base ggplot2 geom/layer function and replaces the geom param
 #' so that it points to the analogous interactive geom.
 #' @importFrom purrr detect_index
+#' @importFrom rlang list2
 #' @noRd
 layer_interactive <- function(layer_func,
                               ...,
                               interactive_geom = NULL,
                               extra_interactive_params = NULL) {
-  args <- list(...)
+  args <- list2(...)
   # we need to temporarily remove the interactive aesthetics if they exist
   # we could use check.aes = FALSE and check.param = FALSE but no fun there
   interactive_mapping <- NULL

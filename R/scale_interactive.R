@@ -1,10 +1,10 @@
 #' Calls a base scale function and returns an interactive scale.
 #' @noRd
-#' @importFrom rlang inherits_any
+#' @importFrom rlang inherits_any list2
 scale_interactive <- function(scale_func,
                               ...,
                               extra_interactive_params = NULL) {
-  args <- list(...)
+  args <- list2(...)
   # We need to get the interactive parameters from the arguments and remove them
   ipar <- get_default_ipar(extra_interactive_params)
   interactive_params <- get_interactive_attrs(args, ipar = ipar)

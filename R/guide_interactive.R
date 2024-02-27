@@ -1,9 +1,10 @@
 #' Calls a base guide function and returns an interactive guide.
 #' @noRd
+#' @importFrom rlang list2
 guide_interactive <- function(guide_func,
                               ...,
                               interactive_guide = NULL) {
-  args <- list(...)
+  args <- list2(...)
   # Call default guide function
   if (is.function(guide_func)) {
     guide <- do.call(guide_func, args)
