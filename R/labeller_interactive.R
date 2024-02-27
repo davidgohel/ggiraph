@@ -27,11 +27,11 @@
 #' # use interactive labeller
 #' @example examples/labeller_interactive.R
 #' @seealso [labeller()], [label_interactive()], [labellers]
-#' @importFrom rlang eval_tidy
+#' @importFrom rlang eval_tidy list2
 #' @importFrom purrr imap
 labeller_interactive <- function(.mapping = NULL, ...) {
   # get interactive aesthetics, plus a label parameter
-  dots <- list(...)
+  dots <- list2(...)
   extra_interactive_params <- c(dots$extra_interactive_params, "label")
   ipar <- get_default_ipar(extra_interactive_params)
   ip <- get_interactive_attrs(.mapping, ipar = ipar)

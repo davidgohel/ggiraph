@@ -573,13 +573,14 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #' }
 #' @export
 #' @seealso [girafe()], [girafe_css()], [girafe_css_bicolor()]
+#' @importFrom rlang list2
 #' @family girafe animation options
 girafe_options <- function(x, ...){
   if(!inherits(x, "girafe")) {
     abort("`x` must be a girafe object", call = NULL)
   }
 
-  args <- list(...)
+  args <- list2(...)
   x$x$settings <- merge_options(x$x$settings, args)
   x$sizingPolicy <- merge_sizing_policy(x$sizingPolicy, args)
   x

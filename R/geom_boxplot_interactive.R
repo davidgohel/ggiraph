@@ -129,9 +129,10 @@ StatInteractiveBoxplot <- ggproto(
 #' # add interactive boxplot -------
 #' @example examples/geom_boxplot_interactive.R
 #' @seealso [girafe()]
+#' @importFrom rlang list2
 #' @export
 geom_boxplot_interactive <- function(...) {
-  args <- list(...)
+  args <- list2(...)
   if ("extra_interactive_params" %in% names(args)) {
     args$extra_interactive_params <- c(args$extra_interactive_params, outlier_ipar)
   } else {
