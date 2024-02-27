@@ -1,3 +1,9 @@
+# ggiraph 0.8.10
+
+## Feature
+
+- support trailing commas everywhere
+
 # ggiraph 0.8.9
 
 ## Changes
