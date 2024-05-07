@@ -20,14 +20,14 @@ jobs:
         config:
           - {os: windows-latest, r: 'devel'}
           - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
+          - {os: macos-latest, r: 'release'}
           - {os: ubuntu-latest, r: 'devel'}
           - {os: ubuntu-latest, r: 'release'}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-pandoc@v2
 
