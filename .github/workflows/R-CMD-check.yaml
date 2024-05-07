@@ -32,7 +32,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v2
 
       - name: Configure dependencies (linux)
-        if: contains(matrix.os, 'macos-latest')
+        if: contains(matrix.os, 'macOS')
         run: brew install libpng
 
       - uses: r-lib/actions/setup-r@v2
