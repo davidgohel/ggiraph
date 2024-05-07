@@ -79,11 +79,8 @@ export default class SVGObject {
       '100%'
     );
     d3.select('#' + this.svgid)
-      .attr('width', width)
-      .attr('height', height);
-    d3.select('#' + this.svgid)
-      .style('width', width + 'px')
-      .style('height', height + 'px');
+      .style('width', Number.parseFloat(width / 72).toFixed(3) + 'in')
+      .style('height', Number.parseFloat(height / 72).toFixed(3) + 'in');
   }
 
   setSizeLimits(width_max, width_min, height_max, height_min) {
