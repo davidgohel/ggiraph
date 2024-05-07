@@ -13,12 +13,10 @@
 ^README\.Rmd$
 ^revdep$
 ^visualtests$
-^vignettes/book$
 ^cran-comments\.md$
 ^revdep$
 ^inst/javascript$
 ^inst/medias$
-tests/testthat/test-dom.R
 ^pkgdown$
 ^\.github$
 ^srcjs$
