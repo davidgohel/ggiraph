@@ -71,7 +71,6 @@ element_interactive <- function(element_func,
 #' @param label The text for the label (scalar character)
 #' @param ... any of the [interactive_parameters].
 #' @return an interactive label object
-#' @inheritParams rlang list2
 #' @export
 #' @examples
 #' library(ggplot2)

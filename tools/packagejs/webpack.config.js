@@ -2,7 +2,7 @@
 
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const WebpackBeforeBuildPlugin = require('before-build-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const UglifyJS = require('uglify-js');
@@ -306,7 +306,7 @@ module.exports = (env, argv) => {
     ]
   };
   if (argv.mode == 'production') {
-    cssConfig.plugins.push(new OptimizeCssAssetsPlugin());
+    cssConfig.plugins.push(new CssMinimizerPlugin());
   }
 
   return [jsConfig, cssConfig];

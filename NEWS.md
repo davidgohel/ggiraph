@@ -1,8 +1,13 @@
 # ggiraph 0.8.10
 
+## Issues 
+
+- fixed size is now defined within style in inches, the size is now as expected.
+
 ## Feature
 
 - support trailing commas everywhere
+- Update to tinyxml2 10.0.0
 
 # ggiraph 0.8.9
 
