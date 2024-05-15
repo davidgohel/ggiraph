@@ -103,17 +103,12 @@ distribution.
 #if defined(_WIN64)
 	#define TIXML_FSEEK _fseeki64
 	#define TIXML_FTELL _ftelli64
-#elif defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__CYGWIN__)
+#elif defined(__APPLE__) || defined(__FreeBSD__) || defined(__ANDROID__)
 	#define TIXML_FSEEK fseeko
 	#define TIXML_FTELL ftello
-#elif defined(__ANDROID__) 
-    #if __ANDROID_API__ > 24
-        #define TIXML_FSEEK fseeko64
-        #define TIXML_FTELL ftello64
-    #else
-        #define TIXML_FSEEK fseeko
-        #define TIXML_FTELL ftello
-    #endif
+#elif defined(__unix__) && defined(__x86_64__)
+	#define TIXML_FSEEK fseeko64
+	#define TIXML_FTELL ftello64
 #else
 	#define TIXML_FSEEK fseek
 	#define TIXML_FTELL ftell
@@ -144,9 +139,9 @@ struct Entity {
     char value;
 };
 
-static const int NUM_ENTITIES = 5;
+static const int NUM_ENTITIES = 4;
 static const Entity entities[NUM_ENTITIES] = {
-    { "quot", 4,	DOUBLE_QUOTE },
+    // { "quot", 4,	DOUBLE_QUOTE },
     { "amp", 3,		'&'  },
     { "apos", 4,	SINGLE_QUOTE },
     { "lt",	2, 		'<'	 },
@@ -712,7 +707,7 @@ bool XMLUtil::ToUnsigned64(const char* str, uint64_t* value) {
 }
 
 
-char* XMLDocument::Identify( char* p, XMLNode** node, bool first )
+char* XMLDocument::Identify( char* p, XMLNode** node )
 {
     TIXMLASSERT( node );
     TIXMLASSERT( p );
@@ -764,19 +759,9 @@ char* XMLDocument::Identify( char* p, XMLNode** node, bool first )
         p += dtdHeaderLen;
     }
     else if ( XMLUtil::StringEqual( p, elementHeader, elementHeaderLen ) ) {
-
-        // Preserve whitespace pedantically before closing tag, when it's immediately after opening tag
-        if (WhitespaceMode() == PEDANTIC_WHITESPACE && first && p != start && *(p + elementHeaderLen) == '/') {
-            returnNode = CreateUnlinkedNode<XMLText>(_textPool);
-            returnNode->_parseLineNum = startLine;
-            p = start;	// Back it up, all the text counts.
-            _parseCurLineNum = startLine;
-        }
-        else {
-            returnNode = CreateUnlinkedNode<XMLElement>(_elementPool);
-            returnNode->_parseLineNum = _parseCurLineNum;
-            p += elementHeaderLen;
-        }
+        returnNode =  CreateUnlinkedNode<XMLElement>( _elementPool );
+        returnNode->_parseLineNum = _parseCurLineNum;
+        p += elementHeaderLen;
     }
     else {
         returnNode = CreateUnlinkedNode<XMLText>( _textPool );
@@ -827,34 +812,6 @@ XMLNode::~XMLNode()
     if ( _parent ) {
         _parent->Unlink( this );
     }
-}
-
-// ChildElementCount was originally suggested by msteiger on the sourceforge page for TinyXML and modified by KB1SPH for TinyXML-2.
-
-int XMLNode::ChildElementCount(const char *value) const {
-	int count = 0;
-
-	const XMLElement *e = FirstChildElement(value);
-
-	while (e) {
-		e = e->NextSiblingElement(value);
-		count++;
-	}
-
-	return count;
-}
-
-int XMLNode::ChildElementCount() const {
-	int count = 0;
-
-	const XMLElement *e = FirstChildElement();
-
-	while (e) {
-		e = e->NextSiblingElement();
-		count++;
-	}
-
-	return count;
 }
 
 const char* XMLNode::Value() const
@@ -1105,23 +1062,21 @@ char* XMLNode::ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr )
 	if (_document->Error())
 		return 0;
 
-	bool first = true;
 	while( p && *p ) {
         XMLNode* node = 0;
 
-        p = _document->Identify( p, &node, first );
+        p = _document->Identify( p, &node );
         TIXMLASSERT( p );
         if ( node == 0 ) {
             break;
         }
-        first = false;
 
        const int initialLineNum = node->_parseLineNum;
 
         StrPair endTag;
         p = node->ParseDeep( p, &endTag, curLineNumPtr );
         if ( !p ) {
-            _document->DeleteNode( node );
+            DeleteNode( node );
             if ( !_document->Error() ) {
                 _document->SetError( XML_ERROR_PARSING, initialLineNum, 0);
             }
@@ -1154,7 +1109,7 @@ char* XMLNode::ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr )
             }
             if ( !wellLocated ) {
                 _document->SetError( XML_ERROR_PARSING_DECLARATION, initialLineNum, "XMLDeclaration value=%s", decl->Value());
-                _document->DeleteNode( node );
+                DeleteNode( node );
                 break;
             }
         }
@@ -1189,7 +1144,7 @@ char* XMLNode::ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr )
             }
             if ( mismatch ) {
                 _document->SetError( XML_ERROR_MISMATCHED_ELEMENT, initialLineNum, "XMLElement name=%s", ele->Name());
-                _document->DeleteNode( node );
+                DeleteNode( node );
                 break;
             }
         }
@@ -1821,11 +1776,11 @@ XMLError XMLElement::QueryInt64Text(int64_t* ival) const
 }
 
 
-XMLError XMLElement::QueryUnsigned64Text(uint64_t* uval) const
+XMLError XMLElement::QueryUnsigned64Text(uint64_t* ival) const
 {
     if(FirstChild() && FirstChild()->ToText()) {
         const char* t = FirstChild()->Value();
-        if(XMLUtil::ToUnsigned64(t, uval)) {
+        if(XMLUtil::ToUnsigned64(t, ival)) {
             return XML_SUCCESS;
         }
         return XML_CAN_NOT_CONVERT_TEXT;
@@ -2457,21 +2412,21 @@ XMLError XMLDocument::SaveFile( FILE* fp, bool compact )
 }
 
 
-XMLError XMLDocument::Parse( const char* xml, size_t nBytes )
+XMLError XMLDocument::Parse( const char* p, size_t len )
 {
     Clear();
 
-    if ( nBytes == 0 || !xml || !*xml ) {
+    if ( len == 0 || !p || !*p ) {
         SetError( XML_ERROR_EMPTY_DOCUMENT, 0, 0 );
         return _errorID;
     }
-    if ( nBytes == static_cast<size_t>(-1) ) {
-        nBytes = strlen( xml );
+    if ( len == static_cast<size_t>(-1) ) {
+        len = strlen( p );
     }
     TIXMLASSERT( _charBuffer == 0 );
-    _charBuffer = new char[ nBytes+1 ];
-    memcpy( _charBuffer, xml, nBytes );
-    _charBuffer[nBytes] = 0;
+    _charBuffer = new char[ len+1 ];
+    memcpy( _charBuffer, p, len );
+    _charBuffer[len] = 0;
 
     Parse();
     if ( Error() ) {
@@ -2494,8 +2449,8 @@ void XMLDocument::Print( XMLPrinter* streamer ) const
         Accept( streamer );
     }
     else {
-        XMLPrinter stdoutStreamer( stdout );
-        Accept( &stdoutStreamer );
+        // XMLPrinter stdoutStreamer( stdout );
+        // Accept( &stdoutStreamer );
     }
 }
 
@@ -2551,7 +2506,7 @@ const char* XMLDocument::ErrorStr() const
 
 void XMLDocument::PrintError() const
 {
-    printf("%s\n", ErrorStr());
+    // printf("%s\n", ErrorStr());
 }
 
 const char* XMLDocument::ErrorName() const
@@ -2668,7 +2623,7 @@ void XMLPrinter::Putc( char ch )
 void XMLPrinter::PrintSpace( int depth )
 {
     for( int i=0; i<depth; ++i ) {
-        Write( "    " );
+        Write( " " );
     }
 }
 
@@ -2775,9 +2730,9 @@ void XMLPrinter::PushAttribute( const char* name, const char* value )
     TIXMLASSERT( _elementJustOpened );
     Putc ( ' ' );
     Write( name );
-    Write( "=\"" );
+    Write( "='" );
     PrintString( value, false );
-    Putc ( '\"' );
+    Putc ( '\'' );
 }
 
 
