@@ -10,6 +10,7 @@ opts_toolbar(
   pngname = "diagram",
   tooltips = NULL,
   hidden = NULL,
+  fixed = FALSE,
   delay_mouseover = 200,
   delay_mouseout = 500
 )
@@ -41,6 +42,9 @@ from the toolbar.
 Valid button groups: selection, zoom, misc
 
 Valid button names: lasso_select, lasso_deselect, zoom_onoff, zoom_rect, zoom_reset, saveaspng}
+
+\item{fixed}{if FALSE (default), the toolbar will float above the graphic, if
+TRUE, the toolbar will be fixed and always visible.}
 
 \item{delay_mouseover}{The duration in milliseconds of the
 transition associated with toolbar display.}

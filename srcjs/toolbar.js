@@ -6,6 +6,7 @@ export default class ToolbarHandler {
     this.svgid = svgid;
     this.clsName = options.clsName;
     this.position = options.position;
+    this.fixed = options.fixed;
     this.delay_over = options.delay_over;
     this.delay_out = options.delay_out;
     this.tooltips = options.tooltips ? options.tooltips : {};
@@ -22,13 +23,33 @@ export default class ToolbarHandler {
       return false;
     }
 
-    const toolbarEl = d3
-      .select('#' + this.containerid + ' .girafe_container_std')
-      .append('div')
-      .attr('id', this.svgid + '_toolbar')
-      .classed(this.clsName, true)
-      .classed(this.clsName + '-' + this.position, true)
-      .attr('data-forsvg', this.svgid);
+    let toolbarEl = null;
+
+    if (!this.fixed) {
+      toolbarEl = d3
+        .select('#' + this.containerid + ' .girafe_container_std')
+        .append('div')
+        .attr('id', this.svgid + '_toolbar')
+        .classed(this.clsName, true)
+        .classed(this.clsName + '-floating', true)
+        .classed(this.clsName + '-floating' + '-' + this.position, true)
+        .attr('data-forsvg', this.svgid);
+    } else if (this.fixed && this.position.includes('bottom')) {
+      toolbarEl = d3
+        .select('#' + this.containerid + ' .girafe_container_std')
+        .append('div')
+        .attr('id', this.svgid + '_toolbar')
+        .classed(this.clsName, true)
+        .attr('data-forsvg', this.svgid);
+    } else {
+      toolbarEl = d3
+        .select('#' + this.containerid + ' .girafe_container_std')
+        .insert('div', ':first-child')
+        .attr('id', this.svgid + '_toolbar')
+        .classed(this.clsName, true)
+        .attr('data-forsvg', this.svgid);
+    }
+    toolbarEl.classed(this.clsName + '-' + this.position, true);
 
     // add blocks
     const that = this;
@@ -114,7 +135,7 @@ export default class ToolbarHandler {
   }
 
   clear(event) {
-    if (this.on && !this.isValidTarget(event.relatedTarget)) {
+    if (!this.fixed && this.on && !this.isValidTarget(event.relatedTarget)) {
       this.on = false;
       d3.select('#' + this.containerid)
         .select('.' + this.clsName)
@@ -129,7 +150,7 @@ export default class ToolbarHandler {
   }
 
   applyOn() {
-    if (!this.on) {
+    if (!this.fixed && !this.on) {
       this.on = true;
       d3.select('#' + this.svgid + '_toolbar')
         .transition()

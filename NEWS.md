@@ -8,6 +8,8 @@
 
 - support trailing commas everywhere
 - Update to tinyxml2 10.0.0
+- girafe toolbar can now be fixed instead of floating. This feature can be 
+defined with `opts_toolbar(fixed = TRUE)`.
 
 # ggiraph 0.8.9
 

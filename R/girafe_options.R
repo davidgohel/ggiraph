@@ -429,7 +429,8 @@ opts_zoom <- function(min = 1, max = 1, duration = 300){
 #'   zoom_reset = 'reset pan/zoom',
 #'   saveaspng = 'download png'
 #' )
-#'
+#' @param fixed if FALSE (default), the toolbar will float above the graphic, if
+#' TRUE, the toolbar will be fixed and always visible.
 #' @param hidden A character vector with the names of the buttons or button groups to be hidden
 #' from the toolbar.
 #'
@@ -465,6 +466,7 @@ opts_toolbar <- function(position = c("topright", "top", "bottom",
                          pngname = "diagram",
                          tooltips = NULL,
                          hidden = NULL,
+                         fixed = FALSE,
                          delay_mouseover = 200,
                          delay_mouseout = 500) {
   position = arg_match(position, error_call = NULL)
@@ -497,6 +499,7 @@ opts_toolbar <- function(position = c("topright", "top", "bottom",
     position = position,
     pngname = pngname,
     tooltips = tooltips,
+    fixed = fixed,
     hidden = hidden,
     delay_over = delay_mouseover,
     delay_out = delay_mouseout
