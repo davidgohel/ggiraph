@@ -87,7 +87,7 @@ always respected when the graph is displayed.
 When a girafe graphic is in a Shiny application,
 graphic will be resized according to the arguments \code{width} and
 \code{height} of the function \code{girafeOutput}. Default
-values are '100\\%' and '500px'. These arguments determine the
+values are '100\\%' and NULL. These arguments determine the
 outer bounding box of the graphic (the HTML element that will
 contain the graphic with an aspect ratio).
 
@@ -96,25 +96,27 @@ document), the graphic will be resized according to the argument \code{width} of
 function \code{girafe}. Its value is beeing used to define a relative
 width of the graphic within its HTML container. Its height is automatically
 adjusted regarding to the argument \code{width} and the aspect ratio.
-
-If this behavior does not fit with your need, I recommend you to use
-package widgetframe that wraps htmlwidgets inside a responsive iframe.
 }
 
 \examples{
 library(ggplot2)
 
 dataset <- mtcars
-dataset$carname = row.names(mtcars)
+dataset$carname <- row.names(mtcars)
 
-gg_point = ggplot( data = dataset,
-    mapping = aes(x = wt, y = qsec, color = disp,
-    tooltip = carname, data_id = carname) ) +
-  geom_point_interactive() + theme_minimal()
+gg_point <- ggplot(
+  data = dataset,
+  mapping = aes(
+    x = wt, y = qsec, color = disp,
+    tooltip = carname, data_id = carname
+  )
+) +
+  geom_point_interactive() +
+  theme_minimal()
 
 x <- girafe(ggobj = gg_point)
 
-if(interactive()){
+if (interactive()) {
   print(x)
 }
 }

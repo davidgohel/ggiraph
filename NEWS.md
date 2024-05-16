@@ -1,5 +1,10 @@
 # ggiraph 0.8.10
 
+## Changes
+
+- `girafeOutput()` argument `height` now defaults to NULL. Set `height` to
+"500px" to recover previous disposition. 
+
 ## Issues 
 
 - fixed size is now defined within style in inches, the size is now as expected.
@@ -7,7 +12,6 @@
 ## Feature
 
 - support trailing commas everywhere
-- Update to tinyxml2 10.0.0
 - girafe toolbar can now be fixed instead of floating. This feature can be 
 defined with `opts_toolbar(fixed = TRUE)`.
 

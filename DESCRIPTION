@@ -1,58 +1,63 @@
-Package: ggiraph
 Type: Package
+Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
-Version: 0.8.10.004
+Version: 0.8.10.005
 Authors@R: c(
-    person("David", "Gohel", role = c("aut", "cre"),
-    email = "david.gohel@ardata.fr"),
-    person("Panagiotis", "Skintzos", role = c("aut"),
-    email = "sigmapi@posteo.net"),
-    person("Mike", "Bostock", role = c("cph"),
-    comment = "d3.js"), 
-    person("Speros", "Kokenes", role = c("cph"),
-    comment = "d3-lasso"), 
-    person("Eric", "Shull", role = c("cph"),
-    comment = "saveSvgAsPng js library"), 
-    person("Lee", "Thomason", role = c("cph"),
-    comment = "TinyXML2"), 
-    person("Vladimir", "Agafonkin", role = c("cph"),
-    comment = "Flatbush"), 
-    person("Eric", "Book", role = c("ctb"),
-    comment = "hline and vline geoms")
-    )
+    person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
+    person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
+    person("Mike", "Bostock", role = "cph",
+           comment = "d3.js"),
+    person("Speros", "Kokenes", role = "cph",
+           comment = "d3-lasso"),
+    person("Eric", "Shull", role = "cph",
+           comment = "saveSvgAsPng js library"),
+    person("Lee", "Thomason", role = "cph",
+           comment = "TinyXML2"),
+    person("Vladimir", "Agafonkin", role = "cph",
+           comment = "Flatbush"),
+    person("Eric", "Book", role = "ctb",
+           comment = "hline and vline geoms")
+  )
+Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
 License: GPL-3
-Copyright: See file COPYRIGHTS.
-Encoding: UTF-8
-SystemRequirements: libpng
-Imports:
-    grid, ggplot2 (>= 3.5.0),
-    htmlwidgets (>= 1.5),
-    stats,
-    htmltools,
-    Rcpp (>= 1.0),
-    systemfonts,
-    purrr, rlang, uuid, 
-    vctrs, cli
-LinkingTo: Rcpp, systemfonts
-Suggests:
-    knitr,
-    tinytest,
-    rmarkdown,
-    maps,
-    hexbin,
-    shiny,
-    sf (>= 1.0),
-    ggrepel (>= 0.9.1),
-    quantreg,
-    xml2 (>= 1.0),
-    dplyr,
-    gdtools (>= 0.3.0)
-VignetteBuilder: knitr
 URL: https://davidgohel.github.io/ggiraph/
 BugReports: https://github.com/davidgohel/ggiraph/issues
-RoxygenNote: 7.3.1
+Imports:
+    cli,
+    ggplot2 (>= 3.5.0),
+    grid,
+    htmltools,
+    htmlwidgets (>= 1.5),
+    purrr,
+    Rcpp (>= 1.0),
+    rlang,
+    stats,
+    systemfonts,
+    uuid,
+    vctrs
+Suggests:
+    dplyr,
+    gdtools (>= 0.3.0),
+    ggrepel (>= 0.9.1),
+    hexbin,
+    knitr,
+    maps,
+    quantreg,
+    rmarkdown,
+    sf (>= 1.0),
+    shiny,
+    tinytest,
+    xml2 (>= 1.0)
+LinkingTo: 
+    Rcpp,
+    systemfonts
+VignetteBuilder: 
+    knitr
+Copyright: See file COPYRIGHTS.
+Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+SystemRequirements: libpng
 Collate: 
     'RcppExports.R'
     'ipar.R'

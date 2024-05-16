@@ -45,16 +45,21 @@
 #' library(ggplot2)
 #'
 #' dataset <- mtcars
-#' dataset$carname = row.names(mtcars)
+#' dataset$carname <- row.names(mtcars)
 #'
-#' gg_point = ggplot( data = dataset,
-#'     mapping = aes(x = wt, y = qsec, color = disp,
-#'     tooltip = carname, data_id = carname) ) +
-#'   geom_point_interactive() + theme_minimal()
+#' gg_point <- ggplot(
+#'   data = dataset,
+#'   mapping = aes(
+#'     x = wt, y = qsec, color = disp,
+#'     tooltip = carname, data_id = carname
+#'   )
+#' ) +
+#'   geom_point_interactive() +
+#'   theme_minimal()
 #'
 #' x <- girafe(ggobj = gg_point)
 #'
-#' if(interactive()){
+#' if (interactive()) {
 #'   print(x)
 #' }
 #' @section Widget options:
@@ -76,7 +81,7 @@
 #' When a girafe graphic is in a Shiny application,
 #' graphic will be resized according to the arguments `width` and
 #' `height` of the function `girafeOutput`. Default
-#' values are '100\%' and '500px'. These arguments determine the
+#' values are '100\%' and NULL. These arguments determine the
 #' outer bounding box of the graphic (the HTML element that will
 #' contain the graphic with an aspect ratio).
 #'
@@ -85,18 +90,14 @@
 #' function `girafe`. Its value is beeing used to define a relative
 #' width of the graphic within its HTML container. Its height is automatically
 #' adjusted regarding to the argument `width` and the aspect ratio.
-#'
-#' If this behavior does not fit with your need, I recommend you to use
-#' package widgetframe that wraps htmlwidgets inside a responsive iframe.
 #' @seealso [girafe_options()], [validated_fonts()], [dsvg()]
 #' @export
 #' @importFrom uuid UUIDgenerate
 girafe <- function(
-  code, ggobj = NULL,  pointsize = 12,
-  width_svg = NULL, height_svg = NULL,
-  options = list(), dependencies = NULL, ...) {
-
-  path = tempfile()
+    code, ggobj = NULL, pointsize = 12,
+    width_svg = NULL, height_svg = NULL,
+    options = list(), dependencies = NULL, ...) {
+  path <- tempfile()
 
   if (is.null(width_svg)) {
     width_svg <- default_width(default = 6)
@@ -107,7 +108,7 @@ girafe <- function(
 
 
   args <- list(...)
-  args$canvas_id <- args$canvas_id %||% paste("svg", gsub('-', '_', UUIDgenerate()), sep = "_")
+  args$canvas_id <- args$canvas_id %||% paste("svg", gsub("-", "_", UUIDgenerate()), sep = "_")
   args$file <- path
   args$width <- width_svg
   args$height <- height_svg
@@ -144,8 +145,9 @@ girafe <- function(
   tryCatch({
     if (!is.null(ggobj)) {
       print(ggobj)
-    } else
+    } else {
       code
+    }
   }, finally = {
     if (length(dev.list()) > devlength) {
       dev.off()
@@ -165,11 +167,10 @@ girafe <- function(
   unlink(path)
 
   createWidget(
-    name = 'girafe', x = x, package = 'ggiraph',
+    name = "girafe", x = x, package = "ggiraph",
     sizingPolicy = sizing_policy,
     dependencies = dependencies
   )
-
 }
 
 
@@ -180,19 +181,33 @@ girafe <- function(
 #' @importFrom grDevices dev.off
 #' @title Create a girafe output element
 #' @description Render a girafe within an application page.
+#' @section Size control:
+#' If you want to control a fixed size, use
+#' `opts_sizing(rescale = FALSE)` and set the chart size
+#' with `girafe(width_svg=..., height_svg=...)`.
+#'
+#' If you want
+#' the graphic to fit the available width,
+#' use `opts_sizing(rescale = TRUE)` and set the size of the
+#' graphic with `girafe(width_svg=..., height_svg=...)`, this
+#' size will define the aspect ratio.
 #'
 #' @param outputId output variable to read the girafe from. Do not use special JavaScript
 #' characters such as a period \code{.} in the id, this would create a JavaScript error.
-#' @param width widget width
-#' @param height widget height
+#' @param width widget width, its default value is set so that the graphic can
+#' cover the entire available horizontal space.
+#' @param height widget height, its default value is NULL so that width
+#' adaptation is not restricted. The height will then be defined according
+#' to the width used and the aspect ratio. Only use a value for the height
+#' if you have a specific reason and want to strictly control the size.
 #' @export
-girafeOutput <- function(outputId, width = "100%", height = "500px"){
+girafeOutput <- function(outputId, width = "100%", height = NULL) {
   # if( "auto" %in% height )
   #   stop("'height:auto' is not supported", call. = FALSE)
   # if( "auto" %in% width )
   #   stop("'width:auto' is not supported", call. = FALSE)
 
-  shinyWidgetOutput(outputId, 'girafe', package = 'ggiraph', width = width, height = height)
+  shinyWidgetOutput(outputId, "girafe", package = "ggiraph", width = width, height = height)
 }
 
 #' @title Reactive version of girafe
@@ -207,7 +222,9 @@ girafeOutput <- function(outputId, width = "100%", height = "500px"){
 #' when `renderGirafe` is used in an interactive R Markdown document.
 #' @export
 renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE, outputArgs = list()) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
   f <- shinyRenderWidget(expr, girafeOutput, env, quoted = TRUE)
   # shinyRenderWidget is missing outputArgs argument
   # set outputArgs to the result function instead
@@ -217,7 +234,7 @@ renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE, outputArgs 
   f
 }
 
-girafe_app_paths <- function(){
+girafe_app_paths <- function() {
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
   list.files(example_dir, full.names = TRUE)
 }
@@ -231,18 +248,21 @@ girafe_app_paths <- function(){
 #' iris, maps and modal.
 #'
 #' @export
-run_girafe_example <- function(name = "crimes"){
+run_girafe_example <- function(name = "crimes") {
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
   apps <- girafe_app_paths()
-  if( !name %in% basename(apps) ){
+  if (!name %in% basename(apps)) {
     abort("could not find app named ", shQuote(name), " in the following list: ",
-         paste0(shQuote(basename(apps)), collapse = ", "), call = NULL
+      paste0(shQuote(basename(apps)), collapse = ", "),
+      call = NULL
     )
   }
-  if(requireNamespace("shiny"))
+  if (requireNamespace("shiny")) {
     shiny::runApp(
       appDir = file.path(example_dir, name),
-      display.mode = "showcase")
-  else warning("package shiny is required to be able to use the function")
+      display.mode = "showcase"
+    )
+  } else {
+    warning("package shiny is required to be able to use the function")
+  }
 }
-
