@@ -1,7 +1,7 @@
 ## Test environments
 
-* local R installation, R 4.4
-* Ubuntu, mac-os and windows with R release
+* local mac-os R 4.4 installation
+* Ubuntu and windows with R release and devel
 * win-builder (older, release and devel)
 
 ## R CMD check results

@@ -20,7 +20,6 @@ jobs:
         config:
           - {os: windows-latest, r: 'devel'}
           - {os: windows-latest, r: 'release'}
-          - {os: macos-latest, r: 'release'}
           - {os: ubuntu-latest, r: 'devel'}
           - {os: ubuntu-latest, r: 'release'}
     env:
@@ -30,16 +29,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
-
-      - if: runner.os == 'macOS'
-        run: |
-          brew install --cask xquartz
-          brew install libpng
-          echo "CFLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
-          echo "CPPFLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
-          echo "CXXFLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
-          echo "CXX11FLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
-          echo "LDFLAGS=-L/opt/homebrew/lib" >> "$GITHUB_ENV"
 
       - uses: r-lib/actions/setup-r@v2
         with:
