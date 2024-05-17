@@ -1,6 +1,6 @@
 ## Test environments
 
-* local R installation, R 4.3.2
+* local R installation, R 4.4
 * Ubuntu, mac-os and windows with R release
 * win-builder (older, release and devel)
 
@@ -10,8 +10,5 @@ There were no ERROR, WARNING or NOTE.
 
 ## Reverse dependencies
 
-There is a new issue related to ggiraph with package 'vlda' because
-`ggiraphOutput()` has been deprecated in favor of `girafeOutput()`.
-Author of 'vlda' was notified almost a year ago that this 
-function would be deprecated (https://github.com/pnuwon/vlda/issues/1).
+There is no issue related to ggiraph that have been detected.
 
