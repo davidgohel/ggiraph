@@ -35,6 +35,11 @@ jobs:
         run: |
           brew install --cask xquartz
           brew install libpng
+          echo "CFLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
+          echo "CPPFLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
+          echo "CXXFLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
+          echo "CXX11FLAGS=-I/opt/homebrew/include" >> "$GITHUB_ENV"
+          echo "LDFLAGS=-L/opt/homebrew/lib" >> "$GITHUB_ENV"
 
       - uses: r-lib/actions/setup-r@v2
         with:
