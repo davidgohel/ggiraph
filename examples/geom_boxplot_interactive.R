@@ -16,8 +16,8 @@ p <- ggplot(mpg) +
       tooltip = after_stat({
         paste0(
           "class: ", .data$fill,
-          "\nQ1: ", prettyNum(.data$ymin),
-          "\nQ3: ", prettyNum(.data$ymax),
+          "\nQ1: ", prettyNum(.data$lower),
+          "\nQ3: ", prettyNum(.data$upper),
           "\nmedian: ", prettyNum(.data$middle)
         )
       })
@@ -40,8 +40,8 @@ p <- ggplot(mpg) +
       tooltip = after_stat({
         paste0(
           "class: ", .data$fill,
-          "\nQ1: ", prettyNum(.data$ymin),
-          "\nQ3: ", prettyNum(.data$ymax),
+          "\nQ1: ", prettyNum(.data$lower),
+          "\nQ3: ", prettyNum(.data$upper),
           "\nmedian: ", prettyNum(.data$middle)
         )
       }),
