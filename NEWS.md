@@ -1,5 +1,9 @@
 # ggiraph 0.9.0
 
+## Issues
+
+- enable build in Alpine linux, thanks to Sebastian Meyer.
+
 ## Changes
 
 - defunct `ggiraph()`, `ggiraphOutput()` and `renderggiraph()`.
