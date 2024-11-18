@@ -4,27 +4,15 @@
 \alias{renderggiraph}
 \title{Reactive version of ggiraph object}
 \usage{
-renderggiraph(expr, env = parent.frame(), quoted = FALSE)
+renderggiraph(...)
 }
 \arguments{
-\item{expr}{An expression that returns a \code{\link[=ggiraph]{ggiraph()}} object.}
-
-\item{env}{The environment in which to evaluate expr.}
-
-\item{quoted}{Is \code{expr} a quoted expression}
+\item{...}{unused}
 }
 \description{
 Makes a reactive version of a ggiraph object for use in Shiny.
 
-This function is now deprecated, users should
+This function is now defunct, users should
 now use function \code{\link[=renderGirafe]{renderGirafe()}}.
-}
-\examples{
-\dontrun{
-if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny" )
-  shinyAppDir(appDir = app_dir )
-}
-}
 }
 \keyword{internal}

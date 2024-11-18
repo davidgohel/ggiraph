@@ -2,71 +2,17 @@
 % Please edit documentation in R/ggiraph.R
 \name{ggiraph}
 \alias{ggiraph}
-\title{Create a ggiraph object (deprecated)}
+\title{Create a ggiraph object (defunct)}
 \usage{
-ggiraph(
-  code,
-  ggobj = NULL,
-  pointsize = 12,
-  width = 0.75,
-  width_svg = 6,
-  height_svg = 5,
-  tooltip_extra_css = NULL,
-  hover_css = NULL,
-  tooltip_opacity = 0.9,
-  tooltip_offx = 10,
-  tooltip_offy = 0,
-  tooltip_zindex = 999,
-  zoom_max = 1,
-  selection_type = "multiple",
-  selected_css = NULL,
-  ...
-)
+ggiraph(...)
 }
 \arguments{
-\item{code}{Plotting code to execute}
-
-\item{ggobj}{ggplot object to print. Argument \code{code} will
-be ignored if this argument is supplied.}
-
-\item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
-
-\item{width}{widget width ratio (0 < width <= 1).}
-
-\item{width_svg, height_svg}{The width and height of the graphics region in inches.
-The default values are 6 and 5 inches. This will define the aspect ratio of the
-graphic as it will be used to define viewbox attribute of the SVG result.
-
-If you use \code{girafe()} in an 'R Markdown' document, we
-recommend not using these arguments so that the knitr
-options \code{fig.width} and \code{fig.height} are used instead.}
-
-\item{tooltip_extra_css}{extra css (added to \code{position: absolute;pointer-events: none;})
-used to customize tooltip area.}
-
-\item{hover_css}{css to apply when mouse is hover and element with a data-id attribute.}
-
-\item{tooltip_opacity}{tooltip opacity}
-
-\item{tooltip_offx}{tooltip x offset}
-
-\item{tooltip_offy}{tooltip y offset}
-
-\item{tooltip_zindex}{tooltip css z-index, default to 999.}
-
-\item{zoom_max}{maximum zoom factor}
-
-\item{selection_type}{row selection mode ("single", "multiple", "none")
-when widget is in a Shiny application.}
-
-\item{selected_css}{css to apply when element is selected (shiny only).}
-
-\item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
+\item{...}{unused}
 }
 \description{
 Create an interactive graphic to be used in a web browser.
 
-This function is now deprecated, users should
+This function is now defunct, users should
 now use function \code{\link[=girafe]{girafe()}}.
 }
 \keyword{internal}

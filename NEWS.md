@@ -1,3 +1,9 @@
+# ggiraph 0.9.0
+
+## Changes
+
+- defunct `ggiraph()`, `ggiraphOutput()` and `renderggiraph()`.
+
 # ggiraph 0.8.10
 
 ## Changes

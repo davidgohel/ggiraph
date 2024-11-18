@@ -4,31 +4,15 @@
 \alias{ggiraphOutput}
 \title{Create a ggiraph output element}
 \usage{
-ggiraphOutput(outputId, width = "100\%", height = "500px")
+ggiraphOutput(...)
 }
 \arguments{
-\item{outputId}{output variable to read the ggiraph from.}
-
-\item{width}{widget width}
-
-\item{height}{widget height}
+\item{...}{unused}
 }
 \description{
 Render a ggiraph within an application page.
 
-This function is now deprecated, users should
+This function is now defunct, users should
 now use function \code{\link[=girafeOutput]{girafeOutput()}}.
-}
-\examples{
-\dontrun{
-if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny/cars" )
-  shinyAppDir(appDir = app_dir )
- }
-if( require(shiny) && interactive() ){
-  app_dir <- file.path( system.file(package = "ggiraph"), "examples/shiny/crimes" )
-  shinyAppDir(appDir = app_dir )
-}
-}
 }
 \keyword{internal}

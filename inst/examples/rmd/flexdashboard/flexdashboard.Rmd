@@ -31,7 +31,7 @@ gg_point = ggplot(dataset, aes(x = Sepal.Length, y = Petal.Width,
                                tooltip = tooltip, onclick = clickjs) ) +
   geom_point_interactive() + theme_light()
 
-x <- ggiraph(code = {print(gg_point)}, zoom_max = 4, hover_css = "stroke:black;fill:orange;") 
+x <- girafe(code = {print(gg_point)}, width_svg = 8, height_svg = 5)
 x
 ```
 
