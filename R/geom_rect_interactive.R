@@ -1,7 +1,7 @@
 #' @title Create interactive rectangles
 #'
 #' @description
-#' These geometries are based on [geom_rect()] and [geom_tile()].
+#' These geometries are based on [ggplot2::geom_rect()] and [ggplot2::geom_tile()].
 #' See the documentation for those functions for more details.
 #'
 #' @note

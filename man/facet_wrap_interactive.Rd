@@ -20,7 +20,7 @@ An interactive facetting object.
 }
 \description{
 These facets are based on
-\code{\link[=facet_wrap]{facet_wrap()}}.
+\code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
 
 To make a facet interactive, it is mandatory to use
 \code{\link[=labeller_interactive]{labeller_interactive()}} for argument \code{labeller}.

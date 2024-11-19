@@ -1,7 +1,7 @@
 #' @title Create interactive point counts
 #'
 #' @description
-#' The geometry is based on [geom_bin2d()].
+#' The geometry is based on [ggplot2::geom_bin2d()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

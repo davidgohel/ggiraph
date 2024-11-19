@@ -1,7 +1,7 @@
 #' @title Create interactive contours of a 2d density estimate
 #'
 #' @description
-#' The geometries are based on [geom_density_2d()] and [geom_density_2d_filled()].
+#' The geometries are based on [ggplot2::geom_density_2d()] and [ggplot2::geom_density_2d_filled()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

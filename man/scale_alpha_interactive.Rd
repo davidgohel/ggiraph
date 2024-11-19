@@ -33,13 +33,13 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[=scale_alpha]{scale_alpha()}},
-\code{\link[=scale_alpha_continuous]{scale_alpha_continuous()}},
-\code{\link[=scale_alpha_discrete]{scale_alpha_discrete()}},
-\code{\link[=scale_alpha_binned]{scale_alpha_binned()}},
-\code{\link[=scale_alpha_ordinal]{scale_alpha_ordinal()}},
-\code{\link[=scale_alpha_date]{scale_alpha_date()}},
-\code{\link[=scale_alpha_datetime]{scale_alpha_datetime()}}.
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha()}},
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha_continuous()}},
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha_discrete()}},
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha_binned()}},
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha_ordinal()}},
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha_date()}},
+\code{\link[ggplot2:scale_alpha]{ggplot2::scale_alpha_datetime()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{

@@ -16,7 +16,7 @@ an interactive label object
 }
 \description{
 This function returns an object that can be used as a label
-via the \code{\link[=labs]{labs()}} family of functions or
+via the \code{\link[ggplot2:labs]{ggplot2::labs()}} family of functions or
 when setting a \code{scale}/\code{guide} name/title or key label.
 It passes the interactive parameters to a theme element created via
 \code{\link[=element_text_interactive]{element_text_interactive()}} or via an interactive guide.

@@ -1,6 +1,6 @@
 #' @title Create interactive legend guide
 #' @description
-#' The guide is based on [guide_legend()].
+#' The guide is based on [ggplot2::guide_legend()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function.

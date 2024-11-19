@@ -16,7 +16,7 @@ guide_colorsteps_interactive(...)
 An interactive guide object.
 }
 \description{
-The guide is based on \code{\link[=guide_coloursteps]{guide_coloursteps()}}.
+The guide is based on \code{\link[ggplot2:guide_coloursteps]{ggplot2::guide_coloursteps()}}.
 See the documentation for that function for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{

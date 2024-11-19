@@ -1,8 +1,8 @@
 #' @title Create interactive histograms and frequency polygons
 #'
 #' @description
-#' The geometries are based on [geom_histogram()]
-#' and [geom_freqpoly()].
+#' The geometries are based on [ggplot2::geom_histogram()]
+#' and [ggplot2::geom_freqpoly()].
 #' See the documentation for those functions for more details.
 #'
 #' This interactive version is only providing a single tooltip per

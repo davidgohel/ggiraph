@@ -39,12 +39,12 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[=scale_colour_brewer]{scale_colour_brewer()}},
-\code{\link[=scale_fill_brewer]{scale_fill_brewer()}},
-\code{\link[=scale_colour_distiller]{scale_colour_distiller()}},
-\code{\link[=scale_fill_distiller]{scale_fill_distiller()}},
-\code{\link[=scale_colour_fermenter]{scale_colour_fermenter()}},
-\code{\link[=scale_fill_fermenter]{scale_fill_fermenter()}}.
+\code{\link[ggplot2:scale_brewer]{ggplot2::scale_colour_brewer()}},
+\code{\link[ggplot2:scale_brewer]{ggplot2::scale_fill_brewer()}},
+\code{\link[ggplot2:scale_brewer]{ggplot2::scale_colour_distiller()}},
+\code{\link[ggplot2:scale_brewer]{ggplot2::scale_fill_distiller()}},
+\code{\link[ggplot2:scale_brewer]{ggplot2::scale_colour_fermenter()}},
+\code{\link[ggplot2:scale_brewer]{ggplot2::scale_fill_fermenter()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{

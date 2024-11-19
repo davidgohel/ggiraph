@@ -16,7 +16,7 @@ guide_colorbar_interactive(...)
 An interactive guide object.
 }
 \description{
-The guide is based on \code{\link[=guide_colourbar]{guide_colourbar()}}.
+The guide is based on \code{\link[ggplot2:guide_colourbar]{ggplot2::guide_colourbar()}}.
 See the documentation for that function for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{

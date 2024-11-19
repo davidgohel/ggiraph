@@ -2,7 +2,7 @@
 #' parameterised by location, direction and distance
 #'
 #' @description
-#' The geometry is based on [geom_spoke()].
+#' The geometry is based on [ggplot2::geom_spoke()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

@@ -1,7 +1,7 @@
 #' @title Create interactive textual annotations
 #'
 #' @description
-#' The geometries are based on [geom_text()] and [geom_label()].
+#' The geometries are based on [ggplot2::geom_text()] and [ggplot2::geom_label()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

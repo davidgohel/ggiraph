@@ -1,7 +1,7 @@
 #' @title Create interactive dot plots
 #'
 #' @description
-#' This geometry is based on [geom_dotplot()].
+#' This geometry is based on [ggplot2::geom_dotplot()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

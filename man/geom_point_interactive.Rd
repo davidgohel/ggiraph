@@ -11,7 +11,7 @@ geom_point_interactive(...)
 plus any of the \link{interactive_parameters}.}
 }
 \description{
-The geometry is based on \code{\link[=geom_point]{geom_point()}}.
+The geometry is based on \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
 See the documentation for those functions for more details.
 }
 \note{
@@ -21,7 +21,7 @@ The following shapes id 3, 4 and 7 to 14 are composite symbols and should not be
 
 The interactive parameters can be supplied with two ways:
 \itemize{
-\item As aesthetics with the mapping argument (via \code{\link[=aes]{aes()}}).
+\item As aesthetics with the mapping argument (via \code{\link[ggplot2:aes]{ggplot2::aes()}}).
 In this way they can be mapped to data columns and apply to a set of geometries.
 
 \item As plain arguments into the geom_*_interactive function.

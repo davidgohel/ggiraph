@@ -22,15 +22,15 @@ geom_pointrange_interactive(...)
 plus any of the \link{interactive_parameters}.}
 }
 \description{
-These geometries are based on \code{\link[=geom_crossbar]{geom_crossbar()}}, \code{\link[=geom_errorbar]{geom_errorbar()}},
-\code{\link[=geom_linerange]{geom_linerange()}} and \code{\link[=geom_pointrange]{geom_pointrange()}}.
+These geometries are based on \code{\link[ggplot2:geom_linerange]{ggplot2::geom_crossbar()}}, \code{\link[ggplot2:geom_linerange]{ggplot2::geom_errorbar()}},
+\code{\link[ggplot2:geom_linerange]{ggplot2::geom_linerange()}} and \code{\link[ggplot2:geom_linerange]{ggplot2::geom_pointrange()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
 \itemize{
-\item As aesthetics with the mapping argument (via \code{\link[=aes]{aes()}}).
+\item As aesthetics with the mapping argument (via \code{\link[ggplot2:aes]{ggplot2::aes()}}).
 In this way they can be mapped to data columns and apply to a set of geometries.
 
 \item As plain arguments into the geom_*_interactive function.

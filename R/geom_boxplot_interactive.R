@@ -112,7 +112,7 @@ StatInteractiveBoxplot <- ggproto(
 #' @title Create interactive boxplot
 #'
 #' @description
-#' The geometry is based on [geom_boxplot()].
+#' The geometry is based on [ggplot2::geom_boxplot()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

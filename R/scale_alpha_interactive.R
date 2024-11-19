@@ -1,12 +1,12 @@
 #' @title Create interactive scales for alpha transparency
 #' @description These scales are based on
-#' [scale_alpha()],
-#' [scale_alpha_continuous()],
-#' [scale_alpha_discrete()],
-#' [scale_alpha_binned()],
-#' [scale_alpha_ordinal()],
-#' [scale_alpha_date()],
-#' [scale_alpha_datetime()].
+#' [ggplot2::scale_alpha()],
+#' [ggplot2::scale_alpha_continuous()],
+#' [ggplot2::scale_alpha_discrete()],
+#' [ggplot2::scale_alpha_binned()],
+#' [ggplot2::scale_alpha_ordinal()],
+#' [ggplot2::scale_alpha_date()],
+#' [ggplot2::scale_alpha_datetime()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

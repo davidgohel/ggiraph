@@ -11,7 +11,7 @@ geom_boxplot_interactive(...)
 plus any of the \link{interactive_parameters}.}
 }
 \description{
-The geometry is based on \code{\link[=geom_boxplot]{geom_boxplot()}}.
+The geometry is based on \code{\link[ggplot2:geom_boxplot]{ggplot2::geom_boxplot()}}.
 See the documentation for that function for more details.
 }
 \details{
@@ -26,7 +26,7 @@ will be incorrect, which will result in an incorrect plot.
 
 The interactive parameters can be supplied with two ways:
 \itemize{
-\item As aesthetics with the mapping argument (via \code{\link[=aes]{aes()}}).
+\item As aesthetics with the mapping argument (via \code{\link[ggplot2:aes]{ggplot2::aes()}}).
 In this way they can be mapped to data columns and apply to a set of geometries.
 
 \item As plain arguments into the geom_*_interactive function.

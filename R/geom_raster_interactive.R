@@ -1,7 +1,7 @@
 #' @title Create interactive raster rectangles
 #'
 #' @description
-#' The geometry is based on [geom_raster()].
+#' The geometry is based on [ggplot2::geom_raster()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

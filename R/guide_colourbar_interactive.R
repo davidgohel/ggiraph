@@ -1,6 +1,6 @@
 #' @title Create interactive continuous colour bar guide
 #' @description
-#' The guide is based on [guide_colourbar()].
+#' The guide is based on [ggplot2::guide_colourbar()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function.

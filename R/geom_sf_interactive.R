@@ -1,8 +1,9 @@
 #' @title Create interactive sf objects
 #'
 #' @description
-#' These geometries are based on [geom_sf()], [geom_sf_label()] and [geom_sf_text()].
-#' See the documentation for those functions for more details.
+#' These geometries are based on [ggplot2::geom_sf()], [ggplot2::geom_sf_label()]
+#' and [ggplot2::geom_sf_text()]. See the documentation for those functions for
+#' more details.
 #'
 #' @param ... arguments passed to base function,
 #' plus any of the [interactive_parameters].
@@ -33,7 +34,7 @@ GeomInteractiveSf <- ggproto(
                         lineend = "butt",
                         linejoin = "round",
                         linemitre = 10,
-                        na.rm = TRUE, 
+                        na.rm = TRUE,
                         .ipar = IPAR_NAMES) {
     # call original draw_panel for each data row/geometry
     # this way multi geometries are handled too

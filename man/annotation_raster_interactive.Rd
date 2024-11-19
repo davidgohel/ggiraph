@@ -11,7 +11,7 @@ annotation_raster_interactive(...)
 plus any of the \link{interactive_parameters}.}
 }
 \description{
-The layer is based on \code{\link[=annotation_raster]{annotation_raster()}}.
+The layer is based on \code{\link[ggplot2:annotation_raster]{ggplot2::annotation_raster()}}.
 See the documentation for that function for more details.
 }
 \section{Details for annotate_*_interactive functions}{

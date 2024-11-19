@@ -1,7 +1,7 @@
 #' @title Create interactive line segments and curves
 #'
 #' @description
-#' The geometries are based on [geom_segment()] and [geom_curve()].
+#' The geometries are based on [ggplot2::geom_segment()] and [ggplot2::geom_curve()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

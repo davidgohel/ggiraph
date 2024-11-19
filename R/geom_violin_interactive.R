@@ -1,7 +1,7 @@
 #' @title Create interactive violin plot
 #'
 #' @description
-#' The geometry is based on [geom_violin()].
+#' The geometry is based on [ggplot2::geom_violin()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

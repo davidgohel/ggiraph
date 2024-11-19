@@ -1,7 +1,7 @@
 #' @title Create interactive hexagonal heatmaps
 #'
 #' @description
-#' The geometry is based on [geom_hex()].
+#' The geometry is based on [ggplot2::geom_hex()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

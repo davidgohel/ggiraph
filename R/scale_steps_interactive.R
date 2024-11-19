@@ -1,11 +1,11 @@
 #' @title Create interactive binned gradient colour scales
 #' @description These scales are based on
-#' [scale_colour_steps()],
-#' [scale_fill_steps()],
-#' [scale_colour_steps2()],
-#' [scale_fill_steps2()],
-#' [scale_colour_stepsn()] and
-#' [scale_fill_stepsn()].
+#' [ggplot2::scale_colour_steps()],
+#' [ggplot2::scale_fill_steps()],
+#' [ggplot2::scale_colour_steps2()],
+#' [ggplot2::scale_fill_steps2()],
+#' [ggplot2::scale_colour_stepsn()] and
+#' [ggplot2::scale_fill_stepsn()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

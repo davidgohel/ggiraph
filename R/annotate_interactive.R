@@ -1,7 +1,7 @@
 #' @title Create interactive annotations
 #'
 #' @description
-#' The layer is based on [annotate()].
+#' The layer is based on [ggplot2::annotate()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function,

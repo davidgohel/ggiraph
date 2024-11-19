@@ -42,16 +42,16 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[=scale_size]{scale_size()}},
-\code{\link[=scale_size_area]{scale_size_area()}},
-\code{\link[=scale_size_continuous]{scale_size_continuous()}},
-\code{\link[=scale_size_discrete]{scale_size_discrete()}},
-\code{\link[=scale_size_binned]{scale_size_binned()}},
-\code{\link[=scale_size_binned_area]{scale_size_binned_area()}},
-\code{\link[=scale_size_date]{scale_size_date()}},
-\code{\link[=scale_size_datetime]{scale_size_datetime()}},
-\code{\link[=scale_size_ordinal]{scale_size_ordinal()}} and
-\code{\link[=scale_radius]{scale_radius()}}.
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_area()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_continuous()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_discrete()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_binned()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_binned_area()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_date()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_datetime()}},
+\code{\link[ggplot2:scale_size]{ggplot2::scale_size_ordinal()}} and
+\code{\link[ggplot2:scale_size]{ggplot2::scale_radius()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{

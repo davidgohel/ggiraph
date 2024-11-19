@@ -7,7 +7,7 @@
 labeller_interactive(.mapping = NULL, ...)
 }
 \arguments{
-\item{.mapping}{set of aesthetic mappings created by \code{\link[=aes]{aes()}} or \code{\link[=aes_]{aes_()}}.
+\item{.mapping}{set of aesthetic mappings created by \code{\link[ggplot2:aes]{ggplot2::aes()}} or \code{\link[ggplot2:aes_]{ggplot2::aes_()}}.
 It should provide mappings for any of the \link{interactive_parameters}.
 In addition it understands a \code{label} parameter for creating a new label text.}
 

@@ -1,11 +1,11 @@
 #' @title Create interactive colorbrewer scales
 #' @description These scales are based on
-#' [scale_colour_brewer()],
-#' [scale_fill_brewer()],
-#' [scale_colour_distiller()],
-#' [scale_fill_distiller()],
-#' [scale_colour_fermenter()],
-#' [scale_fill_fermenter()].
+#' [ggplot2::scale_colour_brewer()],
+#' [ggplot2::scale_fill_brewer()],
+#' [ggplot2::scale_colour_distiller()],
+#' [ggplot2::scale_fill_distiller()],
+#' [ggplot2::scale_colour_fermenter()],
+#' [ggplot2::scale_fill_fermenter()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

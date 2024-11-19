@@ -1,8 +1,8 @@
 #' Create interactive vertical intervals: lines, crossbars & errorbars
 #'
 #' @description
-#' These geometries are based on [geom_crossbar()], [geom_errorbar()],
-#' [geom_linerange()] and [geom_pointrange()].
+#' These geometries are based on [ggplot2::geom_crossbar()], [ggplot2::geom_errorbar()],
+#' [ggplot2::geom_linerange()] and [ggplot2::geom_pointrange()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

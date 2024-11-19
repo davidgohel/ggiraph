@@ -4,8 +4,8 @@
 #' With these functions the user can add interactivity to various [theme][ggplot2::theme]
 #' elements.
 #'
-#' They are based on [element_rect()],
-#' [element_line()] and [element_text()]
+#' They are based on [ggplot2::element_rect()],
+#' [ggplot2::element_line()] and [ggplot2::element_text()]
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,
@@ -63,7 +63,7 @@ element_interactive <- function(element_func,
 #' @title Create an interactive label
 #' @description
 #' This function returns an object that can be used as a label
-#' via the [labs()] family of functions or
+#' via the [ggplot2::labs()] family of functions or
 #' when setting a `scale`/`guide` name/title or key label.
 #' It passes the interactive parameters to a theme element created via
 #' [element_text_interactive()] or via an interactive guide.

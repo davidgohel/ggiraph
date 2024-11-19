@@ -1,6 +1,6 @@
 #' @title Create interactive bins guide
 #' @description
-#' The guide is based on [guide_bins()].
+#' The guide is based on [ggplot2::guide_bins()].
 #' See the documentation for that function for more details.
 #'
 #' @param ... arguments passed to base function.

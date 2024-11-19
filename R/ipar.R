@@ -44,7 +44,7 @@
 #' @section Details for interactive geom functions:
 #' The interactive parameters can be supplied with two ways:
 #' \itemize{
-#'   \item As aesthetics with the mapping argument (via [aes()]).
+#'   \item As aesthetics with the mapping argument (via [ggplot2::aes()]).
 #'   In this way they can be mapped to data columns and apply to a set of geometries.
 #'
 #'   \item As plain arguments into the geom_*_interactive function.
@@ -92,7 +92,7 @@
 #' and they should be scalar values.
 #'
 #' For theme text elements ([element_text_interactive()]), the interactive parameters
-#' can also be supplied while setting a label value, via the [labs()] family
+#' can also be supplied while setting a label value, via the [ggplot2::labs()] family
 #' of functions or when setting a scale/guide title or key label.
 #' Instead of setting a character value for the element, function
 #' [label_interactive()] can be used to define interactive parameters

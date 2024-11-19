@@ -13,7 +13,7 @@ guide_bins_interactive(...)
 An interactive guide object.
 }
 \description{
-The guide is based on \code{\link[=guide_bins]{guide_bins()}}.
+The guide is based on \code{\link[ggplot2:guide_bins]{ggplot2::guide_bins()}}.
 See the documentation for that function for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{

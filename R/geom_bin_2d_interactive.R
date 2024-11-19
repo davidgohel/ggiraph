@@ -1,7 +1,7 @@
 #' @title Create interactive heatmaps of 2d bin counts
 #'
 #' @description
-#' The geometry is based on [geom_bin_2d()].
+#' The geometry is based on [ggplot2::geom_bin_2d()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

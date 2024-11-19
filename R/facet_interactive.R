@@ -2,7 +2,7 @@
 
 #' @title Create interactive wraped facets
 #' @description These facets are based on
-#' [facet_wrap()].
+#' [ggplot2::facet_wrap()].
 #'
 #' To make a facet interactive, it is mandatory to use
 #' [labeller_interactive()] for argument `labeller`.
@@ -51,7 +51,7 @@ FacetInteractiveWrap <- ggproto("FacetInteractiveWrap", FacetWrap,
 
 #' @title Create interactive grid facets
 #' @description These facets are based on
-#' [facet_grid()].
+#' [ggplot2::facet_grid()].
 #'
 #' To make a facet interactive, it is mandatory to use
 #' [labeller_interactive()] for argument `labeller`.

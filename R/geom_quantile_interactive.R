@@ -1,7 +1,7 @@
 #' @title Create interactive quantile regression
 #'
 #' @description
-#' The geometry is based on [geom_quantile()].
+#' The geometry is based on [ggplot2::geom_quantile()].
 #' See the documentation for those functions for more details.
 #'
 #' @param ... arguments passed to base function,

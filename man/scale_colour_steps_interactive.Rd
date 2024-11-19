@@ -39,12 +39,12 @@ An interactive scale object.
 }
 \description{
 These scales are based on
-\code{\link[=scale_colour_steps]{scale_colour_steps()}},
-\code{\link[=scale_fill_steps]{scale_fill_steps()}},
-\code{\link[=scale_colour_steps2]{scale_colour_steps2()}},
-\code{\link[=scale_fill_steps2]{scale_fill_steps2()}},
-\code{\link[=scale_colour_stepsn]{scale_colour_stepsn()}} and
-\code{\link[=scale_fill_stepsn]{scale_fill_stepsn()}}.
+\code{\link[ggplot2:scale_steps]{ggplot2::scale_colour_steps()}},
+\code{\link[ggplot2:scale_steps]{ggplot2::scale_fill_steps()}},
+\code{\link[ggplot2:scale_steps]{ggplot2::scale_colour_steps2()}},
+\code{\link[ggplot2:scale_steps]{ggplot2::scale_fill_steps2()}},
+\code{\link[ggplot2:scale_steps]{ggplot2::scale_colour_stepsn()}} and
+\code{\link[ggplot2:scale_steps]{ggplot2::scale_fill_stepsn()}}.
 See the documentation for those functions for more details.
 }
 \section{Details for interactive scale and interactive guide functions}{
