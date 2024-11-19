@@ -11,13 +11,13 @@ labeller_interactive(.mapping = NULL, ...)
 It should provide mappings for any of the \link{interactive_parameters}.
 In addition it understands a \code{label} parameter for creating a new label text.}
 
-\item{...}{arguments passed to base function \code{\link[=labeller]{labeller()}}}
+\item{...}{arguments passed to base function \code{\link[ggplot2:labeller]{ggplot2::labeller()}}}
 }
 \description{
-This function is a wrapper around \code{\link[=labeller]{labeller()}} that allows the user to turn
+This function is a wrapper around \code{\link[ggplot2:labeller]{ggplot2::labeller()}} that allows the user to turn
 facet strip labels into interactive labels via \code{\link[=label_interactive]{label_interactive()}}.
 
-It requires that the \code{\link[=theme]{theme()}}'s \code{strip.text} elements are defined as interactive
+It requires that the \code{\link[ggplot2:theme]{ggplot2::theme()}}'s \code{strip.text} elements are defined as interactive
 theme elements via \code{\link[=element_text_interactive]{element_text_interactive()}}, see details.
 }
 \details{
@@ -171,5 +171,5 @@ x <- girafe(ggobj = p)
 if (interactive()) print(x)
 }
 \seealso{
-\code{\link[=labeller]{labeller()}}, \code{\link[=label_interactive]{label_interactive()}}, \link{labellers}
+\code{\link[ggplot2:labeller]{ggplot2::labeller()}}, \code{\link[=label_interactive]{label_interactive()}}, \link[ggplot2:labellers]{ggplot2::labellers}
 }

@@ -2,10 +2,10 @@
 #' @title Construct interactive labelling specification for facet strips
 #'
 #' @description
-#' This function is a wrapper around [labeller()] that allows the user to turn
+#' This function is a wrapper around [ggplot2::labeller()] that allows the user to turn
 #' facet strip labels into interactive labels via [label_interactive()].
 #'
-#' It requires that the [theme()]'s `strip.text` elements are defined as interactive
+#' It requires that the [ggplot2::theme()]'s `strip.text` elements are defined as interactive
 #' theme elements via [element_text_interactive()], see details.
 #'
 #' @details
@@ -19,14 +19,14 @@
 #' `theme(strip.text.x = element_text_interactive())`
 #' `theme(strip.text.y = element_text_interactive())`
 #'
-#' @param ... arguments passed to base function [labeller()]
+#' @param ... arguments passed to base function [ggplot2::labeller()]
 #' @param .mapping set of aesthetic mappings created by [ggplot2::aes()] or [ggplot2::aes_()].
 #' It should provide mappings for any of the [interactive_parameters].
 #' In addition it understands a `label` parameter for creating a new label text.
 #' @examples
 #' # use interactive labeller
 #' @example examples/labeller_interactive.R
-#' @seealso [labeller()], [label_interactive()], [labellers]
+#' @seealso [ggplot2::labeller()], [label_interactive()], [ggplot2::labellers]
 #' @importFrom rlang eval_tidy list2
 #' @importFrom purrr imap
 labeller_interactive <- function(.mapping = NULL, ...) {

@@ -17,7 +17,7 @@ element_text_interactive(...)
 plus any of the \link{interactive_parameters}.}
 }
 \description{
-With these functions the user can add interactivity to various \link[ggplot2:theme]{theme}
+With these functions the user can add interactivity to various \code{\link[ggplot2:theme]{ggplot2::theme()}}
 elements.
 
 They are based on \code{\link[ggplot2:element]{ggplot2::element_rect()}},

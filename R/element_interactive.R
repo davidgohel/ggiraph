@@ -1,7 +1,7 @@
 #' @title Create interactive theme elements
 #'
 #' @description
-#' With these functions the user can add interactivity to various [theme][ggplot2::theme]
+#' With these functions the user can add interactivity to various [ggplot2::theme()]
 #' elements.
 #'
 #' They are based on [ggplot2::element_rect()],
