@@ -3,6 +3,7 @@
 ## Issues
 
 - enable build in Alpine linux, thanks to Sebastian Meyer.
+- geom_line_interactive now correctly assigns data_id and tooltip values
 
 ## Changes
 

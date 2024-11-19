@@ -32,6 +32,7 @@ GeomInteractivePath <- ggproto(
                         panel_params,
                         coord,
                         arrow = NULL,
+                        arrow.fill = NULL,
                         lineend = "butt",
                         linejoin = "round",
                         linemitre = 10,
@@ -57,15 +58,33 @@ GeomInteractivePath <- ggproto(
     rows <-
       stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
     munched <- munched[rows >= 2, ]
+    if (nrow(munched) < 2) return(zeroGrob())
+
+    # Work out whether we should use lines or segments
+    attr <- dapply(munched, "group", function(df) {
+      linetype <- unique0(df$linetype)
+      data_frame0(
+        solid = length(linetype) == 1 && (identical(linetype, "solid") || linetype == 1),
+        constant = nrow(unique0(df[, names(df) %in% c("alpha", "colour", "linewidth", "linetype")])) == 1,
+        .size = 1
+      )
+    })
+    solid_lines <- all(attr$solid)
+    constant <- all(attr$constant)
+    if (!solid_lines && !constant) {
+      cli::cli_abort("{.fn {snake_class(self)}} can't have varying {.field colour}, {.field linewidth}, and/or {.field alpha} along the line when {.field linetype} isn't solid.")
+    }
 
     # Work out grouping variables for grobs
     n <- nrow(munched)
-    constant <- length(gr$x0) == n
+    group_diff <- munched$group[-1] != munched$group[-n]
+    start <- c(TRUE, group_diff)
+    end <-   c(group_diff, TRUE)
+
+    munched$fill <- arrow.fill %||% munched$colour
 
     if (!constant) {
-      group_diff <- munched$group[-1] != munched$group[-n]
-      end <- c(group_diff, TRUE)
-      add_interactive_attrs(gr, munched, rows = !end, ipar = .ipar)
+      add_interactive_attrs(gr, munched, rows = rows[!end], ipar = .ipar)
     } else {
       add_interactive_attrs(gr, munched, ipar = .ipar)
     }
