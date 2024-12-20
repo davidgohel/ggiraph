@@ -4,6 +4,16 @@
 #include "dsvg.h"
 #include <regex>
 
+std::string safe_regex_replace(const std::string& input, const std::string& pattern, const std::string& replacement) {
+  size_t start_pos = 0;
+  std::string result = input;
+  while ((start_pos = result.find(pattern, start_pos)) != std::string::npos) {
+    result.replace(start_pos, pattern.length(), replacement);
+    start_pos += replacement.length(); // Advance past the replacement
+  }
+  return result;
+}
+
 INDEX InteractiveElements::push(SVGElement* el) {
   const INDEX index = IndexedElements::push(el);
   if (el) {
@@ -81,8 +91,8 @@ std::string compile_css(const std::string& cls_prefix, const char* cls_suffix,
                         const std::string& canvas_id, const char* data_attr,
                         const char* data_value, const char* css) {
   std::string cls = cls_prefix + cls_suffix + canvas_id + "[" + data_attr + " = \"" + data_value + "\"]";
-  std::regex pattern("_CLASSNAME_");
-  return std::regex_replace(css, pattern, cls);
+  std::string css_str(css);
+  return safe_regex_replace(css_str, "_CLASSNAME_", cls);;
 }
 
 // [[Rcpp::export]]
