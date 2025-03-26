@@ -1,2 +1,8 @@
-CRT=-ucrt
-include Makevars.win
+ifeq (,$(shell pkg-config --version 2>/dev/null))
+  PKG_LIBS = -lpng -lz
+else
+  PKG_CPPFLAGS = $(shell pkg-config --cflags libpng)
+  PKG_LIBS = $(shell pkg-config --libs libpng)
+endif
+
+PKG_CPPFLAGS += -DSTRICT_R_HEADERS
