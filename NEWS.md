@@ -1,4 +1,17 @@
-# ggiraph 0.9.0
+# ggiraph 0.8.13
+
+## Issues
+
+- Use png from the system via pkg-config, thanks to Tomas Kalibera:
+
+> This patch switches to using png from the system, when available via 
+'pkg-config' or otherwise using hard-coded library dependencies. It makes the 
+package work with png from 'Rtools42-45'. Behavior with previous versions of R 
+is not affected, as this uses the '.ucrt' version of Makevars. Using libraries 
+from the system/Rtools when available is required by the CRAN repository policy. 
+Also, it silences a warning [...] about using non-allowed external symbols.
+
+# ggiraph 0.8.12
 
 ## Issues
 
