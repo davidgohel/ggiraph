@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,15 +31,25 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.0" id="ggiraph-090">ggiraph 0.9.0<a class="anchor" aria-label="anchor" href="#ggiraph-090"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.13" id="ggiraph-0813">ggiraph 0.8.13<a class="anchor" aria-label="anchor" href="#ggiraph-0813"></a></h2>
 <div class="section level3">
-<h3 id="issues-0-9-0">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-0"></a></h3>
+<h3 id="issues-0-8-13">Issues<a class="anchor" aria-label="anchor" href="#issues-0-8-13"></a></h3>
+<ul><li>Use png from the system via pkg-config, thanks to Tomas Kalibera:</li>
+</ul><blockquote>
+<p>This patch switches to using png from the system, when available via ‘pkg-config’ or otherwise using hard-coded library dependencies. It makes the package work with png from ‘Rtools42-45’. Behavior with previous versions of R is not affected, as this uses the ‘.ucrt’ version of Makevars. Using libraries from the system/Rtools when available is required by the CRAN repository policy. Also, it silences a warning […] about using non-allowed external symbols.</p>
+</blockquote>
+</div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.8.12" id="ggiraph-0812">ggiraph 0.8.12<a class="anchor" aria-label="anchor" href="#ggiraph-0812"></a></h2><p class="text-muted">CRAN release: 2025-01-08</p>
+<div class="section level3">
+<h3 id="issues-0-8-12">Issues<a class="anchor" aria-label="anchor" href="#issues-0-8-12"></a></h3>
 <ul><li>enable build in Alpine linux, thanks to Sebastian Meyer.</li>
 <li>
 <code><a href="../reference/geom_path_interactive.html">geom_line_interactive()</a></code> now correctly assigns data_id and tooltip values</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-0-9-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-0"></a></h3>
+<h3 id="changes-0-8-12">Changes<a class="anchor" aria-label="anchor" href="#changes-0-8-12"></a></h3>
 <ul><li>defunct <code><a href="../reference/ggiraph.html">ggiraph()</a></code>, <code><a href="../reference/ggiraphOutput.html">ggiraphOutput()</a></code> and <code><a href="../reference/renderggiraph.html">renderggiraph()</a></code>.</li>
 </ul></div>
 </div>
