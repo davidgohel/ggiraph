@@ -129,7 +129,7 @@ GeomInteractiveStep <-
     default_aes = add_default_interactive_aes(GeomStep),
     parameters = interactive_geom_parameters,
     draw_key = interactive_geom_draw_key,
-    draw_panel = function(data, panel_params, coord, direction = "hv", .ipar = IPAR_NAMES) {
+    draw_panel = function(data, panel_params, coord, direction = "hv", .ipar = IPAR_NAMES, ...) {
       ldata <- split(data, data$group)
       ldata <- lapply(ldata, stairstep, direction = direction)
       data <- do.call(rbind, ldata)

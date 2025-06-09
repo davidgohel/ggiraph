@@ -27,8 +27,7 @@ GeomInteractiveBar <- ggproto(
   default_aes = add_default_interactive_aes(GeomBar),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord,
-                        width = NULL, flipped_aes = FALSE,
+  draw_panel = function(self, data, panel_params, coord, ...,
                         .ipar = IPAR_NAMES) {
     GeomInteractiveRect$draw_panel(data, panel_params, coord, .ipar = .ipar)
   }
