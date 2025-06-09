@@ -42,16 +42,8 @@ library(ggplot2)
     unclass(ggiraph:::add_default_interactive_aes(GeomPoint,
       defaults = list(tooltip = NULL, foo = "bar")
     )),
-    list(
-      shape = 19,
-      colour = "black",
-      size = 1.5,
-      fill = NA,
-      alpha = NA,
-      stroke = 0.5,
-      tooltip = NULL,
-      foo = "bar"
-    )
+    c(unclass(GeomPoint$default_aes), aes(tooltip = NULL, foo = "bar")),
+    check.attributes = FALSE
   )
 }
 
@@ -95,7 +87,7 @@ library(ggplot2)
   layer <- geom_point_interactive(aes(tooltip = "tooltip"))
   geom <- layer$geom
   data <- as.data.frame(c(
-    ggiraph:::compact(unclass(geom$default_aes)),
+    ggiraph:::compact(get_geom_defaults(geom)),
     ggiraph:::compact(unclass(layer$mapping))
   ))
   gr <- ggiraph:::interactive_geom_draw_key(geom, data = data, params = geom$parameters(), size = 3)
