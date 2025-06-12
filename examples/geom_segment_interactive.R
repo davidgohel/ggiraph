@@ -36,3 +36,16 @@ p <- ggplot(df, aes(x = x1, y = y1, xend = x2, yend = y2)) +
 
 x <- girafe(ggobj = p)
 if( interactive() ) print(x)
+
+
+p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point(color = "grey50", alpha = 0.3, size = 2) +
+  geom_hpline_interactive(data = iris[1:5,], mapping = aes(tooltip = Species)) +
+  theme_bw()
+
+x <- girafe(ggobj = p)
+if( interactive() ) print(x)
+
+
+
+

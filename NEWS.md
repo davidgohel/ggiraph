@@ -1,3 +1,11 @@
+# ggiraph 0.9.0
+
+## Feature
+
+- New function `geom_hpline_interactive()` that uses a copy of `ungeviz::geom_hpline()` 
+written by Claus O. Wilke.
+
+
 # ggiraph 0.8.13
 
 ## Issues

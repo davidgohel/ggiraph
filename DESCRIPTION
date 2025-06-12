@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.0.001
+Version: 0.9.0.002
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -95,6 +95,7 @@ Collate:
     'geom_hex_interactive.R'
     'geom_histogram_interactive.R'
     'geom_hline_interactive.R'
+    'geom_hpline.R'
     'geom_jitter_interactive.R'
     'geom_label_interactive.R'
     'geom_linerange_interactive.R'
