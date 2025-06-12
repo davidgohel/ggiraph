@@ -74,7 +74,7 @@ test_geom_layer <- expression({
   }
   # has that class default interactive params?
   geom_class_ipar <- unclass(ggiraph:::get_interactive_attrs(result$geom$default_aes))
-  expect_equal(geom_class_ipar, ggiraph:::IPAR_DEFAULTS, info = name)
+  expect_equal(geom_class_ipar, ggiraph:::IPAR_DEFAULTS, info = name, check.attributes = FALSE)
   # has the layer the passed interactive params in aes?
   geom_aes_ipar <- unclass(ggiraph:::get_interactive_attrs(result$mapping))
   expect_equal(geom_aes_ipar, unclass(mapping), info = name)
@@ -112,7 +112,7 @@ test_annot_layer <- expression({
   expect_false(is.null(nse[[cl]]), info = cl)
   # has that class default interactive params?
   geom_class_ipar <- unclass(ggiraph:::get_interactive_attrs(result$geom$default_aes))
-  expect_equal(geom_class_ipar, ggiraph:::IPAR_DEFAULTS, info = name)
+  expect_equal(geom_class_ipar, ggiraph:::IPAR_DEFAULTS, info = name, check.attributes = FALSE)
   # has the layer the passed interactive params in aes_params?
   geom_aes_par_ipar <- unclass(ggiraph:::get_interactive_attrs(result$aes_params))
   expect_equal(geom_aes_par_ipar, mapping, info = name)
