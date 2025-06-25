@@ -4,8 +4,9 @@
 #' @example examples/geom_hline_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_hline_interactive <- function(...)
+geom_hline_interactive <- function(...) {
   layer_interactive(geom_hline, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -20,11 +21,16 @@ GeomInteractiveHline <- ggproto(
   draw_panel = function(data, panel_params, coord, .ipar = IPAR_NAMES) {
     ranges <- coord$backtransform_range(panel_params)
 
-    data$x    <- ranges$x[1]
+    data$x <- ranges$x[1]
     data$xend <- ranges$x[2]
-    data$y    <- data$yintercept
+    data$y <- data$yintercept
     data$yend <- data$yintercept
 
-    GeomInteractiveSegment$draw_panel(unique(data), panel_params, coord, .ipar = .ipar)
+    GeomInteractiveSegment$draw_panel(
+      unique(data),
+      panel_params,
+      coord,
+      .ipar = .ipar
+    )
   }
 )

@@ -12,8 +12,9 @@
 #' @example examples/geom_violin_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_violin_interactive  <- function(...)
+geom_violin_interactive <- function(...) {
   layer_interactive(geom_violin, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

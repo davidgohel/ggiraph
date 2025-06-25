@@ -20,8 +20,9 @@
 #' @export
 #' @name scale_manual_interactive
 #' @family interactive scale
-scale_colour_manual_interactive <- function(...)
+scale_colour_manual_interactive <- function(...) {
   scale_interactive(scale_colour_manual, ...)
+}
 
 #' @export
 #' @rdname scale_manual_interactive
@@ -29,30 +30,36 @@ scale_color_manual_interactive <- scale_colour_manual_interactive
 
 #' @export
 #' @rdname scale_manual_interactive
-scale_fill_manual_interactive <- function(...)
+scale_fill_manual_interactive <- function(...) {
   scale_interactive(scale_fill_manual, ...)
+}
 
 #' @export
 #' @rdname scale_manual_interactive
-scale_size_manual_interactive <- function(...)
+scale_size_manual_interactive <- function(...) {
   scale_interactive(scale_size_manual, ...)
+}
 
 #' @export
 #' @rdname scale_manual_interactive
-scale_shape_manual_interactive <- function(...)
+scale_shape_manual_interactive <- function(...) {
   scale_interactive(scale_shape_manual, ...)
+}
 
 #' @export
 #' @rdname scale_manual_interactive
-scale_linetype_manual_interactive <- function(...)
+scale_linetype_manual_interactive <- function(...) {
   scale_interactive(scale_linetype_manual, ...)
+}
 
 #' @export
 #' @rdname scale_manual_interactive
-scale_alpha_manual_interactive <- function(...)
+scale_alpha_manual_interactive <- function(...) {
   scale_interactive(scale_alpha_manual, ...)
+}
 
 #' @export
 #' @rdname scale_manual_interactive
-scale_discrete_manual_interactive <- function(...)
+scale_discrete_manual_interactive <- function(...) {
   scale_interactive(scale_discrete_manual, ...)
+}

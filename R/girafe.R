@@ -94,9 +94,15 @@
 #' @export
 #' @importFrom uuid UUIDgenerate
 girafe <- function(
-    code, ggobj = NULL, pointsize = 12,
-    width_svg = NULL, height_svg = NULL,
-    options = list(), dependencies = NULL, ...) {
+  code,
+  ggobj = NULL,
+  pointsize = 12,
+  width_svg = NULL,
+  height_svg = NULL,
+  options = list(),
+  dependencies = NULL,
+  ...
+) {
   path <- tempfile()
 
   if (is.null(width_svg)) {
@@ -106,9 +112,9 @@ girafe <- function(
     height_svg <- default_height(default = 5)
   }
 
-
   args <- list(...)
-  args$canvas_id <- args$canvas_id %||% paste("svg", gsub("-", "_", UUIDgenerate()), sep = "_")
+  args$canvas_id <- args$canvas_id %||%
+    paste("svg", gsub("-", "_", UUIDgenerate()), sep = "_")
   args$file <- path
   args$width <- width_svg
   args$height <- height_svg
@@ -132,7 +138,10 @@ girafe <- function(
       ffe <- font_family_exists(font)
       if (!ffe) {
         cli::cli_abort(c(
-          sprintf("Font family '%s' has not been found on your system or is not registered.", font),
+          sprintf(
+            "Font family '%s' has not been found on your system or is not registered.",
+            font
+          ),
           "i" = "You can use a google font with {.code gdtools::register_gfont()}.",
           "i" = "You can use any font with {.code systemfonts::register_font()}."
         ))
@@ -142,17 +151,20 @@ girafe <- function(
 
   devlength <- length(dev.list())
   do.call(dsvg, args)
-  tryCatch({
-    if (!is.null(ggobj)) {
-      print(ggobj)
-    } else {
-      code
+  tryCatch(
+    {
+      if (!is.null(ggobj)) {
+        print(ggobj)
+      } else {
+        code
+      }
+    },
+    finally = {
+      if (length(dev.list()) > devlength) {
+        dev.off()
+      }
     }
-  }, finally = {
-    if (length(dev.list()) > devlength) {
-      dev.off()
-    }
-  })
+  )
 
   settings <- merge_options(default_opts(), options)
   sizing_policy <- merge_sizing_policy(default_sizing_policy(), options)
@@ -167,12 +179,13 @@ girafe <- function(
   unlink(path)
 
   createWidget(
-    name = "girafe", x = x, package = "ggiraph",
+    name = "girafe",
+    x = x,
+    package = "ggiraph",
     sizingPolicy = sizing_policy,
     dependencies = dependencies
   )
 }
-
 
 
 #' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget
@@ -207,7 +220,13 @@ girafeOutput <- function(outputId, width = "100%", height = NULL) {
   # if( "auto" %in% width )
   #   stop("'width:auto' is not supported", call. = FALSE)
 
-  shinyWidgetOutput(outputId, "girafe", package = "ggiraph", width = width, height = height)
+  shinyWidgetOutput(
+    outputId,
+    "girafe",
+    package = "ggiraph",
+    width = width,
+    height = height
+  )
 }
 
 #' @title Reactive version of girafe
@@ -221,7 +240,12 @@ girafeOutput <- function(outputId, width = "100%", height = NULL) {
 #' @param outputArgs A list of arguments to be passed through to the implicit call to [girafeOutput()]
 #' when `renderGirafe` is used in an interactive R Markdown document.
 #' @export
-renderGirafe <- function(expr, env = parent.frame(), quoted = FALSE, outputArgs = list()) {
+renderGirafe <- function(
+  expr,
+  env = parent.frame(),
+  quoted = FALSE,
+  outputArgs = list()
+) {
   if (!quoted) {
     expr <- substitute(expr)
   } # force quoted
@@ -240,7 +264,6 @@ girafe_app_paths <- function() {
 }
 
 
-
 #' Run shiny examples and see corresponding code
 #'
 #' @param name an application name, one of
@@ -252,7 +275,10 @@ run_girafe_example <- function(name = "crimes") {
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
   apps <- girafe_app_paths()
   if (!name %in% basename(apps)) {
-    abort("could not find app named ", shQuote(name), " in the following list: ",
+    abort(
+      "could not find app named ",
+      shQuote(name),
+      " in the following list: ",
       paste0(shQuote(basename(apps)), collapse = ", "),
       call = NULL
     )

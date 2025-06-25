@@ -13,7 +13,6 @@ ggiraph <- function(...) {
 }
 
 
-
 #' @title Create a ggiraph output element
 #' @description Render a ggiraph within an application page.
 #'
@@ -22,7 +21,7 @@ ggiraph <- function(...) {
 #' @param ... unused
 #' @export
 #' @keywords internal
-ggiraphOutput <- function(...){
+ggiraphOutput <- function(...) {
   .Defunct(new = "girafeOutput")
 }
 
@@ -38,4 +37,3 @@ ggiraphOutput <- function(...){
 renderggiraph <- function(...) {
   .Defunct(new = "renderGirafe")
 }
-

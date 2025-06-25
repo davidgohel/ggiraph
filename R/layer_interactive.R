@@ -3,10 +3,12 @@
 #' @importFrom purrr detect_index
 #' @importFrom rlang list2
 #' @noRd
-layer_interactive <- function(layer_func,
-                              ...,
-                              interactive_geom = NULL,
-                              extra_interactive_params = NULL) {
+layer_interactive <- function(
+  layer_func,
+  ...,
+  interactive_geom = NULL,
+  extra_interactive_params = NULL
+) {
   args <- list2(...)
   # we need to temporarily remove the interactive aesthetics if they exist
   # we could use check.aes = FALSE and check.param = FALSE but no fun there
@@ -19,8 +21,10 @@ layer_interactive <- function(layer_func,
 
   ipar <- get_default_ipar(extra_interactive_params)
   # check if it contains interactive aesthetics
-  if (index > 0 &&
-    has_interactive_attrs(args[[index]], ipar = ipar)) {
+  if (
+    index > 0 &&
+      has_interactive_attrs(args[[index]], ipar = ipar)
+  ) {
     interactive_mapping <-
       get_interactive_attrs(args[[index]], ipar = ipar)
     args[[index]] <-
@@ -78,7 +82,11 @@ layer_interactive <- function(layer_func,
 
 #' Finds an interactive class derived from a ggplot2 geom/guide class.
 #' @noRd
-find_interactive_class <- function(gg, baseclass = c("Geom", "Guide"), env = parent.frame()) {
+find_interactive_class <- function(
+  gg,
+  baseclass = c("Geom", "Guide"),
+  env = parent.frame()
+) {
   baseclass <- arg_match(baseclass)
   if (inherits(gg, baseclass)) {
     name <- class(gg)[1]
@@ -89,7 +97,12 @@ find_interactive_class <- function(gg, baseclass = c("Geom", "Guide"), env = par
     }
   } else {
     abort(
-      paste0("`gg` must be either a string or a ", baseclass, "* object, not ", obj_desc(gg)),
+      paste0(
+        "`gg` must be either a string or a ",
+        baseclass,
+        "* object, not ",
+        obj_desc(gg)
+      ),
       call = NULL
     )
   }
@@ -103,7 +116,12 @@ find_interactive_class <- function(gg, baseclass = c("Geom", "Guide"), env = par
   obj <- find_global(name, env = env)
   if (is.null(obj) || !inherits(obj, baseclass)) {
     abort(
-      paste0("Can't find interactive ", baseclass, " function based on ", as_label(gg)),
+      paste0(
+        "Can't find interactive ",
+        baseclass,
+        " function based on ",
+        as_label(gg)
+      ),
       call = NULL
     )
   } else {

@@ -11,18 +11,36 @@ df <- data.frame(
 )
 
 p <- ggplot(df, aes(trt, resp, colour = group))
-g <- p + geom_linerange_interactive(aes(ymin = lower, ymax = upper, tooltip = group))
+g <- p +
+  geom_linerange_interactive(aes(ymin = lower, ymax = upper, tooltip = group))
 x <- girafe(ggobj = g)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 
-g <- p + geom_pointrange_interactive(aes(ymin = lower, ymax = upper, tooltip = group))
+g <- p +
+  geom_pointrange_interactive(aes(ymin = lower, ymax = upper, tooltip = group))
 x <- girafe(ggobj = g)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 
-g <- p + geom_crossbar_interactive(aes(ymin = lower, ymax = upper, tooltip = group), width = 0.2)
+g <- p +
+  geom_crossbar_interactive(
+    aes(ymin = lower, ymax = upper, tooltip = group),
+    width = 0.2
+  )
 x <- girafe(ggobj = g)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 
-g <- p + geom_errorbar_interactive(aes(ymin = lower, ymax = upper, tooltip = group), width = 0.2)
+g <- p +
+  geom_errorbar_interactive(
+    aes(ymin = lower, ymax = upper, tooltip = group),
+    width = 0.2
+  )
 x <- girafe(ggobj = g)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}

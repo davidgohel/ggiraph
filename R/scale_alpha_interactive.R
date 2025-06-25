@@ -17,35 +17,42 @@
 #' @export
 #' @name scale_alpha_interactive
 #' @family interactive scale
-scale_alpha_interactive <- function(...)
+scale_alpha_interactive <- function(...) {
   scale_interactive(scale_alpha, ...)
+}
 
 #' @export
 #' @rdname scale_alpha_interactive
-scale_alpha_continuous_interactive <- function(...)
+scale_alpha_continuous_interactive <- function(...) {
   scale_interactive(scale_alpha_continuous, ...)
+}
 
 #' @export
 #' @rdname scale_alpha_interactive
-scale_alpha_discrete_interactive <- function(...)
+scale_alpha_discrete_interactive <- function(...) {
   scale_interactive(scale_alpha_discrete, ...)
+}
 
 #' @export
 #' @rdname scale_alpha_interactive
-scale_alpha_binned_interactive <- function(...)
+scale_alpha_binned_interactive <- function(...) {
   scale_interactive(scale_alpha_binned, ...)
+}
 
 #' @export
 #' @rdname scale_alpha_interactive
-scale_alpha_ordinal_interactive <- function(...)
+scale_alpha_ordinal_interactive <- function(...) {
   scale_interactive(scale_alpha_ordinal, ...)
+}
 
 #' @export
 #' @rdname scale_alpha_interactive
-scale_alpha_date_interactive <- function(...)
+scale_alpha_date_interactive <- function(...) {
   scale_interactive(scale_alpha_date, ...)
+}
 
 #' @export
 #' @rdname scale_alpha_interactive
-scale_alpha_datetime_interactive <- function(...)
+scale_alpha_datetime_interactive <- function(...) {
   scale_interactive(scale_alpha_datetime, ...)
+}

@@ -32,11 +32,15 @@ In this way they can be set to a scalar value.
 library(ggplot2)
 library(ggiraph)
 
-p <- ggplot(diamonds, aes(x, y, fill=cut)) + xlim(4, 10) + ylim(4, 10)+
+p <- ggplot(diamonds, aes(x, y, fill = cut)) +
+  xlim(4, 10) +
+  ylim(4, 10) +
   geom_bin2d_interactive(aes(tooltip = cut), bins = 30)
 
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

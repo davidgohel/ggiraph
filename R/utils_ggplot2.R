@@ -22,7 +22,8 @@ obj_desc <- function(x) {
       paste0("an S3 object with class ", paste(class(x), collapse = "/"))
     }
   } else {
-    switch(typeof(x),
+    switch(
+      typeof(x),
       "NULL" = "a NULL",
       character = "a character vector",
       integer = "an integer vector",
@@ -52,7 +53,9 @@ find_global <- function(name, env, mode = "any") {
 # from gglpot2 utilities.r
 camelize <- function(x, first = FALSE) {
   x <- gsub("_(.)", "\\U\\1", x, perl = TRUE)
-  if (first) x <- firstUpper(x)
+  if (first) {
+    x <- firstUpper(x)
+  }
   x
 }
 
@@ -82,8 +85,9 @@ message_wrap <- function(...) {
 }
 
 # from ggplot2 grob-null.r
-is.zero <- function(x)
+is.zero <- function(x) {
   is.null(x) || inherits(x, "zeroGrob")
+}
 
 # from gglpot2 utilities.r
 compact <- function(x) {
@@ -101,7 +105,9 @@ check_aesthetics <- function(x, n) {
   }
 
   abort(paste0(
-    "Aesthetics must be either length 1 or the same as the data (", n, "):\n",
+    "Aesthetics must be either length 1 or the same as the data (",
+    n,
+    "):\n",
     paste(names(which(!good)), collapse = ", ")
   ))
 }
@@ -153,12 +159,22 @@ dapply <- function(df, by, fun, ..., drop = TRUE) {
   fallback_order <- unique0(c(by, names(df)))
   apply_fun <- function(x) {
     res <- fun(x, ...)
-    if (is.null(res)) return(res)
-    if (length(res) == 0) return(data_frame0())
+    if (is.null(res)) {
+      return(res)
+    }
+    if (length(res) == 0) {
+      return(data_frame0())
+    }
     vars <- lapply(setNames(by, by), function(col) .subset2(x, col)[1])
-    if (is.matrix(res)) res <- split_matrix(res)
-    if (is.null(names(res))) names(res) <- paste0("V", seq_along(res))
-    if (all(by %in% names(res))) return(data_frame0(!!!unclass(res)))
+    if (is.matrix(res)) {
+      res <- split_matrix(res)
+    }
+    if (is.null(names(res))) {
+      names(res) <- paste0("V", seq_along(res))
+    }
+    if (all(by %in% names(res))) {
+      return(data_frame0(!!!unclass(res)))
+    }
     res <- modify_list(unclass(vars), unclass(res))
     res <- res[intersect(c(fallback_order, names(res)), names(res))]
     data_frame0(!!!res)
@@ -184,7 +200,9 @@ dapply <- function(df, by, fun, ..., drop = TRUE) {
 }
 
 split_with_index <- function(x, f, n = max(f)) {
-  if (n == 1) return(list(x))
+  if (n == 1) {
+    return(list(x))
+  }
   f <- as.integer(f)
   attributes(f) <- list(levels = as.character(seq_len(n)), class = "factor")
   unname(split(x, f))
@@ -250,16 +268,14 @@ id <- function(.variables, drop = FALSE) {
   if (n > 2^31) {
     char_id <- inject(paste(!!!ids, sep = "\r"))
     res <- match(char_id, unique0(char_id))
-  }
-  else {
+  } else {
     combs <- c(1, cumprod(ndistinct[-p]))
     mat <- inject(cbind(!!!ids))
     res <- c((mat - 1L) %*% combs + 1L)
   }
   if (drop) {
     id_var(res, drop = TRUE)
-  }
-  else {
+  } else {
     res <- as.integer(res)
     attr(res, "n") <- n
     res
@@ -276,7 +292,9 @@ vec_rbind0 <- function(..., .error_call = current_env(), .call = caller_env()) {
 split_matrix <- function(x, col_names = colnames(x)) {
   force(col_names)
   x <- lapply(seq_len(ncol(x)), function(i) x[, i])
-  if (!is.null(col_names)) names(x) <- col_names
+  if (!is.null(col_names)) {
+    names(x) <- col_names
+  }
   x
 }
 
@@ -330,7 +348,13 @@ with_ordered_restart <- function(expr, .call) {
         return(zap())
       }
 
-      msg <- paste0("Combining variables of class <", class_x, "> and <", class_y, ">")
+      msg <- paste0(
+        "Combining variables of class <",
+        class_x,
+        "> and <",
+        class_y,
+        ">"
+      )
       desc <- paste0(
         "Please ensure your variables are compatible before plotting (location: ",
         format_error_call(.call),

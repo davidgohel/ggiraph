@@ -12,7 +12,11 @@
 #' @seealso [interactive_parameters], [girafe()]
 #' @export
 guide_coloursteps_interactive <- function(...) {
-  guide_interactive(guide_coloursteps, ..., interactive_guide = GuideInteractiveColoursteps)
+  guide_interactive(
+    guide_coloursteps,
+    ...,
+    interactive_guide = GuideInteractiveColoursteps
+  )
 }
 
 #' @export
@@ -24,22 +28,35 @@ guide_colorsteps_interactive <- guide_coloursteps_interactive
 #' @usage NULL
 #' @export
 GuideInteractiveColoursteps <- ggproto(
-  "GuideInteractiveColoursteps", GuideColoursteps,
+  "GuideInteractiveColoursteps",
+  GuideColoursteps,
   train = function(self, params = self$params, scale, aesthetic = NULL, ...) {
     parent <- ggproto_parent(GuideColoursteps, self)
-    params <- parent$train(params = params, scale = scale, aesthetic = aesthetic, ...)
+    params <- parent$train(
+      params = params,
+      scale = scale,
+      aesthetic = aesthetic,
+      ...
+    )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       parsed <- interactive_guide_parse_binned_breaks(scale, params)
       breaks <- parsed$all_breaks
       label_breaks <- parsed$breaks
       if (params$even.steps || !is.numeric(parsed$scale_breaks)) {
         show.limits <- params$show.limits %||% scale$show.limits %||% FALSE
-        if (show.limits && !(is.character(scale$labels) || is.numeric(scale$labels))) {
+        if (
+          show.limits &&
+            !(is.character(scale$labels) || is.numeric(scale$labels))
+        ) {
           label_breaks <- parsed$all_breaks
         }
       }
-      params <- interactive_guide_train(params, scale, breaks,
-        label_breaks = label_breaks, max_len = length(breaks) - 1
+      params <- interactive_guide_train(
+        params,
+        scale,
+        breaks,
+        label_breaks = label_breaks,
+        max_len = length(breaks) - 1
       )
     }
     params

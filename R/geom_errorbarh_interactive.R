@@ -12,8 +12,9 @@
 #' @example examples/geom_errorbarh_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_errorbarh_interactive <- function(...)
+geom_errorbarh_interactive <- function(...) {
   layer_interactive(geom_errorbarh, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

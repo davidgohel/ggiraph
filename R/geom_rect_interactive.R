@@ -18,8 +18,9 @@
 #' @example examples/geom_rect_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_rect_interactive <- function(...)
+geom_rect_interactive <- function(...) {
   layer_interactive(geom_rect, ...)
+}
 
 #' @importFrom vctrs vec_cbind
 #' @rdname ggiraph-ggproto
@@ -33,18 +34,34 @@ GeomInteractiveRect <- ggproto(
   default_aes = add_default_interactive_aes(GeomRect),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord, lineend = "butt", linejoin = "mitre", .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    self,
+    data,
+    panel_params,
+    coord,
+    lineend = "butt",
+    linejoin = "mitre",
+    .ipar = IPAR_NAMES
+  ) {
     if (!coord$is_linear()) {
-      aesthetics <- setdiff(names(data),
-                            c("x", "y", "xmin", "xmax", "ymin", "ymax"))
+      aesthetics <- setdiff(
+        names(data),
+        c("x", "y", "xmin", "xmax", "ymin", "ymax")
+      )
 
       polys <-
         lapply(split(data, seq_len(nrow(data))), function(row) {
           poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
-          aes <- row[rep(1,5), aesthetics]
+          aes <- row[rep(1, 5), aesthetics]
 
-          GeomInteractivePolygon$draw_panel(vec_cbind(poly, aes), panel_params, coord,
-                                            lineend = lineend, linejoin = linejoin, .ipar = .ipar)
+          GeomInteractivePolygon$draw_panel(
+            vec_cbind(poly, aes),
+            panel_params,
+            coord,
+            lineend = lineend,
+            linejoin = linejoin,
+            .ipar = .ipar
+          )
         })
 
       ggname("bar", do.call("grobTree", polys))

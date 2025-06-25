@@ -1,7 +1,8 @@
 #' @rdname geom_segment_interactive
 #' @export
-geom_curve_interactive <- function(...)
+geom_curve_interactive <- function(...) {
   layer_interactive(geom_curve, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

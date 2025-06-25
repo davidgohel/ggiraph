@@ -13,6 +13,6 @@
 #' @seealso [girafe()], [interactive_parameters], [annotation_raster_interactive()]
 #' @export
 #' @include utils.R
-annotate_interactive <- function(...)
+annotate_interactive <- function(...) {
   layer_interactive(annotate, ...)
-
+}

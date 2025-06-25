@@ -20,10 +20,16 @@ guide_bins_interactive <- function(...) {
 #' @usage NULL
 #' @export
 GuideInteractiveBins <- ggproto(
-  "GuideInteractiveBins", GuideBins,
+  "GuideInteractiveBins",
+  GuideBins,
   train = function(self, params = self$params, scale, aesthetic = NULL, ...) {
     parent <- ggproto_parent(GuideBins, self)
-    params <- parent$train(params = params, scale = scale, aesthetic = aesthetic, ...)
+    params <- parent$train(
+      params = params,
+      scale = scale,
+      aesthetic = aesthetic,
+      ...
+    )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       parsed <- interactive_guide_parse_binned_breaks(scale, params)
       params <- interactive_guide_train(params, scale, parsed$all_breaks)
@@ -41,7 +47,10 @@ GuideInteractiveBins <- ggproto(
   build_labels = function(key, elements, params) {
     grobs <- GuideBins$build_labels(key, elements, params)
     if (inherits(key$.label, "interactive_label") && !all(params$show.limits)) {
-      valid_ind <- setdiff(seq_len(nrow(key)), c(1, nrow(key))[!params$show.limits])
+      valid_ind <- setdiff(
+        seq_len(nrow(key)),
+        c(1, nrow(key))[!params$show.limits]
+      )
       idata <- grobs$labels$children[[1]]$.interactive
       idata <- lapply(idata, function(a) {
         a[valid_ind]

@@ -6,7 +6,6 @@
 # Include parameters
 #' @include ipar.R
 
-
 #' Encodes the attribute value designated for tooltip
 #' @importFrom htmltools htmlEscape
 #' @noRd
@@ -18,8 +17,10 @@ encode_cr <- function(x) {
   if (replace_newlines) {
     x <- sapply(x, function(t) {
       # text might be markup anyway, check for opening/closing tags at start/end
-      if (grepl(newlines_pattern, t) &&
-          !(grepl("^\\s*<\\w+.*?/?>", t) && grepl("</?\\w+.*?/?>\\s*$", t))) {
+      if (
+        grepl(newlines_pattern, t) &&
+          !(grepl("^\\s*<\\w+.*?/?>", t) && grepl("</?\\w+.*?/?>\\s*$", t))
+      ) {
         gsub(newlines_pattern, replacement = "<br/>", x = t)
       } else {
         t
@@ -49,8 +50,7 @@ NULL
 #' Generates a default aesthetics mapping for an interactive class
 #' by copying the default aes and appending the interactive attrs.
 #' @noRd
-add_default_interactive_aes <- function(geom = Geom,
-                                        defaults = IPAR_DEFAULTS) {
+add_default_interactive_aes <- function(geom = Geom, defaults = IPAR_DEFAULTS) {
   append_aes(geom$default_aes, defaults)
 }
 
@@ -62,7 +62,10 @@ interactive_geom_parameters <- function(self, extra = FALSE) {
   parent_params <- self$super()$parameters(extra = extra)
   panel_args <- names(ggproto_formals(self$draw_panel))
   group_args <- names(ggproto_formals(self$draw_group))
-  if ((".ipar" %in% panel_args || ".ipar" %in% group_args) && !(".ipar" %in% parent_params)) {
+  if (
+    (".ipar" %in% panel_args || ".ipar" %in% group_args) &&
+      !(".ipar" %in% parent_params)
+  ) {
     c(parent_params, ".ipar")
   } else {
     parent_params
@@ -94,7 +97,10 @@ grob_argnames <- function(x, grob) {
 #' Returns the contents of a file as text
 #' @noRd
 read_file <- function(path, ..., encoding = "UTF-8", warn = FALSE) {
-  paste0(readLines(con = path, encoding = encoding, warn = warn, ...), collapse = "\n")
+  paste0(
+    readLines(con = path, encoding = encoding, warn = warn, ...),
+    collapse = "\n"
+  )
 }
 
 #' Returns the system os (lowercase: windows, osx, linux)
@@ -102,16 +108,20 @@ read_file <- function(path, ..., encoding = "UTF-8", warn = FALSE) {
 #' @noRd
 get_os <- function() {
   sysinf <- Sys.info()
-  if (!is.null(sysinf)){
+  if (!is.null(sysinf)) {
     os <- sysinf['sysname']
-    if (os == 'Darwin')
+    if (os == 'Darwin') {
       os <- "osx"
-  } else { ## mystery machine
+    }
+  } else {
+    ## mystery machine
     os <- .Platform$OS.type
-    if (grepl("^darwin", R.version$os))
+    if (grepl("^darwin", R.version$os)) {
       os <- "osx"
-    if (grepl("linux-gnu", R.version$os))
+    }
+    if (grepl("linux-gnu", R.version$os)) {
       os <- "linux"
+    }
   }
   tolower(os)
 }
@@ -133,4 +143,3 @@ is_valid_number <- function(x) {
 is_valid_logical <- function(x) {
   is_scalar_logical(x) && !is.na(x)
 }
-

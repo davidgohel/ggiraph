@@ -17,5 +17,6 @@
 #' @example examples/geom_histogram_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_histogram_interactive <- function(...)
+geom_histogram_interactive <- function(...) {
   layer_interactive(geom_histogram, ...)
+}

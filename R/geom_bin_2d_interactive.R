@@ -12,8 +12,9 @@
 #' @example examples/geom_bin2d_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_bin_2d_interactive <- function(...)
+geom_bin_2d_interactive <- function(...) {
   layer_interactive(geom_bin_2d, ..., interactive_geom = GeomInteractiveTile)
+}
 
 #' @export
 #' @rdname geom_bin_2d_interactive
