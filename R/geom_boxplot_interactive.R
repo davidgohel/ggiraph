@@ -158,38 +158,23 @@ GeomInteractiveBoxplot <- ggproto(
   ),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_group = function(data,
-                        panel_params,
-                        coord,
-                        lineend = "butt",
-                        linejoin = "mitre",
-                        fatten = 2,
-                        outlier.colour = NULL,
-                        outlier.fill = NULL,
-                        outlier.shape = 19,
-                        outlier.size = 1.5,
-                        outlier.stroke = 0.5,
-                        outlier.alpha = NULL,
-                        notch = FALSE,
-                        notchwidth = 0.5,
-                        staplewidth = 0,
-                        varwidth = FALSE,
-                        flipped_aes = FALSE,
+  draw_group = function(self, data, panel_params, coord, lineend = "butt",
+                        linejoin = "mitre", fatten = 2, outlier_gp = NULL,
+                        whisker_gp = NULL, staple_gp = NULL, median_gp = NULL,
+                        box_gp = NULL, notch = FALSE, notchwidth = 0.5,
+                        staplewidth = 0, varwidth = FALSE, flipped_aes = FALSE,
                         .ipar = IPAR_NAMES) {
+    # data <- fix_linewidth(data, snake_class(self))
     data <- flip_data(data, flipped_aes)
     # this may occur when using geom_boxplot(stat = "identity")
     if (nrow(data) != 1) {
-      abort("Can't draw more than one boxplot per group. Did you forget aes(group = ...)?")
+      cli::cli_abort(c(
+        "Can only draw one boxplot per group.",
+        "i"= "Did you forget {.code aes(group = ...)}?"
+      ))
     }
 
-    common <- list(
-      colour = data$colour,
-      linewidth = data$linewidth,
-      linetype = data$linetype,
-      fill = alpha(data$fill, data$alpha),
-      group = data$group
-    )
-
+    common <- list(fill = fill_alpha(data$fill, data$alpha), group = data$group)
     .ipar <- setdiff(.ipar, outlier_ipar)
     common <- copy_interactive_attrs(data, common, ipar = .ipar)
 
@@ -198,38 +183,40 @@ GeomInteractiveBoxplot <- ggproto(
       xend = c(data$x, data$x),
       y = c(data$upper, data$lower),
       yend = c(data$ymax, data$ymin),
+      colour    = rep(whisker_gp$colour    %||% data$colour,    2),
+      linetype  = rep(whisker_gp$linetype  %||% data$linetype,  2),
+      linewidth = rep(whisker_gp$linewidth %||% data$linewidth, 2),
       alpha = c(NA_real_, NA_real_),
-      !!!common, .size = 2)
+      !!!common,
+      .size = 2
+    )
     whiskers <- flip_data(whiskers, flipped_aes)
 
-    box <- data_frame0(
-        xmin = data$xmin,
-        xmax = data$xmax,
-        ymin = data$lower,
-        y = data$middle,
-        ymax = data$upper,
-        ynotchlower = ifelse(notch, data$notchlower, NA),
-        ynotchupper = ifelse(notch, data$notchupper, NA),
-        notchwidth = notchwidth,
-        alpha = data$alpha,
-        !!!common
+    box <- transform(
+      data,
+      y = middle,
+      ymax = upper,
+      ymin = lower,
+      ynotchlower = ifelse(notch, notchlower, NA),
+      ynotchupper = ifelse(notch, notchupper, NA),
+      notchwidth = notchwidth
     )
     box <- flip_data(box, flipped_aes)
 
-    if (!is.null(data$outliers) &&
-        length(data$outliers[[1]] >= 1)) {
+    if (!is.null(data$outliers) && length(data$outliers[[1]]) >= 1) {
       outliers <- data_frame0(
         y = data$outliers[[1]],
         x = data$x[1],
-        colour = outlier.colour %||% data$colour[1],
-        fill = outlier.fill %||% data$fill[1],
-        shape = outlier.shape %||% data$shape[1],
-        size = outlier.size %||% data$linewidth[1],
-        stroke = outlier.stroke %||% data$stroke[1],
+        colour = outlier_gp$colour %||% data$colour[1],
+        fill   = outlier_gp$fill   %||% data$fill[1],
+        shape  = outlier_gp$shape  %||% data$shape[1]  %||% 19,
+        size   = outlier_gp$size   %||% data$size[1]   %||% 1.5,
+        stroke = outlier_gp$stroke %||% data$stroke[1] %||% 0.5,
         fill = NA,
-        alpha = outlier.alpha %||% data$alpha[1],
+        alpha = outlier_gp$alpha %||% data$alpha[1],
         .size = length(data$outliers[[1]])
       )
+
       outlier_colnames <- intersect(colnames(data), outlier_ipar)
       if (length(outlier_colnames)) {
         for (name in outlier_colnames) {
@@ -238,8 +225,8 @@ GeomInteractiveBoxplot <- ggproto(
         }
       }
       outliers <- flip_data(outliers, flipped_aes)
-      outliers_grob <-
-        GeomInteractivePoint$draw_panel(outliers, panel_params, coord, .ipar = .ipar)
+
+      outliers_grob <- GeomInteractivePoint$draw_panel(outliers, panel_params, coord, .ipar = .ipar)
     } else {
       outliers_grob <- NULL
     }
@@ -250,6 +237,9 @@ GeomInteractiveBoxplot <- ggproto(
         xend = rep((data$xmax - data$x) * staplewidth + data$x, 2),
         y    = c(data$ymax, data$ymin),
         yend = c(data$ymax, data$ymin),
+        linetype  = rep(staple_gp$linetype  %||% data$linetype, 2),
+        linewidth = rep(staple_gp$linewidth %||% data$linewidth, 2),
+        colour    = rep(staple_gp$colour    %||% data$colour, 2),
         alpha = c(NA_real_, NA_real_),
         !!!common,
         .size = 2
@@ -263,17 +253,168 @@ GeomInteractiveBoxplot <- ggproto(
       staple_grob <- NULL
     }
 
-    ggname(
-      "geom_boxplot_interactive",
-      grobTree(
-        outliers_grob,
-        staple_grob,
-        GeomInteractiveSegment$draw_panel(whiskers, panel_params, coord, lineend = lineend, .ipar = .ipar),
-        GeomInteractiveCrossbar$draw_panel(box, fatten = fatten, panel_params, coord,
-                                           lineend = lineend,
-                                           linejoin = linejoin,
-                                           flipped_aes = flipped_aes, .ipar = .ipar)
+    ggname("geom_boxplot_interactive", grobTree(
+      outliers_grob,
+      staple_grob,
+      GeomInteractiveSegment$draw_panel(whiskers, panel_params, coord, lineend = lineend, .ipar = .ipar),
+      GeomInteractiveCrossbar$draw_panel(
+        box,
+        fatten = fatten,
+        panel_params,
+        coord,
+        lineend = lineend,
+        linejoin = linejoin,
+        flipped_aes = flipped_aes,
+        middle_gp = median_gp,
+        box_gp = box_gp,
+        .ipar = .ipar
       )
-    )
+    ))
   }
+  # draw_group = function(
+  #   data,
+  #   panel_params,
+  #   coord,
+  #   lineend = "butt",
+  #   linejoin = "mitre",
+  #   fatten = 2,
+  #   outlier.colour = NULL,
+  #   outlier.fill = NULL,
+  #   outlier.shape = 19,
+  #   outlier.size = 1.5,
+  #   outlier.stroke = 0.5,
+  #   outlier.alpha = NULL,
+  #   notch = FALSE,
+  #   notchwidth = 0.5,
+  #   staplewidth = 0,
+  #   varwidth = FALSE,
+  #   flipped_aes = FALSE,
+  #   .ipar = IPAR_NAMES
+  # ) {
+  #   data <- flip_data(data, flipped_aes)
+  #   # this may occur when using geom_boxplot(stat = "identity")
+  #   if (nrow(data) != 1) {
+  #     abort(
+  #       "Can't draw more than one boxplot per group. Did you forget aes(group = ...)?"
+  #     )
+  #   }
+  #
+  #   common <- list(
+  #     colour = data$colour,
+  #     linewidth = data$linewidth,
+  #     linetype = data$linetype,
+  #     fill = alpha(data$fill, data$alpha),
+  #     group = data$group
+  #   )
+  #
+  #   .ipar <- setdiff(.ipar, outlier_ipar)
+  #   common <- copy_interactive_attrs(data, common, ipar = .ipar)
+  #
+  #   whiskers <- data_frame0(
+  #     x = c(data$x, data$x),
+  #     xend = c(data$x, data$x),
+  #     y = c(data$upper, data$lower),
+  #     yend = c(data$ymax, data$ymin),
+  #     alpha = c(NA_real_, NA_real_),
+  #     !!!common,
+  #     .size = 2
+  #   )
+  #   whiskers <- flip_data(whiskers, flipped_aes)
+  #
+  #   box <- data_frame0(
+  #     xmin = data$xmin,
+  #     xmax = data$xmax,
+  #     ymin = data$lower,
+  #     y = data$middle,
+  #     ymax = data$upper,
+  #     ynotchlower = ifelse(notch, data$notchlower, NA),
+  #     ynotchupper = ifelse(notch, data$notchupper, NA),
+  #     notchwidth = notchwidth,
+  #     alpha = data$alpha,
+  #     !!!common
+  #   )
+  #   box <- flip_data(box, flipped_aes)
+  #
+  #   if (
+  #     !is.null(data$outliers) &&
+  #       length(data$outliers[[1]] >= 1)
+  #   ) {
+  #     outliers <- data_frame0(
+  #       y = data$outliers[[1]],
+  #       x = data$x[1],
+  #       colour = outlier.colour %||% data$colour[1],
+  #       fill = outlier.fill %||% data$fill[1],
+  #       shape = outlier.shape %||% data$shape[1],
+  #       size = outlier.size %||% data$linewidth[1],
+  #       stroke = outlier.stroke %||% data$stroke[1],
+  #       fill = NA,
+  #       alpha = outlier.alpha %||% data$alpha[1],
+  #       .size = length(data$outliers[[1]])
+  #     )
+  #     outlier_colnames <- intersect(colnames(data), outlier_ipar)
+  #     if (length(outlier_colnames)) {
+  #       for (name in outlier_colnames) {
+  #         unprefixed_name <- sub("outlier.", "", name)
+  #         outliers[[unprefixed_name]] <- data[[name]][[1]]
+  #       }
+  #     }
+  #     outliers <- flip_data(outliers, flipped_aes)
+  #     outliers_grob <-
+  #       GeomInteractivePoint$draw_panel(
+  #         outliers,
+  #         panel_params,
+  #         coord,
+  #         .ipar = .ipar
+  #       )
+  #   } else {
+  #     outliers_grob <- NULL
+  #   }
+  #
+  #   if (staplewidth != 0) {
+  #     staples <- data_frame0(
+  #       x = rep((data$xmin - data$x) * staplewidth + data$x, 2),
+  #       xend = rep((data$xmax - data$x) * staplewidth + data$x, 2),
+  #       y = c(data$ymax, data$ymin),
+  #       yend = c(data$ymax, data$ymin),
+  #       alpha = c(NA_real_, NA_real_),
+  #       !!!common,
+  #       .size = 2
+  #     )
+  #     staples <- flip_data(staples, flipped_aes)
+  #     staple_grob <- GeomInteractiveSegment$draw_panel(
+  #       staples,
+  #       panel_params,
+  #       coord,
+  #       lineend = lineend,
+  #       .ipar = .ipar
+  #     )
+  #   } else {
+  #     staple_grob <- NULL
+  #   }
+  #
+  #   ggname(
+  #     "geom_boxplot_interactive",
+  #     grobTree(
+  #       outliers_grob,
+  #       staple_grob,
+  #       GeomInteractiveSegment$draw_panel(
+  #         whiskers,
+  #         panel_params,
+  #         coord,
+  #         lineend = lineend,
+  #         .ipar = .ipar
+  #       ),
+  #       GeomInteractiveCrossbar$draw_panel(
+  #         box,
+  #         fatten = fatten,
+  #         panel_params,
+  #         coord,
+  #         lineend = lineend,
+  #         linejoin = linejoin,
+  #         flipped_aes = flipped_aes,
+  #         .ipar = .ipar
+  #       )
+  #     )
+  #   )
+  # }
 )

@@ -152,6 +152,7 @@ element_grob.interactive_element <- function(element, ...) {
 }
 
 #' @export
+#' @method merge_element interactive_element
 merge_element.interactive_element <- function(new, old) {
   new <- NextMethod()
 

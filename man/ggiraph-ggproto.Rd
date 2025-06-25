@@ -79,7 +79,7 @@ All \verb{geom_*_interactive} functions (like \code{geom_point_interactive}) ret
 contains a \verb{GeomInteractive*} object (like \code{GeomInteractivePoint}). The \verb{Geom*}
 object is responsible for rendering the data in the plot.
 
-See \link[ggplot2:ggplot2-ggproto]{Geom} for more information.
+See \link[ggplot2:Geom]{Geom} for more information.
 }
 
 \keyword{datasets}

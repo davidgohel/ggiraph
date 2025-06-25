@@ -366,3 +366,5 @@ with_ordered_restart <- function(expr, .call) {
     }
   )
 }
+
+defaults <- function(x, y) c(x, y[setdiff(names(y), names(x))])
