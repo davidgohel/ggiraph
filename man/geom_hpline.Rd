@@ -46,7 +46,7 @@ from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{stat}{The statistical transformation to use on the data for this layer.
 When using a \verb{geom_*()} function to construct a layer, the \code{stat}
-argument can be used the override the default coupling between geoms and
+argument can be used to override the default coupling between geoms and
 stats. The \code{stat} argument accepts the following:
 \itemize{
 \item A \code{Stat} ggproto subclass, for example \code{StatCount}.
@@ -105,24 +105,26 @@ a warning. If \code{TRUE}, missing values are silently removed.}
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
 It can also be a named logical vector to finely select the aesthetics to
-display.}
+display. To include legend keys for all levels, even
+when no data exists, use \code{TRUE}.  If \code{NA}, all levels are shown in legend,
+but unobserved levels are omitted.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 }
 \description{
 This function is a copy of \code{geom_hpline()} of package 'ungeviz' authored
 by Claus O. Wilke.
 
 The geom \code{geom_hpline()} can be used as a drop-in
-replacement for \code{\link[=geom_point]{geom_point()}} but draw horizontal lines
+replacement for \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} but draw horizontal lines
 (point-lines, or plines) instead of points. These lines can often be useful to
 indicate specific parameter estimates in a plot. The geom takes position
-aesthetics as \code{x} and \code{y} like \code{\link[=geom_point]{geom_point()}}, and it uses \code{width}
+aesthetics as \code{x} and \code{y} like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, and it uses \code{width}
 to set the length of the line segment. All other aesthetics (\code{colour}, \code{size},
-\code{linetype}, etc.) are inherited from \code{\link[=geom_segment]{geom_segment()}}.
+\code{linetype}, etc.) are inherited from \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
 }
 \examples{
 library(ggplot2)

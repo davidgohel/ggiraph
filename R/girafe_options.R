@@ -49,27 +49,35 @@
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_tooltip <- function(css = NULL,
-                         offx = 10,
-                         offy = 0,
-                         use_cursor_pos = TRUE,
-                         opacity = .9,
-                         use_fill = FALSE,
-                         use_stroke = FALSE,
-                         delay_mouseover = 200,
-                         delay_mouseout = 500,
-                         placement = c("auto", "doc", "container"),
-                         zindex = 999) {
+opts_tooltip <- function(
+  css = NULL,
+  offx = 10,
+  offy = 0,
+  use_cursor_pos = TRUE,
+  opacity = .9,
+  use_fill = FALSE,
+  use_stroke = FALSE,
+  delay_mouseover = 200,
+  delay_mouseout = 500,
+  placement = c("auto", "doc", "container"),
+  zindex = 999
+) {
   css <- check_css(
     css = css,
     default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left;",
     cls_prefix = "tooltip_",
     name = "opts_tooltip"
   )
-  if( grepl(x = css, pattern = "position[ ]*:") )
-    abort("do not specify position in css, this parameter is managed by girafe.")
-  if( grepl(x = css, pattern = "pointer-events[ ]*:") )
-    abort("do not specify pointer-events in css, this parameter is managed by girafe.")
+  if (grepl(x = css, pattern = "position[ ]*:")) {
+    abort(
+      "do not specify position in css, this parameter is managed by girafe."
+    )
+  }
+  if (grepl(x = css, pattern = "pointer-events[ ]*:")) {
+    abort(
+      "do not specify pointer-events in css, this parameter is managed by girafe."
+    )
+  }
 
   if (!is_valid_number(zindex) || zindex < 1) {
     abort("`zindex` must be a scalar positive number, >= 1", call = NULL)
@@ -123,7 +131,8 @@ opts_tooltip <- function(css = NULL,
     css = css,
     placement = placement,
     opacity = opacity,
-    offx = offx, offy = offy,
+    offx = offx,
+    offy = offy,
     use_cursor_pos = use_cursor_pos,
     use_fill = use_fill,
     use_stroke = use_stroke,
@@ -176,65 +185,74 @@ opts_tooltip <- function(css = NULL,
 #' @export
 #' @family girafe animation options
 #' @seealso [girafe_css()], [girafe_css_bicolor()]
-opts_hover <- function(css = NULL,
-                       reactive = FALSE,
-                       nearest_distance = NULL) {
-  css <- check_css(css,
-                   default = "fill:orange;stroke:gray;",
-                   cls_prefix = "hover_data_",
-                   name = "opts_hover")
+opts_hover <- function(css = NULL, reactive = FALSE, nearest_distance = NULL) {
+  css <- check_css(
+    css,
+    default = "fill:orange;stroke:gray;",
+    cls_prefix = "hover_data_",
+    name = "opts_hover"
+  )
   if (!is_valid_logical(reactive)) {
     abort("`reactive` must be a scalar logical", call = NULL)
   }
-  if (!is.null(nearest_distance) && !(is_valid_number(nearest_distance) && nearest_distance >= 0)) {
-    abort("`nearest_distance` must be a scalar positive number or NULL", call. = FALSE)
+  if (
+    !is.null(nearest_distance) &&
+      !(is_valid_number(nearest_distance) && nearest_distance >= 0)
+  ) {
+    abort(
+      "`nearest_distance` must be a scalar positive number or NULL",
+      call. = FALSE
+    )
   }
 
-  structure(list(css = css, reactive = reactive, nearest_distance = nearest_distance),
-            class = "opts_hover")
+  structure(
+    list(css = css, reactive = reactive, nearest_distance = nearest_distance),
+    class = "opts_hover"
+  )
 }
 
 #' @export
 #' @rdname opts_hover
 opts_hover_inv <- function(css = NULL) {
-  css <- check_css(css,
-                   default = "",
-                   cls_prefix = "hover_inv_",
-                   name = "opts_hover_inv")
-  structure(list(css = css),
-            class = "opts_hover_inv")
+  css <- check_css(
+    css,
+    default = "",
+    cls_prefix = "hover_inv_",
+    name = "opts_hover_inv"
+  )
+  structure(list(css = css), class = "opts_hover_inv")
 }
 
 #' @export
 #' @rdname opts_hover
-opts_hover_key <- function(css = NULL,
-                           reactive = FALSE) {
-  css <- check_css(css,
-                   default = "stroke:red;",
-                   cls_prefix = "hover_key_",
-                   name = "opts_hover")
+opts_hover_key <- function(css = NULL, reactive = FALSE) {
+  css <- check_css(
+    css,
+    default = "stroke:red;",
+    cls_prefix = "hover_key_",
+    name = "opts_hover"
+  )
   if (!is_valid_logical(reactive)) {
     abort("`reactive` must be a scalar logical", call = NULL)
   }
 
-  structure(list(css = css, reactive = reactive),
-            class = "opts_hover_key")
+  structure(list(css = css, reactive = reactive), class = "opts_hover_key")
 }
 
 #' @export
 #' @rdname opts_hover
-opts_hover_theme <- function(css = NULL,
-                             reactive = FALSE) {
-  css <- check_css(css,
-                   default = "fill:green;",
-                   cls_prefix = "hover_theme_",
-                   name = "opts_hover_theme")
+opts_hover_theme <- function(css = NULL, reactive = FALSE) {
+  css <- check_css(
+    css,
+    default = "fill:green;",
+    cls_prefix = "hover_theme_",
+    name = "opts_hover_theme"
+  )
   if (!is_valid_logical(reactive)) {
     abort("`reactive` must be a scalar logical", call = NULL)
   }
 
-  structure(list(css = css, reactive = reactive),
-            class = "opts_hover_theme")
+  structure(list(css = css, reactive = reactive), class = "opts_hover_theme")
 }
 
 #' @title Selection effect settings
@@ -279,85 +297,104 @@ opts_hover_theme <- function(css = NULL,
 #' @export
 #' @family girafe animation options
 #' @seealso [girafe_css()], [girafe_css_bicolor()]
-opts_selection <- function(css = NULL,
-                           type = c("multiple", "single", "none"),
-                           only_shiny = TRUE,
-                           selected = character(0)) {
-  css <- check_css(css,
-                   default = "fill:red;stroke:gray;",
-                   cls_prefix = "select_data_",
-                   name = "opts_selection")
+opts_selection <- function(
+  css = NULL,
+  type = c("multiple", "single", "none"),
+  only_shiny = TRUE,
+  selected = character(0)
+) {
+  css <- check_css(
+    css,
+    default = "fill:red;stroke:gray;",
+    cls_prefix = "select_data_",
+    name = "opts_selection"
+  )
   type = arg_match(type, error_call = NULL)
   if (!is_valid_logical(only_shiny)) {
     abort("`only_shiny` must be a scalar logical", call = NULL)
   }
 
-  structure(list(
-    css = css,
-    type = type,
-    only_shiny = only_shiny,
-    selected = as.character(selected)
-  ),
-  class = "opts_selection")
+  structure(
+    list(
+      css = css,
+      type = type,
+      only_shiny = only_shiny,
+      selected = as.character(selected)
+    ),
+    class = "opts_selection"
+  )
 }
 
 #' @export
 #' @rdname opts_selection
 opts_selection_inv <- function(css = NULL) {
-  css <- check_css(css,
-                   default = "",
-                   cls_prefix = "select_inv_",
-                   name = "opts_selection_inv")
-  structure(list(css = css),
-            class = "opts_selection_inv")
+  css <- check_css(
+    css,
+    default = "",
+    cls_prefix = "select_inv_",
+    name = "opts_selection_inv"
+  )
+  structure(list(css = css), class = "opts_selection_inv")
 }
 
 #' @export
 #' @rdname opts_selection
-opts_selection_key <- function(css = NULL,
-                               type = c("single", "multiple", "none"),
-                               only_shiny = TRUE,
-                               selected = character(0)) {
-  css <- check_css(css,
-                   default = "stroke:gray;",
-                   cls_prefix = "select_key_",
-                   name = "opts_selection_key")
+opts_selection_key <- function(
+  css = NULL,
+  type = c("single", "multiple", "none"),
+  only_shiny = TRUE,
+  selected = character(0)
+) {
+  css <- check_css(
+    css,
+    default = "stroke:gray;",
+    cls_prefix = "select_key_",
+    name = "opts_selection_key"
+  )
   type = arg_match(type, error_call = NULL)
   if (!is_valid_logical(only_shiny)) {
     abort("`only_shiny` must be a scalar logical", call = NULL)
   }
 
-  structure(list(
-    css = css,
-    type = type,
-    only_shiny = only_shiny,
-    selected = as.character(selected)
-  ),
-  class = "opts_selection_key")
+  structure(
+    list(
+      css = css,
+      type = type,
+      only_shiny = only_shiny,
+      selected = as.character(selected)
+    ),
+    class = "opts_selection_key"
+  )
 }
 
 #' @export
 #' @rdname opts_selection
-opts_selection_theme <- function(css = NULL,
-                                 type = c("single", "multiple", "none"),
-                                 only_shiny = TRUE,
-                                 selected = character(0)) {
-  css <- check_css(css,
-                   default = "stroke:gray;",
-                   cls_prefix = "select_theme_",
-                   name = "opts_selection_theme")
+opts_selection_theme <- function(
+  css = NULL,
+  type = c("single", "multiple", "none"),
+  only_shiny = TRUE,
+  selected = character(0)
+) {
+  css <- check_css(
+    css,
+    default = "stroke:gray;",
+    cls_prefix = "select_theme_",
+    name = "opts_selection_theme"
+  )
   type = arg_match(type, error_call = NULL)
   if (!is_valid_logical(only_shiny)) {
     abort("`only_shiny` must be a scalar logical", call = NULL)
   }
 
-  structure(list(
-    css = css,
-    type = type,
-    only_shiny = only_shiny,
-    selected = as.character(selected)
-  ),
-  class = "opts_selection_theme")
+  structure(
+    list(
+      css = css,
+      type = type,
+      only_shiny = only_shiny,
+      selected = as.character(selected)
+    ),
+    class = "opts_selection_theme"
+  )
 }
 
 #' @title Zoom settings
@@ -383,7 +420,7 @@ opts_selection_theme <- function(css = NULL,
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_zoom <- function(min = 1, max = 1, duration = 300){
+opts_zoom <- function(min = 1, max = 1, duration = 300) {
   if (!is_valid_number(min) || min <= 0.2) {
     abort("`min` must be a scalar number, >= 0.2", call = NULL)
   }
@@ -460,15 +497,23 @@ opts_zoom <- function(min = 1, max = 1, duration = 300){
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_toolbar <- function(position = c("topright", "top", "bottom",
-                                      "topleft",  "bottomleft", "bottomright"),
-                         saveaspng = TRUE,
-                         pngname = "diagram",
-                         tooltips = NULL,
-                         hidden = NULL,
-                         fixed = FALSE,
-                         delay_mouseover = 200,
-                         delay_mouseout = 500) {
+opts_toolbar <- function(
+  position = c(
+    "topright",
+    "top",
+    "bottom",
+    "topleft",
+    "bottomleft",
+    "bottomright"
+  ),
+  saveaspng = TRUE,
+  pngname = "diagram",
+  tooltips = NULL,
+  hidden = NULL,
+  fixed = FALSE,
+  delay_mouseover = 200,
+  delay_mouseout = 500
+) {
   position = arg_match(position, error_call = NULL)
   if (!is_valid_logical(saveaspng)) {
     abort("`saveaspng` must be a scalar logical", call = NULL)
@@ -532,7 +577,7 @@ opts_toolbar <- function(position = c("topright", "top", "bottom",
 #'   opts_sizing(rescale = FALSE) )
 #' if( interactive() ) print(x)
 #' @export
-opts_sizing <- function(rescale = TRUE, width = 1){
+opts_sizing <- function(rescale = TRUE, width = 1) {
   if (!is_valid_logical(rescale)) {
     abort("`rescale` must be a scalar logical")
   }
@@ -578,8 +623,8 @@ opts_sizing <- function(rescale = TRUE, width = 1){
 #' @seealso [girafe()], [girafe_css()], [girafe_css_bicolor()]
 #' @importFrom rlang list2
 #' @family girafe animation options
-girafe_options <- function(x, ...){
-  if(!inherits(x, "girafe")) {
+girafe_options <- function(x, ...) {
+  if (!inherits(x, "girafe")) {
     abort("`x` must be a girafe object", call = NULL)
   }
 
@@ -589,7 +634,7 @@ girafe_options <- function(x, ...){
   x
 }
 
-merge_options <- function(options, args){
+merge_options <- function(options, args) {
   for (arg in args) {
     if (inherits(arg, "opts_zoom")) {
       options$zoom <- arg
@@ -622,14 +667,16 @@ merge_options <- function(options, args){
 
 merge_sizing_policy <- function(policy, args) {
   for (arg in args) {
-    if (is.list(arg) && all(names(arg) %in% names(htmlwidgets::sizingPolicy()))) {
+    if (
+      is.list(arg) && all(names(arg) %in% names(htmlwidgets::sizingPolicy()))
+    ) {
       policy <- arg
     }
   }
   policy
 }
 
-default_opts <- function(){
+default_opts <- function() {
   list(
     tooltip = girafe_defaults("opts_tooltip"),
     hover = girafe_defaults("opts_hover"),
@@ -649,4 +696,3 @@ default_opts <- function(){
 default_sizing_policy <- function() {
   sizingPolicy(knitr.figure = TRUE, browser.fill = FALSE)
 }
-

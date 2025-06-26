@@ -48,70 +48,88 @@ p1 <- p1 +
   )
 
 # simple facet
-p <- p1 + facet_wrap_interactive(
-  vars(gear),
-  labeller = labeller_interactive(aes(tooltip = paste("Gear:", gear)))
-)
+p <- p1 +
+  facet_wrap_interactive(
+    vars(gear),
+    labeller = labeller_interactive(aes(tooltip = paste("Gear:", gear)))
+  )
 x <- girafe(ggobj = p)
-if (interactive()) print(x)
+if (interactive()) {
+  print(x)
+}
 
 # With two vars. When the .multi_line labeller argument is TRUE (default),
 # supply a different labeller for each var
-p <- p1 + facet_wrap_interactive(
-  vars(gear, vs),
-  labeller = labeller_interactive(
-    gear = labeller_interactive(aes(tooltip = paste("Gear:", gear))),
-    vs = labeller_interactive(aes(tooltip = paste("VS:", vs)))
+p <- p1 +
+  facet_wrap_interactive(
+    vars(gear, vs),
+    labeller = labeller_interactive(
+      gear = labeller_interactive(aes(tooltip = paste("Gear:", gear))),
+      vs = labeller_interactive(aes(tooltip = paste("VS:", vs)))
+    )
   )
-)
 x <- girafe(ggobj = p)
-if (interactive()) print(x)
+if (interactive()) {
+  print(x)
+}
 
 # When the .multi_line argument is FALSE, the labels are joined and
 # the same happens with the data, so we can refer to both variables in the aesthetics!
-p <- p1 + facet_wrap_interactive(
-  vars(gear, vs),
-  labeller = labeller_interactive(
-    aes(tooltip = paste0("Gear: ", gear, "\nVS: ", vs)),
-    .multi_line = FALSE
-  )
-)
-x <- girafe(ggobj = p)
-if (interactive()) print(x)
-
-# Example with facet_grid:
-p <- p1 + facet_grid_interactive(
-  vs + am ~ gear,
-  labeller = labeller(
-    gear = labeller_interactive(aes(
-      tooltip = paste("gear:", gear), data_id = paste0("gear_", gear)
-    )),
-    vs = labeller_interactive(aes(
-      tooltip = paste("VS:", vs), data_id = paste0("vs_", vs)
-    )),
-    am = labeller_interactive(aes(
-      tooltip = paste("AM:", am), data_id = paste0("am_", am)
-    ))
-  )
-)
-x <- girafe(ggobj = p)
-if (interactive()) print(x)
-
-# Same with .rows and .cols and .multi_line = FALSE
-p <- p1 + facet_grid_interactive(
-  vs + am ~ gear,
-  labeller = labeller(
-    .cols = labeller_interactive(
-      .mapping = aes(tooltip = paste("gear:", gear))
-    ),
-    .rows = labeller_interactive(
-      aes(tooltip = paste0("VS: ", vs, "\nAM: ", am)),
+p <- p1 +
+  facet_wrap_interactive(
+    vars(gear, vs),
+    labeller = labeller_interactive(
+      aes(tooltip = paste0("Gear: ", gear, "\nVS: ", vs)),
       .multi_line = FALSE
     )
   )
-)
 x <- girafe(ggobj = p)
-if (interactive()) print(x)
+if (interactive()) {
+  print(x)
+}
+
+# Example with facet_grid:
+p <- p1 +
+  facet_grid_interactive(
+    vs + am ~ gear,
+    labeller = labeller(
+      gear = labeller_interactive(aes(
+        tooltip = paste("gear:", gear),
+        data_id = paste0("gear_", gear)
+      )),
+      vs = labeller_interactive(aes(
+        tooltip = paste("VS:", vs),
+        data_id = paste0("vs_", vs)
+      )),
+      am = labeller_interactive(aes(
+        tooltip = paste("AM:", am),
+        data_id = paste0("am_", am)
+      ))
+    )
+  )
+x <- girafe(ggobj = p)
+if (interactive()) {
+  print(x)
+}
+
+# Same with .rows and .cols and .multi_line = FALSE
+p <- p1 +
+  facet_grid_interactive(
+    vs + am ~ gear,
+    labeller = labeller(
+      .cols = labeller_interactive(
+        .mapping = aes(tooltip = paste("gear:", gear))
+      ),
+      .rows = labeller_interactive(
+        aes(tooltip = paste0("VS: ", vs, "\nAM: ", am)),
+        .multi_line = FALSE
+      )
+    )
+  )
+x <- girafe(ggobj = p)
+if (interactive()) {
+  print(x)
+}
 
 # a more complex example
 p2 <- ggplot(msleep, aes(x = sleep_total, y = awake)) +
@@ -150,25 +168,28 @@ replace_nas <- function(x) {
 
 # in this example we use the '.label' variable to access the produced label
 # and we set the 'label' aesthetic to modify the label
-p <- p2 + facet_grid_interactive(
-  vore ~ conservation,
-  labeller = labeller(
-    vore = labeller_interactive(
-      aes(tooltip = paste("Vore:", replace_nas(.label))),
-      .default = capitalize
-    ),
-    conservation = labeller_interactive(
-      aes(
-        tooltip = paste("Conservation:\n", replace_nas(.label)),
-        label = cut_str(.label, 3)
+p <- p2 +
+  facet_grid_interactive(
+    vore ~ conservation,
+    labeller = labeller(
+      vore = labeller_interactive(
+        aes(tooltip = paste("Vore:", replace_nas(.label))),
+        .default = capitalize
       ),
-      .default = conservation_status
+      conservation = labeller_interactive(
+        aes(
+          tooltip = paste("Conservation:\n", replace_nas(.label)),
+          label = cut_str(.label, 3)
+        ),
+        .default = conservation_status
+      )
     )
   )
-)
 
 x <- girafe(ggobj = p)
-if (interactive()) print(x)
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[ggplot2:labeller]{ggplot2::labeller()}}, \code{\link[=label_interactive]{label_interactive()}}, \link[ggplot2:labellers]{ggplot2::labellers}

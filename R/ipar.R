@@ -186,12 +186,14 @@ remove_interactive_attrs <- function(x, ipar = IPAR_NAMES) {
 #' Copies interactive parameters from one object to the other.
 #' and returns the result
 #' @noRd
-copy_interactive_attrs <- function(src,
-                                   dest,
-                                   ...,
-                                   useList = FALSE,
-                                   rows = NULL,
-                                   ipar = IPAR_NAMES) {
+copy_interactive_attrs <- function(
+  src,
+  dest,
+  ...,
+  useList = FALSE,
+  rows = NULL,
+  ipar = IPAR_NAMES
+) {
   hasDots <- length(list(...)) > 0
   for (a in ipar) {
     if (!is.null(src[[a]])) {
@@ -217,17 +219,22 @@ copy_interactive_attrs <- function(src,
 #' Add the interactive parameters from a data object to a grob.
 #' and changes its class
 #' @noRd
-add_interactive_attrs <- function(gr,
-                                  data,
-                                  rows = NULL,
-                                  cl = NULL,
-                                  overwrite = TRUE,
-                                  data_attr = "data-id",
-                                  ipar = IPAR_NAMES) {
+add_interactive_attrs <- function(
+  gr,
+  data,
+  rows = NULL,
+  cl = NULL,
+  overwrite = TRUE,
+  data_attr = "data-id",
+  ipar = IPAR_NAMES
+) {
   # check for presence of interactive parameters
-  anames <- Filter(x = get_interactive_attr_names(data, ipar = ipar), function(a) {
-    !is.null(data[[a]])
-  })
+  anames <- Filter(
+    x = get_interactive_attr_names(data, ipar = ipar),
+    function(a) {
+      !is.null(data[[a]])
+    }
+  )
   if (length(anames) == 0) {
     return(gr)
   }
@@ -286,13 +293,15 @@ add_interactive_attrs <- function(gr,
 
 #' Delegate for add_interactive_attrs
 #' @noRd
-do_add_interactive_attrs <- function(gr,
-                                     data,
-                                     rows = NULL,
-                                     cl = NULL,
-                                     overwrite = TRUE,
-                                     data_attr = "data-id",
-                                     ipar = IPAR_NAMES) {
+do_add_interactive_attrs <- function(
+  gr,
+  data,
+  rows = NULL,
+  cl = NULL,
+  overwrite = TRUE,
+  data_attr = "data-id",
+  ipar = IPAR_NAMES
+) {
   # check that is a grob
   if (!is.grob(gr) || is.zero(gr)) {
     return(gr)
@@ -353,9 +362,7 @@ get_data_attr <- function(x, default = "data-id") {
 
 #' Sets the interactive attributtes to the svg output.
 #' @noRd
-interactive_attr_toxml <- function(x,
-                                   ids = character(0),
-                                   rows = NULL) {
+interactive_attr_toxml <- function(x, ids = character(0), rows = NULL) {
   if (length(ids) < 1) {
     return(invisible())
   }
@@ -364,9 +371,12 @@ interactive_attr_toxml <- function(x,
   ipar <- get_ipar(x)
   data_attr <- get_data_attr(x)
   # check for presence of interactive parameters
-  anames <- Filter(x = get_interactive_attr_names(ip, ipar = ipar), function(a) {
-    !is.null(ip[[a]])
-  })
+  anames <- Filter(
+    x = get_interactive_attr_names(ip, ipar = ipar),
+    function(a) {
+      !is.null(ip[[a]])
+    }
+  )
   if (length(anames) == 0) {
     return(invisible())
   }
@@ -377,7 +387,8 @@ interactive_attr_toxml <- function(x,
     } else {
       attrValue <- ip[[a]][rows]
     }
-    attrValue <- switch(a,
+    attrValue <- switch(
+      a,
       tooltip = encode_cr(attrValue),
       hover_css = check_css_attr(attrValue),
       selected_css = check_css_attr(attrValue),
@@ -386,11 +397,7 @@ interactive_attr_toxml <- function(x,
     if (!is.character(attrValue)) {
       attrValue <- as.character(attrValue)
     }
-    attrName <- switch(a,
-      tooltip = "title",
-      data_id = data_attr,
-      a
-    )
+    attrName <- switch(a, tooltip = "title", data_id = data_attr, a)
     set_attr(
       name = attrName,
       ids = as.integer(ids),

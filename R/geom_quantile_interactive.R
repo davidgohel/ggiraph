@@ -12,8 +12,9 @@
 #' @example examples/geom_quantile_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_quantile_interactive <- function(...)
+geom_quantile_interactive <- function(...) {
   layer_interactive(geom_quantile, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

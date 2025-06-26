@@ -12,5 +12,6 @@
 #' @example examples/geom_jitter_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_jitter_interactive <- function(...)
+geom_jitter_interactive <- function(...) {
   layer_interactive(geom_jitter, ...)
+}

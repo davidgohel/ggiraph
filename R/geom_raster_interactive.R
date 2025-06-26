@@ -13,8 +13,9 @@
 #' @example examples/geom_raster_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_raster_interactive <- function(...)
+geom_raster_interactive <- function(...) {
   layer_interactive(geom_raster, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -29,7 +30,7 @@ GeomInteractiveRaster <- ggproto(
   draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
     zz <- GeomRaster$draw_panel(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
-    coords <- coords[1,, drop = FALSE]
+    coords <- coords[1, , drop = FALSE]
     add_interactive_attrs(zz, coords, ipar = .ipar)
   }
 )

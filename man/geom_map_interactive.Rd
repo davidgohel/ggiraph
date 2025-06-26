@@ -34,8 +34,7 @@ library(ggiraph)
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 
 # create tooltips and onclick events
-states_ <- sprintf("<p>\%s</p>",
-                   as.character(crimes$state) )
+states_ <- sprintf("<p>\%s</p>", as.character(crimes$state))
 table_ <- paste0(
   "<table><tr><td>UrbanPop</td>",
   sprintf("<td>\%.0f</td>", crimes$UrbanPop),
@@ -55,21 +54,23 @@ onclick <- sprintf(
 crimes$labs <- paste0(states_, table_)
 crimes$onclick = onclick
 
-if (require("maps") ) {
+if (require("maps")) {
   states_map <- map_data("state")
   gg_map <- ggplot(crimes, aes(map_id = state))
-  gg_map <- gg_map + geom_map_interactive(aes(
-                  fill = Murder,
-                  tooltip = labs,
-                  data_id = state,
-                  onclick = onclick
-                ),
-                map = states_map) +
+  gg_map <- gg_map +
+    geom_map_interactive(
+      aes(
+        fill = Murder,
+        tooltip = labs,
+        data_id = state,
+        onclick = onclick
+      ),
+      map = states_map
+    ) +
     expand_limits(x = states_map$long, y = states_map$lat)
   x <- girafe(ggobj = gg_map)
-  if( interactive() ) print(x)
+  if (interactive()) print(x)
 }
-
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

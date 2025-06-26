@@ -37,19 +37,25 @@ library(ggiraph)
 
 
 p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
-  geom_label_interactive(aes(tooltip = paste(rownames(mtcars), mpg, sep = "\n")))
+  geom_label_interactive(aes(
+    tooltip = paste(rownames(mtcars), mpg, sep = "\n")
+  ))
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 
 
 p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
-  geom_label_interactive(aes(fill = factor(cyl),
-                             tooltip = paste(rownames(mtcars), mpg, sep = "\n")),
-                         colour = "white",
-                         fontface = "bold")
+  geom_label_interactive(
+    aes(fill = factor(cyl), tooltip = paste(rownames(mtcars), mpg, sep = "\n")),
+    colour = "white",
+    fontface = "bold"
+  )
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
-
+if (interactive()) {
+  print(x)
+}
 # add interactive texts to a ggplot -------
 library(ggplot2)
 library(ggiraph)
@@ -58,23 +64,38 @@ library(ggiraph)
 dataset = mtcars
 dataset$label = row.names(mtcars)
 
-dataset$tooltip = paste0( "cyl: ", dataset$cyl, "<br/>",
-       "gear: ", dataset$gear, "<br/>",
-       "carb: ", dataset$carb)
+dataset$tooltip = paste0(
+  "cyl: ",
+  dataset$cyl,
+  "<br/>",
+  "gear: ",
+  dataset$gear,
+  "<br/>",
+  "carb: ",
+  dataset$carb
+)
 
 ## the plot
-gg_text = ggplot(dataset,
-                 aes(x = mpg, y = wt, label = label,
-                     color = qsec,
-                     tooltip = tooltip, data_id = label)) +
+gg_text = ggplot(
+  dataset,
+  aes(
+    x = mpg,
+    y = wt,
+    label = label,
+    color = qsec,
+    tooltip = tooltip,
+    data_id = label
+  )
+) +
   geom_text_interactive(check_overlap = TRUE) +
-  coord_cartesian(xlim = c(0,50))
+  coord_cartesian(xlim = c(0, 50))
 
 ## display the plot
 x <- girafe(ggobj = gg_text)
-x <- girafe_options(x = x,
-                    opts_hover(css = "fill:#FF4C3B;font-style:italic;") )
-if( interactive() ) print(x)
+x <- girafe_options(x = x, opts_hover(css = "fill:#FF4C3B;font-style:italic;"))
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

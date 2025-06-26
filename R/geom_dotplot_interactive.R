@@ -12,8 +12,9 @@
 #' @example examples/geom_dotplot_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_dotplot_interactive <- function(...)
+geom_dotplot_interactive <- function(...) {
   layer_interactive(geom_dotplot, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

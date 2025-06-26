@@ -12,8 +12,9 @@
 #' @example examples/geom_density_2d_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_density_2d_interactive <- function(...)
+geom_density_2d_interactive <- function(...) {
   layer_interactive(geom_density_2d, ...)
+}
 
 #' @export
 #' @rdname geom_density_2d_interactive
@@ -33,8 +34,9 @@ GeomInteractiveDensity2d <- ggproto(
 
 #' @rdname geom_density_2d_interactive
 #' @export
-geom_density_2d_filled_interactive <- function(...)
+geom_density_2d_filled_interactive <- function(...) {
   layer_interactive(geom_density_2d_filled, ...)
+}
 
 #' @export
 #' @rdname geom_density_2d_interactive

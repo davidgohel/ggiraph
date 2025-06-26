@@ -1,9 +1,7 @@
 #' Calls a base guide function and returns an interactive guide.
 #' @noRd
 #' @importFrom rlang list2
-guide_interactive <- function(guide_func,
-                              ...,
-                              interactive_guide = NULL) {
+guide_interactive <- function(guide_func, ..., interactive_guide = NULL) {
   args <- list2(...)
   # Call default guide function
   if (is.function(guide_func)) {
@@ -18,7 +16,8 @@ guide_interactive <- function(guide_func,
   }
 
   ggproto(
-    NULL, interactive_guide,
+    NULL,
+    interactive_guide,
     params = guide$params,
     elements = guide$elements,
     available_aes = guide$available_aes
@@ -36,9 +35,13 @@ guide_interactive <- function(guide_func,
 #' @param max_len the max length of each interactive parameter vector
 #' @return the altered guide params
 #' @noRd
-interactive_guide_train <- function(params, scale, breaks,
-                                    label_breaks = breaks,
-                                    max_len = NULL) {
+interactive_guide_train <- function(
+  params,
+  scale,
+  breaks,
+  label_breaks = breaks,
+  max_len = NULL
+) {
   if (!is.null(params)) {
     key <- params$key
     if (is.data.frame(key) && nrow(key)) {
@@ -65,25 +68,34 @@ interactive_guide_train <- function(params, scale, breaks,
           # length of values should be 1 or same as breaks
           if (length(values) > 1 && length(values) != length(breaks)) {
             warning(paste0(
-              "Cannot set the guide interactive attribute '", a,
+              "Cannot set the guide interactive attribute '",
+              a,
               "', because its length differs from the breaks length"
             ))
           } else {
             # length of values must match provided max length or
             # the rows of decor data frame or the rows of key data frame
-            max_len <- max_len %||% nrow(params$decor) %||% nrow(params$key) %||% 0
+            max_len <- max_len %||%
+              nrow(params$decor) %||%
+              nrow(params$key) %||%
+              0
             if (max_len > 0 && length(values) > max_len) {
               values <- values[seq_len(max_len)]
             }
             # special case for coloursteps guide, when the lengths may not match
-            if (!is.null(params$decor) && length(values) > 1 &&
-              nrow(params$decor) > length(values)
+            if (
+              !is.null(params$decor) &&
+                length(values) > 1 &&
+                nrow(params$decor) > length(values)
             ) {
               # sort the breaks
               sorted_breaks <- sort(breaks)
               # find the bin index of the decor values
-              decor2break <- findInterval(params$decor$value, sorted_breaks,
-                rightmost.closed = TRUE, all.inside = TRUE
+              decor2break <- findInterval(
+                params$decor$value,
+                sorted_breaks,
+                rightmost.closed = TRUE,
+                all.inside = TRUE
               )
               if (!identical(breaks, sorted_breaks)) {
                 # map from sorted breaks to original breaks
@@ -124,9 +136,10 @@ interactive_guide_train <- function(params, scale, breaks,
 }
 
 parse_binned_breaks = function(
-    scale, breaks = scale$get_breaks(),
-    even.steps = TRUE) {
-
+  scale,
+  breaks = scale$get_breaks(),
+  even.steps = TRUE
+) {
   breaks <- breaks[!is.na(breaks)]
   if (length(breaks) == 0) {
     return(NULL)
@@ -147,9 +160,9 @@ parse_binned_breaks = function(
       ))
     }
     bin_at <- breaks
-    nums   <- as.character(breaks)
-    nums   <- strsplit(gsub("\\(|\\)|\\[|\\]", "", nums), ",\\s?")
-    nums   <- as.numeric(unlist(nums, FALSE, FALSE))
+    nums <- as.character(breaks)
+    nums <- strsplit(gsub("\\(|\\)|\\[|\\]", "", nums), ",\\s?")
+    nums <- as.numeric(unlist(nums, FALSE, FALSE))
 
     if (anyNA(nums)) {
       cli::cli_abort(c(
@@ -158,8 +171,8 @@ parse_binned_breaks = function(
       ))
     }
     all_breaks <- nums[c(1, seq_along(breaks) * 2)]
-    limits     <- all_breaks[ c(1, length(all_breaks))]
-    breaks     <- all_breaks[-c(1, length(all_breaks))]
+    limits <- all_breaks[c(1, length(all_breaks))]
+    breaks <- all_breaks[-c(1, length(all_breaks))]
   }
   list(
     breaks = breaks,
@@ -212,12 +225,18 @@ interactive_guide_parse_binned_breaks <- function(scale, params) {
 #' @noRd
 interactive_guide_override_elements <- function(elements) {
   # make title interactive
-  if (inherits(elements$title, "element_text") && !inherits(elements$title, "interactive_element_text")) {
+  if (
+    inherits(elements$title, "element_text") &&
+      !inherits(elements$title, "interactive_element_text")
+  ) {
     elements$title <- as_interactive_element_text(elements$title)
     attr(elements$title, "data_attr") <- "key-id"
   }
   # make labels interactive
-  if (inherits(elements$text, "element_text") && !inherits(elements$text, "interactive_element_text")) {
+  if (
+    inherits(elements$text, "element_text") &&
+      !inherits(elements$text, "interactive_element_text")
+  ) {
     elements$text <- as_interactive_element_text(elements$text)
     attr(elements$text, "data_attr") <- "key-id"
   }

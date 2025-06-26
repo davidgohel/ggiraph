@@ -25,15 +25,24 @@ and they can be scalar values or vectors depending on params on base function.
 library(ggplot2)
 library(ggiraph)
 
-gg <- ggplot(mtcars, aes(x = disp, y = qsec )) +
-  geom_point(size=2) +
+gg <- ggplot(mtcars, aes(x = disp, y = qsec)) +
+  geom_point(size = 2) +
   annotate_interactive(
-    "rect", xmin = 100, xmax = 400, fill = "red",
-    data_id = "an_id", tooltip = "a tooltip",
-    ymin = 18, ymax = 20, alpha = .5)
+    "rect",
+    xmin = 100,
+    xmax = 400,
+    fill = "red",
+    data_id = "an_id",
+    tooltip = "a tooltip",
+    ymin = 18,
+    ymax = 20,
+    alpha = .5
+  )
 
 x <- girafe(ggobj = gg, width_svg = 5, height_svg = 4)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}, \link{interactive_parameters}, \code{\link[=annotation_raster_interactive]{annotation_raster_interactive()}}

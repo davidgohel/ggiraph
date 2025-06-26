@@ -16,17 +16,20 @@ dsvg_view <- function(code, ...) {
   path <- tempfile()
   devlength <- length(dev.list())
   dsvg(path, ...)
-  tryCatch({
-    code
-  }, finally = {
-    if (length(dev.list()) > devlength) {
-      dev.off()
+  tryCatch(
+    {
+      code
+    },
+    finally = {
+      if (length(dev.list()) > devlength) {
+        dev.off()
+      }
     }
-  })
-  if( interactive() ){
+  )
+  if (interactive()) {
     doc <- read_file(path)
-    browsable(HTML(as.character(doc)) )
+    browsable(HTML(as.character(doc)))
+  } else {
+    invisible()
   }
-  else invisible()
 }
-

@@ -60,14 +60,18 @@ set_attr <- function(name, ids, values) {
     if (length(values) == 1 && length(ids) > 1) {
       values <- rep(values, length(ids))
     }
-    if (length(ids) %% length(values) < 1 &&
-      length(ids) != length(values)) {
+    if (
+      length(ids) %% length(values) < 1 &&
+        length(ids) != length(values)
+    ) {
       values <- rep(values, each = length(ids) %/% length(values))
     }
 
     if (length(ids) != length(values)) {
       warning(
-        "Failed setting attribute '", name, "', ",
+        "Failed setting attribute '",
+        name,
+        "', ",
         "mismatched lengths of ids and values ",
         "(most often, it occurs because of clipping or because of NAs in data)"
       )

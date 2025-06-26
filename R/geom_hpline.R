@@ -4,12 +4,12 @@
 #' by Claus O. Wilke.
 #'
 #' The geom `geom_hpline()` can be used as a drop-in
-#' replacement for [`geom_point()`] but draw horizontal lines
+#' replacement for [ggplot2::geom_point()] but draw horizontal lines
 #' (point-lines, or plines) instead of points. These lines can often be useful to
 #' indicate specific parameter estimates in a plot. The geom takes position
-#' aesthetics as `x` and `y` like [`geom_point()`], and it uses `width`
+#' aesthetics as `x` and `y` like [ggplot2::geom_point()], and it uses `width`
 #' to set the length of the line segment. All other aesthetics (`colour`, `size`,
-#' `linetype`, etc.) are inherited from [`geom_segment()`].
+#' `linetype`, etc.) are inherited from [ggplot2::geom_segment()].
 #' @inheritParams ggplot2::geom_point
 #' @examples
 #' library(ggplot2)

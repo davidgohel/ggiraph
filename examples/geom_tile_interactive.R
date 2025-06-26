@@ -11,25 +11,38 @@ df <- data.frame(
 
 p <- ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 
 
 # correlation dataset ----
 cor_mat <- cor(mtcars)
-diag( cor_mat ) <- NA
-var1 <- rep( row.names(cor_mat), ncol(cor_mat) )
-var2 <- rep( colnames(cor_mat), each = nrow(cor_mat) )
+diag(cor_mat) <- NA
+var1 <- rep(row.names(cor_mat), ncol(cor_mat))
+var2 <- rep(colnames(cor_mat), each = nrow(cor_mat))
 cor <- as.numeric(cor_mat)
-cor_mat <- data.frame( var1 = var1, var2 = var2,
-  cor = cor, stringsAsFactors = FALSE )
+cor_mat <- data.frame(
+  var1 = var1,
+  var2 = var2,
+  cor = cor,
+  stringsAsFactors = FALSE
+)
 cor_mat[["tooltip"]] <-
-  sprintf("<i>`%s`</i> vs <i>`%s`</i>:</br><code>%.03f</code>",
-  var1, var2, cor)
+  sprintf("<i>`%s`</i> vs <i>`%s`</i>:</br><code>%.03f</code>", var1, var2, cor)
 
-p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
+p <- ggplot(data = cor_mat, aes(x = var1, y = var2)) +
   geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
-  scale_fill_gradient2_interactive(low = "#BC120A", mid = "white", high = "#BC120A",
-                                   limits = c(-1, 1), data_id = "cormat", tooltip = "cormat") +
+  scale_fill_gradient2_interactive(
+    low = "#BC120A",
+    mid = "white",
+    high = "#BC120A",
+    limits = c(-1, 1),
+    data_id = "cormat",
+    tooltip = "cormat"
+  ) +
   coord_equal()
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}

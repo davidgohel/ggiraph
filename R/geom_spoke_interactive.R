@@ -14,8 +14,9 @@
 #' @example examples/geom_spoke_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_spoke_interactive <- function(...)
+geom_spoke_interactive <- function(...) {
   layer_interactive(geom_spoke, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

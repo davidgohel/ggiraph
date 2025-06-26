@@ -12,8 +12,9 @@
 #' @example examples/geom_map_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_map_interactive <- function(...)
+geom_map_interactive <- function(...) {
   layer_interactive(geom_map, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -25,9 +26,16 @@ GeomInteractiveMap <- ggproto(
   default_aes = add_default_interactive_aes(GeomMap),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(data, panel_params, coord, lineend = "butt",
-                        linejoin = "round", linemitre = 10,
-                        map, .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    data,
+    panel_params,
+    coord,
+    lineend = "butt",
+    linejoin = "round",
+    linemitre = 10,
+    map,
+    .ipar = IPAR_NAMES
+  ) {
     # Only use matching data and map ids
     common <- intersect(data$map_id, map$id)
     data <- data[data$map_id %in% common, , drop = FALSE]
@@ -44,9 +52,13 @@ GeomInteractiveMap <- ggproto(
     data <- data[data_rows, , drop = FALSE]
 
     gr <- polygonGrob(
-      coords$x, coords$y, default.units = "native", id = grob_id,
+      coords$x,
+      coords$y,
+      default.units = "native",
+      id = grob_id,
       gp = gpar(
-        col = data$colour, fill = alpha(data$fill, data$alpha),
+        col = data$colour,
+        fill = alpha(data$fill, data$alpha),
         lwd = data$linewidth * .pt,
         lineend = lineend,
         linejoin = linejoin,
@@ -55,7 +67,13 @@ GeomInteractiveMap <- ggproto(
     )
 
     run_l <- rle(grob_id)
-    ip <- copy_interactive_attrs(data, list(), useList = TRUE, run_l$lengths, ipar = .ipar)
+    ip <- copy_interactive_attrs(
+      data,
+      list(),
+      useList = TRUE,
+      run_l$lengths,
+      ipar = .ipar
+    )
     add_interactive_attrs(gr, ip, ipar = .ipar)
   }
 )

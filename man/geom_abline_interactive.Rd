@@ -41,35 +41,42 @@ library(ggiraph)
 p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 g <- p + geom_abline_interactive(intercept = 20, tooltip = 20)
 x <- girafe(ggobj = g)
-if (interactive())
+if (interactive()) {
   print(x)
+}
 
 l <- coef(lm(mpg ~ wt, data = mtcars))
-g <- p + geom_abline_interactive(
-  intercept = l[[1]],
-  slope = l[[2]],
-  tooltip = paste("intercept:", l[[1]], "\nslope:", l[[2]]),
-  data_id="abline"
-)
+g <- p +
+  geom_abline_interactive(
+    intercept = l[[1]],
+    slope = l[[2]],
+    tooltip = paste("intercept:", l[[1]], "\nslope:", l[[2]]),
+    data_id = "abline"
+  )
 x <- girafe(ggobj = g)
-x <- girafe_options(x = x,
-                    opts_hover(css = "cursor:pointer;fill:orange;stroke:orange;"))
-if (interactive())
+x <- girafe_options(
+  x = x,
+  opts_hover(css = "cursor:pointer;fill:orange;stroke:orange;")
+)
+if (interactive()) {
   print(x)
-
+}
 # add horizontal interactive reference lines to a ggplot -------
 library(ggplot2)
 library(ggiraph)
 
-if( requireNamespace("dplyr", quietly = TRUE)){
+if (requireNamespace("dplyr", quietly = TRUE)) {
   g1 <- ggplot(economics, aes(x = date, y = unemploy)) +
-    geom_point() + geom_line()
+    geom_point() +
+    geom_line()
 
-  gg_hline1 <- g1 + geom_hline_interactive(
-    aes(yintercept = mean(unemploy),
-        tooltip = round(mean(unemploy), 2)), size = 3)
+  gg_hline1 <- g1 +
+    geom_hline_interactive(
+      aes(yintercept = mean(unemploy), tooltip = round(mean(unemploy), 2)),
+      size = 3
+    )
   x <- girafe(ggobj = gg_hline1)
-  if( interactive() ) print(x)
+  if (interactive()) print(x)
 }
 
 dataset <- data.frame(
@@ -84,16 +91,23 @@ dataset$clickjs <- rep(paste0("alert(\"", mean(dataset$y), "\")"), 5)
 
 
 g2 <- ggplot(dataset, aes(x = year, y = y)) +
-  geom_point() + geom_line()
+  geom_point() +
+  geom_line()
 
-gg_hline2 <- g2 + geom_hline_interactive(
-  aes(yintercept = mean(y),
+gg_hline2 <- g2 +
+  geom_hline_interactive(
+    aes(
+      yintercept = mean(y),
       tooltip = round(mean(y), 2),
-      data_id = y, onclick = clickjs))
+      data_id = y,
+      onclick = clickjs
+    )
+  )
 
 x <- girafe(ggobj = gg_hline2)
-if( interactive() ) print(x)
-
+if (interactive()) {
+  print(x)
+}
 # add vertical interactive reference lines to a ggplot -------
 library(ggplot2)
 library(ggiraph)
@@ -102,29 +116,47 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
   g1 <- ggplot(diamonds, aes(carat)) +
     geom_histogram()
 
-  gg_vline1 <- g1 + geom_vline_interactive(
-    aes(xintercept = mean(carat),
+  gg_vline1 <- g1 +
+    geom_vline_interactive(
+      aes(
+        xintercept = mean(carat),
         tooltip = round(mean(carat), 2),
-        data_id = carat), size = 3)
+        data_id = carat
+      ),
+      size = 3
+    )
   x <- girafe(ggobj = gg_vline1)
-  if( interactive() ) print(x)
+  if (interactive()) print(x)
 }
 
 dataset <- data.frame(x = rnorm(100))
 
-dataset$clickjs <- rep(paste0("alert(\"",
-                              round(mean(dataset$x), 2), "\")"), 100)
+dataset$clickjs <- rep(
+  paste0("alert(\"", round(mean(dataset$x), 2), "\")"),
+  100
+)
 
 g2 <- ggplot(dataset, aes(x)) +
   geom_density(fill = "#000000", alpha = 0.7)
-gg_vline2 <- g2 + geom_vline_interactive(
-  aes(xintercept = mean(x), tooltip = round(mean(x), 2),
-      data_id = x, onclick = clickjs), color = "white")
+gg_vline2 <- g2 +
+  geom_vline_interactive(
+    aes(
+      xintercept = mean(x),
+      tooltip = round(mean(x), 2),
+      data_id = x,
+      onclick = clickjs
+    ),
+    color = "white"
+  )
 
 x <- girafe(ggobj = gg_vline2)
-x <- girafe_options(x = x,
-                    opts_hover(css = "cursor:pointer;fill:orange;stroke:orange;") )
-if( interactive() ) print(x)
+x <- girafe_options(
+  x = x,
+  opts_hover(css = "cursor:pointer;fill:orange;stroke:orange;")
+)
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

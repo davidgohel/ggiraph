@@ -2,14 +2,19 @@
 girafe_global <- new.env(parent = emptyenv())
 
 css_default_hover <- girafe_css_bicolor(primary = "orange", secondary = "black")
-css_default_selection <- girafe_css_bicolor(primary = "red", secondary = "black")
+css_default_selection <- girafe_css_bicolor(
+  primary = "red",
+  secondary = "black"
+)
 
 default_girafe_settings <- list(
   fonts = default_fontname(),
   opts_sizing = opts_sizing(width = 1),
   opts_tooltip = opts_tooltip(
     css = "padding:5px;background:black;color:white;border-radius:2px;text-align:left;",
-    offx = 10, offy = 10),
+    offx = 10,
+    offy = 10
+  ),
   opts_hover = opts_hover(css = css_default_hover, reactive = TRUE),
   opts_hover_key = opts_hover_key(css = css_default_hover, reactive = TRUE),
   opts_hover_theme = opts_hover_theme(css = css_default_hover, reactive = TRUE),
@@ -66,61 +71,61 @@ girafe_global$defaults <- default_girafe_settings
 #'
 #' init_girafe_defaults()
 set_girafe_defaults <- function(
-    fonts = NULL,
-    opts_sizing = NULL,
-    opts_tooltip = NULL,
-    opts_hover = NULL,
-    opts_hover_key = NULL,
-    opts_hover_inv = NULL,
-    opts_hover_theme = NULL,
-    opts_selection = NULL,
-    opts_selection_inv = NULL,
-    opts_selection_key = NULL,
-    opts_selection_theme = NULL,
-    opts_zoom = NULL,
-    opts_toolbar = NULL){
-
+  fonts = NULL,
+  opts_sizing = NULL,
+  opts_tooltip = NULL,
+  opts_hover = NULL,
+  opts_hover_key = NULL,
+  opts_hover_inv = NULL,
+  opts_hover_theme = NULL,
+  opts_selection = NULL,
+  opts_selection_inv = NULL,
+  opts_selection_key = NULL,
+  opts_selection_theme = NULL,
+  opts_zoom = NULL,
+  opts_toolbar = NULL
+) {
   x <- list()
 
-  if( !is.null(fonts) ){
+  if (!is.null(fonts)) {
     x$fonts <- fonts
   }
-  if( !is.null(opts_sizing) ){
+  if (!is.null(opts_sizing)) {
     x$opts_sizing <- opts_sizing
   }
-  if( !is.null(opts_tooltip) ){
+  if (!is.null(opts_tooltip)) {
     x$opts_tooltip <- opts_tooltip
   }
-  if( !is.null(opts_hover) ){
+  if (!is.null(opts_hover)) {
     x$opts_hover <- opts_hover
   }
-  if( !is.null(opts_hover_inv) ){
+  if (!is.null(opts_hover_inv)) {
     x$opts_hover_inv <- opts_hover_inv
   }
-  if( !is.null(opts_hover_key) ){
+  if (!is.null(opts_hover_key)) {
     x$opts_hover_key <- opts_hover_key
   }
-  if( !is.null(opts_hover_theme) ){
+  if (!is.null(opts_hover_theme)) {
     x$opts_hover_theme <- opts_hover_theme
   }
 
-  if( !is.null(opts_selection) ){
+  if (!is.null(opts_selection)) {
     x$opts_selection <- opts_selection
   }
-  if( !is.null(opts_selection_inv) ){
+  if (!is.null(opts_selection_inv)) {
     x$opts_selection_inv <- opts_selection_inv
   }
-  if( !is.null(opts_selection_key) ){
+  if (!is.null(opts_selection_key)) {
     x$opts_selection_key <- opts_selection_key
   }
-  if( !is.null(opts_selection_theme) ){
+  if (!is.null(opts_selection_theme)) {
     x$opts_selection_theme <- opts_selection_theme
   }
 
-  if( !is.null(opts_zoom) ){
+  if (!is.null(opts_zoom)) {
     x$opts_zoom <- opts_zoom
   }
-  if( !is.null(opts_toolbar) ){
+  if (!is.null(opts_toolbar)) {
     x$opts_toolbar <- opts_toolbar
   }
   girafe_defaults <- girafe_defaults()
@@ -134,7 +139,7 @@ set_girafe_defaults <- function(
 #'
 #' @description Re-init all defaults options with the package defaults.
 #' @family girafe animation options
-init_girafe_defaults <- function(){
+init_girafe_defaults <- function() {
   x <- default_girafe_settings
   girafe_global$defaults <- x
   class(x) <- "girafe_defaults"
@@ -158,7 +163,7 @@ init_girafe_defaults <- function(){
 #' @return a list containing default values or an
 #' element selected with argument `name`.
 #' @family girafe animation options
-girafe_defaults <- function(name = NULL){
+girafe_defaults <- function(name = NULL) {
   x <- girafe_global$defaults
   if (!is.null(name) && !is_valid_string_non_empty(name)) {
     abort("`name` must be a non-empty scalar character", call = NULL)
@@ -169,37 +174,42 @@ girafe_defaults <- function(name = NULL){
   }
 }
 
-default_width <- function(default = 6){
+default_width <- function(default = 6) {
   if (isTRUE(getOption('knitr.in.progress'))) {
     knitr::opts_current$get("fig.width")
-  } else default
+  } else {
+    default
+  }
 }
-default_height <- function(default = 5){
+default_height <- function(default = 5) {
   if (isTRUE(getOption('knitr.in.progress'))) {
     knitr::opts_current$get("fig.height")
-  } else default
+  } else {
+    default
+  }
 }
 
-modifyList <- function (x, val, keep.null = FALSE) {
+modifyList <- function(x, val, keep.null = FALSE) {
   stopifnot(is.list(x), is.list(val))
   xnames <- names(x)
   vnames <- names(val)
   vnames <- vnames[nzchar(vnames)]
   if (keep.null) {
     for (v in vnames) {
-      x[v] <- if (v %in% xnames && is.list(x[[v]]) && is.list(val[[v]]))
+      x[v] <- if (v %in% xnames && is.list(x[[v]]) && is.list(val[[v]])) {
         list(modifyList(x[[v]], val[[v]], keep.null = keep.null))
-      else val[v]
+      } else {
+        val[v]
+      }
     }
-  }
-  else {
+  } else {
     for (v in vnames) {
-      x[[v]] <- if (v %in% xnames && is.list(x[[v]]) &&
-                    is.list(val[[v]]))
+      x[[v]] <- if (v %in% xnames && is.list(x[[v]]) && is.list(val[[v]])) {
         modifyList(x[[v]], val[[v]], keep.null = keep.null)
-      else val[[v]]
+      } else {
+        val[[v]]
+      }
     }
   }
   x
 }
-

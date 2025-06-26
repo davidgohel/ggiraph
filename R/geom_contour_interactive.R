@@ -13,8 +13,9 @@
 #' @example examples/geom_contour_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_contour_interactive <- function(...)
+geom_contour_interactive <- function(...) {
   layer_interactive(geom_contour, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -30,8 +31,9 @@ GeomInteractiveContour <- ggproto(
 #' @export
 #' @rdname geom_contour_interactive
 #' @include geom_polygon_interactive.R
-geom_contour_filled_interactive <- function(...)
+geom_contour_filled_interactive <- function(...) {
   layer_interactive(geom_contour_filled, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

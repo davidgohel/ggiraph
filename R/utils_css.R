@@ -23,12 +23,14 @@
 #'   image = "outline:2px red"
 #' )
 #' @export
-girafe_css <- function(css,
-                       text = NULL,
-                       point = NULL,
-                       line = NULL,
-                       area = NULL,
-                       image = NULL) {
+girafe_css <- function(
+  css,
+  text = NULL,
+  point = NULL,
+  line = NULL,
+  area = NULL,
+  image = NULL
+) {
   css <- c(
     paste0("/*GIRAFE CSS*/", validate_css(css, "css")),
     validate_css(text, "text", "text"),
@@ -84,7 +86,7 @@ girafe_css <- function(css,
 #' ))
 #' if (interactive()) print(x)
 #' @seealso [girafe_css()], [girafe()]
-girafe_css_bicolor <- function(primary = "orange", secondary = "gray"){
+girafe_css_bicolor <- function(primary = "orange", secondary = "gray") {
   girafe_css(
     css = sprintf("fill:%s;stroke:%s;cursor:pointer;", primary, secondary),
     text = sprintf("stroke:none;fill:%s;", primary),
@@ -96,17 +98,19 @@ girafe_css_bicolor <- function(primary = "orange", secondary = "gray"){
 }
 
 
-
 #' Helper to check girafe_css argument
 #' @noRd
 #' @importFrom rlang is_scalar_character
-validate_css <- function(css,
-                         name,
-                         tag = NULL) {
-  if (is.null(css) || any(is.na(css)))
+validate_css <- function(css, name, tag = NULL) {
+  if (is.null(css) || any(is.na(css))) {
     css <- ""
-  if (!is_string(css))
-    abort(paste0("Argument `", name, "` must be a scalar character"), call = NULL)
+  }
+  if (!is_string(css)) {
+    abort(
+      paste0("Argument `", name, "` must be a scalar character"),
+      call = NULL
+    )
+  }
   css <- trimws(css)
   if (nchar(css) > 0) {
     tag <- paste0(tag, "._CLASSNAME_", collapse = ", ")
@@ -118,12 +122,14 @@ validate_css <- function(css,
 #' Helper to check css argument, given in other functions
 #' @noRd
 #' @importFrom rlang is_scalar_character
-check_css <- function(css,
-                      default,
-                      cls_prefix,
-                      name = cls_prefix,
-                      canvas_id = "SVGID_",
-                      filter = NULL) {
+check_css <- function(
+  css,
+  default,
+  cls_prefix,
+  name = cls_prefix,
+  canvas_id = "SVGID_",
+  filter = NULL
+) {
   if (is.null(css)) {
     css <- default
   } else if (!is_string(css)) {
@@ -143,8 +149,9 @@ check_css <- function(css,
 check_css_attr <- function(css) {
   pattern = "\\/\\*GIRAFE CSS\\*\\/"
   unlist(lapply(css, function(x) {
-    if (!grepl(pattern, x))
+    if (!grepl(pattern, x)) {
       x <- girafe_css(x)
+    }
     gsub(pattern, "", x)
   }))
 }

@@ -16,8 +16,9 @@
 #' @export
 #' @name scale_colour_steps_interactive
 #' @family interactive scale
-scale_colour_steps_interactive <- function(...)
+scale_colour_steps_interactive <- function(...) {
   scale_interactive(scale_colour_steps, ...)
+}
 
 #' @export
 #' @rdname scale_colour_steps_interactive
@@ -25,13 +26,15 @@ scale_color_steps_interactive <- scale_colour_steps_interactive
 
 #' @export
 #' @rdname scale_colour_steps_interactive
-scale_fill_steps_interactive <- function(...)
+scale_fill_steps_interactive <- function(...) {
   scale_interactive(scale_fill_steps, ...)
+}
 
 #' @export
 #' @rdname scale_colour_steps_interactive
-scale_colour_steps2_interactive <- function(...)
+scale_colour_steps2_interactive <- function(...) {
   scale_interactive(scale_colour_steps2, ...)
+}
 
 #' @export
 #' @rdname scale_colour_steps_interactive
@@ -39,13 +42,15 @@ scale_color_steps2_interactive <- scale_colour_steps2_interactive
 
 #' @export
 #' @rdname scale_colour_steps_interactive
-scale_fill_steps2_interactive <- function(...)
+scale_fill_steps2_interactive <- function(...) {
   scale_interactive(scale_fill_steps2, ...)
+}
 
 #' @export
 #' @rdname scale_colour_steps_interactive
-scale_colour_stepsn_interactive <- function(...)
+scale_colour_stepsn_interactive <- function(...) {
   scale_interactive(scale_colour_stepsn, ...)
+}
 
 #' @export
 #' @rdname scale_colour_steps_interactive
@@ -53,5 +58,6 @@ scale_color_stepsn_interactive <- scale_colour_stepsn_interactive
 
 #' @export
 #' @rdname scale_colour_steps_interactive
-scale_fill_stepsn_interactive <- function(...)
+scale_fill_stepsn_interactive <- function(...) {
   scale_interactive(scale_fill_stepsn, ...)
+}

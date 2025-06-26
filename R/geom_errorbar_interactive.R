@@ -1,7 +1,8 @@
 #' @rdname geom_crossbar_interactive
 #' @export
-geom_errorbar_interactive <- function(...)
+geom_errorbar_interactive <- function(...) {
   layer_interactive(geom_errorbar, ...)
+}
 
 
 #' @rdname ggiraph-ggproto
@@ -14,13 +15,38 @@ GeomInteractiveErrorbar <- ggproto(
   default_aes = add_default_interactive_aes(GeomErrorbar),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord, lineend = "butt",
-                        width = NULL, flipped_aes = FALSE,
-                        .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    self,
+    data,
+    panel_params,
+    coord,
+    lineend = "butt",
+    width = NULL,
+    flipped_aes = FALSE,
+    .ipar = IPAR_NAMES
+  ) {
     data <- flip_data(data, flipped_aes)
 
-    x <- vec_interleave(data$xmin, data$xmax, NA, data$x,    data$x,    NA, data$xmin, data$xmax)
-    y <- vec_interleave(data$ymax, data$ymax, NA, data$ymax, data$ymin, NA, data$ymin, data$ymin)
+    x <- vec_interleave(
+      data$xmin,
+      data$xmax,
+      NA,
+      data$x,
+      data$x,
+      NA,
+      data$xmin,
+      data$xmax
+    )
+    y <- vec_interleave(
+      data$ymax,
+      data$ymax,
+      NA,
+      data$ymax,
+      data$ymin,
+      NA,
+      data$ymin,
+      data$ymin
+    )
     z <- data_frame0(
       x = x,
       y = y,
@@ -33,6 +59,12 @@ GeomInteractiveErrorbar <- ggproto(
     )
     z <- flip_data(z, flipped_aes)
     z <- copy_interactive_attrs(data, z, each = 8, ipar = .ipar)
-    GeomInteractivePath$draw_panel(z, panel_params, coord, lineend = lineend, .ipar = .ipar)
+    GeomInteractivePath$draw_panel(
+      z,
+      panel_params,
+      coord,
+      lineend = lineend,
+      .ipar = .ipar
+    )
   }
 )

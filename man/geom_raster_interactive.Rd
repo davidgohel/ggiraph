@@ -37,11 +37,15 @@ df$z <- runif(nrow(df))
 gg <- ggplot(df, aes(x, y, fill = z, tooltip = "tooltip")) +
   geom_raster_interactive() +
   scale_fill_gradient_interactive(
-    data_id = "coco", onclick = "cici", tooltip = "cucu"
+    data_id = "coco",
+    onclick = "cici",
+    tooltip = "cucu"
   )
 
 x <- girafe(ggobj = gg)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

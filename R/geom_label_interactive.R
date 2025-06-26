@@ -3,8 +3,9 @@
 #' # add interactive labels to a ggplot -------
 #' @example examples/geom_label_interactive.R
 #' @export
-geom_label_interactive <- function(...)
+geom_label_interactive <- function(...) {
   layer_interactive(geom_label, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -27,12 +28,14 @@ GeomInteractiveLabel <- ggproto(
         if (inherits(gr$children[[i]]$children[[j]], "roundrect")) {
           gr$children[[i]]$children[[j]] <- add_interactive_attrs(
             gr$children[[i]]$children[[j]],
-            data = coords[i, ], ipar = .ipar
+            data = coords[i, ],
+            ipar = .ipar
           )
         } else if (inherits(gr$children[[i]]$children[[j]], "titleGrob")) {
           gr$children[[i]]$children[[j]]$children[[1]] <- add_interactive_attrs(
             gr$children[[i]]$children[[j]]$children[[1]],
-            data = coords[i, ], ipar = .ipar
+            data = coords[i, ],
+            ipar = .ipar
           )
         }
       }

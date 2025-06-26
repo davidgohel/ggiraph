@@ -49,11 +49,19 @@
 #' @importFrom Rcpp sourceCpp
 #' @importFrom systemfonts match_font
 #' @export
-dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
-                 pointsize = 12, standalone = TRUE, setdims = TRUE, canvas_id = "svg_1",
-                 title = NULL, desc = NULL,
-                 fonts = list()) {
-
+dsvg <- function(
+  file = "Rplots.svg",
+  width = 6,
+  height = 6,
+  bg = "white",
+  pointsize = 12,
+  standalone = TRUE,
+  setdims = TRUE,
+  canvas_id = "svg_1",
+  title = NULL,
+  desc = NULL,
+  fonts = list()
+) {
   if (!is_valid_string_non_empty(file)) {
     abort("`file` must be a non-empty scalar character", call = NULL)
   }
@@ -92,13 +100,15 @@ dsvg <- function(file = "Rplots.svg", width = 6, height = 6, bg = "white",
 
   invisible(DSVG_(
     filename = file,
-    width = width, height = height,
+    width = width,
+    height = height,
     canvas_id = canvas_id,
-    title = title, desc = desc,
-    standalone = standalone, setdims = setdims,
+    title = title,
+    desc = desc,
+    standalone = standalone,
+    setdims = setdims,
     pointsize = pointsize,
     bg = bg,
     aliases = list(system = fonts_list)
   ))
 }
-

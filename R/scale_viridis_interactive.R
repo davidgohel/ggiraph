@@ -21,8 +21,9 @@
 #' @export
 #' @name scale_viridis_interactive
 #' @family interactive scale
-scale_colour_viridis_d_interactive <- function(...)
+scale_colour_viridis_d_interactive <- function(...) {
   scale_interactive(scale_colour_viridis_d, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
@@ -30,13 +31,15 @@ scale_color_viridis_d_interactive <- scale_colour_viridis_d_interactive
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_fill_viridis_d_interactive <- function(...)
+scale_fill_viridis_d_interactive <- function(...) {
   scale_interactive(scale_fill_viridis_d, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_colour_viridis_c_interactive <- function(...)
+scale_colour_viridis_c_interactive <- function(...) {
   scale_interactive(scale_colour_viridis_c, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
@@ -44,13 +47,15 @@ scale_color_viridis_c_interactive <- scale_colour_viridis_c_interactive
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_fill_viridis_c_interactive <- function(...)
+scale_fill_viridis_c_interactive <- function(...) {
   scale_interactive(scale_fill_viridis_c, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_colour_viridis_b_interactive <- function(...)
+scale_colour_viridis_b_interactive <- function(...) {
   scale_interactive(scale_colour_viridis_b, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
@@ -58,13 +63,15 @@ scale_color_viridis_b_interactive <- scale_colour_viridis_b_interactive
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_fill_viridis_b_interactive <- function(...)
+scale_fill_viridis_b_interactive <- function(...) {
   scale_interactive(scale_fill_viridis_b, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_colour_ordinal_interactive <- function(...)
+scale_colour_ordinal_interactive <- function(...) {
   scale_interactive(scale_colour_ordinal, ...)
+}
 
 #' @export
 #' @rdname scale_viridis_interactive
@@ -72,5 +79,6 @@ scale_color_ordinal_interactive <- scale_colour_ordinal_interactive
 
 #' @export
 #' @rdname scale_viridis_interactive
-scale_fill_ordinal_interactive <- function(...)
+scale_fill_ordinal_interactive <- function(...) {
   scale_interactive(scale_fill_ordinal, ...)
+}

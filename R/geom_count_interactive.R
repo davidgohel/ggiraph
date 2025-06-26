@@ -12,5 +12,6 @@
 #' @example examples/geom_count_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_count_interactive <- function(...)
+geom_count_interactive <- function(...) {
   layer_interactive(geom_count, ..., interactive_geom = GeomInteractivePoint)
+}

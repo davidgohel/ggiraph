@@ -12,8 +12,9 @@
 #' @example examples/geom_hex_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_hex_interactive <- function(...)
+geom_hex_interactive <- function(...) {
   layer_interactive(geom_hex, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
