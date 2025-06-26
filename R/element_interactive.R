@@ -157,7 +157,7 @@ element_grob.interactive_element <- function(element, ...) {
 
 #' @export
 #' @method merge_element interactive_element
-merge_element.interactive_element <- function(new, old) {
+merge_element.interactive_element <- function(new, old, ...) {
   new <- NextMethod()
 
   ipar <- unique(c(get_ipar(new), get_ipar(old)))

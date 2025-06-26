@@ -119,12 +119,12 @@ This function is a copy of \code{geom_hpline()} of package 'ungeviz' authored
 by Claus O. Wilke.
 
 The geom \code{geom_hpline()} can be used as a drop-in
-replacement for \code{\link[=geom_point]{geom_point()}} but draw horizontal lines
+replacement for \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} but draw horizontal lines
 (point-lines, or plines) instead of points. These lines can often be useful to
 indicate specific parameter estimates in a plot. The geom takes position
-aesthetics as \code{x} and \code{y} like \code{\link[=geom_point]{geom_point()}}, and it uses \code{width}
+aesthetics as \code{x} and \code{y} like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, and it uses \code{width}
 to set the length of the line segment. All other aesthetics (\code{colour}, \code{size},
-\code{linetype}, etc.) are inherited from \code{\link[=geom_segment]{geom_segment()}}.
+\code{linetype}, etc.) are inherited from \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
 }
 \examples{
 library(ggplot2)
