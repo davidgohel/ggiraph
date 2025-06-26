@@ -83,8 +83,7 @@ interactive_geom_draw_key <- function(self, data, params, size) {
 #' Appends a list of attributes to an aesthetic mapping.
 #' @noRd
 append_aes <- function(mapping, lst) {
-  aes_new <- structure(lst, class = "uneval")
-  mapping[names(aes_new)] <- aes_new
+  mapping[names(lst)] <- lst
   mapping
 }
 
