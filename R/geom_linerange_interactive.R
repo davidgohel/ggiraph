@@ -1,7 +1,8 @@
 #' @rdname geom_crossbar_interactive
 #' @export
-geom_linerange_interactive <- function(...)
+geom_linerange_interactive <- function(...) {
   layer_interactive(geom_linerange, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -13,17 +14,28 @@ GeomInteractiveLinerange <- ggproto(
   default_aes = add_default_interactive_aes(GeomLinerange),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(data, panel_params, coord, lineend = "butt", flipped_aes = FALSE, na.rm = FALSE, .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    data,
+    panel_params,
+    coord,
+    lineend = "butt",
+    flipped_aes = FALSE,
+    na.rm = FALSE,
+    .ipar = IPAR_NAMES
+  ) {
     data <- flip_data(data, flipped_aes)
-    data <- transform(data,
-                      xend = x,
-                      y = ymin,
-                      yend = ymax)
+    data <- transform(data, xend = x, y = ymin, yend = ymax)
     data <- flip_data(data, flipped_aes)
     ggname(
       "geom_linerange_interactive",
-      GeomInteractiveSegment$draw_panel(data, panel_params, coord, lineend = lineend, na.rm = na.rm,
-                                        .ipar = .ipar)
+      GeomInteractiveSegment$draw_panel(
+        data,
+        panel_params,
+        coord,
+        lineend = lineend,
+        na.rm = na.rm,
+        .ipar = .ipar
+      )
     )
   }
 )

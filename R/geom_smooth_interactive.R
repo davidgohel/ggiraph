@@ -12,8 +12,9 @@
 #' @example examples/geom_smooth_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_smooth_interactive <- function(...)
+geom_smooth_interactive <- function(...) {
   layer_interactive(geom_smooth, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -25,8 +26,17 @@ GeomInteractiveSmooth <- ggproto(
   default_aes = add_default_interactive_aes(GeomSmooth),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_group = function(data, panel_params, coord, lineend = "butt", linejoin = "round",
-                        linemitre = 10, se = FALSE, flipped_aes = FALSE, .ipar = IPAR_NAMES) {
+  draw_group = function(
+    data,
+    panel_params,
+    coord,
+    lineend = "butt",
+    linejoin = "round",
+    linemitre = 10,
+    se = FALSE,
+    flipped_aes = FALSE,
+    .ipar = IPAR_NAMES
+  ) {
     ribbon <- transform(data, colour = NA)
     path <- transform(data, alpha = NA)
 
@@ -35,9 +45,24 @@ GeomInteractiveSmooth <- ggproto(
     has_ribbon <- se && !is.null(data[[ymax]]) && !is.null(data[[ymin]])
 
     gList(
-      if (has_ribbon)
-        GeomInteractiveRibbon$draw_group(ribbon, panel_params, coord, flipped_aes = flipped_aes, .ipar = .ipar),
-      GeomInteractiveLine$draw_panel(path, panel_params, coord, lineend = lineend, linejoin = linejoin, linemitre = linemitre, .ipar = .ipar)
+      if (has_ribbon) {
+        GeomInteractiveRibbon$draw_group(
+          ribbon,
+          panel_params,
+          coord,
+          flipped_aes = flipped_aes,
+          .ipar = .ipar
+        )
+      },
+      GeomInteractiveLine$draw_panel(
+        path,
+        panel_params,
+        coord,
+        lineend = lineend,
+        linejoin = linejoin,
+        linemitre = linemitre,
+        .ipar = .ipar
+      )
     )
   }
 )

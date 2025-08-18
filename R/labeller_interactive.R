@@ -57,7 +57,6 @@ labeller_interactive <- function(.mapping = NULL, ...) {
     labels <- lbl_fun(data)
     # if we have labels and interactive parameters
     if (nrow(data) > 0 && length(labels) > 0 && length(ip) > 0) {
-
       labels <- lapply(labels, function(x) {
         # add the labels
         data$.label <- x
@@ -69,7 +68,10 @@ labeller_interactive <- function(.mapping = NULL, ...) {
           lbl <- x
           if (!inherits(lbl, "interactive_label")) {
             # create a label_interactive, applying the interactive parameters
-            args <- list(label = x, extra_interactive_params = extra_interactive_params)
+            args <- list(
+              label = x,
+              extra_interactive_params = extra_interactive_params
+            )
             args <- copy_interactive_attrs(ip_data, args, rows = i, ipar = ipar)
             lbl <- do.call(label_interactive, args)
           }

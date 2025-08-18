@@ -4,8 +4,9 @@
 #' @example examples/geom_vline_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_vline_interactive <- function(...)
+geom_vline_interactive <- function(...) {
   layer_interactive(geom_vline, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -20,11 +21,16 @@ GeomInteractiveVline <- ggproto(
   draw_panel = function(data, panel_params, coord, .ipar = IPAR_NAMES) {
     ranges <- coord$backtransform_range(panel_params)
 
-    data$x    <- data$xintercept
+    data$x <- data$xintercept
     data$xend <- data$xintercept
-    data$y    <- ranges$y[1]
+    data$y <- ranges$y[1]
     data$yend <- ranges$y[2]
 
-    GeomInteractiveSegment$draw_panel(unique(data), panel_params, coord, .ipar = .ipar)
+    GeomInteractiveSegment$draw_panel(
+      unique(data),
+      panel_params,
+      coord,
+      .ipar = .ipar
+    )
   }
 )

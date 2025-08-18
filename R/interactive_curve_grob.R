@@ -22,7 +22,10 @@ makeContent.interactive_curve_grob <- function(x) {
   ipar <- get_ipar(x)
   for (i in seq_along(gr$children)) {
     gr$children[[i]] <- add_interactive_attrs(
-      gr$children[[i]], data = data, data_attr = data_attr, ipar = ipar
+      gr$children[[i]],
+      data = data,
+      data_attr = data_attr,
+      ipar = ipar
     )
   }
   gr

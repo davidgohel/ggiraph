@@ -12,8 +12,9 @@
 #' @example examples/geom_segment_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_segment_interactive <- function(...)
+geom_segment_interactive <- function(...) {
   layer_interactive(geom_segment, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -25,15 +26,17 @@ GeomInteractiveSegment <- ggproto(
   default_aes = add_default_interactive_aes(GeomSegment),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(data,
-                        panel_params,
-                        coord,
-                        arrow = NULL,
-                        arrow.fill = NULL,
-                        lineend = "butt",
-                        linejoin = "round",
-                        na.rm = FALSE,
-                        .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    data,
+    panel_params,
+    coord,
+    arrow = NULL,
+    arrow.fill = NULL,
+    lineend = "butt",
+    linejoin = "round",
+    na.rm = FALSE,
+    .ipar = IPAR_NAMES
+  ) {
     data <- remove_missing(
       data,
       na.rm = na.rm,
@@ -51,8 +54,9 @@ GeomInteractiveSegment <- ggproto(
       ),
       name = "geom_segment"
     )
-    if (empty(data))
+    if (empty(data)) {
       return(zeroGrob())
+    }
 
     if (coord$is_linear()) {
       coord <- coord$transform(data, panel_params)
@@ -84,13 +88,15 @@ GeomInteractiveSegment <- ggproto(
       rename(subset(data, select = c(-x, -y)), c("xend" = "x", "yend" = "y"))
 
     pieces <- rbind(starts, ends)
-    pieces <- pieces[order(pieces$group),]
+    pieces <- pieces[order(pieces$group), ]
 
-    GeomInteractivePath$draw_panel(pieces,
-                                   panel_params,
-                                   coord,
-                                   arrow = arrow,
-                                   lineend = lineend,
-                                   .ipar = .ipar)
+    GeomInteractivePath$draw_panel(
+      pieces,
+      panel_params,
+      coord,
+      arrow = arrow,
+      lineend = lineend,
+      .ipar = .ipar
+    )
   }
 )

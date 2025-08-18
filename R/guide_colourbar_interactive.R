@@ -24,10 +24,16 @@ guide_colorbar_interactive <- guide_colourbar_interactive
 #' @usage NULL
 #' @export
 GuideInteractiveColourbar <- ggproto(
-  "GuideInteractiveColourbar", GuideColourbar,
+  "GuideInteractiveColourbar",
+  GuideColourbar,
   train = function(self, params = self$params, scale, aesthetic = NULL, ...) {
     parent <- ggproto_parent(GuideColourbar, self)
-    params <- parent$train(params = params, scale = scale, aesthetic = aesthetic, ...)
+    params <- parent$train(
+      params = params,
+      scale = scale,
+      aesthetic = aesthetic,
+      ...
+    )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       breaks <- Filter(is.finite, scale$get_breaks())
       label_breaks <- breaks
@@ -36,7 +42,12 @@ GuideInteractiveColourbar <- ggproto(
       } else {
         breaks <- params$decor$value
       }
-      params <- interactive_guide_train(params, scale, breaks, label_breaks = label_breaks)
+      params <- interactive_guide_train(
+        params,
+        scale,
+        breaks,
+        label_breaks = label_breaks
+      )
     }
     params
   },
@@ -49,7 +60,8 @@ GuideInteractiveColourbar <- ggproto(
     ipar <- get_ipar(params)
     idata <- get_interactive_data(params)
     if (length(idata)) {
-      result$bar <- add_interactive_attrs(result$bar,
+      result$bar <- add_interactive_attrs(
+        result$bar,
         idata,
         data_attr = "key-id",
         ipar = ipar

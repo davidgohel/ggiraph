@@ -23,12 +23,22 @@ guide_legend_interactive <- function(...) {
 #' @usage NULL
 #' @export
 GuideInteractiveLegend <- ggproto(
-  "GuideInteractiveLegend", GuideLegend,
+  "GuideInteractiveLegend",
+  GuideLegend,
   train = function(self, params = self$params, scale, aesthetic = NULL, ...) {
     parent <- ggproto_parent(GuideLegend, self)
-    params <- parent$train(params = params, scale = scale, aesthetic = aesthetic, ...)
+    params <- parent$train(
+      params = params,
+      scale = scale,
+      aesthetic = aesthetic,
+      ...
+    )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
-      params <- interactive_guide_train(params, scale, breaks = params$key$.value)
+      params <- interactive_guide_train(
+        params,
+        scale,
+        breaks = params$key$.value
+      )
     }
     params
   },
@@ -48,10 +58,13 @@ GuideInteractiveLegend <- ggproto(
       lbl_ip <- transpose(get_interactive_data(labels))
       extra_interactive_params <- setdiff(lbl_ipar, IPAR_NAMES)
       labels <- lapply(seq_along(labels), function(i) {
-        args <- c(list(
-          label = labels[[i]],
-          extra_interactive_params = extra_interactive_params
-        ), lbl_ip[[i]])
+        args <- c(
+          list(
+            label = labels[[i]],
+            extra_interactive_params = extra_interactive_params
+          ),
+          lbl_ip[[i]]
+        )
         do.call(label_interactive, args)
       })
       key$.label <- labels

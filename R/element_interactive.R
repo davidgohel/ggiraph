@@ -22,25 +22,30 @@ NULL
 
 #' @rdname element_interactive
 #' @export
-element_line_interactive <- function(...)
+element_line_interactive <- function(...) {
   element_interactive(element_line, ...)
+}
 
 #' @rdname element_interactive
 #' @export
-element_rect_interactive <- function(...)
+element_rect_interactive <- function(...) {
   element_interactive(element_rect, ...)
+}
 
 #' @rdname element_interactive
 #' @export
-element_text_interactive <- function(...)
+element_text_interactive <- function(...) {
   element_interactive(element_text, ...)
+}
 
 #' Calls a base ggplot2 element function and returns an interactive element.
 #' @importFrom rlang list2
 #' @noRd
-element_interactive <- function(element_func,
-                                ...,
-                                extra_interactive_params = NULL) {
+element_interactive <- function(
+  element_func,
+  ...,
+  extra_interactive_params = NULL
+) {
   args <- list2(...)
   # We need to get the interactive parameters from the arguments and remove them
   ipar <- get_default_ipar(extra_interactive_params)
@@ -54,9 +59,11 @@ element_interactive <- function(element_func,
   # By setting them as an attribute they are preserved.
   attr(struct, "interactive") <- ip
   attr(struct, "ipar") <- ipar
-  class(struct) <- c(paste("interactive", class(struct)[1], sep = "_"),
-                     "interactive_element",
-                     class(struct))
+  class(struct) <- c(
+    paste("interactive", class(struct)[1], sep = "_"),
+    "interactive_element",
+    class(struct)
+  )
   struct
 }
 
@@ -105,9 +112,7 @@ label_interactive <- function(label, ...) {
 
 #' @export
 #' @importFrom purrr transpose
-element_grob.interactive_element_text <- function(element,
-                                                  label = "",
-                                                  ...) {
+element_grob.interactive_element_text <- function(element, label = "", ...) {
   ipar <- get_ipar(element)
   el_ip <- get_interactive_attrs(element, ipar = ipar)
   if (inherits(label, "interactive_label")) {
@@ -116,7 +121,6 @@ element_grob.interactive_element_text <- function(element,
     ip <- modify_list(el_ip, lbl_ip)
     attr(element, "interactive") <- ip
     attr(element, "ipar") <- ipar
-
   } else if (is.list(label)) {
     # guide labels in continuous scales are passed as a list
     label <- label[!is.na(label)]
@@ -172,9 +176,7 @@ merge_element.interactive_element <- function(new, old, ...) {
 
 as_interactive_element_text <- function(el) {
   if (!inherits(el, "interactive_element_text")) {
-    class(el) <- c("interactive_element_text",
-                   "interactive_element",
-                   class(el))
+    class(el) <- c("interactive_element_text", "interactive_element", class(el))
   }
   el
 }

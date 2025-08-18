@@ -41,32 +41,48 @@ In this way they can be set to a scalar value.
 library(ggplot2)
 library(ggiraph)
 
-dataset = data.frame( x1 = c(1, 3, 1, 5, 4),
-	x2 = c(2, 4, 3, 6, 6),
-	y1 = c( 1, 1, 4, 1, 3),
-	y2 = c( 2, 2, 5, 3, 5),
-	t = c( 'a', 'a', 'a', 'b', 'b'),
-	r = c( 1, 2, 3, 4, 5),
-	tooltip = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
-	uid = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
-	oc = rep("alert(this.getAttribute(\"data-id\"))", 5)
+dataset = data.frame(
+  x1 = c(1, 3, 1, 5, 4),
+  x2 = c(2, 4, 3, 6, 6),
+  y1 = c(1, 1, 4, 1, 3),
+  y2 = c(2, 2, 5, 3, 5),
+  t = c('a', 'a', 'a', 'b', 'b'),
+  r = c(1, 2, 3, 4, 5),
+  tooltip = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
+  uid = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
+  oc = rep("alert(this.getAttribute(\"data-id\"))", 5)
 )
 
 gg_rect = ggplot() +
-	scale_x_continuous(name="x") +
-	scale_y_continuous(name="y") +
-	geom_rect_interactive(data=dataset,
-		mapping = aes(xmin = x1, xmax = x2,
-			ymin = y1, ymax = y2, fill = t,
-			tooltip = tooltip, onclick = oc, data_id = uid ),
-		color="black", alpha=0.5, linejoin = "bevel", lineend = "round") +
-	geom_text(data=dataset,
-			aes(x = x1 + ( x2 - x1 ) / 2, y = y1 + ( y2 - y1 ) / 2,
-					label = r ),
-		size = 4 )
+  scale_x_continuous(name = "x") +
+  scale_y_continuous(name = "y") +
+  geom_rect_interactive(
+    data = dataset,
+    mapping = aes(
+      xmin = x1,
+      xmax = x2,
+      ymin = y1,
+      ymax = y2,
+      fill = t,
+      tooltip = tooltip,
+      onclick = oc,
+      data_id = uid
+    ),
+    color = "black",
+    alpha = 0.5,
+    linejoin = "bevel",
+    lineend = "round"
+  ) +
+  geom_text(
+    data = dataset,
+    aes(x = x1 + (x2 - x1) / 2, y = y1 + (y2 - y1) / 2, label = r),
+    size = 4
+  )
 
 x <- girafe(ggobj = gg_rect)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 # add interactive tiles to a ggplot -------
 library(ggplot2)
 library(ggiraph)
@@ -81,28 +97,41 @@ df <- data.frame(
 
 p <- ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 
 
 # correlation dataset ----
 cor_mat <- cor(mtcars)
-diag( cor_mat ) <- NA
-var1 <- rep( row.names(cor_mat), ncol(cor_mat) )
-var2 <- rep( colnames(cor_mat), each = nrow(cor_mat) )
+diag(cor_mat) <- NA
+var1 <- rep(row.names(cor_mat), ncol(cor_mat))
+var2 <- rep(colnames(cor_mat), each = nrow(cor_mat))
 cor <- as.numeric(cor_mat)
-cor_mat <- data.frame( var1 = var1, var2 = var2,
-  cor = cor, stringsAsFactors = FALSE )
+cor_mat <- data.frame(
+  var1 = var1,
+  var2 = var2,
+  cor = cor,
+  stringsAsFactors = FALSE
+)
 cor_mat[["tooltip"]] <-
-  sprintf("<i>`\%s`</i> vs <i>`\%s`</i>:</br><code>\%.03f</code>",
-  var1, var2, cor)
+  sprintf("<i>`\%s`</i> vs <i>`\%s`</i>:</br><code>\%.03f</code>", var1, var2, cor)
 
-p <- ggplot(data = cor_mat, aes(x = var1, y = var2) ) +
+p <- ggplot(data = cor_mat, aes(x = var1, y = var2)) +
   geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
-  scale_fill_gradient2_interactive(low = "#BC120A", mid = "white", high = "#BC120A",
-                                   limits = c(-1, 1), data_id = "cormat", tooltip = "cormat") +
+  scale_fill_gradient2_interactive(
+    low = "#BC120A",
+    mid = "white",
+    high = "#BC120A",
+    limits = c(-1, 1),
+    data_id = "cormat",
+    tooltip = "cormat"
+  ) +
   coord_equal()
 x <- girafe(ggobj = p)
-if( interactive() ) print(x)
+if (interactive()) {
+  print(x)
+}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

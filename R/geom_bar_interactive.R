@@ -13,8 +13,9 @@
 #' @example examples/geom_bar_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_bar_interactive <- function(...)
+geom_bar_interactive <- function(...) {
   layer_interactive(geom_bar, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -27,8 +28,14 @@ GeomInteractiveBar <- ggproto(
   default_aes = add_default_interactive_aes(GeomBar),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord, ...,
-                        .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    self,
+    data,
+    panel_params,
+    coord,
+    ...,
+    .ipar = IPAR_NAMES
+  ) {
     GeomInteractiveRect$draw_panel(data, panel_params, coord, .ipar = .ipar)
   }
 )

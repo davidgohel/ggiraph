@@ -9,7 +9,9 @@ new_data_frame <- function(x = list(), n = NULL) {
     n <- if (length(x) == 0 || min(lengths) == 0) 0 else max(lengths)
   }
   for (i in seq_along(x)) {
-    if (lengths[i] == n) next
+    if (lengths[i] == n) {
+      next
+    }
     if (lengths[i] != 1) {
       abort("Elements must equal the number of rows or 1")
     }
@@ -24,6 +26,8 @@ new_data_frame <- function(x = list(), n = NULL) {
 
 # More performant modifyList without recursion
 modify_list <- function(old, new) {
-  for (i in names(new)) old[[i]] <- new[[i]]
+  for (i in names(new)) {
+    old[[i]] <- new[[i]]
+  }
   old
 }

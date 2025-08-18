@@ -1,15 +1,18 @@
 library(ggplot2)
 library(ggiraph)
 
-if( requireNamespace("dplyr", quietly = TRUE)){
+if (requireNamespace("dplyr", quietly = TRUE)) {
   g1 <- ggplot(economics, aes(x = date, y = unemploy)) +
-    geom_point() + geom_line()
+    geom_point() +
+    geom_line()
 
-  gg_hline1 <- g1 + geom_hline_interactive(
-    aes(yintercept = mean(unemploy),
-        tooltip = round(mean(unemploy), 2)), size = 3)
+  gg_hline1 <- g1 +
+    geom_hline_interactive(
+      aes(yintercept = mean(unemploy), tooltip = round(mean(unemploy), 2)),
+      size = 3
+    )
   x <- girafe(ggobj = gg_hline1)
-  if( interactive() ) print(x)
+  if (interactive()) print(x)
 }
 
 dataset <- data.frame(
@@ -24,13 +27,20 @@ dataset$clickjs <- rep(paste0("alert(\"", mean(dataset$y), "\")"), 5)
 
 
 g2 <- ggplot(dataset, aes(x = year, y = y)) +
-  geom_point() + geom_line()
+  geom_point() +
+  geom_line()
 
-gg_hline2 <- g2 + geom_hline_interactive(
-  aes(yintercept = mean(y),
+gg_hline2 <- g2 +
+  geom_hline_interactive(
+    aes(
+      yintercept = mean(y),
       tooltip = round(mean(y), 2),
-      data_id = y, onclick = clickjs))
+      data_id = y,
+      onclick = clickjs
+    )
+  )
 
 x <- girafe(ggobj = gg_hline2)
-if( interactive() ) print(x)
-
+if (interactive()) {
+  print(x)
+}

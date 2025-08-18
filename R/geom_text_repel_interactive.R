@@ -17,7 +17,11 @@
 geom_text_repel_interactive <- function(...) {
   if (requireNamespace("ggrepel")) {
     layerfunc <- getExportedValue("ggrepel", "geom_text_repel")
-    layer_interactive(layerfunc, ..., interactive_geom = get_repel_geom("GeomTextRepel"))
+    layer_interactive(
+      layerfunc,
+      ...,
+      interactive_geom = get_repel_geom("GeomTextRepel")
+    )
   }
 }
 
@@ -26,7 +30,11 @@ geom_text_repel_interactive <- function(...) {
 geom_label_repel_interactive <- function(...) {
   if (requireNamespace("ggrepel")) {
     layerfunc <- getExportedValue("ggrepel", "geom_label_repel")
-    layer_interactive(layerfunc, ..., interactive_geom = get_repel_geom("GeomLabelRepel"))
+    layer_interactive(
+      layerfunc,
+      ...,
+      interactive_geom = get_repel_geom("GeomLabelRepel")
+    )
   }
 }
 

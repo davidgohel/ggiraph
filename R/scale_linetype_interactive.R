@@ -14,20 +14,24 @@
 #' @export
 #' @name scale_linetype_interactive
 #' @family interactive scale
-scale_linetype_interactive <- function(...)
+scale_linetype_interactive <- function(...) {
   scale_interactive(scale_linetype, ...)
+}
 
 #' @export
 #' @rdname scale_linetype_interactive
-scale_linetype_continuous_interactive <- function(...)
+scale_linetype_continuous_interactive <- function(...) {
   scale_interactive(scale_linetype_continuous, ...)
+}
 
 #' @export
 #' @rdname scale_linetype_interactive
-scale_linetype_discrete_interactive <- function(...)
+scale_linetype_discrete_interactive <- function(...) {
   scale_interactive(scale_linetype_discrete, ...)
+}
 
 #' @export
 #' @rdname scale_linetype_interactive
-scale_linetype_binned_interactive <- function(...)
+scale_linetype_binned_interactive <- function(...) {
   scale_interactive(scale_linetype_binned, ...)
+}

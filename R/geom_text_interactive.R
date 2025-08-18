@@ -12,8 +12,9 @@
 #' @example examples/geom_text_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_text_interactive <- function(...)
+geom_text_interactive <- function(...) {
   layer_interactive(geom_text, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

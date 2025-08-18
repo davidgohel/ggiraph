@@ -22,11 +22,12 @@ default_fonts <- list(
 
 default_fontname <- function() {
   os <- get_os()
-  if (!os %in% c("windows", "osx"))
+  if (!os %in% c("windows", "osx")) {
     os <- "unix"
+  }
   def_fonts <- default_fonts[[os]]
   def_fonts <- def_fonts[unlist(lapply(def_fonts, font_family_exists))]
-  missing_fonts <- setdiff(r_font_families, names(def_fonts) )
+  missing_fonts <- setdiff(r_font_families, names(def_fonts))
   def_fonts[missing_fonts] <- lapply(def_fonts[missing_fonts], match_family)
   def_fonts
 }
@@ -56,11 +57,10 @@ default_fontname <- function() {
 #' validated_fonts()
 validated_fonts <- function(fonts = list()) {
   fonts <- fonts[unlist(lapply(fonts, font_family_exists))]
-  missing_fonts <- setdiff(r_font_families, names(fonts) )
+  missing_fonts <- setdiff(r_font_families, names(fonts))
   fonts[missing_fonts] <- default_fontname()[missing_fonts]
   fonts
 }
-
 
 
 #' @title Check if font family exists.
@@ -76,7 +76,7 @@ validated_fonts <- function(fonts = list()) {
 #' @export
 #' @importFrom systemfonts match_font system_fonts
 #' @family functions for font management
-font_family_exists <- function( font_family = "sans" ){
+font_family_exists <- function(font_family = "sans") {
   datafonts <- fortify_font_db()
   tolower(font_family) %in% tolower(datafonts$family)
 }
@@ -95,32 +95,45 @@ font_family_exists <- function( font_family = "sans" ){
 #' match_family("serif")
 #' @importFrom systemfonts match_font system_fonts registry_fonts
 #' @family functions for font management
-match_family <- function(font = "sans", bold = TRUE, italic = TRUE, debug = NULL) {
+match_family <- function(
+  font = "sans",
+  bold = TRUE,
+  italic = TRUE,
+  debug = NULL
+) {
   font <- match_font(font, bold = bold, italic = italic)
   font_db <- fortify_font_db()
-  match <- which( font_db$path %in% font$path )
+  match <- which(font_db$path %in% font$path)
   font_db$family[match[1]]
 }
 
-fortify_font_db <- function(){
+fortify_font_db <- function() {
   db_sys <- system_fonts()
   db_reg <- registry_fonts()
   nam <- intersect(colnames(db_sys), colnames(db_reg))
-  db_sys <- db_sys[,nam]
-  db_reg <- db_reg[,nam]
+  db_sys <- db_sys[, nam]
+  db_reg <- db_reg[, nam]
   font_db <- rbind(db_sys, db_reg)
   font_db
 }
 
 list_theme_fonts <- function(gg) {
-  if(is.null(names(gg)) || is.null(gg[["theme"]])) return(character())
-  element_text_set <- Filter(f = function(x) inherits(x, "element_text") && !is.null(x$family), gg[["theme"]])
+  if (is.null(names(gg)) || is.null(gg[["theme"]])) {
+    return(character())
+  }
+  element_text_set <- Filter(
+    f = function(x) inherits(x, "element_text") && !is.null(x$family),
+    gg[["theme"]]
+  )
   fonts <- vapply(
     X = element_text_set,
     FUN = function(x) {
       z <- x$family
-      if (isTRUE(all.equal(z, ""))) "sans"
-      else z
+      if (isTRUE(all.equal(z, ""))) {
+        "sans"
+      } else {
+        z
+      }
     },
     FUN.VALUE = NA_character_,
     USE.NAMES = FALSE
@@ -128,4 +141,3 @@ list_theme_fonts <- function(gg) {
   fonts <- setdiff(unique(fonts), c("sans", "serif", "mono", "symbol"))
   fonts
 }
-

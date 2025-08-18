@@ -12,8 +12,9 @@
 #' @example examples/geom_errorbarh_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_errorbarh_interactive <- function(...)
+geom_errorbarh_interactive <- function(...) {
   layer_interactive(geom_errorbarh, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -26,11 +27,35 @@ GeomInteractiveErrorbarh <- ggproto(
   default_aes = add_default_interactive_aes(GeomErrorbarh),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(self, data, panel_params, coord, height = NULL, lineend = "butt",
-                        .ipar = IPAR_NAMES) {
-
-    x = vec_interleave(data$xmax, data$xmax, NA, data$xmax, data$xmin, NA, data$xmin, data$xmin)
-    y = vec_interleave(data$ymin, data$ymax, NA, data$y,    data$y,    NA, data$ymin, data$ymax)
+  draw_panel = function(
+    self,
+    data,
+    panel_params,
+    coord,
+    height = NULL,
+    lineend = "butt",
+    .ipar = IPAR_NAMES
+  ) {
+    x = vec_interleave(
+      data$xmax,
+      data$xmax,
+      NA,
+      data$xmax,
+      data$xmin,
+      NA,
+      data$xmin,
+      data$xmin
+    )
+    y = vec_interleave(
+      data$ymin,
+      data$ymax,
+      NA,
+      data$y,
+      data$y,
+      NA,
+      data$ymin,
+      data$ymax
+    )
     z <- data_frame0(
       x = x,
       y = y,
@@ -42,6 +67,12 @@ GeomInteractiveErrorbarh <- ggproto(
       .size = nrow(data) * 8
     )
     z <- copy_interactive_attrs(data, z, each = 8, ipar = .ipar)
-    GeomInteractivePath$draw_panel(z, panel_params, coord, lineend = lineend, .ipar = .ipar)
+    GeomInteractivePath$draw_panel(
+      z,
+      panel_params,
+      coord,
+      lineend = lineend,
+      .ipar = .ipar
+    )
   }
 )

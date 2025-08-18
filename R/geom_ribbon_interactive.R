@@ -12,8 +12,9 @@
 #' @example examples/geom_ribbon_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_ribbon_interactive <- function(...)
+geom_ribbon_interactive <- function(...) {
   layer_interactive(geom_ribbon, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -25,20 +26,23 @@ GeomInteractiveRibbon <- ggproto(
   default_aes = add_default_interactive_aes(GeomRibbon),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_group = function(data,
-                        panel_params,
-                        coord,
-                        lineend = "butt",
-                        linejoin = "round", linemitre = 10,
-                        na.rm = FALSE,
-                        flipped_aes = FALSE,
-                        outline.type = "both",
-                        .ipar = IPAR_NAMES) {
-
+  draw_group = function(
+    data,
+    panel_params,
+    coord,
+    lineend = "butt",
+    linejoin = "round",
+    linemitre = 10,
+    na.rm = FALSE,
+    flipped_aes = FALSE,
+    outline.type = "both",
+    .ipar = IPAR_NAMES
+  ) {
     data <- flip_data(data, flipped_aes)
-    if (na.rm)
+    if (na.rm) {
       data <-
         data[stats::complete.cases(data[c("x", "ymin", "ymax")]), ]
+    }
     data <- data[order(data$group), ]
 
     # Check that aesthetics are constant
@@ -98,18 +102,21 @@ GeomInteractiveRibbon <- ggproto(
       default.units = "native",
       gp = gpar(
         fill = alpha(aes$fill, aes$alpha),
-        col = if (is_full_outline)
+        col = if (is_full_outline) {
           aes$colour
-        else
-          NA,
-        lwd = if (is_full_outline)
+        } else {
+          NA
+        },
+        lwd = if (is_full_outline) {
           aes$linewidth * .pt
-        else
-          0,
-        lty = if (is_full_outline)
+        } else {
+          0
+        },
+        lty = if (is_full_outline) {
           aes$linetype
-        else
+        } else {
           1
+        }
       )
     )
     g_poly <- add_interactive_attrs(g_poly, aes, ipar = .ipar)
@@ -147,8 +154,9 @@ GeomInteractiveRibbon <- ggproto(
 
 #' @rdname geom_ribbon_interactive
 #' @export
-geom_area_interactive <- function(...)
+geom_area_interactive <- function(...) {
   layer_interactive(geom_area, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

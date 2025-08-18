@@ -12,8 +12,9 @@
 #' @example examples/geom_density_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_density_interactive <- function(...)
+geom_density_interactive <- function(...) {
   layer_interactive(geom_density, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL

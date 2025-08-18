@@ -13,8 +13,9 @@
 #' @example examples/geom_path_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_path_interactive <- function(...)
+geom_path_interactive <- function(...) {
   layer_interactive(geom_path, ...)
+}
 
 #' @importFrom stats complete.cases
 #' @importFrom stats ave
@@ -28,16 +29,18 @@ GeomInteractivePath <- ggproto(
   default_aes = add_default_interactive_aes(GeomPath),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(data,
-                        panel_params,
-                        coord,
-                        arrow = NULL,
-                        arrow.fill = NULL,
-                        lineend = "butt",
-                        linejoin = "round",
-                        linemitre = 10,
-                        na.rm = FALSE,
-                        .ipar = IPAR_NAMES) {
+  draw_panel = function(
+    data,
+    panel_params,
+    coord,
+    arrow = NULL,
+    arrow.fill = NULL,
+    lineend = "butt",
+    linejoin = "round",
+    linemitre = 10,
+    na.rm = FALSE,
+    .ipar = IPAR_NAMES
+  ) {
     gr <- GeomPath$draw_panel(
       data = data,
       panel_params = panel_params,
@@ -46,7 +49,8 @@ GeomInteractivePath <- ggproto(
       lineend = lineend,
       linejoin = linejoin,
       linemitre = linemitre,
-      na.rm = na.rm)
+      na.rm = na.rm
+    )
 
     if (inherits(gr, "zeroGrob")) {
       return(gr)
@@ -58,28 +62,36 @@ GeomInteractivePath <- ggproto(
     rows <-
       stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
     munched <- munched[rows >= 2, ]
-    if (nrow(munched) < 2) return(zeroGrob())
+    if (nrow(munched) < 2) {
+      return(zeroGrob())
+    }
 
     # Work out whether we should use lines or segments
     attr <- dapply(munched, "group", function(df) {
       linetype <- unique0(df$linetype)
       data_frame0(
-        solid = length(linetype) == 1 && (identical(linetype, "solid") || linetype == 1),
-        constant = nrow(unique0(df[, names(df) %in% c("alpha", "colour", "linewidth", "linetype")])) == 1,
+        solid = length(linetype) == 1 &&
+          (identical(linetype, "solid") || linetype == 1),
+        constant = nrow(unique0(df[,
+          names(df) %in% c("alpha", "colour", "linewidth", "linetype")
+        ])) ==
+          1,
         .size = 1
       )
     })
     solid_lines <- all(attr$solid)
     constant <- all(attr$constant)
     if (!solid_lines && !constant) {
-      cli::cli_abort("{.fn {snake_class(self)}} can't have varying {.field colour}, {.field linewidth}, and/or {.field alpha} along the line when {.field linetype} isn't solid.")
+      cli::cli_abort(
+        "{.fn {snake_class(self)}} can't have varying {.field colour}, {.field linewidth}, and/or {.field alpha} along the line when {.field linetype} isn't solid."
+      )
     }
 
     # Work out grouping variables for grobs
     n <- nrow(munched)
     group_diff <- munched$group[-1] != munched$group[-n]
     start <- c(TRUE, group_diff)
-    end <-   c(group_diff, TRUE)
+    end <- c(group_diff, TRUE)
 
     munched$fill <- arrow.fill %||% munched$colour
 
@@ -88,15 +100,15 @@ GeomInteractivePath <- ggproto(
     } else {
       add_interactive_attrs(gr, munched, ipar = .ipar)
     }
-
   }
 )
 
 
 #' @export
 #' @rdname geom_path_interactive
-geom_line_interactive <- function(...)
+geom_line_interactive <- function(...) {
   layer_interactive(geom_line, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -109,14 +121,21 @@ GeomInteractiveLine <- ggproto(
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
   draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
-    GeomInteractivePath$draw_panel(data, panel_params, coord, ..., .ipar = .ipar)
+    GeomInteractivePath$draw_panel(
+      data,
+      panel_params,
+      coord,
+      ...,
+      .ipar = .ipar
+    )
   }
 )
 
 #' @export
 #' @rdname geom_path_interactive
-geom_step_interactive <- function(...)
+geom_step_interactive <- function(...) {
   layer_interactive(geom_step, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -129,7 +148,14 @@ GeomInteractiveStep <-
     default_aes = add_default_interactive_aes(GeomStep),
     parameters = interactive_geom_parameters,
     draw_key = interactive_geom_draw_key,
-    draw_panel = function(data, panel_params, coord, direction = "hv", .ipar = IPAR_NAMES, ...) {
+    draw_panel = function(
+      data,
+      panel_params,
+      coord,
+      direction = "hv",
+      .ipar = IPAR_NAMES,
+      ...
+    ) {
       ldata <- split(data, data$group)
       ldata <- lapply(ldata, stairstep, direction = direction)
       data <- do.call(rbind, ldata)
@@ -156,16 +182,16 @@ stairstep <- function(data, direction = "hv") {
     ys <- rep(1:n, each = 2)[-2 * n]
     xs <- c(1, rep(2:n, each = 2))
   } else {
-    xs <- rep(1:(n-1), each = 2)
+    xs <- rep(1:(n - 1), each = 2)
     ys <- rep(1:n, each = 2)
   }
 
   if (direction == "mid") {
     gaps <- data$x[-1] - data$x[-n]
-    mid_x <- data$x[-n] + gaps/2 # map the mid-point between adjacent x-values
+    mid_x <- data$x[-n] + gaps / 2 # map the mid-point between adjacent x-values
     x <- c(data$x[1], mid_x[xs], data$x[n])
     y <- c(data$y[ys])
-    data_attr <- data[c(1,xs,n), setdiff(names(data), c("x", "y"))]
+    data_attr <- data[c(1, xs, n), setdiff(names(data), c("x", "y"))]
   } else {
     x <- data$x[xs]
     y <- data$y[ys]

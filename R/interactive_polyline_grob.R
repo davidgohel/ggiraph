@@ -20,8 +20,9 @@ drawDetails.interactive_polyline_grob <- function(x, recording) {
   NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
-    if (is.null(x$id) && is.null(x$id.lengths))
+    if (is.null(x$id) && is.null(x$id.lengths)) {
       x$id <- rep(1, length(x$x))
+    }
     .w = c(TRUE, x$id[-1] != x$id[-length(x$id)])
     interactive_attr_toxml(x = x, ids = ids, rows = .w)
   }
@@ -40,8 +41,9 @@ drawDetails.interactive_lines_grob <- function(x, recording) {
   NextMethod()
   ids <- dsvg_tracer_off()
   if (length(ids) > 0) {
-    if (is.null(x$id) && is.null(x$id.lengths))
+    if (is.null(x$id) && is.null(x$id.lengths)) {
       x$id <- rep(1, length(x$x))
+    }
     .w = c(TRUE, x$id[-1] != x$id[-length(x$id)])
     interactive_attr_toxml(x = x, ids = ids, rows = .w)
   }

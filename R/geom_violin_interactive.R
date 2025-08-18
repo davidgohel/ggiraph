@@ -12,8 +12,9 @@
 #' @example examples/geom_violin_interactive.R
 #' @seealso [girafe()]
 #' @export
-geom_violin_interactive  <- function(...)
+geom_violin_interactive <- function(...) {
   layer_interactive(geom_violin, ...)
+}
 
 #' @rdname ggiraph-ggproto
 #' @format NULL
@@ -25,14 +26,20 @@ GeomInteractiveViolin <- ggproto(
   default_aes = add_default_interactive_aes(GeomViolin),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_group = function(self, data, ...,
-                        draw_quantiles = NULL, flipped_aes = FALSE,
-                        .ipar = IPAR_NAMES) {
+  draw_group = function(
+    self,
+    data,
+    ...,
+    draw_quantiles = NULL,
+    flipped_aes = FALSE,
+    .ipar = IPAR_NAMES
+  ) {
     data <- flip_data(data, flipped_aes)
     # Find the points for the line to go all the way around
-    data <- transform(data,
-                      xminv = x - violinwidth * (x - xmin),
-                      xmaxv = x + violinwidth * (xmax - x)
+    data <- transform(
+      data,
+      xminv = x - violinwidth * (x - xmin),
+      xmaxv = x + violinwidth * (xmax - x)
     )
 
     # Make sure it's sorted properly to draw the outline
@@ -43,7 +50,7 @@ GeomInteractiveViolin <- ggproto(
 
     # Close the polygon: set first and last point the same
     # Needed for coord_polar and such
-    newdata <- rbind(newdata, newdata[1,])
+    newdata <- rbind(newdata, newdata[1, ])
     newdata <- flip_data(newdata, flipped_aes)
 
     # Draw quantiles if requested, so long as there is non-zero y range
@@ -69,12 +76,18 @@ GeomInteractiveViolin <- ggproto(
         GeomInteractivePath$draw_panel(both, ..., .ipar = .ipar)
       }
 
-      ggname("geom_violin", grobTree(
-        GeomInteractivePolygon$draw_panel(newdata, ..., .ipar = .ipar),
-        quantile_grob)
+      ggname(
+        "geom_violin",
+        grobTree(
+          GeomInteractivePolygon$draw_panel(newdata, ..., .ipar = .ipar),
+          quantile_grob
+        )
       )
     } else {
-      ggname("geom_violin", GeomInteractivePolygon$draw_panel(newdata, ..., .ipar = .ipar))
+      ggname(
+        "geom_violin",
+        GeomInteractivePolygon$draw_panel(newdata, ..., .ipar = .ipar)
+      )
     }
   }
 )
