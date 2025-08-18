@@ -43,7 +43,7 @@ if (
   requireNamespace(
     "sf",
     quietly = TRUE,
-    versionCheck = c(op = ">=", version = "0.7-3")
+    versionCheck = list(op = ">=", version = "0.7-3")
   )
 ) {
   nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
