@@ -1,6 +1,9 @@
 # ggiraph 0.9.0
 
+## Issues
 
+- fix usage of `requireNamespace` in the example for `R >= 4.5.1`.
+- change few codes for compatibility with 'ggplot2' 4.0.0.
 
 # ggiraph 0.8.13
 
