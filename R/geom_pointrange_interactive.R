@@ -18,36 +18,31 @@ GeomInteractivePointrange <- ggproto(
     data,
     panel_params,
     coord,
+    lineend = "butt",
     fatten = 4,
     flipped_aes = FALSE,
     na.rm = FALSE,
     .ipar = IPAR_NAMES
   ) {
+    line_grob <- GeomInteractiveLinerange$draw_panel(
+      data,
+      panel_params,
+      coord,
+      lineend = lineend,
+      flipped_aes = flipped_aes,
+      na.rm = na.rm,
+      .ipar = .ipar
+    )
+
     if (is.null(data[[flipped_names(flipped_aes)$y]])) {
-      return(
-        GeomInteractiveLinerange$draw_panel(
-          data,
-          panel_params,
-          coord,
-          flipped_aes = flipped_aes,
-          na.rm = na.rm,
-          .ipar = .ipar
-        )
-      )
+      return(line_grob)
     }
 
     ggname(
       "geom_pointrange",
       gTree(
         children = gList(
-          GeomInteractiveLinerange$draw_panel(
-            data,
-            panel_params,
-            coord,
-            flipped_aes = flipped_aes,
-            na.rm = na.rm,
-            .ipar = .ipar
-          ),
+          line_grob,
           GeomInteractivePoint$draw_panel(
             transform(data, size = size * fatten),
             panel_params,

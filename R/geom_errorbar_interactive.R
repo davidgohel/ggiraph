@@ -47,7 +47,7 @@ GeomInteractiveErrorbar <- ggproto(
       data$ymin,
       data$ymin
     )
-    z <- data_frame0(
+    data <- data_frame0(
       x = x,
       y = y,
       colour = rep(data$colour, each = 8),
@@ -57,8 +57,8 @@ GeomInteractiveErrorbar <- ggproto(
       group = rep(seq_len(nrow(data)), each = 8),
       .size = nrow(data) * 8
     )
-    z <- flip_data(z, flipped_aes)
-    z <- copy_interactive_attrs(data, z, each = 8, ipar = .ipar)
+    data <- flip_data(data, flipped_aes)
+    z <- copy_interactive_attrs(data, data, each = 8, ipar = .ipar)
     GeomInteractivePath$draw_panel(
       z,
       panel_params,

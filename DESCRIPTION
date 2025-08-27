@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.0
+Version: 0.9.1.001
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -53,6 +53,8 @@ LinkingTo:
     systemfonts
 VignetteBuilder: 
     knitr
+Remotes: 
+    tidyverse/ggplot2
 Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

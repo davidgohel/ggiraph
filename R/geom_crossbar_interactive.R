@@ -28,6 +28,7 @@ GeomInteractiveCrossbar <- ggproto(
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
   draw_panel = function(
+    self,
     data,
     panel_params,
     coord,
@@ -36,6 +37,8 @@ GeomInteractiveCrossbar <- ggproto(
     fatten = 2.5,
     width = NULL,
     flipped_aes = FALSE,
+    middle_gp = NULL,
+    box_gp = NULL,
     .ipar = IPAR_NAMES
   ) {
     data <- flip_data(data, flipped_aes)
@@ -48,6 +51,7 @@ GeomInteractiveCrossbar <- ggproto(
       linewidth = linewidth * fatten,
       alpha = NA
     )
+    middle <- data_frame0(!!!defaults(compact(middle_gp), middle))
 
     has_notch <- !is.null(data$ynotchlower) &&
       !is.null(data$ynotchupper) &&
@@ -56,7 +60,10 @@ GeomInteractiveCrossbar <- ggproto(
 
     if (has_notch) {
       if (data$ynotchlower < data$ymin || data$ynotchupper > data$ymax) {
-        message("notch went outside hinges. Try setting notch=FALSE.")
+        cli::cli_inform(c(
+          "Notch went outside hinges",
+          i = "Do you want {.code notch = FALSE}?"
+        ))
       }
 
       notchindent <- (1 - data$notchwidth) * (data$xmax - data$xmin) / 2
@@ -113,6 +120,7 @@ GeomInteractiveCrossbar <- ggproto(
       )
       box <- copy_interactive_attrs(data, box, 5, ipar = .ipar)
     }
+    box <- data_frame0(!!!defaults(compact(box_gp), box))
     box <- flip_data(box, flipped_aes)
     middle <- flip_data(middle, flipped_aes)
 

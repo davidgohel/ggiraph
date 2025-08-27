@@ -19,10 +19,19 @@ GeomInteractiveCol <- ggproto(
     data,
     panel_params,
     coord,
+    lineend = "butt",
+    linejoin = "mitre",
     width = NULL,
     flipped_aes = FALSE,
     .ipar = IPAR_NAMES
   ) {
-    GeomInteractiveRect$draw_panel(data, panel_params, coord, .ipar = .ipar)
+    GeomInteractiveRect$draw_panel(
+      data,
+      panel_params,
+      coord,
+      lineend = lineend,
+      linejoin = linejoin,
+      .ipar = .ipar
+    )
   }
 )

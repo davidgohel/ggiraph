@@ -18,8 +18,9 @@ GeomInteractiveLinerange <- ggproto(
     data,
     panel_params,
     coord,
-    lineend = "butt",
     flipped_aes = FALSE,
+    lineend = "butt",
+    linejoin = "round",
     na.rm = FALSE,
     .ipar = IPAR_NAMES
   ) {
@@ -32,8 +33,9 @@ GeomInteractiveLinerange <- ggproto(
         data,
         panel_params,
         coord,
-        lineend = lineend,
         na.rm = na.rm,
+        lineend = lineend,
+        linejoin = linejoin,
         .ipar = .ipar
       )
     )
