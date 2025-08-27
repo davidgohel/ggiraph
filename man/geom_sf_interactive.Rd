@@ -54,7 +54,7 @@ if (
     print(x)
   }
 
-  nc_3857 <- sf::st_transform(nc, "+init=epsg:3857")
+  nc_3857 <- sf::st_transform(nc, 3857)
 
   # Unfortunately if you plot other types of feature you'll need to use
   # show.legend to tell ggplot2 what type of legend to use

@@ -52,19 +52,6 @@ x <- girafe(ggobj = g)
 if (interactive()) {
   print(x)
 }
-
-g <- p +
-  geom_point() +
-  geom_errorbarh_interactive(aes(
-    xmax = resp + se,
-    xmin = resp - se,
-    height = .2,
-    tooltip = group
-  ))
-x <- girafe(ggobj = g)
-if (interactive()) {
-  print(x)
-}
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}

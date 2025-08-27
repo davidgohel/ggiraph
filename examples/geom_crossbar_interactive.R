@@ -11,6 +11,8 @@ df <- data.frame(
 )
 
 p <- ggplot(df, aes(trt, resp, colour = group))
+
+
 g <- p +
   geom_linerange_interactive(aes(ymin = lower, ymax = upper, tooltip = group))
 x <- girafe(ggobj = g)
