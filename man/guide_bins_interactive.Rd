@@ -116,54 +116,54 @@ if (interactive()) {
 }
 
 
-# make the title and labels interactive
-p3 <- p +
-  scale_fill_viridis_c_interactive(
-    data_id = function(breaks) {
-      sapply(seq_along(breaks), function(i) {
-        if (i < length(breaks)) {
-          paste(
-            min(breaks[i], breaks[i + 1], na.rm = TRUE),
-            max(breaks[i], breaks[i + 1], na.rm = TRUE),
-            sep = "-"
-          )
-        } else {
-          NA_character_
-        }
-      })
-    },
-    tooltip = function(breaks) {
-      sapply(seq_along(breaks), function(i) {
-        if (i < length(breaks)) {
-          paste(
-            min(breaks[i], breaks[i + 1], na.rm = TRUE),
-            max(breaks[i], breaks[i + 1], na.rm = TRUE),
-            sep = "-"
-          )
-        } else {
-          NA_character_
-        }
-      })
-    },
-    guide = "bins",
-    name = label_interactive("nlevel", data_id = "nlevel", tooltip = "nlevel"),
-    labels = function(breaks) {
-      label_interactive(
-        as.character(breaks),
-        data_id = as.character(breaks),
-        onclick = paste0("alert(\"", as.character(breaks), "\")"),
-        tooltip = as.character(breaks)
-      )
-    }
-  )
-x <- girafe(ggobj = p3)
-x <- girafe_options(
-  x,
-  opts_hover_key(girafe_css("stroke:red", text = "stroke:none;fill:red"))
-)
-if (interactive()) {
-  print(x)
-}
+# # make the title and labels interactive
+# p3 <- p +
+#   scale_fill_viridis_c_interactive(
+#     data_id = function(breaks) {
+#       sapply(seq_along(breaks), function(i) {
+#         if (i < length(breaks)) {
+#           paste(
+#             min(breaks[i], breaks[i + 1], na.rm = TRUE),
+#             max(breaks[i], breaks[i + 1], na.rm = TRUE),
+#             sep = "-"
+#           )
+#         } else {
+#           NA_character_
+#         }
+#       })
+#     },
+#     tooltip = function(breaks) {
+#       sapply(seq_along(breaks), function(i) {
+#         if (i < length(breaks)) {
+#           paste(
+#             min(breaks[i], breaks[i + 1], na.rm = TRUE),
+#             max(breaks[i], breaks[i + 1], na.rm = TRUE),
+#             sep = "-"
+#           )
+#         } else {
+#           NA_character_
+#         }
+#       })
+#     },
+#     guide = "bins",
+#     name = label_interactive("nlevel", data_id = "nlevel", tooltip = "nlevel"),
+#     labels = function(breaks) {
+#       label_interactive(
+#         as.character(breaks),
+#         data_id = as.character(breaks),
+#         onclick = paste0("alert(\"", as.character(breaks), "\")"),
+#         tooltip = as.character(breaks)
+#       )
+#     }
+#   )
+# x <- girafe(ggobj = p3)
+# x <- girafe_options(
+#   x,
+#   opts_hover_key(girafe_css("stroke:red", text = "stroke:none;fill:red"))
+# )
+# if (interactive()) {
+#   print(x)
+# }
 }
 \seealso{
 \link{interactive_parameters}, \code{\link[=girafe]{girafe()}}
