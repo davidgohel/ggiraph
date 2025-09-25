@@ -1,0 +1,2 @@
+import './widgets/girafe.js'
+

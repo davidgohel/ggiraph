@@ -1,3 +1,5 @@
+import { saveSvgAsPng } from 'save-svg-as-png';
+
 export default class PngHandler {
   constructor(svgid, options) {
     this.svgid = svgid;

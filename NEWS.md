@@ -1,3 +1,9 @@
+# ggiraph 0.9.2
+
+## internals
+
+- refresh the process that bundle the javascript file thanks to package 'packer'.
+
 # ggiraph 0.9.1
 
 ## Issues

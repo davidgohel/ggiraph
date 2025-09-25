@@ -246,6 +246,7 @@ export default class SVGObject {
   setupToolbar(options) {
     // register png handler
     let handler;
+
     try {
       if (!options.hidden.includes('saveaspng')) {
         handler = new PngHandler(this.svgid, { pngname: options.pngname });

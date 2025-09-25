@@ -1,4 +1,8 @@
 import * as d3 from 'd3';
+import { lasso } from 'd3-lasso';
+
+// Make d3 available globally for d3-lasso
+window.d3 = d3;
 
 export default class SelectionHandler {
   constructor(svgid, options) {
@@ -183,7 +187,7 @@ export default class SelectionHandler {
   lasso(add) {
     const targetEl = d3.select('#' + this.svgid + '_rootg');
     const that = this;
-    let lasso_ = d3.lasso();
+    let lasso_ = lasso();
     const lasso_start = function () {
       targetEl.style('cursor', 'crosshair');
     };

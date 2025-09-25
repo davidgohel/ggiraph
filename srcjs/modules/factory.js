@@ -1,3 +1,4 @@
+import * as d3 from 'd3';
 import SVGObject from './svg.js';
 
 // Returns a factory function for HTMLWidgets

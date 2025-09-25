@@ -1,7 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-todo.md
 inst/doc
 revdep
 src/*.o
