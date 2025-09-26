@@ -1,5 +1,10 @@
 # ggiraph 0.9.2
 
+## Feature
+
+- add interactive version of `ggbeeswarm::geom_quasirandom`, see 
+`geom_quasirandom_interactive()`.
+
 ## internals
 
 - refresh the process that bundle the javascript file thanks to package 'packer'.

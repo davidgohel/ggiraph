@@ -47,7 +47,6 @@
 #' @useDynLib ggiraph,.registration = TRUE
 #' @importFrom rlang is_string
 #' @importFrom Rcpp sourceCpp
-#' @importFrom systemfonts match_font
 #' @export
 dsvg <- function(
   file = "Rplots.svg",

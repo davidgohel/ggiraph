@@ -100,14 +100,14 @@ StatInteractiveBoxplot <- ggproto(
     )
     data_new[, !names(data_new) %in% non_constant_columns, drop = FALSE]
   },
-  setup_data = function(data, params) {
+  setup_data = function(self, data, params) {
     outlier_colnames <- intersect(colnames(data), c(IPAR_NAMES, outlier_ipar))
     if (length(outlier_colnames)) {
       for (name in outlier_colnames) {
         data[[name]] <- as.list(data[[name]])
       }
     }
-    data
+    self$super()$setup_data(data, params)
   },
   compute_group = function(
     data,
