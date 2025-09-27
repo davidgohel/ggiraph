@@ -80,7 +80,6 @@ gg <- ggplot(
 x <- girafe(
   ggobj = gg,
   options = list(
-    x,
     opts_zoom(max = 5),
     opts_selection(only_shiny = FALSE),
     opts_toolbar(position = "top")
@@ -93,7 +92,6 @@ if (interactive()) print(x)
 x <- girafe(
   ggobj = gg,
   options = list(
-    x,
     opts_zoom(max = 5),
     opts_selection(only_shiny = FALSE),
     opts_toolbar(
@@ -109,7 +107,6 @@ if (interactive()) print(x)
 x <- girafe(
   ggobj = gg,
   options = list(
-    x,
     opts_zoom(max = 5),
     opts_selection(only_shiny = FALSE),
     opts_toolbar(

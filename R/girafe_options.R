@@ -504,7 +504,6 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #' x <- girafe(
 #'   ggobj = gg,
 #'   options = list(
-#'     x,
 #'     opts_zoom(max = 5),
 #'     opts_selection(only_shiny = FALSE),
 #'     opts_toolbar(position = "top")
@@ -517,7 +516,6 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #' x <- girafe(
 #'   ggobj = gg,
 #'   options = list(
-#'     x,
 #'     opts_zoom(max = 5),
 #'     opts_selection(only_shiny = FALSE),
 #'     opts_toolbar(
@@ -533,7 +531,6 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #' x <- girafe(
 #'   ggobj = gg,
 #'   options = list(
-#'     x,
 #'     opts_zoom(max = 5),
 #'     opts_selection(only_shiny = FALSE),
 #'     opts_toolbar(
