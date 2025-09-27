@@ -4,7 +4,7 @@
 \alias{opts_zoom}
 \title{Zoom settings}
 \usage{
-opts_zoom(min = 1, max = 1, duration = 300)
+opts_zoom(min = 1, max = 1, duration = 300, default_on = FALSE)
 }
 \arguments{
 \item{min}{minimum zoom factor}
@@ -12,6 +12,8 @@ opts_zoom(min = 1, max = 1, duration = 300)
 \item{max}{maximum zoom factor}
 
 \item{duration}{duration of the zoom transitions, in milliseconds}
+
+\item{default_on}{if TRUE, pan/zoom will be activated by default when the plot is rendered}
 }
 \description{
 Allows customization of the zoom.
@@ -30,7 +32,7 @@ gg <- ggplot(
 
 x <- girafe(ggobj = gg)
 x <- girafe_options(x,
-  opts_zoom(min = .7, max = 2) )
+  opts_zoom(min = .7, max = 2, default_on = TRUE) )
 if( interactive() ) print(x)
 }
 \seealso{

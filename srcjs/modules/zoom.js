@@ -7,6 +7,7 @@ export default class ZoomHandler {
     this.max = options.max;
     this.duration = options.duration;
     this.tooltips = options.tooltips || {};
+    this.default_on = options.default_on || false;
     this.zoomer = null;
     this.on = false;
   }
@@ -21,6 +22,17 @@ export default class ZoomHandler {
       .scaleExtent([this.min, this.max])
       .duration(this.duration);
     this.on = false;
+
+    // Auto-activate zoom if requested
+    if (this.default_on) {
+      // Delay activation to ensure SVG is ready
+      setTimeout(() => {
+        this.zoomOn();
+        // Update button state if toolbar exists
+        this.updateButtonState();
+      }, 100);
+    }
+
     return true;
   }
 
@@ -136,6 +148,25 @@ export default class ZoomHandler {
     if (this.on) {
       this.on = false;
       d3.select('#' + this.svgid).on('.zoom', null);
+    }
+  }
+
+  updateButtonState() {
+    // Update the toolbar button state to reflect current zoom state
+    const button = d3.select('.ggiraph-toolbar-icon-zoom_onoff');
+    if (!button.empty()) {
+      const data = button.datum();
+      if (data) {
+        const state = this.on ? data.zoom_off : data.zoom_on;
+        const stateKey = this.on ? 'zoom_off' : 'zoom_on';
+        const tooltip = this.tooltips[stateKey] || state.tooltip;
+
+        button
+          .attr('title', tooltip)
+          .classed(state.class, true)
+          .classed(state.unclass, false)
+          .html(state.icon);
+      }
     }
   }
 

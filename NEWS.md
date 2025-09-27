@@ -2,8 +2,10 @@
 
 ## Feature
 
-- add interactive version of `ggbeeswarm::geom_quasirandom`, see 
+- add interactive version of `ggbeeswarm::geom_quasirandom`, see
 `geom_quasirandom_interactive()`.
+- add `default_on` parameter to `opts_zoom()` to automatically activate pan/zoom 
+mode when plot is rendered.
 
 ## Issues
 

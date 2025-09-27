@@ -402,6 +402,7 @@ opts_selection_theme <- function(
 #' @param min minimum zoom factor
 #' @param max maximum zoom factor
 #' @param duration duration of the zoom transitions, in milliseconds
+#' @param default_on if TRUE, pan/zoom will be activated by default when the plot is rendered
 #' @examples
 #' library(ggplot2)
 #'
@@ -416,11 +417,11 @@ opts_selection_theme <- function(
 #'
 #' x <- girafe(ggobj = gg)
 #' x <- girafe_options(x,
-#'   opts_zoom(min = .7, max = 2) )
+#'   opts_zoom(min = .7, max = 2, default_on = TRUE) )
 #' if( interactive() ) print(x)
 #' @export
 #' @family girafe animation options
-opts_zoom <- function(min = 1, max = 1, duration = 300) {
+opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
   if (!is_valid_number(min) || min <= 0.2) {
     abort("`min` must be a scalar number, >= 0.2", call = NULL)
   }
@@ -433,11 +434,15 @@ opts_zoom <- function(min = 1, max = 1, duration = 300) {
   if (!is_valid_number(duration) || duration < 0) {
     abort("`duration` must be a scalar positive number", call = NULL)
   }
+  if (!is_valid_logical(default_on)) {
+    abort("`default_on` must be a scalar logical", call = NULL)
+  }
 
   x <- list(
     min = min,
     max = max,
-    duration = duration
+    duration = duration,
+    default_on = default_on
   )
   class(x) <- "opts_zoom"
   x
