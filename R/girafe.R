@@ -62,6 +62,25 @@
 #' if (interactive()) {
 #'   print(x)
 #' }
+#' @section Managing Grouping with Interactive Aesthetics:
+#'
+#' Adding an interactive aesthetic like `tooltip` can sometimes alter the implicit
+#' grouping that ggplot2 performs automatically.
+#'
+#' In these cases, you **must explicitly** specify the `group` aesthetic to ensure
+#' correct graph rendering by clearly defining the variables that determine the
+#' grouping.
+#'
+#' ```r
+#' mapping = ggplot2::aes(tooltip = .data_tooltip, group = interaction(factor1, factor2, ...))
+#' ```
+#'
+#' This precaution is necessary:
+#'
+#' - ggplot2 automatically determines grouping based on the provided aesthetics
+#' - Interactive aesthetics added by ggiraph can interfere with this logic
+#' - Explicit `group` specification prevents unexpected behavior and ensures predictable results
+#'
 #' @section Widget options:
 #' girafe animations can be customized with function [girafe_options()].
 #' Options are available to customize tooltips, hover effects, zoom effects
@@ -69,8 +88,10 @@
 #' @section Widget sizing:
 #' girafe graphics are responsive, which mean, they will be resized
 #' according to their container. There are two responsive behavior
-#' implementations: one for Shiny applications and flexdashboard documents
-#' and one for other documents (i.e. R markdown and `saveWidget`).
+#' implementations:
+#'
+#' - one for Shiny applications and flexdashboard documents,
+#' - and another one for other documents (i.e. R markdown and `saveWidget`).
 #'
 #' Graphics are created by an R graphic device (i.e pdf, png, svg here) and
 #' need arguments width and height to define a graphic region.

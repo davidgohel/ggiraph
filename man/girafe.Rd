@@ -64,6 +64,27 @@ When a zoom effect is set, "zoom activate", "zoom desactivate" and
 When selection type is set to 'multiple' (in Shiny applications), lasso
 selection and lasso anti-selections buttons are available in a toolbar.
 }
+\section{Managing Grouping with Interactive Aesthetics}{
+
+
+Adding an interactive aesthetic like \code{tooltip} can sometimes alter the implicit
+grouping that ggplot2 performs automatically.
+
+In these cases, you \strong{must explicitly} specify the \code{group} aesthetic to ensure
+correct graph rendering by clearly defining the variables that determine the
+grouping.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{mapping = ggplot2::aes(tooltip = .data_tooltip, group = interaction(factor1, factor2, ...))
+}\if{html}{\out{</div>}}
+
+This precaution is necessary:
+\itemize{
+\item ggplot2 automatically determines grouping based on the provided aesthetics
+\item Interactive aesthetics added by ggiraph can interfere with this logic
+\item Explicit \code{group} specification prevents unexpected behavior and ensures predictable results
+}
+}
+
 \section{Widget options}{
 
 girafe animations can be customized with function \code{\link[=girafe_options]{girafe_options()}}.
@@ -75,8 +96,11 @@ selection effects and toolbar.
 
 girafe graphics are responsive, which mean, they will be resized
 according to their container. There are two responsive behavior
-implementations: one for Shiny applications and flexdashboard documents
-and one for other documents (i.e. R markdown and \code{saveWidget}).
+implementations:
+\itemize{
+\item one for Shiny applications and flexdashboard documents,
+\item and another one for other documents (i.e. R markdown and \code{saveWidget}).
+}
 
 Graphics are created by an R graphic device (i.e pdf, png, svg here) and
 need arguments width and height to define a graphic region.
