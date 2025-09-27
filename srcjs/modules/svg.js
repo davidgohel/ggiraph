@@ -233,9 +233,12 @@ export default class SVGObject {
     }
   }
 
-  setupZoom(options) {
+  setupZoom(options, toolbarTooltips) {
     // register zoom handler
     try {
+      if (toolbarTooltips) {
+        options.tooltips = toolbarTooltips;
+      }
       const handler = new ZoomHandler(this.svgid, options);
       if (handler.init()) this.handlers.set('zoom', handler);
     } catch (e) {

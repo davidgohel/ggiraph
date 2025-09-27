@@ -59,7 +59,7 @@ export function factory(shinyMode) {
           x.settings.select_theme
         );
 
-        ggobj.setupZoom(x.settings.zoom);
+        ggobj.setupZoom(x.settings.zoom, x.settings.toolbar.tooltips);
 
         ggobj.setupToolbar(x.settings.toolbar);
 

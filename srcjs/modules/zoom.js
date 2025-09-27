@@ -6,6 +6,7 @@ export default class ZoomHandler {
     this.min = options.min;
     this.max = options.max;
     this.duration = options.duration;
+    this.tooltips = options.tooltips || {};
     this.zoomer = null;
     this.on = false;
   }
@@ -52,14 +53,18 @@ export default class ZoomHandler {
         onclick: function (dat) {
           const el = d3.select(this);
           let state;
+          let stateKey;
           if (that.on) {
             that.zoomOff();
             state = dat.zoom_on;
+            stateKey = 'zoom_on';
           } else {
             that.zoomOn();
             state = dat.zoom_off;
+            stateKey = 'zoom_off';
           }
-          el.attr('title', state.tooltip)
+          const tooltip = that.tooltips[stateKey] || state.tooltip;
+          el.attr('title', tooltip)
             .classed(state.class, true)
             .classed(state.unclass, false)
             .html(state.icon);

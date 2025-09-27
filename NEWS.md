@@ -5,6 +5,11 @@
 - add interactive version of `ggbeeswarm::geom_quasirandom`, see 
 `geom_quasirandom_interactive()`.
 
+## Issues
+
+- fix custom tooltip for `zoom_off` state in toolbar not being applied correctly.
+
+
 ## internals
 
 - refresh the process that bundle the javascript file thanks to package 'packer'.
