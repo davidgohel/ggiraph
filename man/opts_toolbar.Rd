@@ -37,11 +37,11 @@ saveaspng = 'download png'
 )}
 
 \item{hidden}{A character vector with the names of the buttons or button groups to be hidden
-from the toolbar.
+from the toolbar. This allows full customization of which buttons appear.
 
-Valid button groups: selection, zoom, misc
+Valid button groups: 'selection', 'zoom', 'misc'
 
-Valid button names: lasso_select, lasso_deselect, zoom_onoff, zoom_rect, zoom_reset, saveaspng}
+Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff', 'zoom_rect', 'zoom_reset', 'saveaspng'}
 
 \item{fixed}{if FALSE (default), the toolbar will float above the graphic, if
 TRUE, the toolbar will be fixed and always visible.}
@@ -61,21 +61,64 @@ support the standard Promise object will need to have a polyfill (e.g.
 Internet Explorer with version less than 11 will need it).
 }
 \examples{
+library(ggiraph)
 library(ggplot2)
 
 dataset <- mtcars
-dataset$carname = row.names(mtcars)
+dataset$carname <- row.names(mtcars)
 
 gg <- ggplot(
   data = dataset,
-  mapping = aes(x = wt, y = qsec, color = disp,
-                tooltip = carname, data_id = carname) ) +
-  geom_point_interactive() + theme_minimal()
+  mapping = aes(
+    x = wt, y = qsec, color = disp,
+    tooltip = carname, data_id = carname
+  )
+) +
+  geom_point_interactive() +
+  theme_minimal()
 
-x <- girafe(ggobj = gg)
-x <- girafe_options(x,
-  opts_toolbar(position = "top") )
-if( interactive() ) print(x)
+x <- girafe(
+  ggobj = gg,
+  options = list(
+    x,
+    opts_zoom(max = 5),
+    opts_selection(only_shiny = FALSE),
+    opts_toolbar(position = "top")
+  )
+)
+if (interactive()) print(x)
+
+# Hide lasso selection tools (useful in Shiny when selections
+# are controlled by other app interactions)
+x <- girafe(
+  ggobj = gg,
+  options = list(
+    x,
+    opts_zoom(max = 5),
+    opts_selection(only_shiny = FALSE),
+    opts_toolbar(
+      position = "top",
+      hidden = c("lasso_select", "lasso_deselect")
+    )
+  )
+)
+if (interactive()) print(x)
+
+
+# Keep only zoom/pan and reset, hide rectangular zoom
+x <- girafe(
+  ggobj = gg,
+  options = list(
+    x,
+    opts_zoom(max = 5),
+    opts_selection(only_shiny = FALSE),
+    opts_toolbar(
+      position = "top",
+      hidden = c("selection", "zoom_rect", "saveaspng")
+    )
+  )
+)
+if (interactive()) print(x)
 }
 \seealso{
 Other girafe animation options: 
