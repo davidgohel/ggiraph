@@ -303,7 +303,7 @@ do_add_interactive_attrs <- function(
   ipar = IPAR_NAMES
 ) {
   # check that is a grob
-  if (!is.grob(gr) || is.zero(gr)) {
+  if (!is.grob(gr) || is_zero(gr)) {
     return(gr)
   }
   # check if it's interactive grob already
@@ -398,6 +398,16 @@ interactive_attr_toxml <- function(x, ids = character(0), rows = NULL) {
       attrValue <- as.character(attrValue)
     }
     attrName <- switch(a, tooltip = "title", data_id = data_attr, a)
+
+    if (isTRUE("fill_na" %in% x$.interactive_hooks) && anyNA(attrValue) && !is.na(attrValue[1])) {
+      attrValue <- Reduce(f = function(a, b) {
+        newb <- if (is.na(b)) {
+          rev(a)[1]
+        } else b
+        c(a, newb)
+      }, x = attrValue)
+    }
+
     set_attr(
       name = attrName,
       ids = as.integer(ids),

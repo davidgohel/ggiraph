@@ -65,27 +65,12 @@ firstUpper <- function(s) {
 }
 
 # from ggplot2 utilities.r
-is.waive <- function(x) inherits(x, "waiver")
-
-# from ggplot2 utilities.r
 empty <- function(df) {
-  is.null(df) || nrow(df) == 0 || ncol(df) == 0 || is.waive(df)
-}
-
-# from ggplot2 utilities.r
-"%||%" <- function(a, b) {
-  if (!is.null(a)) a else b
-}
-
-# from ggplot2 utilities.r
-message_wrap <- function(...) {
-  msg <- paste(..., collapse = "", sep = "")
-  wrapped <- strwrap(msg, width = getOption("width") - 2)
-  message(paste0(wrapped, collapse = "\n"))
+  is.null(df) || nrow(df) == 0 || ncol(df) == 0 || is_waiver(df)
 }
 
 # from ggplot2 grob-null.r
-is.zero <- function(x) {
+is_zero <- function(x) {
   is.null(x) || inherits(x, "zeroGrob")
 }
 
@@ -96,19 +81,18 @@ compact <- function(x) {
 }
 
 # from ggplot2 geom.r
+#' @importFrom vctrs list_sizes
 check_aesthetics <- function(x, n) {
-  ns <- vapply(x, length, numeric(1))
+  ns <- list_sizes(x)
   good <- ns == 1L | ns == n
 
   if (all(good)) {
     return()
   }
 
-  abort(paste0(
-    "Aesthetics must be either length 1 or the same as the data (",
-    n,
-    "):\n",
-    paste(names(which(!good)), collapse = ", ")
+  cli::cli_abort(c(
+    "Aesthetics must be either length 1 or the same as the data ({n}).",
+    "x" = "Fix the following mappings: {.col {names(which(!good))}}."
   ))
 }
 
@@ -127,7 +111,7 @@ rename <- function(x, replace) {
 
 #' @importFrom vctrs vec_unique
 unique0 <- function(x, ...) {
-  if (is.null(x)) x else vctrs::vec_unique(x, ...)
+  if (is.null(x)) x else vec_unique(x, ...)
 }
 
 #' @importFrom vctrs data_frame

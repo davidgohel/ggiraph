@@ -41,6 +41,7 @@ GeomInteractivePath <- ggproto(
     na.rm = FALSE,
     .ipar = IPAR_NAMES
   ) {
+    data <- panel_path_reshape(data)
     gr <- GeomPath$draw_panel(
       data = data,
       panel_params = panel_params,

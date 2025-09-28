@@ -12,7 +12,10 @@ parameter for customizing which toolbar buttons are displayed.
 ## Issues
 
 - fix custom tooltip for `zoom_off` state in toolbar not being applied correctly.
-
+- fix `geom_ribbon_interactive()` hover behavior so all ribbon parts 
+(upper, lower, fill) with same `data_id` react together.
+- improve `geom_line_interactive()` and `geom_path_interactive()` with 
+*mismatched lengths of ids* message when data have NA.
 
 ## internals
 

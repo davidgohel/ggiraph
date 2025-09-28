@@ -43,5 +43,5 @@ source("setup.R")
 
 {
   gr <- ggiraph:::partialPointGrob(interactive_points_grob(), pch = 2)
-  expect_true(ggiraph:::is.zero(gr))
+  expect_true(ggiraph:::is_zero(gr))
 }
