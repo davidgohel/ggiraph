@@ -12,6 +12,8 @@ girafe(
   height_svg = NULL,
   options = list(),
   dependencies = NULL,
+  check_fonts_registered = FALSE,
+  check_fonts_dependencies = FALSE,
   ...
 )
 }
@@ -36,18 +38,20 @@ options \code{fig.width} and \code{fig.height} are used instead.}
 
 \item{dependencies}{Additional widget HTML dependencies, see \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}.}
 
+\item{check_fonts_registered}{whether to check if fonts families found in
+the ggplot are registered with 'systemfonts'.}
+
+\item{check_fonts_dependencies}{whether to check if fonts families found in
+the ggplot are found in the \code{dependencies} list.}
+
 \item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
 }
 \description{
 Create an interactive graphic with a ggplot object
-to be used in a web browser. The function should replace function
-\code{ggiraph}.
+to be used in a web browser.
 }
 \details{
 Use \code{geom_zzz_interactive} to create interactive graphical elements.
-
-Difference from original functions is that some extra aesthetics are understood:
-the \link{interactive_parameters}.
 
 Tooltips can be displayed when mouse is over graphical elements.
 

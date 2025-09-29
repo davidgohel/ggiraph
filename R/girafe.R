@@ -2,14 +2,10 @@
 #' @title Create a girafe object
 #'
 #' @description Create an interactive graphic with a ggplot object
-#' to be used in a web browser. The function should replace function
-#' `ggiraph`.
+#' to be used in a web browser.
 #'
 #' @details
 #' Use `geom_zzz_interactive` to create interactive graphical elements.
-#'
-#' Difference from original functions is that some extra aesthetics are understood:
-#' the [interactive_parameters].
 #'
 #' Tooltips can be displayed when mouse is over graphical elements.
 #'
@@ -40,6 +36,10 @@
 #' @param options a list of options for girafe rendering, see
 #' [opts_tooltip()], [opts_hover()], [opts_selection()], ...
 #' @param dependencies Additional widget HTML dependencies, see [htmlwidgets::createWidget()].
+#' @param check_fonts_registered whether to check if fonts families found in
+#' the ggplot are registered with 'systemfonts'.
+#' @param check_fonts_dependencies whether to check if fonts families found in
+#' the ggplot are found in the `dependencies` list.
 #' @param ... arguments passed on to [dsvg()]
 #' @examples
 #' library(ggplot2)
@@ -122,10 +122,13 @@ girafe <- function(
   height_svg = NULL,
   options = list(),
   dependencies = NULL,
+  check_fonts_registered = FALSE,
+  check_fonts_dependencies = FALSE,
   ...
 ) {
   path <- tempfile()
 
+  # checks dims -----
   if (is.null(width_svg)) {
     width_svg <- default_width(default = 6)
   }
@@ -133,6 +136,7 @@ girafe <- function(
     height_svg <- default_height(default = 5)
   }
 
+  # prepare argument for dsvg -----
   args <- list(...)
   args$canvas_id <- args$canvas_id %||%
     paste("svg", gsub("-", "_", UUIDgenerate()), sep = "_")
@@ -148,29 +152,16 @@ girafe <- function(
   }
 
   if (!is.null(ggobj)) {
+    # check ggobj -----
     if (!inherits(ggobj, "ggplot")) {
       cli::cli_abort(c(
         "{.code ggobj} must be a {.code ggplot2} object."
       ))
     }
-
-    family_list <- list_theme_fonts(ggobj)
-    for (font in family_list) {
-      ffe <- font_family_exists(font)
-      if (!ffe) {
-        cli::cli_abort(c(
-          sprintf(
-            "Font family '%s' has not been found on your system or is not registered.",
-            font
-          ),
-          "i" = "You can use a google font with {.code gdtools::register_gfont()}.",
-          "i" = "You can use any font with {.code systemfonts::register_font()}."
-        ))
-      }
-    }
   }
 
   devlength <- length(dev.list())
+  # graphic production -----
   do.call(dsvg, args)
   tryCatch(
     {
@@ -199,6 +190,26 @@ girafe <- function(
 
   unlink(path)
 
+  # check fonts
+  family_list <- character()
+  if (check_fonts_registered || check_fonts_dependencies) {
+    family_list <- list_fonts(ggobj)
+  }
+  # check fonts -----
+  if (check_fonts_registered && !is.null(ggobj)) {
+    fonts_checking_registered(family_list = family_list)
+  } else if (check_fonts_registered && is.null(ggobj)) {
+    cli::cli_warn(
+      c("!" = "Dependencies checking can not be performed if `ggobj` is missing.")
+    )
+  }
+  if (check_fonts_dependencies && !is.null(ggobj)) {
+    fonts_checking_dependencies(dependencies = dependencies, family_list = family_list)
+  } else if (check_fonts_dependencies && is.null(ggobj)) {
+    cli::cli_warn("!" = "Dependencies checking can not be performed if `ggobj` is missing.")
+  }
+
+  # create widget -----
   createWidget(
     name = "girafe",
     x = x,
@@ -207,7 +218,6 @@ girafe <- function(
     dependencies = dependencies
   )
 }
-
 
 #' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget
 #' @import grid

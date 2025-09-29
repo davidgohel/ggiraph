@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.2.007
+Version: 0.9.2.008
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -32,14 +32,15 @@ Imports:
     purrr,
     Rcpp (>= 1.0),
     rlang,
+    S7,
     stats,
     systemfonts,
     uuid,
     vctrs
 Suggests:
     gdtools (>= 0.3.0),
-    ggrepel (>= 0.9.1),
     ggbeeswarm,
+    ggrepel (>= 0.9.1),
     hexbin,
     knitr,
     maps,

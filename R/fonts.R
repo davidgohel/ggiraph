@@ -117,13 +117,29 @@ fortify_font_db <- function() {
   font_db
 }
 
+
+
+
+# girafe font checking ------
+
+list_fonts <- function(gg) {
+  fonts_families <- c(
+    list_layers_fonts(gg),
+    list_theme_fonts(gg)
+  )
+  browser()
+  fonts_families <- sort(unique(fonts_families))
+  fonts_families %||% character()
+}
+
+#' @importFrom S7 prop_exists
 list_theme_fonts <- function(gg) {
-  if (is.null(names(gg)) || is.null(gg[["theme"]])) {
+  if (!prop_exists(gg, "theme")) {
     return(character())
   }
   element_text_set <- Filter(
     f = function(x) inherits(x, "element_text") && !is.null(x$family),
-    gg[["theme"]]
+    gg@theme
   )
   fonts <- vapply(
     X = element_text_set,
@@ -141,3 +157,100 @@ list_theme_fonts <- function(gg) {
   fonts <- setdiff(unique(fonts), c("sans", "serif", "mono", "symbol"))
   fonts
 }
+
+list_layers_fonts <- function(gg) {
+  if (!prop_exists(gg, "layers") || length(gg@layers) == 0) {
+    return(character())
+  }
+
+  fonts <- character()
+
+  for (layer in gg@layers) {
+    if (!is.null(layer$aes_params) && !is.null(layer$aes_params$family)) {
+      family_value <- layer$aes_params$family
+      if (!is.null(family_value) && !identical(family_value, "")) {
+        fonts <- c(fonts, family_value)
+      }
+    }
+  }
+
+  fonts <- setdiff(unique(fonts), c("sans", "serif", "mono", "symbol"))
+  fonts
+}
+
+extract_family_names_regex <- function(lines) {
+  # Pattern pour capturer le contenu entre quotes après font-family:
+  pattern <- "font-family:\\s*['\"]([^'\"]+)['\"]"
+  matches <- regmatches(lines, regexpr(pattern, lines, perl = TRUE))
+
+  # Extraire seulement le nom de la police (groupe capturé)
+  font_names <- gsub("font-family:\\s*['\"]([^'\"]+)['\"]", "\\1", matches, perl = TRUE)
+
+  return(font_names)
+}
+
+htmldep_css_files <- function(dep) {
+  css_files <- list()
+
+  if (!is.null(dep$stylesheet)) {
+    for (i in seq_along(dep$stylesheet)) {
+      css_file <- dep$stylesheet[i]
+      if (is.list(dep$src)) {
+        full_path <- file.path(dep$src$file, css_file)
+      } else {
+        full_path <- file.path(dep$src, css_file)
+      }
+      css_files[[css_file]] <- full_path
+    }
+  }
+  css_files <- unlist(css_files)
+  css_files <- unname(css_files)
+  as.character(css_files)
+}
+
+list_families_from_dependencies <- function(dependencies) {
+  css_files <- lapply(dependencies, htmldep_css_files)
+  css_files <- unlist(css_files)
+  css_files <- unname(css_files)
+  font_families <- lapply(css_files, function(path) {
+    x <- readLines(path)
+    extract_family_names_regex(x)
+  })
+  font_families <- unlist(font_families)
+  font_families <- unname(font_families)
+  font_families <- unique(font_families)
+  font_families
+}
+
+fonts_checking_registered <- function(family_list) {
+  datafonts <- fortify_font_db()
+  missing_family_list <- family_list[!tolower(family_list) %in% tolower(datafonts$family)]
+
+  if (length(missing_family_list) > 0) {
+    cli::cli_abort(c(
+      "!" = "Some fonts are not available in system fonts or are not registered with the {.pkg systemfonts} package.",
+      "!" = "Found {length(missing_family_list)} missing font famil{?y/ies} used in ggplot theme: {missing_family_list}.",
+      "i" = "You can install and register Google Fonts with {.code gdtools::register_gfont()}.",
+      "i" = "You can install and register any fonts with {.code systemfonts::register_font()}.",
+      "i" = "For an easy offline alternative with good rendering, use {.code gdtools::register_liberationsans()} to get 'Liberation Sans'."
+    ))
+  }
+}
+
+fonts_checking_dependencies <- function(dependencies, family_list) {
+  font_families <- list_families_from_dependencies(dependencies)
+  missing_family_list <- setdiff(family_list, font_families)
+  if (length(missing_family_list) > 0L) {
+    missing_family_list <- shQuote(missing_family_list)
+    cli::cli_warn(
+      c(
+        "!" = "Found {length(missing_family_list)} missing font famil{?y/ies} in the htmlDependencies provided in `dependencies`:",
+        "!" = "Missing: {missing_family_list}",
+        "i" = "You can add you font families as 'htmlDependencies' within the call to {.fn girafe}:",
+        "i" = "for example to add 'Open Sans': {.code girafe(..., dependencies = list(gdtools::gfontHtmlDependency(family = 'Open Sans')))}",
+        "!" = "This can be a false positive if fonts are loaded from other sources. In that case, set {.code check_fonts_dependencies = FALSE} in {.fn girafe} as we only scan the htmlDependencies from the {.code dependencies} argument."
+      )
+    )
+  }
+}
+
