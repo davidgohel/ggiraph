@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,30 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.1" id="ggiraph-091">ggiraph 0.9.1<a class="anchor" aria-label="anchor" href="#ggiraph-091"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.2" id="ggiraph-092">ggiraph 0.9.2<a class="anchor" aria-label="anchor" href="#ggiraph-092"></a></h2>
+<div class="section level3">
+<h3 id="feature-0-9-2">Feature<a class="anchor" aria-label="anchor" href="#feature-0-9-2"></a></h3>
+<ul><li>add interactive version of <code><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html" class="external-link">ggbeeswarm::geom_quasirandom</a></code>, see <code><a href="../reference/geom_quasirandom_interactive.html">geom_quasirandom_interactive()</a></code>.</li>
+<li>add <code>default_on</code> parameter to <code><a href="../reference/opts_zoom.html">opts_zoom()</a></code> to automatically activate pan/zoom mode when plot is rendered.</li>
+<li>improve <code><a href="../reference/opts_toolbar.html">opts_toolbar()</a></code> documentation and examples to better demonstrate the <code>hidden</code> parameter for customizing which toolbar buttons are displayed.</li>
+<li>add examples with correct management of fonts (using <code><a href="https://davidgohel.github.io/gdtools/reference/register_liberationsans.html" class="external-link">register_liberationsans()</a></code>).</li>
+<li>add <code>check_fonts_registered</code> and <code>check_fonts_dependencies</code> arguments to <code><a href="../reference/girafe.html">girafe()</a></code> to validate that fonts used in plots are properly registered and available in HTML dependencies.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="issues-0-9-2">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-2"></a></h3>
+<ul><li>fix custom tooltip for <code>zoom_off</code> state in toolbar not being applied correctly.</li>
+<li>fix <code><a href="../reference/geom_ribbon_interactive.html">geom_ribbon_interactive()</a></code> hover behavior so all ribbon parts (upper, lower, fill) with same <code>data_id</code> react together.</li>
+<li>improve <code><a href="../reference/geom_path_interactive.html">geom_line_interactive()</a></code> and <code><a href="../reference/geom_path_interactive.html">geom_path_interactive()</a></code> with <em>mismatched lengths of ids</em> message when data have NA.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="internals-0-9-2">internals<a class="anchor" aria-label="anchor" href="#internals-0-9-2"></a></h3>
+<ul><li>refresh the process that bundle the javascript file thanks to package ‘packer’.</li>
+<li>id is now defined with an simple internal function copied from <code>shinyWidgets::genId</code>
+</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.9.1" id="ggiraph-091">ggiraph 0.9.1<a class="anchor" aria-label="anchor" href="#ggiraph-091"></a></h2><p class="text-muted">CRAN release: 2025-09-16</p>
 <div class="section level3">
 <h3 id="issues-0-9-1">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-1"></a></h3>
 <ul><li>adapt codes for ggplot2 4.0.0. There are lot of changes in ggplot2 4.0.0 and we hope we did not miss anything…</li>
@@ -253,7 +276,7 @@
 <h3 id="changes-0-7-9">Changes<a class="anchor" aria-label="anchor" href="#changes-0-7-9"></a></h3>
 <ul><li>Improved tooltip positioning and added ‘placement’ parameter</li>
 <li>Added ‘tooltip_fill’ interactive attribute</li>
-<li>move font management from gdtools to systemfonts, also libpng is now required as gdtools/cairo is not used anymore. It comes also with functions <code><a href="../reference/validated_fonts.html">validated_fonts()</a></code> and also <code><a href="../reference/match_family.html">match_family()</a></code> and <code><a href="../reference/font_family_exists.html">font_family_exists()</a></code> that have been copied from package gdtools.</li>
+<li>move font management from gdtools to systemfonts, also libpng is now required as gdtools/cairo is not used anymore. It comes also with functions <code><a href="../reference/validated_fonts.html">validated_fonts()</a></code> and also <code><a href="../reference/match_family.html">match_family()</a></code> and <code><a href="https://davidgohel.github.io/gdtools/reference/font_family_exists.html" class="external-link">font_family_exists()</a></code> that have been copied from package gdtools.</li>
 <li>Updated some geometries from latest ggplot2</li>
 </ul></div>
 <div class="section level3">

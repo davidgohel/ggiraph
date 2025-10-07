@@ -12,7 +12,6 @@
 <url><loc>https://davidgohel.github.io/ggiraph/reference/element_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/facet_grid_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/facet_wrap_interactive.html</loc></url>
-<url><loc>https://davidgohel.github.io/ggiraph/reference/font_family_exists.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_abline_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_bar_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_bin_2d_interactive.html</loc></url>
@@ -32,6 +31,7 @@
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_point_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_polygon_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_quantile_interactive.html</loc></url>
+<url><loc>https://davidgohel.github.io/ggiraph/reference/geom_quasirandom_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_raster_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_rect_interactive.html</loc></url>
 <url><loc>https://davidgohel.github.io/ggiraph/reference/geom_ribbon_interactive.html</loc></url>

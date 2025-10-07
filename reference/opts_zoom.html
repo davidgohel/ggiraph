@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">opts_zoom</span><span class="op">(</span>min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">1</span>, duration <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">opts_zoom</span><span class="op">(</span>min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">1</span>, duration <span class="op">=</span> <span class="fl">300</span>, default_on <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -54,6 +54,10 @@
 
 <dt id="arg-duration">duration<a class="anchor" aria-label="anchor" href="#arg-duration"></a></dt>
 <dd><p>duration of the zoom transitions, in milliseconds</p></dd>
+
+
+<dt id="arg-default-on">default_on<a class="anchor" aria-label="anchor" href="#arg-default-on"></a></dt>
+<dd><p>if TRUE, pan/zoom will be activated by default when the plot is rendered</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -85,7 +89,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span>ggobj <span class="op">=</span> <span class="va">gg</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe_options.html">girafe_options</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>  <span class="fu">opts_zoom</span><span class="op">(</span>min <span class="op">=</span> <span class="fl">.7</span>, max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">opts_zoom</span><span class="op">(</span>min <span class="op">=</span> <span class="fl">.7</span>, max <span class="op">=</span> <span class="fl">2</span>, default_on <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span> <span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
