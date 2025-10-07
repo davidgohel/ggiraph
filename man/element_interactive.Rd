@@ -44,6 +44,9 @@ theme parameters.
 # add interactive theme elements -------
 library(ggplot2)
 library(ggiraph)
+library(gdtools)
+
+register_liberationsans()
 
 dataset <- structure(
   list(
@@ -79,7 +82,7 @@ gg_point = ggplot(data = dataset) +
     tooltip = carname,
     data_id = carname
   )) +
-  theme_minimal() +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11) +
   theme(
     plot.title = element_text_interactive(
       data_id = "plot.title",
@@ -117,7 +120,12 @@ gg_point = ggplot(data = dataset) +
     )
   )
 
-x <- girafe(ggobj = gg_point)
+x <- girafe(
+  ggobj = gg_point,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
 if (interactive()) {
   print(x)
 }

@@ -128,6 +128,10 @@ adjusted regarding to the argument \code{width} and the aspect ratio.
 
 \examples{
 library(ggplot2)
+library(ggiraph)
+library(gdtools)
+
+register_liberationsans()
 
 dataset <- mtcars
 dataset$carname <- row.names(mtcars)
@@ -139,14 +143,17 @@ gg_point <- ggplot(
     tooltip = carname, data_id = carname
   )
 ) +
-  geom_point_interactive() +
-  theme_minimal()
+  geom_point_interactive(hover_nearest = TRUE, size = 11/.pt) +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
 
-x <- girafe(ggobj = gg_point)
+x <- girafe(
+  ggobj = gg_point,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
 
-if (interactive()) {
-  print(x)
-}
+x
 }
 \seealso{
 \code{\link[=girafe_options]{girafe_options()}}, \code{\link[=validated_fonts]{validated_fonts()}}, \code{\link[=dsvg]{dsvg()}}

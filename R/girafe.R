@@ -41,27 +41,7 @@
 #' @param check_fonts_dependencies whether to check if fonts families found in
 #' the ggplot are found in the `dependencies` list.
 #' @param ... arguments passed on to [dsvg()]
-#' @examples
-#' library(ggplot2)
-#'
-#' dataset <- mtcars
-#' dataset$carname <- row.names(mtcars)
-#'
-#' gg_point <- ggplot(
-#'   data = dataset,
-#'   mapping = aes(
-#'     x = wt, y = qsec, color = disp,
-#'     tooltip = carname, data_id = carname
-#'   )
-#' ) +
-#'   geom_point_interactive() +
-#'   theme_minimal()
-#'
-#' x <- girafe(ggobj = gg_point)
-#'
-#' if (interactive()) {
-#'   print(x)
-#' }
+#' @example examples/girafe.R
 #' @section Managing Grouping with Interactive Aesthetics:
 #'
 #' Adding an interactive aesthetic like `tooltip` can sometimes alter the implicit

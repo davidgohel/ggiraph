@@ -35,11 +35,20 @@ In this way they can be set to a scalar value.
 # add interactive bar -------
 library(ggplot2)
 library(ggiraph)
+library(gdtools)
+
+register_liberationsans()
 
 p <- ggplot(mpg, aes(x = class, tooltip = class, data_id = class)) +
-  geom_bar_interactive()
+  geom_bar_interactive() +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
 
-x <- girafe(ggobj = p)
+x <- girafe(
+  ggobj = p,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
 if (interactive()) {
   print(x)
 }
@@ -50,9 +59,15 @@ dat <- data.frame(
   height = c(172, 159, 71)
 )
 p <- ggplot(dat, aes(x = name, y = height, tooltip = gender, data_id = name)) +
-  geom_col_interactive()
+  geom_col_interactive() +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
 
-x <- girafe(ggobj = p)
+x <- girafe(
+  ggobj = p,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
 if (interactive()) {
   print(x)
 }
@@ -69,8 +84,14 @@ p <- ggplot(dat, aes(x = name, y = height, fill = gender, data_id = name)) +
     values = c(Male = "#0072B2", Female = "#009E73"),
     data_id = c(Female = "Female", Male = "Male"),
     tooltip = c(Male = "Male", Female = "Female")
+  ) +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
+x <- girafe(
+  ggobj = p,
+  dependencies = list(
+    liberationsansHtmlDependency()
   )
-x <- girafe(ggobj = p)
+)
 if (interactive()) {
   print(x)
 }

@@ -1,5 +1,8 @@
 library(ggplot2)
 library(ggiraph)
+library(gdtools)
+
+register_liberationsans()
 
 gg <- ggplot(mtcars, aes(x = disp, y = qsec)) +
   geom_point(size = 2) +
@@ -13,9 +16,18 @@ gg <- ggplot(mtcars, aes(x = disp, y = qsec)) +
     ymin = 18,
     ymax = 20,
     alpha = .5
-  )
+  ) +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
 
-x <- girafe(ggobj = gg, width_svg = 5, height_svg = 4)
-if (interactive()) {
-  print(x)
-}
+girafe(
+  ggobj = gg,
+  width_svg = 5,
+  height_svg = 4,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
+
+
+
+

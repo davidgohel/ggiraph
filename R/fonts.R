@@ -20,6 +20,7 @@ default_fonts <- list(
   )
 )
 
+#' @importFrom gdtools font_family_exists
 default_fontname <- function() {
   os <- get_os()
   if (!os %in% c("windows", "osx")) {
@@ -63,24 +64,6 @@ validated_fonts <- function(fonts = list()) {
 }
 
 
-#' @title Check if font family exists.
-#'
-#' @description Check if a font family exists in system fonts.
-#'
-#' @return A logical value
-#' @param font_family font family name (case sensitive)
-#' @examples
-#' font_family_exists("sans")
-#' font_family_exists("Arial")
-#' font_family_exists("Courier")
-#' @export
-#' @importFrom systemfonts match_font system_fonts
-#' @family functions for font management
-font_family_exists <- function(font_family = "sans") {
-  datafonts <- fortify_font_db()
-  tolower(font_family) %in% tolower(datafonts$family)
-}
-
 #' Find best family match with systemfonts
 #'
 #' \code{match_family()} returns the best font family match.
@@ -93,6 +76,7 @@ font_family_exists <- function(font_family = "sans") {
 #' @examples
 #' match_family("sans")
 #' match_family("serif")
+#' @importFrom gdtools sys_fonts
 #' @importFrom systemfonts match_font system_fonts registry_fonts
 #' @family functions for font management
 match_family <- function(
@@ -102,23 +86,10 @@ match_family <- function(
   debug = NULL
 ) {
   font <- match_font(font, bold = bold, italic = italic)
-  font_db <- fortify_font_db()
+  font_db <- sys_fonts()
   match <- which(font_db$path %in% font$path)
   font_db$family[match[1]]
 }
-
-fortify_font_db <- function() {
-  db_sys <- system_fonts()
-  db_reg <- registry_fonts()
-  nam <- intersect(colnames(db_sys), colnames(db_reg))
-  db_sys <- db_sys[, nam]
-  db_reg <- db_reg[, nam]
-  font_db <- rbind(db_sys, db_reg)
-  font_db
-}
-
-
-
 
 # girafe font checking ------
 
@@ -223,7 +194,7 @@ list_families_from_dependencies <- function(dependencies) {
 }
 
 fonts_checking_registered <- function(family_list) {
-  datafonts <- fortify_font_db()
+  datafonts <- sys_fonts()
   missing_family_list <- family_list[!tolower(family_list) %in% tolower(datafonts$family)]
 
   if (length(missing_family_list) > 0) {

@@ -84,7 +84,7 @@ source("setup.R")
 {
   fonts <- ggiraph:::default_fontname()
   for(name in names(fonts)) {
-    if (font_family_exists(fonts[[name]])) {
+    if (gdtools::font_family_exists(fonts[[name]])) {
       doc <- dsvg_doc(
         fonts = fonts,
         expr = {

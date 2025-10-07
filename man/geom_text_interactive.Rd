@@ -34,13 +34,21 @@ In this way they can be set to a scalar value.
 # add interactive labels to a ggplot -------
 library(ggplot2)
 library(ggiraph)
+library(gdtools)
 
+register_liberationsans()
 
 p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
   geom_label_interactive(aes(
     tooltip = paste(rownames(mtcars), mpg, sep = "\n")
-  ))
-x <- girafe(ggobj = p)
+  ), family = "Liberation Sans") +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
+x <- girafe(
+  ggobj = p,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
 if (interactive()) {
   print(x)
 }
@@ -50,15 +58,25 @@ p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
   geom_label_interactive(
     aes(fill = factor(cyl), tooltip = paste(rownames(mtcars), mpg, sep = "\n")),
     colour = "white",
-    fontface = "bold"
+    fontface = "bold",
+    family = "Liberation Sans"
+  ) +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
+x <- girafe(
+  ggobj = p,
+  dependencies = list(
+    liberationsansHtmlDependency()
   )
-x <- girafe(ggobj = p)
+)
 if (interactive()) {
   print(x)
 }
 # add interactive texts to a ggplot -------
 library(ggplot2)
 library(ggiraph)
+library(gdtools)
+
+register_liberationsans()
 
 ## the data
 dataset = mtcars
@@ -87,11 +105,17 @@ gg_text = ggplot(
     data_id = label
   )
 ) +
-  geom_text_interactive(check_overlap = TRUE) +
-  coord_cartesian(xlim = c(0, 50))
+  geom_text_interactive(check_overlap = TRUE, family = "Liberation Sans") +
+  coord_cartesian(xlim = c(0, 50)) +
+  theme_minimal(base_family = "Liberation Sans", base_size = 11)
 
 ## display the plot
-x <- girafe(ggobj = gg_text)
+x <- girafe(
+  ggobj = gg_text,
+  dependencies = list(
+    liberationsansHtmlDependency()
+  )
+)
 x <- girafe_options(x = x, opts_hover(css = "fill:#FF4C3B;font-style:italic;"))
 if (interactive()) {
   print(x)

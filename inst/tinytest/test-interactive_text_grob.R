@@ -4,7 +4,7 @@ library(grid)
 library(xml2)
 source("setup.R")
 
-result <- ggiraph:::fortify_font_db()
+result <- gdtools::sys_fonts()
 if(!(is.data.frame(result) && nrow(result) > 0)){
   exit_file("no available font")
 }
