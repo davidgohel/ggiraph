@@ -8,6 +8,7 @@
 mode when plot is rendered.
 - improve `opts_toolbar()` documentation and examples to better demonstrate the `hidden`
 parameter for customizing which toolbar buttons are displayed.
+- add examples with correct management of fonts (using `register_liberationsans()`)
 
 ## Issues
 
