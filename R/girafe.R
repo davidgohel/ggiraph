@@ -93,7 +93,6 @@
 #' adjusted regarding to the argument `width` and the aspect ratio.
 #' @seealso [girafe_options()], [validated_fonts()], [dsvg()]
 #' @export
-#' @importFrom uuid UUIDgenerate
 girafe <- function(
   code,
   ggobj = NULL,
@@ -119,7 +118,7 @@ girafe <- function(
   # prepare argument for dsvg -----
   args <- list(...)
   args$canvas_id <- args$canvas_id %||%
-    paste("svg", gsub("-", "_", UUIDgenerate()), sep = "_")
+    paste("svg", UUIDgenerate(), sep = "_")
   args$file <- path
   args$width <- width_svg
   args$height <- height_svg
@@ -302,4 +301,9 @@ run_girafe_example <- function(name = "crimes") {
   } else {
     warning("package shiny is required to be able to use the function")
   }
+}
+
+
+UUIDgenerate <- function() {
+  paste(format(as.hexmode(sample(256, 8, replace = TRUE) - 1), width = 2), collapse = "")
 }

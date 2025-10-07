@@ -21,6 +21,7 @@ parameter for customizing which toolbar buttons are displayed.
 ## internals
 
 - refresh the process that bundle the javascript file thanks to package 'packer'.
+- id is now defined with an simple internal function copied from `shinyWidgets::genId`
 
 # ggiraph 0.9.1
 
