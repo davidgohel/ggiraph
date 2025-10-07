@@ -98,7 +98,6 @@ list_fonts <- function(gg) {
     list_layers_fonts(gg),
     list_theme_fonts(gg)
   )
-  browser()
   fonts_families <- sort(unique(fonts_families))
   fonts_families %||% character()
 }
@@ -150,14 +149,30 @@ list_layers_fonts <- function(gg) {
 }
 
 extract_family_names_regex <- function(lines) {
-  # Pattern pour capturer le contenu entre quotes après font-family:
-  pattern <- "font-family:\\s*['\"]([^'\"]+)['\"]"
-  matches <- regmatches(lines, regexpr(pattern, lines, perl = TRUE))
+  # one single line
+  css_text <- paste(lines, collapse = "\n")
 
-  # Extraire seulement le nom de la police (groupe capturé)
-  font_names <- gsub("font-family:\\s*['\"]([^'\"]+)['\"]", "\\1", matches, perl = TRUE)
+  # Pattern for @font-face
+  fontface_pattern <- "@font-face\\s*\\{[^}]+\\}"
+  fontface_blocks <- regmatches(css_text, gregexpr(fontface_pattern, css_text, perl = TRUE))[[1]]
 
-  return(font_names)
+  if (length(fontface_blocks) == 0) {
+    return(character())
+  }
+
+  # Pattern to extract family in @font-face blocks
+  family_pattern <- "font-family:\\s*['\"]([^'\"]+)['\"]"
+
+  font_names <- character()
+  for (block in fontface_blocks) {
+    matches <- regmatches(block, regexpr(family_pattern, block, perl = TRUE))
+    if (length(matches) > 0) {
+      family_name <- gsub(family_pattern, "\\1", matches, perl = TRUE)
+      font_names <- c(font_names, family_name)
+    }
+  }
+
+  return(sort(unique(font_names)))
 }
 
 htmldep_css_files <- function(dep) {

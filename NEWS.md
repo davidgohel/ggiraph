@@ -8,7 +8,11 @@
 mode when plot is rendered.
 - improve `opts_toolbar()` documentation and examples to better demonstrate the `hidden`
 parameter for customizing which toolbar buttons are displayed.
-- add examples with correct management of fonts (using `register_liberationsans()`)
+- add examples with correct management of fonts (using `register_liberationsans()`).
+- add `check_fonts_registered` and `check_fonts_dependencies` arguments to `girafe()`
+to validate that fonts used in plots are properly registered and available in HTML dependencies.
+
+
 
 ## Issues
 
