@@ -5,8 +5,8 @@
 \title{Create a girafe object}
 \usage{
 girafe(
-  code,
   ggobj = NULL,
+  code,
   pointsize = 12,
   width_svg = NULL,
   height_svg = NULL,
@@ -18,10 +18,10 @@ girafe(
 )
 }
 \arguments{
-\item{code}{Plotting code to execute}
-
 \item{ggobj}{ggplot object to print. Argument \code{code} will
 be ignored if this argument is supplied.}
+
+\item{code}{Plotting code to execute}
 
 \item{pointsize}{the default pointsize of plotted text in pixels, default to 12.}
 

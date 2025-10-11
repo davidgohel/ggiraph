@@ -94,8 +94,8 @@
 #' @seealso [girafe_options()], [validated_fonts()], [dsvg()]
 #' @export
 girafe <- function(
-  code,
   ggobj = NULL,
+  code,
   pointsize = 12,
   width_svg = NULL,
   height_svg = NULL,

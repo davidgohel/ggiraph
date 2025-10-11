@@ -41,7 +41,7 @@ library(ggplot2)
 
 # girafe_options, trailing comma ----
 {
-  g <- girafe({
+  g <- girafe(code = {
     NULL
   })
   expect_identical(girafe_options(g, ), g, info = "no options set")

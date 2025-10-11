@@ -267,7 +267,7 @@ library(ggiraph)
 # girafe_options ----
 {
   expect_error(girafe_options("foo"), info = "check x argument")
-  g <- girafe({
+  g <- girafe(code = {
     NULL
   })
   expect_identical(girafe_options(g), g, info = "no options set")

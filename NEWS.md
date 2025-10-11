@@ -1,3 +1,11 @@
+# ggiraph 0.9.3
+
+## Change
+
+- reorder arguments of `girafe()` with argument `ggobj` in first position. 
+IT DOES NOT makes ggplot objects pipe-able with `girafe()` (unless you add
+parenthesis around your ggplot code).
+
 # ggiraph 0.9.2
 
 ## Feature
