@@ -1,7 +1,8 @@
 RWINLIB = ../windows/harfbuzz-2.7.4
 
 PKG_CPPFLAGS = -I${RWINLIB}/include \
-	-DSTRICT_R_HEADERS
+	-DSTRICT_R_HEADERS \
+	-DRCPP_NO_MASK_RF_ERROR
 
 PKG_LIBS = -L${RWINLIB}/lib${R_ARCH}${CRT} -lpng -lz
 
