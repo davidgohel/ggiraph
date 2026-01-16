@@ -51,7 +51,7 @@ source("setup.R")
 
 # attributes cannot contain single quotes ----
 {
-  expect_error(dsvg_doc({
+  expect_silent(dsvg_doc({
     plot.new()
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6), c(.4, .3))

@@ -6,6 +6,11 @@
 IT DOES NOT makes ggplot objects pipe-able with `girafe()` (unless you add
 parenthesis around your ggplot code).
 
+## Issues
+
+- single quotes in attribute values (e.g. "Côte d'Ivoire") are now automatically
+escaped instead of raising an error (#329).
+
 # ggiraph 0.9.2
 
 ## Feature
