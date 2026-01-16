@@ -268,7 +268,12 @@ opts_hover_theme <- function(css = NULL, reactive = FALSE) {
 #' [girafe_css()], to give more control over the css for different element types.
 #' @param type selection mode ("single", "multiple", "none")
 #'  when widget is in a Shiny application.
-#' @param only_shiny disable selections if not in a shiny context.
+#' @param only_shiny disable selections when not running within a Shiny
+#' application. Defaults to `TRUE` because selection is primarily
+#' designed for Shiny interactivity, where selected elements can be
+#' captured as reactive values. Set to `FALSE` only to demonstrate
+#' the selection/lasso feature in standalone HTML pages (e.g. in
+#' documentation examples or R Markdown output).
 #' @param selected character vector, id to be selected when the graph will be
 #' initialized.
 #' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,

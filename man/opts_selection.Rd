@@ -38,7 +38,12 @@ It must be a scalar character. It can also be constructed with
 \item{type}{selection mode ("single", "multiple", "none")
 when widget is in a Shiny application.}
 
-\item{only_shiny}{disable selections if not in a shiny context.}
+\item{only_shiny}{disable selections when not running within a Shiny
+application. Defaults to \code{TRUE} because selection is primarily
+designed for Shiny interactivity, where selected elements can be
+captured as reactive values. Set to \code{FALSE} only to demonstrate
+the selection/lasso feature in standalone HTML pages (e.g. in
+documentation examples or R Markdown output).}
 
 \item{selected}{character vector, id to be selected when the graph will be
 initialized.}
