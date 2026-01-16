@@ -40,6 +40,12 @@ to validate that fonts used in plots are properly registered and available in HT
 - refresh the process that bundle the javascript file thanks to package 'packer'.
 - id is now defined with an simple internal function copied from `shinyWidgets::genId`
 
+## changes
+
+- `font_family_exists()` was a duplicated function from 'gdtools', as 'gdtools' is now imported
+it makes no sense to keep the duplicate. Use `gdtools::font_family_exists()` instead of 
+`ggiraph::font_family_exists()`.
+
 # ggiraph 0.9.1
 
 ## Issues
