@@ -684,32 +684,38 @@ girafe_options <- function(x, ...) {
   x
 }
 
+merge_single_opts <- function(default_opts, user_opts) {
+  merged <- modifyList(as.list(default_opts), as.list(user_opts))
+  class(merged) <- class(default_opts)
+  merged
+}
+
 merge_options <- function(options, args) {
   for (arg in args) {
     if (inherits(arg, "opts_zoom")) {
-      options$zoom <- arg
+      options$zoom <- merge_single_opts(options$zoom, arg)
     } else if (inherits(arg, "opts_selection")) {
-      options$select <- arg
+      options$select <- merge_single_opts(options$select, arg)
     } else if (inherits(arg, "opts_selection_inv")) {
-      options$select_inv <- arg
+      options$select_inv <- merge_single_opts(options$select_inv, arg)
     } else if (inherits(arg, "opts_selection_key")) {
-      options$select_key <- arg
+      options$select_key <- merge_single_opts(options$select_key, arg)
     } else if (inherits(arg, "opts_selection_theme")) {
-      options$select_theme <- arg
+      options$select_theme <- merge_single_opts(options$select_theme, arg)
     } else if (inherits(arg, "opts_tooltip")) {
-      options$tooltip <- arg
+      options$tooltip <- merge_single_opts(options$tooltip, arg)
     } else if (inherits(arg, "opts_hover")) {
-      options$hover <- arg
+      options$hover <- merge_single_opts(options$hover, arg)
     } else if (inherits(arg, "opts_hover_key")) {
-      options$hover_key <- arg
+      options$hover_key <- merge_single_opts(options$hover_key, arg)
     } else if (inherits(arg, "opts_hover_theme")) {
-      options$hover_theme <- arg
+      options$hover_theme <- merge_single_opts(options$hover_theme, arg)
     } else if (inherits(arg, "opts_hover_inv")) {
-      options$hover_inv <- arg
+      options$hover_inv <- merge_single_opts(options$hover_inv, arg)
     } else if (inherits(arg, "opts_toolbar")) {
-      options$toolbar <- arg
+      options$toolbar <- merge_single_opts(options$toolbar, arg)
     } else if (inherits(arg, "opts_sizing")) {
-      options$sizing <- arg
+      options$sizing <- merge_single_opts(options$sizing, arg)
     }
   }
   options

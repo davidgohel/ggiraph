@@ -94,6 +94,12 @@ This precaution is necessary:
 girafe animations can be customized with function \code{\link[=girafe_options]{girafe_options()}}.
 Options are available to customize tooltips, hover effects, zoom effects
 selection effects and toolbar.
+
+Options passed to \code{girafe()} are merged with defaults set via
+\code{\link[=set_girafe_defaults]{set_girafe_defaults()}}. This means you can define global styles once
+and override only specific parameters per plot. For example, if you set
+a custom tooltip CSS globally, you can still adjust \code{offx} and \code{offy}
+in a specific \code{girafe()} call without losing your CSS styling.
 }
 
 \section{Widget sizing}{
@@ -139,11 +145,14 @@ dataset$carname <- row.names(mtcars)
 gg_point <- ggplot(
   data = dataset,
   mapping = aes(
-    x = wt, y = qsec, color = disp,
-    tooltip = carname, data_id = carname
+    x = wt,
+    y = qsec,
+    color = disp,
+    tooltip = carname,
+    data_id = carname
   )
 ) +
-  geom_point_interactive(hover_nearest = TRUE, size = 11/.pt) +
+  geom_point_interactive(hover_nearest = TRUE, size = 11 / .pt) +
   theme_minimal(base_family = "Liberation Sans", base_size = 11)
 
 x <- girafe(

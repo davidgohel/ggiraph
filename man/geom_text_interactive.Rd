@@ -39,9 +39,12 @@ library(gdtools)
 register_liberationsans()
 
 p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
-  geom_label_interactive(aes(
-    tooltip = paste(rownames(mtcars), mpg, sep = "\n")
-  ), family = "Liberation Sans") +
+  geom_label_interactive(
+    aes(
+      tooltip = paste(rownames(mtcars), mpg, sep = "\n")
+    ),
+    family = "Liberation Sans"
+  ) +
   theme_minimal(base_family = "Liberation Sans", base_size = 11)
 x <- girafe(
   ggobj = p,

@@ -78,7 +78,10 @@ if (
   dodge_width <- .8
   position <- position_dodge(width = dodge_width)
 
-  gg_qr <- ggplot(dat, aes(x = am, y = disp, fill = gear, group = interaction(am, gear))) +
+  gg_qr <- ggplot(
+    dat,
+    aes(x = am, y = disp, fill = gear, group = interaction(am, gear))
+  ) +
     geom_quasirandom_interactive(
       aes(tooltip = disp, data_id = name),
       shape = 21,

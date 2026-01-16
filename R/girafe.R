@@ -65,6 +65,12 @@
 #' girafe animations can be customized with function [girafe_options()].
 #' Options are available to customize tooltips, hover effects, zoom effects
 #' selection effects and toolbar.
+#'
+#' Options passed to `girafe()` are merged with defaults set via
+#' [set_girafe_defaults()]. This means you can define global styles once
+#' and override only specific parameters per plot. For example, if you set
+#' a custom tooltip CSS globally, you can still adjust `offx` and `offy`
+#' in a specific `girafe()` call without losing your CSS styling.
 #' @section Widget sizing:
 #' girafe graphics are responsive, which mean, they will be resized
 #' according to their container. There are two responsive behavior

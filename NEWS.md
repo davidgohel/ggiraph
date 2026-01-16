@@ -2,9 +2,15 @@
 
 ## Change
 
-- reorder arguments of `girafe()` with argument `ggobj` in first position. 
+- reorder arguments of `girafe()` with argument `ggobj` in first position.
 IT DOES NOT makes ggplot objects pipe-able with `girafe()` (unless you add
 parenthesis around your ggplot code).
+
+## Feature
+
+- options passed to `girafe()` are now merged with defaults from
+`set_girafe_defaults()` instead of replacing them entirely. This allows
+setting global styles while overriding specific parameters per plot (#328).
 
 ## Issues
 
