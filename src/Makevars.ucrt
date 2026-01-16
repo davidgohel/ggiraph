@@ -5,4 +5,5 @@ else
   PKG_LIBS = $(shell pkg-config --libs libpng)
 endif
 
-PKG_CPPFLAGS += -DSTRICT_R_HEADERS
+PKG_CPPFLAGS += -DSTRICT_R_HEADERS \
+  -DRCPP_NO_MASK_RF_ERROR
