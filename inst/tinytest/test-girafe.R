@@ -50,7 +50,7 @@ library(xml2)
   }
 
   g <- girafe(ggobj = ggplot(), options = list(opts_zoom(1, 4), htmlwidgets::sizingPolicy(padding = 0)))
-  expect_identical(g$x$settings$zoom, opts_zoom(1, 4))
+  expect_equivalent(g$x$settings$zoom, opts_zoom(1, 4))
   expect_identical(g$sizingPolicy, htmlwidgets::sizingPolicy(padding = 0))
 }
 
