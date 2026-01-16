@@ -8,6 +8,8 @@ parenthesis around your ggplot code).
 
 ## Issues
 
+- tooltip position is now reset to (0,0) when it disappears, fixing potential
+layout issues in flexdashboard and similar containers. (#323)
 - single quotes in attribute values (e.g. "Côte d'Ivoire") are now automatically
 escaped instead of raising an error (#329).
 

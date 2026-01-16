@@ -66,7 +66,13 @@ export default class TooltipHandler {
     if (this.lastTargetId) {
       this.lastTargetId = null;
       const tooltipEl = d3.select('div.' + this.clsName);
-      tooltipEl.transition().duration(this.delay_out).style('opacity', 0);
+      tooltipEl
+        .transition()
+        .duration(this.delay_out)
+        .style('opacity', 0)
+        .on('end', function () {
+          d3.select(this).style('left', '0px').style('top', '0px');
+        });
     }
   }
 
