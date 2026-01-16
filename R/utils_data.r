@@ -17,6 +17,6 @@ panel_path_reshape <- function(data) {
     data,
     has_na = NULL, segment_change = NULL
   )
-  data
+  as.data.frame(data)
 }
 

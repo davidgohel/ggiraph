@@ -12,6 +12,8 @@ parenthesis around your ggplot code).
 layout issues in flexdashboard and similar containers. (#323)
 - single quotes in attribute values (e.g. "Côte d'Ivoire") are now automatically
 escaped instead of raising an error (#329).
+- fix "Unknown or uninitialised column: `subgroup`" warning when using
+`geom_segment_interactive()` or `geom_path_interactive()` with `coord_polar()` (#344).
 
 # ggiraph 0.9.2
 
