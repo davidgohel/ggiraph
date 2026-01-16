@@ -154,7 +154,10 @@ extract_family_names_regex <- function(lines) {
 
   # Pattern for @font-face
   fontface_pattern <- "@font-face\\s*\\{[^}]+\\}"
-  fontface_blocks <- regmatches(css_text, gregexpr(fontface_pattern, css_text, perl = TRUE))[[1]]
+  fontface_blocks <- regmatches(
+    css_text,
+    gregexpr(fontface_pattern, css_text, perl = TRUE)
+  )[[1]]
 
   if (length(fontface_blocks) == 0) {
     return(character())
@@ -210,7 +213,9 @@ list_families_from_dependencies <- function(dependencies) {
 
 fonts_checking_registered <- function(family_list) {
   datafonts <- sys_fonts()
-  missing_family_list <- family_list[!tolower(family_list) %in% tolower(datafonts$family)]
+  missing_family_list <- family_list[
+    !tolower(family_list) %in% tolower(datafonts$family)
+  ]
 
   if (length(missing_family_list) > 0) {
     cli::cli_abort(c(
@@ -239,4 +244,3 @@ fonts_checking_dependencies <- function(dependencies, family_list) {
     )
   }
 }
-

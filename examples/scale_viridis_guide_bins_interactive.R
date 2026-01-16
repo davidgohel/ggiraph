@@ -61,7 +61,6 @@ if (interactive()) {
   print(x)
 }
 
-
 # # make the title and labels interactive
 # p3 <- p +
 #   scale_fill_viridis_c_interactive(

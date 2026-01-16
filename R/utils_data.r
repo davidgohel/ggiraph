@@ -15,8 +15,8 @@ panel_path_reshape <- function(data) {
   data <- filter(data, !.data$has_na)
   data <- mutate(
     data,
-    has_na = NULL, segment_change = NULL
+    has_na = NULL,
+    segment_change = NULL
   )
   as.data.frame(data)
 }
-

@@ -42,13 +42,21 @@ GeomInteractiveRibbon <- ggproto(
     polygon_child_index <- which(grepl("polygon", names(grtree$children)))[1]
     if (length(polygon_child_index) == 1L && is.finite(polygon_child_index)) {
       grtree$children[[polygon_child_index]] <-
-        add_interactive_attrs(grtree$children[[polygon_child_index]], aes, ipar = .ipar)
+        add_interactive_attrs(
+          grtree$children[[polygon_child_index]],
+          aes,
+          ipar = .ipar
+        )
     }
 
     polyline_child_index <- which(grepl("polyline", names(grtree$children)))[1]
     if (length(polyline_child_index) == 1L && is.finite(polyline_child_index)) {
       grtree$children[[polyline_child_index]] <-
-        add_interactive_attrs(grtree$children[[polyline_child_index]], aes, ipar = .ipar)
+        add_interactive_attrs(
+          grtree$children[[polyline_child_index]],
+          aes,
+          ipar = .ipar
+        )
       grtree$children[[polyline_child_index]]$.interactive_hooks <- c("fill_na")
     }
 

@@ -25,4 +25,3 @@ geom_quasirandom_interactive <- function(...) {
     interactive_geom = GeomInteractivePoint
   )
 }
-

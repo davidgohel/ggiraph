@@ -214,7 +214,11 @@ label_data_to_wrap <- function(layout, gtab_layout, facets) {
 
   ## ordering
   # create a fake key in gtab_layout
-  gtab_layout$layout_key <- gsub("(.*?)([0-9]+-[0-9]+)", "\\2", gtab_layout$name)
+  gtab_layout$layout_key <- gsub(
+    "(.*?)([0-9]+-[0-9]+)",
+    "\\2",
+    gtab_layout$name
+  )
   # create a fake key in layout
   layout$layout_key <- paste(layout$COL, layout$ROW, sep = "-")
   layout$layout_key <- factor(
