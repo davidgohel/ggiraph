@@ -18,27 +18,26 @@ elements when used in shiny applications.
 Interactivity is added to ggplot **geometries, legends and theme
 elements**, via the following aesthetics:
 
--   `tooltip`: tooltips to be displayed when mouse is over elements.
--   `onclick`: JavaScript function to be executed when elements are
-    clicked.
--   `data_id`: id to be associated with elements (used for hover and
-    click actions)
+- `tooltip`: tooltips to be displayed when mouse is over elements.
+- `onclick`: JavaScript function to be executed when elements are
+  clicked.
+- `data_id`: id to be associated with elements (used for hover and click
+  actions)
 
 ### Why use `{ggiraph}`
 
--   You want to provide your readers with more information than the
-    basic information available; you can display a tooltip when the
-    user’s mouse is on a graphical element, you can also visually
-    animate elements with the same attribute when the mouse passes over
-    a graphical element, and finally you can link a JavaScript action to
-    the click, such as opening a hypertext link.
--   You want to allow users of a Shiny application to select graphical
-    elements; for example, you can make the points of a scatter plot
-    selectable and available as a reactive value from the server part of
-    your application. With Shiny, `{ggiraph}` allows interaction with
-    graph elements, legends elements, titles and ggplot theme elements
-    from the server part; each selection is available as a reactive
-    value.
+- You want to provide your readers with more information than the basic
+  information available; you can display a tooltip when the user’s mouse
+  is on a graphical element, you can also visually animate elements with
+  the same attribute when the mouse passes over a graphical element, and
+  finally you can link a JavaScript action to the click, such as opening
+  a hypertext link.
+- You want to allow users of a Shiny application to select graphical
+  elements; for example, you can make the points of a scatter plot
+  selectable and available as a reactive value from the server part of
+  your application. With Shiny, `{ggiraph}` allows interaction with
+  graph elements, legends elements, titles and ggplot theme elements
+  from the server part; each selection is available as a reactive value.
 
 ![](man/figures/image_girafe.png)
 
@@ -52,12 +51,12 @@ elements**, via the following aesthetics:
 
 The things you need to know to create an interactive graphic :
 
--   Instead of using `geom_point`, use `geom_point_interactive`, instead
-    of using `geom_sf`, use `geom_sf_interactive`… Provide at least one
-    of the aesthetics `tooltip`, `data_id` and `onclick` to create
-    interactive elements.
--   Call function `girafe` with the ggplot object so that the graphic is
-    translated as a web interactive graphics.
+- Instead of using `geom_point`, use `geom_point_interactive`, instead
+  of using `geom_sf`, use `geom_sf_interactive`… Provide at least one of
+  the aesthetics `tooltip`, `data_id` and `onclick` to create
+  interactive elements.
+- Call function `girafe` with the ggplot object so that the graphic is
+  translated as a web interactive graphics.
 
 ``` r
 library(ggplot2)
@@ -75,10 +74,10 @@ girafe(ggobj = gg_point)
 
 ### With Shiny
 
--   If used within a shiny application, elements associated with an id
-    (`data_id`) can be selected and manipulated on client and server
-    sides. The list of selected values will be stored in in a reactive
-    value named `[shiny_id]_selected`.
+- If used within a shiny application, elements associated with an id
+  (`data_id`) can be selected and manipulated on client and server
+  sides. The list of selected values will be stored in in a reactive
+  value named `[shiny_id]_selected`.
 
 ![](man/figures/shiny_girafe.png)
 
@@ -140,11 +139,39 @@ documentation.
 If you want to submit a Pull Request to integrate functions of yours,
 provide if possible:
 
--   the new function(s) with code and roxygen tags (with examples)
--   a new section in the appropriate vignette that describes how to use
-    the new function
--   corresponding tests in directory `inst/tinytest`.
+- the new function(s) with code and roxygen tags (with examples)
+- a new section in the appropriate vignette that describes how to use
+  the new function
+- corresponding tests in directory `inst/tinytest`.
 
-By using rhub (run `rhub::check_for_cran()`), you will see if everything
-is ok. When submitted, the PR will be evaluated automatically with
-Github Action and you will be able to see if something broke.
+### Install from sources on macOS
+
+Please read carefully the official R for macOS instructions:
+<https://mac.r-project.org/>
+
+To compile `{ggiraph}` from source, you need `libpng`. Using Homebrew is
+recommended:
+
+    brew install libpng
+
+Then configure your `~/.R/Makevars` file with the appropriate paths. For
+Apple Silicon Macs (M1/M2/M3), the typical configuration is:
+
+    CFLAGS=-I/opt/homebrew/include
+    CPPFLAGS=-I/opt/homebrew/include
+    CXXFLAGS=-I/opt/homebrew/include
+    CXX11FLAGS=-I/opt/homebrew/include
+    LDFLAGS=-L/opt/homebrew/lib
+
+For Intel Macs, paths are usually `/usr/local/include` and
+`/usr/local/lib` instead.
+
+    CFLAGS=-I/usr/local/include
+    CPPFLAGS=-I/usr/local/include
+    CXXFLAGS=-I/usr/local/include
+    CXX11FLAGS=-I/usr/local/include
+    LDFLAGS=-L/usr/local/lib
+
+> Note: Paths may vary depending on your system configuration. We are
+> unable to provide support for installation issues related to macOS
+> compilation setup.

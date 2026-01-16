@@ -133,22 +133,54 @@ usually read them and answer when possible.
 
 ### Bug reports
 
-When you file a [bug report](https://github.com/davidgohel/ggiraph/issues), please spend 
-some time making it easy for me to follow and reproduce. The more time you spend on making 
-the bug report coherent, the more time I can dedicate to investigate the bug as opposed to 
-the bug report.
+When you file a [bug report](https://github.com/davidgohel/ggiraph/issues),
+please spend some time making it easy for me to follow and reproduce. The more
+time you spend on making the bug report coherent, the more time I can dedicate
+to investigate the bug as opposed to the bug report.
 
 ### Contributing to the package development
 
 A great way to start is to contribute an example or improve the documentation.
 
-If you want to submit a Pull Request to integrate functions of yours, provide if possible:
+If you want to submit a Pull Request to integrate functions of yours, provide if
+possible:
 
-* the new function(s) with code and roxygen tags (with examples)
-* a new section in the appropriate vignette that describes how to use the new function
-* corresponding tests in directory `inst/tinytest`.
+- the new function(s) with code and roxygen tags (with examples)
+- a new section in the appropriate vignette that describes how to use the new
+function
+- corresponding tests in directory `inst/tinytest`.
 
-By using rhub (run `rhub::check_for_cran()`), you will see if everything is ok.
-When submitted, the PR will be evaluated automatically with Github Action 
-and you will be able to see if something broke.
+### Install from sources on macOS
 
+Please read carefully the official R for macOS instructions: https://mac.r-project.org/
+
+To compile `{ggiraph}` from source, you need `libpng`. Using Homebrew is recommended:
+
+```
+brew install libpng
+```
+
+Then configure your `~/.R/Makevars` file with the appropriate paths. For Apple 
+Silicon Macs (M1/M2/M3), the typical configuration is:
+
+```
+CFLAGS=-I/opt/homebrew/include
+CPPFLAGS=-I/opt/homebrew/include
+CXXFLAGS=-I/opt/homebrew/include
+CXX11FLAGS=-I/opt/homebrew/include
+LDFLAGS=-L/opt/homebrew/lib
+```
+
+For Intel Macs, paths are usually `/usr/local/include` and `/usr/local/lib` instead.
+
+```
+CFLAGS=-I/usr/local/include
+CPPFLAGS=-I/usr/local/include
+CXXFLAGS=-I/usr/local/include
+CXX11FLAGS=-I/usr/local/include
+LDFLAGS=-L/usr/local/lib
+```
+
+
+> Note: Paths may vary depending on your system configuration. We are unable to 
+provide support for installation issues related to macOS compilation setup.
