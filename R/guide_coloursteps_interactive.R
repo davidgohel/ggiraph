@@ -44,8 +44,9 @@ GuideInteractiveColoursteps <- ggproto(
       label_breaks <- parsed$breaks
       if (params$even.steps || !is.numeric(parsed$scale_breaks)) {
         show.limits <- params$show.limits %||% scale$show.limits %||% FALSE
+        # ggplot2 >= 4.0: show.limits can be a length-2 vector, use any()
         if (
-          show.limits &&
+          any(show.limits) &&
             !(is.character(scale$labels) || is.numeric(scale$labels))
         ) {
           label_breaks <- parsed$all_breaks
@@ -67,5 +68,9 @@ GuideInteractiveColoursteps <- ggproto(
   },
   build_decor = function(decor, grobs, elements, params) {
     GuideInteractiveColourbar$build_decor(decor, grobs, elements, params)
+  },
+  # Delegate to GuideInteractiveColourbar which handles interactive_label
+  build_labels = function(key, elements, params) {
+    GuideInteractiveColourbar$build_labels(key, elements, params)
   }
 )

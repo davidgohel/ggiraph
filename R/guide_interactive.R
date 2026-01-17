@@ -114,17 +114,23 @@ interactive_guide_train <- function(
       params$.ipar <- ipar
       params$.interactive <- idata
 
-      # continuous scales might break the label_interactive struct
-      # and we need to replace the labels
+      # Continuous scales might break the label_interactive struct
+      # and we need to replace the labels in the key.
+      # ggplot2 >= 4.0 compatibility fix:
+      # - Compare length(labels) with length(label_breaks) instead of nrow(key)
+      #   because for binned guides, key includes limit rows but label_breaks may not.
+      # - Only replace key$.label when labels match key rows exactly (continuous guides).
+      # - For binned guides with hidden limits, the build_labels method handles
+      #   interactive labels by converting them before calling the parent method.
       if (is.numeric(label_breaks)) {
         labels <- scale$get_labels(label_breaks)
         if (inherits(labels, "interactive_label")) {
-          if (length(labels) != nrow(key)) {
+          if (length(labels) != length(label_breaks)) {
             warning(paste0(
               "Cannot set the guide interactive labels, ",
               "', because its length differs from the breaks length"
             ))
-          } else {
+          } else if (length(labels) == nrow(key)) {
             key$.label <- labels
             params$key <- key
           }
