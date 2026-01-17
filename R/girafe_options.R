@@ -144,8 +144,11 @@ opts_tooltip <- function(
   call_args <- names(match.call())[-1]
   # Map function arg names to list element names
   arg_mapping <- c(delay_mouseover = "delay_over", delay_mouseout = "delay_out")
-  call_args <- ifelse(call_args %in% names(arg_mapping),
-                      arg_mapping[call_args], call_args)
+  call_args <- ifelse(
+    call_args %in% names(arg_mapping),
+    arg_mapping[call_args],
+    call_args
+  )
   attr(x, "explicit_args") <- call_args
   x
 }
@@ -624,8 +627,11 @@ opts_toolbar <- function(
   call_args <- names(match.call())[-1]
   # Map function arg names to list element names
   arg_mapping <- c(delay_mouseover = "delay_over", delay_mouseout = "delay_out")
-  call_args <- ifelse(call_args %in% names(arg_mapping),
-                      arg_mapping[call_args], call_args)
+  call_args <- ifelse(
+    call_args %in% names(arg_mapping),
+    arg_mapping[call_args],
+    call_args
+  )
   attr(x, "explicit_args") <- call_args
   x
 }

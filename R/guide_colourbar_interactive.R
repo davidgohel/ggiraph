@@ -68,5 +68,31 @@ GuideInteractiveColourbar <- ggproto(
       )
     }
     result
+  },
+  # In ggplot2 4.0, GuideColourbar$build_labels calls validate_labels() which
+  # processes lists with unlist(), stripping the 'interactive_label' class.
+  # We override build_labels to convert the single interactive_label object
+  # (containing multiple labels) into a list of individual label_interactive
+  # objects BEFORE calling the parent method. Each individual label_interactive
+  # preserves its interactive attributes when passed to element_grob().
+  build_labels = function(key, elements, params) {
+    if (inherits(key$.label, "interactive_label")) {
+      labels <- key$.label
+      lbl_ipar <- get_ipar(labels)
+      lbl_ip <- transpose(get_interactive_data(labels))
+      extra_interactive_params <- setdiff(lbl_ipar, IPAR_NAMES)
+      labels <- lapply(seq_along(labels), function(i) {
+        args <- c(
+          list(
+            label = labels[[i]],
+            extra_interactive_params = extra_interactive_params
+          ),
+          lbl_ip[[i]]
+        )
+        do.call(label_interactive, args)
+      })
+      key$.label <- labels
+    }
+    GuideColourbar$build_labels(key, elements, params)
   }
 )
