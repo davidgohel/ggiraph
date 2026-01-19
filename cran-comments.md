@@ -1,6 +1,6 @@
 ## Test environments
 
-- local mac-os R 4.5.1 installation
+- local mac-os R 4.5.2 installation
 - Ubuntu latest with R release and devel
 - win-builder (release and devel)
 
