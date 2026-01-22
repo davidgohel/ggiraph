@@ -1,0 +1,145 @@
+# Create interactive rectangles
+
+These geometries are based on
+[`ggplot2::geom_rect()`](https://ggplot2.tidyverse.org/reference/geom_tile.html)
+and
+[`ggplot2::geom_tile()`](https://ggplot2.tidyverse.org/reference/geom_tile.html).
+See the documentation for those functions for more details.
+
+## Usage
+
+``` r
+geom_rect_interactive(...)
+
+geom_tile_interactive(...)
+```
+
+## Arguments
+
+- ...:
+
+  arguments passed to base function, plus any of the
+  [interactive_parameters](https://davidgohel.github.io/ggiraph/dev/reference/interactive_parameters.md).
+
+## Note
+
+Converting a raster to svg elements could inflate dramatically the size
+of the svg and make it unreadable in a browser. Function
+`geom_tile_interactive` should be used with caution, total number of
+rectangles should be small.
+
+## Details for interactive geom functions
+
+The interactive parameters can be supplied with two ways:
+
+- As aesthetics with the mapping argument (via
+  [`ggplot2::aes()`](https://ggplot2.tidyverse.org/reference/aes.html)).
+  In this way they can be mapped to data columns and apply to a set of
+  geometries.
+
+- As plain arguments into the geom\_\*\_interactive function. In this
+  way they can be set to a scalar value.
+
+## See also
+
+[`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
+
+## Examples
+
+``` r
+# add interactive polygons to a ggplot -------
+library(ggplot2)
+library(ggiraph)
+
+dataset = data.frame(
+  x1 = c(1, 3, 1, 5, 4),
+  x2 = c(2, 4, 3, 6, 6),
+  y1 = c(1, 1, 4, 1, 3),
+  y2 = c(2, 2, 5, 3, 5),
+  t = c('a', 'a', 'a', 'b', 'b'),
+  r = c(1, 2, 3, 4, 5),
+  tooltip = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
+  uid = c("ID 1", "ID 2", "ID 3", "ID 4", "ID 5"),
+  oc = rep("alert(this.getAttribute(\"data-id\"))", 5)
+)
+
+gg_rect = ggplot() +
+  scale_x_continuous(name = "x") +
+  scale_y_continuous(name = "y") +
+  geom_rect_interactive(
+    data = dataset,
+    mapping = aes(
+      xmin = x1,
+      xmax = x2,
+      ymin = y1,
+      ymax = y2,
+      fill = t,
+      tooltip = tooltip,
+      onclick = oc,
+      data_id = uid
+    ),
+    color = "black",
+    alpha = 0.5,
+    linejoin = "bevel",
+    lineend = "round"
+  ) +
+  geom_text(
+    data = dataset,
+    aes(x = x1 + (x2 - x1) / 2, y = y1 + (y2 - y1) / 2, label = r),
+    size = 4
+  )
+
+x <- girafe(ggobj = gg_rect)
+if (interactive()) {
+  print(x)
+}
+# add interactive tiles to a ggplot -------
+library(ggplot2)
+library(ggiraph)
+
+df <- data.frame(
+  id = rep(c("a", "b", "c", "d", "e"), 2),
+  x = rep(c(2, 5, 7, 9, 12), 2),
+  y = rep(c(1, 2), each = 5),
+  z = factor(rep(1:5, each = 2)),
+  w = rep(diff(c(0, 4, 6, 8, 10, 14)), 2)
+)
+
+p <- ggplot(df, aes(x, y, tooltip = id)) + geom_tile_interactive(aes(fill = z))
+x <- girafe(ggobj = p)
+if (interactive()) {
+  print(x)
+}
+
+
+# correlation dataset ----
+cor_mat <- cor(mtcars)
+diag(cor_mat) <- NA
+var1 <- rep(row.names(cor_mat), ncol(cor_mat))
+var2 <- rep(colnames(cor_mat), each = nrow(cor_mat))
+cor <- as.numeric(cor_mat)
+cor_mat <- data.frame(
+  var1 = var1,
+  var2 = var2,
+  cor = cor,
+  stringsAsFactors = FALSE
+)
+cor_mat[["tooltip"]] <-
+  sprintf("<i>`%s`</i> vs <i>`%s`</i>:</br><code>%.03f</code>", var1, var2, cor)
+
+p <- ggplot(data = cor_mat, aes(x = var1, y = var2)) +
+  geom_tile_interactive(aes(fill = cor, tooltip = tooltip), colour = "white") +
+  scale_fill_gradient2_interactive(
+    low = "#BC120A",
+    mid = "white",
+    high = "#BC120A",
+    limits = c(-1, 1),
+    data_id = "cormat",
+    tooltip = "cormat"
+  ) +
+  coord_equal()
+x <- girafe(ggobj = p)
+if (interactive()) {
+  print(x)
+}
+```
