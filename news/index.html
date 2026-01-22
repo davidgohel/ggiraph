@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,24 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.2" id="ggiraph-092">ggiraph 0.9.2<a class="anchor" aria-label="anchor" href="#ggiraph-092"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.3" id="ggiraph-093">ggiraph 0.9.3<a class="anchor" aria-label="anchor" href="#ggiraph-093"></a></h2><p class="text-muted">CRAN release: 2026-01-19</p>
+<div class="section level3">
+<h3 id="change-0-9-3">Change<a class="anchor" aria-label="anchor" href="#change-0-9-3"></a></h3>
+<ul><li>reorder arguments of <code><a href="../reference/girafe.html">girafe()</a></code> with argument <code>ggobj</code> in first position. IT DOES NOT makes ggplot objects pipe-able with <code><a href="../reference/girafe.html">girafe()</a></code> (unless you add parenthesis around your ggplot code).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="feature-0-9-3">Feature<a class="anchor" aria-label="anchor" href="#feature-0-9-3"></a></h3>
+<ul><li>options passed to <code><a href="../reference/girafe.html">girafe()</a></code> are now merged with defaults from <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> instead of replacing them entirely. This allows setting global styles while overriding specific parameters per plot (<a href="https://github.com/davidgohel/ggiraph/issues/328" class="external-link">#328</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="issues-0-9-3">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-3"></a></h3>
+<ul><li>tooltip position is now reset to (0,0) when it disappears, fixing potential layout issues in flexdashboard and similar containers. (<a href="https://github.com/davidgohel/ggiraph/issues/323" class="external-link">#323</a>)</li>
+<li>single quotes in attribute values (e.g. “Côte d’Ivoire”) are now automatically escaped instead of raising an error (<a href="https://github.com/davidgohel/ggiraph/issues/329" class="external-link">#329</a>).</li>
+<li>fix “Unknown or uninitialised column: <code>subgroup</code>” warning when using <code><a href="../reference/geom_segment_interactive.html">geom_segment_interactive()</a></code> or <code><a href="../reference/geom_path_interactive.html">geom_path_interactive()</a></code> with <code><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar()</a></code> (<a href="https://github.com/davidgohel/ggiraph/issues/344" class="external-link">#344</a>).</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.9.2" id="ggiraph-092">ggiraph 0.9.2<a class="anchor" aria-label="anchor" href="#ggiraph-092"></a></h2><p class="text-muted">CRAN release: 2025-10-07</p>
 <div class="section level3">
 <h3 id="feature-0-9-2">Feature<a class="anchor" aria-label="anchor" href="#feature-0-9-2"></a></h3>
 <ul><li>add interactive version of <code><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html" class="external-link">ggbeeswarm::geom_quasirandom</a></code>, see <code><a href="../reference/geom_quasirandom_interactive.html">geom_quasirandom_interactive()</a></code>.</li>
@@ -51,6 +68,11 @@
 <ul><li>refresh the process that bundle the javascript file thanks to package ‘packer’.</li>
 <li>id is now defined with an simple internal function copied from <code>shinyWidgets::genId</code>
 </li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-0-9-2">changes<a class="anchor" aria-label="anchor" href="#changes-0-9-2"></a></h3>
+<ul><li>
+<code><a href="https://davidgohel.github.io/gdtools/reference/font_family_exists.html" class="external-link">font_family_exists()</a></code> was a duplicated function from ‘gdtools’, as ‘gdtools’ is now imported it makes no sense to keep the duplicate. Use <code><a href="https://davidgohel.github.io/gdtools/reference/font_family_exists.html" class="external-link">gdtools::font_family_exists()</a></code> instead of <code><a href="https://davidgohel.github.io/gdtools/reference/font_family_exists.html" class="external-link">ggiraph::font_family_exists()</a></code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -500,7 +522,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
