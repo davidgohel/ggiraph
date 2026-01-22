@@ -5,13 +5,14 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
+
 
 name: pkgdown
 
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, 'sitedeploy')"
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GDTOOLS_CACHE_DIR: "/usr/share/fonts/gfonts/"
