@@ -33,7 +33,8 @@ zoom_on = 'activate pan/zoom',
 zoom_off = 'deactivate pan/zoom',
 zoom_rect = 'zoom with rectangle',
 zoom_reset = 'reset pan/zoom',
-saveaspng = 'download png'
+saveaspng = 'download png',
+fullscreen = 'fullscreen'
 )}
 
 \item{hidden}{A character vector with the names of the buttons or button groups to be hidden
@@ -41,7 +42,7 @@ from the toolbar. This allows full customization of which buttons appear.
 
 Valid button groups: 'selection', 'zoom', 'misc'
 
-Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff', 'zoom_rect', 'zoom_reset', 'saveaspng'}
+Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff', 'zoom_rect', 'zoom_reset', 'saveaspng', 'fullscreen'}
 
 \item{fixed}{if FALSE (default), the toolbar will float above the graphic, if
 TRUE, the toolbar will be fixed and always visible.}

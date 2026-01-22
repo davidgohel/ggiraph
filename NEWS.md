@@ -1,3 +1,8 @@
+# ggiraph 0.9.4
+
+- toolbar gains new button "fullscreen".
+
+
 # ggiraph 0.9.3
 
 ## Change

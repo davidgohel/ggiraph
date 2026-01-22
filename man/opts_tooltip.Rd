@@ -15,7 +15,7 @@ opts_tooltip(
   delay_mouseover = 200,
   delay_mouseout = 500,
   placement = c("auto", "doc", "container"),
-  zindex = 999
+  zindex = 9999
 )
 }
 \arguments{

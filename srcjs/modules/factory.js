@@ -61,7 +61,7 @@ export function factory(shinyMode) {
 
         ggobj.setupZoom(x.settings.zoom, x.settings.toolbar.tooltips);
 
-        ggobj.setupToolbar(x.settings.toolbar);
+        ggobj.setupToolbar(x.settings.toolbar, x.settings.tooltip.zindex);
 
         ggobj.setupTooltip(x.settings.tooltip);
 

@@ -60,7 +60,7 @@ opts_tooltip <- function(
   delay_mouseover = 200,
   delay_mouseout = 500,
   placement = c("auto", "doc", "container"),
-  zindex = 999
+  zindex = 9999
 ) {
   css <- check_css(
     css = css,
@@ -494,7 +494,8 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #'   zoom_off = 'deactivate pan/zoom',
 #'   zoom_rect = 'zoom with rectangle',
 #'   zoom_reset = 'reset pan/zoom',
-#'   saveaspng = 'download png'
+#'   saveaspng = 'download png',
+#'   fullscreen = 'fullscreen'
 #' )
 #' @param fixed if FALSE (default), the toolbar will float above the graphic, if
 #' TRUE, the toolbar will be fixed and always visible.
@@ -503,7 +504,7 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #'
 #' Valid button groups: 'selection', 'zoom', 'misc'
 #'
-#' Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff', 'zoom_rect', 'zoom_reset', 'saveaspng'
+#' Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff', 'zoom_rect', 'zoom_reset', 'saveaspng', 'fullscreen'
 #'
 #' @note
 #' `saveaspng` relies on JavaScript promises, so any browsers that don't natively

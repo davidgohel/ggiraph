@@ -8,6 +8,7 @@ import SelectionHandler from './selection.js';
 import { MouseHandler, EVENT_TYPES } from './mouse.js';
 import NearestHandler from './nearest.js';
 import PngHandler from './png.js';
+import FullscreenHandler from './fullscreen.js';
 
 export default class SVGObject {
   constructor(containerid, shinyMode) {
@@ -246,7 +247,7 @@ export default class SVGObject {
     }
   }
 
-  setupToolbar(options) {
+  setupToolbar(options, tooltipZindex) {
     // register png handler
     let handler;
 
@@ -258,12 +259,22 @@ export default class SVGObject {
     } catch (e) {
       console.error(e);
     }
+    // register fullscreen handler
+    try {
+      if (!options.hidden.includes('fullscreen')) {
+        handler = new FullscreenHandler(this.svgid, this.containerid, tooltipZindex);
+        if (handler.init()) this.handlers.set('fullscreen', handler);
+      }
+    } catch (e) {
+      console.error(e);
+    }
     // register toolbar handler
     try {
       const providers = [];
       this.handlers.forEach(function (h) {
         if (
           h instanceof PngHandler ||
+          h instanceof FullscreenHandler ||
           h instanceof ZoomHandler ||
           (h instanceof SelectionHandler &&
             h.attrName == 'data-id' &&
