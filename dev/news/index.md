@@ -3,6 +3,8 @@
 ## ggiraph 0.9.4
 
 - toolbar gains new button “fullscreen”.
+- internals: lasso local replace d3-lasso and ggiraph is using the
+  latest version od d3.js.
 
 ## ggiraph 0.9.3
 
