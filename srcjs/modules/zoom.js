@@ -114,8 +114,8 @@ export default class ZoomHandler {
           .on('start', function () {
             targetEl.style('cursor', 'move');
           })
-          .on('zoom', function () {
-            targetEl.attr('transform', d3.event.transform);
+          .on('zoom', function (event) {
+            targetEl.attr('transform', event.transform);
           })
           .on('end', function () {
             targetEl.style('cursor', 'auto');
@@ -296,10 +296,11 @@ function dragrect() {
       on.start();
     }
 
-    function dragmove() {
+    function dragmove(event) {
       // mouse position within drawing area
-      const tx = d3.mouse(this)[0];
-      const ty = d3.mouse(this)[1];
+      const point = d3.pointer(event, this);
+      const tx = point[0];
+      const ty = point[1];
 
       // initialize the points or set the latest point
       if (!p1) {

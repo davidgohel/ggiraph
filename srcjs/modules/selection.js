@@ -1,8 +1,5 @@
 import * as d3 from 'd3';
-import { lasso } from 'd3-lasso';
-
-// Make d3 available globally for d3-lasso
-window.d3 = d3;
+import { lasso } from './lasso';
 
 export default class SelectionHandler {
   constructor(svgid, options) {
