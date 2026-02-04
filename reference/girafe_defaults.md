@@ -69,7 +69,7 @@ girafe_defaults()
 #> 
 #> $opts_tooltip
 #> $css
-#> [1] ".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}"
+#> [1] ".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:9999;}"
 #> 
 #> $placement
 #> [1] "doc"

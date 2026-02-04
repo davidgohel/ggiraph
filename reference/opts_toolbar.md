@@ -40,7 +40,7 @@ opts_toolbar(
   list( lasso_select = 'lasso selection', lasso_deselect = 'lasso
   deselection', zoom_on = 'activate pan/zoom', zoom_off = 'deactivate
   pan/zoom', zoom_rect = 'zoom with rectangle', zoom_reset = 'reset
-  pan/zoom', saveaspng = 'download png' )
+  pan/zoom', saveaspng = 'download png', fullscreen = 'fullscreen' )
 
 - hidden:
 
@@ -51,7 +51,7 @@ opts_toolbar(
   Valid button groups: 'selection', 'zoom', 'misc'
 
   Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff',
-  'zoom_rect', 'zoom_reset', 'saveaspng'
+  'zoom_rect', 'zoom_reset', 'saveaspng', 'fullscreen'
 
 - fixed:
 

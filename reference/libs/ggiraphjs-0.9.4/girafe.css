@@ -149,3 +149,47 @@
 .ggiraph-svg .ggiraph-svg-rootg [id] {
   pointer-events: all;
 }
+
+/* fullscreen modal styles */
+.ggiraph-fullscreen-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ggiraph-fullscreen-content {
+  position: relative;
+  height: 90vw;
+  max-height: 90vh;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ggiraph-fullscreen-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ggiraph-fullscreen-close:hover {
+  background-color: #e30c37;
+  color: white;
+}
