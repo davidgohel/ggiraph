@@ -14,7 +14,8 @@ opts_selection(
   css = NULL,
   type = c("multiple", "single", "none"),
   only_shiny = TRUE,
-  selected = character(0)
+  selected = character(0),
+  linked = FALSE
 )
 
 opts_selection_inv(css = NULL)
@@ -61,6 +62,11 @@ opts_selection_theme(
 
   character vector, id to be selected when the graph will be
   initialized.
+
+- linked:
+
+  if TRUE, selecting a legend/guide element (`key-id`) will also select
+  the corresponding geometry elements (`data-id`) and vice versa.
 
 ## Note
 

@@ -113,6 +113,9 @@ girafe_defaults()
 #> $nearest_distance
 #> NULL
 #> 
+#> $linked
+#> [1] FALSE
+#> 
 #> attr(,"class")
 #> [1] "opts_hover"
 #> attr(,"explicit_args")
@@ -163,6 +166,9 @@ girafe_defaults()
 #> 
 #> $selected
 #> character(0)
+#> 
+#> $linked
+#> [1] FALSE
 #> 
 #> attr(,"class")
 #> [1] "opts_selection"

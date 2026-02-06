@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.5.002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.5.003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.5" id="ggiraph-095">ggiraph 0.9.5<a class="anchor" aria-label="anchor" href="#ggiraph-095"></a></h2>
+<div class="section level3">
+<h3 id="feature-0-9-5">Feature<a class="anchor" aria-label="anchor" href="#feature-0-9-5"></a></h3>
+<ul><li>
+<code><a href="../reference/opts_hover.html">opts_hover()</a></code> and <code><a href="../reference/opts_selection.html">opts_selection()</a></code> gain a new <code>linked</code> parameter. When <code>linked = TRUE</code>, hover and selection states are shared between geometry elements (<code>data-id</code>) and legend/guide elements (<code>key-id</code>): hovering or clicking a legend key highlights or selects the corresponding geometries, and vice versa (<a href="https://github.com/davidgohel/ggiraph/issues/330" class="external-link">#330</a>).</li>
+</ul></div>
 <div class="section level3">
 <h3 id="issues-0-9-5">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-5"></a></h3>
 <ul><li>fix label_interactive broken by the new V4 ggplot2 (<a href="https://github.com/davidgohel/ggiraph/issues/348" class="external-link">#348</a>)</li>

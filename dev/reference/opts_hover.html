@@ -19,7 +19,7 @@ while one is hovered (inverted operation)."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.5.002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.5.003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,12 @@ while one is hovered (inverted operation).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">opts_hover</span><span class="op">(</span>css <span class="op">=</span> <span class="cn">NULL</span>, reactive <span class="op">=</span> <span class="cn">FALSE</span>, nearest_distance <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">opts_hover</span><span class="op">(</span></span>
+<span>  css <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reactive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  nearest_distance <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  linked <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">opts_hover_inv</span><span class="op">(</span>css <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
@@ -84,6 +89,11 @@ when using the <code>hover_nearest</code> <a href="interactive_parameters.html">
 By default (<code>NULL</code>) it's set to <code>Infinity</code> which means that there is no distance limit.
 Setting it to 50, for example, it will hover the nearest element that has
 at maximum 50 SVG units (pixels) distance from the mouse cursor.</p></dd>
+
+
+<dt id="arg-linked">linked<a class="anchor" aria-label="anchor" href="#arg-linked"></a></dt>
+<dd><p>if TRUE, hovering a legend/guide element (<code>key-id</code>) will
+also highlight the corresponding geometry elements (<code>data-id</code>) and vice versa.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -10,7 +10,12 @@ is hovered (inverted operation).
 ## Usage
 
 ``` r
-opts_hover(css = NULL, reactive = FALSE, nearest_distance = NULL)
+opts_hover(
+  css = NULL,
+  reactive = FALSE,
+  nearest_distance = NULL,
+  linked = FALSE
+)
 
 opts_hover_inv(css = NULL)
 
@@ -41,6 +46,12 @@ opts_hover_theme(css = NULL, reactive = FALSE)
   there is no distance limit. Setting it to 50, for example, it will
   hover the nearest element that has at maximum 50 SVG units (pixels)
   distance from the mouse cursor.
+
+- linked:
+
+  if TRUE, hovering a legend/guide element (`key-id`) will also
+  highlight the corresponding geometry elements (`data-id`) and vice
+  versa.
 
 ## Note
 
