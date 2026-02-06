@@ -1,3 +1,9 @@
+# ggiraph 0.9.5
+
+## Issues
+
+- fix label_interactive broken by the new V4 ggplot2 (#348)
+
 # ggiraph 0.9.4
 
 - toolbar gains new button "fullscreen".

@@ -59,8 +59,11 @@ element_interactive <- function(
   # By setting them as an attribute they are preserved.
   attr(struct, "interactive") <- ip
   attr(struct, "ipar") <- ipar
+  # Strip namespace prefix from S7 class name
+  # (e.g. "ggplot2::element_text" -> "element_text")
+  base_class <- sub("^.*::", "", class(struct)[1])
   class(struct) <- c(
-    paste("interactive", class(struct)[1], sep = "_"),
+    paste("interactive", base_class, sep = "_"),
     "interactive_element",
     class(struct)
   )
