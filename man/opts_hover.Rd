@@ -7,7 +7,12 @@
 \alias{opts_hover_theme}
 \title{Hover effect settings}
 \usage{
-opts_hover(css = NULL, reactive = FALSE, nearest_distance = NULL)
+opts_hover(
+  css = NULL,
+  reactive = FALSE,
+  nearest_distance = NULL,
+  linked = FALSE
+)
 
 opts_hover_inv(css = NULL)
 
@@ -27,6 +32,9 @@ when using the \code{hover_nearest} \link[=interactive_parameters]{interactive p
 By default (\code{NULL}) it's set to \code{Infinity} which means that there is no distance limit.
 Setting it to 50, for example, it will hover the nearest element that has
 at maximum 50 SVG units (pixels) distance from the mouse cursor.}
+
+\item{linked}{if TRUE, hovering a legend/guide element (\code{key-id}) will
+also highlight the corresponding geometry elements (\code{data-id}) and vice versa.}
 }
 \description{
 Allows customization of the rendering

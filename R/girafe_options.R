@@ -167,6 +167,8 @@ opts_tooltip <- function(
 #' By default (`NULL`) it's set to `Infinity` which means that there is no distance limit.
 #' Setting it to 50, for example, it will hover the nearest element that has
 #' at maximum 50 SVG units (pixels) distance from the mouse cursor.
+#' @param linked if TRUE, hovering a legend/guide element (`key-id`) will
+#' also highlight the corresponding geometry elements (`data-id`) and vice versa.
 #' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,
 #' be aware that the browser's CSS engine will apply it also to line elements,
 #' if there are any that use the hovering feature. This will cause an undesired effect.
@@ -192,7 +194,7 @@ opts_tooltip <- function(
 #' @export
 #' @family girafe animation options
 #' @seealso [girafe_css()], [girafe_css_bicolor()]
-opts_hover <- function(css = NULL, reactive = FALSE, nearest_distance = NULL) {
+opts_hover <- function(css = NULL, reactive = FALSE, nearest_distance = NULL, linked = FALSE) {
   css <- check_css(
     css,
     default = "fill:orange;stroke:gray;",
@@ -211,8 +213,11 @@ opts_hover <- function(css = NULL, reactive = FALSE, nearest_distance = NULL) {
       call. = FALSE
     )
   }
+  if (!is_valid_logical(linked)) {
+    abort("`linked` must be a scalar logical", call = NULL)
+  }
 
-  x <- list(css = css, reactive = reactive, nearest_distance = nearest_distance)
+  x <- list(css = css, reactive = reactive, nearest_distance = nearest_distance, linked = linked)
   class(x) <- "opts_hover"
   attr(x, "explicit_args") <- names(match.call())[-1]
   x
@@ -292,6 +297,8 @@ opts_hover_theme <- function(css = NULL, reactive = FALSE) {
 #' documentation examples or R Markdown output).
 #' @param selected character vector, id to be selected when the graph will be
 #' initialized.
+#' @param linked if TRUE, selecting a legend/guide element (`key-id`) will
+#' also select the corresponding geometry elements (`data-id`) and vice versa.
 #' @note **IMPORTANT**: When applying a `fill` style with the `css` argument,
 #' be aware that the browser's CSS engine will apply it also to line elements,
 #' if there are any that use the selection feature. This will cause an undesired effect.
@@ -322,7 +329,8 @@ opts_selection <- function(
   css = NULL,
   type = c("multiple", "single", "none"),
   only_shiny = TRUE,
-  selected = character(0)
+  selected = character(0),
+  linked = FALSE
 ) {
   css <- check_css(
     css,
@@ -334,12 +342,16 @@ opts_selection <- function(
   if (!is_valid_logical(only_shiny)) {
     abort("`only_shiny` must be a scalar logical", call = NULL)
   }
+  if (!is_valid_logical(linked)) {
+    abort("`linked` must be a scalar logical", call = NULL)
+  }
 
   x <- list(
     css = css,
     type = type,
     only_shiny = only_shiny,
-    selected = as.character(selected)
+    selected = as.character(selected),
+    linked = linked
   )
   class(x) <- "opts_selection"
   attr(x, "explicit_args") <- names(match.call())[-1]

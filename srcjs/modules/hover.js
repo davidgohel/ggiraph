@@ -13,6 +13,7 @@ export default class HoverHandler {
     this.nodeIds = [];
     this.dataHovered = [];
     this.lastTargetId = null;
+    this.linkedHandlers = null;
   }
 
   init() {
@@ -72,6 +73,14 @@ export default class HoverHandler {
       this.lastTargetId = null;
       this.setHovered([]);
     }
+    if (this.linkedHandlers) {
+      this.linkedHandlers.forEach((h) => {
+        if (h.lastTargetId) {
+          h.lastTargetId = null;
+          h.setHovered([], true);
+        }
+      });
+    }
   }
 
   isValidTarget(target) {
@@ -97,7 +106,7 @@ export default class HoverHandler {
     return false;
   }
 
-  setHovered(hovered) {
+  setHovered(hovered, fromLinked = false) {
     if (
       this.dataHovered.length !== hovered.length ||
       !this.dataHovered.every((item) => hovered.includes(item))
@@ -106,6 +115,9 @@ export default class HoverHandler {
       this.refreshHovered();
       if (this.shinyInputId) {
         Shiny.onInputChange(this.shinyInputId, this.dataHovered);
+      }
+      if (!fromLinked && this.linkedHandlers) {
+        this.linkedHandlers.forEach((h) => h.setHovered(hovered, true));
       }
     }
   }

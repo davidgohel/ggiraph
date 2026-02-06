@@ -1,5 +1,13 @@
 # ggiraph 0.9.5
 
+## Feature
+
+- `opts_hover()` and `opts_selection()` gain a new `linked` parameter. When
+`linked = TRUE`, hover and selection states are shared between geometry
+elements (`data-id`) and legend/guide elements (`key-id`): hovering or
+clicking a legend key highlights or selects the corresponding geometries,
+and vice versa (#330).
+
 ## Issues
 
 - fix label_interactive broken by the new V4 ggplot2 (#348)

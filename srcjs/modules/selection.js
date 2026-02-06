@@ -15,6 +15,7 @@ export default class SelectionHandler {
     this.initialSelection = options.selected;
     this.nodeIds = [];
     this.dataSelected = [];
+    this.linkedHandlers = null;
   }
 
   init() {
@@ -111,6 +112,9 @@ export default class SelectionHandler {
 
   clear() {
     this.setSelected([]);
+    if (this.linkedHandlers) {
+      this.linkedHandlers.forEach((h) => h.setSelected([], true));
+    }
   }
 
   isValidTarget(target) {
@@ -149,7 +153,7 @@ export default class SelectionHandler {
     return false;
   }
 
-  setSelected(selected) {
+  setSelected(selected, fromLinked = false) {
     if (
       this.dataSelected.length !== selected.length ||
       !this.dataSelected.every((item) => selected.includes(item))
@@ -158,6 +162,9 @@ export default class SelectionHandler {
       this.refreshSelected();
       if (this.shinyInputId) {
         Shiny.onInputChange(this.shinyInputId, this.dataSelected);
+      }
+      if (!fromLinked && this.linkedHandlers) {
+        this.linkedHandlers.forEach((h) => h.setSelected(selected, true));
       }
     }
   }

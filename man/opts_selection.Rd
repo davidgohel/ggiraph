@@ -11,7 +11,8 @@ opts_selection(
   css = NULL,
   type = c("multiple", "single", "none"),
   only_shiny = TRUE,
-  selected = character(0)
+  selected = character(0),
+  linked = FALSE
 )
 
 opts_selection_inv(css = NULL)
@@ -47,6 +48,9 @@ documentation examples or R Markdown output).}
 
 \item{selected}{character vector, id to be selected when the graph will be
 initialized.}
+
+\item{linked}{if TRUE, selecting a legend/guide element (\code{key-id}) will
+also select the corresponding geometry elements (\code{data-id}) and vice versa.}
 }
 \description{
 Allows customization of the rendering of

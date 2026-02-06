@@ -156,6 +156,15 @@ export default class SVGObject {
     } catch (e) {
       console.error(e);
     }
+    // link hover_data and hover_key handlers
+    if (hover.linked) {
+      const hd = this.handlers.get('hover_data');
+      const hk = this.handlers.get('hover_key');
+      if (hd && hk) {
+        hd.linkedHandlers = [hk];
+        hk.linkedHandlers = [hd];
+      }
+    }
   }
 
   setupSelection(select, select_inv, select_key, select_theme) {
@@ -193,6 +202,15 @@ export default class SVGObject {
       }, this);
     } catch (e) {
       console.error(e);
+    }
+    // link select_data and select_key handlers
+    if (select.linked) {
+      const sd = this.handlers.get('select_data');
+      const sk = this.handlers.get('select_key');
+      if (sd && sk) {
+        sd.linkedHandlers = [sk];
+        sk.linkedHandlers = [sd];
+      }
     }
   }
 
