@@ -69,7 +69,7 @@ export default class HoverHandler {
   }
 
   clear() {
-    if (this.lastTargetId) {
+    if (this.lastTargetId || this.dataHovered.length > 0) {
       this.lastTargetId = null;
       this.setHovered([]);
     }

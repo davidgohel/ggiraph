@@ -14,6 +14,8 @@ and vice versa (#330).
 
 ## Issues
 
+- fix linked hover state not clearing when cursor leaves a legend key
+without re-entering the panel area (#330).
 - fix label_interactive broken by the new V4 ggplot2 (#348)
 - fix interactive labels in binned guides when scale breaks fall outside limits (#338)
 
