@@ -147,10 +147,13 @@ parse_binned_breaks = function(
   breaks <- sort(breaks)
   if (is.numeric(breaks)) {
     limits <- scale$get_limits()
+    # Censor breaks outside limits to align with ggplot2 (>= 4.0.0)
+    breaks <- breaks[breaks >= limits[1] & breaks <= limits[2]]
     if (!is.numeric(scale$breaks)) {
       breaks <- breaks[!breaks %in% limits]
     }
     all_breaks <- unique0(c(limits[1], breaks, limits[2]))
+    all_breaks <- sort(all_breaks)
     bin_at <- all_breaks[-1] - diff(all_breaks) / 2
   } else {
     if (isFALSE(even.steps)) {
