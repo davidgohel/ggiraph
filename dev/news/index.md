@@ -1,10 +1,19 @@
 # Changelog
 
+## ggiraph 0.9.5
+
+### Issues
+
+- fix label_interactive broken by the new V4 ggplot2
+  ([\#348](https://github.com/davidgohel/ggiraph/issues/348))
+
 ## ggiraph 0.9.4
+
+CRAN release: 2026-02-04
 
 - toolbar gains new button “fullscreen”.
 - internals: lasso local replace d3-lasso and ggiraph is using the
-  latest version od d3.js.
+  latest version of d3.js.
 
 ## ggiraph 0.9.3
 

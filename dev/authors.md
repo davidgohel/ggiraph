@@ -30,13 +30,13 @@ Source:
 [`DESCRIPTION`](https://github.com/davidgohel/ggiraph/blob/master/DESCRIPTION)
 
 Gohel D, Skintzos P (2026). *ggiraph: Make 'ggplot2' Graphics
-Interactive*. R package version 0.9.4.002,
+Interactive*. R package version 0.9.5.001,
 <https://davidgohel.github.io/ggiraph/>.
 
     @Manual{,
       title = {ggiraph: Make 'ggplot2' Graphics Interactive},
       author = {David Gohel and Panagiotis Skintzos},
       year = {2026},
-      note = {R package version 0.9.4.002},
+      note = {R package version 0.9.5.001},
       url = {https://davidgohel.github.io/ggiraph/},
     }
