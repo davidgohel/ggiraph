@@ -23,6 +23,16 @@ export default class SVGObject {
     this.handlers.forEach((h) => h.destroy());
     this.handlers.clear();
 
+    // remove class handler
+    if (this.classMessageId) {
+      try {
+        Shiny.addCustomMessageHandler(this.classMessageId, function (message) {});
+      } catch (e) {
+        console.error(e);
+      }
+      this.classMessageId = null;
+    }
+
     // remove any old style element
     d3.select('#' + this.containerid + ' style').remove();
 
@@ -250,6 +260,35 @@ export default class SVGObject {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  setupClassHandler() {
+    if (!this.shinyMode) return;
+    const svgid = this.svgid;
+    this.classMessageId = this.containerid + '_class';
+    Shiny.addCustomMessageHandler(this.classMessageId, function (message) {
+      const rootNode = document.getElementById(svgid + '_rootg');
+      if (!rootNode) return;
+      const targets = [];
+      if (message.data_id)
+        targets.push({ attr: 'data-id', ids: message.data_id });
+      if (message.key_id)
+        targets.push({ attr: 'key-id', ids: message.key_id });
+      if (message.theme_id)
+        targets.push({ attr: 'theme-id', ids: message.theme_id });
+      targets.forEach(function (t) {
+        rootNode.querySelectorAll('*[' + t.attr + ']').forEach(function (node) {
+          if (t.ids.includes(node.getAttribute(t.attr))) {
+            const el = d3.select(node);
+            if (message.action === 'add') el.classed(message.cls, true);
+            else if (message.action === 'remove')
+              el.classed(message.cls, false);
+            else if (message.action === 'toggle')
+              el.classed(message.cls, !el.classed(message.cls));
+          }
+        });
+      });
+    });
   }
 
   setupZoom(options, toolbarTooltips) {

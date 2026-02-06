@@ -66,6 +66,8 @@ export function factory(shinyMode) {
         ggobj.setupTooltip(x.settings.tooltip);
 
         ggobj.setupMouse();
+
+        ggobj.setupClassHandler();
       },
 
       resize: function (width, height) {}

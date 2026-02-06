@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.5.003
+Version: 0.9.5.004
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -117,6 +117,7 @@ Collate:
     'geom_vline_interactive.R'
     'ggiraph.R'
     'girafe.R'
+    'girafe_class.R'
     'grob_interactive.R'
     'guide_bins_interactive.R'
     'guide_colourbar_interactive.R'
