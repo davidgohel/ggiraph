@@ -85,6 +85,11 @@ export default class SelectionHandler {
   }
 
   getButtons() {
+    // disable lasso on touch devices — D3 drag does not reliably
+    // provide touch coordinates, causing SVGPoint errors
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      return [];
+    }
     const that = this;
     return [
       {

@@ -1,8 +1,8 @@
 export const EVENT_TYPES = [
-  'mouseover',
-  'mouseout',
-  'mousemove',
-  'mousedown',
+  'pointerover',
+  'pointerout',
+  'pointermove',
+  'pointerdown',
   'wheel',
   'click',
   'nearest'
@@ -38,9 +38,12 @@ export class MouseHandler {
     const svgNode = document.getElementById(this.svgid);
     let use_capture;
     this.event_types.forEach(function (type) {
-      use_capture = type !== 'mousemove';
+      use_capture = type !== 'pointermove';
       svgNode.addEventListener(type, this, use_capture);
     }, this);
+
+    // allow pan scrolling but prevent pinch-zoom conflicts with D3 zoom
+    svgNode.style.touchAction = 'pan-x pan-y';
 
     // return true to add to list of handLers
     return true;
@@ -61,13 +64,35 @@ export class MouseHandler {
   handleEvent(event) {
     try {
       const target = event.target;
+      const isTouch = event.pointerType === 'touch';
       let handled = false,
         nearest = null;
-      if (event.type === 'mouseout') {
-        this.handlers.get(event.type).forEach((h) => h.clear(event));
-      } else if (event.type === 'mouseover' && !event.buttons) {
-        this.handlers.get(event.type).forEach((h) => h.applyOn(target, event));
-      } else if (event.type === 'mousemove' && !event.buttons) {
+
+      if (event.type === 'pointerout') {
+        // mouse: clear immediately (same as before)
+        // touch: ignore — clear happens on next pointerdown
+        if (!isTouch) {
+          this.handlers.get(event.type).forEach((h) => h.clear(event));
+        }
+      } else if (event.type === 'pointerover' && !event.buttons) {
+        // mouse only — touch does not fire meaningful pointerover
+        if (!isTouch) {
+          this.handlers.get(event.type).forEach((h) => h.applyOn(target, event));
+        }
+      } else if (event.type === 'pointerdown') {
+        if (isTouch) {
+          // touch: pointerdown replaces mouseover
+          // clear previous hover/tooltip first
+          this.handlers.get('pointerout').forEach((h) => h.clear(event));
+          // then apply on the new target
+          if (this.svgid !== target.id) {
+            this.handlers.get('pointerover').forEach((h) => h.applyOn(target, event));
+          }
+        } else {
+          // mouse: clear tooltip (same as old mousedown)
+          this.handlers.get(event.type).forEach((h) => h.clear(event));
+        }
+      } else if (event.type === 'pointermove' && !event.buttons) {
         if (this.svgid !== target.id) {
           handled = this.handlers
             .get(event.type)
@@ -85,7 +110,7 @@ export class MouseHandler {
             this.handlers.get('nearest').forEach((h) => h.clear(event));
           }
         }
-      } else if (event.type === 'mousedown' || event.type === 'wheel') {
+      } else if (event.type === 'wheel') {
         this.handlers.get(event.type).forEach((h) => h.clear(event));
       } else if (event.type === 'click') {
         if (this.svgid !== target.id) {

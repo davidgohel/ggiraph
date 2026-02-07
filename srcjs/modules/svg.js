@@ -233,21 +233,21 @@ export default class SVGObject {
 
       this.handlers.forEach(function (h) {
         if (h instanceof TooltipHandler) {
-          mouseHandlers.get('mouseover').push(h);
-          mouseHandlers.get('mouseout').push(h);
-          mouseHandlers.get('mousemove').push(h);
-          mouseHandlers.get('mousedown').push(h);
+          mouseHandlers.get('pointerover').push(h);
+          mouseHandlers.get('pointerout').push(h);
+          mouseHandlers.get('pointermove').push(h);
+          mouseHandlers.get('pointerdown').push(h);
           mouseHandlers.get('wheel').push(h);
           mouseHandlers.get('nearest').push(h);
         } else if (h instanceof HoverHandler) {
-          mouseHandlers.get('mouseover').push(h);
-          mouseHandlers.get('mouseout').push(h);
+          mouseHandlers.get('pointerover').push(h);
+          mouseHandlers.get('pointerout').push(h);
           mouseHandlers.get('nearest').push(h);
         } else if (h instanceof SelectionHandler) {
           mouseHandlers.get('click').push(h);
         } else if (h instanceof ToolbarHandler) {
-          mouseHandlers.get('mouseover').push(h);
-          mouseHandlers.get('mouseout').push(h);
+          mouseHandlers.get('pointerover').push(h);
+          mouseHandlers.get('pointerout').push(h);
         }
       });
 

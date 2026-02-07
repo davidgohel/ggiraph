@@ -12,6 +12,12 @@ elements (`data-id`) and legend/guide elements (`key-id`): hovering or
 clicking a legend key highlights or selects the corresponding geometries,
 and vice versa (#330).
 
+## Changes
+
+- Mouse events replaced by Pointer Events for touch device support.
+Hover and tooltips now work on mobile via tap; the lasso selection
+tool is disabled on touch devices (#300).
+
 ## Issues
 
 - fix linked hover state not clearing when cursor leaves a legend key
