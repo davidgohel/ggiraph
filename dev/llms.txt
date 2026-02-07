@@ -235,6 +235,10 @@ LDFLAGS=-L/usr/local/lib
   : Create a girafe output element
 - [`run_girafe_example()`](https://davidgohel.github.io/ggiraph/dev/reference/run_girafe_example.md)
   : Run shiny examples and see corresponding code
+- [`girafe_class_add()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
+  [`girafe_class_remove()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
+  [`girafe_class_toggle()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
+  : Add, remove or toggle CSS classes on girafe elements
 
 ## Interactive geometries
 
