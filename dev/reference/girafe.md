@@ -13,6 +13,7 @@ girafe(
   width_svg = NULL,
   height_svg = NULL,
   options = list(),
+  font_set = NULL,
   dependencies = NULL,
   check_fonts_registered = FALSE,
   check_fonts_dependencies = FALSE,
@@ -53,6 +54,25 @@ girafe(
   [`opts_hover()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_hover.md),
   [`opts_selection()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_selection.md),
   ...
+
+- font_set:
+
+  A
+  [`gdtools::font_set()`](https://davidgohel.github.io/gdtools/reference/font_set.html)
+  object controlling font aliases and HTML dependencies. The default is
+  [`gdtools::font_set_liberation()`](https://davidgohel.github.io/gdtools/reference/font_set_liberation.html),
+  which uses Liberation fonts (bundled by 'fontquiver' under the SIL
+  Open Font License). This makes output reproducible offline without
+  requiring any system font.
+
+  For system-aware font selection use
+  [`gdtools::font_set_auto()`](https://davidgohel.github.io/gdtools/reference/font_set_auto.html),
+  or build a custom configuration with
+  [`gdtools::font_set()`](https://davidgohel.github.io/gdtools/reference/font_set.html).
+
+  `font_set$dsvg_fonts` is passed as `fonts` argument to
+  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+  and `font_set$dependencies` are appended to `dependencies`.
 
 - dependencies:
 
@@ -161,8 +181,8 @@ ratio.
 ## See also
 
 [`girafe_options()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_options.md),
-[`validated_fonts()`](https://davidgohel.github.io/ggiraph/dev/reference/validated_fonts.md),
-[`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+[`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md),
+[`gdtools::font_set()`](https://davidgohel.github.io/gdtools/reference/font_set.html)
 
 ## Examples
 
@@ -171,8 +191,7 @@ library(ggplot2)
 library(ggiraph)
 library(gdtools)
 
-register_liberationsans()
-#> [1] TRUE
+fonts <- font_set(sans = font_liberation("sans"))
 
 dataset <- mtcars
 dataset$carname <- row.names(mtcars)
@@ -188,13 +207,11 @@ gg_point <- ggplot(
   )
 ) +
   geom_point_interactive(hover_nearest = TRUE, size = 11 / .pt) +
-  theme_minimal(base_family = "Liberation Sans", base_size = 11)
+  theme_minimal(base_family = fonts$sans, base_size = 11)
 
 x <- girafe(
   ggobj = gg_point,
-  dependencies = list(
-    liberationsansHtmlDependency()
-  )
+  font_set = fonts
 )
 
 x

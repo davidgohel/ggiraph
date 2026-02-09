@@ -13,7 +13,7 @@ used fonts must also be available on the computer used to render the svg."><meta
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.5.006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.5.007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,13 +106,12 @@ it may class with the interactive elements' tooltip.</p></dd>
 
 <dt id="arg-fonts">fonts<a class="anchor" aria-label="anchor" href="#arg-fonts"></a></dt>
 <dd><p>Named list of font names to be aliased with
-fonts installed on your system. If unspecified, the R default
-families "sans", "serif", "mono" and "symbol"
-are aliased to the family returned by <code><a href="match_family.html">match_family()</a></code>.</p>
-<p>If fonts are available, the default mapping will use these values:</p><table class="table table"><tr><td>R family</td><td>Font on Windows</td><td>Font on Unix</td><td>Font on Mac OS</td></tr><tr><td><code>sans</code></td><td>Arial</td><td>DejaVu Sans</td><td>Helvetica</td></tr><tr><td><code>serif</code></td><td>Times New Roman</td><td>DejaVu serif</td><td>Times</td></tr><tr><td><code>mono</code></td><td>Courier</td><td>DejaVu mono</td><td>Courier</td></tr><tr><td><code>symbol</code></td><td>Symbol</td><td>DejaVu Sans</td><td>Symbol</td></tr></table><p>As an example, using <code>fonts = list(sans = "Roboto")</code> would make the
-default font "Roboto" as many ggplot theme are using <code>theme_minimal(base_family="")</code> or
-<code>theme_minimal(base_family="sans")</code>.</p>
-<p>You can also use theme_minimal(base_family="Roboto").</p></dd>
+fonts installed on your system. If unspecified, the defaults
+from <code><a href="https://davidgohel.github.io/gdtools/reference/font_set_liberation.html" class="external-link">gdtools::font_set_liberation()</a></code> are used for the R families
+"sans", "serif", "mono" and "symbol".</p>
+<p>As an example, using <code>fonts = list(sans = "Roboto")</code> would make the
+default font "Roboto" as many ggplot themes use
+<code>theme_minimal(base_family = "sans")</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

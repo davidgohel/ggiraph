@@ -43,16 +43,16 @@ Other girafe animation options:
 girafe_defaults()
 #> $fonts
 #> $fonts$sans
-#> [1] "DejaVu Sans"
+#> [1] "Liberation Sans"
 #> 
 #> $fonts$serif
-#> [1] "DejaVu serif"
-#> 
-#> $fonts$symbol
-#> [1] "DejaVu Sans"
+#> [1] "Liberation Serif"
 #> 
 #> $fonts$mono
-#> [1] "DejaVu Sans"
+#> [1] "Liberation Mono"
+#> 
+#> $fonts$symbol
+#> [1] "Liberation Sans"
 #> 
 #> 
 #> $opts_sizing

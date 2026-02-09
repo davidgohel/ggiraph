@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Liberation Mono';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('../fonts/LiberationMono-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/LiberationMono-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Liberation Mono';
+  font-style: italic;
+  font-weight: 400;
+  src:
+    url('../fonts/LiberationMono-Italic.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/LiberationMono-Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Liberation Mono';
+  font-style: normal;
+  font-weight: 700;
+  src:
+    url('../fonts/LiberationMono-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/LiberationMono-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Liberation Mono';
+  font-style: italic;
+  font-weight: 700;
+  src:
+    url('../fonts/LiberationMono-BoldItalic.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/LiberationMono-BoldItalic.woff') format('woff');
+}

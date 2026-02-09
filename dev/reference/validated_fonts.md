@@ -1,8 +1,13 @@
 # List of validated default fonts
 
 Validates and possibly modifies the fonts to be used as default value in
-a graphic according to the fonts available on the machine. It process
+a graphic according to the fonts available on the machine. It processes
 elements named "sans", "serif", "mono" and "symbol".
+
+Default font resolution is delegated to
+[`gdtools::font_set_liberation()`](https://davidgohel.github.io/gdtools/reference/font_set_liberation.html),
+which uses Liberation fonts (bundled by 'fontquiver', SIL Open Font
+License) for reproducible offline output.
 
 ## Usage
 
@@ -15,19 +20,9 @@ validated_fonts(fonts = list())
 - fonts:
 
   Named list of font names to be aliased with fonts installed on your
-  system. If unspecified, the R default families "sans", "serif", "mono"
-  and "symbol" are aliased to the family returned by
-  [`match_family()`](https://davidgohel.github.io/ggiraph/dev/reference/match_family.md).
-
-  If fonts are available, the default mapping will use these values:
-
-  |          |                 |              |                |
-  |----------|-----------------|--------------|----------------|
-  | R family | Font on Windows | Font on Unix | Font on Mac OS |
-  | `sans`   | Arial           | DejaVu Sans  | Helvetica      |
-  | `serif`  | Times New Roman | DejaVu serif | Times          |
-  | `mono`   | Courier         | DejaVu mono  | Courier        |
-  | `symbol` | Symbol          | DejaVu Sans  | Symbol         |
+  system. If unspecified, the defaults from
+  [`gdtools::font_set_liberation()`](https://davidgohel.github.io/gdtools/reference/font_set_liberation.html)
+  are used.
 
 ## Value
 
@@ -46,15 +41,15 @@ Other functions for font management:
 ``` r
 validated_fonts()
 #> $sans
-#> [1] "DejaVu Sans"
+#> [1] "Liberation Sans"
 #> 
 #> $serif
-#> [1] "DejaVu serif"
+#> [1] "Liberation Serif"
 #> 
 #> $mono
-#> [1] "DejaVu Sans"
+#> [1] "Liberation Mono"
 #> 
 #> $symbol
-#> [1] "DejaVu Sans"
+#> [1] "Liberation Sans"
 #> 
 ```

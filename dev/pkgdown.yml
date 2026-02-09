@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   overview: overview.html
-last_built: 2026-02-07T08:06Z
+last_built: 2026-02-09T15:53Z
 urls:
   reference: https://davidgohel.github.io/ggiraph/reference
   article: https://davidgohel.github.io/ggiraph/articles
