@@ -1,65 +1,35 @@
 r_font_families <- c("sans", "serif", "mono", "symbol")
-default_fonts <- list(
-  windows = c(
-    sans = "Arial",
-    serif = "Times New Roman",
-    mono = "Courier New",
-    symbol = "Symbol"
-  ),
-  osx = c(
-    sans = "Helvetica",
-    serif = "Times",
-    mono = "Courier",
-    symbol = "Symbol"
-  ),
-  unix = c(
-    sans = "DejaVu Sans",
-    serif = "DejaVu serif",
-    mono = "DejaVu mono",
-    symbol = "DejaVu Sans"
-  )
-)
-
-#' @importFrom gdtools font_family_exists
-default_fontname <- function() {
-  os <- get_os()
-  if (!os %in% c("windows", "osx")) {
-    os <- "unix"
-  }
-  def_fonts <- default_fonts[[os]]
-  def_fonts <- def_fonts[unlist(lapply(def_fonts, font_family_exists))]
-  missing_fonts <- setdiff(r_font_families, names(def_fonts))
-  def_fonts[missing_fonts] <- lapply(def_fonts[missing_fonts], match_family)
-  def_fonts
-}
 
 #' @export
 #' @title List of validated default fonts
 #' @description Validates and possibly modifies the fonts to be used as default
-#' value in a graphic according to the fonts available on the machine. It process
-#' elements named "sans", "serif", "mono" and "symbol".
+#' value in a graphic according to the fonts available on the machine. It
+#' processes elements named "sans", "serif", "mono" and "symbol".
+#'
+#' Default font resolution is delegated to [gdtools::font_set_liberation()],
+#' which uses Liberation fonts (bundled by 'fontquiver', SIL Open Font
+#' License) for reproducible offline output.
+#'
 #' @param fonts Named list of font names to be aliased with
-#' fonts installed on your system. If unspecified, the R default
-#' families "sans", "serif", "mono" and "symbol"
-#' are aliased to the family returned by [match_family()].
-#'
-#' If fonts are available, the default mapping will use these values:
-#'
-#' | R family | Font on Windows    | Font on Unix | Font on Mac OS |
-#' |----------|--------------------|--------------|----------------|
-#' | `sans`   | Arial              | DejaVu Sans  | Helvetica      |
-#' | `serif`  | Times New Roman    | DejaVu serif | Times          |
-#' | `mono`   | Courier            | DejaVu mono  | Courier        |
-#' | `symbol` | Symbol             | DejaVu Sans  | Symbol         |
+#' fonts installed on your system. If unspecified, the defaults
+#' from [gdtools::font_set_liberation()] are used.
 #' @return a named list of validated font family names
 #' @seealso [girafe()], [dsvg()]
 #' @family functions for font management
+#' @importFrom gdtools font_family_exists font_set_liberation
 #' @examples
 #' validated_fonts()
 validated_fonts <- function(fonts = list()) {
+  auto <- font_set_liberation()
+  defaults <- c(
+    sans = auto$sans,
+    serif = auto$serif,
+    mono = auto$mono,
+    symbol = auto$symbol
+  )
   fonts <- fonts[unlist(lapply(fonts, font_family_exists))]
   missing_fonts <- setdiff(r_font_families, names(fonts))
-  fonts[missing_fonts] <- default_fontname()[missing_fonts]
+  fonts[missing_fonts] <- defaults[missing_fonts]
   fonts
 }
 

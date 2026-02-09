@@ -19,24 +19,13 @@
 #' @param desc A longer description for accessibility purposes (aria-description/aria-describedby).
 #' @param canvas_id svg id within HTML page.
 #' @param fonts Named list of font names to be aliased with
-#' fonts installed on your system. If unspecified, the R default
-#' families "sans", "serif", "mono" and "symbol"
-#' are aliased to the family returned by [match_family()].
-#'
-#' If fonts are available, the default mapping will use these values:
-#'
-#' | R family | Font on Windows    | Font on Unix | Font on Mac OS |
-#' |----------|--------------------|--------------|----------------|
-#' | `sans`   | Arial              | DejaVu Sans  | Helvetica      |
-#' | `serif`  | Times New Roman    | DejaVu serif | Times          |
-#' | `mono`   | Courier            | DejaVu mono  | Courier        |
-#' | `symbol` | Symbol             | DejaVu Sans  | Symbol         |
+#' fonts installed on your system. If unspecified, the defaults
+#' from [gdtools::font_set_liberation()] are used for the R families
+#' "sans", "serif", "mono" and "symbol".
 #'
 #' As an example, using `fonts = list(sans = "Roboto")` would make the
-#' default font "Roboto" as many ggplot theme are using `theme_minimal(base_family="")` or
-#' `theme_minimal(base_family="sans")`.
-#'
-#' You can also use theme_minimal(base_family="Roboto").
+#' default font "Roboto" as many ggplot themes use
+#' `theme_minimal(base_family = "sans")`.
 #' @seealso [Devices]
 #' @examples
 #' fileout <- tempfile(fileext = ".svg")

@@ -8,25 +8,20 @@ validated_fonts(fonts = list())
 }
 \arguments{
 \item{fonts}{Named list of font names to be aliased with
-fonts installed on your system. If unspecified, the R default
-families "sans", "serif", "mono" and "symbol"
-are aliased to the family returned by \code{\link[=match_family]{match_family()}}.
-
-If fonts are available, the default mapping will use these values:\tabular{llll}{
-   R family \tab Font on Windows \tab Font on Unix \tab Font on Mac OS \cr
-   \code{sans} \tab Arial \tab DejaVu Sans \tab Helvetica \cr
-   \code{serif} \tab Times New Roman \tab DejaVu serif \tab Times \cr
-   \code{mono} \tab Courier \tab DejaVu mono \tab Courier \cr
-   \code{symbol} \tab Symbol \tab DejaVu Sans \tab Symbol \cr
-}}
+fonts installed on your system. If unspecified, the defaults
+from \code{\link[gdtools:font_set_liberation]{gdtools::font_set_liberation()}} are used.}
 }
 \value{
 a named list of validated font family names
 }
 \description{
 Validates and possibly modifies the fonts to be used as default
-value in a graphic according to the fonts available on the machine. It process
-elements named "sans", "serif", "mono" and "symbol".
+value in a graphic according to the fonts available on the machine. It
+processes elements named "sans", "serif", "mono" and "symbol".
+
+Default font resolution is delegated to \code{\link[gdtools:font_set_liberation]{gdtools::font_set_liberation()}},
+which uses Liberation fonts (bundled by 'fontquiver', SIL Open Font
+License) for reproducible offline output.
 }
 \examples{
 validated_fonts()

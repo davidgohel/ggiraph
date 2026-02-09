@@ -11,6 +11,7 @@ girafe(
   width_svg = NULL,
   height_svg = NULL,
   options = list(),
+  font_set = NULL,
   dependencies = NULL,
   check_fonts_registered = FALSE,
   check_fonts_dependencies = FALSE,
@@ -35,6 +36,19 @@ options \code{fig.width} and \code{fig.height} are used instead.}
 
 \item{options}{a list of options for girafe rendering, see
 \code{\link[=opts_tooltip]{opts_tooltip()}}, \code{\link[=opts_hover]{opts_hover()}}, \code{\link[=opts_selection]{opts_selection()}}, ...}
+
+\item{font_set}{A \code{\link[gdtools:font_set]{gdtools::font_set()}} object controlling font
+aliases and HTML dependencies. The default is
+\code{\link[gdtools:font_set_liberation]{gdtools::font_set_liberation()}}, which uses Liberation fonts
+(bundled by 'fontquiver' under the SIL Open Font License).
+This makes output reproducible offline without requiring
+any system font.
+
+For system-aware font selection use \code{\link[gdtools:font_set_auto]{gdtools::font_set_auto()}},
+or build a custom configuration with \code{\link[gdtools:font_set]{gdtools::font_set()}}.
+
+\code{font_set$dsvg_fonts} is passed as \code{fonts} argument to \code{\link[=dsvg]{dsvg()}} and
+\code{font_set$dependencies} are appended to \code{dependencies}.}
 
 \item{dependencies}{Additional widget HTML dependencies, see \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}.}
 
@@ -137,7 +151,7 @@ library(ggplot2)
 library(ggiraph)
 library(gdtools)
 
-register_liberationsans()
+fonts <- font_set(sans = font_liberation("sans"))
 
 dataset <- mtcars
 dataset$carname <- row.names(mtcars)
@@ -153,17 +167,15 @@ gg_point <- ggplot(
   )
 ) +
   geom_point_interactive(hover_nearest = TRUE, size = 11 / .pt) +
-  theme_minimal(base_family = "Liberation Sans", base_size = 11)
+  theme_minimal(base_family = fonts$sans, base_size = 11)
 
 x <- girafe(
   ggobj = gg_point,
-  dependencies = list(
-    liberationsansHtmlDependency()
-  )
+  font_set = fonts
 )
 
 x
 }
 \seealso{
-\code{\link[=girafe_options]{girafe_options()}}, \code{\link[=validated_fonts]{validated_fonts()}}, \code{\link[=dsvg]{dsvg()}}
+\code{\link[=girafe_options]{girafe_options()}}, \code{\link[=dsvg]{dsvg()}}, \code{\link[gdtools:font_set]{gdtools::font_set()}}
 }

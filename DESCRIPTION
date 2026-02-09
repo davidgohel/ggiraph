@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.5.006
+Version: 0.9.5.007
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -25,7 +25,7 @@ BugReports: https://github.com/davidgohel/ggiraph/issues
 Imports:
     cli,
     dplyr,
-    gdtools (>= 0.4.4),
+    gdtools (>= 0.5.0),
     ggplot2 (>= 4.0.0),
     grid,
     htmltools,

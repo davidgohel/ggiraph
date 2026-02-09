@@ -8,7 +8,7 @@ css_default_selection <- girafe_css_bicolor(
 )
 
 default_girafe_settings <- list(
-  fonts = default_fontname(),
+  fonts = validated_fonts(),
   opts_sizing = opts_sizing(width = 1),
   opts_tooltip = opts_tooltip(
     css = "padding:5px;background:black;color:white;border-radius:2px;text-align:left;",

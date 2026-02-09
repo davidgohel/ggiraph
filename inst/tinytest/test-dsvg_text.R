@@ -82,7 +82,7 @@ source("setup.R")
 
 # test with font categories (sans, serif, mono, symbol) ----
 {
-  fonts <- ggiraph:::default_fontname()
+  fonts <- ggiraph::validated_fonts()
   for(name in names(fonts)) {
     if (gdtools::font_family_exists(fonts[[name]])) {
       doc <- dsvg_doc(

@@ -41,24 +41,13 @@ it may class with the interactive elements' tooltip.}
 \item{desc}{A longer description for accessibility purposes (aria-description/aria-describedby).}
 
 \item{fonts}{Named list of font names to be aliased with
-fonts installed on your system. If unspecified, the R default
-families "sans", "serif", "mono" and "symbol"
-are aliased to the family returned by \code{\link[=match_family]{match_family()}}.
-
-If fonts are available, the default mapping will use these values:\tabular{llll}{
-   R family \tab Font on Windows \tab Font on Unix \tab Font on Mac OS \cr
-   \code{sans} \tab Arial \tab DejaVu Sans \tab Helvetica \cr
-   \code{serif} \tab Times New Roman \tab DejaVu serif \tab Times \cr
-   \code{mono} \tab Courier \tab DejaVu mono \tab Courier \cr
-   \code{symbol} \tab Symbol \tab DejaVu Sans \tab Symbol \cr
-}
-
+fonts installed on your system. If unspecified, the defaults
+from \code{\link[gdtools:font_set_liberation]{gdtools::font_set_liberation()}} are used for the R families
+"sans", "serif", "mono" and "symbol".
 
 As an example, using \code{fonts = list(sans = "Roboto")} would make the
-default font "Roboto" as many ggplot theme are using \code{theme_minimal(base_family="")} or
-\code{theme_minimal(base_family="sans")}.
-
-You can also use theme_minimal(base_family="Roboto").}
+default font "Roboto" as many ggplot themes use
+\code{theme_minimal(base_family = "sans")}.}
 }
 \description{
 This function produces SVG files (compliant to the current w3 svg XML standard)

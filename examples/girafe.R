@@ -2,7 +2,7 @@ library(ggplot2)
 library(ggiraph)
 library(gdtools)
 
-register_liberationsans()
+fonts <- font_set(sans = font_liberation("sans"))
 
 dataset <- mtcars
 dataset$carname <- row.names(mtcars)
@@ -18,13 +18,11 @@ gg_point <- ggplot(
   )
 ) +
   geom_point_interactive(hover_nearest = TRUE, size = 11 / .pt) +
-  theme_minimal(base_family = "Liberation Sans", base_size = 11)
+  theme_minimal(base_family = fonts$sans, base_size = 11)
 
 x <- girafe(
   ggobj = gg_point,
-  dependencies = list(
-    liberationsansHtmlDependency()
-  )
+  font_set = fonts
 )
 
 x

@@ -35,6 +35,18 @@
 #' @param pointsize the default pointsize of plotted text in pixels, default to 12.
 #' @param options a list of options for girafe rendering, see
 #' [opts_tooltip()], [opts_hover()], [opts_selection()], ...
+#' @param font_set A [gdtools::font_set()] object controlling font
+#' aliases and HTML dependencies. The default is
+#' [gdtools::font_set_liberation()], which uses Liberation fonts
+#' (bundled by 'fontquiver' under the SIL Open Font License).
+#' This makes output reproducible offline without requiring
+#' any system font.
+#'
+#' For system-aware font selection use [gdtools::font_set_auto()],
+#' or build a custom configuration with [gdtools::font_set()].
+#'
+#' `font_set$dsvg_fonts` is passed as `fonts` argument to [dsvg()] and
+#' `font_set$dependencies` are appended to `dependencies`.
 #' @param dependencies Additional widget HTML dependencies, see [htmlwidgets::createWidget()].
 #' @param check_fonts_registered whether to check if fonts families found in
 #' the ggplot are registered with 'systemfonts'.
@@ -97,7 +109,7 @@
 #' function `girafe`. Its value is beeing used to define a relative
 #' width of the graphic within its HTML container. Its height is automatically
 #' adjusted regarding to the argument `width` and the aspect ratio.
-#' @seealso [girafe_options()], [validated_fonts()], [dsvg()]
+#' @seealso [girafe_options()], [dsvg()], [gdtools::font_set()]
 #' @export
 girafe <- function(
   ggobj = NULL,
@@ -106,6 +118,7 @@ girafe <- function(
   width_svg = NULL,
   height_svg = NULL,
   options = list(),
+  font_set = NULL,
   dependencies = NULL,
   check_fonts_registered = FALSE,
   check_fonts_dependencies = FALSE,
@@ -135,6 +148,16 @@ girafe <- function(
   if (identical(args$bg, "transparent")) {
     args$bg <- "#ffffff01"
   }
+
+  # font_set integration -----
+  if (is.null(font_set)) {
+    font_set <- font_set_liberation()
+  }
+  if (!inherits(font_set, "font_set")) {
+    cli::cli_abort("{.arg font_set} must be a {.cls font_set} object.")
+  }
+  args$fonts <- font_set$dsvg_fonts
+  dependencies <- c(dependencies, font_set$dependencies)
 
   if (!is.null(ggobj)) {
     # check ggobj -----
