@@ -12,17 +12,19 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
     if: "!contains(github.event.head_commit.message, 'ci skip')"
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}, ${{ matrix.config.dependencies }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest, r: 'devel'}
-          - {os: ubuntu-latest, r: 'release'}
+          - {os: windows-latest, r: 'release', dependencies: 'all'}
+          - {os: ubuntu-latest, r: 'devel', dependencies: 'all'}
+          - {os: ubuntu-latest, r: 'release', dependencies: 'all'}
+          - {os: ubuntu-latest, r: 'release', dependencies: 'hard'}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      _R_CHECK_DEPENDS_ONLY_: ${{ matrix.config.dependencies == 'hard' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +40,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
-          needs: check
+          dependencies: '"${{ matrix.config.dependencies }}"'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
