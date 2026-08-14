@@ -58,6 +58,7 @@ The things you need to know to create an interactive graphic :
   translated as a web interactive graphics.
 
 ``` r
+
 library(ggplot2)
 library(ggiraph)
 data <- mtcars
@@ -102,12 +103,14 @@ You can also make interactive annotations, titles and facets (see
 > Get development version on github
 
 ``` r
+
 devtools::install_github('davidgohel/ggiraph')
 ```
 
 > Get CRAN version
 
 ``` r
+
 install.packages("ggiraph")
 ```
 
@@ -128,23 +131,40 @@ read them and answer when possible.
 
 ### Bug reports
 
-When you file a [bug
-report](https://github.com/davidgohel/ggiraph/issues), please spend some
-time making it easy for me to follow and reproduce. The more time you
-spend on making the bug report coherent, the more time I can dedicate to
-investigate the bug as opposed to the bug report.
+Bugs are reported through [GitHub
+issues](https://github.com/davidgohel/rvg/issues/new/choose). The issue
+form requires a reproducible example (a
+[reprex](https://reprex.tidyverse.org/)) and the output of
+[`sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html); reports
+missing these elements are closed without further response. The more
+reproducible your report, the more time can go into investigating the
+bug rather than reconstructing it.
 
-### Contributing to the package development
+For usage questions (“how do I do X with ggiraph”), please read
+<https://ardata.fr/ggiraph-book/> or ask on [Stack
+Overflow](https://stackoverflow.com/questions/tagged/r) with the `[r]`
+tag instead.
 
-A great way to start is to contribute an example or improve the
-documentation.
+### Pull requests
 
-If you want to submit a Pull Request to integrate functions of yours,
-provide if possible:
+Before writing any code, please open an issue describing the change you
+have in mind and the reason for it. The proposal needs to be discussed
+and explicitly validated by the maintainer before work starts; pull
+requests for features that have not gone through this step will not be
+considered, no matter how well crafted. This isn’t meant to discourage
+contributions, only to make sure the time you invest goes into a change
+that will actually land.
 
-- the new function(s) with code and roxygen tags (with examples)
-- a new section in the appropriate vignette that describes how to use
-  the new function
+Pull requests are accepted on a case-by-case basis: once a proposal has
+been agreed in an issue, the maintainer will invite you to open a PR for
+that specific change. Unsolicited PRs that bypass this step will be
+closed.
+
+When invited to open a PR, please include:
+
+- the new function(s) with code and roxygen tags, including runnable
+  examples
+- documentation updates where relevant
 - corresponding tests in directory `inst/tinytest`.
 
 ### Install from sources on macOS

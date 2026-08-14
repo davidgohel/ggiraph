@@ -39,10 +39,6 @@ The interactive parameters can be supplied with two ways:
 
 [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
 
-[`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
-
-[`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
-
 ## Examples
 
 ``` r

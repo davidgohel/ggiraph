@@ -1,5 +1,23 @@
 # Changelog
 
+## ggiraph 0.9.7
+
+### Issues
+
+- The fullscreen modal is now sized after the graphic aspect ratio, so
+  that graphics of any `width_svg`/`height_svg` are displayed entirely,
+  whatever the browser
+  ([\#354](https://github.com/davidgohel/ggiraph/issues/354)).
+
+## ggiraph 0.9.6
+
+CRAN release: 2026-02-21
+
+### Issues
+
+- Fix documentation and examples so that R CMD check run ok when
+  `_R_CHECK_DEPENDS_ONLY_: true`
+
 ## ggiraph 0.9.5
 
 CRAN release: 2026-02-17

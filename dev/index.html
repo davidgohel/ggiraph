@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Make ggplot2 Graphics Interactive • ggiraph package</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Open_Sans-0.4.10/font.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Open_Sans-0.4.10/font.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Make ggplot2 Graphics Interactive">
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.6.004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,16 +151,18 @@
 <div class="section level3">
 <h3 id="bug-reports">Bug reports<a class="anchor" aria-label="anchor" href="#bug-reports"></a>
 </h3>
-<p>When you file a <a href="https://github.com/davidgohel/ggiraph/issues" class="external-link">bug report</a>, please spend some time making it easy for me to follow and reproduce. The more time you spend on making the bug report coherent, the more time I can dedicate to investigate the bug as opposed to the bug report.</p>
+<p>Bugs are reported through <a href="https://github.com/davidgohel/rvg/issues/new/choose" class="external-link">GitHub issues</a>. The issue form requires a reproducible example (a <a href="https://reprex.tidyverse.org/" class="external-link">reprex</a>) and the output of <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code>; reports missing these elements are closed without further response. The more reproducible your report, the more time can go into investigating the bug rather than reconstructing it.</p>
+<p>For usage questions (“how do I do X with ggiraph”), please read <a href="https://ardata.fr/ggiraph-book/" class="external-link uri">https://ardata.fr/ggiraph-book/</a> or ask on <a href="https://stackoverflow.com/questions/tagged/r" class="external-link">Stack Overflow</a> with the <code>[r]</code> tag instead.</p>
 </div>
 <div class="section level3">
-<h3 id="contributing-to-the-package-development">Contributing to the package development<a class="anchor" aria-label="anchor" href="#contributing-to-the-package-development"></a>
+<h3 id="pull-requests">Pull requests<a class="anchor" aria-label="anchor" href="#pull-requests"></a>
 </h3>
-<p>A great way to start is to contribute an example or improve the documentation.</p>
-<p>If you want to submit a Pull Request to integrate functions of yours, provide if possible:</p>
+<p>Before writing any code, please open an issue describing the change you have in mind and the reason for it. The proposal needs to be discussed and explicitly validated by the maintainer before work starts; pull requests for features that have not gone through this step will not be considered, no matter how well crafted. This isn’t meant to discourage contributions, only to make sure the time you invest goes into a change that will actually land.</p>
+<p>Pull requests are accepted on a case-by-case basis: once a proposal has been agreed in an issue, the maintainer will invite you to open a PR for that specific change. Unsolicited PRs that bypass this step will be closed.</p>
+<p>When invited to open a PR, please include:</p>
 <ul>
-<li>the new function(s) with code and roxygen tags (with examples)</li>
-<li>a new section in the appropriate vignette that describes how to use the new function</li>
+<li>the new function(s) with code and roxygen tags, including runnable examples</li>
+<li>documentation updates where relevant</li>
 <li>corresponding tests in directory <code>inst/tinytest</code>.</li>
 </ul>
 </div>
@@ -242,7 +244,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

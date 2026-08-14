@@ -162,8 +162,14 @@
 
 .ggiraph-fullscreen-content {
   position: relative;
-  height: 90vw;
-  max-height: 90vh;
+  /* sizes below are those of the content box, padding excluded, so that
+     the aspect ratio set inline by the fullscreen handler applies to the
+     svg itself; width and height are overridden there too */
+  box-sizing: content-box;
+  width: calc(92vw - 40px);
+  height: calc(92vh - 40px);
+  max-width: calc(92vw - 40px);
+  max-height: calc(92vh - 40px);
   background-color: white;
   border-radius: 8px;
   padding: 20px;
