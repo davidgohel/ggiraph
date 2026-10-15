@@ -90,6 +90,6 @@ fileout <- tempfile(fileext = ".svg")
 dsvg(file = fileout)
 plot(rnorm(10), main="Simple Example", xlab = "", ylab = "")
 dev.off()
-#> agg_record_1dd111fa3b8e 
+#> agg_record_1d7f41c04eae 
 #>                       2 
 ```
