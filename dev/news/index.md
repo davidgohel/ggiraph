@@ -8,6 +8,17 @@
   that graphics of any `width_svg`/`height_svg` are displayed entirely,
   whatever the browser
   ([\#354](https://github.com/davidgohel/ggiraph/issues/354)).
+- [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
+  and
+  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+  are faster when many fonts are installed: the Liberation fonts are
+  only looked up when the fonts supplied miss a family, and the supplied
+  fonts are checked with a single listing of the system fonts. With a
+  complete `font_set`,
+  [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
+  lists the system fonts once instead of 12 times
+  ([\#359](https://github.com/davidgohel/ggiraph/issues/359),
+  [\#360](https://github.com/davidgohel/ggiraph/issues/360)).
 
 ## ggiraph 0.9.6
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,8 @@
 <div class="section level3">
 <h3 id="issues-0-9-7">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-7"></a></h3>
 <ul><li>The fullscreen modal is now sized after the graphic aspect ratio, so that graphics of any <code>width_svg</code>/<code>height_svg</code> are displayed entirely, whatever the browser (<a href="https://github.com/davidgohel/ggiraph/issues/354" class="external-link">#354</a>).</li>
+<li>
+<code><a href="../reference/girafe.html">girafe()</a></code> and <code><a href="../reference/dsvg.html">dsvg()</a></code> are faster when many fonts are installed: the Liberation fonts are only looked up when the fonts supplied miss a family, and the supplied fonts are checked with a single listing of the system fonts. With a complete <code>font_set</code>, <code><a href="../reference/girafe.html">girafe()</a></code> lists the system fonts once instead of 12 times (<a href="https://github.com/davidgohel/ggiraph/issues/359" class="external-link">#359</a>, <a href="https://github.com/davidgohel/ggiraph/issues/360" class="external-link">#360</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
