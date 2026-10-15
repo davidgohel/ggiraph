@@ -45,12 +45,30 @@ jobs:
             const labels = missing.map(m => `needs-${m}`);
             if (hasLocalPath) labels.push("needs-portable-path");
 
-            if (labels.length === 0) return;
+            const current = (context.payload.issue.labels || []).map(l => l.name);
+
+            // remove the needs-* labels that no longer apply, and 'stale'
+            // when nothing is missing anymore
+            const toRemove = current.filter(l =>
+              (l.startsWith("needs-") && !labels.includes(l)) ||
+              (l === "stale" && labels.length === 0)
+            );
+            for (const name of toRemove) {
+              await github.rest.issues.removeLabel({
+                ...context.repo,
+                issue_number: context.issue.number,
+                name,
+              });
+            }
+
+            // only label and comment when something new is missing
+            const toAdd = labels.filter(l => !current.includes(l));
+            if (toAdd.length === 0) return;
 
             await github.rest.issues.addLabels({
               ...context.repo,
               issue_number: context.issue.number,
-              labels,
+              labels: toAdd,
             });
 
             const items = {
