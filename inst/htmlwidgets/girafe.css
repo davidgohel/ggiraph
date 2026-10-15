@@ -2,6 +2,21 @@
   margin-left: auto;
   margin-right: auto;
 }
+/* fill mode (e.g. in bslib::page_fillable()): auto margins would prevent
+   the widget from stretching to the size of its container */
+.html-fill-container > .girafe.html-fill-item {
+  margin-left: 0;
+  margin-right: 0;
+}
+.girafe_container_fill {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.girafe_container_fill > svg {
+  flex: 1 1 0;
+  min-height: 0;
+}
 .girafe_container_std {
   margin-left: auto;
   margin-right: auto;

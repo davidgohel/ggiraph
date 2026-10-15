@@ -94,6 +94,17 @@ export default class SVGObject {
       .style('height', Number.parseFloat(height / 72).toFixed(3) + 'in');
   }
 
+  // fill mode: the svg takes the size of its container, the toolbar
+  // excepted, and follows it when it is resized
+  fillContainer() {
+    d3.select('#' + this.containerid + ' .girafe_container_std').classed(
+      'girafe_container_fill',
+      true
+    );
+    d3.select('#' + this.svgid).style('height', null);
+    this.setSizeLimits('none', '0', 'none', '0');
+  }
+
   setSizeLimits(width_max, width_min, height_max, height_min) {
     d3.select('#' + this.svgid)
       .style('max-width', width_max)

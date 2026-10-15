@@ -9,6 +9,10 @@ stylesheet for all the graphics of a document (#355).
 
 ## Issues
 
+- In Shiny, `girafeOutput()` now fills its container when it is in a
+fillable layout, e.g. a card of `bslib::page_fillable()`: the graphic
+follows the size of the card, keeping its aspect ratio. Without `height`,
+it starts from 400px as `plotOutput()` (#353).
 - ggiraph now compiles on OpenBSD, NetBSD and DragonFly BSD; the bundled
 tinyxml2 used `fseeko64()`, which only exists on Linux with glibc
 (#357, thanks to @przmv).

@@ -1,6 +1,16 @@
 import * as d3 from 'd3';
 import SVGObject from './svg.js';
 
+// true when the output fills its container, e.g. in a card of
+// bslib::page_fillable() (see htmltools::bindFillRole())
+function isFillItem(el) {
+  return (
+    el.classList.contains('html-fill-item') &&
+    el.parentElement !== null &&
+    el.parentElement.classList.contains('html-fill-container')
+  );
+}
+
 // Returns a factory function for HTMLWidgets
 export function factory(shinyMode) {
   return function (el, width, height) {
@@ -31,12 +41,21 @@ export function factory(shinyMode) {
         } else if (shinyMode) {
           ggobj.autoScale('100%');
           ggobj.IEFixResize(1, 1 / x.ratio);
-          ggobj.setSizeLimits(
-            d3.select(el).style('width'),
-            0,
-            d3.select(el).style('height'),
-            0
-          );
+          if (isFillItem(el)) {
+            // without height, start from 400px as shiny::plotOutput(), the
+            // container then grows or shrinks to fill the available space
+            if (!el.style.height) {
+              el.style.height = '400px';
+            }
+            ggobj.fillContainer();
+          } else {
+            ggobj.setSizeLimits(
+              d3.select(el).style('width'),
+              0,
+              d3.select(el).style('height'),
+              0
+            );
+          }
           //ggobj.removeContainerLimits();
         } else {
           ggobj.autoScale(Math.round(x.settings.sizing.width * 100) + '%');
