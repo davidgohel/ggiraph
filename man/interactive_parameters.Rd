@@ -3,8 +3,15 @@
 \name{interactive_parameters}
 \alias{interactive_parameters}
 \title{Interactive parameters}
-\arguments{
-\item{tooltip}{Tooltip text to associate with one or more elements.
+\description{
+Throughout ggiraph there are functions that add interactivity to ggplot plot elements.
+The user can control the various aspects of interactivity by supplying
+a special set of parameters to these functions.
+}
+\section{Parameters}{
+
+\itemize{
+\item \code{tooltip}: Tooltip text to associate with one or more elements.
 If this is supplied a tooltip is shown when the element is hovered.
 Plain text or html is supported.
 
@@ -12,39 +19,30 @@ To use html markup it is advised to use \code{\link[htmltools:HTML]{htmltools::H
 in order to mark the text as html markup.
 If the text is not marked as html and no opening/closing tags were detected,
 then any existing newline characters (\verb{\\r\\n}, \verb{\\r} and \verb{\\n})
-are replaced with the \verb{<br/>} tag.}
-
-\item{onclick}{Javascript code to associate with one or more elements.
-This code will be executed when the element is clicked.}
-
-\item{hover_css}{Individual css style associate with one or more elements.
+are replaced with the \verb{<br/>} tag.
+\item \code{onclick}: Javascript code to associate with one or more elements.
+This code will be executed when the element is clicked.
+\item \code{hover_css}: Individual css style associate with one or more elements.
 This css style is applied when the element is hovered and overrides the default style,
 set via \code{\link[=opts_hover]{opts_hover()}}, \code{\link[=opts_hover_key]{opts_hover_key()}} or \code{\link[=opts_hover_theme]{opts_hover_theme()}}.
 It can also be constructed with \code{\link[=girafe_css]{girafe_css()}},
-to give more control over the css for different element types (see \code{\link[=opts_hover]{opts_hover()}} note).}
-
-\item{selected_css}{Individual css style associate with one or more elements.
+to give more control over the css for different element types (see \code{\link[=opts_hover]{opts_hover()}} note).
+\item \code{selected_css}: Individual css style associate with one or more elements.
 This css style is applied when the element is selected and overrides the default style,
 set via \code{\link[=opts_selection]{opts_selection()}}, \code{\link[=opts_selection_key]{opts_selection_key()}} or \code{\link[=opts_selection_theme]{opts_selection_theme()}}.
 It can also be constructed with \code{\link[=girafe_css]{girafe_css()}},
-to give more control over the css for different element types (see \code{\link[=opts_selection]{opts_selection()}} note).}
-
-\item{data_id}{Identifier to associate with one or more elements.
+to give more control over the css for different element types (see \code{\link[=opts_selection]{opts_selection()}} note).
+\item \code{data_id}: Identifier to associate with one or more elements.
 This is mandatory parameter if hover and selection interactivity is desired.
-Identifiers are available as reactive input values in Shiny applications.}
-
-\item{tooltip_fill}{Color to use for tooltip background when \code{\link[=opts_tooltip]{opts_tooltip()}} \code{use_fill} is TRUE.
+Identifiers are available as reactive input values in Shiny applications.
+\item \code{tooltip_fill}: Color to use for tooltip background when \code{\link[=opts_tooltip]{opts_tooltip()}} \code{use_fill} is TRUE.
 Useful for setting the tooltip background color in \code{\link[=geom_text_interactive]{geom_text_interactive()}} or
-\code{\link[=geom_label_interactive]{geom_label_interactive()}}, when the geom text color may be the same as the tooltip text color.}
+\code{\link[=geom_label_interactive]{geom_label_interactive()}}, when the geom text color may be the same as the tooltip text color.
+\item \code{hover_nearest}: Set to TRUE to apply the hover effect on the nearest element
+while moving the mouse. In this case it is mandatory to also set the \code{data_id} parameter.
+}
+}
 
-\item{hover_nearest}{Set to TRUE to apply the hover effect on the nearest element
-while moving the mouse. In this case it is mandatory to also set the \code{data_id} parameter}
-}
-\description{
-Throughout ggiraph there are functions that add interactivity to ggplot plot elements.
-The user can control the various aspects of interactivity by supplying
-a special set of parameters to these functions.
-}
 \section{Details for interactive geom functions}{
 
 The interactive parameters can be supplied with two ways:
