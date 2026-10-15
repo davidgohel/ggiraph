@@ -16,20 +16,31 @@ r_font_families <- c("sans", "serif", "mono", "symbol")
 #' @return a named list of validated font family names
 #' @seealso [girafe()], [dsvg()]
 #' @family functions for font management
-#' @importFrom gdtools font_family_exists font_set_liberation
+#' @importFrom gdtools font_set_liberation sys_fonts
 #' @examples
 #' validated_fonts()
 validated_fonts <- function(fonts = list()) {
-  auto <- font_set_liberation()
-  defaults <- c(
-    sans = auto$sans,
-    serif = auto$serif,
-    mono = auto$mono,
-    symbol = auto$symbol
-  )
-  fonts <- fonts[unlist(lapply(fonts, font_family_exists))]
+  # listing the fonts is slow when many are installed: list them once
+  # and only build the Liberation defaults when a family is missing
+  if (length(fonts) > 0) {
+    families <- tolower(sys_fonts()$family)
+    fonts <- fonts[vapply(
+      fonts,
+      function(x) tolower(x) %in% families,
+      logical(1)
+    )]
+  }
   missing_fonts <- setdiff(r_font_families, names(fonts))
-  fonts[missing_fonts] <- defaults[missing_fonts]
+  if (length(missing_fonts) > 0) {
+    auto <- font_set_liberation()
+    defaults <- c(
+      sans = auto$sans,
+      serif = auto$serif,
+      mono = auto$mono,
+      symbol = auto$symbol
+    )
+    fonts[missing_fonts] <- defaults[missing_fonts]
+  }
   fonts
 }
 

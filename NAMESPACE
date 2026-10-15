@@ -283,7 +283,6 @@ importFrom(dplyr,
   ungroup
 )
 importFrom(gdtools,
-  font_family_exists,
   font_set_liberation,
   sys_fonts
 )

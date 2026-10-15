@@ -5,6 +5,11 @@
 - The fullscreen modal is now sized after the graphic aspect ratio, so that
 graphics of any `width_svg`/`height_svg` are displayed entirely, whatever the
 browser (#354).
+- `girafe()` and `dsvg()` are faster when many fonts are installed: the
+Liberation fonts are only looked up when the fonts supplied miss a family,
+and the supplied fonts are checked with a single listing of the system
+fonts. With a complete `font_set`, `girafe()` lists the system fonts once
+instead of 12 times (#359, #360).
 
 # ggiraph 0.9.6
 
