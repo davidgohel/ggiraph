@@ -13,6 +13,14 @@
 
 ### Issues
 
+- In Shiny,
+  [`girafeOutput()`](https://davidgohel.github.io/ggiraph/dev/reference/girafeOutput.md)
+  now fills its container when it is in a fillable layout, e.g. a card
+  of
+  [`bslib::page_fillable()`](https://rstudio.github.io/bslib/reference/page_fillable.html):
+  the graphic follows the size of the card, keeping its aspect ratio.
+  Without `height`, it starts from 400px as `plotOutput()`
+  ([\#353](https://github.com/davidgohel/ggiraph/issues/353)).
 - ggiraph now compiles on OpenBSD, NetBSD and DragonFly BSD; the bundled
   tinyxml2 used `fseeko64()`, which only exists on Linux with glibc
   ([\#357](https://github.com/davidgohel/ggiraph/issues/357), thanks to
