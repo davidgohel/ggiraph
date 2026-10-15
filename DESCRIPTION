@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.7.003
+Version: 0.9.7.004
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -150,4 +150,4 @@ Collate:
     'scale_viridis_interactive.R'
     'tracers.R'
     'utils_data.r'
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1

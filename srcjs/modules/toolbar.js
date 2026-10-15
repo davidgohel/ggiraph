@@ -13,6 +13,13 @@ export default class ToolbarHandler {
     this.hidden = Array.isArray(options.hidden)
       ? options.hidden
       : [options.hidden];
+    // CSS variables defining the toolbar colors (see girafe.css)
+    this.colors = {
+      '--ggiraph-toolbar-bg': options.bg_color,
+      '--ggiraph-toolbar-icon-color': options.icon_color,
+      '--ggiraph-toolbar-icon-active-color': options.icon_active_color,
+      '--ggiraph-toolbar-icon-hover-color': options.icon_hover_color,
+    };
     this.on = false;
   }
 
@@ -50,6 +57,13 @@ export default class ToolbarHandler {
         .attr('data-forsvg', this.svgid);
     }
     toolbarEl.classed(this.clsName + '-' + this.position, true);
+
+    // colors set with opts_toolbar(), the others keep the CSS defaults
+    for (const [name, value] of Object.entries(this.colors)) {
+      if (typeof value === 'string' && value.length) {
+        toolbarEl.style(name, value);
+      }
+    }
 
     // add blocks
     const that = this;

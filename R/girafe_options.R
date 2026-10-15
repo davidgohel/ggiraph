@@ -517,6 +517,31 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #' Valid button groups: 'selection', 'zoom', 'misc'
 #'
 #' Valid button names: 'lasso_select', 'lasso_deselect', 'zoom_onoff', 'zoom_rect', 'zoom_reset', 'saveaspng', 'fullscreen'
+#' @param bg_color,icon_color,icon_active_color,icon_hover_color Colors
+#' of the toolbar, as CSS color values (e.g. `"#333333"`, `"white"` or
+#' `"rgba(0, 0, 0, 0.5)"`): the background of the toolbar, the color of the
+#' icons, the color of the icons of active buttons (zoom activated, lasso
+#' deselection) and the color of the hovered icon. If `NULL` (default),
+#' the default colors are used.
+#'
+#' @section Toolbar colors:
+#' The toolbar colors are defined by CSS variables, which `bg_color`,
+#' `icon_color`, `icon_active_color` and `icon_hover_color` set for one
+#' graphic. To set them for all the graphics of a document or of an
+#' application, define these variables in a stylesheet:
+#'
+#' ```css
+#' .ggiraph-toolbar {
+#'   --ggiraph-toolbar-bg: #222222;
+#'   --ggiraph-toolbar-icon-color: #f0f0f0;
+#'   --ggiraph-toolbar-icon-active-color: #ffb000;
+#'   --ggiraph-toolbar-icon-hover-color: #ffffff;
+#' }
+#' ```
+#'
+#' In R Markdown or Quarto, this rule can be written in a `css` chunk;
+#' prefix the selector with a class (e.g. `.my-class .ggiraph-toolbar`)
+#' to apply it only to the graphics inside an element of that class.
 #'
 #' @note
 #' `saveaspng` relies on JavaScript promises, so any browsers that don't natively
@@ -578,6 +603,22 @@ opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
 #'   )
 #' )
 #' if (interactive()) print(x)
+#'
+#' # Change the toolbar colors
+#' x <- girafe(
+#'   ggobj = gg,
+#'   options = list(
+#'     opts_zoom(max = 5),
+#'     opts_toolbar(
+#'       fixed = TRUE,
+#'       bg_color = "#222222",
+#'       icon_color = "#f0f0f0",
+#'       icon_active_color = "#ffb000",
+#'       icon_hover_color = "white"
+#'     )
+#'   )
+#' )
+#' if (interactive()) print(x)
 #' @export
 #' @family girafe animation options
 opts_toolbar <- function(
@@ -595,7 +636,11 @@ opts_toolbar <- function(
   hidden = NULL,
   fixed = FALSE,
   delay_mouseover = 200,
-  delay_mouseout = 500
+  delay_mouseout = 500,
+  bg_color = NULL,
+  icon_color = NULL,
+  icon_active_color = NULL,
+  icon_hover_color = NULL
 ) {
   position = arg_match(position, error_call = NULL)
   if (!is_valid_logical(saveaspng)) {
@@ -622,6 +667,21 @@ opts_toolbar <- function(
   if (!is_valid_number(delay_mouseout) || delay_mouseout < 0) {
     abort("`delay_mouseout` must be a scalar positive number", call = NULL)
   }
+  colors <- list(
+    bg_color = bg_color,
+    icon_color = icon_color,
+    icon_active_color = icon_active_color,
+    icon_hover_color = icon_hover_color
+  )
+  for (arg in names(colors)) {
+    value <- colors[[arg]]
+    if (!is.null(value) && !is_valid_string_non_empty(value)) {
+      abort(
+        sprintf("`%s` must be NULL or a non-empty scalar character", arg),
+        call = NULL
+      )
+    }
+  }
 
   x <- list(
     position = position,
@@ -630,7 +690,11 @@ opts_toolbar <- function(
     fixed = fixed,
     hidden = hidden,
     delay_over = delay_mouseover,
-    delay_out = delay_mouseout
+    delay_out = delay_mouseout,
+    bg_color = bg_color,
+    icon_color = icon_color,
+    icon_active_color = icon_active_color,
+    icon_hover_color = icon_hover_color
   )
   class(x) <- "opts_toolbar"
   # Track explicitly provided arguments for merging with defaults

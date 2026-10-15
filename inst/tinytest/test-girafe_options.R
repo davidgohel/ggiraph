@@ -212,6 +212,43 @@ library(ggiraph)
   expect_equal(opts$delay_out, 50, info = "check delay_mouseout argument")
 }
 
+# opts_toolbar colors ----
+{
+  color_args <- c("bg_color", "icon_color", "icon_active_color", "icon_hover_color")
+
+  opts <- opts_toolbar()
+  for (arg in color_args) {
+    expect_null(opts[[arg]], info = paste(arg, "defaults to NULL"))
+    expect_error(do.call(opts_toolbar, setNames(list(1), arg)), info = paste("check", arg))
+    expect_error(do.call(opts_toolbar, setNames(list(c("red", "blue")), arg)), info = paste("check", arg))
+    expect_error(do.call(opts_toolbar, setNames(list(" "), arg)), info = paste("check", arg))
+  }
+
+  opts <- opts_toolbar(
+    bg_color = "#222222",
+    icon_color = "white",
+    icon_active_color = "rgba(255, 176, 0, 1)",
+    icon_hover_color = "#fff"
+  )
+  expect_equal(opts$bg_color, "#222222")
+  expect_equal(opts$icon_color, "white")
+  expect_equal(opts$icon_active_color, "rgba(255, 176, 0, 1)")
+  expect_equal(opts$icon_hover_color, "#fff")
+
+  # the colors reach the widget settings and merge with other toolbar options
+  library(ggplot2)
+  g <- girafe(
+    ggobj = ggplot(),
+    options = list(
+      opts_toolbar(position = "top"),
+      opts_toolbar(icon_color = "white")
+    )
+  )
+  expect_equal(g$x$settings$toolbar$position, "top")
+  expect_equal(g$x$settings$toolbar$icon_color, "white")
+  expect_null(g$x$settings$toolbar$bg_color)
+}
+
 # opts_sizing ----
 {
   opts <- opts_sizing()
