@@ -4,13 +4,11 @@ Throughout ggiraph there are functions that add interactivity to ggplot
 plot elements. The user can control the various aspects of interactivity
 by supplying a special set of parameters to these functions.
 
-## Arguments
+## Parameters
 
-- tooltip:
-
-  Tooltip text to associate with one or more elements. If this is
-  supplied a tooltip is shown when the element is hovered. Plain text or
-  html is supported.
+- `tooltip`: Tooltip text to associate with one or more elements. If
+  this is supplied a tooltip is shown when the element is hovered. Plain
+  text or html is supported.
 
   To use html markup it is advised to use
   [`htmltools::HTML()`](https://rstudio.github.io/htmltools/reference/HTML.html)
@@ -19,16 +17,12 @@ by supplying a special set of parameters to these functions.
   existing newline characters (`\r\n`, `\r` and `\n`) are replaced with
   the `<br/>` tag.
 
-- onclick:
+- `onclick`: Javascript code to associate with one or more elements.
+  This code will be executed when the element is clicked.
 
-  Javascript code to associate with one or more elements. This code will
-  be executed when the element is clicked.
-
-- hover_css:
-
-  Individual css style associate with one or more elements. This css
-  style is applied when the element is hovered and overrides the default
-  style, set via
+- `hover_css`: Individual css style associate with one or more elements.
+  This css style is applied when the element is hovered and overrides
+  the default style, set via
   [`opts_hover()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_hover.md),
   [`opts_hover_key()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_hover.md)
   or
@@ -39,11 +33,9 @@ by supplying a special set of parameters to these functions.
   [`opts_hover()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_hover.md)
   note).
 
-- selected_css:
-
-  Individual css style associate with one or more elements. This css
-  style is applied when the element is selected and overrides the
-  default style, set via
+- `selected_css`: Individual css style associate with one or more
+  elements. This css style is applied when the element is selected and
+  overrides the default style, set via
   [`opts_selection()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_selection.md),
   [`opts_selection_key()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_selection.md)
   or
@@ -54,15 +46,12 @@ by supplying a special set of parameters to these functions.
   [`opts_selection()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_selection.md)
   note).
 
-- data_id:
+- `data_id`: Identifier to associate with one or more elements. This is
+  mandatory parameter if hover and selection interactivity is desired.
+  Identifiers are available as reactive input values in Shiny
+  applications.
 
-  Identifier to associate with one or more elements. This is mandatory
-  parameter if hover and selection interactivity is desired. Identifiers
-  are available as reactive input values in Shiny applications.
-
-- tooltip_fill:
-
-  Color to use for tooltip background when
+- `tooltip_fill`: Color to use for tooltip background when
   [`opts_tooltip()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_tooltip.md)
   `use_fill` is TRUE. Useful for setting the tooltip background color in
   [`geom_text_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_text_interactive.md)
@@ -70,11 +59,9 @@ by supplying a special set of parameters to these functions.
   [`geom_label_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_text_interactive.md),
   when the geom text color may be the same as the tooltip text color.
 
-- hover_nearest:
-
-  Set to TRUE to apply the hover effect on the nearest element while
-  moving the mouse. In this case it is mandatory to also set the
-  `data_id` parameter
+- `hover_nearest`: Set to TRUE to apply the hover effect on the nearest
+  element while moving the mouse. In this case it is mandatory to also
+  set the `data_id` parameter.
 
 ## Details for interactive geom functions
 
