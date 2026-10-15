@@ -2,6 +2,15 @@
 
 ## ggiraph 0.9.7
 
+### Features
+
+- [`opts_toolbar()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_toolbar.md)
+  gains arguments `bg_color`, `icon_color`, `icon_active_color` and
+  `icon_hover_color` to set the colors of the toolbar. These colors are
+  CSS variables that can also be set in a stylesheet for all the
+  graphics of a document
+  ([\#355](https://github.com/davidgohel/ggiraph/issues/355)).
+
 ### Issues
 
 - The fullscreen modal is now sized after the graphic aspect ratio, so

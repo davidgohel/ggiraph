@@ -256,6 +256,18 @@ girafe_defaults()
 #> $delay_out
 #> [1] 500
 #> 
+#> $bg_color
+#> NULL
+#> 
+#> $icon_color
+#> NULL
+#> 
+#> $icon_active_color
+#> NULL
+#> 
+#> $icon_hover_color
+#> NULL
+#> 
 #> attr(,"class")
 #> [1] "opts_toolbar"
 #> attr(,"explicit_args")

@@ -18,9 +18,11 @@
   left: 0;
 }
 
+/* toolbar colors can be customised with these CSS variables, set by
+   opts_toolbar() or by a stylesheet */
 .ggiraph-toolbar {
   background-color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--ggiraph-toolbar-bg, rgba(255, 255, 255, 0.3));
   border-radius: 5px;
   padding: 2px;
 }
@@ -92,20 +94,20 @@
 }
 
 .ggiraph-toolbar-icon.drop {
-  stroke: #e30c37;
-  fill: #e30c37;
+  stroke: var(--ggiraph-toolbar-icon-active-color, #e30c37);
+  fill: var(--ggiraph-toolbar-icon-active-color, #e30c37);
 }
 .ggiraph-toolbar-icon.drop:hover {
-  stroke: #333;
-  fill: #333;
+  stroke: var(--ggiraph-toolbar-icon-hover-color, #333);
+  fill: var(--ggiraph-toolbar-icon-hover-color, #333);
 }
 .ggiraph-toolbar-icon.neutral {
-  stroke: #069;
-  fill: #069;
+  stroke: var(--ggiraph-toolbar-icon-color, #069);
+  fill: var(--ggiraph-toolbar-icon-color, #069);
 }
 .ggiraph-toolbar-icon.neutral:hover {
-  stroke: #333;
-  fill: #333;
+  stroke: var(--ggiraph-toolbar-icon-hover-color, #333);
+  fill: var(--ggiraph-toolbar-icon-hover-color, #333);
 }
 
 .ggiraph-svg .lasso path {

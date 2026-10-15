@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,11 @@
 <span>  hidden <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fixed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  delay_mouseover <span class="op">=</span> <span class="fl">200</span>,</span>
-<span>  delay_mouseout <span class="op">=</span> <span class="fl">500</span></span>
+<span>  delay_mouseout <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  bg_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon_active_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon_hover_color <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -102,12 +106,39 @@ transition associated with toolbar display.</p></dd>
 <dd><p>The duration in milliseconds of the
 transition associated with toolbar end of display.</p></dd>
 
+
+<dt id="arg-bg-color-icon-color-icon-active-color-icon-hover-color">bg_color, icon_color, icon_active_color, icon_hover_color<a class="anchor" aria-label="anchor" href="#arg-bg-color-icon-color-icon-active-color-icon-hover-color"></a></dt>
+<dd><p>Colors
+of the toolbar, as CSS color values (e.g. <code>"#333333"</code>, <code>"white"</code> or
+<code>"rgba(0, 0, 0, 0.5)"</code>): the background of the toolbar, the color of the
+icons, the color of the icons of active buttons (zoom activated, lasso
+deselection) and the color of the hovered icon. If <code>NULL</code> (default),
+the default colors are used.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p><code>saveaspng</code> relies on JavaScript promises, so any browsers that don't natively
 support the standard Promise object will need to have a polyfill (e.g.
 Internet Explorer with version less than 11 will need it).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="toolbar-colors">Toolbar colors<a class="anchor" aria-label="anchor" href="#toolbar-colors"></a></h2>
+
+
+<p>The toolbar colors are defined by CSS variables, which <code>bg_color</code>,
+<code>icon_color</code>, <code>icon_active_color</code> and <code>icon_hover_color</code> set for one
+graphic. To set them for all the graphics of a document or of an
+application, define these variables in a stylesheet:</p>
+<p></p><div class="sourceCode css"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">.ggiraph-toolbar</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="va">--ggiraph-toolbar-bg</span><span class="ch">:</span> <span class="cn">#222222</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="va">--ggiraph-toolbar-icon-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="va">--ggiraph-toolbar-icon-active-color</span><span class="ch">:</span> <span class="cn">#ffb000</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="va">--ggiraph-toolbar-icon-hover-color</span><span class="ch">:</span> <span class="cn">#ffffff</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>}</span></code></pre><p></p></div>
+<p>In R Markdown or Quarto, this rule can be written in a <code>css</code> chunk;
+prefix the selector with a class (e.g. <code>.my-class .ggiraph-toolbar</code>)
+to apply it only to the graphics inside an element of that class.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -176,6 +207,22 @@ Internet Explorer with version less than 11 will need it).</p>
 <span class="r-in"><span>    <span class="fu">opts_toolbar</span><span class="op">(</span></span></span>
 <span class="r-in"><span>      position <span class="op">=</span> <span class="st">"top"</span>,</span></span>
 <span class="r-in"><span>      hidden <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"selection"</span>, <span class="st">"zoom_rect"</span>, <span class="st">"saveaspng"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Change the toolbar colors</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="girafe.html">girafe</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ggobj <span class="op">=</span> <span class="va">gg</span>,</span></span>
+<span class="r-in"><span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="opts_zoom.html">opts_zoom</a></span><span class="op">(</span>max <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu">opts_toolbar</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      fixed <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>      bg_color <span class="op">=</span> <span class="st">"#222222"</span>,</span></span>
+<span class="r-in"><span>      icon_color <span class="op">=</span> <span class="st">"#f0f0f0"</span>,</span></span>
+<span class="r-in"><span>      icon_active_color <span class="op">=</span> <span class="st">"#ffb000"</span>,</span></span>
+<span class="r-in"><span>      icon_hover_color <span class="op">=</span> <span class="st">"white"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
