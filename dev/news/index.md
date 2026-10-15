@@ -13,6 +13,10 @@
 
 ### Issues
 
+- ggiraph now compiles on OpenBSD, NetBSD and DragonFly BSD; the bundled
+  tinyxml2 used `fseeko64()`, which only exists on Linux with glibc
+  ([\#357](https://github.com/davidgohel/ggiraph/issues/357), thanks to
+  [@przmv](https://github.com/przmv)).
 - The fullscreen modal is now sized after the graphic aspect ratio, so
   that graphics of any `width_svg`/`height_svg` are displayed entirely,
   whatever the browser
