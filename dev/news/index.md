@@ -40,6 +40,11 @@
   lists the system fonts once instead of 12 times
   ([\#359](https://github.com/davidgohel/ggiraph/issues/359),
   [\#360](https://github.com/davidgohel/ggiraph/issues/360)).
+- `girafe.js` was loaded twice in each document: `girafe.yaml` still
+  declared it as a dependency, in addition to the widget binding added
+  by htmlwidgets. Only the stylesheet is now declared there
+  ([\#361](https://github.com/davidgohel/ggiraph/issues/361),
+  [\#351](https://github.com/davidgohel/ggiraph/issues/351)).
 
 ## ggiraph 0.9.6
 
