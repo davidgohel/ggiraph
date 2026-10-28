@@ -1,6 +1,5 @@
 dependencies:
-  - name: ggiraphjs
-    version: 0.9.4
+  - name: girafe-css
+    version: 0.9.7
     src: htmlwidgets
-    script: girafe.js
     stylesheet: girafe.css

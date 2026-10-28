@@ -24,6 +24,9 @@ Liberation fonts are only looked up when the fonts supplied miss a family,
 and the supplied fonts are checked with a single listing of the system
 fonts. With a complete `font_set`, `girafe()` lists the system fonts once
 instead of 12 times (#359, #360).
+- `girafe.js` was loaded twice in each document: `girafe.yaml` still
+declared it as a dependency, in addition to the widget binding added by
+htmlwidgets. Only the stylesheet is now declared there (#361, #351).
 
 # ggiraph 0.9.6
 
