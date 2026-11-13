@@ -7,6 +7,12 @@
 toolbar. These colors are CSS variables that can also be set in a
 stylesheet for all the graphics of a document (#355).
 
+- `dsvg()` now reports what it can draw with `dev.capabilities()`
+(gradients, patterns, clipping paths, alpha masks), so that packages such as
+'ggplot2' or 'marquee' can check it. Stroking or filling a path
+(`grid.stroke()`, `grid.fill()`, `grid.fillStroke()`) was silently ignored,
+it now emits a warning.
+
 ## Issues
 
 - In Shiny, `girafeOutput()` now fills its container when it is in a

@@ -72,6 +72,55 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
   }
 }
 
+#if R_GE_version >= 15
+SEXP dsvg_define_group(SEXP source, int op, SEXP destination, pDevDesc dd) {
+  // grid warns that the group definition failed
+  return R_NilValue;
+}
+
+void dsvg_use_group(SEXP ref, SEXP trans, pDevDesc dd) {
+}
+
+void dsvg_release_group(SEXP ref, pDevDesc dd) {
+}
+
+void dsvg_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
+  Rf_warning("Stroking a path is not supported by dsvg, the path is ignored.");
+}
+
+void dsvg_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
+  Rf_warning("Filling a path is not supported by dsvg, the path is ignored.");
+}
+
+void dsvg_fill_stroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
+  Rf_warning("Filling and stroking a path is not supported by dsvg, the path is ignored.");
+}
+
+SEXP dsvg_capabilities(SEXP capabilities) {
+  SEXP pat = PROTECT(Rf_allocVector(INTSXP, 3));
+  INTEGER(pat)[0] = R_GE_linearGradientPattern;
+  INTEGER(pat)[1] = R_GE_radialGradientPattern;
+  INTEGER(pat)[2] = R_GE_tilingPattern;
+  SET_VECTOR_ELT(capabilities, R_GE_capability_patterns, pat);
+  UNPROTECT(1);
+
+  SET_VECTOR_ELT(capabilities, R_GE_capability_clippingPaths,
+                 Rf_ScalarInteger(1));
+
+  // luminance masks are drawn as alpha masks
+  SET_VECTOR_ELT(capabilities, R_GE_capability_masks,
+                 Rf_ScalarInteger(R_GE_alphaMask));
+
+  SET_VECTOR_ELT(capabilities, R_GE_capability_compositing,
+                 Rf_ScalarInteger(0));
+  SET_VECTOR_ELT(capabilities, R_GE_capability_transformations,
+                 Rf_ScalarInteger(0));
+  SET_VECTOR_ELT(capabilities, R_GE_capability_paths,
+                 Rf_ScalarInteger(0));
+  return capabilities;
+}
+#endif // R_GE_version >= 15
+
 pDevDesc dsvg_driver_new(std::string filename,
                          double width, double height,
                          std::string canvas_id,
@@ -162,6 +211,21 @@ pDevDesc dsvg_driver_new(std::string filename,
 
   // version 14 fully supported
   dd->deviceVersion = R_GE_deviceClip;
+#endif
+
+#if R_GE_version >= 15
+  // The engine calls these callbacks without checking for NULL once
+  // deviceVersion is 15: groups and path stroking/filling are not
+  // supported yet, the callbacks only warn.
+  dd->defineGroup  = dsvg_define_group;
+  dd->useGroup     = dsvg_use_group;
+  dd->releaseGroup = dsvg_release_group;
+  dd->stroke       = dsvg_stroke;
+  dd->fill         = dsvg_fill;
+  dd->fillStroke   = dsvg_fill_stroke;
+  dd->capabilities = dsvg_capabilities;
+
+  dd->deviceVersion = R_GE_group;
 #endif
 
   dd->deviceSpecific = new DSVG_dev(filename,
