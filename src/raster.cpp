@@ -7,6 +7,9 @@ extern "C" {
 #include <png.h>
 }
 #include <cstdint>
+#include <cmath>
+#include <cstdlib>
+#include <vector>
 
 static const char encode_lookup[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static const char pad_character = '=';
@@ -49,78 +52,89 @@ static void png_memory_write(png_structp  png_ptr, png_bytep data, png_size_t le
   p->insert(p->end(), data, data + length);
 }
 
-// This code has been copied from the package svglite maintained by Thomas Lin Pedersen
-std::string raster_to_string(unsigned int *raster, int w, int h, double width, double height, bool interpolate) {
-  h = h < 0 ? -h : h;
-  w = w < 0 ? -w : w;
-  bool resize = false;
-  int w_fac = 1, h_fac = 1;
-  std::vector<unsigned int> raster_resize;
+/*
+ * Enlargement factor of a raster of `pixels` pixels drawn on `size` points.
+ * Without interpolation, a raster smaller than its size is enlarged by
+ * repeating its pixels, so that it stays sharp in viewers that ignore the
+ * attribute image-rendering: about one pixel per point.
+ */
+static int enlargement(int pixels, double size, bool interpolate) {
+  if (interpolate || pixels <= 0 || size <= pixels) return 1;
+  return (int) std::ceil(size / pixels);
+}
 
-  if (!interpolate && double(w) < width) {
-    resize = true;
-    w_fac = std::ceil(width / w);
-  }
-  if (!interpolate && double(h) < height) {
-    resize = true;
-    h_fac = std::ceil(height / h);
-  }
-
-  if (resize) {
-    int w_new = w * w_fac;
-    int h_new = h * h_fac;
-    raster_resize.reserve(w_new * h_new);
-    for (int i = 0; i < h; ++i) {
-      for (int j = 0; j < w; ++j) {
-        unsigned int val = raster[i * w + j];
-        for (int wrep = 0; wrep < w_fac; ++wrep) {
-          raster_resize.push_back(val);
-        }
-      }
-      for (int hrep = 1; hrep < h_fac; ++hrep) {
-        raster_resize.insert(raster_resize.end(), raster_resize.end() - w_new, raster_resize.end());
-      }
+/*
+ * RGBA bytes of a raster of R colours (h rows of w pixels, top row first),
+ * each pixel repeated fx times horizontally and fy times vertically.
+ * The components are read with the macros of R, whatever the byte order
+ * of the machine.
+ */
+static std::vector<std::uint8_t> raster_rgba(const unsigned int *raster,
+                                             int w, int h, int fx, int fy) {
+  const size_t out_w = (size_t) w * fx;
+  const size_t out_h = (size_t) h * fy;
+  std::vector<std::uint8_t> bytes(out_w * out_h * 4);
+  std::uint8_t* p = bytes.data();
+  for (size_t y = 0; y < out_h; ++y) {
+    const unsigned int* row = raster + (y / fy) * w;
+    for (size_t x = 0; x < out_w; ++x) {
+      const unsigned int col = row[x / fx];
+      *p++ = R_RED(col);
+      *p++ = R_GREEN(col);
+      *p++ = R_BLUE(col);
+      *p++ = R_ALPHA(col);
     }
-    raster = raster_resize.data();
-    w = w_new;
-    h = h_new;
   }
+  return bytes;
+}
 
+/*
+ * PNG file (in memory) of RGBA bytes, h rows of w pixels.
+ * Returns an empty vector if libpng fails.
+ */
+static std::vector<std::uint8_t> png_encode(const std::vector<std::uint8_t>& rgba,
+                                            int w, int h) {
+  std::vector<std::uint8_t> out;
   png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-  if (!png) {
-    return "";
-  }
+  if (!png) return out;
   png_infop info = png_create_info_struct(png);
   if (!info) {
-    png_destroy_write_struct(&png, (png_infopp)NULL);
-    return "";
+    png_destroy_write_struct(&png, NULL);
+    return out;
   }
+  // libpng jumps back here on error
   if (setjmp(png_jmpbuf(png))) {
     png_destroy_write_struct(&png, &info);
-    return "";
+    out.clear();
+    return out;
   }
-  png_set_IHDR(
-    png,
-    info,
-    w, h,
-    8,
-    PNG_COLOR_TYPE_RGBA,
-    PNG_INTERLACE_NONE,
-    PNG_COMPRESSION_TYPE_DEFAULT,
-    PNG_FILTER_TYPE_DEFAULT
-  );
-  std::vector<uint8_t*> rows(h);
+  png_set_write_fn(png, &out, png_memory_write, NULL);
+  png_set_IHDR(png, info, w, h, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE,
+               PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+  png_write_info(png, info);
+  const size_t row_size = (size_t) w * 4;
   for (int y = 0; y < h; ++y) {
-    rows[y] = (uint8_t*)raster + y * w * 4;
+    png_write_row(png, (png_const_bytep) (rgba.data() + y * row_size));
   }
-
-  std::vector<std::uint8_t> buffer;
-  png_set_rows(png, info, &rows[0]);
-  png_set_write_fn(png, &buffer, png_memory_write, NULL);
-  png_write_png(png, info, PNG_TRANSFORM_IDENTITY, NULL);
+  png_write_end(png, NULL);
   png_destroy_write_struct(&png, &info);
+  return out;
+}
 
-  return base64_encode(buffer.data(), buffer.size());
+/*
+ * A raster as a PNG file encoded in base64, for the attribute href of an
+ * <image>. `width` and `height` are the size of the image in points.
+ */
+std::string raster_to_string(unsigned int *raster, int w, int h, double width, double height, bool interpolate) {
+  w = std::abs(w);
+  h = std::abs(h);
+  const int fx = enlargement(w, width, interpolate);
+  const int fy = enlargement(h, height, interpolate);
+  const std::vector<std::uint8_t> png = png_encode(
+    raster_rgba(raster, w, h, fx, fy), w * fx, h * fy
+  );
+  if (png.empty()) return "";
+  return base64_encode(png.data(), png.size());
 }
 
 void dsvg_raster(unsigned int *raster, int w, int h, double x, double y,
