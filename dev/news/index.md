@@ -12,12 +12,18 @@
   ([\#355](https://github.com/davidgohel/ggiraph/issues/355)).
 
 - [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
-  now reports what it can draw with
+  now supports the graphics engine features of R 4.2 and 4.3: luminance
+  masks, `grid.stroke()`/`grid.fill()`/`grid.fillStroke()`, groups with
+  their transformations and compositing operators (`grid.group()`,
+  `grid.define()`, `grid.use()`), and glyphs (`glyphGrob()`). Packages
+  that use them now render correctly in ggiraph graphics, in particular
+  ‘marquee’: its texts are drawn faster and sharper, and texts with a
+  background (inline code, heading rules) are no longer missing.
   [`dev.capabilities()`](https://rdrr.io/r/grDevices/dev.capabilities.html)
-  (gradients, patterns, clipping paths, alpha masks), so that packages
-  such as ‘ggplot2’ or ‘marquee’ can check it. Stroking or filling a
-  path (`grid.stroke()`, `grid.fill()`, `grid.fillStroke()`) was
-  silently ignored, it now emits a warning.
+  reports what
+  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+  can draw. Only the ‘saturate’ compositing operator has no SVG
+  equivalent and is drawn as ‘over’ with a warning.
 
 ### Issues
 
