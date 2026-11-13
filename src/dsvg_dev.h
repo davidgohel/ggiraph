@@ -8,6 +8,7 @@
 #include "clip.h"
 #include "mask.h"
 #include "pattern.h"
+#include "group.h"
 #include <stack>
 
 /* helper enum for positioning svg elements inside their parent */
@@ -51,6 +52,14 @@ public:
   Masks masks;
   /* indexed pattern elements */
   Patterns patterns;
+  /* indexed group elements */
+  Groups groups;
+  /*
+   * Path appending (stroke/fill/fillStroke): while true, the shapes are not
+   * drawn but appended as subpaths to 'path_data'.
+   */
+  bool appending_path = false;
+  std::string path_data;
 
   /*
    * Constructor

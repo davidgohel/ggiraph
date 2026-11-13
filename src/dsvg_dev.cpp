@@ -21,7 +21,8 @@ DSVG_dev::DSVG_dev(std::string filename_,
     interactives(canvas_id_),
     clips(canvas_id_),
     masks(canvas_id_),
-    patterns(canvas_id_) {
+    patterns(canvas_id_),
+    groups(canvas_id_) {
 
   file = fopen(R_ExpandFileName(filename.c_str()), "w");
   if (!file) Rf_error("Failed to open file for writing: \"%s\"", filename.c_str());

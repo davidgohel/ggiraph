@@ -98,6 +98,10 @@ double dsvg_strwidth(const char *str, const pGEcontext gc, pDevDesc dd) {
 void dsvg_text_utf8(double x, double y, const char *str, double rot,
                            double hadj, const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  if (svgd->appending_path) {
+    Rf_warning("Text is not included in a stroked or filled path by dsvg.");
+    return;
+  }
   SVGElement* text = svgd->svg_element("text");
 
   if (rot == 0) {

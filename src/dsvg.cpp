@@ -73,50 +73,43 @@ void dsvg_new_page(const pGEcontext gc, pDevDesc dd) {
 }
 
 #if R_GE_version >= 15
-SEXP dsvg_define_group(SEXP source, int op, SEXP destination, pDevDesc dd) {
-  // grid warns that the group definition failed
-  return R_NilValue;
+static SEXP int_values(std::initializer_list<int> values) {
+  SEXP out = Rf_allocVector(INTSXP, values.size());
+  int i = 0;
+  for (int value : values) INTEGER(out)[i++] = value;
+  return out;
 }
 
-void dsvg_use_group(SEXP ref, SEXP trans, pDevDesc dd) {
-}
-
-void dsvg_release_group(SEXP ref, pDevDesc dd) {
-}
-
-void dsvg_stroke(SEXP path, const pGEcontext gc, pDevDesc dd) {
-  Rf_warning("Stroking a path is not supported by dsvg, the path is ignored.");
-}
-
-void dsvg_fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
-  Rf_warning("Filling a path is not supported by dsvg, the path is ignored.");
-}
-
-void dsvg_fill_stroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dd) {
-  Rf_warning("Filling and stroking a path is not supported by dsvg, the path is ignored.");
-}
-
+/*
+ * Fills what dsvg can draw in the list prepared by the engine
+ * (dev.capabilities()): 1 or the supported types when supported,
+ * 0 when not.
+ */
 SEXP dsvg_capabilities(SEXP capabilities) {
-  SEXP pat = PROTECT(Rf_allocVector(INTSXP, 3));
-  INTEGER(pat)[0] = R_GE_linearGradientPattern;
-  INTEGER(pat)[1] = R_GE_radialGradientPattern;
-  INTEGER(pat)[2] = R_GE_tilingPattern;
-  SET_VECTOR_ELT(capabilities, R_GE_capability_patterns, pat);
-  UNPROTECT(1);
-
+  SET_VECTOR_ELT(capabilities, R_GE_capability_patterns,
+                 int_values({R_GE_linearGradientPattern,
+                             R_GE_radialGradientPattern,
+                             R_GE_tilingPattern}));
   SET_VECTOR_ELT(capabilities, R_GE_capability_clippingPaths,
-                 Rf_ScalarInteger(1));
-
-  // luminance masks are drawn as alpha masks
+                 int_values({1}));
   SET_VECTOR_ELT(capabilities, R_GE_capability_masks,
-                 Rf_ScalarInteger(R_GE_alphaMask));
-
-  SET_VECTOR_ELT(capabilities, R_GE_capability_compositing,
-                 Rf_ScalarInteger(0));
+                 int_values({R_GE_alphaMask, R_GE_luminanceMask}));
+  int n_ops = 0;
+  for (int op = R_GE_compositeClear; op <= R_GE_compositeExclusion; op++) {
+    if (dsvg_supports_operator(op)) n_ops++;
+  }
+  SEXP ops = PROTECT(Rf_allocVector(INTSXP, n_ops));
+  for (int op = R_GE_compositeClear, i = 0; op <= R_GE_compositeExclusion; op++) {
+    if (dsvg_supports_operator(op)) INTEGER(ops)[i++] = op;
+  }
+  SET_VECTOR_ELT(capabilities, R_GE_capability_compositing, ops);
+  UNPROTECT(1);
   SET_VECTOR_ELT(capabilities, R_GE_capability_transformations,
-                 Rf_ScalarInteger(0));
-  SET_VECTOR_ELT(capabilities, R_GE_capability_paths,
-                 Rf_ScalarInteger(0));
+                 int_values({1}));
+  SET_VECTOR_ELT(capabilities, R_GE_capability_paths, int_values({1}));
+#if R_GE_version >= 16
+  SET_VECTOR_ELT(capabilities, R_GE_capability_glyphs, int_values({1}));
+#endif
   return capabilities;
 }
 #endif // R_GE_version >= 15
@@ -214,9 +207,6 @@ pDevDesc dsvg_driver_new(std::string filename,
 #endif
 
 #if R_GE_version >= 15
-  // The engine calls these callbacks without checking for NULL once
-  // deviceVersion is 15: groups and path stroking/filling are not
-  // supported yet, the callbacks only warn.
   dd->defineGroup  = dsvg_define_group;
   dd->useGroup     = dsvg_use_group;
   dd->releaseGroup = dsvg_release_group;
@@ -226,6 +216,11 @@ pDevDesc dsvg_driver_new(std::string filename,
   dd->capabilities = dsvg_capabilities;
 
   dd->deviceVersion = R_GE_group;
+#endif
+
+#if R_GE_version >= 16
+  dd->glyph = dsvg_glyph;
+  dd->deviceVersion = R_GE_glyphs;
 #endif
 
   dd->deviceSpecific = new DSVG_dev(filename,

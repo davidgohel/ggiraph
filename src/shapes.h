@@ -4,6 +4,9 @@
 #ifndef DSVG_SHAPES_INCLUDED
 #define DSVG_SHAPES_INCLUDED
 
+class DSVG_dev;
+void set_fill_color_or_pattern(SVGElement* element, const pGEcontext gc, DSVG_dev* svgd);
+
 void dsvg_line(double x1, double y1, double x2, double y2,
                const pGEcontext gc, pDevDesc dd);
 

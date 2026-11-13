@@ -48,8 +48,17 @@ SEXP dsvg_set_mask(SEXP path, SEXP ref, pDevDesc dd) {
     // draw the mask by calling the passed path function
     eval_function_ref(path);
 
-    // set the alpha filter to mask's elements
-    std::string& filter_id = dsvg_alpha_filter(svgd);
+    // SVG masks use the luminance of their content: alpha masks get a
+    // filter that turns their content white, keeping its transparency
+    bool luminance = false;
+#if R_GE_version >= 15
+    luminance = R_GE_maskType(path) == R_GE_luminanceMask;
+#endif
+    if (luminance) {
+      set_attr(mask, "style", "mask-type:luminance");
+    }
+    std::string filter_id;
+    if (!luminance) filter_id = dsvg_alpha_filter(svgd);
     if (!filter_id.empty()) {
       SVGElement* child = (SVGElement*)mask->FirstChild();
       while (child) {

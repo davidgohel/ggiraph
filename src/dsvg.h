@@ -8,5 +8,7 @@
 #include "shapes.h"
 #include "raster.h"
 #include "text.h"
+#include "paths.h"
+#include "glyph.h"
 
 #endif // DSVG_DRIVER_INCLUDED

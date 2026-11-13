@@ -127,6 +127,8 @@ void dsvg_raster(unsigned int *raster, int w, int h, double x, double y,
                  double width, double height, double rot, Rboolean interpolate,
                  const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  // rasters are not part of a stroked/filled path
+  if (svgd->appending_path) return;
   SVGElement* image = svgd->svg_element("image");
 
   if (height < 0)

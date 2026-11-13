@@ -3,6 +3,26 @@
  */
 #include "dsvg.h"
 
+/*
+ * Appends a subpath to the path being recorded by stroke/fill/fillStroke.
+ * Returns true if the device is recording a path.
+ */
+static bool append_subpath(DSVG_dev* svgd, int n, double* x, double* y,
+                           bool close) {
+  if (!svgd->appending_path) return false;
+  if (n < 1) return true;
+  std::ostringstream os;
+  os.flags(std::ios_base::fixed | std::ios_base::dec);
+  os.precision(2);
+  os << "M " << x[0] << " " << y[0] << " ";
+  for (int i = 1; i < n; i++) {
+    os << "L " << x[i] << " " << y[i] << " ";
+  }
+  if (close) os << "Z ";
+  svgd->path_data.append(os.str());
+  return true;
+}
+
 void set_fill_color_or_pattern(SVGElement* element, const pGEcontext gc, DSVG_dev* svgd) {
 #if R_GE_version >= 13
   if (!Rf_isNull(gc->patternFill)) {
@@ -18,6 +38,11 @@ void set_fill_color_or_pattern(SVGElement* element, const pGEcontext gc, DSVG_de
 void dsvg_line(double x1, double y1, double x2, double y2,
                const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  {
+    double x[2] = {x1, x2};
+    double y[2] = {y1, y2};
+    if (append_subpath(svgd, 2, x, y, false)) return;
+  }
   SVGElement* line = svgd->svg_element("line");
   set_attr(line, "x1", x1);
   set_attr(line, "y1", y1);
@@ -32,6 +57,7 @@ void dsvg_line(double x1, double y1, double x2, double y2,
 void dsvg_polyline(int n, double *x, double *y,
                    const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  if (append_subpath(svgd, n, x, y, false)) return;
   SVGElement* polyline = svgd->svg_element("polyline");
 
   std::ostringstream os;
@@ -52,6 +78,7 @@ void dsvg_polyline(int n, double *x, double *y,
 void dsvg_polygon(int n, double *x, double *y,
                   const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  if (append_subpath(svgd, n, x, y, true)) return;
   SVGElement* polygon = svgd->svg_element("polygon");
 
   std::ostringstream os;
@@ -72,6 +99,14 @@ void dsvg_polygon(int n, double *x, double *y,
 void dsvg_path(double *x, double *y, int npoly, int *nper, Rboolean winding,
                const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  if (svgd->appending_path) {
+    int offset = 0;
+    for (int i = 0; i < npoly; i++) {
+      append_subpath(svgd, nper[i], x + offset, y + offset, true);
+      offset += nper[i];
+    }
+    return;
+  }
   SVGElement* path = svgd->svg_element("path");
 
   int index = 0;
@@ -102,6 +137,11 @@ void dsvg_path(double *x, double *y, int npoly, int *nper, Rboolean winding,
 void dsvg_rect(double x0, double y0, double x1, double y1,
                const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  {
+    double x[4] = {x0, x1, x1, x0};
+    double y[4] = {y0, y0, y1, y1};
+    if (append_subpath(svgd, 4, x, y, true)) return;
+  }
   SVGElement* rect = svgd->svg_element("rect");
 
   set_attr(rect, "x", fmin(x0, x1));
@@ -118,6 +158,17 @@ void dsvg_rect(double x0, double y0, double x1, double y1,
 void dsvg_circle(double x, double y, double r,
                  const pGEcontext gc, pDevDesc dd) {
   DSVG_dev *svgd = (DSVG_dev*) dd->deviceSpecific;
+  if (svgd->appending_path) {
+    // two half circles
+    std::ostringstream os;
+    os.flags(std::ios_base::fixed | std::ios_base::dec);
+    os.precision(2);
+    os << "M " << x - r << " " << y << " "
+       << "A " << r << " " << r << " 0 1 0 " << x + r << " " << y << " "
+       << "A " << r << " " << r << " 0 1 0 " << x - r << " " << y << " Z ";
+    svgd->path_data.append(os.str());
+    return;
+  }
   SVGElement* circle = svgd->svg_element("circle");
 
   set_attr(circle, "cx", x);
