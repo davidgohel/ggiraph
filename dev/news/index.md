@@ -11,6 +11,14 @@
   graphics of a document
   ([\#355](https://github.com/davidgohel/ggiraph/issues/355)).
 
+- [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+  now reports what it can draw with
+  [`dev.capabilities()`](https://rdrr.io/r/grDevices/dev.capabilities.html)
+  (gradients, patterns, clipping paths, alpha masks), so that packages
+  such as ‘ggplot2’ or ‘marquee’ can check it. Stroking or filling a
+  path (`grid.stroke()`, `grid.fill()`, `grid.fillStroke()`) was
+  silently ignored, it now emits a warning.
+
 ### Issues
 
 - In Shiny,

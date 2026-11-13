@@ -35,7 +35,13 @@ Other functions for font management:
 
 ``` r
 match_family("sans")
+#> Warning: 'match_family' is deprecated.
+#> Use 'systemfonts::match_fonts' instead.
+#> See help("Deprecated")
 #> [1] "DejaVu Sans"
 match_family("serif")
+#> Warning: 'match_family' is deprecated.
+#> Use 'systemfonts::match_fonts' instead.
+#> See help("Deprecated")
 #> [1] "DejaVu Serif"
 ```
