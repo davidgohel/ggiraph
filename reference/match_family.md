@@ -1,5 +1,10 @@
 # Find best family match with systemfonts
 
+`match_family()` is deprecated: use
+[`systemfonts::match_fonts()`](https://systemfonts.r-lib.org/reference/match_fonts.html)
+instead. It is no longer used by ggiraph, and its equivalent in
+'gdtools' is deprecated too.
+
 `match_family()` returns the best font family match.
 
 ## Usage
@@ -25,17 +30,3 @@ match_family(font = "sans", bold = TRUE, italic = TRUE, debug = NULL)
 - debug:
 
   deprecated
-
-## See also
-
-Other functions for font management:
-[`validated_fonts()`](https://davidgohel.github.io/ggiraph/reference/validated_fonts.md)
-
-## Examples
-
-``` r
-match_family("sans")
-#> [1] "DejaVu Sans"
-match_family("serif")
-#> [1] "DejaVu Serif"
-```

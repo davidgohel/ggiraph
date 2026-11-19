@@ -1,5 +1,72 @@
 # Changelog
 
+## ggiraph 0.9.7
+
+### Features
+
+- [`opts_toolbar()`](https://davidgohel.github.io/ggiraph/reference/opts_toolbar.md)
+  gains arguments `bg_color`, `icon_color`, `icon_active_color` and
+  `icon_hover_color` to set the colors of the toolbar. These colors are
+  CSS variables that can also be set in a stylesheet for all the
+  graphics of a document
+  ([\#355](https://github.com/davidgohel/ggiraph/issues/355)).
+
+- [`dsvg()`](https://davidgohel.github.io/ggiraph/reference/dsvg.md) now
+  supports the graphics engine features of R 4.2 and 4.3: luminance
+  masks, `grid.stroke()`/`grid.fill()`/`grid.fillStroke()`, groups with
+  their transformations and compositing operators (`grid.group()`,
+  `grid.define()`, `grid.use()`), and glyphs (`glyphGrob()`). Packages
+  that use them now render correctly in ggiraph graphics, in particular
+  ‘marquee’: its texts are drawn faster and sharper, and texts with a
+  background (inline code, heading rules) are no longer missing.
+  [`dev.capabilities()`](https://rdrr.io/r/grDevices/dev.capabilities.html)
+  reports what
+  [`dsvg()`](https://davidgohel.github.io/ggiraph/reference/dsvg.md) can
+  draw. Only the ‘saturate’ compositing operator has no SVG equivalent
+  and is drawn as ‘over’ with a warning.
+
+### Changes
+
+- [`match_family()`](https://davidgohel.github.io/ggiraph/reference/match_family.md)
+  is deprecated: use
+  [`systemfonts::match_fonts()`](https://systemfonts.r-lib.org/reference/match_fonts.html)
+  instead. It is no longer used by ggiraph, and its equivalent in
+  ‘gdtools’ is deprecated too.
+
+### Issues
+
+- In Shiny,
+  [`girafeOutput()`](https://davidgohel.github.io/ggiraph/reference/girafeOutput.md)
+  now fills its container when it is in a fillable layout, e.g. a card
+  of
+  [`bslib::page_fillable()`](https://rstudio.github.io/bslib/reference/page_fillable.html):
+  the graphic follows the size of the card, keeping its aspect ratio.
+  Without `height`, it starts from 400px as `plotOutput()`
+  ([\#353](https://github.com/davidgohel/ggiraph/issues/353)).
+- ggiraph now compiles on OpenBSD, NetBSD and DragonFly BSD; the bundled
+  tinyxml2 used `fseeko64()`, which only exists on Linux with glibc
+  ([\#357](https://github.com/davidgohel/ggiraph/issues/357), thanks to
+  [@przmv](https://github.com/przmv)).
+- The fullscreen modal is now sized after the graphic aspect ratio, so
+  that graphics of any `width_svg`/`height_svg` are displayed entirely,
+  whatever the browser
+  ([\#354](https://github.com/davidgohel/ggiraph/issues/354)).
+- [`girafe()`](https://davidgohel.github.io/ggiraph/reference/girafe.md)
+  and [`dsvg()`](https://davidgohel.github.io/ggiraph/reference/dsvg.md)
+  are faster when many fonts are installed: the Liberation fonts are
+  only looked up when the fonts supplied miss a family, and the supplied
+  fonts are checked with a single listing of the system fonts. With a
+  complete `font_set`,
+  [`girafe()`](https://davidgohel.github.io/ggiraph/reference/girafe.md)
+  lists the system fonts once instead of 12 times
+  ([\#359](https://github.com/davidgohel/ggiraph/issues/359),
+  [\#360](https://github.com/davidgohel/ggiraph/issues/360)).
+- `girafe.js` was loaded twice in each document: `girafe.yaml` still
+  declared it as a dependency, in addition to the widget binding added
+  by htmlwidgets. Only the stylesheet is now declared there
+  ([\#361](https://github.com/davidgohel/ggiraph/issues/361),
+  [\#351](https://github.com/davidgohel/ggiraph/issues/351)).
+
 ## ggiraph 0.9.6
 
 CRAN release: 2026-02-21

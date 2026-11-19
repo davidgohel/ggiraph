@@ -2,6 +2,21 @@
   margin-left: auto;
   margin-right: auto;
 }
+/* fill mode (e.g. in bslib::page_fillable()): auto margins would prevent
+   the widget from stretching to the size of its container */
+.html-fill-container > .girafe.html-fill-item {
+  margin-left: 0;
+  margin-right: 0;
+}
+.girafe_container_fill {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.girafe_container_fill > svg {
+  flex: 1 1 0;
+  min-height: 0;
+}
 .girafe_container_std {
   margin-left: auto;
   margin-right: auto;
@@ -18,9 +33,11 @@
   left: 0;
 }
 
+/* toolbar colors can be customised with these CSS variables, set by
+   opts_toolbar() or by a stylesheet */
 .ggiraph-toolbar {
   background-color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--ggiraph-toolbar-bg, rgba(255, 255, 255, 0.3));
   border-radius: 5px;
   padding: 2px;
 }
@@ -92,20 +109,20 @@
 }
 
 .ggiraph-toolbar-icon.drop {
-  stroke: #e30c37;
-  fill: #e30c37;
+  stroke: var(--ggiraph-toolbar-icon-active-color, #e30c37);
+  fill: var(--ggiraph-toolbar-icon-active-color, #e30c37);
 }
 .ggiraph-toolbar-icon.drop:hover {
-  stroke: #333;
-  fill: #333;
+  stroke: var(--ggiraph-toolbar-icon-hover-color, #333);
+  fill: var(--ggiraph-toolbar-icon-hover-color, #333);
 }
 .ggiraph-toolbar-icon.neutral {
-  stroke: #069;
-  fill: #069;
+  stroke: var(--ggiraph-toolbar-icon-color, #069);
+  fill: var(--ggiraph-toolbar-icon-color, #069);
 }
 .ggiraph-toolbar-icon.neutral:hover {
-  stroke: #333;
-  fill: #333;
+  stroke: var(--ggiraph-toolbar-icon-hover-color, #333);
+  fill: var(--ggiraph-toolbar-icon-hover-color, #333);
 }
 
 .ggiraph-svg .lasso path {
@@ -162,8 +179,14 @@
 
 .ggiraph-fullscreen-content {
   position: relative;
-  height: 90vw;
-  max-height: 90vh;
+  /* sizes below are those of the content box, padding excluded, so that
+     the aspect ratio set inline by the fullscreen handler applies to the
+     svg itself; width and height are overridden there too */
+  box-sizing: content-box;
+  width: calc(92vw - 40px);
+  height: calc(92vh - 40px);
+  max-width: calc(92vw - 40px);
+  max-height: calc(92vh - 40px);
   background-color: white;
   border-radius: 8px;
   padding: 20px;

@@ -13,7 +13,11 @@ opts_toolbar(
   hidden = NULL,
   fixed = FALSE,
   delay_mouseover = 200,
-  delay_mouseout = 500
+  delay_mouseout = 500,
+  bg_color = NULL,
+  icon_color = NULL,
+  icon_active_color = NULL,
+  icon_hover_color = NULL
 )
 ```
 
@@ -68,12 +72,38 @@ opts_toolbar(
   The duration in milliseconds of the transition associated with toolbar
   end of display.
 
+- bg_color, icon_color, icon_active_color, icon_hover_color:
+
+  Colors of the toolbar, as CSS color values (e.g. `"#333333"`,
+  `"white"` or `"rgba(0, 0, 0, 0.5)"`): the background of the toolbar,
+  the color of the icons, the color of the icons of active buttons (zoom
+  activated, lasso deselection) and the color of the hovered icon. If
+  `NULL` (default), the default colors are used.
+
 ## Note
 
 `saveaspng` relies on JavaScript promises, so any browsers that don't
 natively support the standard Promise object will need to have a
 polyfill (e.g. Internet Explorer with version less than 11 will need
 it).
+
+## Toolbar colors
+
+The toolbar colors are defined by CSS variables, which `bg_color`,
+`icon_color`, `icon_active_color` and `icon_hover_color` set for one
+graphic. To set them for all the graphics of a document or of an
+application, define these variables in a stylesheet:
+
+    .ggiraph-toolbar {
+      --ggiraph-toolbar-bg: #222222;
+      --ggiraph-toolbar-icon-color: #f0f0f0;
+      --ggiraph-toolbar-icon-active-color: #ffb000;
+      --ggiraph-toolbar-icon-hover-color: #ffffff;
+    }
+
+In R Markdown or Quarto, this rule can be written in a `css` chunk;
+prefix the selector with a class (e.g. `.my-class .ggiraph-toolbar`) to
+apply it only to the graphics inside an element of that class.
 
 ## See also
 
@@ -142,6 +172,22 @@ x <- girafe(
     opts_toolbar(
       position = "top",
       hidden = c("selection", "zoom_rect", "saveaspng")
+    )
+  )
+)
+if (interactive()) print(x)
+
+# Change the toolbar colors
+x <- girafe(
+  ggobj = gg,
+  options = list(
+    opts_zoom(max = 5),
+    opts_toolbar(
+      fixed = TRUE,
+      bg_color = "#222222",
+      icon_color = "#f0f0f0",
+      icon_active_color = "#ffb000",
+      icon_hover_color = "white"
     )
   )
 )

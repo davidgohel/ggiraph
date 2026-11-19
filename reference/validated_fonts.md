@@ -33,9 +33,6 @@ a named list of validated font family names
 [`girafe()`](https://davidgohel.github.io/ggiraph/reference/girafe.md),
 [`dsvg()`](https://davidgohel.github.io/ggiraph/reference/dsvg.md)
 
-Other functions for font management:
-[`match_family()`](https://davidgohel.github.io/ggiraph/reference/match_family.md)
-
 ## Examples
 
 ``` r
