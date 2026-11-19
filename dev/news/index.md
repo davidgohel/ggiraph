@@ -25,6 +25,14 @@
   can draw. Only the ‘saturate’ compositing operator has no SVG
   equivalent and is drawn as ‘over’ with a warning.
 
+### Changes
+
+- [`match_family()`](https://davidgohel.github.io/ggiraph/dev/reference/match_family.md)
+  is deprecated: use
+  [`systemfonts::match_fonts()`](https://systemfonts.r-lib.org/reference/match_fonts.html)
+  instead. It is no longer used by ggiraph, and its equivalent in
+  ‘gdtools’ is deprecated too.
+
 ### Issues
 
 - In Shiny,

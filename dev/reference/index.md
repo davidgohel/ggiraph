@@ -263,8 +263,6 @@
 
 ## Fonts
 
-- [`match_family()`](https://davidgohel.github.io/ggiraph/dev/reference/match_family.md)
-  : Find best family match with systemfonts
 - [`validated_fonts()`](https://davidgohel.github.io/ggiraph/dev/reference/validated_fonts.md)
   : List of validated default fonts
 

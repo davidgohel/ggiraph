@@ -24,19 +24,22 @@
 - **Eric Book**. Contributor.  
   hline and vline geoms
 
+- **Thomas Lin Pedersen**. Contributor.  
+  get_font_file() from svglite
+
 ## Citation
 
 Source:
 [`DESCRIPTION`](https://github.com/davidgohel/ggiraph/blob/master/DESCRIPTION)
 
 Gohel D, Skintzos P (2026). *ggiraph: Make 'ggplot2' Graphics
-Interactive*. R package version 0.9.7.010,
+Interactive*. R package version 0.9.7.013,
 <https://davidgohel.github.io/ggiraph/>.
 
     @Manual{,
       title = {ggiraph: Make 'ggplot2' Graphics Interactive},
       author = {David Gohel and Panagiotis Skintzos},
       year = {2026},
-      note = {R package version 0.9.7.010},
+      note = {R package version 0.9.7.013},
       url = {https://davidgohel.github.io/ggiraph/},
     }

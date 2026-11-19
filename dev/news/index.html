@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.7.013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,11 @@
 <h3 id="features-0-9-7">Features<a class="anchor" aria-label="anchor" href="#features-0-9-7"></a></h3>
 <ul><li><p><code><a href="../reference/opts_toolbar.html">opts_toolbar()</a></code> gains arguments <code>bg_color</code>, <code>icon_color</code>, <code>icon_active_color</code> and <code>icon_hover_color</code> to set the colors of the toolbar. These colors are CSS variables that can also be set in a stylesheet for all the graphics of a document (<a href="https://github.com/davidgohel/ggiraph/issues/355" class="external-link">#355</a>).</p></li>
 <li><p><code><a href="../reference/dsvg.html">dsvg()</a></code> now supports the graphics engine features of R 4.2 and 4.3: luminance masks, <code>grid.stroke()</code>/<code>grid.fill()</code>/<code>grid.fillStroke()</code>, groups with their transformations and compositing operators (<code>grid.group()</code>, <code>grid.define()</code>, <code>grid.use()</code>), and glyphs (<code>glyphGrob()</code>). Packages that use them now render correctly in ggiraph graphics, in particular ‘marquee’: its texts are drawn faster and sharper, and texts with a background (inline code, heading rules) are no longer missing. <code><a href="https://rdrr.io/r/grDevices/dev.capabilities.html" class="external-link">dev.capabilities()</a></code> reports what <code><a href="../reference/dsvg.html">dsvg()</a></code> can draw. Only the ‘saturate’ compositing operator has no SVG equivalent and is drawn as ‘over’ with a warning.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-0-9-7">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-7"></a></h3>
+<ul><li>
+<code><a href="../reference/match_family.html">match_family()</a></code> is deprecated: use <code><a href="https://systemfonts.r-lib.org/reference/match_fonts.html" class="external-link">systemfonts::match_fonts()</a></code> instead. It is no longer used by ggiraph, and its equivalent in ‘gdtools’ is deprecated too.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="issues-0-9-7">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-7"></a></h3>
