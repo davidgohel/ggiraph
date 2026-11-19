@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.7.010
+Version: 0.9.7.011
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -16,7 +16,9 @@ Authors@R: c(
     person("Vladimir", "Agafonkin", role = "cph",
            comment = "Flatbush"),
     person("Eric", "Book", role = "ctb",
-           comment = "hline and vline geoms")
+           comment = "hline and vline geoms"),
+    person("Thomas Lin", "Pedersen", role = "ctb",
+           comment = "get_font_file() from svglite")
   )
 Description: Create interactive 'ggplot2' graphics using 'htmlwidgets'.
 License: GPL-3
@@ -55,6 +57,7 @@ LinkingTo:
     systemfonts
 VignetteBuilder: 
     knitr
+Config/roxygen2/version: 8.1.1
 Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -150,4 +153,3 @@ Collate:
     'scale_viridis_interactive.R'
     'tracers.R'
     'utils_data.r'
-Config/roxygen2/version: 8.1.1
