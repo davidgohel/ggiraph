@@ -48,7 +48,26 @@ For system-aware font selection use \code{\link[gdtools:font_set_auto]{gdtools::
 or build a custom configuration with \code{\link[gdtools:font_set]{gdtools::font_set()}}.
 
 \code{font_set$dsvg_fonts} is passed as \code{fonts} argument to \code{\link[=dsvg]{dsvg()}} and
-\code{font_set$dependencies} are appended to \code{dependencies}.}
+\code{font_set$dependencies} are appended to \code{dependencies}.
+
+With rich text packages, give the real name of the font rather than an
+alias of the font set (\code{"sans"}, \code{"serif"}, \code{"mono"}, \code{"symbol"}):
+\itemize{
+\item 'munch' (\code{element_md()}, \code{element_chunks()}, \code{geom_text_md()}: markdown,
+equations and rich text) writes \verb{<text>} elements, but measures the
+texts itself to place them, with the font found by 'systemfonts' for
+the family name; with an alias, it can measure a font other than the
+one drawn. Use for example \code{theme_minimal(base_family = "Liberation Sans")}.
+Its equations are drawn as outlines.
+\item 'marquee' (\code{element_marquee()}, \code{geom_marquee()}) draws its texts as
+glyphs, written as outlines, with the font found by 'systemfonts':
+the aliases do not apply to them. Use for example
+\code{element_marquee(family = "Liberation Sans")} and, for inline code,
+\code{classic_style(code_font = "Liberation Mono")}.
+}
+
+Texts and equations drawn as outlines do not need the font in the HTML
+page.}
 
 \item{dependencies}{Additional widget HTML dependencies, see \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}.}
 

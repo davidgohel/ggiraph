@@ -47,6 +47,24 @@
 #'
 #' `font_set$dsvg_fonts` is passed as `fonts` argument to [dsvg()] and
 #' `font_set$dependencies` are appended to `dependencies`.
+#'
+#' With rich text packages, give the real name of the font rather than an
+#' alias of the font set (`"sans"`, `"serif"`, `"mono"`, `"symbol"`):
+#'
+#' - 'munch' (`element_md()`, `element_chunks()`, `geom_text_md()`: markdown,
+#'   equations and rich text) writes `<text>` elements, but measures the
+#'   texts itself to place them, with the font found by 'systemfonts' for
+#'   the family name; with an alias, it can measure a font other than the
+#'   one drawn. Use for example `theme_minimal(base_family = "Liberation Sans")`.
+#'   Its equations are drawn as outlines.
+#' - 'marquee' (`element_marquee()`, `geom_marquee()`) draws its texts as
+#'   glyphs, written as outlines, with the font found by 'systemfonts':
+#'   the aliases do not apply to them. Use for example
+#'   `element_marquee(family = "Liberation Sans")` and, for inline code,
+#'   `classic_style(code_font = "Liberation Mono")`.
+#'
+#' Texts and equations drawn as outlines do not need the font in the HTML
+#' page.
 #' @param dependencies Additional widget HTML dependencies, see [htmlwidgets::createWidget()].
 #' @param check_fonts_registered whether to check if fonts families found in
 #' the ggplot are registered with 'systemfonts'.
