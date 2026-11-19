@@ -18,7 +18,7 @@ jobs:
   lock:
     runs-on: ubuntu-latest
     steps:
-      - uses: dessant/lock-threads@v5
+      - uses: dessant/lock-threads@v6
         with:
           issue-inactive-days: '30'
           issue-comment: >
@@ -27,3 +27,5 @@ jobs:
             link to this old issue if necessary.
           issue-lock-reason: 'resolved'
           pr-inactive-days: '30'
+          # no Discussions on this repository
+          process-only: 'issues, prs'
