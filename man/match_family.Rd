@@ -16,14 +16,10 @@ match_family(font = "sans", bold = TRUE, italic = TRUE, debug = NULL)
 \item{debug}{deprecated}
 }
 \description{
+\code{match_family()} is deprecated: use \code{\link[systemfonts:match_fonts]{systemfonts::match_fonts()}} instead.
+It is no longer used by ggiraph, and its equivalent in 'gdtools' is
+deprecated too.
+
 \code{match_family()} returns the best font family match.
 }
-\examples{
-match_family("sans")
-match_family("serif")
-}
-\seealso{
-Other functions for font management:
-\code{\link[=validated_fonts]{validated_fonts()}}
-}
-\concept{functions for font management}
+\keyword{internal}

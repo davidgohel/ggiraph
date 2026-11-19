@@ -47,25 +47,28 @@ validated_fonts <- function(fonts = list()) {
 
 #' Find best family match with systemfonts
 #'
-#' \code{match_family()} returns the best font family match.
+#' @description
+#' `match_family()` is deprecated: use [systemfonts::match_fonts()] instead.
+#' It is no longer used by ggiraph, and its equivalent in 'gdtools' is
+#' deprecated too.
+#'
+#' `match_family()` returns the best font family match.
 #'
 #' @param font family or face to match.
 #' @param bold Wheter to match a font featuring a `bold` face.
 #' @param italic Wheter to match a font featuring an `italic` face.
 #' @param debug deprecated
 #' @export
-#' @examples
-#' match_family("sans")
-#' match_family("serif")
+#' @keywords internal
 #' @importFrom gdtools sys_fonts
 #' @importFrom systemfonts match_font system_fonts registry_fonts
-#' @family functions for font management
 match_family <- function(
   font = "sans",
   bold = TRUE,
   italic = TRUE,
   debug = NULL
 ) {
+  .Deprecated(new = "systemfonts::match_fonts")
   font <- match_font(font, bold = bold, italic = italic)
   font_db <- sys_fonts()
   match <- which(font_db$path %in% font$path)

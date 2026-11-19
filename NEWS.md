@@ -17,6 +17,12 @@ code, heading rules) are no longer missing. `dev.capabilities()` reports
 what `dsvg()` can draw. Only the 'saturate' compositing operator has no SVG
 equivalent and is drawn as 'over' with a warning.
 
+## Changes
+
+- `match_family()` is deprecated: use `systemfonts::match_fonts()` instead.
+It is no longer used by ggiraph, and its equivalent in 'gdtools' is
+deprecated too.
+
 ## Issues
 
 - In Shiny, `girafeOutput()` now fills its container when it is in a

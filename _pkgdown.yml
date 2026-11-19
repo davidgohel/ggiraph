@@ -56,7 +56,6 @@ reference:
     - labeller_interactive
   - title: Fonts
     contents:
-    - match_family
     - validated_fonts
   - title: Other interactive layers
     contents:

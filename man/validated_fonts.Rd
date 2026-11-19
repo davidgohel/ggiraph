@@ -28,8 +28,5 @@ validated_fonts()
 }
 \seealso{
 \code{\link[=girafe]{girafe()}}, \code{\link[=dsvg]{dsvg()}}
-
-Other functions for font management:
-\code{\link[=match_family]{match_family()}}
 }
 \concept{functions for font management}
