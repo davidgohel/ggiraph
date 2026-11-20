@@ -2,6 +2,8 @@
 
 ## ggiraph 0.9.7
 
+CRAN release: 2026-11-19
+
 ### Features
 
 - [`opts_toolbar()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_toolbar.md)
