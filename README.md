@@ -5,7 +5,7 @@
 status](https://github.com/davidgohel/ggiraph/workflows/R-CMD-check/badge.svg)](https://github.com/davidgohel/ggiraph/actions)
 [![version](https://www.r-pkg.org/badges/version/ggiraph)](https://CRAN.R-project.org/package=ggiraph)
 ![cranlogs](https://cranlogs.r-pkg.org/badges/ggiraph) [![codecov test
-coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/master/graph/badge.svg)](https://app.codecov.io/gh/davidgohel/ggiraph)
+coverage](https://codecov.io/gh/davidgohel/ggiraph/branch/main/graph/badge.svg)](https://app.codecov.io/gh/davidgohel/ggiraph)
 
 ## Overview
 
