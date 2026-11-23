@@ -1,3 +1,11 @@
+# ggiraph 0.9.8
+
+## Internals
+
+- Unit tests are now run with 'testthat' (edition 3) instead of 'tinytest'.
+Each test has a name, so failures are easier to locate, and tests no
+longer share their variables.
+
 # ggiraph 0.9.7
 
 ## Features

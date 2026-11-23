@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.8.001
+Version: 0.9.8.002
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -50,7 +50,8 @@ Suggests:
     rmarkdown,
     sf (>= 1.0),
     shiny,
-    tinytest,
+    testthat (>= 3.0.0),
+    withr,
     xml2 (>= 1.0)
 LinkingTo: 
     Rcpp,
@@ -58,6 +59,7 @@ LinkingTo:
 VignetteBuilder: 
     knitr
 Config/roxygen2/version: 8.1.1
+Config/testthat/edition: 3
 Copyright: See file COPYRIGHTS.
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
