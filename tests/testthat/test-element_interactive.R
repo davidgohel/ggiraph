@@ -56,37 +56,53 @@ test_that("element_text_interactive keeps its interactive attributes when render
   mapping <- list(data_id = "data-id", tooltip = "tooltip")
   text_el <- do.call(element_text_interactive, mapping)
   t <- theme_minimal() + theme(legend.text = text_el)
-  # element_render() measures the text, so it needs a device; a page is
-  # opened so that the svg file is never empty, even when ggplot2 has cached
-  # the font metrics and does not use the device
-  dsvg_doc({
-    grid.newpage()
-    result <- element_render(t, "legend.text")
-  })
-  result <- result$children[[1]]
-  ip <- ggiraph:::compact(ggiraph:::get_interactive_data(result))
-  expect_equal(ip, mapping, info = "element_text_interactive mapping")
 
-  dsvg_doc({
-    grid.newpage()
-    result <- element_render(t, "legend.text", label = label_interactive("foo"))
-  })
-  result <- result$children[[1]]
-  expect_equal(ip, mapping, info = "element_text_interactive mapping 2")
+  # element_render() measures the text, so it needs a device: the element is
+  # rendered and drawn in dsvg; returns the interactive attributes of the
+  # text grob and the <text> nodes written in the svg
+  render_text <- function(...) {
+    doc <- dsvg_doc({
+      grid.newpage()
+      result <- element_render(t, "legend.text", ...)
+      grid.draw(result)
+    })
+    list(
+      ip = ggiraph:::compact(ggiraph:::get_interactive_data(result$children[[1]])),
+      texts = xml_find_all(doc, "//text")
+    )
+  }
 
-  dsvg_doc({
-    grid.newpage()
-    result <- element_render(t, "legend.text", label = list("foo", "bar"))
-  })
-  result <- result$children[[1]]
-  expect_equal(ip, mapping, info = "element_text_interactive mapping 3")
+  # the element attributes are set on the text grob
+  out <- render_text()
+  expect_equal(out$ip, mapping)
 
-  dsvg_doc({
-    grid.newpage()
-    result <- element_render(t, "legend.text", label = list(label_interactive("foo")))
-  })
-  result <- result$children[[1]]
-  expect_equal(ip, mapping, info = "element_text_interactive mapping 4")
+  # the attributes of an interactive label replace those of the element
+  out <- render_text(label = label_interactive("foo", tooltip = "tt foo"))
+  expect_equal(out$ip, list(data_id = "data-id", tooltip = "tt foo"))
+  expect_length(out$texts, 1)
+  expect_equal(xml_attr(out$texts, "title"), "tt foo")
+  expect_equal(xml_attr(out$texts, "theme-id"), "data-id")
+
+  # a list of labels (guide labels of continuous scales) has one set of
+  # attributes per label; grid draws one text per position, so each label
+  # gets its own position
+  out <- render_text(
+    label = list("foo", label_interactive("bar", tooltip = "tt bar")),
+    x = c(.3, .7), y = c(.5, .5)
+  )
+  expect_equal(
+    out$ip,
+    list(data_id = c("data-id", "data-id"), tooltip = c("tooltip", "tt bar"))
+  )
+  expect_length(out$texts, 2)
+  expect_equal(xml_attr(out$texts, "title"), c("tooltip", "tt bar"))
+  expect_equal(xml_attr(out$texts, "theme-id"), c("data-id", "data-id"))
+
+  # a list with a single interactive label
+  out <- render_text(label = list(label_interactive("foo", tooltip = "tt foo")))
+  expect_equal(out$ip, list(data_id = "data-id", tooltip = "tt foo"))
+  expect_length(out$texts, 1)
+  expect_equal(xml_attr(out$texts, "title"), "tt foo")
 })
 
 # as_interactive_element_text ----
