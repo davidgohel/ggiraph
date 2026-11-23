@@ -68,3 +68,46 @@ test_that("the svg size defaults to 6 x 5 inches outside of knitr", {
   expect_equal(ggiraph:::default_width(), 6)
   expect_equal(ggiraph:::default_height(), 5)
 })
+
+test_that("a second call to set_girafe_defaults() keeps the fields already set", {
+  withr::defer(init_girafe_defaults())
+  init_girafe_defaults()
+  set_girafe_defaults(opts_toolbar = opts_toolbar(pngname = "custom"))
+  set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))
+  toolbar <- girafe_defaults("opts_toolbar")
+  expect_s3_class(toolbar, "opts_toolbar")
+  expect_equal(toolbar$pngname, "custom")
+  expect_equal(toolbar$position, "top")
+
+  # the fields not given keep the package defaults
+  init_girafe_defaults()
+  set_girafe_defaults(opts_tooltip = opts_tooltip(offx = 99))
+  expect_equal(girafe_defaults("opts_tooltip")$offy, 10)
+})
+
+test_that("each option of set_girafe_defaults() reaches girafe()", {
+  withr::defer(init_girafe_defaults())
+  # argument of set_girafe_defaults(), new value, field of the girafe settings
+  cases <- list(
+    list("opts_sizing", opts_sizing(width = .5), "sizing", "width", .5),
+    list("opts_tooltip", opts_tooltip(offx = 99), "tooltip", "offx", 99),
+    list("opts_hover", opts_hover(css = "fill:red;"), "hover", "css", NULL),
+    list("opts_hover_key", opts_hover_key(css = "fill:red;"), "hover_key", "css", NULL),
+    list("opts_hover_inv", opts_hover_inv(css = "opacity:.3;"), "hover_inv", "css", NULL),
+    list("opts_hover_theme", opts_hover_theme(css = "fill:red;"), "hover_theme", "css", NULL),
+    list("opts_selection", opts_selection(type = "single"), "select", "type", "single"),
+    list("opts_selection_inv", opts_selection_inv(css = "opacity:.3;"), "select_inv", "css", NULL),
+    list("opts_selection_key", opts_selection_key(type = "single"), "select_key", "type", "single"),
+    list("opts_selection_theme", opts_selection_theme(type = "single"), "select_theme", "type", "single"),
+    list("opts_zoom", opts_zoom(max = 7), "zoom", "max", 7),
+    list("opts_toolbar", opts_toolbar(position = "top"), "toolbar", "position", "top")
+  )
+  p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+  for (case in cases) {
+    init_girafe_defaults()
+    do.call(set_girafe_defaults, stats::setNames(list(case[[2]]), case[[1]]))
+    expected <- case[[5]] %||% case[[2]][[case[[4]]]]
+    settings <- girafe(ggobj = p)$x$settings
+    expect_equal(settings[[case[[3]]]][[case[[4]]]], expected, info = case[[1]])
+  }
+})

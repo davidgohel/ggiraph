@@ -36,6 +36,13 @@ girafe_global$defaults <- default_girafe_settings
 #' are automatically applied to every girafe you produce.
 #' Use `set_girafe_defaults()` to override them. Use `init_girafe_defaults()`
 #' to re-init all values with the package defaults.
+#'
+#' Only the arguments given to the `opts_*()` functions replace the current
+#' defaults, as with the `options` argument of [girafe()]: after
+#' `set_girafe_defaults(opts_toolbar = opts_toolbar(pngname = "plot"))`,
+#' a call to `set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))`
+#' keeps `pngname = "plot"`.
+#' @return the previous defaults, invisibly.
 #' @family girafe animation options
 #' @param fonts deprecated, it never had any effect: use the `font_set`
 #' argument of [girafe()] to choose the fonts.
@@ -84,56 +91,37 @@ set_girafe_defaults <- function(
   opts_zoom = NULL,
   opts_toolbar = NULL
 ) {
-  x <- list()
-
   if (!is.null(fonts)) {
     cli::cli_warn(c(
       "!" = "The {.arg fonts} argument of {.fn set_girafe_defaults} is deprecated and has no effect.",
       "i" = "Use the {.arg font_set} argument of {.fn girafe} to choose the fonts."
     ))
   }
-  if (!is.null(opts_sizing)) {
-    x$opts_sizing <- opts_sizing
-  }
-  if (!is.null(opts_tooltip)) {
-    x$opts_tooltip <- opts_tooltip
-  }
-  if (!is.null(opts_hover)) {
-    x$opts_hover <- opts_hover
-  }
-  if (!is.null(opts_hover_inv)) {
-    x$opts_hover_inv <- opts_hover_inv
-  }
-  if (!is.null(opts_hover_key)) {
-    x$opts_hover_key <- opts_hover_key
-  }
-  if (!is.null(opts_hover_theme)) {
-    x$opts_hover_theme <- opts_hover_theme
-  }
+  new_opts <- list(
+    opts_sizing = opts_sizing,
+    opts_tooltip = opts_tooltip,
+    opts_hover = opts_hover,
+    opts_hover_key = opts_hover_key,
+    opts_hover_inv = opts_hover_inv,
+    opts_hover_theme = opts_hover_theme,
+    opts_selection = opts_selection,
+    opts_selection_inv = opts_selection_inv,
+    opts_selection_key = opts_selection_key,
+    opts_selection_theme = opts_selection_theme,
+    opts_zoom = opts_zoom,
+    opts_toolbar = opts_toolbar
+  )
+  new_opts <- Filter(Negate(is.null), new_opts)
 
-  if (!is.null(opts_selection)) {
-    x$opts_selection <- opts_selection
+  # as with the `options` of girafe(), only the arguments given to the
+  # opts_*() functions replace the current defaults
+  old_defaults <- girafe_defaults()
+  defaults <- old_defaults
+  for (name in names(new_opts)) {
+    defaults[[name]] <- merge_single_opts(defaults[[name]], new_opts[[name]])
   }
-  if (!is.null(opts_selection_inv)) {
-    x$opts_selection_inv <- opts_selection_inv
-  }
-  if (!is.null(opts_selection_key)) {
-    x$opts_selection_key <- opts_selection_key
-  }
-  if (!is.null(opts_selection_theme)) {
-    x$opts_selection_theme <- opts_selection_theme
-  }
-
-  if (!is.null(opts_zoom)) {
-    x$opts_zoom <- opts_zoom
-  }
-  if (!is.null(opts_toolbar)) {
-    x$opts_toolbar <- opts_toolbar
-  }
-  girafe_defaults <- girafe_defaults()
-  girafe_new_defaults <- modifyList(girafe_defaults, x)
-  girafe_global$defaults <- girafe_new_defaults
-  invisible(girafe_defaults)
+  girafe_global$defaults <- defaults
+  invisible(old_defaults)
 }
 
 #' @export

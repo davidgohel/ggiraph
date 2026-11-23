@@ -50,11 +50,20 @@ in argument \code{options} of \code{girafe()} function.}
 
 \item{opts_toolbar}{default values for \code{\link[=opts_toolbar]{opts_toolbar()}} used in argument \code{options} of \code{girafe()} function.}
 }
+\value{
+the previous defaults, invisibly.
+}
 \description{
 girafe animation options (see \code{\link[=girafe_defaults]{girafe_defaults()}})
 are automatically applied to every girafe you produce.
 Use \code{set_girafe_defaults()} to override them. Use \code{init_girafe_defaults()}
 to re-init all values with the package defaults.
+
+Only the arguments given to the \verb{opts_*()} functions replace the current
+defaults, as with the \code{options} argument of \code{\link[=girafe]{girafe()}}: after
+\code{set_girafe_defaults(opts_toolbar = opts_toolbar(pngname = "plot"))},
+a call to \code{set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))}
+keeps \code{pngname = "plot"}.
 }
 \examples{
 library(ggplot2)

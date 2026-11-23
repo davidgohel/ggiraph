@@ -13,6 +13,12 @@ can not be checked without a ggplot.
 had any effect. Fonts are chosen with the `font_set` argument of `girafe()`.
 `girafe_defaults()` no longer returns a `fonts` element.
 
+- `set_girafe_defaults()` merges options as the `options` argument of
+`girafe()` does: only the arguments given to the `opts_*()` functions
+replace the current defaults. A second call such as
+`set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))` now
+keeps the toolbar settings of a previous call instead of resetting them.
+
 ## Internals
 
 - Unit tests are now run with 'testthat' (edition 3) instead of 'tinytest'.
