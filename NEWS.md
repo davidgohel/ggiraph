@@ -1,5 +1,18 @@
 # ggiraph 0.9.8
 
+## Issues
+
+- `girafe(check_fonts_registered = TRUE)` and
+`girafe(check_fonts_dependencies = TRUE)` failed with an error when the
+graphic was given with `code` instead of `ggobj`; they now warn that fonts
+can not be checked without a ggplot.
+
+## Changes
+
+- The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
+had any effect. Fonts are chosen with the `font_set` argument of `girafe()`.
+`girafe_defaults()` no longer returns a `fonts` element.
+
 ## Internals
 
 - Unit tests are now run with 'testthat' (edition 3) instead of 'tinytest'.

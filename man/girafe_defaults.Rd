@@ -8,7 +8,7 @@ girafe_defaults(name = NULL)
 }
 \arguments{
 \item{name}{optional, option's name to return, one of
-'fonts', 'opts_sizing', 'opts_tooltip', 'opts_hover', 'opts_hover_key',
+'opts_sizing', 'opts_tooltip', 'opts_hover', 'opts_hover_key',
 'opts_hover_inv', 'opts_hover_theme', 'opts_selection',
 'opts_selection_inv', 'opts_selection_key', 'opts_selection_theme',
 'opts_zoom', 'opts_toolbar'.}

@@ -216,30 +216,24 @@ girafe <- function(
 
   unlink(path)
 
-  # check fonts
-  family_list <- character()
-  if (check_fonts_registered || check_fonts_dependencies) {
-    family_list <- list_fonts(ggobj)
-  }
   # check fonts -----
-  if (check_fonts_registered && !is.null(ggobj)) {
-    fonts_checking_registered(family_list = family_list)
-  } else if (check_fonts_registered && is.null(ggobj)) {
-    cli::cli_warn(
-      c(
-        "!" = "Dependencies checking can not be performed if `ggobj` is missing."
-      )
-    )
-  }
-  if (check_fonts_dependencies && !is.null(ggobj)) {
-    fonts_checking_dependencies(
-      dependencies = dependencies,
-      family_list = family_list
-    )
-  } else if (check_fonts_dependencies && is.null(ggobj)) {
-    cli::cli_warn(
-      "!" = "Dependencies checking can not be performed if `ggobj` is missing."
-    )
+  if (check_fonts_registered || check_fonts_dependencies) {
+    if (is.null(ggobj)) {
+      cli::cli_warn(c(
+        "!" = "Fonts can not be checked if {.arg ggobj} is missing."
+      ))
+    } else {
+      family_list <- list_fonts(ggobj)
+      if (check_fonts_registered) {
+        fonts_checking_registered(family_list = family_list)
+      }
+      if (check_fonts_dependencies) {
+        fonts_checking_dependencies(
+          dependencies = dependencies,
+          family_list = family_list
+        )
+      }
+    }
   }
 
   # create widget -----

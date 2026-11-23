@@ -8,7 +8,6 @@ css_default_selection <- girafe_css_bicolor(
 )
 
 default_girafe_settings <- list(
-  fonts = validated_fonts(),
   opts_sizing = opts_sizing(width = 1),
   opts_tooltip = opts_tooltip(
     css = "padding:5px;background:black;color:white;border-radius:2px;text-align:left;",
@@ -38,8 +37,8 @@ girafe_global$defaults <- default_girafe_settings
 #' Use `set_girafe_defaults()` to override them. Use `init_girafe_defaults()`
 #' to re-init all values with the package defaults.
 #' @family girafe animation options
-#' @param fonts default values for `fonts`, see argument `fonts`
-#' of [dsvg()] function.
+#' @param fonts deprecated, it never had any effect: use the `font_set`
+#' argument of [girafe()] to choose the fonts.
 #' @param opts_sizing default values for [opts_sizing()] used
 #' in argument `options` of `girafe()` function.
 #' @param opts_tooltip default values for [opts_tooltip()] used
@@ -88,7 +87,10 @@ set_girafe_defaults <- function(
   x <- list()
 
   if (!is.null(fonts)) {
-    x$fonts <- fonts
+    cli::cli_warn(c(
+      "!" = "The {.arg fonts} argument of {.fn set_girafe_defaults} is deprecated and has no effect.",
+      "i" = "Use the {.arg font_set} argument of {.fn girafe} to choose the fonts."
+    ))
   }
   if (!is.null(opts_sizing)) {
     x$opts_sizing <- opts_sizing
@@ -154,7 +156,7 @@ init_girafe_defaults <- function() {
 #' are automatically applied to every girafe you produce.
 #' These default values are returned by this function.
 #' @param name optional, option's name to return, one of
-#' 'fonts', 'opts_sizing', 'opts_tooltip', 'opts_hover', 'opts_hover_key',
+#' 'opts_sizing', 'opts_tooltip', 'opts_hover', 'opts_hover_key',
 #' 'opts_hover_inv', 'opts_hover_theme', 'opts_selection',
 #' 'opts_selection_inv', 'opts_selection_key', 'opts_selection_theme',
 #' 'opts_zoom', 'opts_toolbar'.

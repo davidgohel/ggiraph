@@ -21,8 +21,8 @@ set_girafe_defaults(
 )
 }
 \arguments{
-\item{fonts}{default values for \code{fonts}, see argument \code{fonts}
-of \code{\link[=dsvg]{dsvg()}} function.}
+\item{fonts}{deprecated, it never had any effect: use the \code{font_set}
+argument of \code{\link[=girafe]{girafe()}} to choose the fonts.}
 
 \item{opts_sizing}{default values for \code{\link[=opts_sizing]{opts_sizing()}} used
 in argument \code{options} of \code{girafe()} function.}
