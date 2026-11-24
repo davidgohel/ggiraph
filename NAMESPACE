@@ -306,7 +306,6 @@ importFrom(htmlwidgets,
 )
 importFrom(purrr,
   detect_index,
-  flatten,
   imap,
   transpose
 )

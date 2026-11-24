@@ -21,7 +21,6 @@ geom_sf_interactive <- function(...) {
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom purrr flatten
 GeomInteractiveSf <- ggproto(
   "GeomInteractiveSf",
   GeomSf,
@@ -36,13 +35,14 @@ GeomInteractiveSf <- ggproto(
     lineend = "butt",
     linejoin = "round",
     linemitre = 10,
+    arrow = NULL,
+    arrow.fill = NULL,
     na.rm = TRUE,
     .ipar = IPAR_NAMES
   ) {
     # call original draw_panel for each data row/geometry
     # this way multi geometries are handled too
-    useflatten <- FALSE
-    grobs <- lapply(1:nrow(data), function(i) {
+    grobs <- lapply(seq_len(nrow(data)), function(i) {
       row <- data[i, , drop = FALSE]
       gr <- GeomSf$draw_panel(
         row,
@@ -52,23 +52,22 @@ GeomInteractiveSf <- ggproto(
         lineend = lineend,
         linejoin = linejoin,
         linemitre = linemitre,
+        arrow = arrow,
+        arrow.fill = arrow.fill,
         na.rm = na.rm
       )
       if (inherits(gr, "gList")) {
-        # grid v<3.6.0
-        useflatten <<- TRUE
-        for (i in seq_along(gr)) {
-          gr[[i]] <- add_interactive_attrs(gr[[i]], row, ipar = .ipar)
+        # a geometry collection is drawn as a gList
+        for (j in seq_along(gr)) {
+          gr[[j]] <- add_interactive_attrs(gr[[j]], row, ipar = .ipar)
         }
         gr
       } else {
         add_interactive_attrs(gr, row, ipar = .ipar)
       }
     })
-    if (useflatten) {
-      grobs <- flatten(grobs)
-    }
-    do.call("gList", grobs)
+    # gList() flattens the gLists of the geometry collections, as in ggplot2
+    inject(gList(!!!grobs))
   }
 )
 

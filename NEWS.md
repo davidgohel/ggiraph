@@ -64,6 +64,11 @@ where 'ggplot2' drops the aesthetic with a warning.
 does: with `clip = "off"` the line went beyond the panel, and in polar
 coordinates it differed from 'ggplot2'.
 
+- `geom_sf_interactive()` accepts the `arrow` and `arrow.fill` arguments of
+'ggplot2' 4.0 (they failed with "unused argument"), and draws geometry
+collections next to other geometries (it failed with "only 'grobs' allowed
+in gList").
+
 ## Changes
 
 - `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`
