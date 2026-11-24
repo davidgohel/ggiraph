@@ -48,24 +48,18 @@ GeomInteractiveViolin <- ggproto(
         data,
         ipar = .ipar
       )
+      # the quantile lines get the attributes of their violin, these are
+      # constant within the group: one row per point of the lines
+      quantile_grob <- zz$children[[2]]
+      if (!is_zero(quantile_grob)) {
+        n <- length(quantile_grob$x %||% quantile_grob$x0)
+        zz$children[[2]] <- add_interactive_attrs(
+          quantile_grob,
+          vctrs::vec_slice(data, rep(1L, n)),
+          ipar = .ipar
+        )
+      }
     }
     zz
   }
 )
-
-create_quantile_segment_frame <- function(data, draw_quantiles) {
-  dens <- cumsum(data$density) / sum(data$density)
-  ecdf <- stats::approxfun(dens, data$y, ties = "ordered")
-  ys <- ecdf(draw_quantiles) # these are all the y-values for quantiles
-
-  # Get the violin bounds for the requested quantiles.
-  violin.xminvs <- (stats::approxfun(data$y, data$xminv))(ys)
-  violin.xmaxvs <- (stats::approxfun(data$y, data$xmaxv))(ys)
-
-  # We have two rows per segment drawn. Each segment gets its own group.
-  data_frame0(
-    x = vctrs::vec_interleave(violin.xminvs, violin.xmaxvs),
-    y = rep(ys, each = 2),
-    group = rep(ys, each = 2)
-  )
-}

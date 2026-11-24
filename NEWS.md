@@ -25,6 +25,11 @@ a single id (e.g. `data_id = "121"`) also targeted the elements whose id is
 a substring of it ("1", "12", "21"...). Shiny sends a vector of length one
 as a string and the JavaScript handler searched it with `includes()`.
 
+- `geom_violin_interactive()`: the quantile lines drawn with
+`quantile.linetype` had no interactive attributes, so hovering a line
+interrupted the tooltip and the hover effect of its violin. They now carry
+the attributes of their violin.
+
 ## Changes
 
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
