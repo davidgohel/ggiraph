@@ -40,6 +40,10 @@ is drawn instead of being removed with a warning.
 `interactive_text_grob()` (with `check.overlap`): an interactive parameter
 given as a single value was only set on the first element drawn.
 
+- `geom_errorbar_interactive(orientation = "y")` and
+`geom_errorbarh_interactive()` drew the horizontal errorbars with x and y
+swapped: the data were not flipped back after building the lines.
+
 ## Changes
 
 - A missing interactive value (e.g. a `tooltip` or a `data_id` that is
