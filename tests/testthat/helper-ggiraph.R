@@ -248,3 +248,31 @@ expect_interval_geom <- function(geom, geom_interactive, tags) {
     testthat::expect_equal(shapes$title, rep(c("tt a", "tt b", "tt c"), length(tags)))
   }
 }
+
+# The lines and polylines of a plot drawn without theme, to compare a ggiraph
+# reference line geom with its ggplot2 counterpart.
+svg_line_shapes <- function(p) {
+  doc <- dsvg_plot(p + theme_void())
+  nodes <- xml2::xml_find_all(doc, ".//line|.//polyline")
+  attr <- function(name) xml2::xml_attr(nodes, name)
+  data.frame(
+    geometry = paste(
+      xml2::xml_name(nodes), attr("x1"), attr("y1"), attr("x2"), attr("y2"),
+      attr("points"), attr("stroke-linecap")
+    ),
+    id = attr("data-id")
+  )
+}
+
+# Compare a reference line drawn by ggplot2 and by ggiraph, in cartesian
+# coordinates with and without clipping, and in polar coordinates.
+expect_same_reference_line <- function(layer, layer_interactive, id) {
+  base <- ggplot(mtcars, aes(wt, mpg)) + geom_blank()
+  coords <- list(coord_cartesian(), coord_cartesian(clip = "off"), coord_polar())
+  for (coord in coords) {
+    expected <- svg_line_shapes(base + layer + coord)
+    result <- svg_line_shapes(base + layer_interactive + coord)
+    testthat::expect_equal(result$geometry, expected$geometry)
+    testthat::expect_equal(unique(result$id), id)
+  }
+}

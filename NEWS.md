@@ -58,6 +58,12 @@ boxplots lost their `outlier.*` interactive attributes; and an aesthetic
 varying within a group made the stat fail, so the boxplots were not drawn,
 where 'ggplot2' drops the aesthetic with a warning.
 
+- `geom_hline_interactive()` and `geom_vline_interactive()` accept the
+`lineend` argument of 'ggplot2' 4.0 (it failed with "unused argument"), and
+`geom_abline_interactive()` limits the line to the panel as `geom_abline()`
+does: with `clip = "off"` the line went beyond the panel, and in polar
+coordinates it differed from 'ggplot2'.
+
 ## Changes
 
 - `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`

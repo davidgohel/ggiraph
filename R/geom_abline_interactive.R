@@ -31,7 +31,6 @@ GeomInteractiveAbline <- ggproto(
     panel_params,
     coord,
     lineend = "butt",
-    ...,
     .ipar = IPAR_NAMES
   ) {
     ranges <- coord$backtransform_range(panel_params)
@@ -40,19 +39,22 @@ GeomInteractiveAbline <- ggproto(
       # Ensure the line extends well outside the panel to avoid visible line
       # ending for thick lines
       ranges$x <- ranges$x + c(-1, 1) * diff(ranges$x)
+      ranges$y <- ranges$y + c(-1, 1) * diff(ranges$y)
     }
 
-    data$x <- ranges$x[1]
-    data$xend <- ranges$x[2]
-    data$y <- ranges$x[1] * data$slope + data$intercept
-    data$yend <- ranges$x[2] * data$slope + data$intercept
+    # as in ggplot2 4.0: the line is limited to where it crosses the ranges
+    # of both axes
+    x <- sweep(outer(ranges$y, data$intercept, FUN = "-"), 2, data$slope, FUN = "/")
+    data$x <- pmax(ranges$x[1], pmin(x[1, ], x[2, ]))
+    data$xend <- pmin(ranges$x[2], pmax(x[1, ], x[2, ]))
+    data$y <- data$x * data$slope + data$intercept
+    data$yend <- data$xend * data$slope + data$intercept
 
     GeomInteractiveSegment$draw_panel(
       unique0(data),
       panel_params,
       coord,
       lineend = lineend,
-      ...,
       .ipar = .ipar
     )
   }
