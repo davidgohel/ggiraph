@@ -46,6 +46,11 @@ swapped: the data were not flipped back after building the lines.
 
 ## Changes
 
+- `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`
+since 'ggplot2' 4.0.0: use `geom_errorbar_interactive(orientation = "y")`.
+`GeomInteractiveErrorbarh` is now a `GeomInteractiveErrorbar` without code
+of its own.
+
 - A missing interactive value (e.g. a `tooltip` or a `data_id` that is
 `NA`) no longer writes the text "NA" in the SVG: the element has no
 attribute. It has no tooltip, and with a missing `data_id` it can no longer

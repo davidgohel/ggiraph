@@ -4,15 +4,19 @@
 \alias{geom_errorbarh_interactive}
 \title{Create interactive horizontal error bars}
 \usage{
-geom_errorbarh_interactive(...)
+geom_errorbarh_interactive(..., orientation = "y")
 }
 \arguments{
-\item{...}{arguments passed to base function,
+\item{...}{arguments passed to \code{\link[=geom_errorbar_interactive]{geom_errorbar_interactive()}},
 plus any of the \link{interactive_parameters}.}
+
+\item{orientation}{The orientation of the layer, \code{"y"} for horizontal
+error bars.}
 }
 \description{
-This geometry is based on \code{\link[ggplot2:geom_errorbarh]{ggplot2::geom_errorbarh()}}.
-See the documentation for those functions for more details.
+\code{geom_errorbarh_interactive()} is deprecated, as \code{\link[ggplot2:geom_errorbarh]{ggplot2::geom_errorbarh()}}
+since 'ggplot2' 4.0.0: use \code{geom_errorbar_interactive(orientation = "y")}
+instead (see \code{\link[=geom_crossbar_interactive]{geom_crossbar_interactive()}}).
 }
 \section{Details for interactive geom functions}{
 
@@ -38,16 +42,15 @@ df <- data.frame(
   se = c(0.1, 0.3, 0.3, 0.2)
 )
 
-# Define the top and bottom of the errorbars
-
+# geom_errorbarh_interactive() is deprecated: use
+# geom_errorbar_interactive(orientation = "y") for horizontal error bars
 p <- ggplot(df, aes(resp, trt, colour = group))
 g <- p +
   geom_point() +
-  geom_errorbarh_interactive(aes(
-    xmax = resp + se,
-    xmin = resp - se,
-    tooltip = group
-  ))
+  geom_errorbar_interactive(
+    aes(xmax = resp + se, xmin = resp - se, tooltip = group),
+    orientation = "y"
+  )
 x <- girafe(ggobj = g)
 if (interactive()) {
   print(x)
@@ -56,3 +59,4 @@ if (interactive()) {
 \seealso{
 \code{\link[=girafe]{girafe()}}
 }
+\keyword{internal}

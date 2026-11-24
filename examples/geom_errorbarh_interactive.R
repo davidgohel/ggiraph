@@ -8,16 +8,15 @@ df <- data.frame(
   se = c(0.1, 0.3, 0.3, 0.2)
 )
 
-# Define the top and bottom of the errorbars
-
+# geom_errorbarh_interactive() is deprecated: use
+# geom_errorbar_interactive(orientation = "y") for horizontal error bars
 p <- ggplot(df, aes(resp, trt, colour = group))
 g <- p +
   geom_point() +
-  geom_errorbarh_interactive(aes(
-    xmax = resp + se,
-    xmin = resp - se,
-    tooltip = group
-  ))
+  geom_errorbar_interactive(
+    aes(xmax = resp + se, xmin = resp - se, tooltip = group),
+    orientation = "y"
+  )
 x <- girafe(ggobj = g)
 if (interactive()) {
   print(x)

@@ -9,6 +9,7 @@ geom_errorbar_interactive <- function(...) {
 #' @format NULL
 #' @usage NULL
 #' @export
+#' @importFrom vctrs vec_interleave
 GeomInteractiveErrorbar <- ggproto(
   "GeomInteractiveErrorbar",
   GeomErrorbar,
