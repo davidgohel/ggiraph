@@ -42,14 +42,6 @@ test_that("add_default_interactive_aes is working", {
   )
 })
 
-# grob_argnames is working ----
-test_that("grob_argnames is working", {
-  expect_equal(
-    ggiraph:::grob_argnames(list(x = 1, y = 2, tooltip = "tooltip"), pointsGrob),
-    c("x", "y")
-  )
-})
-
 # read_file is working ----
 test_that("read_file is working", {
   fn <- tempfile()

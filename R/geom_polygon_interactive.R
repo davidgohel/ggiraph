@@ -74,9 +74,6 @@ GeomInteractivePolygon <- ggproto(
       )
       add_interactive_attrs(gr, munched, ipar = .ipar)
     } else {
-      if (utils::packageVersion('grid') < "3.6") {
-        abort("Polygons with holes requires R 3.6 or above")
-      }
       # Sort by group to make sure that colors, fill, etc. come in same order
       munched <- munched[order(munched$group, munched$subgroup), ]
       id <- match(munched$subgroup, unique(munched$subgroup))
@@ -86,7 +83,7 @@ GeomInteractivePolygon <- ggproto(
       # are the same within each group.
       first_idx <- !duplicated(munched$group)
       first_rows <- munched[first_idx, ]
-      args <- list(
+      gr <- pathGrob(
         x = munched$x,
         y = munched$y,
         default.units = "native",
@@ -102,12 +99,6 @@ GeomInteractivePolygon <- ggproto(
           linejoin = linejoin,
           linemitre = linemitre
         )
-      )
-      # pathId argument does not exist prior to grid v3.6.0
-      # so we dont't call pathGrob directly because travis test fails
-      gr <- do.call(
-        pathGrob,
-        args[grob_argnames(x = args, grob = grid::pathGrob)]
       )
       add_interactive_attrs(gr, munched, ipar = .ipar)
     }

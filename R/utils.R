@@ -88,12 +88,6 @@ append_aes <- function(mapping, lst) {
   mapping
 }
 
-#' Returns the arguments for a grob function
-#' @noRd
-grob_argnames <- function(x, grob) {
-  intersect(names(formals(grob)), names(x))
-}
-
 #' Returns the contents of a file as text
 #' @noRd
 read_file <- function(path, ..., encoding = "UTF-8", warn = FALSE) {
