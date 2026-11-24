@@ -20,6 +20,11 @@ attribute, as the colour bar does. Attributes given as a function were lost
 with a "mismatched lengths" warning; several values now give an explicit
 warning.
 
+- `girafe_class_add()`, `girafe_class_remove()` and `girafe_class_toggle()`:
+a single id (e.g. `data_id = "121"`) also targeted the elements whose id is
+a substring of it ("1", "12", "21"...). Shiny sends a vector of length one
+as a string and the JavaScript handler searched it with `includes()`.
+
 ## Changes
 
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never

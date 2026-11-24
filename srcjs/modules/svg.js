@@ -280,13 +280,15 @@ export default class SVGObject {
     Shiny.addCustomMessageHandler(this.classMessageId, function (message) {
       const rootNode = document.getElementById(svgid + '_rootg');
       if (!rootNode) return;
+      // Shiny unboxes vectors of length 1: a single id arrives as a string,
+      // on which includes() would do a substring search
       const targets = [];
       if (message.data_id)
-        targets.push({ attr: 'data-id', ids: message.data_id });
+        targets.push({ attr: 'data-id', ids: [].concat(message.data_id) });
       if (message.key_id)
-        targets.push({ attr: 'key-id', ids: message.key_id });
+        targets.push({ attr: 'key-id', ids: [].concat(message.key_id) });
       if (message.theme_id)
-        targets.push({ attr: 'theme-id', ids: message.theme_id });
+        targets.push({ attr: 'theme-id', ids: [].concat(message.theme_id) });
       targets.forEach(function (t) {
         rootNode.querySelectorAll('*[' + t.attr + ']').forEach(function (node) {
           if (t.ids.includes(node.getAttribute(t.attr))) {
