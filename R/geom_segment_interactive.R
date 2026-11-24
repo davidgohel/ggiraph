@@ -37,21 +37,13 @@ GeomInteractiveSegment <- ggproto(
     na.rm = FALSE,
     .ipar = IPAR_NAMES
   ) {
+    data$xend <- data$xend %||% data$x
+    data$yend <- data$yend %||% data$y
+    # as in ggplot2, missing interactive attributes do not remove a segment
     data <- remove_missing(
       data,
       na.rm = na.rm,
-      c(
-        "x",
-        "y",
-        "xend",
-        "yend",
-        "linetype",
-        "linewidth",
-        "shape",
-        "tooltip",
-        "onclick",
-        "data_id"
-      ),
+      c("x", "y", "xend", "yend", "linetype", "linewidth"),
       name = "geom_segment"
     )
     if (empty(data)) {

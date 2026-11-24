@@ -30,6 +30,11 @@ as a string and the JavaScript handler searched it with `includes()`.
 interrupted the tooltip and the hover effect of its violin. They now carry
 the attributes of their violin.
 
+- `geom_segment_interactive()` follows `geom_segment()` of 'ggplot2' 4.0:
+a missing `xend` or `yend` is the start coordinate (it failed with an
+error), and a segment whose `tooltip`, `data_id` or `onclick` is missing
+is drawn instead of being removed with a warning.
+
 ## Changes
 
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
