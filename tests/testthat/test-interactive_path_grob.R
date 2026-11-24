@@ -51,6 +51,7 @@ test_that("Using pathId", {
 
   nodes <- xml_find_all(doc, ".//path[@info]")
   expect_equal(length(nodes), 3)
+  expect_equal(xml_attr(nodes, "info"), rep("bar", 3))
   tooltips <- xml_find_all(doc, ".//path[@info][@title]")
   expect_equal(length(tooltips), 3)
   tooltips <- sapply(tooltips, xml_attr, "title")

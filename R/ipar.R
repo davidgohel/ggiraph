@@ -377,7 +377,9 @@ interactive_attr_toxml <- function(x, ids = character(0), rows = NULL) {
   }
 
   for (a in anames) {
-    if (length(rows) == 0) {
+    # a single value is for all the elements, set_attr() recycles it:
+    # subsetting it by `rows` would give NA to all but the first element
+    if (length(rows) == 0 || length(ip[[a]]) == 1) {
       attrValue <- ip[[a]]
     } else {
       attrValue <- ip[[a]][rows]

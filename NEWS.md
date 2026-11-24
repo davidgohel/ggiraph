@@ -35,6 +35,11 @@ a missing `xend` or `yend` is the start coordinate (it failed with an
 error), and a segment whose `tooltip`, `data_id` or `onclick` is missing
 is drawn instead of being removed with a warning.
 
+- `interactive_path_grob()`, `interactive_polygon_grob()`,
+`interactive_polyline_grob()`, `interactive_lines_grob()` and
+`interactive_text_grob()` (with `check.overlap`): an interactive parameter
+given as a single value was only set on the first element drawn.
+
 ## Changes
 
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never

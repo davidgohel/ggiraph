@@ -39,6 +39,7 @@ test_that("Using id.lengths", {
 
   nodes <- xml_find_all(doc, ".//polygon[@info]")
   expect_equal(length(nodes), 5)
+  expect_equal(xml_attr(nodes, "info"), rep("bar", 5))
   tooltips <- xml_find_all(doc, ".//polygon[@info][@title]")
   expect_equal(length(tooltips), 5)
   tooltips <- sapply(tooltips, xml_attr, "title")
