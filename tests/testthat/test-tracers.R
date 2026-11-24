@@ -258,3 +258,24 @@ test_that("tracers do not work with no device", {
   expect_equal(length(ggiraph:::collect_id(0)), 0)
   expect_false(ggiraph:::add_attribute(0, "foo", 1, "bar"))
 })
+
+# missing values ----
+test_that("a missing value does not write the attribute", {
+  dat <- data.frame(x = 1:3, y = 1:3, tt = c("a", NA, "c"))
+  layers <- list(
+    circle = geom_point_interactive(aes(tooltip = tt, data_id = tt)),
+    rect = geom_rect_interactive(
+      aes(xmin = x, xmax = x + .5, ymin = y, ymax = y + .5, tooltip = tt, data_id = tt)
+    ),
+    line = geom_segment_interactive(
+      aes(xend = x + 1, yend = y, tooltip = tt, data_id = tt)
+    )
+  )
+  for (tag in names(layers)) {
+    doc <- dsvg_plot(ggplot(dat, aes(x, y)) + layers[[tag]])
+    expect_false(grepl("\"NA\"", as.character(doc)), info = tag)
+    nodes <- xml_find_all(doc, paste0(".//", tag, "[@data-id]"))
+    expect_equal(xml_attr(nodes, "data-id"), c("a", "c"), info = tag)
+    expect_equal(xml_attr(nodes, "title"), c("a", "c"), info = tag)
+  }
+})

@@ -74,6 +74,10 @@ set_attr <- function(name, ids, values) {
         "(most often, it occurs because of clipping or because of NAs in data)"
       )
     } else {
+      # a missing value means no attribute: no tooltip, no shared "NA" id
+      missing_values <- is.na(values)
+      ids <- ids[!missing_values]
+      values <- values[!missing_values]
       dev_num <- as.integer(dev.cur() - 1L)
       result <- add_attribute(
         dn = dev_num,
