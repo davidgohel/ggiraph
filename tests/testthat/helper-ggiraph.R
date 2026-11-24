@@ -302,3 +302,19 @@ expect_same_rects <- function(base, layer, layer_interactive, ids) {
     testthat::expect_equal(result$id[!is.na(result$id)], ids)
   }
 }
+
+# The polygons and images of a plot drawn without theme and legend: their
+# geometry and interactive attributes.
+svg_area_shapes <- function(p) {
+  doc <- dsvg_plot(p + theme_void() + theme(legend.position = "none"))
+  nodes <- xml2::xml_find_all(doc, ".//polygon|.//image")
+  attr <- function(name) xml2::xml_attr(nodes, name)
+  data.frame(
+    geometry = paste(
+      xml2::xml_name(nodes), attr("points"), attr("x"), attr("y"),
+      attr("width"), attr("height")
+    ),
+    id = attr("data-id"),
+    title = attr("title")
+  )
+}
