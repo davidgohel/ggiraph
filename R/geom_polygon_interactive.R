@@ -42,7 +42,7 @@ GeomInteractivePolygon <- ggproto(
       return(zeroGrob())
     }
 
-    munched <- coord_munch(coord, data, panel_params)
+    munched <- coord_munch(coord, data, panel_params, is_closed = TRUE)
 
     if (is.null(munched$subgroup)) {
       # Sort by group to make sure that colors, fill, etc. come in same order
@@ -63,7 +63,7 @@ GeomInteractivePolygon <- ggproto(
           id = munched$group,
           gp = gpar(
             col = first_rows$colour,
-            fill = alpha(first_rows$fill, first_rows$alpha),
+            fill = fill_alpha(first_rows$fill, first_rows$alpha),
             lwd = first_rows$linewidth * .pt,
             lty = first_rows$linetype,
             lineend = lineend,
@@ -95,7 +95,7 @@ GeomInteractivePolygon <- ggproto(
         rule = rule,
         gp = gpar(
           col = first_rows$colour,
-          fill = alpha(first_rows$fill, first_rows$alpha),
+          fill = fill_alpha(first_rows$fill, first_rows$alpha),
           lwd = first_rows$linewidth * .pt,
           lty = first_rows$linetype,
           lineend = lineend,

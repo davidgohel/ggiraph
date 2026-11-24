@@ -43,7 +43,7 @@ GeomInteractiveMap <- ggproto(
 
     # Munch, then set up id variable for polygonGrob -
     # must be sequential integers
-    coords <- coord_munch(coord, map, panel_params)
+    coords <- coord_munch(coord, map, panel_params, is_closed = TRUE)
     coords$group <- coords$group %||% coords$id
     grob_id <- match(coords$group, unique(coords$group))
 
@@ -58,7 +58,7 @@ GeomInteractiveMap <- ggproto(
       id = grob_id,
       gp = gpar(
         col = data$colour,
-        fill = alpha(data$fill, data$alpha),
+        fill = fill_alpha(data$fill, data$alpha),
         lwd = data$linewidth * .pt,
         lineend = lineend,
         linejoin = linejoin,

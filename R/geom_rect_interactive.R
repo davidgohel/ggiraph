@@ -49,22 +49,25 @@ GeomInteractiveRect <- ggproto(
         c("x", "y", "xmin", "xmax", "ymin", "ymax")
       )
 
-      polys <-
-        lapply(split(data, seq_len(nrow(data))), function(row) {
-          poly <- rect_to_poly(row$xmin, row$xmax, row$ymin, row$ymax)
-          aes <- row[rep(1, 5), aesthetics]
+      # as in ggplot2 4.0: one polygon of 4 corners per rectangle, closed by
+      # the polygon geom
+      index <- rep(seq_len(nrow(data)), each = 4)
+      new <- data[index, aesthetics, drop = FALSE]
+      new$x <- vec_interleave(data$xmin, data$xmax, data$xmax, data$xmin)
+      new$y <- vec_interleave(data$ymax, data$ymax, data$ymin, data$ymin)
+      new$group <- index
 
-          GeomInteractivePolygon$draw_panel(
-            vec_cbind(poly, aes),
-            panel_params,
-            coord,
-            lineend = lineend,
-            linejoin = linejoin,
-            .ipar = .ipar
-          )
-        })
-
-      ggname("bar", do.call("grobTree", polys))
+      ggname(
+        "geom_rect_interactive",
+        GeomInteractivePolygon$draw_panel(
+          new,
+          panel_params,
+          coord,
+          lineend = lineend,
+          linejoin = linejoin,
+          .ipar = .ipar
+        )
+      )
     } else {
       coords <- coord$transform(data, panel_params)
 
@@ -79,7 +82,7 @@ GeomInteractiveRect <- ggproto(
           just = c("left", "top"),
           gp = gpar(
             col = coords$colour,
-            fill = alpha(coords$fill, coords$alpha),
+            fill = fill_alpha(coords$fill, coords$alpha),
             lwd = coords$linewidth * .pt,
             lty = coords$linetype,
             linejoin = linejoin,
@@ -91,10 +94,3 @@ GeomInteractiveRect <- ggproto(
     }
   }
 )
-
-rect_to_poly <- function(xmin, xmax, ymin, ymax) {
-  new_data_frame(list(
-    y = c(ymax, ymax, ymin, ymin, ymax),
-    x = c(xmin, xmax, xmax, xmin, xmin)
-  ))
-}

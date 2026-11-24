@@ -198,3 +198,15 @@ test_theme_element <- expression({
   ip <- ggiraph:::compact(ggiraph:::get_interactive_data(result))
   expect_equal(ip, mapping, info = "interactive attributes match")
 })
+
+# The svg elements of a plot drawn without theme, to compare a ggiraph geom
+# with its ggplot2 counterpart.
+svg_shapes <- function(p, tag) {
+  doc <- dsvg_plot(p + theme_void())
+  nodes <- xml2::xml_find_all(doc, paste0(".//", tag))
+  data.frame(
+    points = xml2::xml_attr(nodes, "points"),
+    fill = xml2::xml_attr(nodes, "fill"),
+    id = xml2::xml_attr(nodes, "data-id")
+  )
+}

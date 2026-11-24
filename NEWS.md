@@ -44,6 +44,14 @@ given as a single value was only set on the first element drawn.
 `geom_errorbarh_interactive()` drew the horizontal errorbars with x and y
 swapped: the data were not flipped back after building the lines.
 
+- `geom_map_interactive()`, `geom_polygon_interactive()` and
+`geom_rect_interactive()` follow their 'ggplot2' 4.0 counterparts: a
+gradient or pattern fill (e.g. `fill = linearGradient(...)`) failed with
+"Unknown colour name", and in non linear coordinates (e.g. `coord_polar()`)
+the shapes were not munched as closed polygons, so they differed from
+'ggplot2'. This also applies to the geoms drawing their boxes or areas with
+`GeomInteractivePolygon` (crossbar, boxplot, filled contours).
+
 ## Changes
 
 - `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`
