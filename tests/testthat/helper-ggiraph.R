@@ -276,3 +276,29 @@ expect_same_reference_line <- function(layer, layer_interactive, id) {
     testthat::expect_equal(unique(result$id), id)
   }
 }
+
+# The rectangles and polygons of a plot drawn without theme: their geometry
+# and interactive attributes.
+svg_rect_shapes <- function(p) {
+  doc <- dsvg_plot(p + theme_void())
+  nodes <- xml2::xml_find_all(doc, ".//rect|.//polygon")
+  attr <- function(name) xml2::xml_attr(nodes, name)
+  data.frame(
+    geometry = paste(
+      xml2::xml_name(nodes), attr("x"), attr("y"), attr("width"),
+      attr("height"), attr("points"), attr("stroke-linejoin")
+    ),
+    id = attr("data-id")
+  )
+}
+
+# Compare a rectangle geom drawn by ggplot2 and by ggiraph, in cartesian and
+# polar coordinates.
+expect_same_rects <- function(base, layer, layer_interactive, ids) {
+  for (coord in list(coord_cartesian(), coord_polar())) {
+    expected <- svg_rect_shapes(base + layer + coord)
+    result <- svg_rect_shapes(base + layer_interactive + coord)
+    testthat::expect_equal(result$geometry, expected$geometry)
+    testthat::expect_equal(result$id[!is.na(result$id)], ids)
+  }
+}
