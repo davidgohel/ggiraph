@@ -87,7 +87,6 @@ GuideInteractiveColoursteps <- ggproto(
     )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       parsed <- interactive_guide_parse_binned_breaks(scale, params)
-      breaks <- parsed$all_breaks
       label_breaks <- parsed$breaks
       if (params$even.steps || !is.numeric(parsed$scale_breaks)) {
         show.limits <- params$show.limits %||% scale$show.limits %||% FALSE
@@ -98,12 +97,12 @@ GuideInteractiveColoursteps <- ggproto(
           label_breaks <- parsed$all_breaks
         }
       }
+      # the steps are drawn as a single raster grob: one value for the bar
       params <- interactive_guide_train(
         params,
         scale,
-        breaks,
-        label_breaks = label_breaks,
-        max_len = length(breaks) - 1
+        breaks = 1,
+        label_breaks = label_breaks
       )
     }
     params

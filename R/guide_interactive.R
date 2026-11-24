@@ -82,31 +82,6 @@ interactive_guide_train <- function(
             if (max_len > 0 && length(values) > max_len) {
               values <- values[seq_len(max_len)]
             }
-            # special case for coloursteps guide, when the lengths may not match
-            if (
-              !is.null(params$decor) &&
-                length(values) > 1 &&
-                nrow(params$decor) > length(values)
-            ) {
-              # sort the breaks
-              sorted_breaks <- sort(breaks)
-              # find the bin index of the decor values
-              decor2break <- findInterval(
-                params$decor$value,
-                sorted_breaks,
-                rightmost.closed = TRUE,
-                all.inside = TRUE
-              )
-              if (!identical(breaks, sorted_breaks)) {
-                # map from sorted breaks to original breaks
-                m <- match(breaks, sorted_breaks[seq_len(max_len)], nomatch = 0)
-                m <- m[m != 0]
-                # remap the bin indices
-                decor2break <- sapply(decor2break, function(i) m[i])
-              }
-              # spread the values accordingly
-              values <- sapply(decor2break, function(i) values[i])
-            }
             idata[[a]] <- values
           }
         }

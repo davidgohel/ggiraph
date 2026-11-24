@@ -14,6 +14,12 @@ lengths" warning; the bar is a single element and now receives them. The
 guide was still reading the `raster` parameter replaced by `display` in
 'ggplot2' 4.0.0.
 
+- `guide_coloursteps_interactive()`: since 'ggplot2' 4.0.0 the steps are
+drawn as a single image, so they carry one value per interactive
+attribute, as the colour bar does. Attributes given as a function were lost
+with a "mismatched lengths" warning; several values now give an explicit
+warning.
+
 ## Changes
 
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
