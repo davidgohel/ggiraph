@@ -37,7 +37,8 @@ GuideInteractiveColourbar <- ggproto(
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       breaks <- Filter(is.finite, scale$get_breaks())
       label_breaks <- breaks
-      if (isTRUE(params$raster)) {
+      # with display "raster" or "gradient", the bar is a single grob
+      if (params$display %in% c("raster", "gradient")) {
         breaks <- 1
       } else {
         breaks <- params$decor$value

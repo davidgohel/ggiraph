@@ -7,6 +7,13 @@
 graphic was given with `code` instead of `ggobj`; they now warn that fonts
 can not be checked without a ggplot.
 
+- `guide_colourbar_interactive()`: with the default `display = "raster"` or
+with `display = "gradient"`, interactive attributes given as a function
+(e.g. `data_id = function(breaks) ...`) were lost with a "mismatched
+lengths" warning; the bar is a single element and now receives them. The
+guide was still reading the `raster` parameter replaced by `display` in
+'ggplot2' 4.0.0.
+
 ## Changes
 
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
