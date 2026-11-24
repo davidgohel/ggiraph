@@ -69,6 +69,11 @@ coordinates it differed from 'ggplot2'.
 collections next to other geometries (it failed with "only 'grobs' allowed
 in gList").
 
+- `geom_ribbon_interactive()`, `geom_area_interactive()` and
+`geom_density_interactive()` with `outline.type = "full"` drew their areas
+without interactive attributes: 'ggplot2' then returns the polygon alone,
+not in a tree of grobs.
+
 ## Changes
 
 - `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`

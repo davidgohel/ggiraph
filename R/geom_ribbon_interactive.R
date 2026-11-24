@@ -39,6 +39,11 @@ GeomInteractiveRibbon <- ggproto(
 
     grtree <- GeomRibbon$draw_group(data, ...)
 
+    # with `outline.type = "full"`, ggplot2 returns the polygon alone
+    if (inherits(grtree, "polygon")) {
+      return(add_interactive_attrs(grtree, aes, ipar = .ipar))
+    }
+
     polygon_child_index <- which(grepl("polygon", names(grtree$children)))[1]
     if (length(polygon_child_index) == 1L && is.finite(polygon_child_index)) {
       grtree$children[[polygon_child_index]] <-

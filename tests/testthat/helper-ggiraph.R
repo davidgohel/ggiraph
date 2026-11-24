@@ -318,3 +318,33 @@ svg_area_shapes <- function(p) {
     title = attr("title")
   )
 }
+
+# The polygons and polylines of a plot drawn without theme and legend: their
+# geometry and interactive attributes.
+svg_ribbon_shapes <- function(p) {
+  doc <- dsvg_plot(p + theme_void() + theme(legend.position = "none"))
+  nodes <- xml2::xml_find_all(doc, ".//polygon|.//polyline")
+  data.frame(
+    tag = xml2::xml_name(nodes),
+    points = xml2::xml_attr(nodes, "points"),
+    id = xml2::xml_attr(nodes, "data-id")
+  )
+}
+
+# Compare a ribbon-like layer drawn by ggplot2 and by ggiraph for every
+# outline type: each polygon and outline carries the id of its group.
+expect_same_ribbons <- function(base, geom, geom_interactive, groups) {
+  shapes_per_group <- c(upper = 2, lower = 2, both = 3, full = 1)
+  for (outline in names(shapes_per_group)) {
+    expected <- svg_ribbon_shapes(base + geom(outline.type = outline))
+    result <- svg_ribbon_shapes(
+      base + geom_interactive(aes(data_id = .data$g), outline.type = outline)
+    )
+    testthat::expect_equal(result$points, expected$points, info = outline)
+    testthat::expect_equal(
+      result$id,
+      rep(groups, each = shapes_per_group[[outline]]),
+      info = outline
+    )
+  }
+}

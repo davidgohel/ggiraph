@@ -35,3 +35,18 @@ test_that("polygons and polylines have the correct data-id", {
   polylines_b <- xml_find_all(doc, ".//polyline[@data-id='b']")
   expect_length(polylines_b, 3)
 })
+
+test_that("ribbons and areas carry their attributes for every outline type", {
+  dat <- data.frame(
+    x = rep(1:5, 2), lo = c(1:5, 2:6), hi = c(3:7, 5:9),
+    g = rep(c("a", "b"), each = 5)
+  )
+  expect_same_ribbons(
+    ggplot(dat, aes(x, ymin = lo, ymax = hi, group = g)),
+    geom_ribbon, geom_ribbon_interactive, c("a", "b")
+  )
+  expect_same_ribbons(
+    ggplot(dat, aes(x, hi, fill = g)),
+    geom_area, geom_area_interactive, c("a", "b")
+  )
+})
