@@ -52,6 +52,12 @@ the shapes were not munched as closed polygons, so they differed from
 'ggplot2'. This also applies to the geoms drawing their boxes or areas with
 `GeomInteractivePolygon` (crossbar, boxplot, filled contours).
 
+- `geom_boxplot_interactive()` follows `geom_boxplot()` of 'ggplot2' 4.0:
+the `quantile.type` argument was ignored; the outliers of horizontal
+boxplots lost their `outlier.*` interactive attributes; and an aesthetic
+varying within a group made the stat fail, so the boxplots were not drawn,
+where 'ggplot2' drops the aesthetic with a warning.
+
 ## Changes
 
 - `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`

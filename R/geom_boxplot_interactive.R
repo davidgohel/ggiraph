@@ -81,14 +81,11 @@ StatInteractiveBoxplot <- ggproto(
     # ignored here).
     dropped <- non_constant_columns[!non_constant_columns %in% self$dropped_aes]
     if (length(dropped) > 0) {
-      dropped_msg <- paste0(dropped, sep = ', ')
-      abort(c(
-        paste0(
-          "The following aesthetics were dropped during statistical transformation: ",
-          dropped_msg
-        ),
+      # a warning, as in ggplot2 (>= 3.4.0)
+      cli::cli_warn(c(
+        "The following aesthetics were dropped during statistical transformation: {.field {dropped}}.",
         "i" = "This can happen when ggplot fails to infer the correct grouping structure in the data.",
-        "i" = "Did you forget to specify a `group` aesthetic or to convert a numerical variable into a factor?"
+        "i" = "Did you forget to specify a {.code group} aesthetic or to convert a numerical variable into a factor?"
       ))
     }
 
@@ -115,7 +112,8 @@ StatInteractiveBoxplot <- ggproto(
     width = NULL,
     na.rm = FALSE,
     coef = 1.5,
-    flipped_aes = FALSE
+    flipped_aes = FALSE,
+    quantile.type = 7
   ) {
     # compute boxplot data
     df <- StatBoxplot$compute_group(
@@ -124,11 +122,13 @@ StatInteractiveBoxplot <- ggproto(
       width = width,
       na.rm = na.rm,
       coef = coef,
-      flipped_aes = flipped_aes
+      flipped_aes = flipped_aes,
+      quantile.type = quantile.type
     )
-    # add outlier aesthetics
+    # add outlier aesthetics; the outliers are values of the flipped data
     if (length(df$outliers[[1]])) {
-      outlier_indices <- which(data$y %in% df$outliers[[1]])
+      values <- flip_data(data, flipped_aes)$y
+      outlier_indices <- which(values %in% df$outliers[[1]])
       outlier_colnames <- intersect(colnames(data), outlier_ipar)
       if (length(outlier_colnames)) {
         for (name in outlier_colnames) {
