@@ -1,3 +1,19 @@
+#' Child of a geom with NULL default values for some aesthetics
+#' @details
+#' ggproto() keeps the expression of the parent and evaluates it in the
+#' calling frame each time `super()` is called: this frame must stay small
+#' (it is serialized with the plot) and `parent_geom` must not change.
+#' @param parent_geom the geom
+#' @param names names of the aesthetics to add to `default_aes`
+#' @noRd
+geom_with_default_aes <- function(parent_geom, names) {
+  default_aes <- append_aes(
+    parent_geom$default_aes,
+    Map(names, f = function(x) NULL)
+  )
+  ggproto(NULL, parent_geom, default_aes = default_aes)
+}
+
 #' Calls a base ggplot2 geom/layer function and replaces the geom param
 #' so that it points to the analogous interactive geom.
 #' @importFrom purrr detect_index
@@ -63,12 +79,12 @@ layer_interactive <- function(
     }
     layer_$geom_params <- append(layer_$geom_params, list(.ipar = ipar))
 
-    # set the defaults for any extra parameter
-    default_aes_names <- names(layer_$geom$default_aes)
-    missing_names <- setdiff(ipar, default_aes_names)
+    # set the defaults for any extra parameter: ggplot2 only applies the
+    # fixed aesthetics (`foo = "x"`) that are in `default_aes`. They are set
+    # in a child of the geom, the shared geom object must not be modified.
+    missing_names <- setdiff(ipar, names(layer_$geom$default_aes))
     if (length(missing_names) > 0) {
-      defaults <- Map(missing_names, f = function(x) NULL)
-      layer_$geom$default_aes <- append_aes(layer_$geom$default_aes, defaults)
+      layer_$geom <- geom_with_default_aes(layer_$geom, missing_names)
     }
 
     if (is.list(result)) {

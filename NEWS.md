@@ -48,6 +48,10 @@ keeps the toolbar settings of a previous call instead of resetting them.
 Each test has a name, so failures are easier to locate, and tests no
 longer share their variables.
 
+- A layer created with `extra_interactive_params` no longer adds the extra
+aesthetics to the shared interactive geom (e.g. `GeomInteractivePoint`)
+for the rest of the session; they are set in a child geom of the layer.
+
 # ggiraph 0.9.7
 
 ## Features
