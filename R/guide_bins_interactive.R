@@ -139,7 +139,15 @@ GuideInteractiveBins <- ggproto(
     )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       parsed <- interactive_guide_parse_binned_breaks(scale, params)
-      params <- interactive_guide_train(params, scale, parsed$all_breaks)
+      # with labels given as a vector, the limits are NA in all_breaks: they
+      # have no label, and scale$get_labels() refuses them
+      label_breaks <- parsed$all_breaks[!is.na(parsed$all_breaks)]
+      params <- interactive_guide_train(
+        params,
+        scale,
+        parsed$all_breaks,
+        label_breaks = label_breaks
+      )
     }
     params
   },

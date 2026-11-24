@@ -74,6 +74,10 @@ in gList").
 without interactive attributes: 'ggplot2' then returns the polygon alone,
 not in a tree of grobs.
 
+- `guide_bins_interactive()` (the guide of `scale_*_binned_interactive()`)
+failed with "`breaks` and `labels` have different lengths" when the labels
+were given as a vector (e.g. `labels = c("low", "mid", "high")`).
+
 ## Changes
 
 - `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`

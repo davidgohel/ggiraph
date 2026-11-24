@@ -192,3 +192,36 @@ test_that("continuous scale - bins guide - show.limits", {
   tooltips <- sapply(nodes, function(node) xml_attr(node, "title"))
   expect_equal(tooltips, c("50", "100", "150", "200", "250", "300", "350"), info = "legend labels tooltips")
 })
+
+# labels given as a vector ----
+test_that("bins guide accepts labels given as a vector, as ggplot2", {
+  legend_texts <- function(p) {
+    doc <- dsvg_plot(p)
+    xml_text(xml_find_all(doc, ".//text"))
+  }
+  base <- ggplot(mtcars, aes(wt, mpg, size = hp)) + geom_point_interactive()
+  expected <- legend_texts(
+    base + scale_size_binned(breaks = c(100, 200, 300), labels = c("low", "mid", "high"))
+  )
+  p <- base + scale_size_binned_interactive(
+    breaks = c(100, 200, 300),
+    labels = c("low", "mid", "high"),
+    data_id = function(breaks) paste0("k", seq_along(breaks))
+  )
+  expect_equal(legend_texts(p), expected)
+  keys <- xml_find_all(dsvg_plot(p), ".//circle[@key-id]")
+  expect_equal(xml_attr(keys, "key-id"), paste0("k", 1:4))
+})
+
+test_that("interactive labels given as a vector warn instead of failing", {
+  base <- ggplot(mtcars, aes(wt, mpg, size = hp)) + geom_point_interactive()
+  p <- base + scale_size_binned_interactive(
+    breaks = c(100, 200, 300),
+    labels = label_interactive(c("low", "mid", "high"), data_id = c("a", "b", "c"))
+  )
+  expect_warning(doc <- dsvg_plot(p), "Cannot set the guide interactive labels")
+  expect_equal(
+    xml_text(xml_find_all(doc, ".//text[text() = 'low' or text() = 'high']")),
+    c("low", "high")
+  )
+})
