@@ -210,3 +210,41 @@ svg_shapes <- function(p, tag) {
     id = xml2::xml_attr(nodes, "data-id")
   )
 }
+
+# The lines and circles of a plot drawn without theme: their geometry and
+# interactive attributes.
+svg_lines_circles <- function(p) {
+  doc <- dsvg_plot(p + theme_void())
+  nodes <- xml2::xml_find_all(doc, ".//line|.//circle")
+  attr <- function(name) xml2::xml_attr(nodes, name)
+  data.frame(
+    tag = xml2::xml_name(nodes),
+    geometry = paste(attr("x1"), attr("y1"), attr("x2"), attr("y2"), attr("cx"), attr("cy"), attr("r")),
+    id = attr("data-id"),
+    title = attr("title")
+  )
+}
+
+interval_data <- data.frame(
+  trt = factor(c("a", "b", "c")),
+  resp = c(1, 5, 3),
+  lower = c(0.8, 4.6, 2.4),
+  upper = c(1.1, 5.3, 3.3)
+)
+
+# Compare an interactive interval geom with its ggplot2 counterpart, in both
+# orientations.
+expect_interval_geom <- function(geom, geom_interactive, tags) {
+  vertical <- ggplot(interval_data, aes(trt, resp, ymin = lower, ymax = upper))
+  horizontal <- ggplot(interval_data, aes(resp, trt, xmin = lower, xmax = upper))
+  for (base in list(vertical, horizontal)) {
+    expected <- svg_lines_circles(base + geom())
+    shapes <- svg_lines_circles(
+      base + geom_interactive(aes(data_id = trt, tooltip = paste("tt", trt)))
+    )
+    testthat::expect_equal(shapes$geometry, expected$geometry)
+    testthat::expect_equal(shapes$tag, rep(tags, each = 3))
+    testthat::expect_equal(shapes$id, rep(c("a", "b", "c"), length(tags)))
+    testthat::expect_equal(shapes$title, rep(c("tt a", "tt b", "tt c"), length(tags)))
+  }
+}
