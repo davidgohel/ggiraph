@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggiraph)
 
-# geom_text_repel_interactive
+# geom_quasirandom_interactive
 if (
   requireNamespace("ggbeeswarm", quietly = TRUE) &&
     requireNamespace("dplyr", quietly = TRUE)

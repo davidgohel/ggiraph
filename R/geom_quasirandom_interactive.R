@@ -7,7 +7,7 @@
 #' plus any of the [interactive_parameters].
 #' @inheritSection interactive_parameters Details for interactive geom functions
 #' @examples
-#' # add interactive repulsive texts to a ggplot -------
+#' # add interactive quasirandom points to a ggplot -------
 #' @example examples/geom_quasirandom_interactive.R
 #' @seealso [girafe()]
 #' @export
