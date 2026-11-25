@@ -225,3 +225,42 @@ test_that("interactive labels given as a vector warn instead of failing", {
     c("low", "high")
   )
 })
+
+# discrete scale - bins guide ----
+test_that("bins guide with a discrete scale of intervals draws as ggplot2", {
+  dat <- data.frame(
+    x = 1:8, y = 1:8,
+    z = cut(c(10, 20, 30, 40, 60, 70, 80, 95), c(0, 25, 50, 100))
+  )
+  base <- ggplot(dat, aes(x, y, colour = z)) + geom_point_interactive()
+  p_ggplot2 <- base + guides(colour = guide_bins())
+  received <- NULL
+  p_ggiraph <- base +
+    scale_colour_discrete_interactive(
+      data_id = function(breaks) {
+        received <<- breaks
+        c(paste0("bin", seq_len(length(breaks) - 1)), NA)
+      },
+      guide = "bins"
+    )
+  doc_ggplot2 <- dsvg_plot(p_ggplot2)
+  doc_ggiraph <- dsvg_plot(p_ggiraph)
+
+  # the intervals are parsed into breaks and limits
+  expect_equal(received, c(0, 25, 50, 100))
+  expect_equal(
+    xml_text(xml_find_all(doc_ggiraph, "//text")),
+    xml_text(xml_find_all(doc_ggplot2, "//text"))
+  )
+  keys <- xml_find_all(doc_ggiraph, "//circle[@key-id]")
+  expect_equal(xml_attr(keys, "key-id"), c("bin1", "bin2", "bin3"))
+})
+
+test_that("bins guide with a discrete scale needs intervals as breaks", {
+  dat <- data.frame(x = 1:3, y = 1:3, z = c("a", "b", "c"))
+  p <- ggplot(dat, aes(x, y, colour = z)) +
+    geom_point_interactive() +
+    scale_colour_discrete_interactive(data_id = "bins", guide = "bins")
+  # same warning ("NAs introduced by coercion") and error as ggplot2
+  expect_error(suppressWarnings(dsvg_plot(p)), "not formatted correctly")
+})

@@ -206,3 +206,16 @@ test_that("continuous scale - legend guide - reverse", {
   tooltips <- sapply(nodes, function(node) xml_attr(node, "title"))
   expect_equal(tooltips, rev(c("0.25", "0.5", "0.75", "1")), info = "legend labels tooltips")
 })
+
+# values whose length differs from the breaks ----
+test_that("legend warns when the values do not match the breaks", {
+  dat <- data.frame(x = 1:3, y = 1:3, z = c("a", "b", "c"))
+  p <- ggplot(dat, aes(x, y, colour = z)) +
+    geom_point_interactive() +
+    scale_colour_manual_interactive(
+      values = c("red", "green", "blue"),
+      data_id = c("a", "b")
+    )
+  expect_warning(doc <- dsvg_plot(p), "length differs from the breaks length")
+  expect_length(xml_find_all(doc, "//*[@key-id]"), 0)
+})

@@ -114,3 +114,17 @@ test_that("check_css", {
     default = default, cls_prefix = cls_prefix, name = name, canvas_id = canvas_id
   ), paste0(".", cls_prefix, canvas_id, " { ", default, " }"))
 })
+
+test_that("girafe_css_bicolor", {
+  expect_equal(
+    girafe_css_bicolor(primary = "yellow", secondary = "black"),
+    girafe_css(
+      css = "fill:yellow;stroke:black;cursor:pointer;",
+      text = "stroke:none;fill:yellow;",
+      line = "fill:none;stroke:yellow;",
+      area = "fill:yellow;stroke:none;",
+      point = "fill:yellow;stroke:black;",
+      image = "stroke:yellow;"
+    )
+  )
+})

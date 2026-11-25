@@ -37,6 +37,22 @@ test_that("blend modes use mix-blend-mode on the source", {
   expect_equal(xml_attr(p$uses[[2]], "style"), "mix-blend-mode:color-dodge")
 })
 
+test_that("each blend mode of grid has its CSS name", {
+  modes <- c(
+    multiply = "multiply", screen = "screen", overlay = "overlay",
+    darken = "darken", lighten = "lighten",
+    color.dodge = "color-dodge", color.burn = "color-burn",
+    hard.light = "hard-light", soft.light = "soft-light",
+    difference = "difference", exclusion = "exclusion"
+  )
+  for (op in names(modes)) {
+    p <- parts(group_doc(op, dst))
+    expect_equal(length(p$uses), 2L, info = op)
+    expect_equal(xml_attr(p$uses[[2]], "style"),
+                 paste0("mix-blend-mode:", modes[[op]]), info = op)
+  }
+})
+
 # Porter-Duff operators use masks of the other layer ----------------------
 test_that("Porter-Duff operators use masks of the other layer", {
   doc <- group_doc("in", dst)
@@ -57,6 +73,26 @@ test_that("Porter-Duff operators use masks of the other layer", {
   filter_id <- sub("^url\\(#(.*)\\)$", "\\1",
                    xml_attr(xml_find_first(mask, "use"), "filter"))
   expect_true(grepl("_filter_black$", filter_id))
+})
+
+# dest.* operators swap the layers --------------------------------------
+test_that("dest.over, dest.in and dest.out swap source and destination", {
+  p <- parts(group_doc("dest.over", dst))
+  expect_equal(sub(".*_", "", vapply(p$uses, href_id, "")), c("s", "d"),
+               info = "source under the destination")
+  expect_true(all(is.na(xml_attr(p$uses, "mask"))))
+
+  p <- parts(group_doc("dest.in", dst))
+  expect_equal(length(p$uses), 1L)
+  expect_true(grepl("_d$", href_id(p$uses[[1]])))
+  expect_match(xml_attr(p$uses[[1]], "mask"), "_s_a\\)$",
+               info = "destination masked by the alpha of the source")
+
+  p <- parts(group_doc("dest.out", dst))
+  expect_equal(length(p$uses), 1L)
+  expect_true(grepl("_d$", href_id(p$uses[[1]])))
+  expect_match(xml_attr(p$uses[[1]], "mask"), "_s_ia\\)$",
+               info = "destination masked by the inverse alpha of the source")
 })
 
 # sums are added with plus-lighter -----------------------------------------
