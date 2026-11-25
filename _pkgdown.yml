@@ -70,7 +70,6 @@ reference:
   - title: Girafe graphic device
     contents:
     - dsvg
-    - dsvg_view
 
 navbar:
   title: ggiraph

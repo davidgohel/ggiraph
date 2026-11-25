@@ -1,18 +1,23 @@
-#' Run plotting code and view svg in RStudio Viewer or web broswer.
+#' Run plotting code and view svg in RStudio Viewer or web browser
 #'
-#' This is useful primarily for testing. Requires the `htmltools`
-#' package.
+#' @description
+#' `dsvg_view()` is deprecated: draw with [dsvg()] directly, or display an
+#' interactive graphic with [girafe()].
 #'
 #' @param code Plotting code to execute.
 #' @param ... Other arguments passed on to [dsvg()].
+#' @keywords internal
 #' @export
-#' @examples
-#' \donttest{
-#' dsvg_view(plot(1:10))
-#' dsvg_view(hist(rnorm(100)))
-#' }
 #' @importFrom htmltools browsable HTML
 dsvg_view <- function(code, ...) {
+  cli::cli_warn(
+    c(
+      "!" = "{.fn dsvg_view} is deprecated.",
+      "i" = "Draw with {.fn dsvg} directly, or display an interactive graphic with {.fn girafe}."
+    ),
+    .frequency = "regularly",
+    .frequency_id = "ggiraph_no_more_dsvg_view"
+  )
   path <- tempfile()
   devlength <- length(dev.list())
   dsvg(path, ...)

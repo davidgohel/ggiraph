@@ -2,7 +2,7 @@
 % Please edit documentation in R/dsvg_view.R
 \name{dsvg_view}
 \alias{dsvg_view}
-\title{Run plotting code and view svg in RStudio Viewer or web broswer.}
+\title{Run plotting code and view svg in RStudio Viewer or web browser}
 \usage{
 dsvg_view(code, ...)
 }
@@ -12,12 +12,7 @@ dsvg_view(code, ...)
 \item{...}{Other arguments passed on to \code{\link[=dsvg]{dsvg()}}.}
 }
 \description{
-This is useful primarily for testing. Requires the \code{htmltools}
-package.
+\code{dsvg_view()} is deprecated: draw with \code{\link[=dsvg]{dsvg()}} directly, or display an
+interactive graphic with \code{\link[=girafe]{girafe()}}.
 }
-\examples{
-\donttest{
-dsvg_view(plot(1:10))
-dsvg_view(hist(rnorm(100)))
-}
-}
+\keyword{internal}

@@ -111,6 +111,9 @@ attribute. It has no tooltip, and with a missing `data_id` it can no longer
 be hovered or selected; before, all the elements with a missing `data_id`
 shared the id "NA".
 
+- `dsvg_view()` is deprecated: draw with `dsvg()` directly, or display an
+interactive graphic with `girafe()`.
+
 - The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
 had any effect. Fonts are chosen with the `font_set` argument of `girafe()`.
 `girafe_defaults()` no longer returns a `fonts` element.
