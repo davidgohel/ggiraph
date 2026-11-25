@@ -9,4 +9,9 @@
 library(testthat)
 library(ggiraph)
 
-test_check("ggiraph")
+# With _R_CHECK_DEPENDS_ONLY_ (hard dependencies check), R CMD check hides
+# the suggested packages but the test framework: the tests, which read the
+# SVG with xml2, are skipped, as they were with tinytest.
+if (requireNamespace("xml2", quietly = TRUE)) {
+  test_check("ggiraph")
+}
