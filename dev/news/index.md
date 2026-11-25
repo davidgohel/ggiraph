@@ -2,6 +2,11 @@
 
 ## ggiraph 0.9.8
 
+### Features
+
+- Interactive scales for line width: `scale_linewidth_*_interactive()`
+  (continuous, discrete, binned, date, datetime, ordinal and manual).
+
 ### Changes
 
 - A missing interactive value (`NA`) no longer writes “NA” in the SVG:
@@ -16,6 +21,9 @@
   are deprecated.
 - [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
   only changes the options it is given, as `girafe(options = )` does.
+- [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md):
+  an interactive parameter varying within a group is dropped, as
+  ‘ggplot2’ does (the box took its first value).
 
 ### Issues
 
@@ -27,8 +35,16 @@ Interactive geoms now draw as their ‘ggplot2’ 4.0 counterparts:
   gradient and pattern fills, shapes in polar coordinates (also
   crossbar, boxplot and filled contours).
 - [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md):
-  `quantile.type`, outliers of horizontal boxplots.
+  `quantile.type`, outliers of horizontal boxplots; factors and dates
+  were written as numbers.
 - `geom_errorbar_interactive(orientation = "y")`: x and y were swapped.
+- [`geom_errorbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_crossbar_interactive.md),
+  [`geom_crossbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_crossbar_interactive.md):
+  a missing linetype lost all the attributes or failed.
+- [`geom_path_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_path_interactive.md),
+  [`geom_step_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_path_interactive.md):
+  arrow heads, line ends and `orientation` as in ‘ggplot2’; the segments
+  of lines with varying colour get the attributes of their line.
 - [`geom_segment_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_segment_interactive.md),
   [`geom_hline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md),
   [`geom_vline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md),
@@ -55,14 +71,18 @@ Legends and themes:
 Other:
 
 - [`girafe_class_add()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
-  and friends: a single id also targeted the ids containing it.
+  and friends: a single id also targeted the ids containing it; they say
+  when the session is missing.
 - `girafe(check_fonts_*)` failed when the graphic was given with `code`.
 - Interactive grobs: a single value was only set on the first element.
+- Labels given as expressions (`parse = TRUE`) lost their attributes.
 
 ### Internals
 
 - Tests use ‘testthat’; geom tests compare the SVG with the one of
   ‘ggplot2’.
+- Interactive geoms call the methods of ‘ggplot2’ instead of copies of
+  them, so they follow its next versions. ‘dplyr’ is only suggested.
 
 ## ggiraph 0.9.7
 

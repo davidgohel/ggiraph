@@ -138,6 +138,7 @@ Other interactive scale:
 [`scale_colour_steps_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_colour_steps_interactive.md),
 [`scale_gradient_interactive`](https://davidgohel.github.io/ggiraph/dev/reference/scale_gradient_interactive.md),
 [`scale_linetype_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linetype_interactive.md),
+[`scale_linewidth_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md),
 [`scale_manual_interactive`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md),
 [`scale_shape_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_shape_interactive.md),
 [`scale_size_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_size_interactive.md),

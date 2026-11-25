@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.025</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.8" id="ggiraph-098">ggiraph 0.9.8<a class="anchor" aria-label="anchor" href="#ggiraph-098"></a></h2>
 <div class="section level3">
+<h3 id="features-0-9-8">Features<a class="anchor" aria-label="anchor" href="#features-0-9-8"></a></h3>
+<ul><li>Interactive scales for line width: <code>scale_linewidth_*_interactive()</code> (continuous, discrete, binned, date, datetime, ordinal and manual).</li>
+</ul></div>
+<div class="section level3">
 <h3 id="changes-0-9-8">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-8"></a></h3>
 <ul><li>A missing interactive value (<code>NA</code>) no longer writes “NA” in the SVG: the element gets no attribute. Elements with a missing <code>data_id</code> can no longer be hovered or selected (they used to share the id “NA”).</li>
 <li>
@@ -41,6 +45,8 @@
 <code><a href="../reference/dsvg_view.html">dsvg_view()</a></code> and the <code>fonts</code> argument of <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> are deprecated.</li>
 <li>
 <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> only changes the options it is given, as <code>girafe(options = )</code> does.</li>
+<li>
+<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: an interactive parameter varying within a group is dropped, as ‘ggplot2’ does (the box took its first value).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="issues-0-9-8">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-8"></a></h3>
@@ -48,9 +54,13 @@
 <ul><li>
 <code><a href="../reference/geom_rect_interactive.html">geom_rect_interactive()</a></code>, <code><a href="../reference/geom_polygon_interactive.html">geom_polygon_interactive()</a></code>, <code><a href="../reference/geom_map_interactive.html">geom_map_interactive()</a></code>: gradient and pattern fills, shapes in polar coordinates (also crossbar, boxplot and filled contours).</li>
 <li>
-<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: <code>quantile.type</code>, outliers of horizontal boxplots.</li>
+<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: <code>quantile.type</code>, outliers of horizontal boxplots; factors and dates were written as numbers.</li>
 <li>
 <code>geom_errorbar_interactive(orientation = "y")</code>: x and y were swapped.</li>
+<li>
+<code><a href="../reference/geom_crossbar_interactive.html">geom_errorbar_interactive()</a></code>, <code><a href="../reference/geom_crossbar_interactive.html">geom_crossbar_interactive()</a></code>: a missing linetype lost all the attributes or failed.</li>
+<li>
+<code><a href="../reference/geom_path_interactive.html">geom_path_interactive()</a></code>, <code><a href="../reference/geom_path_interactive.html">geom_step_interactive()</a></code>: arrow heads, line ends and <code>orientation</code> as in ‘ggplot2’; the segments of lines with varying colour get the attributes of their line.</li>
 <li>
 <code><a href="../reference/geom_segment_interactive.html">geom_segment_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_hline_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_vline_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_abline_interactive()</a></code>, <code><a href="../reference/geom_sf_interactive.html">geom_sf_interactive()</a></code>: arguments and behaviours of ‘ggplot2’ 4.0.</li>
 <li>
@@ -63,14 +73,16 @@
 <li>Adding a theme element over an interactive one dropped its interactive attributes.</li>
 </ul><p>Other:</p>
 <ul><li>
-<code><a href="../reference/girafe_class.html">girafe_class_add()</a></code> and friends: a single id also targeted the ids containing it.</li>
+<code><a href="../reference/girafe_class.html">girafe_class_add()</a></code> and friends: a single id also targeted the ids containing it; they say when the session is missing.</li>
 <li>
 <code>girafe(check_fonts_*)</code> failed when the graphic was given with <code>code</code>.</li>
 <li>Interactive grobs: a single value was only set on the first element.</li>
+<li>Labels given as expressions (<code>parse = TRUE</code>) lost their attributes.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="internals-0-9-8">Internals<a class="anchor" aria-label="anchor" href="#internals-0-9-8"></a></h3>
 <ul><li>Tests use ‘testthat’; geom tests compare the SVG with the one of ‘ggplot2’.</li>
+<li>Interactive geoms call the methods of ‘ggplot2’ instead of copies of them, so they follow its next versions. ‘dplyr’ is only suggested.</li>
 </ul></div>
 </div>
     <div class="section level2">

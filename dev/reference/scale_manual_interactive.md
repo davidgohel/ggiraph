@@ -6,6 +6,7 @@ These scales are based on
 [`ggplot2::scale_size_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html),
 [`ggplot2::scale_shape_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html),
 [`ggplot2::scale_linetype_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html),
+[`ggplot2::scale_linewidth_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html),
 [`ggplot2::scale_alpha_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html)
 and
 [`ggplot2::scale_discrete_manual()`](https://ggplot2.tidyverse.org/reference/scale_manual.html).
@@ -25,6 +26,8 @@ scale_size_manual_interactive(...)
 scale_shape_manual_interactive(...)
 
 scale_linetype_manual_interactive(...)
+
+scale_linewidth_manual_interactive(...)
 
 scale_alpha_manual_interactive(...)
 
@@ -106,6 +109,7 @@ Other interactive scale:
 [`scale_colour_steps_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_colour_steps_interactive.md),
 [`scale_gradient_interactive`](https://davidgohel.github.io/ggiraph/dev/reference/scale_gradient_interactive.md),
 [`scale_linetype_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linetype_interactive.md),
+[`scale_linewidth_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md),
 [`scale_shape_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_shape_interactive.md),
 [`scale_size_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_size_interactive.md),
 [`scale_viridis_interactive`](https://davidgohel.github.io/ggiraph/dev/reference/scale_viridis_interactive.md)

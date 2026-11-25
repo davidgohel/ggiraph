@@ -407,12 +407,21 @@ LDFLAGS=-L/usr/local/lib
   [`scale_linetype_discrete_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linetype_interactive.md)
   [`scale_linetype_binned_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linetype_interactive.md)
   : Create interactive scales for line patterns
+- [`scale_linewidth_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  [`scale_linewidth_continuous_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  [`scale_linewidth_discrete_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  [`scale_linewidth_binned_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  [`scale_linewidth_date_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  [`scale_linewidth_datetime_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  [`scale_linewidth_ordinal_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_linewidth_interactive.md)
+  : Create interactive scales for line width
 - [`scale_colour_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_color_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_fill_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_size_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_shape_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_linetype_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
+  [`scale_linewidth_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_alpha_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   [`scale_discrete_manual_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/scale_manual_interactive.md)
   : Create your own interactive discrete scale
