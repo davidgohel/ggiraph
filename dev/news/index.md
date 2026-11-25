@@ -53,6 +53,11 @@
   (with `check.overlap`): an interactive parameter given as a single
   value was only set on the first element drawn.
 
+- `interactive_text_grob(check.overlap = TRUE)`: `x` or `y` given as a
+  single value was not recycled when looking for the labels drawn by
+  ‘grid’, which gave “subscript out of bounds” warnings and could drop
+  the interactive attributes of all the labels.
+
 - `geom_errorbar_interactive(orientation = "y")` and
   [`geom_errorbarh_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_errorbarh_interactive.md)
   drew the horizontal errorbars with x and y swapped: the data were not
