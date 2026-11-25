@@ -55,3 +55,15 @@ test_that("coloursteps labels keep their own attributes", {
   nodes <- xml_find_all(doc, "//text[starts-with(@key-id, 'lab')]")
   expect_equal(xml_attr(nodes, "key-id"), c("lab10", "lab30", "lab50"))
 })
+
+test_that("coloursteps ignores even.steps = FALSE with a discrete scale, as ggplot2", {
+  dat <- data.frame(x = 1:3, y = 1:3, z = cut(c(10, 30, 60), c(0, 25, 50, 100)))
+  p <- ggplot(dat, aes(x, y, colour = z)) +
+    geom_point() +
+    scale_colour_discrete_interactive(
+      data_id = "bar",
+      guide = guide_coloursteps(even.steps = FALSE)
+    )
+  expect_no_warning(nodes <- coloursteps_keys(p))
+  expect_equal(xml_attr(nodes, "key-id"), "bar")
+})

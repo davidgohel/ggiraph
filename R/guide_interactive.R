@@ -121,8 +121,7 @@ interactive_guide_train <- function(
 
 parse_binned_breaks = function(
   scale,
-  breaks = scale$get_breaks(),
-  even.steps = TRUE
+  breaks = scale$get_breaks()
 ) {
   breaks <- breaks[!is.na(breaks)]
   if (length(breaks) == 0) {
@@ -140,12 +139,6 @@ parse_binned_breaks = function(
     all_breaks <- sort(all_breaks)
     bin_at <- all_breaks[-1] - diff(all_breaks) / 2
   } else {
-    if (isFALSE(even.steps)) {
-      cli::cli_warn(paste0(
-        "{.code even.steps = FALSE} is not supported when used with a ",
-        "discrete scale."
-      ))
-    }
     bin_at <- breaks
     nums <- as.character(breaks)
     nums <- strsplit(gsub("\\(|\\)|\\[|\\]", "", nums), ",\\s?")
@@ -180,8 +173,7 @@ parse_binned_breaks = function(
 #' @noRd
 interactive_guide_parse_binned_breaks <- function(scale, params) {
   scale_breaks <- scale$get_breaks()
-  even.steps <- params$even.steps %||% TRUE
-  parsed <- parse_binned_breaks(scale, scale_breaks, even.steps)
+  parsed <- parse_binned_breaks(scale, scale_breaks)
   parsed$scale_breaks <- scale_breaks
   if (is.character(scale$labels) || is.numeric(scale$labels)) {
     limit_breaks <- c(NA, NA)

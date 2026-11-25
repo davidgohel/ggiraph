@@ -798,7 +798,7 @@ merge_single_opts <- function(default_opts, user_opts) {
     # Fallback: merge all (old behavior)
     user_opts_filtered <- as.list(user_opts)
   }
-  merged <- modifyList(as.list(default_opts), user_opts_filtered)
+  merged <- utils::modifyList(as.list(default_opts), user_opts_filtered)
   class(merged) <- class(default_opts)
   merged
 }

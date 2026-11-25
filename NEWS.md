@@ -43,6 +43,10 @@ is drawn instead of being removed with a warning.
 `interactive_text_grob()` (with `check.overlap`): an interactive parameter
 given as a single value was only set on the first element drawn.
 
+- `guide_coloursteps_interactive(even.steps = FALSE)` with a discrete scale
+no longer warns that `even.steps = FALSE` is not supported: 'ggplot2' 4.0
+ignores it silently.
+
 - `element_text_interactive()`, `element_rect_interactive()` and
 `element_line_interactive()`: adding a theme element over an interactive
 one (e.g. `theme(axis.text.x = element_text_interactive(data_id = "a")) +
@@ -126,6 +130,8 @@ longer share their variables.
 - A layer created with `extra_interactive_params` no longer adds the extra
 aesthetics to the shared interactive geom (e.g. `GeomInteractivePoint`)
 for the rest of the session; they are set in a child geom of the layer.
+
+- The copy of `modifyList()` is removed, `utils::modifyList()` is used.
 
 # ggiraph 0.9.7
 
