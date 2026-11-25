@@ -1,6 +1,9 @@
-# Run plotting code and view svg in RStudio Viewer or web broswer.
+# Run plotting code and view svg in RStudio Viewer or web browser
 
-This is useful primarily for testing. Requires the `htmltools` package.
+`dsvg_view()` is deprecated: draw with
+[`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+directly, or display an interactive graphic with
+[`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md).
 
 ## Usage
 
@@ -18,12 +21,3 @@ dsvg_view(code, ...)
 
   Other arguments passed on to
   [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md).
-
-## Examples
-
-``` r
-# \donttest{
-dsvg_view(plot(1:10))
-dsvg_view(hist(rnorm(100)))
-# }
-```

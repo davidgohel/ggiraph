@@ -15,13 +15,17 @@
   (e.g. `data_id = function(breaks) ...`) were lost with a “mismatched
   lengths” warning; the bar is a single element and now receives them.
   The guide was still reading the `raster` parameter replaced by
-  `display` in ‘ggplot2’ 4.0.0.
+  `display` in ‘ggplot2’ 4.0.0. A function now receives the breaks of
+  the scale, as for the other guides, instead of `1`, and must return a
+  single value for the whole bar; several values give a warning that
+  explains it.
 
 - [`guide_coloursteps_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_coloursteps_interactive.md):
   since ‘ggplot2’ 4.0.0 the steps are drawn as a single image, so they
   carry one value per interactive attribute, as the colour bar does.
   Attributes given as a function were lost with a “mismatched lengths”
-  warning; several values now give an explicit warning.
+  warning; a function receives the breaks of the scale and must return a
+  single value, several values give a warning that explains it.
 
 - [`girafe_class_add()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md),
   [`girafe_class_remove()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
@@ -52,6 +56,20 @@
   [`interactive_text_grob()`](https://davidgohel.github.io/ggiraph/dev/reference/interactive_text_grob.md)
   (with `check.overlap`): an interactive parameter given as a single
   value was only set on the first element drawn.
+
+- `guide_coloursteps_interactive(even.steps = FALSE)` with a discrete
+  scale no longer warns that `even.steps = FALSE` is not supported:
+  ‘ggplot2’ 4.0 ignores it silently.
+
+- [`element_text_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/element_interactive.md),
+  [`element_rect_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/element_interactive.md)
+  and
+  [`element_line_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/element_interactive.md):
+  adding a theme element over an interactive one
+  (e.g. `theme(axis.text.x = element_text_interactive(data_id = "a")) + theme(axis.text.x = element_text_interactive(colour = "red"))`)
+  lost the interactive attributes of the first one. They are kept, as
+  ‘ggplot2’ keeps the other properties of the element; the attributes of
+  the new element win.
 
 - `interactive_text_grob(check.overlap = TRUE)`: `x` or `y` given as a
   single value was not recycled when looking for the labels drawn by
@@ -129,6 +147,12 @@
   longer be hovered or selected; before, all the elements with a missing
   `data_id` shared the id “NA”.
 
+- [`dsvg_view()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg_view.md)
+  is deprecated: draw with
+  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+  directly, or display an interactive graphic with
+  [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md).
+
 - The `fonts` argument of
   [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
   is deprecated: it never had any effect. Fonts are chosen with the
@@ -156,6 +180,12 @@
   extra aesthetics to the shared interactive geom
   (e.g. `GeomInteractivePoint`) for the rest of the session; they are
   set in a child geom of the layer.
+
+- The copy of [`modifyList()`](https://rdrr.io/r/utils/modifyList.html)
+  is removed,
+  [`utils::modifyList()`](https://rdrr.io/r/utils/modifyList.html) is
+  used; `new_data_frame()` is replaced by `data_frame0()`, as in
+  ‘ggplot2’; `get_os()`, no longer used, is removed.
 
 ## ggiraph 0.9.7
 

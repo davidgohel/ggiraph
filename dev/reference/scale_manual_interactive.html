@@ -23,7 +23,7 @@ See the documentation for those functions for more details."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.021</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.025</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,12 +107,20 @@ if it's not already.</p>
 It can also be a named vector, where each name should correspond to the same break name.
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.</p>
-<p>For binned guides like <code>bins</code> and <code>coloursteps</code> the breaks include the label breaks and the limits.
+<p>The interactive parameters follow what 'ggplot2' draws: one value per
+key drawn in the legend.</p>
+<p>For the <code>bins</code> guide the breaks include the label breaks and the limits.
 The number of bins will be one less than the number of breaks and the interactive parameters can be
-constructed for each bin separately (look at the examples).
-For <code>colourbar</code> guide in raster mode, the breaks vector, is scalar 1 always, meaning the interactive
-parameters should be scalar too. For <code>colourbar</code> guide in non-raster mode, the bar is drawn using
-rectangles, and the breaks are the midpoints of each rectangle.</p>
+constructed for each bin separately (look at the examples).</p>
+<p>The <code>colourbar</code> guide (with the default <code>display = "raster"</code> or with
+<code>display = "gradient"</code>) and the <code>coloursteps</code> guide draw the bar as a
+single element: each interactive parameter must be a single value, given
+for the whole bar (e.g. <code>data_id = "bar"</code>). A function still receives the
+breaks of the scale, the ones labelled in the legend, and must return a
+single value (e.g. <code>data_id = function(breaks) paste(breaks, collapse = "-")</code>);
+several values give a warning and the parameter is not set.
+With <code>display = "rectangles"</code>, the <code>colourbar</code> guide draws one rectangle
+per colour and the breaks are the midpoints of each rectangle.</p>
 <p>The interactive parameters here, give interactivity only to the key elements of the guide.</p>
 <p>To provide interactivity to the rest of the elements of a guide, (title, labels, background, etc),
 the relevant theme elements or relevant guide arguments can be used.

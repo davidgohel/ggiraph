@@ -307,5 +307,3 @@
 
 - [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
   : SVG Graphics Driver
-- [`dsvg_view()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg_view.md)
-  : Run plotting code and view svg in RStudio Viewer or web broswer.
