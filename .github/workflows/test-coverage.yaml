@@ -31,6 +31,12 @@ jobs:
           extra-packages: any::covr, any::xml2
           needs: coverage
 
+      - name: Install a colour emoji font (bitmap glyph tests)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-color-emoji
+
       - name: Test coverage
         run: |
           cov <- covr::package_coverage(

@@ -42,6 +42,12 @@ jobs:
           extra-packages: any::rcmdcheck, any::testthat
           dependencies: '"${{ matrix.config.dependencies }}"'
 
+      - name: Install a colour emoji font (bitmap glyph tests)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-color-emoji
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
