@@ -44,9 +44,9 @@ test_that("attributes are written", {
   expect_equal(xml_attr(circle, "onclick"), "alert(2)")
 })
 
-# attributes cannot contain single quotes ----
-test_that("attributes cannot contain single quotes", {
-  expect_silent(dsvg_doc({
+# single quotes are kept in attributes ----
+test_that("single quotes are kept in attributes", {
+  expect_silent(doc <- dsvg_doc({
     plot.new()
     ggiraph:::dsvg_tracer_on()
     points(c(0.5, .6), c(.4, .3))
@@ -56,7 +56,12 @@ test_that("attributes cannot contain single quotes", {
       ids = ids,
       values = c("alert('1')", "alert('2')")
     )
+    ggiraph:::set_attr(name = "data-id", ids = ids, values = c("a'1", "b"))
   }))
+  nodes <- xml_find_all(doc, ".//*[@onclick]")
+  # the JavaScript of onclick stays valid, the ids are not changed
+  expect_equal(xml_attr(nodes, "onclick"), c("alert('1')", "alert('2')"))
+  expect_equal(xml_attr(nodes, "data-id"), c("a'1", "b"))
 })
 
 # set_attr throws error with invalid argument types ----

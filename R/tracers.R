@@ -53,7 +53,8 @@ set_attr <- function(name, ids, values) {
     stopifnot(length(name) == 1)
     stopifnot(is.character(values))
     stopifnot(is.numeric(ids))
-    values <- gsub(pattern = "'", replacement = "\u2019", values)
+    # single quotes are escaped by the SVG writer (&apos;): they must be kept
+    # as they are (JavaScript of onclick, ids sent to Shiny)
 
     if (length(values) == 1 && length(ids) > 1) {
       values <- rep(values, length(ids))

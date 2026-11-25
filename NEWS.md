@@ -57,6 +57,8 @@ containing it; they say when the session is missing.
 - `girafe(check_fonts_*)` failed when the graphic was given with `code`.
 - Interactive grobs: a single value was only set on the first element.
 - Labels given as expressions (`parse = TRUE`) lost their attributes.
+- `onclick` code and ids containing single quotes were altered (the quotes
+were replaced by ’), which broke the JavaScript of `onclick`.
 
 ## Internals
 
