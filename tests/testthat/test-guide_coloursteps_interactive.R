@@ -19,19 +19,27 @@ test_that("coloursteps bar carries the interactive attributes", {
   expect_equal(xml_attr(nodes, "title"), "my bar")
 })
 
-test_that("coloursteps bar accepts a function", {
+test_that("coloursteps bar gives the breaks to a function", {
   expect_no_warning(
     nodes <- coloursteps_keys(
-      coloursteps_plot(data_id = function(x) rep("bar", length(x)))
+      coloursteps_plot(data_id = function(x) paste(x, collapse = "-"))
     )
   )
-  expect_equal(xml_attr(nodes, "key-id"), "bar")
+  expect_equal(xml_attr(nodes, "key-id"), "10-30-50")
+})
+
+test_that("coloursteps bar warns when a function returns several values", {
+  expect_warning(
+    nodes <- coloursteps_keys(coloursteps_plot(data_id = function(x) paste("value", x))),
+    "single element"
+  )
+  expect_length(nodes, 0)
 })
 
 test_that("coloursteps bar warns when given several values", {
   expect_warning(
     nodes <- coloursteps_keys(coloursteps_plot(data_id = c("a", "b", "c", "d"))),
-    "length differs from the breaks length"
+    "single element"
   )
   expect_length(nodes, 0)
 })

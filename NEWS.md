@@ -12,13 +12,16 @@ with `display = "gradient"`, interactive attributes given as a function
 (e.g. `data_id = function(breaks) ...`) were lost with a "mismatched
 lengths" warning; the bar is a single element and now receives them. The
 guide was still reading the `raster` parameter replaced by `display` in
-'ggplot2' 4.0.0.
+'ggplot2' 4.0.0. A function now receives the breaks of the scale, as for
+the other guides, instead of `1`, and must return a single value for the
+whole bar; several values give a warning that explains it.
 
 - `guide_coloursteps_interactive()`: since 'ggplot2' 4.0.0 the steps are
 drawn as a single image, so they carry one value per interactive
 attribute, as the colour bar does. Attributes given as a function were lost
-with a "mismatched lengths" warning; several values now give an explicit
-warning.
+with a "mismatched lengths" warning; a function receives the breaks of the
+scale and must return a single value, several values give a warning that
+explains it.
 
 - `girafe_class_add()`, `girafe_class_remove()` and `girafe_class_toggle()`:
 a single id (e.g. `data_id = "121"`) also targeted the elements whose id is

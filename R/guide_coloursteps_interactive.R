@@ -97,12 +97,14 @@ GuideInteractiveColoursteps <- ggproto(
           label_breaks <- parsed$all_breaks
         }
       }
-      # the steps are drawn as a single raster grob: one value for the bar
+      # the steps are drawn as a single raster grob: a function receives
+      # the breaks but must return a single value
       params <- interactive_guide_train(
         params,
         scale,
-        breaks = 1,
-        label_breaks = label_breaks
+        breaks = parsed$breaks,
+        label_breaks = label_breaks,
+        single_element = TRUE
       )
     }
     params

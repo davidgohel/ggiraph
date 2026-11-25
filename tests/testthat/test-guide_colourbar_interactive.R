@@ -29,14 +29,22 @@ test_that("raster and gradient colourbars carry the interactive attributes", {
   )
 })
 
-test_that("raster and gradient colourbars accept a function", {
+test_that("raster and gradient colourbars give the breaks to a function", {
   for (display in c("raster", "gradient")) {
     expect_no_warning(
       nodes <- colourbar_keys(
-        colourbar_plot(display, data_id = function(x) rep("bar", length(x)))
+        colourbar_plot(display, data_id = function(x) paste(x, collapse = "-"))
       )
     )
-    expect_equal(xml_attr(nodes, "key-id"), "bar", info = display)
+    expect_equal(xml_attr(nodes, "key-id"), "0-25-50-75-100", info = display)
+  }
+})
+
+test_that("raster and gradient colourbars warn when a function returns several values", {
+  for (display in c("raster", "gradient")) {
+    p <- colourbar_plot(display, data_id = function(x) paste("value", x))
+    expect_warning(nodes <- colourbar_keys(p), "single element")
+    expect_length(nodes, 0)
   }
 })
 
@@ -45,7 +53,7 @@ test_that("raster and gradient colourbars warn when given several values", {
     p <- colourbar_plot(display, data_id = c("a", "b", "c"))
     expect_warning(
       nodes <- colourbar_keys(p),
-      "length differs from the breaks length"
+      "single element"
     )
     expect_length(nodes, 0)
   }

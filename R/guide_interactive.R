@@ -33,6 +33,9 @@ guide_interactive <- function(guide_func, ..., interactive_guide = NULL) {
 #' @param breaks the breaks for guide keys/decor
 #' @param label_breaks the breaks for the labels
 #' @param max_len the max length of each interactive parameter vector
+#' @param single_element `TRUE` when the guide keys are drawn as a single
+#' element (colour bar drawn as an image): a function still receives the
+#' breaks, but each interactive parameter must have a single value.
 #' @return the altered guide params
 #' @noRd
 interactive_guide_train <- function(
@@ -40,7 +43,8 @@ interactive_guide_train <- function(
   scale,
   breaks,
   label_breaks = breaks,
-  max_len = NULL
+  max_len = NULL,
+  single_element = FALSE
 ) {
   if (!is.null(params)) {
     key <- params$key
@@ -66,7 +70,12 @@ interactive_guide_train <- function(
             values <- as.character(scale[[a]])
           }
           # length of values should be 1 or same as breaks
-          if (length(values) > 1 && length(values) != length(breaks)) {
+          if (single_element && length(values) > 1) {
+            cli::cli_warn(c(
+              "Cannot set the guide interactive attribute {.arg {a}}: the colour bar is drawn as a single element and needs a single value, not {length(values)}.",
+              i = "A function given to the scale receives the {length(breaks)} break{?s} and must return one value for the whole bar."
+            ))
+          } else if (length(values) > 1 && length(values) != length(breaks)) {
             warning(paste0(
               "Cannot set the guide interactive attribute '",
               a,

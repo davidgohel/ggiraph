@@ -51,12 +51,22 @@ It can also be a named vector, where each name should correspond to the same bre
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.
 
-For binned guides like \code{bins} and \code{coloursteps} the breaks include the label breaks and the limits.
+The interactive parameters follow what 'ggplot2' draws: one value per
+key drawn in the legend.
+
+For the \code{bins} guide the breaks include the label breaks and the limits.
 The number of bins will be one less than the number of breaks and the interactive parameters can be
 constructed for each bin separately (look at the examples).
-For \code{colourbar} guide in raster mode, the breaks vector, is scalar 1 always, meaning the interactive
-parameters should be scalar too. For \code{colourbar} guide in non-raster mode, the bar is drawn using
-rectangles, and the breaks are the midpoints of each rectangle.
+
+The \code{colourbar} guide (with the default \code{display = "raster"} or with
+\code{display = "gradient"}) and the \code{coloursteps} guide draw the bar as a
+single element: each interactive parameter must be a single value, given
+for the whole bar (e.g. \code{data_id = "bar"}). A function still receives the
+breaks of the scale, the ones labelled in the legend, and must return a
+single value (e.g. \code{data_id = function(breaks) paste(breaks, collapse = "-")});
+several values give a warning and the parameter is not set.
+With \code{display = "rectangles"}, the \code{colourbar} guide draws one rectangle
+per colour and the breaks are the midpoints of each rectangle.
 
 The interactive parameters here, give interactivity only to the key elements of the guide.
 
