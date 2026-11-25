@@ -196,8 +196,10 @@ Rcpp::IntegerVector non_overlapping_texts(
   if (!dev) return result;
 
   // check number of elements
-  R_xlen_t nx = Rf_imax2(x.length(), y.length());
-  if (nx == 0) return result;
+  R_xlen_t x_len = x.length();
+  R_xlen_t y_len = y.length();
+  if (x_len == 0 || y_len == 0) return result;
+  R_xlen_t nx = Rf_imax2(x_len, y_len);
 
   // check label
   if (Rf_isNull(label) || !Rf_isVector(label) || LENGTH(label) == 0)
@@ -213,7 +215,7 @@ Rcpp::IntegerVector non_overlapping_texts(
   if (lineheight.length() == 0)
     lineheight = Rcpp::DoubleVector({1.2});
 
-  // store lengths
+  // store lengths, all vectors are recycled as grid does
   R_xlen_t hjust_len = hjust.length();
   R_xlen_t vjust_len = vjust.length();
   R_xlen_t rot_len = rot.length();
@@ -236,7 +238,7 @@ Rcpp::IntegerVector non_overlapping_texts(
     gc.cex = 1;
     // get rect
     Rect2D rect = textRect(
-      x[i], y[i], label,
+      x[i % x_len], y[i % y_len], label,
       hjust[i % hjust_len],
            vjust[i % vjust_len],
                 rot[i % rot_len],

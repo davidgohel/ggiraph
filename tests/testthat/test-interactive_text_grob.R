@@ -91,3 +91,22 @@ test_that("check.overlap = TRUE and expression", {
   tooltips <- xml_find_all(doc, ".//text[@info][@title]")
   expect_equal(length(tooltips), 32)
 })
+
+# check.overlap = TRUE and recycled coordinates
+test_that("check.overlap = TRUE recycles x and y as grid does", {
+  expect_no_warning(
+    doc <- dsvg_doc({
+      gr <- interactive_text_grob(
+        c("aaaa", "bbbb", "c"),
+        x = c(0.1, 0.11, 0.7),
+        y = 0.5,
+        check.overlap = TRUE,
+        data_id = c("A", "B", "C")
+      )
+      grid.draw(gr)
+    })
+  )
+  nodes <- xml_find_all(doc, ".//text")
+  expect_equal(xml_text(nodes), c("aaaa", "c"))
+  expect_equal(xml_attr(nodes, "data-id"), c("A", "C"))
+})
