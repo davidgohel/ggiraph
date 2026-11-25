@@ -13,92 +13,11 @@ StatInteractiveBoxplot <- ggproto(
     c(IPAR_DEFAULTS, rlang::set_names(IPAR_DEFAULTS, outlier_ipar))
   ),
   dropped_aes = c("x", "y", IPAR_NAMES, outlier_ipar),
-  compute_panel = function(self, data, scales, ...) {
-    if (empty(data)) {
-      return(data_frame0())
-    }
-
-    groups <- split(data, data$group)
-    stats <- lapply(groups, function(group) {
-      self$compute_group(data = group, scales = scales, ...)
-    })
-
-    # Record columns that are not constant within groups. We will drop them later.
-    non_constant_columns <- character(0)
-
-    stats <- mapply(
-      function(new, old) {
-        # In this function,
-        #
-        #   - `new` is the computed result. All the variables will be picked.
-        #   - `old` is the original data. There are 3 types of variables:
-        #     1) If the variable is already included in `new`, it's ignored
-        #        because the values of `new` will be used.
-        #     2) If the variable is not included in `new` and the value is
-        #        constant within the group, it will be picked.
-        #     3) If the variable is not included in `new` and the value is not
-        #        constant within the group, it will be dropped. We need to record
-        #        the dropped columns to drop it consistently later.
-        if (empty(new)) {
-          return(data_frame0())
-        }
-
-        # First, filter out the columns already included `new` (type 1).
-        old <- old[, !(names(old) %in% names(new)), drop = FALSE]
-
-        # Then, check whether the rest of the columns have constant values (type 2)
-        # or not (type 3).
-        non_constant <- vapply(
-          old,
-          function(x) length(unique0(x)) > 1,
-          logical(1L)
-        )
-
-        # Record the non-constant columns.
-        non_constant_columns <<- c(
-          non_constant_columns,
-          names(old)[non_constant]
-        )
-
-        vec_cbind(
-          new,
-          # Note that, while the non-constant columns should be dropped, we don't
-          # do this here because it can be filled by vec_rbind() later if either
-          # one of the group has a constant value (see #4394 for the details).
-          old[rep(1, nrow(new)), , drop = FALSE]
-        )
-      },
-      stats,
-      groups,
-      SIMPLIFY = FALSE
-    )
-
-    non_constant_columns <- unique0(non_constant_columns)
-
-    # We are going to drop columns that are not constant within groups and not
-    # carried over/recreated by the stat. This can produce unexpected results,
-    # and hence we warn about it (variables in dropped_aes are expected so
-    # ignored here).
-    dropped <- non_constant_columns[!non_constant_columns %in% self$dropped_aes]
-    if (length(dropped) > 0) {
-      # a warning, as in ggplot2 (>= 3.4.0)
-      cli::cli_warn(c(
-        "The following aesthetics were dropped during statistical transformation: {.field {dropped}}.",
-        "i" = "This can happen when ggplot fails to infer the correct grouping structure in the data.",
-        "i" = "Did you forget to specify a {.code group} aesthetic or to convert a numerical variable into a factor?"
-      ))
-    }
-
-    # Finally, combine the results and drop columns that are not constant.
-    data_new <- vec_rbind(!!!stats)
-    non_constant_columns <- setdiff(
-      non_constant_columns,
-      c(IPAR_NAMES, outlier_ipar)
-    )
-    data_new[, !names(data_new) %in% non_constant_columns, drop = FALSE]
-  },
   setup_data = function(self, data, params) {
-    outlier_colnames <- intersect(colnames(data), c(IPAR_NAMES, outlier_ipar))
+    # the outlier.* columns keep one value per outlier, in a list; the other
+    # interactive parameters are constant within a group (a list would turn
+    # factors and dates into numbers)
+    outlier_colnames <- intersect(colnames(data), outlier_ipar)
     if (length(outlier_colnames)) {
       for (name in outlier_colnames) {
         data[[name]] <- as.list(data[[name]])
@@ -106,35 +25,26 @@ StatInteractiveBoxplot <- ggproto(
     }
     self$super()$setup_data(data, params)
   },
-  compute_group = function(
-    data,
-    scales,
-    width = NULL,
-    na.rm = FALSE,
-    coef = 1.5,
-    flipped_aes = FALSE,
-    quantile.type = 7
-  ) {
+  # the parameters are those of StatBoxplot: compute_group() passes them on
+  parameters = function(self, extra = FALSE) {
+    StatBoxplot$parameters(extra = extra)
+  },
+  compute_group = function(data, scales, ..., flipped_aes = FALSE) {
     # compute boxplot data
     df <- StatBoxplot$compute_group(
       data,
       scales,
-      width = width,
-      na.rm = na.rm,
-      coef = coef,
-      flipped_aes = flipped_aes,
-      quantile.type = quantile.type
+      ...,
+      flipped_aes = flipped_aes
     )
-    # add outlier aesthetics; the outliers are values of the flipped data
-    if (length(df$outliers[[1]])) {
-      values <- flip_data(data, flipped_aes)$y
-      outlier_indices <- which(values %in% df$outliers[[1]])
-      outlier_colnames <- intersect(colnames(data), outlier_ipar)
-      if (length(outlier_colnames)) {
-        for (name in outlier_colnames) {
-          df[[name]] <- list(unlist(data[[name]][outlier_indices]))
-        }
-      }
+    # add outlier aesthetics, one value per outlier; the outliers are values
+    # of the flipped data. The columns are set for every group, even without
+    # outliers: otherwise compute_panel() of 'ggplot2' would see them as
+    # varying within groups and drop them for all groups
+    values <- flip_data(data, flipped_aes)$y
+    outlier_indices <- which(values %in% df$outliers[[1]])
+    for (name in intersect(colnames(data), outlier_ipar)) {
+      df[[name]] <- list(unlist(data[[name]][outlier_indices]))
     }
     df
   }
@@ -197,143 +107,85 @@ GeomInteractiveBoxplot <- ggproto(
     data,
     panel_params,
     coord,
-    lineend = "butt",
-    linejoin = "mitre",
-    fatten = 2,
-    outlier_gp = NULL,
+    ...,
     whisker_gp = NULL,
     staple_gp = NULL,
     median_gp = NULL,
-    box_gp = NULL,
-    notch = FALSE,
-    notchwidth = 0.5,
     staplewidth = 0,
-    varwidth = FALSE,
-    flipped_aes = FALSE,
     .ipar = IPAR_NAMES
   ) {
-    # data <- fix_linewidth(data, snake_class(self))
-    data <- flip_data(data, flipped_aes)
-    # this may occur when using geom_boxplot(stat = "identity")
-    if (nrow(data) != 1) {
-      cli::cli_abort(c(
-        "Can only draw one boxplot per group.",
-        "i" = "Did you forget {.code aes(group = ...)}?"
-      ))
-    }
-
-    common <- list(fill = fill_alpha(data$fill, data$alpha), group = data$group)
-    .ipar <- setdiff(.ipar, outlier_ipar)
-    common <- copy_interactive_attrs(data, common, ipar = .ipar)
-
-    whiskers <- data_frame0(
-      x = c(data$x, data$x),
-      xend = c(data$x, data$x),
-      y = c(data$upper, data$lower),
-      yend = c(data$ymax, data$ymin),
-      colour = rep(whisker_gp$colour %||% data$colour, 2),
-      linetype = rep(whisker_gp$linetype %||% data$linetype, 2),
-      linewidth = rep(whisker_gp$linewidth %||% data$linewidth, 2),
-      alpha = c(NA_real_, NA_real_),
-      !!!common,
-      .size = 2
-    )
-    whiskers <- flip_data(whiskers, flipped_aes)
-
-    box <- transform(
+    gr <- GeomBoxplot$draw_group(
       data,
-      y = middle,
-      ymax = upper,
-      ymin = lower,
-      ynotchlower = ifelse(notch, notchlower, NA),
-      ynotchupper = ifelse(notch, notchupper, NA),
-      notchwidth = notchwidth
+      panel_params,
+      coord,
+      ...,
+      whisker_gp = whisker_gp,
+      staple_gp = staple_gp,
+      median_gp = median_gp,
+      staplewidth = staplewidth
     )
-    box <- flip_data(box, flipped_aes)
-
-    if (!is.null(data$outliers) && length(data$outliers[[1]]) >= 1) {
-      outliers <- data_frame0(
-        y = data$outliers[[1]],
-        x = data$x[1],
-        colour = outlier_gp$colour %||% data$colour[1],
-        fill = outlier_gp$fill %||% data$fill[1],
-        shape = outlier_gp$shape %||% data$shape[1] %||% 19,
-        size = outlier_gp$size %||% data$size[1] %||% 1.5,
-        stroke = outlier_gp$stroke %||% data$stroke[1] %||% 0.5,
-        fill = NA,
-        alpha = outlier_gp$alpha %||% data$alpha[1],
-        .size = length(data$outliers[[1]])
+    box_ipar <- setdiff(.ipar, outlier_ipar)
+    # children: outliers (if any), staples (if staplewidth), whiskers, box
+    n <- length(gr$children)
+    i <- 1L
+    if (n > 0 && inherits(gr$children[[1]], "points")) {
+      gr$children[[1]] <- add_interactive_attrs(
+        gr$children[[1]],
+        boxplot_outlier_data(data),
+        ipar = box_ipar
       )
-
-      outlier_colnames <- intersect(colnames(data), outlier_ipar)
-      if (length(outlier_colnames)) {
-        for (name in outlier_colnames) {
-          unprefixed_name <- sub("outlier.", "", name)
-          outliers[[unprefixed_name]] <- data[[name]][[1]]
-        }
-      }
-      outliers <- flip_data(outliers, flipped_aes)
-
-      outliers_grob <- GeomInteractivePoint$draw_panel(
-        outliers,
-        panel_params,
-        coord,
-        .ipar = .ipar
-      )
-    } else {
-      outliers_grob <- NULL
+      i <- 2L
     }
-
+    # a group drawn without its box (outliers only)
+    if (n < i + 1L) {
+      return(gr)
+    }
     if (staplewidth != 0) {
-      staples <- data_frame0(
-        x = rep((data$xmin - data$x) * staplewidth + data$x, 2),
-        xend = rep((data$xmax - data$x) * staplewidth + data$x, 2),
-        y = c(data$ymax, data$ymin),
-        yend = c(data$ymax, data$ymin),
-        linetype = rep(staple_gp$linetype %||% data$linetype, 2),
-        linewidth = rep(staple_gp$linewidth %||% data$linewidth, 2),
-        colour = rep(staple_gp$colour %||% data$colour, 2),
-        alpha = c(NA_real_, NA_real_),
-        !!!common,
-        .size = 2
+      gr$children[[i]] <- add_interactive_attrs(
+        gr$children[[i]],
+        boxplot_line_data(data, staple_gp),
+        ipar = box_ipar,
+        by_shape = TRUE
       )
-      staples <- flip_data(staples, flipped_aes)
-      staple_grob <- GeomInteractiveSegment$draw_panel(
-        staples,
-        panel_params,
-        coord,
-        lineend = lineend,
-        .ipar = .ipar
-      )
-    } else {
-      staple_grob <- NULL
+      i <- i + 1L
     }
-
-    ggname(
-      "geom_boxplot_interactive",
-      grobTree(
-        outliers_grob,
-        staple_grob,
-        GeomInteractiveSegment$draw_panel(
-          whiskers,
-          panel_params,
-          coord,
-          lineend = lineend,
-          .ipar = .ipar
-        ),
-        GeomInteractiveCrossbar$draw_panel(
-          box,
-          fatten = fatten,
-          panel_params,
-          coord,
-          lineend = lineend,
-          linejoin = linejoin,
-          flipped_aes = flipped_aes,
-          middle_gp = median_gp,
-          box_gp = box_gp,
-          .ipar = .ipar
-        )
-      )
+    gr$children[[i]] <- add_interactive_attrs(
+      gr$children[[i]],
+      boxplot_line_data(data, whisker_gp),
+      ipar = box_ipar,
+      by_shape = TRUE
     )
+    gr$children[[i + 1L]] <- crossbar_add_interactive_attrs(
+      gr$children[[i + 1L]],
+      data,
+      middle_gp = median_gp,
+      ipar = box_ipar
+    )
+    gr
   }
 )
+
+#' Data of the outliers of a boxplot group
+#' @details
+#' The `outlier.*` interactive parameters of the group, one value per
+#' outlier (computed by `StatInteractiveBoxplot`), named without their
+#' prefix.
+#' @noRd
+boxplot_outlier_data <- function(data) {
+  cols <- intersect(names(data), outlier_ipar)
+  out <- lapply(cols, function(name) data[[name]][[1]])
+  names(out) <- sub("^outlier[.]", "", cols)
+  out
+}
+
+#' Data of the whiskers or staples of a boxplot group
+#' @details
+#' Two segments per group, with the linetype and linewidth of `gp`
+#' (`whisker_gp`, `staple_gp`), without the rows removed by `GeomSegment`.
+#' @noRd
+boxplot_line_data <- function(data, gp = NULL) {
+  lines <- vctrs::vec_rep(data, 2L)
+  lines$linetype <- gp$linetype %||% lines$linetype
+  lines$linewidth <- gp$linewidth %||% lines$linewidth
+  segment_drawn_data(lines)
+}

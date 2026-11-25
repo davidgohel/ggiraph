@@ -44,3 +44,11 @@ test_that("girafe_class_* check their arguments", {
   expect_error(girafe_class_add(session, "plot", "hl"), "At least one of")
   expect_length(session$messages, 0)
 })
+
+test_that("girafe_class_* explain a missing session", {
+  expect_error(
+    girafe_class_add("plot", "hl", data_id = "a"),
+    "must be the Shiny session"
+  )
+  expect_error(girafe_class_toggle(NULL, "plot", "hl", data_id = "a"), "Did you forget it")
+})

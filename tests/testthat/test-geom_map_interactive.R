@@ -42,3 +42,16 @@ test_that("geom_map_interactive accepts a gradient fill", {
   expect_true(all(startsWith(shapes$fill, "url(#")))
   expect_equal(shapes$id, c("a", "b"))
 })
+
+test_that("each shape of the map takes the row of its region", {
+  sq <- function(x0, y0, id, group) data.frame(long = x0 + c(0, 1, 1, 0), lat = y0 + c(0, 0, 1, 1), id = id, group = group)
+  # r1 has two shapes, r3 is not in the data, r4 is not in the map
+  map <- rbind(sq(0, 0, "r1", "r1.1"), sq(2, 0, "r1", "r1.2"), sq(0, 2, "r2", "r2.1"), sq(2, 2, "r3", "r3.1"))
+  dat <- data.frame(region = c("r2", "r1", "r4"))
+  for (coord in list(coord_cartesian(), coord_polar())) {
+    doc <- dsvg_plot(ggplot(dat, aes(map_id = region)) + coord +
+      geom_map_interactive(aes(data_id = region), map = map) +
+      expand_limits(x = c(0, 3), y = c(0, 3)))
+    expect_equal(xml_attr(xml_find_all(doc, ".//polygon[@data-id]"), "data-id"), c("r1", "r1", "r2"))
+  }
+})

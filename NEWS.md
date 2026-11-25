@@ -11,6 +11,8 @@ be hovered or selected (they used to share the id "NA").
 deprecated.
 - `set_girafe_defaults()` only changes the options it is given, as
 `girafe(options = )` does.
+- `geom_boxplot_interactive()`: an interactive parameter varying within a
+group is dropped, as 'ggplot2' does (the box took its first value).
 
 ## Issues
 
@@ -20,8 +22,13 @@ Interactive geoms now draw as their 'ggplot2' 4.0 counterparts:
 `geom_map_interactive()`: gradient and pattern fills, shapes in polar
 coordinates (also crossbar, boxplot and filled contours).
 - `geom_boxplot_interactive()`: `quantile.type`, outliers of horizontal
-boxplots.
+boxplots; factors and dates were written as numbers.
 - `geom_errorbar_interactive(orientation = "y")`: x and y were swapped.
+- `geom_errorbar_interactive()`, `geom_crossbar_interactive()`: a missing
+linetype lost all the attributes or failed.
+- `geom_path_interactive()`, `geom_step_interactive()`: arrow heads, line
+ends and `orientation` as in 'ggplot2'; the segments of lines with varying
+colour get the attributes of their line.
 - `geom_segment_interactive()`, `geom_hline_interactive()`,
 `geom_vline_interactive()`, `geom_abline_interactive()`,
 `geom_sf_interactive()`: arguments and behaviours of 'ggplot2' 4.0.
@@ -41,14 +48,17 @@ attributes.
 Other:
 
 - `girafe_class_add()` and friends: a single id also targeted the ids
-containing it.
+containing it; they say when the session is missing.
 - `girafe(check_fonts_*)` failed when the graphic was given with `code`.
 - Interactive grobs: a single value was only set on the first element.
+- Labels given as expressions (`parse = TRUE`) lost their attributes.
 
 ## Internals
 
 - Tests use 'testthat'; geom tests compare the SVG with the one of
 'ggplot2'.
+- Interactive geoms call the methods of 'ggplot2' instead of copies of
+them, so they follow its next versions. 'dplyr' is only suggested.
 
 # ggiraph 0.9.7
 

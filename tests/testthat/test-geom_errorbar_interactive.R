@@ -33,3 +33,26 @@ test_that("each errorbar carries the attributes of its row", {
   expect_equal(xml_attr(nodes, "data-id"), rep(c("a", "b"), each = 3))
   expect_equal(xml_attr(nodes, "title"), rep(c("tt a", "tt b"), each = 3))
 })
+
+test_that("an errorbar not drawn does not shift the attributes", {
+  dat <- transform(interval_data, lt = c("solid", NA, "dashed"))
+  p <- ggplot(dat, aes(trt, ymin = lower, ymax = upper, linetype = lt)) +
+    geom_errorbar_interactive(aes(data_id = trt))
+  doc <- dsvg_plot(p)
+  # 'b' has a blank linetype: ggplot2 keeps it but nothing is drawn
+  expect_equal(
+    xml_attr(xml_find_all(doc, ".//polyline[@data-id]"), "data-id"),
+    rep(c("a", "c"), each = 3)
+  )
+})
+
+test_that("errorbars keep their attributes in polar coordinates", {
+  p <- ggplot(interval_data, aes(trt, ymin = lower, ymax = upper)) +
+    geom_errorbar_interactive(aes(data_id = trt)) +
+    coord_polar()
+  doc <- dsvg_plot(p)
+  expect_equal(
+    xml_attr(xml_find_all(doc, ".//polyline[@data-id]"), "data-id"),
+    rep(c("a", "b", "c"), each = 3)
+  )
+})

@@ -18,26 +18,10 @@ GeomInteractiveVline <- ggproto(
   default_aes = add_default_interactive_aes(GeomVline),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    lineend = "butt",
-    .ipar = IPAR_NAMES
-  ) {
-    ranges <- coord$backtransform_range(panel_params)
-
-    data$x <- data$xintercept
-    data$xend <- data$xintercept
-    data$y <- ranges$y[1]
-    data$yend <- ranges$y[2]
-
-    GeomInteractiveSegment$draw_panel(
-      unique0(data),
-      panel_params,
-      coord,
-      lineend = lineend,
-      .ipar = .ipar
-    )
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    gr <- GeomVline$draw_panel(data, panel_params, coord, ...)
+    # 'ggplot2' draws the unique rows; the computed ends depend on the
+    # other columns, so the unique rows are the same before computing them
+    add_interactive_attrs(gr, segment_drawn_data(unique0(data)), ipar = .ipar, by_shape = TRUE)
   }
 )

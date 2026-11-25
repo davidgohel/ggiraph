@@ -27,80 +27,20 @@ GeomInteractivePolygon <- ggproto(
   default_aes = add_default_interactive_aes(GeomPolygon),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    rule = "evenodd",
-    lineend = "butt",
-    linejoin = "round",
-    linemitre = 10,
-    .ipar = IPAR_NAMES
-  ) {
-    n <- nrow(data)
-    if (n == 1) {
-      return(zeroGrob())
-    }
-
-    munched <- coord_munch(coord, data, panel_params, is_closed = TRUE)
-
-    if (is.null(munched$subgroup)) {
-      # Sort by group to make sure that colors, fill, etc. come in same order
-      munched <- munched[order(munched$group), ]
-
-      # For gpar(), there is one entry per polygon (not one entry per point).
-      # We'll pull the first value from each group, and assume all these values
-      # are the same within each group.
-      first_idx <- !duplicated(munched$group)
-      first_rows <- munched[first_idx, ]
-
-      gr <- ggname(
-        "geom_polygon_interactive",
-        polygonGrob(
-          munched$x,
-          munched$y,
-          default.units = "native",
-          id = munched$group,
-          gp = gpar(
-            col = first_rows$colour,
-            fill = fill_alpha(first_rows$fill, first_rows$alpha),
-            lwd = first_rows$linewidth * .pt,
-            lty = first_rows$linetype,
-            lineend = lineend,
-            linejoin = linejoin,
-            linemitre = linemitre
-          )
-        )
-      )
-      add_interactive_attrs(gr, munched, ipar = .ipar)
-    } else {
-      # Sort by group to make sure that colors, fill, etc. come in same order
-      munched <- munched[order(munched$group, munched$subgroup), ]
-      id <- match(munched$subgroup, unique0(munched$subgroup))
-
-      # For gpar(), there is one entry per polygon (not one entry per point).
-      # We'll pull the first value from each group, and assume all these values
-      # are the same within each group.
-      first_idx <- !duplicated(munched$group)
-      first_rows <- munched[first_idx, ]
-      gr <- pathGrob(
-        x = munched$x,
-        y = munched$y,
-        default.units = "native",
-        id = id,
-        pathId = munched$group,
-        rule = rule,
-        gp = gpar(
-          col = first_rows$colour,
-          fill = fill_alpha(first_rows$fill, first_rows$alpha),
-          lwd = first_rows$linewidth * .pt,
-          lty = first_rows$linetype,
-          lineend = lineend,
-          linejoin = linejoin,
-          linemitre = linemitre
-        )
-      )
-      add_interactive_attrs(gr, munched, ipar = .ipar)
-    }
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    # a polygon (or a path with holes) with one shape per group
+    gr <- GeomPolygon$draw_panel(data, panel_params, coord, ...)
+    add_interactive_attrs(gr, polygon_group_data(data), ipar = .ipar, by_shape = TRUE)
   }
 )
+
+#' One data row per group, as the shapes drawn by `GeomPolygon$draw_panel()`
+#' @details
+#' 'ggplot2' draws one shape per group, sorted by group, with the
+#' graphical parameters of the first row of each group: each shape takes
+#' the interactive parameters of that row.
+#' @noRd
+polygon_group_data <- function(data) {
+  data <- data[order(data$group), , drop = FALSE]
+  data[!duplicated(data$group), , drop = FALSE]
+}

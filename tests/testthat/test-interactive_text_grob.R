@@ -110,3 +110,32 @@ test_that("check.overlap = TRUE recycles x and y as grid does", {
   expect_equal(xml_text(nodes), c("aaaa", "c"))
   expect_equal(xml_attr(nodes, "data-id"), c("A", "C"))
 })
+
+# expressions of different complexity ----
+test_that("each expression gives its attributes to all its elements", {
+  labels <- c("a", "alpha^2 + beta[i]", "b", "frac(x, y)")
+  doc <- dsvg_doc(grid.draw(interactive_text_grob(
+    str2expression(labels),
+    x = c(0.2, 0.4, 0.6, 0.8), y = 0.5,
+    data_id = c("A", "B", "C", "D")
+  )))
+  nodes <- xml_find_all(doc, ".//*[@data-id]")
+  # alpha, 2, +, beta, i for B; x, y and the fraction bar for D
+  expect_equal(xml_attr(nodes, "data-id"), rep(c("A", "B", "C", "D"), c(1, 5, 1, 3)))
+})
+
+test_that("expressions drawn with check.overlap are those of grid, with their attributes", {
+  args <- list(
+    str2expression(c("alpha", "beta^2", "gamma[i]", "delta")),
+    x = c(0.2, 0.21, 0.6, 0.61), y = 0.5, gp = gpar(fontsize = 30),
+    check.overlap = TRUE
+  )
+  texts <- function(doc) xml_text(xml_find_all(doc, ".//text"))
+  expected <- dsvg_doc(grid.draw(do.call(textGrob, args)))
+  expect_no_warning(doc <- dsvg_doc(grid.draw(do.call(
+    interactive_text_grob, c(args, list(data_id = c("A", "B", "C", "D")))
+  ))))
+  expect_equal(texts(doc), texts(expected))
+  # grid draws alpha, beta^2 (two elements) and gamma[i] (two elements)
+  expect_equal(xml_attr(xml_find_all(doc, ".//*[@data-id]"), "data-id"), c("A", "B", "B", "C", "C"))
+})

@@ -26,69 +26,9 @@ GeomInteractiveSegment <- ggproto(
   default_aes = add_default_interactive_aes(GeomSegment),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    arrow = NULL,
-    arrow.fill = NULL,
-    lineend = "butt",
-    linejoin = "round",
-    na.rm = FALSE,
-    .ipar = IPAR_NAMES
-  ) {
-    data$xend <- data$xend %||% data$x
-    data$yend <- data$yend %||% data$y
-    # as in ggplot2, missing interactive attributes do not remove a segment
-    data <- remove_missing(
-      data,
-      na.rm = na.rm,
-      c("x", "y", "xend", "yend", "linetype", "linewidth"),
-      name = "geom_segment"
-    )
-    if (empty(data)) {
-      return(zeroGrob())
-    }
-
-    if (coord$is_linear()) {
-      coord <- coord$transform(data, panel_params)
-      arrow.fill <- arrow.fill %||% coord$colour
-
-      gr <- segmentsGrob(
-        coord$x,
-        coord$y,
-        coord$xend,
-        coord$yend,
-        default.units = "native",
-        gp = gpar(
-          col = alpha(coord$colour, coord$alpha),
-          fill = alpha(arrow.fill, coord$alpha),
-          lwd = coord$linewidth * .pt,
-          lty = coord$linetype,
-          lineend = lineend,
-          linejoin = linejoin
-        ),
-        arrow = arrow
-      )
-      gr <- add_interactive_attrs(gr, coord, ipar = .ipar)
-      return(gr)
-    }
-
-    data$group <- 1:nrow(data)
-    starts <- subset(data, select = c(-xend, -yend))
-    ends <-
-      rename(subset(data, select = c(-x, -y)), c("xend" = "x", "yend" = "y"))
-
-    pieces <- rbind(starts, ends)
-    pieces <- pieces[order(pieces$group), ]
-
-    GeomInteractivePath$draw_panel(
-      pieces,
-      panel_params,
-      coord,
-      arrow = arrow,
-      lineend = lineend,
-      .ipar = .ipar
-    )
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    # segments, or a polyline (one line per segment) in non linear coordinates
+    gr <- GeomSegment$draw_panel(data, panel_params, coord, ...)
+    add_interactive_attrs(gr, segment_drawn_data(data), ipar = .ipar, by_shape = TRUE)
   }
 )

@@ -29,78 +29,19 @@ GeomInteractivePath <- ggproto(
   default_aes = add_default_interactive_aes(GeomPath),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    arrow = NULL,
-    arrow.fill = NULL,
-    lineend = "butt",
-    linejoin = "round",
-    linemitre = 10,
-    na.rm = FALSE,
-    .ipar = IPAR_NAMES
-  ) {
-    data <- panel_path_reshape(data)
-    gr <- GeomPath$draw_panel(
-      data = data,
-      panel_params = panel_params,
-      coord = coord,
-      arrow = arrow,
-      lineend = lineend,
-      linejoin = linejoin,
-      linemitre = linemitre,
-      na.rm = na.rm
-    )
-
-    if (inherits(gr, "zeroGrob")) {
+  draw_panel = function(self, data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    gr <- GeomPath$draw_panel(data, panel_params, coord, ...)
+    if (is_zero(gr)) {
       return(gr)
     }
-
-    # must be sorted on group
-    data <- data[order(data$group), , drop = FALSE]
-    munched <- coord_munch(coord, data, panel_params)
-    rows <-
-      stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
-    munched <- munched[rows >= 2, ]
-    if (nrow(munched) < 2) {
-      return(zeroGrob())
-    }
-
-    # Work out whether we should use lines or segments
-    attr <- dapply(munched, "group", function(df) {
-      linetype <- unique0(df$linetype)
-      data_frame0(
-        solid = length(linetype) == 1 &&
-          (identical(linetype, "solid") || linetype == 1),
-        constant = nrow(unique0(df[,
-          names(df) %in% c("alpha", "colour", "linewidth", "linetype")
-        ])) ==
-          1,
-        .size = 1
-      )
-    })
-    solid_lines <- all(attr$solid)
-    constant <- all(attr$constant)
-    if (!solid_lines && !constant) {
-      cli::cli_abort(
-        "{.fn {snake_class(self)}} can't have varying {.field colour}, {.field linewidth}, and/or {.field alpha} along the line when {.field linetype} isn't solid."
-      )
-    }
-
-    # Work out grouping variables for grobs
-    n <- nrow(munched)
-    group_diff <- munched$group[-1] != munched$group[-n]
-    start <- c(TRUE, group_diff)
-    end <- c(group_diff, TRUE)
-
-    munched$fill <- arrow.fill %||% munched$colour
-
-    if (!constant) {
-      add_interactive_attrs(gr, munched, rows = rows[!end], ipar = .ipar)
+    if (inherits(gr, "segments")) {
+      # aesthetics varying along the lines: one segment between two points
+      data <- path_segment_data(data, coord, panel_params)
     } else {
-      add_interactive_attrs(gr, munched, ipar = .ipar)
+      # one line per group, cut at its missing points
+      data <- path_group_data(data)
     }
+    add_interactive_attrs(gr, data, ipar = .ipar, by_shape = TRUE)
   }
 )
 
@@ -153,19 +94,48 @@ GeomInteractiveStep <-
       data,
       panel_params,
       coord,
+      ...,
       direction = "hv",
-      .ipar = IPAR_NAMES,
-      ...
+      flipped_aes = FALSE,
+      .ipar = IPAR_NAMES
     ) {
-      ldata <- split(data, data$group)
-      ldata <- lapply(ldata, stairstep, direction = direction)
-      data <- do.call(rbind, ldata)
-      row.names(data) <- NULL
-      GeomInteractivePath$draw_panel(data, panel_params, coord, .ipar = .ipar)
+      gr <- GeomStep$draw_panel(
+        data,
+        panel_params,
+        coord,
+        ...,
+        direction = direction,
+        flipped_aes = flipped_aes
+      )
+      if (is_zero(gr)) {
+        return(gr)
+      }
+      # the steps drawn by 'ggplot2', then the rules of paths
+      data <- step_data(data, direction = direction, flipped_aes = flipped_aes)
+      if (inherits(gr, "segments")) {
+        data <- path_segment_data(data, coord, panel_params)
+      } else {
+        data <- path_group_data(data)
+      }
+      add_interactive_attrs(gr, data, ipar = .ipar, by_shape = TRUE)
     }
   )
 
-# Calculate stairsteps
+#' Data of the steps drawn by `GeomStep$draw_panel()`
+#' @details
+#' As 'ggplot2' does: the stairsteps of each group, computed on the flipped
+#' data for a horizontal orientation.
+#' @noRd
+step_data <- function(data, direction = "hv", flipped_aes = FALSE) {
+  data <- flip_data(data, flipped_aes)
+  if (isTRUE(flipped_aes)) {
+    direction <- switch(direction, hv = "vh", vh = "hv", direction)
+  }
+  data <- dapply(data, "group", stairstep, direction = direction)
+  flip_data(data, flipped_aes)
+}
+
+# Calculate stairsteps, copy of the internal function of 'ggplot2'
 stairstep <- function(data, direction = "hv") {
   direction <- match.arg(direction, c("hv", "vh", "mid"))
   data <- as.data.frame(data)[order(data$x), ]
@@ -200,4 +170,42 @@ stairstep <- function(data, direction = "hv") {
   }
 
   data_frame0(x = x, y = y, data_attr)
+}
+
+#' One data row per line drawn by `GeomPath$draw_panel()`
+#' @details
+#' 'ggplot2' draws a polyline with one line per group of at least 2 points,
+#' sorted by group; a line takes the interactive parameters of the first
+#' row of its group. The pieces and arrow heads of a line cut by missing
+#' points take the value of their line (see `polyline_element_counts()`).
+#' @noRd
+path_group_data <- function(data) {
+  data <- data[order(data$group), , drop = FALSE]
+  n <- tabulate(match(data$group, unique0(data$group)))
+  first <- !duplicated(data$group)
+  data[first, , drop = FALSE][n >= 2, , drop = FALSE]
+}
+
+#' One data row per segment drawn by `GeomPath$draw_panel()`
+#' @details
+#' When the aesthetics vary along the lines, 'ggplot2' draws a segment
+#' between two consecutive points of a line (after munching), with the
+#' parameters of its first point. 'grid' draws only the segments whose ends
+#' are finite.
+#' @noRd
+path_segment_data <- function(data, coord, panel_params) {
+  data <- data[order(data$group), , drop = FALSE]
+  munched <- coord_munch(coord, data, panel_params)
+  rows <- stats::ave(seq_len(nrow(munched)), munched$group, FUN = length)
+  munched <- munched[rows >= 2, , drop = FALSE]
+  n <- nrow(munched)
+  if (n < 2) {
+    return(munched[0, , drop = FALSE])
+  }
+  end <- c(munched$group[-1] != munched$group[-n], TRUE)
+  start <- munched[!end, , drop = FALSE]
+  stop <- munched[c(FALSE, !end[-n]), , drop = FALSE]
+  drawn <- is.finite(start$x) & is.finite(start$y) &
+    is.finite(stop$x) & is.finite(stop$y)
+  start[drawn, , drop = FALSE]
 }

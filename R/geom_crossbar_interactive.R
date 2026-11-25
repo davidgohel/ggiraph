@@ -32,120 +32,49 @@ GeomInteractiveCrossbar <- ggproto(
     data,
     panel_params,
     coord,
-    lineend = "butt",
-    linejoin = "mitre",
-    fatten = 2.5,
-    width = NULL,
-    flipped_aes = FALSE,
+    ...,
     middle_gp = NULL,
-    box_gp = NULL,
     .ipar = IPAR_NAMES
   ) {
-    data <- flip_data(data, flipped_aes)
-
-    middle <- transform(
+    gr <- GeomCrossbar$draw_panel(
       data,
-      x = xmin,
-      xend = xmax,
-      yend = y,
-      linewidth = linewidth * fatten,
-      alpha = NA
+      panel_params,
+      coord,
+      ...,
+      middle_gp = middle_gp
     )
-    middle <- data_frame0(!!!defaults(compact(middle_gp), middle))
-
-    has_notch <- !is.null(data$ynotchlower) &&
-      !is.null(data$ynotchupper) &&
-      !is.na(data$ynotchlower) &&
-      !is.na(data$ynotchupper)
-
-    if (has_notch) {
-      if (data$ynotchlower < data$ymin || data$ynotchupper > data$ymax) {
-        cli::cli_inform(c(
-          "Notch went outside hinges",
-          i = "Do you want {.code notch = FALSE}?"
-        ))
-      }
-
-      notchindent <- (1 - data$notchwidth) * (data$xmax - data$xmin) / 2
-
-      middle$x <- middle$x + notchindent
-      middle$xend <- middle$xend - notchindent
-
-      box <- data_frame0(
-        x = c(
-          data$xmin,
-          data$xmin,
-          data$xmin + notchindent,
-          data$xmin,
-          data$xmin,
-          data$xmax,
-          data$xmax,
-          data$xmax - notchindent,
-          data$xmax,
-          data$xmax,
-          data$xmin
-        ),
-        y = c(
-          data$ymax,
-          data$ynotchupper,
-          data$y,
-          data$ynotchlower,
-          data$ymin,
-          data$ymin,
-          data$ynotchlower,
-          data$y,
-          data$ynotchupper,
-          data$ymax,
-          data$ymax
-        ),
-        alpha = rep(data$alpha, 11),
-        colour = rep(data$colour, 11),
-        linewidth = rep(data$linewidth, 11),
-        linetype = rep(data$linetype, 11),
-        fill = rep(data$fill, 11),
-        group = rep(seq_len(nrow(data)), 11)
-      )
-      box <- copy_interactive_attrs(data, box, 11, ipar = .ipar)
-    } else {
-      # No notch
-      box <- data_frame0(
-        x = c(data$xmin, data$xmin, data$xmax, data$xmax, data$xmin),
-        y = c(data$ymax, data$ymin, data$ymin, data$ymax, data$ymax),
-        alpha = rep(data$alpha, 5),
-        colour = rep(data$colour, 5),
-        linewidth = rep(data$linewidth, 5),
-        linetype = rep(data$linetype, 5),
-        fill = rep(data$fill, 5),
-        group = rep(seq_len(nrow(data)), 5) # each bar forms it's own group
-      )
-      box <- copy_interactive_attrs(data, box, 5, ipar = .ipar)
-    }
-    box <- data_frame0(!!!defaults(compact(box_gp), box))
-    box <- flip_data(box, flipped_aes)
-    middle <- flip_data(middle, flipped_aes)
-
-    ggname(
-      "geom_interactive_crossbar",
-      gTree(
-        children = gList(
-          GeomInteractivePolygon$draw_panel(
-            box,
-            panel_params,
-            coord,
-            lineend = lineend,
-            linejoin = linejoin,
-            .ipar = .ipar
-          ),
-          GeomInteractiveSegment$draw_panel(
-            middle,
-            panel_params,
-            coord,
-            lineend = lineend,
-            linejoin = linejoin,
-            .ipar = .ipar
-          )
-        )
-      )
-    )
+    crossbar_add_interactive_attrs(gr, data, middle_gp = middle_gp, ipar = .ipar)
   }
 )
+
+#' Set the interactive attributes of a crossbar drawn by
+#' `GeomCrossbar$draw_panel()`
+#' @details
+#' 'ggplot2' returns a tree with the boxes (a polygon, one shape per row)
+#' and the middle lines (segments). The middle lines take the linetype and
+#' linewidth of `middle_gp` before the rows removed by `GeomSegment` are
+#' dropped. Also used by `GeomInteractiveBoxplot` for its box.
+#' @noRd
+crossbar_add_interactive_attrs <- function(
+  gr,
+  data,
+  middle_gp = NULL,
+  ipar = IPAR_NAMES
+) {
+  gr$children[[1]] <- add_interactive_attrs(
+    gr$children[[1]],
+    data,
+    ipar = ipar,
+    by_shape = TRUE
+  )
+  middle <- data
+  middle$linetype <- middle_gp$linetype %||% middle$linetype
+  middle$linewidth <- middle_gp$linewidth %||% middle$linewidth
+  gr$children[[2]] <- add_interactive_attrs(
+    gr$children[[2]],
+    segment_drawn_data(middle),
+    ipar = ipar,
+    by_shape = TRUE
+  )
+  gr
+}

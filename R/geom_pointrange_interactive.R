@@ -14,44 +14,30 @@ GeomInteractivePointrange <- ggproto(
   default_aes = add_default_interactive_aes(GeomPointrange),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    lineend = "butt",
-    fatten = 4,
-    flipped_aes = FALSE,
-    na.rm = FALSE,
-    .ipar = IPAR_NAMES
-  ) {
-    line_grob <- GeomInteractiveLinerange$draw_panel(
-      data,
-      panel_params,
-      coord,
-      lineend = lineend,
-      flipped_aes = flipped_aes,
-      na.rm = na.rm,
-      .ipar = .ipar
-    )
-
-    if (is.null(data[[flipped_names(flipped_aes)$y]])) {
-      return(line_grob)
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    gr <- GeomPointrange$draw_panel(data, panel_params, coord, ...)
+    # without y, the linerange alone
+    if (!inherits(gr, "gTree")) {
+      return(add_interactive_attrs(
+        gr,
+        segment_drawn_data(data),
+        ipar = .ipar,
+      by_shape = TRUE
+      ))
     }
-
-    ggname(
-      "geom_pointrange",
-      gTree(
-        children = gList(
-          line_grob,
-          GeomInteractivePoint$draw_panel(
-            transform(data, size = size * fatten),
-            panel_params,
-            coord,
-            na.rm = na.rm,
-            .ipar = .ipar
-          )
-        )
-      )
+    # the linerange, then the point
+    gr$children[[1]] <- add_interactive_attrs(
+      gr$children[[1]],
+      segment_drawn_data(data),
+      ipar = .ipar,
+      by_shape = TRUE
     )
+    gr$children[[2]] <- add_interactive_attrs(
+      gr$children[[2]],
+      data,
+      ipar = .ipar,
+      by_shape = TRUE
+    )
+    gr
   }
 )

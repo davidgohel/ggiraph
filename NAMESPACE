@@ -273,14 +273,6 @@ import(grid)
 importFrom(MASS,kde2d)
 importFrom(Rcpp,sourceCpp)
 importFrom(S7,prop_exists)
-importFrom(dplyr,
-  consecutive_id,
-  filter,
-  group_by,
-  lag,
-  mutate,
-  ungroup
-)
 importFrom(gdtools,
   font_set_liberation,
   sys_fonts
@@ -344,7 +336,6 @@ importFrom(vctrs,
   list_sizes,
   vec_cast,
   vec_cbind,
-  vec_interleave,
   vec_ptype2,
   vec_rbind,
   vec_slice,

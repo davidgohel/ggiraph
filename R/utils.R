@@ -114,3 +114,18 @@ is_valid_number <- function(x) {
 is_valid_logical <- function(x) {
   is_scalar_logical(x) && !is.na(x)
 }
+
+#' Rows drawn by `GeomSegment$draw_panel()`
+#' @details
+#' `GeomSegment$draw_panel()` removes the rows with a missing position,
+#' linetype or linewidth before drawing. A geom that wraps a method of
+#' 'ggplot2' drawing segments (linerange, pointrange...) gives the
+#' interactive attributes of the segments drawn, not of the removed rows.
+#' @noRd
+segment_drawn_data <- function(data) {
+  vars <- intersect(
+    c("x", "y", "xmin", "xmax", "ymin", "ymax", "xend", "yend", "linetype", "linewidth"),
+    names(data)
+  )
+  vctrs::vec_slice(data, stats::complete.cases(data[vars]))
+}

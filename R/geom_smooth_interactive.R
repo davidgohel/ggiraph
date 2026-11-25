@@ -26,43 +26,16 @@ GeomInteractiveSmooth <- ggproto(
   default_aes = add_default_interactive_aes(GeomSmooth),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_group = function(
-    data,
-    panel_params,
-    coord,
-    lineend = "butt",
-    linejoin = "round",
-    linemitre = 10,
-    se = FALSE,
-    flipped_aes = FALSE,
-    .ipar = IPAR_NAMES
-  ) {
-    ribbon <- transform(data, colour = NA)
-    path <- transform(data, alpha = NA)
-
-    ymin = flipped_names(flipped_aes)$ymin
-    ymax = flipped_names(flipped_aes)$ymax
-    has_ribbon <- se && !is.null(data[[ymax]]) && !is.null(data[[ymin]])
-
-    gList(
-      if (has_ribbon) {
-        GeomInteractiveRibbon$draw_group(
-          ribbon,
-          panel_params,
-          coord,
-          flipped_aes = flipped_aes,
-          .ipar = .ipar
-        )
-      },
-      GeomInteractiveLine$draw_panel(
-        path,
-        panel_params,
-        coord,
-        lineend = lineend,
-        linejoin = linejoin,
-        linemitre = linemitre,
-        .ipar = .ipar
-      )
-    )
+  draw_group = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    grobs <- GeomSmooth$draw_group(data, panel_params, coord, ...)
+    # the confidence band (when drawn), then the line
+    n <- length(grobs)
+    if (n > 1) {
+      grobs[[1]] <- ribbon_add_interactive_attrs(grobs[[1]], data, ipar = .ipar)
+    }
+    ia <- get_interactive_attr_names(data, ipar = .ipar)
+    aes <- lapply(data[names(data) %in% ia], unique0)
+    grobs[[n]] <- add_interactive_attrs(grobs[[n]], aes, ipar = .ipar)
+    grobs
   }
 )

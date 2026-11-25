@@ -54,6 +54,12 @@ girafe_class_toggle <- function(session, id, class, data_id = NULL, key_id = NUL
 }
 
 girafe_class_action <- function(session, id, class, action, data_id = NULL, key_id = NULL, theme_id = NULL) {
+  if (!is_shiny_session(session)) {
+    cli::cli_abort(c(
+      "{.arg session} must be the Shiny session.",
+      "i" = "Did you forget it? Call {.code girafe_class_{action}(session, id, class, ...)} in the server function."
+    ), call = NULL)
+  }
   if (!is.character(class) || length(class) != 1 || !nzchar(class)) {
     stop("`class` must be a non-empty string.", call. = FALSE)
   }
@@ -70,4 +76,10 @@ girafe_class_action <- function(session, id, class, action, data_id = NULL, key_
     type = paste0(id, "_class"),
     message = message
   )
+}
+
+# a Shiny session (or an object with the same method to send messages)
+is_shiny_session <- function(session) {
+  (is.environment(session) || is.list(session)) &&
+    is.function(session$sendCustomMessage)
 }

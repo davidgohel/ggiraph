@@ -26,36 +26,10 @@ GeomInteractiveAbline <- ggproto(
   default_aes = add_default_interactive_aes(GeomAbline),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    lineend = "butt",
-    .ipar = IPAR_NAMES
-  ) {
-    ranges <- coord$backtransform_range(panel_params)
-
-    if (coord$clip == "on" && coord$is_linear()) {
-      # Ensure the line extends well outside the panel to avoid visible line
-      # ending for thick lines
-      ranges$x <- ranges$x + c(-1, 1) * diff(ranges$x)
-      ranges$y <- ranges$y + c(-1, 1) * diff(ranges$y)
-    }
-
-    # as in ggplot2 4.0: the line is limited to where it crosses the ranges
-    # of both axes
-    x <- sweep(outer(ranges$y, data$intercept, FUN = "-"), 2, data$slope, FUN = "/")
-    data$x <- pmax(ranges$x[1], pmin(x[1, ], x[2, ]))
-    data$xend <- pmin(ranges$x[2], pmax(x[1, ], x[2, ]))
-    data$y <- data$x * data$slope + data$intercept
-    data$yend <- data$xend * data$slope + data$intercept
-
-    GeomInteractiveSegment$draw_panel(
-      unique0(data),
-      panel_params,
-      coord,
-      lineend = lineend,
-      .ipar = .ipar
-    )
+  draw_panel = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    gr <- GeomAbline$draw_panel(data, panel_params, coord, ...)
+    # 'ggplot2' draws the unique rows; the computed ends depend on the
+    # other columns, so the unique rows are the same before computing them
+    add_interactive_attrs(gr, segment_drawn_data(unique0(data)), ipar = .ipar, by_shape = TRUE)
   }
 )

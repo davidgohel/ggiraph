@@ -34,63 +34,10 @@ GeomInteractiveRect <- ggproto(
   default_aes = add_default_interactive_aes(GeomRect),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    self,
-    data,
-    panel_params,
-    coord,
-    lineend = "butt",
-    linejoin = "mitre",
-    .ipar = IPAR_NAMES
-  ) {
-    if (!coord$is_linear()) {
-      aesthetics <- setdiff(
-        names(data),
-        c("x", "y", "xmin", "xmax", "ymin", "ymax")
-      )
-
-      # as in ggplot2 4.0: one polygon of 4 corners per rectangle, closed by
-      # the polygon geom
-      index <- rep(seq_len(nrow(data)), each = 4)
-      new <- data[index, aesthetics, drop = FALSE]
-      new$x <- vec_interleave(data$xmin, data$xmax, data$xmax, data$xmin)
-      new$y <- vec_interleave(data$ymax, data$ymax, data$ymin, data$ymin)
-      new$group <- index
-
-      ggname(
-        "geom_rect_interactive",
-        GeomInteractivePolygon$draw_panel(
-          new,
-          panel_params,
-          coord,
-          lineend = lineend,
-          linejoin = linejoin,
-          .ipar = .ipar
-        )
-      )
-    } else {
-      coords <- coord$transform(data, panel_params)
-
-      gr <- ggname(
-        "geom_rect_interactive",
-        rectGrob(
-          coords$xmin,
-          coords$ymax,
-          width = coords$xmax - coords$xmin,
-          height = coords$ymax - coords$ymin,
-          default.units = "native",
-          just = c("left", "top"),
-          gp = gpar(
-            col = coords$colour,
-            fill = fill_alpha(coords$fill, coords$alpha),
-            lwd = coords$linewidth * .pt,
-            lty = coords$linetype,
-            linejoin = linejoin,
-            lineend = lineend
-          )
-        )
-      )
-      add_interactive_attrs(gr, coords, ipar = .ipar)
-    }
+  draw_panel = function(self, data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
+    # rectangles, or a polygon (one shape per rectangle) in non linear
+    # coordinates: one data row per rectangle
+    gr <- GeomRect$draw_panel(data, panel_params, coord, ...)
+    add_interactive_attrs(gr, data, ipar = .ipar, by_shape = TRUE)
   }
 )

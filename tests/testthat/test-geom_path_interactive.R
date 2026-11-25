@@ -56,3 +56,71 @@ test_that("stairstep handles every direction", {
   expect_s3_class(ggiraph:::stairstep(dat, direction = "mid"), "data.frame")
   expect_error(ggiraph:::stairstep(dat, direction = "d"))
 })
+
+# lines cut by missing values, arrows, varying aesthetics ----
+path_na_data <- data.frame(
+  x = rep(1:6, 2), y = c(1, 2, NA, 4, 5, 6, 2, 3, 4, NA, NA, 5),
+  g = rep(c("a", "b"), each = 6)
+)
+
+test_that("lines cut by missing values have the arrow heads of ggplot2", {
+  shapes <- function(p) {
+    doc <- dsvg_plot(p + theme_void())
+    nodes <- xml_find_all(doc, ".//polyline|.//polygon")
+    vapply(xml_attrs(nodes), function(v) {
+      paste(v[setdiff(names(v), c("id", "data-id"))], collapse = " ")
+    }, "")
+  }
+  base <- ggplot(path_na_data, aes(x, y, group = g))
+  arrow <- arrow(ends = "both")
+  expect_equal(
+    suppressWarnings(shapes(base + geom_path_interactive(aes(data_id = g), arrow = arrow))),
+    suppressWarnings(shapes(base + geom_path(arrow = arrow)))
+  )
+  doc <- suppressWarnings(dsvg_plot(base + geom_path_interactive(aes(data_id = g), arrow = arrow)))
+  # a: two pieces and two heads; b: one piece (the last one has one point) and one head
+  expect_equal(
+    xml_attr(xml_find_all(doc, ".//polyline[@data-id]"), "data-id"),
+    c("a", "a", "a", "a", "b", "b")
+  )
+})
+
+test_that("segments of lines with varying aesthetics take the attributes of their line", {
+  full <- stats::na.omit(path_na_data)
+  doc <- dsvg_plot(ggplot(full, aes(x, y, group = g, colour = y)) +
+    geom_path_interactive(aes(data_id = g)))
+  expect_equal(xml_attr(xml_find_all(doc, ".//line[@data-id]"), "data-id"), rep(c("a", "b"), c(4, 3)))
+  # with missing values, the segments next to them are not drawn
+  doc <- suppressWarnings(dsvg_plot(ggplot(path_na_data, aes(x, y, group = g, colour = x)) +
+    geom_path_interactive(aes(data_id = g))))
+  expect_equal(xml_attr(xml_find_all(doc, ".//line[@data-id]"), "data-id"), rep(c("a", "b"), c(3, 2)))
+})
+
+# geom_step_interactive follows geom_step ----
+test_that("steps are drawn as in ggplot2: orientation, arrows, line ends", {
+  dat <- data.frame(x = c(1, 2, 4, 5, 1, 3, 4, 6), y = c(1, 3, 2, 4, 2, 1, 3, 2), g = rep(c("a", "b"), each = 4))
+  shapes <- function(p) {
+    doc <- dsvg_plot(p + theme_void())
+    nodes <- xml_find_all(doc, ".//polyline|.//polygon")
+    vapply(xml_attrs(nodes), function(v) {
+      paste(v[setdiff(names(v), c("id", "data-id"))], collapse = " ")
+    }, "")
+  }
+  base <- ggplot(dat, aes(x, y, group = g))
+  for (args in list(
+    list(orientation = "y"),
+    list(arrow = arrow()),
+    list(lineend = "round", linejoin = "mitre", linewidth = 3)
+  )) {
+    expect_equal(
+      shapes(base + do.call(geom_step_interactive, c(list(aes(data_id = g)), args))),
+      shapes(base + do.call(geom_step, args)),
+      info = names(args)[1]
+    )
+  }
+  doc <- dsvg_plot(base + geom_step_interactive(aes(data_id = g), arrow = arrow()))
+  expect_equal(
+    xml_attr(xml_find_all(doc, ".//polyline[@data-id]"), "data-id"),
+    c("a", "a", "b", "b")
+  )
+})

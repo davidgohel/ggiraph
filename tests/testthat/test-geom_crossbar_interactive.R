@@ -49,3 +49,26 @@ test_that("middle and box graphical parameters keep the attributes", {
   expect_equal(unique(nodes$stroke[nodes$tag == "line"]), "#FF0000")
   expect_equal(unique(nodes$stroke[nodes$tag == "polygon"]), "#0000FF")
 })
+
+test_that("boxes and middle lines keep their attributes in polar coordinates", {
+  p <- ggplot(interval_data, aes(trt, resp, ymin = lower, ymax = upper)) +
+    geom_crossbar_interactive(aes(data_id = trt)) +
+    coord_polar()
+  doc <- dsvg_plot(p)
+  expect_equal(xml_attr(xml_find_all(doc, ".//polygon[@data-id]"), "data-id"), c("a", "b", "c"))
+  expect_equal(xml_attr(xml_find_all(doc, ".//polyline[@data-id]"), "data-id"), c("a", "b", "c"))
+})
+
+test_that("a missing linetype draws as ggplot2 and does not shift the attributes", {
+  dat <- transform(interval_data, lt = c("solid", NA, "dashed"))
+  base <- ggplot(dat, aes(trt, resp, ymin = lower, ymax = upper, linetype = lt))
+  # the middle line of 'b' is removed by ggplot2, its box is drawn
+  doc <- suppressWarnings(dsvg_plot(base + geom_crossbar_interactive(aes(data_id = trt))))
+  expect_equal(xml_attr(xml_find_all(doc, ".//polygon[@data-id]"), "data-id"), c("a", "b", "c"))
+  expect_equal(xml_attr(xml_find_all(doc, ".//line[@data-id]"), "data-id"), c("a", "c"))
+  # with a middle linetype, the middle line of 'b' is drawn
+  doc <- suppressWarnings(dsvg_plot(base + geom_crossbar_interactive(
+    aes(data_id = trt), middle.linetype = "solid"
+  )))
+  expect_equal(xml_attr(xml_find_all(doc, ".//line[@data-id]"), "data-id"), c("a", "b", "c"))
+})

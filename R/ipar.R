@@ -231,7 +231,8 @@ add_interactive_attrs <- function(
   cl = NULL,
   overwrite = TRUE,
   data_attr = "data-id",
-  ipar = IPAR_NAMES
+  ipar = IPAR_NAMES,
+  by_shape = FALSE
 ) {
   # check for presence of interactive parameters
   anames <- Filter(
@@ -284,6 +285,14 @@ add_interactive_attrs <- function(
     }
     return(gr)
   } else {
+    # a polyline or a polygon drawing one line or shape per data row (e.g.
+    # segments drawn in non linear coordinates, boxes of crossbars) expects
+    # one value per point: each point takes the row of its line or shape
+    # (opt-in: extensions such as 'ggstar' call this function and repeat the
+    # values themselves; the default keeps the behaviour of ggiraph 0.9.7)
+    if (by_shape && is.null(rows)) {
+      data <- point_data_by_id(gr, data)
+    }
     do_add_interactive_attrs(
       gr = gr,
       data = data,
@@ -294,6 +303,34 @@ add_interactive_attrs <- function(
       ipar = anames
     )
   }
+}
+
+#' Data of a polyline, polygon or path drawing one line or shape per data
+#' row, one row per point
+#' @details
+#' Interactive polylines, polygons and paths take the value of the first
+#' point of each line or shape (`pathId` for paths with holes). When 'ggplot2' draws one line or shape per data row
+#' (segments in non linear coordinates, boxes of crossbars), the data are
+#' repeated for each point of its line or shape.
+#' @noRd
+point_data_by_id <- function(gr, data) {
+  if (!inherits(gr, c("polyline", "polygon", "pathgrob")) || !is.data.frame(data)) {
+    return(data)
+  }
+  # a path with holes: one shape per pathId
+  id <- if (inherits(gr, "pathgrob")) gr$pathId %||% gr$id else gr$id
+  if (is.null(id) && !is.null(gr$id.lengths)) {
+    id <- rep(seq_along(gr$id.lengths), gr$id.lengths)
+  }
+  if (is.null(id)) {
+    return(data)
+  }
+  lines <- unique(id)
+  n <- nrow(data)
+  if (n <= 1 || n != length(lines) || n == length(id)) {
+    return(data)
+  }
+  vctrs::vec_slice(data, match(id, lines))
 }
 
 #' Delegate for add_interactive_attrs

@@ -49,3 +49,16 @@ test_that("segments in non linear coordinates carry the attributes", {
   nodes <- segment_nodes(p, "//polyline[@data-id]")
   expect_equal(xml_attr(nodes, "data-id"), c("a", "b", "c"))
 })
+
+test_that("segments and their arrow heads keep their attributes in polar coordinates", {
+  sd <- data.frame(x = c(1, 2, 3), y = c(1, 3, 2), xend = c(2, 3, 4), yend = c(2, 1, 3))
+  p <- ggplot(sd, aes(x, y, xend = xend, yend = yend)) +
+    geom_segment_interactive(aes(data_id = c("a", "b", "c")), arrow = arrow(ends = "both")) +
+    coord_polar()
+  doc <- dsvg_plot(p)
+  # one line and two arrow heads per segment
+  expect_equal(
+    xml_attr(xml_find_all(doc, ".//polyline[@data-id]"), "data-id"),
+    rep(c("a", "b", "c"), each = 3)
+  )
+})

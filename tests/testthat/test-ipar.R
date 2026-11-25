@@ -205,3 +205,23 @@ test_that("interactive_attr_toxml", {
   expect_null(ggiraph:::interactive_attr_toxml(interactive_points_grob(tooltip = "tooltip")))
   expect_null(ggiraph:::interactive_attr_toxml(interactive_points_grob(), ids = "1"))
 })
+
+# polylines drawing one line per data row ----
+test_that("by_shape: a polyline drawing one line per data row gives each point its row", {
+  gr <- grid::polylineGrob(x = 1:6, y = 1:6, id = rep(1:3, each = 2))
+  data <- data.frame(data_id = c("a", "b", "c"))
+  gr <- ggiraph:::add_interactive_attrs(gr, data, by_shape = TRUE)
+  expect_equal(ggiraph:::get_interactive_data(gr)$data_id, rep(c("a", "b", "c"), each = 2))
+  # one row per point: unchanged
+  gr <- grid::polylineGrob(x = 1:6, y = 1:6, id = rep(1:3, each = 2))
+  data <- data.frame(data_id = letters[1:6])
+  gr <- ggiraph:::add_interactive_attrs(gr, data, by_shape = TRUE)
+  expect_equal(ggiraph:::get_interactive_data(gr)$data_id, letters[1:6])
+})
+
+test_that("without by_shape, the values are kept as given (used by extensions)", {
+  # e.g. 'ggstar' gives one row per star and repeats the values itself
+  gr <- grid::polygonGrob(x = 1:6, y = 1:6, id.lengths = c(3, 3))
+  gr <- ggiraph:::add_interactive_attrs(gr, data.frame(data_id = c("a", "b")))
+  expect_equal(ggiraph:::get_interactive_data(gr)$data_id, c("a", "b"))
+})

@@ -31,41 +31,8 @@ GeomInteractiveRibbon <- ggproto(
     ...,
     .ipar = IPAR_NAMES
   ) {
-    ia <- get_interactive_attr_names(data, ipar = .ipar)
-    aes <- lapply(
-      data[names(data) %in% ia],
-      unique0
-    )
-
     grtree <- GeomRibbon$draw_group(data, ...)
-
-    # with `outline.type = "full"`, ggplot2 returns the polygon alone
-    if (inherits(grtree, "polygon")) {
-      return(add_interactive_attrs(grtree, aes, ipar = .ipar))
-    }
-
-    polygon_child_index <- which(grepl("polygon", names(grtree$children)))[1]
-    if (length(polygon_child_index) == 1L && is.finite(polygon_child_index)) {
-      grtree$children[[polygon_child_index]] <-
-        add_interactive_attrs(
-          grtree$children[[polygon_child_index]],
-          aes,
-          ipar = .ipar
-        )
-    }
-
-    polyline_child_index <- which(grepl("polyline", names(grtree$children)))[1]
-    if (length(polyline_child_index) == 1L && is.finite(polyline_child_index)) {
-      grtree$children[[polyline_child_index]] <-
-        add_interactive_attrs(
-          grtree$children[[polyline_child_index]],
-          aes,
-          ipar = .ipar
-        )
-      grtree$children[[polyline_child_index]]$.interactive_hooks <- c("fill_na")
-    }
-
-    grtree
+    ribbon_add_interactive_attrs(grtree, data, ipar = .ipar)
   }
 )
 
@@ -89,3 +56,45 @@ GeomInteractiveArea <- ggproto(
     GeomInteractiveRibbon$draw_group(..., .ipar = .ipar)
   }
 )
+
+#' Set the interactive attributes of a ribbon drawn by `GeomRibbon$draw_group()`
+#' @details
+#' A ribbon is drawn for a group: its area and its outline take the values
+#' of the group. 'ggplot2' returns a tree with the area (a polygon) and the
+#' outline (polylines), or the polygon alone with `outline.type = "full"`.
+#' Also used by `GeomInteractiveSmooth` for its confidence band.
+#' @param grtree the grob returned by `GeomRibbon$draw_group()`
+#' @param data the data of the group
+#' @noRd
+ribbon_add_interactive_attrs <- function(grtree, data, ipar = IPAR_NAMES) {
+  ia <- get_interactive_attr_names(data, ipar = ipar)
+  aes <- lapply(data[names(data) %in% ia], unique0)
+
+  # with `outline.type = "full"`, ggplot2 returns the polygon alone
+  if (inherits(grtree, "polygon")) {
+    return(add_interactive_attrs(grtree, aes, ipar = ipar))
+  }
+
+  polygon_child_index <- which(grepl("polygon", names(grtree$children)))[1]
+  if (length(polygon_child_index) == 1L && is.finite(polygon_child_index)) {
+    grtree$children[[polygon_child_index]] <-
+      add_interactive_attrs(
+        grtree$children[[polygon_child_index]],
+        aes,
+        ipar = ipar
+      )
+  }
+
+  polyline_child_index <- which(grepl("polyline", names(grtree$children)))[1]
+  if (length(polyline_child_index) == 1L && is.finite(polyline_child_index)) {
+    grtree$children[[polyline_child_index]] <-
+      add_interactive_attrs(
+        grtree$children[[polyline_child_index]],
+        aes,
+        ipar = ipar
+      )
+    grtree$children[[polyline_child_index]]$.interactive_hooks <- c("fill_na")
+  }
+
+  grtree
+}

@@ -26,54 +26,23 @@ GeomInteractiveMap <- ggproto(
   default_aes = add_default_interactive_aes(GeomMap),
   parameters = interactive_geom_parameters,
   draw_key = interactive_geom_draw_key,
-  draw_panel = function(
-    data,
-    panel_params,
-    coord,
-    lineend = "butt",
-    linejoin = "round",
-    linemitre = 10,
-    map,
-    .ipar = IPAR_NAMES
-  ) {
-    # Only use matching data and map ids
-    common <- intersect(data$map_id, map$id)
-    data <- data[data$map_id %in% common, , drop = FALSE]
-    map <- map[map$id %in% common, , drop = FALSE]
-
-    # Munch, then set up id variable for polygonGrob -
-    # must be sequential integers
-    coords <- coord_munch(coord, map, panel_params, is_closed = TRUE)
-    coords$group <- coords$group %||% coords$id
-    grob_id <- match(coords$group, unique0(coords$group))
-
-    # Align data with map
-    data_rows <- match(coords$id[!duplicated(grob_id)], data$map_id)
-    data <- data[data_rows, , drop = FALSE]
-
-    gr <- polygonGrob(
-      coords$x,
-      coords$y,
-      default.units = "native",
-      id = grob_id,
-      gp = gpar(
-        col = data$colour,
-        fill = fill_alpha(data$fill, data$alpha),
-        lwd = data$linewidth * .pt,
-        lineend = lineend,
-        linejoin = linejoin,
-        linemitre = linemitre
-      )
-    )
-
-    run_l <- rle(grob_id)
-    ip <- copy_interactive_attrs(
-      data,
-      list(),
-      useList = TRUE,
-      run_l$lengths,
-      ipar = .ipar
-    )
-    add_interactive_attrs(gr, ip, ipar = .ipar)
+  draw_panel = function(data, panel_params, coord, ..., map, .ipar = IPAR_NAMES) {
+    gr <- GeomMap$draw_panel(data, panel_params, coord, ..., map = map)
+    add_interactive_attrs(gr, map_group_data(data, map), ipar = .ipar, by_shape = TRUE)
   }
 )
+
+#' One data row per shape drawn by `GeomMap$draw_panel()`
+#' @details
+#' 'ggplot2' keeps the regions found in both the data and the map, draws one
+#' shape per group of the map (a region can have several), in the order of
+#' the map, and gives each shape the data row of its region (`map_id`).
+#' @noRd
+map_group_data <- function(data, map) {
+  common <- intersect(data$map_id, map$id)
+  data <- data[data$map_id %in% common, , drop = FALSE]
+  map <- map[map$id %in% common, , drop = FALSE]
+  group <- map$group %||% map$id
+  first <- !duplicated(match(group, unique0(group)))
+  data[match(map$id[first], data$map_id), , drop = FALSE]
+}

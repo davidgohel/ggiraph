@@ -48,3 +48,13 @@ test_that("geom_polygon_interactive draws polygons with holes as geom_polygon", 
     expect_equal(shapes$id, c("a", "b"))
   }
 })
+
+test_that("polygons with holes keep the attributes of their group", {
+  sq <- function(x0, y0, s, g, sub) data.frame(x = x0 + c(0, s, s, 0), y = y0 + c(0, 0, s, s), g = g, sub = sub)
+  holes <- rbind(sq(0, 0, 4, "A", 1), sq(1, 1, 2, "A", 2), sq(5, 0, 2, "B", 1))
+  for (coord in list(coord_cartesian(), coord_polar())) {
+    doc <- dsvg_plot(ggplot(holes, aes(x, y, group = g, subgroup = sub)) + coord +
+      geom_polygon_interactive(aes(data_id = g)))
+    expect_equal(xml_attr(xml_find_all(doc, ".//path[@data-id]"), "data-id"), c("A", "B"))
+  }
+})

@@ -42,3 +42,16 @@ test_that("ribbons and lines are drawn as in ggplot2, with their attributes", {
     }
   }
 })
+
+test_that("each group keeps its attributes, with or without band, in polar coordinates", {
+  mt <- transform(mtcars, cyl = factor(cyl))
+  base <- ggplot(mt, aes(wt, mpg, colour = cyl))
+  for (se in c(TRUE, FALSE)) {
+    doc <- dsvg_plot(base + coord_polar() + geom_smooth_interactive(
+      aes(data_id = cyl), method = "lm", formula = y ~ x, se = se
+    ))
+    lines <- xml_find_all(doc, ".//polyline[@data-id]")
+    expect_equal(unique(xml_attr(lines, "data-id")), c("4", "6", "8"), info = se)
+    expect_length(xml_find_all(doc, ".//polygon[@data-id]"), if (se) 3 else 0)
+  }
+})

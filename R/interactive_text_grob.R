@@ -16,6 +16,12 @@ interactive_text_grob <- function(...) {
 
 #' @export
 drawDetails.interactive_text_grob <- function(x, recording) {
+  # an expression (plotmath) gives a number of elements that depends on its
+  # content: the expressions are drawn one at a time
+  if (is.expression(x$label) && length(x$label) > 1) {
+    draw_expressions_one_by_one(x)
+    return(invisible())
+  }
   dsvg_tracer_on()
   NextMethod()
   ids <- dsvg_tracer_off()
@@ -26,6 +32,45 @@ drawDetails.interactive_text_grob <- function(x, recording) {
   }
   interactive_attr_toxml(x = x, ids = ids, rows = rows)
   invisible()
+}
+
+#' Draw the expressions of an interactive text grob one at a time
+#' @details
+#' 'plotmath' draws an expression with several elements (pieces of text,
+#' lines), their number depends on the expression. Each expression is drawn
+#' alone, as 'grid' would draw it (same position, justification, rotation
+#' and graphical parameters), and its elements take its interactive
+#' parameters. With `check.overlap`, only the expressions drawn by 'grid'
+#' are drawn.
+#' @noRd
+draw_expressions_one_by_one <- function(x) {
+  n <- max(length(x$x), length(x$y))
+  rows <- seq_len(n)
+  if (x$check.overlap && n > 1) {
+    rows <- get_non_overlapping_rows(x) %||% rows
+  }
+  pick <- function(v, i) if (length(v) > 1) v[(i - 1L) %% length(v) + 1L] else v
+  gp <- unclass(x$gp)
+  ids <- list()
+  for (i in rows) {
+    gr <- grid::textGrob(
+      label = x$label[(i - 1L) %% length(x$label) + 1L],
+      x = x$x[(i - 1L) %% length(x$x) + 1L],
+      y = x$y[(i - 1L) %% length(x$y) + 1L],
+      hjust = pick(grid::resolveHJust(x$just, x$hjust), i),
+      vjust = pick(grid::resolveVJust(x$just, x$vjust), i),
+      rot = pick(x$rot, i),
+      gp = do.call(grid::gpar, lapply(gp, pick, i = i))
+    )
+    dsvg_tracer_on()
+    grid::grid.draw(gr)
+    ids[[length(ids) + 1L]] <- dsvg_tracer_off()
+  }
+  interactive_attr_toxml(
+    x = x,
+    ids = unlist(ids),
+    rows = rep(rows, lengths(ids))
+  )
 }
 
 get_non_overlapping_rows <- function(gr) {
