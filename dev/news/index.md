@@ -1,5 +1,157 @@
 # Changelog
 
+## ggiraph 0.9.8
+
+### Issues
+
+- `girafe(check_fonts_registered = TRUE)` and
+  `girafe(check_fonts_dependencies = TRUE)` failed with an error when
+  the graphic was given with `code` instead of `ggobj`; they now warn
+  that fonts can not be checked without a ggplot.
+
+- [`guide_colourbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_colourbar_interactive.md):
+  with the default `display = "raster"` or with `display = "gradient"`,
+  interactive attributes given as a function
+  (e.g. `data_id = function(breaks) ...`) were lost with a “mismatched
+  lengths” warning; the bar is a single element and now receives them.
+  The guide was still reading the `raster` parameter replaced by
+  `display` in ‘ggplot2’ 4.0.0.
+
+- [`guide_coloursteps_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_coloursteps_interactive.md):
+  since ‘ggplot2’ 4.0.0 the steps are drawn as a single image, so they
+  carry one value per interactive attribute, as the colour bar does.
+  Attributes given as a function were lost with a “mismatched lengths”
+  warning; several values now give an explicit warning.
+
+- [`girafe_class_add()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md),
+  [`girafe_class_remove()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
+  and
+  [`girafe_class_toggle()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md):
+  a single id (e.g. `data_id = "121"`) also targeted the elements whose
+  id is a substring of it (“1”, “12”, “21”…). Shiny sends a vector of
+  length one as a string and the JavaScript handler searched it with
+  `includes()`.
+
+- [`geom_violin_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_violin_interactive.md):
+  the quantile lines drawn with `quantile.linetype` had no interactive
+  attributes, so hovering a line interrupted the tooltip and the hover
+  effect of its violin. They now carry the attributes of their violin.
+
+- [`geom_segment_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_segment_interactive.md)
+  follows
+  [`geom_segment()`](https://ggplot2.tidyverse.org/reference/geom_segment.html)
+  of ‘ggplot2’ 4.0: a missing `xend` or `yend` is the start coordinate
+  (it failed with an error), and a segment whose `tooltip`, `data_id` or
+  `onclick` is missing is drawn instead of being removed with a warning.
+
+- [`interactive_path_grob()`](https://davidgohel.github.io/ggiraph/dev/reference/interactive_path_grob.md),
+  [`interactive_polygon_grob()`](https://davidgohel.github.io/ggiraph/dev/reference/interactive_polygon_grob.md),
+  [`interactive_polyline_grob()`](https://davidgohel.github.io/ggiraph/dev/reference/interactive_polyline_grob.md),
+  [`interactive_lines_grob()`](https://davidgohel.github.io/ggiraph/dev/reference/interactive_polyline_grob.md)
+  and
+  [`interactive_text_grob()`](https://davidgohel.github.io/ggiraph/dev/reference/interactive_text_grob.md)
+  (with `check.overlap`): an interactive parameter given as a single
+  value was only set on the first element drawn.
+
+- `geom_errorbar_interactive(orientation = "y")` and
+  [`geom_errorbarh_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_errorbarh_interactive.md)
+  drew the horizontal errorbars with x and y swapped: the data were not
+  flipped back after building the lines.
+
+- [`geom_map_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_map_interactive.md),
+  [`geom_polygon_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_polygon_interactive.md)
+  and
+  [`geom_rect_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_rect_interactive.md)
+  follow their ‘ggplot2’ 4.0 counterparts: a gradient or pattern fill
+  (e.g. `fill = linearGradient(...)`) failed with “Unknown colour name”,
+  and in non linear coordinates
+  (e.g. [`coord_polar()`](https://ggplot2.tidyverse.org/reference/coord_radial.html))
+  the shapes were not munched as closed polygons, so they differed from
+  ‘ggplot2’. This also applies to the geoms drawing their boxes or areas
+  with `GeomInteractivePolygon` (crossbar, boxplot, filled contours).
+
+- [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md)
+  follows
+  [`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)
+  of ‘ggplot2’ 4.0: the `quantile.type` argument was ignored; the
+  outliers of horizontal boxplots lost their `outlier.*` interactive
+  attributes; and an aesthetic varying within a group made the stat
+  fail, so the boxplots were not drawn, where ‘ggplot2’ drops the
+  aesthetic with a warning.
+
+- [`geom_hline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md)
+  and
+  [`geom_vline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md)
+  accept the `lineend` argument of ‘ggplot2’ 4.0 (it failed with “unused
+  argument”), and
+  [`geom_abline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md)
+  limits the line to the panel as
+  [`geom_abline()`](https://ggplot2.tidyverse.org/reference/geom_abline.html)
+  does: with `clip = "off"` the line went beyond the panel, and in polar
+  coordinates it differed from ‘ggplot2’.
+
+- [`geom_sf_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_sf_interactive.md)
+  accepts the `arrow` and `arrow.fill` arguments of ‘ggplot2’ 4.0 (they
+  failed with “unused argument”), and draws geometry collections next to
+  other geometries (it failed with “only ‘grobs’ allowed in gList”).
+
+- [`geom_ribbon_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_ribbon_interactive.md),
+  [`geom_area_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_ribbon_interactive.md)
+  and
+  [`geom_density_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_density_interactive.md)
+  with `outline.type = "full"` drew their areas without interactive
+  attributes: ‘ggplot2’ then returns the polygon alone, not in a tree of
+  grobs.
+
+- [`guide_bins_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_bins_interactive.md)
+  (the guide of `scale_*_binned_interactive()`) failed with “`breaks`
+  and `labels` have different lengths” when the labels were given as a
+  vector (e.g. `labels = c("low", "mid", "high")`).
+
+### Changes
+
+- [`geom_errorbarh_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_errorbarh_interactive.md)
+  is deprecated, as
+  [`ggplot2::geom_errorbarh()`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+  since ‘ggplot2’ 4.0.0: use
+  `geom_errorbar_interactive(orientation = "y")`.
+  `GeomInteractiveErrorbarh` is now a `GeomInteractiveErrorbar` without
+  code of its own.
+
+- A missing interactive value (e.g. a `tooltip` or a `data_id` that is
+  `NA`) no longer writes the text “NA” in the SVG: the element has no
+  attribute. It has no tooltip, and with a missing `data_id` it can no
+  longer be hovered or selected; before, all the elements with a missing
+  `data_id` shared the id “NA”.
+
+- The `fonts` argument of
+  [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
+  is deprecated: it never had any effect. Fonts are chosen with the
+  `font_set` argument of
+  [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md).
+  [`girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_defaults.md)
+  no longer returns a `fonts` element.
+
+- [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
+  merges options as the `options` argument of
+  [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
+  does: only the arguments given to the `opts_*()` functions replace the
+  current defaults. A second call such as
+  `set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))`
+  now keeps the toolbar settings of a previous call instead of resetting
+  them.
+
+### Internals
+
+- Unit tests are now run with ‘testthat’ (edition 3) instead of
+  ‘tinytest’. Each test has a name, so failures are easier to locate,
+  and tests no longer share their variables.
+
+- A layer created with `extra_interactive_params` no longer adds the
+  extra aesthetics to the shared interactive geom
+  (e.g. `GeomInteractivePoint`) for the rest of the session; they are
+  set in a child geom of the layer.
+
 ## ggiraph 0.9.7
 
 CRAN release: 2026-11-19

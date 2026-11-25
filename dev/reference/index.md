@@ -83,8 +83,6 @@
   : Create interactive smoothed density estimates
 - [`geom_dotplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_dotplot_interactive.md)
   : Create interactive dot plots
-- [`geom_errorbarh_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_errorbarh_interactive.md)
-  : Create interactive horizontal error bars
 - [`geom_hex_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_hex_interactive.md)
   : Create interactive hexagonal heatmaps
 - [`geom_freqpoly_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_histogram_interactive.md)

@@ -13,7 +13,7 @@ girafe_defaults(name = NULL)
 
 - name:
 
-  optional, option's name to return, one of 'fonts', 'opts_sizing',
+  optional, option's name to return, one of 'opts_sizing',
   'opts_tooltip', 'opts_hover', 'opts_hover_key', 'opts_hover_inv',
   'opts_hover_theme', 'opts_selection', 'opts_selection_inv',
   'opts_selection_key', 'opts_selection_theme', 'opts_zoom',
@@ -41,20 +41,6 @@ Other girafe animation options:
 
 ``` r
 girafe_defaults()
-#> $fonts
-#> $fonts$sans
-#> [1] "Liberation Sans"
-#> 
-#> $fonts$serif
-#> [1] "Liberation Serif"
-#> 
-#> $fonts$mono
-#> [1] "Liberation Mono"
-#> 
-#> $fonts$symbol
-#> [1] "Liberation Sans"
-#> 
-#> 
 #> $opts_sizing
 #> $rescale
 #> [1] TRUE

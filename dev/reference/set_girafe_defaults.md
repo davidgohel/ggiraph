@@ -7,6 +7,15 @@ are automatically applied to every girafe you produce. Use
 [`init_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/init_girafe_defaults.md)
 to re-init all values with the package defaults.
 
+Only the arguments given to the `opts_*()` functions replace the current
+defaults, as with the `options` argument of
+[`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md):
+after
+`set_girafe_defaults(opts_toolbar = opts_toolbar(pngname = "plot"))`, a
+call to
+`set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))`
+keeps `pngname = "plot"`.
+
 ## Usage
 
 ``` r
@@ -31,9 +40,9 @@ set_girafe_defaults(
 
 - fonts:
 
-  default values for `fonts`, see argument `fonts` of
-  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
-  function.
+  deprecated, it never had any effect: use the `font_set` argument of
+  [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
+  to choose the fonts.
 
 - opts_sizing:
 
@@ -130,6 +139,10 @@ set_girafe_defaults(
   used in argument `options` of
   [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
   function.
+
+## Value
+
+the previous defaults, invisibly.
 
 ## See also
 

@@ -35,11 +35,11 @@ The interactive parameters can be supplied with two ways:
 ## Examples
 
 ``` r
-# add interactive repulsive texts to a ggplot -------
+# add interactive quasirandom points to a ggplot -------
 library(ggplot2)
 library(ggiraph)
 
-# geom_text_repel_interactive
+# geom_quasirandom_interactive
 if (
   requireNamespace("ggbeeswarm", quietly = TRUE) &&
     requireNamespace("dplyr", quietly = TRUE)
