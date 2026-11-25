@@ -23,7 +23,7 @@ test_that("special characters are escaped", {
 # utf-8 characters are preserved ----
 test_that("utf-8 characters are preserved", {
   # skip in windows because of xml2 buglet
-  if (ggiraph:::get_os() != "windows") {
+  if (.Platform$OS.type != "windows") {
     doc <- dsvg_doc({
       plot.new()
       text(0.5, 0.5, "\u00b5")

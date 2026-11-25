@@ -45,13 +45,13 @@ labeller_interactive <- function(.mapping = NULL, ...) {
     evaled <- compact(evaled)
     n <- nrow(data)
     check_aesthetics(evaled, n)
-    new_data_frame(evaled)
+    data_frame0(!!!evaled)
   }
 
   # labeller function
   fun <- function(data) {
     if (!is.data.frame(data)) {
-      data <- new_data_frame(data)
+      data <- data_frame0(!!!data)
     }
     # call default labeller to get the labels
     labels <- lbl_fun(data)

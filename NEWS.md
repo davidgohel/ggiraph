@@ -134,7 +134,9 @@ longer share their variables.
 aesthetics to the shared interactive geom (e.g. `GeomInteractivePoint`)
 for the rest of the session; they are set in a child geom of the layer.
 
-- The copy of `modifyList()` is removed, `utils::modifyList()` is used.
+- The copy of `modifyList()` is removed, `utils::modifyList()` is used;
+`new_data_frame()` is replaced by `data_frame0()`, as in 'ggplot2';
+`get_os()`, no longer used, is removed.
 
 # ggiraph 0.9.7
 

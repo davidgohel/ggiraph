@@ -29,7 +29,7 @@ GeomInteractiveHex <- ggproto(
   draw_group = function(data, panel_params, coord, ..., .ipar = IPAR_NAMES) {
     zz <- GeomHex$draw_group(data, panel_params, coord, ...)
     coords <- coord$transform(data, panel_params)
-    tmp <- new_data_frame(n = length(zz$x))
+    tmp <- data_frame0(.size = length(zz$x))
     tmp <- copy_interactive_attrs(coords, tmp, each = 6, ipar = .ipar)
     add_interactive_attrs(zz, tmp, ipar = .ipar)
   }
