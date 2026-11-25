@@ -110,3 +110,44 @@ test_that("as_interactive_element_text", {
   expect_s3_class(ggiraph:::as_interactive_element_text("foo"), "interactive_element_text")
   expect_s3_class(ggiraph:::as_interactive_element_text(element_text_interactive()), "interactive_element_text")
 })
+
+# merging interactive elements (theme() + theme()) ----
+merged_attrs <- function(theme, name) {
+  ggiraph:::compact(ggiraph:::get_interactive_data(theme[[name]]))
+}
+
+test_that("an interactive element keeps the attributes of the one it replaces", {
+  th <- theme(axis.text.x = element_text_interactive(data_id = "a", tooltip = "t")) +
+    theme(axis.text.x = element_text_interactive(colour = "red"))
+  expect_equal(th$axis.text.x@colour, "red")
+  expect_equal(merged_attrs(th, "axis.text.x"), list(data_id = "a", tooltip = "t"))
+
+  th <- theme(panel.background = element_rect_interactive(data_id = "a")) +
+    theme(panel.background = element_rect_interactive(fill = "red"))
+  expect_equal(th$panel.background@fill, "red")
+  expect_equal(merged_attrs(th, "panel.background"), list(data_id = "a"))
+})
+
+test_that("the attributes of the new interactive element win", {
+  th <- theme(axis.text.x = element_text_interactive(data_id = "a", tooltip = "t")) +
+    theme(axis.text.x = element_text_interactive(data_id = "b"))
+  expect_equal(merged_attrs(th, "axis.text.x"), list(data_id = "b", tooltip = "t"))
+})
+
+test_that("an interactive element replacing a plain one keeps its attributes", {
+  th <- theme(axis.text.x = element_text(colour = "red")) +
+    theme(axis.text.x = element_text_interactive(data_id = "a"))
+  expect_s3_class(th$axis.text.x, "interactive_element_text")
+  expect_equal(th$axis.text.x@colour, "red")
+  expect_equal(merged_attrs(th, "axis.text.x"), list(data_id = "a"))
+})
+
+test_that("merged interactive attributes are written in the SVG", {
+  p <- ggplot(data.frame(x = c("a", "b"), y = 1:2), aes(x, y)) +
+    geom_col() +
+    theme(axis.text.x = element_text_interactive(data_id = "axis-x")) +
+    theme(axis.text.x = element_text_interactive(colour = "red"))
+  doc <- dsvg_plot(p)
+  nodes <- xml_find_all(doc, "//text[@theme-id='axis-x']")
+  expect_equal(xml_text(nodes), c("a", "b"))
+})

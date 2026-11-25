@@ -158,22 +158,34 @@ element_grob.interactive_element <- function(element, ...) {
   zz
 }
 
-#' @export
-#' @method merge_element interactive_element
-merge_element.interactive_element <- function(new, old, ...) {
-  new <- NextMethod()
+# merge_element() is an S7 generic since 'ggplot2' 4.0.0: an S3 method is
+# never called, the method is registered with S7 (see .onLoad()).
+merge_element_s7 <- S7::new_external_generic(
+  "ggplot2",
+  "merge_element",
+  c("new", "old")
+)
 
-  ipar <- unique(c(get_ipar(new), get_ipar(old)))
-  new_data <- get_interactive_data(new)
-  old_data <- get_interactive_data(old)
+S7::method(
+  merge_element_s7,
+  list(S7::new_S3_class("interactive_element"), S7::class_any)
+) <- function(new, old, ...) {
+  # merge the element properties as 'ggplot2' does
+  merge_element_parent <- S7::method(
+    ggplot2::merge_element,
+    list(ggplot2::element, S7::class_any)
+  )
+  new <- merge_element_parent(new, old, ...)
 
-  missing_names <- setdiff(ipar, names(new_data))
-  if (length(missing_names) > 0) {
-    new_data[missing_names] <- old_data[missing_names]
-  }
+  # then the interactive attributes: the new ones win, the missing ones
+  # are taken from the old element
+  new_data <- compact(get_interactive_data(new))
+  old_data <- compact(get_interactive_data(old))
+  missing_names <- setdiff(names(old_data), names(new_data))
+  new_data[missing_names] <- old_data[missing_names]
 
   attr(new, "interactive") <- new_data
-  attr(new, "ipar") <- ipar
+  attr(new, "ipar") <- unique(c(get_ipar(new), get_ipar(old)))
   new
 }
 

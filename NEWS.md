@@ -43,6 +43,14 @@ is drawn instead of being removed with a warning.
 `interactive_text_grob()` (with `check.overlap`): an interactive parameter
 given as a single value was only set on the first element drawn.
 
+- `element_text_interactive()`, `element_rect_interactive()` and
+`element_line_interactive()`: adding a theme element over an interactive
+one (e.g. `theme(axis.text.x = element_text_interactive(data_id = "a")) +
+theme(axis.text.x = element_text_interactive(colour = "red"))`) lost the
+interactive attributes of the first one. They are kept, as 'ggplot2' keeps
+the other properties of the element; the attributes of the new element
+win.
+
 - `interactive_text_grob(check.overlap = TRUE)`: `x` or `y` given as a
 single value was not recycled when looking for the labels drawn by 'grid',
 which gave "subscript out of bounds" warnings and could drop the
