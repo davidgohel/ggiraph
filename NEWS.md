@@ -1,142 +1,54 @@
 # ggiraph 0.9.8
 
-## Issues
-
-- `girafe(check_fonts_registered = TRUE)` and
-`girafe(check_fonts_dependencies = TRUE)` failed with an error when the
-graphic was given with `code` instead of `ggobj`; they now warn that fonts
-can not be checked without a ggplot.
-
-- `guide_colourbar_interactive()`: with the default `display = "raster"` or
-with `display = "gradient"`, interactive attributes given as a function
-(e.g. `data_id = function(breaks) ...`) were lost with a "mismatched
-lengths" warning; the bar is a single element and now receives them. The
-guide was still reading the `raster` parameter replaced by `display` in
-'ggplot2' 4.0.0. A function now receives the breaks of the scale, as for
-the other guides, instead of `1`, and must return a single value for the
-whole bar; several values give a warning that explains it.
-
-- `guide_coloursteps_interactive()`: since 'ggplot2' 4.0.0 the steps are
-drawn as a single image, so they carry one value per interactive
-attribute, as the colour bar does. Attributes given as a function were lost
-with a "mismatched lengths" warning; a function receives the breaks of the
-scale and must return a single value, several values give a warning that
-explains it.
-
-- `girafe_class_add()`, `girafe_class_remove()` and `girafe_class_toggle()`:
-a single id (e.g. `data_id = "121"`) also targeted the elements whose id is
-a substring of it ("1", "12", "21"...). Shiny sends a vector of length one
-as a string and the JavaScript handler searched it with `includes()`.
-
-- `geom_violin_interactive()`: the quantile lines drawn with
-`quantile.linetype` had no interactive attributes, so hovering a line
-interrupted the tooltip and the hover effect of its violin. They now carry
-the attributes of their violin.
-
-- `geom_segment_interactive()` follows `geom_segment()` of 'ggplot2' 4.0:
-a missing `xend` or `yend` is the start coordinate (it failed with an
-error), and a segment whose `tooltip`, `data_id` or `onclick` is missing
-is drawn instead of being removed with a warning.
-
-- `interactive_path_grob()`, `interactive_polygon_grob()`,
-`interactive_polyline_grob()`, `interactive_lines_grob()` and
-`interactive_text_grob()` (with `check.overlap`): an interactive parameter
-given as a single value was only set on the first element drawn.
-
-- `guide_coloursteps_interactive(even.steps = FALSE)` with a discrete scale
-no longer warns that `even.steps = FALSE` is not supported: 'ggplot2' 4.0
-ignores it silently.
-
-- `element_text_interactive()`, `element_rect_interactive()` and
-`element_line_interactive()`: adding a theme element over an interactive
-one (e.g. `theme(axis.text.x = element_text_interactive(data_id = "a")) +
-theme(axis.text.x = element_text_interactive(colour = "red"))`) lost the
-interactive attributes of the first one. They are kept, as 'ggplot2' keeps
-the other properties of the element; the attributes of the new element
-win.
-
-- `interactive_text_grob(check.overlap = TRUE)`: `x` or `y` given as a
-single value was not recycled when looking for the labels drawn by 'grid',
-which gave "subscript out of bounds" warnings and could drop the
-interactive attributes of all the labels.
-
-- `geom_errorbar_interactive(orientation = "y")` and
-`geom_errorbarh_interactive()` drew the horizontal errorbars with x and y
-swapped: the data were not flipped back after building the lines.
-
-- `geom_map_interactive()`, `geom_polygon_interactive()` and
-`geom_rect_interactive()` follow their 'ggplot2' 4.0 counterparts: a
-gradient or pattern fill (e.g. `fill = linearGradient(...)`) failed with
-"Unknown colour name", and in non linear coordinates (e.g. `coord_polar()`)
-the shapes were not munched as closed polygons, so they differed from
-'ggplot2'. This also applies to the geoms drawing their boxes or areas with
-`GeomInteractivePolygon` (crossbar, boxplot, filled contours).
-
-- `geom_boxplot_interactive()` follows `geom_boxplot()` of 'ggplot2' 4.0:
-the `quantile.type` argument was ignored; the outliers of horizontal
-boxplots lost their `outlier.*` interactive attributes; and an aesthetic
-varying within a group made the stat fail, so the boxplots were not drawn,
-where 'ggplot2' drops the aesthetic with a warning.
-
-- `geom_hline_interactive()` and `geom_vline_interactive()` accept the
-`lineend` argument of 'ggplot2' 4.0 (it failed with "unused argument"), and
-`geom_abline_interactive()` limits the line to the panel as `geom_abline()`
-does: with `clip = "off"` the line went beyond the panel, and in polar
-coordinates it differed from 'ggplot2'.
-
-- `geom_sf_interactive()` accepts the `arrow` and `arrow.fill` arguments of
-'ggplot2' 4.0 (they failed with "unused argument"), and draws geometry
-collections next to other geometries (it failed with "only 'grobs' allowed
-in gList").
-
-- `geom_ribbon_interactive()`, `geom_area_interactive()` and
-`geom_density_interactive()` with `outline.type = "full"` drew their areas
-without interactive attributes: 'ggplot2' then returns the polygon alone,
-not in a tree of grobs.
-
-- `guide_bins_interactive()` (the guide of `scale_*_binned_interactive()`)
-failed with "`breaks` and `labels` have different lengths" when the labels
-were given as a vector (e.g. `labels = c("low", "mid", "high")`).
-
 ## Changes
 
-- `geom_errorbarh_interactive()` is deprecated, as `ggplot2::geom_errorbarh()`
-since 'ggplot2' 4.0.0: use `geom_errorbar_interactive(orientation = "y")`.
-`GeomInteractiveErrorbarh` is now a `GeomInteractiveErrorbar` without code
-of its own.
+- A missing interactive value (`NA`) no longer writes "NA" in the SVG: the
+element gets no attribute. Elements with a missing `data_id` can no longer
+be hovered or selected (they used to share the id "NA").
+- `geom_errorbarh_interactive()` is deprecated, as in 'ggplot2' 4.0: use
+`geom_errorbar_interactive(orientation = "y")`.
+- `dsvg_view()` and the `fonts` argument of `set_girafe_defaults()` are
+deprecated.
+- `set_girafe_defaults()` only changes the options it is given, as
+`girafe(options = )` does.
 
-- A missing interactive value (e.g. a `tooltip` or a `data_id` that is
-`NA`) no longer writes the text "NA" in the SVG: the element has no
-attribute. It has no tooltip, and with a missing `data_id` it can no longer
-be hovered or selected; before, all the elements with a missing `data_id`
-shared the id "NA".
+## Issues
 
-- `dsvg_view()` is deprecated: draw with `dsvg()` directly, or display an
-interactive graphic with `girafe()`.
+Interactive geoms now draw as their 'ggplot2' 4.0 counterparts:
 
-- The `fonts` argument of `set_girafe_defaults()` is deprecated: it never
-had any effect. Fonts are chosen with the `font_set` argument of `girafe()`.
-`girafe_defaults()` no longer returns a `fonts` element.
+- `geom_rect_interactive()`, `geom_polygon_interactive()`,
+`geom_map_interactive()`: gradient and pattern fills, shapes in polar
+coordinates (also crossbar, boxplot and filled contours).
+- `geom_boxplot_interactive()`: `quantile.type`, outliers of horizontal
+boxplots.
+- `geom_errorbar_interactive(orientation = "y")`: x and y were swapped.
+- `geom_segment_interactive()`, `geom_hline_interactive()`,
+`geom_vline_interactive()`, `geom_abline_interactive()`,
+`geom_sf_interactive()`: arguments and behaviours of 'ggplot2' 4.0.
+- `geom_ribbon_interactive()` (and area, density) with
+`outline.type = "full"`, and the quantile lines of
+`geom_violin_interactive()`, had no interactive attributes.
 
-- `set_girafe_defaults()` merges options as the `options` argument of
-`girafe()` does: only the arguments given to the `opts_*()` functions
-replace the current defaults. A second call such as
-`set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))` now
-keeps the toolbar settings of a previous call instead of resetting them.
+Legends and themes:
+
+- `guide_colourbar_interactive()`, `guide_coloursteps_interactive()`: the
+bar is a single element and takes a single value; a function receives the
+breaks and must return one value.
+- `guide_bins_interactive()` failed with labels given as a vector.
+- Adding a theme element over an interactive one dropped its interactive
+attributes.
+
+Other:
+
+- `girafe_class_add()` and friends: a single id also targeted the ids
+containing it.
+- `girafe(check_fonts_*)` failed when the graphic was given with `code`.
+- Interactive grobs: a single value was only set on the first element.
 
 ## Internals
 
-- Unit tests are now run with 'testthat' (edition 3) instead of 'tinytest'.
-Each test has a name, so failures are easier to locate, and tests no
-longer share their variables.
-
-- A layer created with `extra_interactive_params` no longer adds the extra
-aesthetics to the shared interactive geom (e.g. `GeomInteractivePoint`)
-for the rest of the session; they are set in a child geom of the layer.
-
-- The copy of `modifyList()` is removed, `utils::modifyList()` is used;
-`new_data_frame()` is replaced by `data_frame0()`, as in 'ggplot2';
-`get_os()`, no longer used, is removed.
+- Tests use 'testthat'; geom tests compare the SVG with the one of
+'ggplot2'.
 
 # ggiraph 0.9.7
 
