@@ -5,6 +5,7 @@
 #' [ggplot2::scale_size_manual()],
 #' [ggplot2::scale_shape_manual()],
 #' [ggplot2::scale_linetype_manual()],
+#' [ggplot2::scale_linewidth_manual()],
 #' [ggplot2::scale_alpha_manual()] and
 #' [ggplot2::scale_discrete_manual()].
 #' See the documentation for those functions for more details.
@@ -50,6 +51,12 @@ scale_shape_manual_interactive <- function(...) {
 #' @rdname scale_manual_interactive
 scale_linetype_manual_interactive <- function(...) {
   scale_interactive(scale_linetype_manual, ...)
+}
+
+#' @export
+#' @rdname scale_manual_interactive
+scale_linewidth_manual_interactive <- function(...) {
+  scale_interactive(scale_linewidth_manual, ...)
 }
 
 #' @export

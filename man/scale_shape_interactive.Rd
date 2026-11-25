@@ -88,6 +88,7 @@ Other interactive scale:
 \code{\link[=scale_colour_steps_interactive]{scale_colour_steps_interactive()}},
 \code{\link{scale_gradient_interactive}},
 \code{\link[=scale_linetype_interactive]{scale_linetype_interactive()}},
+\code{\link[=scale_linewidth_interactive]{scale_linewidth_interactive()}},
 \code{\link{scale_manual_interactive}},
 \code{\link[=scale_size_interactive]{scale_size_interactive()}},
 \code{\link{scale_viridis_interactive}}

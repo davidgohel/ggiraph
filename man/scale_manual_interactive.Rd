@@ -8,6 +8,7 @@
 \alias{scale_size_manual_interactive}
 \alias{scale_shape_manual_interactive}
 \alias{scale_linetype_manual_interactive}
+\alias{scale_linewidth_manual_interactive}
 \alias{scale_alpha_manual_interactive}
 \alias{scale_discrete_manual_interactive}
 \title{Create your own interactive discrete scale}
@@ -23,6 +24,8 @@ scale_size_manual_interactive(...)
 scale_shape_manual_interactive(...)
 
 scale_linetype_manual_interactive(...)
+
+scale_linewidth_manual_interactive(...)
 
 scale_alpha_manual_interactive(...)
 
@@ -42,6 +45,7 @@ These scales are based on
 \code{\link[ggplot2:scale_size_manual]{ggplot2::scale_size_manual()}},
 \code{\link[ggplot2:scale_shape_manual]{ggplot2::scale_shape_manual()}},
 \code{\link[ggplot2:scale_linetype_manual]{ggplot2::scale_linetype_manual()}},
+\code{\link[ggplot2:scale_linewidth_manual]{ggplot2::scale_linewidth_manual()}},
 \code{\link[ggplot2:scale_alpha_manual]{ggplot2::scale_alpha_manual()}} and
 \code{\link[ggplot2:scale_discrete_manual]{ggplot2::scale_discrete_manual()}}.
 See the documentation for those functions for more details.
@@ -246,6 +250,7 @@ Other interactive scale:
 \code{\link[=scale_colour_steps_interactive]{scale_colour_steps_interactive()}},
 \code{\link{scale_gradient_interactive}},
 \code{\link[=scale_linetype_interactive]{scale_linetype_interactive()}},
+\code{\link[=scale_linewidth_interactive]{scale_linewidth_interactive()}},
 \code{\link[=scale_shape_interactive]{scale_shape_interactive()}},
 \code{\link[=scale_size_interactive]{scale_size_interactive()}},
 \code{\link{scale_viridis_interactive}}

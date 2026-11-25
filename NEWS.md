@@ -1,5 +1,10 @@
 # ggiraph 0.9.8
 
+## Features
+
+- Interactive scales for line width: `scale_linewidth_*_interactive()`
+(continuous, discrete, binned, date, datetime, ordinal and manual).
+
 ## Changes
 
 - A missing interactive value (`NA`) no longer writes "NA" in the SVG: the

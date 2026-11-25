@@ -1,7 +1,7 @@
 Type: Package
 Package: ggiraph
 Title: Make 'ggplot2' Graphics Interactive
-Version: 0.9.8.026
+Version: 0.9.8.027
 Authors@R: c(
     person("David", "Gohel", , "david.gohel@ardata.fr", role = c("aut", "cre")),
     person("Panagiotis", "Skintzos", , "sigmapi@posteo.net", role = "aut"),
@@ -150,6 +150,7 @@ Collate:
     'scale_gradient_interactive.R'
     'scale_interactive.R'
     'scale_linetype_interactive.R'
+    'scale_linewidth_interactive.R'
     'scale_manual_interactive.R'
     'scale_shape_interactive.R'
     'scale_size_interactive.R'
