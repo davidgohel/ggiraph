@@ -46,7 +46,10 @@ test_that("girafe with a font_set lists the fonts at most once", {
 # font checks in girafe() ----
 # the families are read in the SVG, as drawn
 svg_fonts <- function(p, ...) {
-  ggiraph:::list_svg_fonts(girafe(ggobj = p, font_set = fs, ...)$x$html)
+  # fonts that do not exist: no check of their registration
+  ggiraph:::list_svg_fonts(
+    girafe(ggobj = p, font_set = fs, check_fonts_registered = FALSE, ...)$x$html
+  )
 }
 
 test_that("the fonts are read in the SVG, aliases resolved", {
@@ -86,29 +89,26 @@ test_that("the fonts set outside of the plot are read", {
 })
 
 test_that("a graphic given with `code` is checked", {
-  expect_error(
-    girafe(
-      code = plot(1, main = "t", family = "Font That Does Not Exist"),
-      check_fonts_registered = TRUE
-    ),
+  expect_warning(
+    girafe(code = plot(1, main = "t", family = "Font That Does Not Exist")),
     "Font That Does Not Exist"
   )
 })
 
-test_that("check_fonts_registered stops on fonts unknown to systemfonts", {
+test_that("check_fonts_registered warns, by default, on fonts unknown to systemfonts", {
   p <- ggplot(mtcars, aes(wt, mpg)) +
     geom_point() +
     theme(text = element_text(family = "Font That Does Not Exist"))
-  expect_error(
-    girafe(ggobj = p, check_fonts_registered = TRUE),
+  # a warning, the graphic is drawn
+  expect_warning(
+    x <- girafe(ggobj = p),
     "Font That Does Not Exist"
   )
+  expect_s3_class(x, "girafe")
+  expect_no_warning(girafe(ggobj = p, check_fonts_registered = FALSE))
 
   p <- p + theme(text = element_text(family = fs$sans))
-  expect_s3_class(
-    girafe(ggobj = p, font_set = fs, check_fonts_registered = TRUE),
-    "girafe"
-  )
+  expect_no_warning(girafe(ggobj = p, font_set = fs))
 })
 
 test_that("check_fonts_dependencies warns on fonts missing from the dependencies", {
@@ -116,7 +116,7 @@ test_that("check_fonts_dependencies warns on fonts missing from the dependencies
     geom_point() +
     theme(text = element_text(family = "Font That Does Not Exist"))
   expect_warning(
-    girafe(ggobj = p, check_fonts_dependencies = TRUE),
+    girafe(ggobj = p, check_fonts_registered = FALSE, check_fonts_dependencies = TRUE),
     "Font That Does Not Exist"
   )
 

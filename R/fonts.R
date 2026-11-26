@@ -168,13 +168,15 @@ fonts_checking_registered <- function(family_list) {
   ]
 
   if (length(missing_family_list) > 0) {
-    cli::cli_abort(c(
-      "!" = "Some fonts are not available in system fonts or are not registered with the {.pkg systemfonts} package.",
-      "!" = "Found {length(missing_family_list)} missing font famil{?y/ies} used in ggplot theme: {missing_family_list}.",
+    # a warning: the graphic is drawn, but its texts are measured with
+    # another font than the one the browser will use
+    cli::cli_warn(c(
+      "!" = "Font famil{?y/ies} {.val {missing_family_list}} {?is/are} not installed or not registered with {.pkg systemfonts}: the texts are measured with another font and may not fit.",
       "i" = "You can install and register Google Fonts with {.code gdtools::register_gfont()}.",
       "i" = "You can install and register any fonts with {.code systemfonts::register_font()}.",
-      "i" = "For an easy offline alternative with good rendering, use {.code gdtools::register_liberationsans()} to get 'Liberation Sans'."
-    ))
+      "i" = "For an easy offline alternative with good rendering, use {.code gdtools::register_liberationsans()} to get 'Liberation Sans'.",
+      "i" = "Set {.code check_fonts_registered = FALSE} in {.fn girafe} to skip this check."
+    ), call = NULL)
   }
 }
 

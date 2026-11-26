@@ -67,7 +67,8 @@
 #' page.
 #' @param dependencies Additional widget HTML dependencies, see [htmlwidgets::createWidget()].
 #' @param check_fonts_registered whether to check if the font families used
-#' by the texts of the graphic are registered with 'systemfonts'.
+#' by the texts of the graphic are registered with 'systemfonts' (a warning
+#' if not: the texts are measured with another font). `TRUE` by default.
 #' @param check_fonts_dependencies whether to check if the font families used
 #' by the texts of the graphic are found in the `dependencies` list.
 #'
@@ -143,7 +144,7 @@ girafe <- function(
   options = list(),
   font_set = NULL,
   dependencies = NULL,
-  check_fonts_registered = FALSE,
+  check_fonts_registered = TRUE,
   check_fonts_dependencies = FALSE,
   ...
 ) {

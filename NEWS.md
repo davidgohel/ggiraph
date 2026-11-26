@@ -18,6 +18,10 @@ deprecated.
 `girafe(options = )` does.
 - `geom_boxplot_interactive()`: an interactive parameter varying within a
 group is dropped, as 'ggplot2' does (the box took its first value).
+- `girafe()` warns when a font of the graphic is not installed or not
+registered with 'systemfonts' (`check_fonts_registered = TRUE` by default,
+it was `FALSE` and an error): its texts would be measured with another
+font and may not fit.
 - The hover and selection css no longer fill the lines: with a css such as
 `opts_hover(css = "fill:orange;stroke:orange;")`, the polylines were
 filled as closed shapes (e.g. an arc of a polar segment). Lines are filled
