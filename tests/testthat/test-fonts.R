@@ -228,3 +228,26 @@ test_that("match_family() is deprecated", {
   expect_warning(family <- match_family("sans"), class = "deprecatedWarning")
   expect_type(family, "character")
 })
+
+# girafe(fonts = ) ----
+test_that("girafe(fonts = ) is applied over the font set, with a deprecation warning", {
+  p <- ggplot(mtcars, aes(wt, mpg)) + geom_point() + labs(title = "t")
+  expect_warning(
+    x <- girafe(ggobj = p, font_set = fs, fonts = list(sans = fs$mono)),
+    "deprecated"
+  )
+  # it was ignored since 0.9.7
+  expect_equal(ggiraph:::list_svg_fonts(x$x$html), fs$mono)
+  # the warning shows the equivalent font_set
+  expect_warning(
+    girafe(ggobj = p, font_set = fs, fonts = list(sans = fs$mono)),
+    paste0('font_set(sans = "', fs$mono, '")'),
+    fixed = TRUE
+  )
+  # a list without names is ignored
+  expect_warning(
+    x <- girafe(ggobj = p, font_set = fs, fonts = list("Arial")),
+    "it is ignored"
+  )
+  expect_equal(ggiraph:::list_svg_fonts(x$x$html), fs$sans)
+})

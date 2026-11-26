@@ -197,3 +197,30 @@ fonts_checking_dependencies <- function(dependencies, family_list) {
     )
   }
 }
+
+# girafe(fonts = ) is deprecated: the equivalent font_set, built from the
+# fonts given, is shown
+warn_girafe_fonts <- function(fonts) {
+  aliases <- if (is.list(fonts) && !is.null(names(fonts))) {
+    intersect(names(fonts), r_font_families)
+  } else {
+    character()
+  }
+  values <- vapply(fonts[aliases], function(x) as.character(x)[1], character(1))
+  example <- if (length(aliases)) {
+    paste0(
+      "font_set = gdtools::font_set(",
+      paste0(aliases, " = \"", values, "\"", collapse = ", "),
+      ")"
+    )
+  } else {
+    "font_set = gdtools::font_set(sans = \"Open Sans\")"
+  }
+  cli_warn(c(
+    "!" = "The {.arg fonts} argument of {.fn girafe} is deprecated: use {.arg font_set}.",
+    "i" = "For example {.code {example}}: it also embeds the fonts in the HTML page, which {.arg fonts} does not.",
+    if (!length(aliases)) {
+      c("x" = "{.arg fonts} must be a list named with {.val {r_font_families}}: it is ignored.")
+    }
+  ), call = NULL)
+}

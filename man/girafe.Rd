@@ -83,7 +83,9 @@ from \code{\link[ggplot2:theme_set]{ggplot2::theme_set()}}, the \code{family} of
 an aesthetic, or a graphic given with \code{code}. The aliases (\code{"sans"}...)
 are checked as the fonts of \code{font_set} they stand for.}
 
-\item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
+\item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}. Its \code{fonts} argument is
+deprecated in \code{girafe()}: use \code{font_set}, which also embeds the fonts in
+the HTML page.}
 }
 \description{
 Create an interactive graphic with a ggplot object

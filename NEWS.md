@@ -12,6 +12,9 @@ element gets no attribute. Elements with a missing `data_id` can no longer
 be hovered or selected (they used to share the id "NA").
 - `geom_errorbarh_interactive()` is deprecated, as in 'ggplot2' 4.0: use
 `geom_errorbar_interactive(orientation = "y")`.
+- `girafe(fonts = )` is deprecated in favour of `font_set`, which also
+embeds the fonts in the HTML page; it was ignored since 0.9.7 (the fonts of
+`font_set` replaced it) and is applied again over them.
 - `dsvg_view()` and the `fonts` argument of `set_girafe_defaults()` are
 deprecated.
 - `set_girafe_defaults()` only changes the options it is given, as

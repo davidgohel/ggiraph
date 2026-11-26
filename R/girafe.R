@@ -76,7 +76,9 @@
 #' from [ggplot2::theme_set()], the `family` of a layer, `element_geom()`,
 #' an aesthetic, or a graphic given with `code`. The aliases (`"sans"`...)
 #' are checked as the fonts of `font_set` they stand for.
-#' @param ... arguments passed on to [dsvg()]
+#' @param ... arguments passed on to [dsvg()]. Its `fonts` argument is
+#' deprecated in `girafe()`: use `font_set`, which also embeds the fonts in
+#' the HTML page.
 #' @example examples/girafe.R
 #' @section Managing Grouping with Interactive Aesthetics:
 #'
@@ -160,6 +162,12 @@ girafe <- function(
 
   # prepare argument for dsvg -----
   args <- list(...)
+  # `fonts` (passed to dsvg()) was ignored since 0.9.7, replaced by the
+  # fonts of `font_set`: it is applied again over them, and deprecated
+  user_fonts <- args$fonts
+  if (!is.null(user_fonts)) {
+    warn_girafe_fonts(user_fonts)
+  }
   args$canvas_id <- args$canvas_id %||%
     paste("svg", UUIDgenerate(), sep = "_")
   args$file <- path
@@ -181,6 +189,10 @@ girafe <- function(
     cli::cli_abort("{.arg font_set} must be a {.cls font_set} object.")
   }
   args$fonts <- font_set$dsvg_fonts
+  if (is.list(user_fonts) && !is.null(names(user_fonts))) {
+    aliases <- intersect(names(user_fonts), r_font_families)
+    args$fonts[aliases] <- user_fonts[aliases]
+  }
   dependencies <- c(dependencies, font_set$dependencies)
 
   if (!is.null(ggobj)) {
