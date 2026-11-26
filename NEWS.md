@@ -66,6 +66,10 @@ containing it; they say when the session is missing.
 - Interactive grobs: a single value was only set on the first element.
 - `opts_zoom()`: `min = 0.2` was refused, although it is the documented
 lower bound.
+- `girafe(check_fonts_registered, check_fonts_dependencies)` missed the
+fonts set outside of the plot (`theme_set()`, `element_geom()`, the `family`
+aesthetic) and could not check a graphic given with `code`: the fonts are
+now read in the SVG, as drawn.
 - Labels given as expressions (`parse = TRUE`) lost their attributes.
 - `onclick` code and ids containing single quotes were altered (the quotes
 were replaced by ’), which broke the JavaScript of `onclick`.

@@ -66,10 +66,15 @@
 #' Texts and equations drawn as outlines do not need the font in the HTML
 #' page.
 #' @param dependencies Additional widget HTML dependencies, see [htmlwidgets::createWidget()].
-#' @param check_fonts_registered whether to check if fonts families found in
-#' the ggplot are registered with 'systemfonts'.
-#' @param check_fonts_dependencies whether to check if fonts families found in
-#' the ggplot are found in the `dependencies` list.
+#' @param check_fonts_registered whether to check if the font families used
+#' by the texts of the graphic are registered with 'systemfonts'.
+#' @param check_fonts_dependencies whether to check if the font families used
+#' by the texts of the graphic are found in the `dependencies` list.
+#'
+#' The families are read in the SVG, as drawn: from the theme of the plot or
+#' from [ggplot2::theme_set()], the `family` of a layer, `element_geom()`,
+#' an aesthetic, or a graphic given with `code`. The aliases (`"sans"`...)
+#' are checked as the fonts of `font_set` they stand for.
 #' @param ... arguments passed on to [dsvg()]
 #' @example examples/girafe.R
 #' @section Managing Grouping with Interactive Aesthetics:
@@ -218,21 +223,15 @@ girafe <- function(
 
   # check fonts -----
   if (check_fonts_registered || check_fonts_dependencies) {
-    if (is.null(ggobj)) {
-      cli::cli_warn(c(
-        "!" = "Fonts can not be checked if {.arg ggobj} is missing."
-      ))
-    } else {
-      family_list <- list_fonts(ggobj)
-      if (check_fonts_registered) {
-        fonts_checking_registered(family_list = family_list)
-      }
-      if (check_fonts_dependencies) {
-        fonts_checking_dependencies(
-          dependencies = dependencies,
-          family_list = family_list
-        )
-      }
+    family_list <- list_svg_fonts(x$html)
+    if (check_fonts_registered) {
+      fonts_checking_registered(family_list = family_list)
+    }
+    if (check_fonts_dependencies) {
+      fonts_checking_dependencies(
+        dependencies = dependencies,
+        family_list = family_list
+      )
     }
   }
 

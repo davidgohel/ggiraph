@@ -77,59 +77,19 @@ match_family <- function(
 
 # girafe font checking ------
 
-list_fonts <- function(gg) {
-  fonts_families <- c(
-    list_layers_fonts(gg),
-    list_theme_fonts(gg)
-  )
-  fonts_families <- sort(unique(fonts_families))
-  fonts_families %||% character()
-}
-
-#' @importFrom S7 prop_exists
-list_theme_fonts <- function(gg) {
-  if (!prop_exists(gg, "theme")) {
-    return(character())
-  }
-  element_text_set <- Filter(
-    f = function(x) inherits(x, "element_text") && !is.null(x$family),
-    gg@theme
-  )
-  fonts <- vapply(
-    X = element_text_set,
-    FUN = function(x) {
-      z <- x$family
-      if (isTRUE(all.equal(z, ""))) {
-        "sans"
-      } else {
-        z
-      }
-    },
-    FUN.VALUE = NA_character_,
-    USE.NAMES = FALSE
-  )
-  fonts <- setdiff(unique(fonts), c("sans", "serif", "mono", "symbol"))
-  fonts
-}
-
-list_layers_fonts <- function(gg) {
-  if (!prop_exists(gg, "layers") || length(gg@layers) == 0) {
-    return(character())
-  }
-
-  fonts <- character()
-
-  for (layer in gg@layers) {
-    if (!is.null(layer$aes_params) && !is.null(layer$aes_params$family)) {
-      family_value <- layer$aes_params$family
-      if (!is.null(family_value) && !identical(family_value, "")) {
-        fonts <- c(fonts, family_value)
-      }
-    }
-  }
-
-  fonts <- setdiff(unique(fonts), c("sans", "serif", "mono", "symbol"))
-  fonts
+# the fonts written by dsvg in the `font-family` attribute of the `<text>`
+# elements: the families really used, aliases resolved ("sans" is written
+# as the font of the font set), whatever set them (theme of the plot or
+# theme_set(), `family` of a layer, element_geom(), an aesthetic, base
+# graphics...). Texts drawn as outlines (equations, 'marquee') have no
+# `<text>` and need no font.
+list_svg_fonts <- function(svg) {
+  m <- regmatches(svg, gregexpr("font-family=(['\"])[^'\"]*\\1", svg, perl = TRUE))[[1]]
+  fonts <- substr(m, 14L, nchar(m) - 1L)
+  fonts <- gsub("&apos;", "'", fonts, fixed = TRUE)
+  fonts <- gsub("&quot;", "\"", fonts, fixed = TRUE)
+  fonts <- gsub("&amp;", "&", fonts, fixed = TRUE)
+  sort(unique(fonts[nzchar(fonts)]))
 }
 
 extract_family_names_regex <- function(lines) {

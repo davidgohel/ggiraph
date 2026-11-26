@@ -280,7 +280,6 @@ import(graphics)
 import(grid)
 importFrom(MASS,kde2d)
 importFrom(Rcpp,sourceCpp)
-importFrom(S7,prop_exists)
 importFrom(gdtools,
   font_set_liberation,
   sys_fonts

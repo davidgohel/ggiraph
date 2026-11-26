@@ -71,11 +71,16 @@ page.}
 
 \item{dependencies}{Additional widget HTML dependencies, see \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}.}
 
-\item{check_fonts_registered}{whether to check if fonts families found in
-the ggplot are registered with 'systemfonts'.}
+\item{check_fonts_registered}{whether to check if the font families used
+by the texts of the graphic are registered with 'systemfonts'.}
 
-\item{check_fonts_dependencies}{whether to check if fonts families found in
-the ggplot are found in the \code{dependencies} list.}
+\item{check_fonts_dependencies}{whether to check if the font families used
+by the texts of the graphic are found in the \code{dependencies} list.
+
+The families are read in the SVG, as drawn: from the theme of the plot or
+from \code{\link[ggplot2:theme_set]{ggplot2::theme_set()}}, the \code{family} of a layer, \code{element_geom()},
+an aesthetic, or a graphic given with \code{code}. The aliases (\code{"sans"}...)
+are checked as the fonts of \code{font_set} they stand for.}
 
 \item{...}{arguments passed on to \code{\link[=dsvg]{dsvg()}}}
 }

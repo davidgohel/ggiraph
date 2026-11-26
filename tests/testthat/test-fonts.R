@@ -44,29 +44,55 @@ test_that("girafe with a font_set lists the fonts at most once", {
 })
 
 # font checks in girafe() ----
-test_that("font checks warn when there is no ggplot to read the fonts from", {
-  expect_warning(
-    girafe(code = plot(1), check_fonts_registered = TRUE),
-    "Fonts can not be checked"
-  )
-  expect_warning(
-    girafe(code = plot(1), check_fonts_dependencies = TRUE),
-    "Fonts can not be checked"
-  )
-})
+# the families are read in the SVG, as drawn
+svg_fonts <- function(p, ...) {
+  ggiraph:::list_svg_fonts(girafe(ggobj = p, font_set = fs, ...)$x$html)
+}
 
-test_that("list_fonts() reads the fonts of the theme and of the layers", {
+test_that("the fonts are read in the SVG, aliases resolved", {
   p <- ggplot(mtcars, aes(wt, mpg, label = cyl)) +
     geom_text(family = "Layer Font") +
-    geom_text(family = "sans") +
+    geom_text(family = "mono") +
+    labs(title = "title") +
     theme(
       text = element_text(family = "Theme Font"),
       plot.title = element_text(family = ""),
-      axis.title = element_text(family = "mono")
+      axis.title = element_text(family = "sans")
     )
-  # generic families are not checked
-  expect_equal(ggiraph:::list_fonts(p), c("Layer Font", "Theme Font"))
-  expect_equal(ggiraph:::list_fonts(ggplot()), character())
+  expect_equal(
+    svg_fonts(p),
+    sort(c("Layer Font", "Theme Font", fs$mono, fs$sans))
+  )
+})
+
+test_that("the fonts set outside of the plot are read", {
+  base <- ggplot(mtcars, aes(wt, mpg, label = cyl)) + geom_text()
+  # element_geom() of ggplot2 4.0: the default family of geom_text()
+  expect_true("Geom Font" %in% svg_fonts(base + theme(geom = element_geom(family = "Geom Font"))))
+  # global theme
+  old <- theme_set(theme_minimal(base_family = "Global Font"))
+  on.exit(theme_set(old))
+  expect_true("Global Font" %in% svg_fonts(base))
+  theme_set(old)
+  # aesthetic
+  p <- ggplot(data.frame(x = 1, y = 1, f = "Mapped Font"), aes(x, y, label = "a", family = f)) +
+    geom_text()
+  expect_true("Mapped Font" %in% svg_fonts(p))
+  # escaped quotes in a name
+  expect_equal(
+    ggiraph:::list_svg_fonts("<text font-family='It&apos;s'>a</text><text font-family=\"B\">b</text>"),
+    c("B", "It's")
+  )
+})
+
+test_that("a graphic given with `code` is checked", {
+  expect_error(
+    girafe(
+      code = plot(1, main = "t", family = "Font That Does Not Exist"),
+      check_fonts_registered = TRUE
+    ),
+    "Font That Does Not Exist"
+  )
 })
 
 test_that("check_fonts_registered stops on fonts unknown to systemfonts", {
