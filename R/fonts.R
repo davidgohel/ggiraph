@@ -107,8 +107,8 @@ extract_family_names_regex <- function(lines) {
     return(character())
   }
 
-  # Pattern to extract family in @font-face blocks
-  family_pattern <- "font-family:\\s*['\"]([^'\"]+)['\"]"
+  # family in @font-face blocks, quoted or not (`font-family: Open Sans;`)
+  family_pattern <- "font-family:\\s*['\"]?([^;'\"}]+?)['\"]?\\s*(;|\\})"
 
   font_names <- character()
   for (block in fontface_blocks) {
@@ -122,23 +122,29 @@ extract_family_names_regex <- function(lines) {
   return(sort(unique(font_names)))
 }
 
+# the local css files of a dependency, as htmltools finds them: `src$file`
+# relative to the package when `package` is given; a stylesheet can be
+# given as a list with `href`; remote dependencies (`src$href` only) and
+# missing files are skipped
 htmldep_css_files <- function(dep) {
-  css_files <- list()
-
-  if (!is.null(dep$stylesheet)) {
-    for (i in seq_along(dep$stylesheet)) {
-      css_file <- dep$stylesheet[i]
-      if (is.list(dep$src)) {
-        full_path <- file.path(dep$src$file, css_file)
-      } else {
-        full_path <- file.path(dep$src, css_file)
-      }
-      css_files[[css_file]] <- full_path
-    }
+  src <- dep$src
+  dir <- if (is.list(src)) src$file else if (!is.null(names(src))) src[["file"]] else src
+  if (is.null(dir) || is.null(dep$stylesheet)) {
+    return(character())
   }
-  css_files <- unlist(css_files)
-  css_files <- unname(css_files)
-  as.character(css_files)
+  if (!is.null(dep$package)) {
+    dir <- system.file(dir, package = dep$package)
+  }
+  sheets <- dep$stylesheet
+  if (is.list(sheets)) {
+    sheets <- vapply(
+      sheets,
+      function(x) if (is.list(x)) x$href %||% NA_character_ else as.character(x),
+      character(1)
+    )
+  }
+  paths <- file.path(dir, sheets[!is.na(sheets)])
+  paths[file.exists(paths)]
 }
 
 list_families_from_dependencies <- function(dependencies) {
@@ -174,7 +180,8 @@ fonts_checking_registered <- function(family_list) {
 
 fonts_checking_dependencies <- function(dependencies, family_list) {
   font_families <- list_families_from_dependencies(dependencies)
-  missing_family_list <- setdiff(family_list, font_families)
+  # font-family names are case insensitive in css
+  missing_family_list <- family_list[!tolower(family_list) %in% tolower(font_families)]
   if (length(missing_family_list) > 0L) {
     missing_family_list <- shQuote(missing_family_list)
     cli::cli_warn(

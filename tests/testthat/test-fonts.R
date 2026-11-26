@@ -162,6 +162,65 @@ test_that("font families are read from the @font-face rules of the dependencies"
   )
 })
 
+test_that("font names without quotes are read", {
+  css <- c(
+    "@font-face { font-family: Open Sans; src: url(a.woff2); }",
+    "@font-face { src: url(b.woff2); font-family: Fira Code }"
+  )
+  expect_equal(
+    ggiraph:::extract_family_names_regex(css),
+    c("Fira Code", "Open Sans")
+  )
+})
+
+test_that("the css files of the dependencies are found as htmltools finds them", {
+  # relative to the package
+  dep_pkg <- htmltools::htmlDependency(
+    "x", "1.0", src = "htmlwidgets", stylesheet = "girafe.yaml", package = "ggiraph"
+  )
+  expect_equal(
+    ggiraph:::htmldep_css_files(dep_pkg),
+    file.path(system.file("htmlwidgets", package = "ggiraph"), "girafe.yaml")
+  )
+  dir <- withr::local_tempdir()
+  writeLines("@font-face { font-family: 'Open Sans'; }", file.path(dir, "f.css"))
+  # a stylesheet given as a list with href
+  dep_list <- htmltools::htmlDependency(
+    "x", "1.0", src = dir, stylesheet = list(list(href = "f.css", media = "all"))
+  )
+  expect_equal(ggiraph:::htmldep_css_files(dep_list), file.path(dir, "f.css"))
+  # remote dependency and missing file: nothing to read, no error
+  dep_href <- htmltools::htmlDependency(
+    "x", "1.0", src = c(href = "https://example.org"), stylesheet = "f.css"
+  )
+  expect_equal(ggiraph:::htmldep_css_files(dep_href), character())
+  dep_missing <- htmltools::htmlDependency("x", "1.0", src = dir, stylesheet = "none.css")
+  expect_equal(ggiraph:::htmldep_css_files(dep_missing), character())
+
+  # girafe() does not fail on them
+  p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+  expect_s3_class(
+    girafe(
+      ggobj = p, font_set = fs, check_fonts_dependencies = TRUE,
+      dependencies = list(dep_pkg, dep_list, dep_href, dep_missing)
+    ),
+    "girafe"
+  )
+})
+
+test_that("font names of the dependencies are compared without case", {
+  dir <- withr::local_tempdir()
+  writeLines("@font-face { font-family: 'open sans'; }", file.path(dir, "f.css"))
+  dep <- htmltools::htmlDependency("x", "1.0", src = dir, stylesheet = "f.css")
+  expect_no_warning(
+    ggiraph:::fonts_checking_dependencies(list(dep), family_list = "Open Sans")
+  )
+  expect_warning(
+    ggiraph:::fonts_checking_dependencies(list(dep), family_list = "Roboto"),
+    "Roboto"
+  )
+})
+
 # match_family ----
 test_that("match_family() is deprecated", {
   # it calls systemfonts::match_font(), deprecated too

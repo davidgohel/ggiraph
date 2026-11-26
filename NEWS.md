@@ -70,6 +70,10 @@ lower bound.
 fonts set outside of the plot (`theme_set()`, `element_geom()`, the `family`
 aesthetic) and could not check a graphic given with `code`: the fonts are
 now read in the SVG, as drawn.
+- `girafe(check_fonts_dependencies = TRUE)` failed with a dependency
+declared with `package =` or with a stylesheet given as a list, and missed
+the font names written without quotes in `@font-face` (they were reported
+as missing). Names are now compared without case, as in CSS.
 - Labels given as expressions (`parse = TRUE`) lost their attributes.
 - `onclick` code and ids containing single quotes were altered (the quotes
 were replaced by ’), which broke the JavaScript of `onclick`.
