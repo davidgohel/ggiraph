@@ -197,11 +197,8 @@ test_that("attributes with style css work", {
       style_node <- xml_find_first(doc, ".//style")
       style <- xml2::xml_text(style_node)
       selector <- paste0(attr, suffix, "svgid[", typename, " = \"id\"]")
-      # the lines are not filled (girafe_css() without a line rule)
-      expect_equal(style, paste0(
-        ".", selector, " { cursor: pointer; }\n",
-        "line.", selector, ", polyline.", selector, " { fill:none; }"
-      ))
+      # no fill in the css: no rule for the lines
+      expect_equal(style, paste0(".", selector, " { cursor: pointer; }"))
     }
   }
 })

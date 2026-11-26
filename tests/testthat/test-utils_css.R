@@ -147,6 +147,14 @@ test_that("girafe_css does not fill lines, unless asked with `line`", {
   expect_true(grepl("polyline._CLASSNAME_ { fill:red; }", css, fixed = TRUE))
   # an empty css stays empty (no style, e.g. no inverted hover)
   expect_equal(ggiraph::girafe_css(""), "/*GIRAFE CSS*/")
+  # a css without fill stays as it is: the lines are not filled anyway
+  expect_equal(
+    ggiraph::girafe_css("stroke:red;stroke-width:2.5px;"),
+    "/*GIRAFE CSS*/._CLASSNAME_ { stroke:red;stroke-width:2.5px; }"
+  )
+  expect_false(grepl("fill", opts_selection(css = "stroke:red;r:3.5px;")$css, fixed = TRUE))
+  # fill-opacity is a fill
+  expect_true(grepl(no_fill, ggiraph::girafe_css("fill-opacity:0.5;"), fixed = TRUE))
 })
 
 test_that("the tooltip css is a single rule (no rule for lines)", {

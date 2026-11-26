@@ -6,8 +6,9 @@
 #' @param text Override style for text elements (svg:text)
 #' @param point Override style for point elements (svg:circle)
 #' @param line Override style for line elements (svg:line, svg:polyline).
-#' When it is not given, the lines are not filled (`fill:none;`): a `fill`
-#' of the generic `css` would fill a polyline as a closed shape, which is
+#' When it is not given and `css` sets a fill, the lines are not filled
+#' (`fill:none;`): a `fill` of the generic `css` would fill a polyline as a
+#' closed shape, which is
 #' never what 'ggplot2' draws (its filled shapes are polygons, paths and
 #' rects). The other properties of `css` (e.g. `stroke`) still apply.
 #' @param area Override style for area elements (svg:rect, svg:polygon, svg:path)
@@ -35,9 +36,10 @@ girafe_css <- function(
   area = NULL,
   image = NULL
 ) {
-  # polylines are never filled, unless asked with `line` (an empty css
-  # stays empty: it means no style, e.g. no inverted hover)
-  if (is.null(line) && is_string(css) && nzchar(trimws(css))) {
+  # polylines are never filled, unless asked with `line`; the rule is only
+  # added when `css` sets a fill: a css without fill (or empty, which means
+  # no style, e.g. no inverted hover) stays as it is
+  if (is.null(line) && is_string(css) && grepl("fill", css, fixed = TRUE)) {
     line <- "fill:none;"
   }
   css <- c(
