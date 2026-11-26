@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.030</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.036</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,16 +38,15 @@
 </ul></div>
 <div class="section level3">
 <h3 id="changes-0-9-8">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-8"></a></h3>
-<ul><li>A missing interactive value (<code>NA</code>) no longer writes “NA” in the SVG: the element gets no attribute. Elements with a missing <code>data_id</code> can no longer be hovered or selected (they used to share the id “NA”).</li>
-<li>
-<code><a href="../reference/geom_errorbarh_interactive.html">geom_errorbarh_interactive()</a></code> is deprecated, as in ‘ggplot2’ 4.0: use <code>geom_errorbar_interactive(orientation = "y")</code>.</li>
-<li>
-<code><a href="../reference/dsvg_view.html">dsvg_view()</a></code> and the <code>fonts</code> argument of <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> are deprecated.</li>
-<li>
-<code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> only changes the options it is given, as <code>girafe(options = )</code> does.</li>
-<li>
-<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: an interactive parameter varying within a group is dropped, as ‘ggplot2’ does (the box took its first value).</li>
-<li>The hover and selection css no longer fill the lines: with a css such as <code>opts_hover(css = "fill:orange;stroke:orange;")</code>, the polylines were filled as closed shapes (e.g. an arc of a polar segment). Lines are filled only when asked with the <code>line</code> argument of <code><a href="../reference/girafe_css.html">girafe_css()</a></code>.</li>
+<ul><li><p>A missing interactive value (<code>NA</code>) no longer writes “NA” in the SVG: the element gets no attribute. Elements with a missing <code>data_id</code> can no longer be hovered or selected (they used to share the id “NA”).</p></li>
+<li><p><code><a href="../reference/geom_errorbarh_interactive.html">geom_errorbarh_interactive()</a></code> is deprecated, as in ‘ggplot2’ 4.0: use <code>geom_errorbar_interactive(orientation = "y")</code>.</p></li>
+<li><p><code>girafe(fonts = )</code> is deprecated in favour of <code>font_set</code>, which also embeds the fonts in the HTML page; it was ignored since 0.9.7 (the fonts of <code>font_set</code> replaced it) and is applied again over them.</p></li>
+<li><p><code><a href="../reference/dsvg_view.html">dsvg_view()</a></code> and the <code>fonts</code> argument of <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> are deprecated.</p></li>
+<li><p><code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> only changes the options it is given, as <code>girafe(options = )</code> does.</p></li>
+<li><p><code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: an interactive parameter varying within a group is dropped, as ‘ggplot2’ does (the box took its first value).</p></li>
+<li><p><code><a href="../reference/girafe.html">girafe()</a></code> warns when a font of the graphic is not installed or not registered with ‘systemfonts’ (<code>check_fonts_registered = TRUE</code> by default, it was <code>FALSE</code> and an error): its texts would be measured with another font and may not fit.</p></li>
+<li><p>The hover and selection css no longer fill the lines: with a css such as <code>opts_hover(css = "fill:orange;stroke:orange;")</code>, the polylines were filled as closed shapes (e.g. an arc of a polar segment). Lines are filled only when asked with the <code>line</code> argument of <code><a href="../reference/girafe_css.html">girafe_css()</a></code>.</p></li>
+<li><p>Error and warning messages name the function and describe the wrong value, e.g. “Error in <code><a href="../reference/opts_hover.html">opts_hover()</a></code>: <code>reactive</code> must be <code>TRUE</code> or <code>FALSE</code>, not the number 1.” (checks of ‘rlang’, messages of ‘cli’).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="issues-0-9-8">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-8"></a></h3>
@@ -78,6 +77,12 @@
 <li>
 <code>girafe(check_fonts_*)</code> failed when the graphic was given with <code>code</code>.</li>
 <li>Interactive grobs: a single value was only set on the first element.</li>
+<li>
+<code><a href="../reference/opts_zoom.html">opts_zoom()</a></code>: <code>min = 0.2</code> was refused, although it is the documented lower bound.</li>
+<li>
+<code>girafe(check_fonts_registered, check_fonts_dependencies)</code> missed the fonts set outside of the plot (<code><a href="https://ggplot2.tidyverse.org/reference/get_theme.html" class="external-link">theme_set()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_geom()</a></code>, the <code>family</code> aesthetic) and could not check a graphic given with <code>code</code>: the fonts are now read in the SVG, as drawn.</li>
+<li>
+<code>girafe(check_fonts_dependencies = TRUE)</code> failed with a dependency declared with <code>package =</code> or with a stylesheet given as a list, and missed the font names written without quotes in <code>@font-face</code> (they were reported as missing). Names are now compared without case, as in CSS.</li>
 <li>Labels given as expressions (<code>parse = TRUE</code>) lost their attributes.</li>
 <li>
 <code>onclick</code> code and ids containing single quotes were altered (the quotes were replaced by ’), which broke the JavaScript of <code>onclick</code>.</li>

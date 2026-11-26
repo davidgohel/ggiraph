@@ -15,7 +15,7 @@ girafe(
   options = list(),
   font_set = NULL,
   dependencies = NULL,
-  check_fonts_registered = FALSE,
+  check_fonts_registered = TRUE,
   check_fonts_dependencies = FALSE,
   ...
 )
@@ -101,18 +101,29 @@ girafe(
 
 - check_fonts_registered:
 
-  whether to check if fonts families found in the ggplot are registered
-  with 'systemfonts'.
+  whether to check if the font families used by the texts of the graphic
+  are registered with 'systemfonts' (a warning if not: the texts are
+  measured with another font). `TRUE` by default.
 
 - check_fonts_dependencies:
 
-  whether to check if fonts families found in the ggplot are found in
-  the `dependencies` list.
+  whether to check if the font families used by the texts of the graphic
+  are found in the `dependencies` list.
+
+  The families are read in the SVG, as drawn: from the theme of the plot
+  or from
+  [`ggplot2::theme_set()`](https://ggplot2.tidyverse.org/reference/get_theme.html),
+  the `family` of a layer,
+  [`element_geom()`](https://ggplot2.tidyverse.org/reference/element.html),
+  an aesthetic, or a graphic given with `code`. The aliases
+  (`"sans"`...) are checked as the fonts of `font_set` they stand for.
 
 - ...:
 
   arguments passed on to
-  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md)
+  [`dsvg()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg.md).
+  Its `fonts` argument is deprecated in `girafe()`: use `font_set`,
+  which also embeds the fonts in the HTML page.
 
 ## Details
 

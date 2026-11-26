@@ -12,23 +12,44 @@
 - A missing interactive value (`NA`) no longer writes “NA” in the SVG:
   the element gets no attribute. Elements with a missing `data_id` can
   no longer be hovered or selected (they used to share the id “NA”).
+
 - [`geom_errorbarh_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_errorbarh_interactive.md)
   is deprecated, as in ‘ggplot2’ 4.0: use
   `geom_errorbar_interactive(orientation = "y")`.
+
+- `girafe(fonts = )` is deprecated in favour of `font_set`, which also
+  embeds the fonts in the HTML page; it was ignored since 0.9.7 (the
+  fonts of `font_set` replaced it) and is applied again over them.
+
 - [`dsvg_view()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg_view.md)
   and the `fonts` argument of
   [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
   are deprecated.
+
 - [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
   only changes the options it is given, as `girafe(options = )` does.
+
 - [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md):
   an interactive parameter varying within a group is dropped, as
   ‘ggplot2’ does (the box took its first value).
+
+- [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
+  warns when a font of the graphic is not installed or not registered
+  with ‘systemfonts’ (`check_fonts_registered = TRUE` by default, it was
+  `FALSE` and an error): its texts would be measured with another font
+  and may not fit.
+
 - The hover and selection css no longer fill the lines: with a css such
   as `opts_hover(css = "fill:orange;stroke:orange;")`, the polylines
   were filled as closed shapes (e.g. an arc of a polar segment). Lines
   are filled only when asked with the `line` argument of
   [`girafe_css()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_css.md).
+
+- Error and warning messages name the function and describe the wrong
+  value, e.g. “Error in
+  [`opts_hover()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_hover.md):
+  `reactive` must be `TRUE` or `FALSE`, not the number 1.” (checks of
+  ‘rlang’, messages of ‘cli’).
 
 ### Issues
 
@@ -80,6 +101,19 @@ Other:
   when the session is missing.
 - `girafe(check_fonts_*)` failed when the graphic was given with `code`.
 - Interactive grobs: a single value was only set on the first element.
+- [`opts_zoom()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_zoom.md):
+  `min = 0.2` was refused, although it is the documented lower bound.
+- `girafe(check_fonts_registered, check_fonts_dependencies)` missed the
+  fonts set outside of the plot
+  ([`theme_set()`](https://ggplot2.tidyverse.org/reference/get_theme.html),
+  [`element_geom()`](https://ggplot2.tidyverse.org/reference/element.html),
+  the `family` aesthetic) and could not check a graphic given with
+  `code`: the fonts are now read in the SVG, as drawn.
+- `girafe(check_fonts_dependencies = TRUE)` failed with a dependency
+  declared with `package =` or with a stylesheet given as a list, and
+  missed the font names written without quotes in `@font-face` (they
+  were reported as missing). Names are now compared without case, as in
+  CSS.
 - Labels given as expressions (`parse = TRUE`) lost their attributes.
 - `onclick` code and ids containing single quotes were altered (the
   quotes were replaced by ’), which broke the JavaScript of `onclick`.
