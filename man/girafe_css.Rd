@@ -20,7 +20,11 @@ girafe_css(
 
 \item{point}{Override style for point elements (svg:circle)}
 
-\item{line}{Override style for line elements (svg:line, svg:polyline)}
+\item{line}{Override style for line elements (svg:line, svg:polyline).
+When it is not given, the lines are not filled (\code{fill:none;}): a \code{fill}
+of the generic \code{css} would fill a polyline as a closed shape, which is
+never what 'ggplot2' draws (its filled shapes are polygons, paths and
+rects). The other properties of \code{css} (e.g. \code{stroke}) still apply.}
 
 \item{area}{Override style for area elements (svg:rect, svg:polygon, svg:path)}
 

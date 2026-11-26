@@ -42,7 +42,7 @@ test_that("girafe_css", {
     info = "should return just placeholder /*GIRAFE CSS*/"
   )
   css <- ggiraph::girafe_css(css_code)
-  re <- paste0("^", girafe_css_re, classname_re, css_re(css_code), "$")
+  re <- paste0("^", girafe_css_re, classname_re, css_re(css_code))
   expect_true(
     grepl(re, css),
     info = "should return the css code with placeholder"
@@ -50,7 +50,7 @@ test_that("girafe_css", {
   css_tag_code <- "stroke: none;"
   css <- ggiraph::girafe_css(css_code, text = css_tag_code)
   re <- paste0("^", girafe_css_re, classname_re, css_re(css_code))
-  re2 <- paste0("\\s*text", classname_re, css_re(css_tag_code), "$")
+  re2 <- paste0("\\s*text", classname_re, css_re(css_tag_code))
   expect_true(
     grepl(re, css) && grepl(re2, css),
     info = "should use the tag for text"
@@ -58,7 +58,7 @@ test_that("girafe_css", {
 
   css <- ggiraph::girafe_css(css_code, point = css_tag_code)
   re <- paste0("^", girafe_css_re, classname_re, css_re(css_code))
-  re2 <- paste0("\\s*circle", classname_re, css_re(css_tag_code), "$")
+  re2 <- paste0("\\s*circle", classname_re, css_re(css_tag_code))
   expect_true(
     grepl(re, css) && grepl(re2, css),
     info = "should use the tag for point"
@@ -112,7 +112,11 @@ test_that("check_css", {
   expect_identical(ggiraph:::check_css(
     NULL,
     default = default, cls_prefix = cls_prefix, name = name, canvas_id = canvas_id
-  ), paste0(".", cls_prefix, canvas_id, " { ", default, " }"))
+  ), paste0(
+    ".", cls_prefix, canvas_id, " { ", default, " }\n",
+    # a raw css does not fill the lines
+    "line.", cls_prefix, canvas_id, ", polyline.", cls_prefix, canvas_id, " { fill:none; }"
+  ))
 })
 
 test_that("girafe_css_bicolor", {
@@ -126,5 +130,31 @@ test_that("girafe_css_bicolor", {
       point = "fill:yellow;stroke:black;",
       image = "stroke:yellow;"
     )
+  )
+})
+
+# lines are not filled unless asked ----
+test_that("girafe_css does not fill lines, unless asked with `line`", {
+  no_fill <- "line._CLASSNAME_, polyline._CLASSNAME_ { fill:none; }"
+  # a generic css with a fill would fill the polylines as closed shapes
+  expect_equal(
+    ggiraph::girafe_css("fill:orange;stroke:orange;"),
+    paste0("/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:orange; }\n", no_fill)
+  )
+  # an explicit line rule is kept as it is
+  css <- ggiraph::girafe_css("fill:orange;", line = "fill:red;")
+  expect_false(grepl("fill:none", css, fixed = TRUE))
+  expect_true(grepl("polyline._CLASSNAME_ { fill:red; }", css, fixed = TRUE))
+  # an empty css stays empty (no style, e.g. no inverted hover)
+  expect_equal(ggiraph::girafe_css(""), "/*GIRAFE CSS*/")
+})
+
+test_that("the tooltip css is a single rule (no rule for lines)", {
+  css <- opts_tooltip(css = "background:black;")$css
+  expect_false(grepl("polyline", css, fixed = TRUE))
+  # the declarations managed by girafe end the tooltip rule
+  expect_equal(
+    css,
+    ".tooltip_SVGID_ { background:black; ; position:absolute;pointer-events:none;z-index:9999;}"
   )
 })

@@ -5,7 +5,11 @@
 #' @param css The generic css style
 #' @param text Override style for text elements (svg:text)
 #' @param point Override style for point elements (svg:circle)
-#' @param line Override style for line elements (svg:line, svg:polyline)
+#' @param line Override style for line elements (svg:line, svg:polyline).
+#' When it is not given, the lines are not filled (`fill:none;`): a `fill`
+#' of the generic `css` would fill a polyline as a closed shape, which is
+#' never what 'ggplot2' draws (its filled shapes are polygons, paths and
+#' rects). The other properties of `css` (e.g. `stroke`) still apply.
 #' @param area Override style for area elements (svg:rect, svg:polygon, svg:path)
 #' @param image Override style for image elements (svg:image)
 #'
@@ -31,6 +35,11 @@ girafe_css <- function(
   area = NULL,
   image = NULL
 ) {
+  # polylines are never filled, unless asked with `line` (an empty css
+  # stays empty: it means no style, e.g. no inverted hover)
+  if (is.null(line) && is_string(css) && nzchar(trimws(css))) {
+    line <- "fill:none;"
+  }
   css <- c(
     paste0("/*GIRAFE CSS*/", validate_css(css, "css")),
     validate_css(text, "text", "text"),
@@ -128,7 +137,8 @@ check_css <- function(
   cls_prefix,
   name = cls_prefix,
   canvas_id = "SVGID_",
-  filter = NULL
+  filter = NULL,
+  lines = TRUE
 ) {
   if (is.null(css)) {
     css <- default
@@ -137,7 +147,9 @@ check_css <- function(
   }
   pattern = "\\/\\*GIRAFE CSS\\*\\/"
   if (!grepl(pattern, css)) {
-    css <- girafe_css(css)
+    # `lines`: the css styles shapes, the lines are not filled (see
+    # girafe_css()); FALSE for the tooltip, a div with a single rule
+    css <- if (lines) girafe_css(css) else girafe_css(css, line = "")
   }
   css <- gsub("_CLASSNAME_", paste0(cls_prefix, canvas_id, filter), css)
   css <- gsub(pattern, "", css)

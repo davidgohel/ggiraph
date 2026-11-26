@@ -66,7 +66,8 @@ opts_tooltip <- function(
     css = css,
     default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left;",
     cls_prefix = "tooltip_",
-    name = "opts_tooltip"
+    name = "opts_tooltip",
+    lines = FALSE
   )
   if (grepl(x = css, pattern = "position[ ]*:")) {
     abort(
