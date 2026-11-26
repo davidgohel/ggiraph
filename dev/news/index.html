@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.028</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,7 @@
 <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> only changes the options it is given, as <code>girafe(options = )</code> does.</li>
 <li>
 <code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: an interactive parameter varying within a group is dropped, as ‘ggplot2’ does (the box took its first value).</li>
+<li>The hover and selection css no longer fill the lines: with a css such as <code>opts_hover(css = "fill:orange;stroke:orange;")</code>, the polylines were filled as closed shapes (e.g. an arc of a polar segment). Lines are filled only when asked with the <code>line</code> argument of <code><a href="../reference/girafe_css.html">girafe_css()</a></code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="issues-0-9-8">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-8"></a></h3>
