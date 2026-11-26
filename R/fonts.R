@@ -190,7 +190,7 @@ fonts_checking_dependencies <- function(dependencies, family_list) {
       c(
         "!" = "Found {length(missing_family_list)} missing font famil{?y/ies} in the htmlDependencies provided in `dependencies`:",
         "!" = "Missing: {missing_family_list}",
-        "i" = "You can add you font families as 'htmlDependencies' within the call to {.fn girafe}:",
+        "i" = "You can add your font families as 'htmlDependencies' within the call to {.fn girafe}:",
         "i" = "for example to add 'Open Sans': {.code girafe(..., dependencies = list(gdtools::gfontHtmlDependency(family = 'Open Sans')))}",
         "!" = "This can be a false positive if fonts are loaded from other sources. In that case, set {.code check_fonts_dependencies = FALSE} in {.fn girafe} as we only scan the htmlDependencies from the {.code dependencies} argument."
       )
