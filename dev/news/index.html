@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.027</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.028</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,8 @@
 <code>girafe(check_fonts_*)</code> failed when the graphic was given with <code>code</code>.</li>
 <li>Interactive grobs: a single value was only set on the first element.</li>
 <li>Labels given as expressions (<code>parse = TRUE</code>) lost their attributes.</li>
+<li>
+<code>onclick</code> code and ids containing single quotes were altered (the quotes were replaced by ’), which broke the JavaScript of <code>onclick</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="internals-0-9-8">Internals<a class="anchor" aria-label="anchor" href="#internals-0-9-8"></a></h3>
