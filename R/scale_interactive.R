@@ -87,7 +87,8 @@ scale_interactive <- function(
       interactive_guide = interactive_guide
     )
   } else {
-    cli::cli_warn(
+    # no `cli::`: extensions copy this function (see utils.R)
+    cli_warn(
       "Only the {.val legend}, {.val bins}, {.val colourbar} and {.val coloursteps} guides can be interactive."
     )
     return(sc)

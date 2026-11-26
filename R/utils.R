@@ -2,6 +2,11 @@
 #' @importFrom rlang arg_match is_named %||%
 #' @importFrom rlang check_bool check_number_decimal check_string
 #' @importFrom rlang caller_arg caller_env
+# Functions copied by extensions with getFromNamespace() (add_interactive_attrs(),
+# scale_interactive()...) must not call `pkg::fun()` of a package that the
+# extensions do not import: their R CMD check warns ("'::' or ':::' import
+# not declared from"). They call imported functions instead.
+#' @importFrom cli cli_abort cli_warn
 # Include generic helpers from ggplot2
 #' @include utils_ggplot2.R
 #' @include utils_ggplot2_performance.R

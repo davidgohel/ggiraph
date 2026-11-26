@@ -280,6 +280,10 @@ import(graphics)
 import(grid)
 importFrom(MASS,kde2d)
 importFrom(Rcpp,sourceCpp)
+importFrom(cli,
+  cli_abort,
+  cli_warn
+)
 importFrom(gdtools,
   font_set_liberation,
   sys_fonts
