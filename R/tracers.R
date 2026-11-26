@@ -67,13 +67,10 @@ set_attr <- function(name, ids, values) {
     }
 
     if (length(ids) != length(values)) {
-      warning(
-        "Failed setting attribute '",
-        name,
-        "', ",
-        "mismatched lengths of ids and values ",
-        "(most often, it occurs because of clipping or because of NAs in data)"
-      )
+      cli::cli_warn(c(
+        "Can't set the attribute {.field {name}}: {length(ids)} element{?s} drawn for {length(values)} value{?s}.",
+        "i" = "Most often, it occurs because of clipping or because of {.code NA} in the data."
+      ))
     } else {
       # a missing value means no attribute: no tooltip, no shared "NA" id
       missing_values <- is.na(values)

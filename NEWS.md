@@ -23,10 +23,9 @@ group is dropped, as 'ggplot2' does (the box took its first value).
 filled as closed shapes (e.g. an arc of a polar segment). Lines are filled
 only when asked with the `line` argument of `girafe_css()`.
 
-- Error messages of the `opts_*()` functions and `dsvg()` name the
-function and describe the wrong value, e.g. "Error in `opts_hover()`:
-`reactive` must be `TRUE` or `FALSE`, not the number 1." (checks of
-'rlang', messages of 'cli').
+- Error and warning messages name the function and describe the wrong
+value, e.g. "Error in `opts_hover()`: `reactive` must be `TRUE` or
+`FALSE`, not the number 1." (checks of 'rlang', messages of 'cli').
 
 ## Issues
 

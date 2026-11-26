@@ -216,6 +216,6 @@ test_that("legend warns when the values do not match the breaks", {
       values = c("red", "green", "blue"),
       data_id = c("a", "b")
     )
-  expect_warning(doc <- dsvg_plot(p), "length differs from the breaks length")
+  expect_warning(doc <- dsvg_plot(p), "differs from the number of breaks")
   expect_length(xml_find_all(doc, "//*[@key-id]"), 0)
 })

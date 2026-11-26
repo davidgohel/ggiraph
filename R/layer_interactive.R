@@ -112,13 +112,8 @@ find_interactive_class <- function(
       name <- "bar"
     }
   } else {
-    abort(
-      paste0(
-        "`gg` must be either a string or a ",
-        baseclass,
-        "* object, not ",
-        obj_desc(gg)
-      ),
+    cli::cli_abort(
+      "{.arg gg} must be either a string or a {.cls {baseclass}} object, not {.obj_type_friendly {gg}}.",
       call = NULL
     )
   }
@@ -131,13 +126,8 @@ find_interactive_class <- function(
   }
   obj <- find_global(name, env = env)
   if (is.null(obj) || !inherits(obj, baseclass)) {
-    abort(
-      paste0(
-        "Can't find interactive ",
-        baseclass,
-        " function based on ",
-        as_label(gg)
-      ),
+    cli::cli_abort(
+      "Can't find the interactive {baseclass} based on {.code {as_label(gg)}}.",
       call = NULL
     )
   } else {

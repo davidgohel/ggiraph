@@ -53,18 +53,19 @@ girafe_class_toggle <- function(session, id, class, data_id = NULL, key_id = NUL
   girafe_class_action(session, id, class, action = "toggle", data_id = data_id, key_id = key_id, theme_id = theme_id)
 }
 
-girafe_class_action <- function(session, id, class, action, data_id = NULL, key_id = NULL, theme_id = NULL) {
+girafe_class_action <- function(session, id, class, action, data_id = NULL, key_id = NULL, theme_id = NULL, call = caller_env()) {
   if (!is_shiny_session(session)) {
     cli::cli_abort(c(
       "{.arg session} must be the Shiny session.",
       "i" = "Did you forget it? Call {.code girafe_class_{action}(session, id, class, ...)} in the server function."
-    ), call = NULL)
+    ), call = call)
   }
-  if (!is.character(class) || length(class) != 1 || !nzchar(class)) {
-    stop("`class` must be a non-empty string.", call. = FALSE)
-  }
+  check_string(class, allow_empty = FALSE, call = call)
   if (is.null(data_id) && is.null(key_id) && is.null(theme_id)) {
-    stop("At least one of `data_id`, `key_id`, or `theme_id` must be provided.", call. = FALSE)
+    cli::cli_abort(
+      "At least one of {.arg data_id}, {.arg key_id} or {.arg theme_id} must be given.",
+      call = call
+    )
   }
 
   message <- list(action = action, cls = class)

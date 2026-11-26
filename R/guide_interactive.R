@@ -9,7 +9,10 @@ guide_interactive <- function(guide_func, ..., interactive_guide = NULL) {
   } else if (inherits(guide_func, "Guide")) {
     guide <- guide_func
   } else {
-    abort("Invalid guide_func argument!")
+    cli::cli_abort(
+      "{.arg guide_func} must be a function or a {.cls Guide} object, not {.obj_type_friendly {guide_func}}.",
+      call = NULL
+    )
   }
   if (is.null(interactive_guide)) {
     interactive_guide <- find_interactive_class(guide, baseclass = "Guide")
@@ -76,11 +79,9 @@ interactive_guide_train <- function(
               i = "A function given to the scale receives the {length(breaks)} break{?s} and must return one value for the whole bar."
             ))
           } else if (length(values) > 1 && length(values) != length(breaks)) {
-            warning(paste0(
-              "Cannot set the guide interactive attribute '",
-              a,
-              "', because its length differs from the breaks length"
-            ))
+            cli::cli_warn(
+              "Can't set the interactive attribute {.field {a}} of the guide: its length differs from the number of breaks."
+            )
           } else {
             # length of values must match provided max length or
             # the rows of decor data frame or the rows of key data frame
@@ -104,10 +105,9 @@ interactive_guide_train <- function(
         labels <- scale$get_labels(label_breaks)
         if (inherits(labels, "interactive_label")) {
           if (length(labels) != nrow(key)) {
-            warning(paste0(
-              "Cannot set the guide interactive labels, ",
-              "', because its length differs from the breaks length"
-            ))
+            cli::cli_warn(
+              "Can't set the interactive labels of the guide: their number differs from the number of breaks."
+            )
           } else {
             key$.label <- labels
             params$key <- key

@@ -155,13 +155,9 @@ init_girafe_defaults <- function() {
 #' @family girafe animation options
 girafe_defaults <- function(name = NULL) {
   x <- girafe_global$defaults
-  if (!is.null(name) && !is_valid_string_non_empty(name)) {
-    abort("`name` must be a non-empty scalar character", call = NULL)
-  } else if (!is.null(name) && is_valid_string_non_empty(name)) {
-    x[[name]]
-  } else {
-    x
-  }
+  check_string(name, allow_empty = FALSE, allow_null = TRUE)
+  check_not_blank(name)
+  if (is.null(name)) x else x[[name]]
 }
 
 default_width <- function(default = 6) {

@@ -1,5 +1,5 @@
 #' @importFrom MASS kde2d
-#' @importFrom rlang abort arg_match is_named %||%
+#' @importFrom rlang arg_match is_named %||%
 #' @importFrom rlang check_bool check_number_decimal check_string
 #' @importFrom rlang caller_arg caller_env
 # Include generic helpers from ggplot2
@@ -107,15 +107,6 @@ is_valid_string_non_empty <- function(x) {
   is_valid_string(x) && nzchar(trimws(x))
 }
 
-#' @importFrom rlang is_scalar_integer is_scalar_double
-is_valid_number <- function(x) {
-  (is_scalar_integer(x) || is_scalar_double(x)) && !is.na(x) && !is.nan(x)
-}
-
-#' @importFrom rlang is_scalar_logical
-is_valid_logical <- function(x) {
-  is_scalar_logical(x) && !is.na(x)
-}
 
 # a number strictly positive (check_number_decimal() has no exclusive bound)
 check_number_positive <- function(x, ..., arg = caller_arg(x), call = caller_env()) {

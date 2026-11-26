@@ -14,8 +14,9 @@ test_that("girafe_defaults() returns every option or one of them", {
   for (name in opts_names) {
     expect_s3_class(girafe_defaults(name), name)
   }
-  expect_error(girafe_defaults(1), "non-empty scalar character")
-  expect_error(girafe_defaults(""), "non-empty scalar character")
+  expect_error(girafe_defaults(1), "must be a single string")
+  expect_error(girafe_defaults(""), "must be a single string")
+  expect_error(girafe_defaults(" "), "must not be blank")
 })
 
 test_that("defaults set with set_girafe_defaults() are used by girafe()", {

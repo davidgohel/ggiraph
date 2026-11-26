@@ -281,7 +281,7 @@ add_interactive_attrs <- function(
           )
       }
     } else {
-      abort("Can't add interactive attrs to gTree", call = NULL)
+      cli::cli_abort("Can't add interactive attributes to a {.cls gTree}.", call = NULL)
     }
     return(gr)
   } else {

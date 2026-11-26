@@ -38,9 +38,13 @@ test_that("girafe_class_* send only the given ids, as character", {
 # invalid arguments ----
 test_that("girafe_class_* check their arguments", {
   session <- mock_session()
-  expect_error(girafe_class_add(session, "plot", "", data_id = "a"), "non-empty string")
-  expect_error(girafe_class_add(session, "plot", c("a", "b"), data_id = "a"), "non-empty string")
-  expect_error(girafe_class_add(session, "plot", 1, data_id = "a"), "non-empty string")
+  expect_error(girafe_class_add(session, "plot", "", data_id = "a"), "must be a single string")
+  expect_error(girafe_class_add(session, "plot", c("a", "b"), data_id = "a"), "must be a single string")
+  expect_error(girafe_class_add(session, "plot", 1, data_id = "a"), "must be a single string")
+  # the error names the function of the user, not the internal one
+  expect_error(girafe_class_add(session, "plot", 1, data_id = "a"), class = "rlang_error")
+  err <- tryCatch(girafe_class_add(session, "plot", "hl"), error = identity)
+  expect_equal(as.character(err$call[[1]]), "girafe_class_add")
   expect_error(girafe_class_add(session, "plot", "hl"), "At least one of")
   expect_length(session$messages, 0)
 })

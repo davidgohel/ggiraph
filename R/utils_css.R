@@ -112,14 +112,14 @@ girafe_css_bicolor <- function(primary = "orange", secondary = "gray") {
 #' Helper to check girafe_css argument
 #' @noRd
 #' @importFrom rlang is_scalar_character
-validate_css <- function(css, name, tag = NULL) {
+validate_css <- function(css, name, tag = NULL, call = caller_env()) {
   if (is.null(css) || any(is.na(css))) {
     css <- ""
   }
   if (!is_string(css)) {
-    abort(
-      paste0("Argument `", name, "` must be a scalar character"),
-      call = NULL
+    cli::cli_abort(
+      "{.arg {name}} must be a single string, not {.obj_type_friendly {css}}.",
+      call = call
     )
   }
   css <- trimws(css)
@@ -140,12 +140,16 @@ check_css <- function(
   name = cls_prefix,
   canvas_id = "SVGID_",
   filter = NULL,
-  lines = TRUE
+  lines = TRUE,
+  call = caller_env()
 ) {
   if (is.null(css)) {
     css <- default
   } else if (!is_string(css)) {
-    abort(name, ": css must be a scalar character", call = NULL)
+    cli::cli_abort(
+      "{.arg css} must be a single string, not {.obj_type_friendly {css}}.",
+      call = call
+    )
   }
   pattern = "\\/\\*GIRAFE CSS\\*\\/"
   if (!grepl(pattern, css)) {

@@ -219,7 +219,7 @@ test_that("interactive labels given as a vector warn instead of failing", {
     breaks = c(100, 200, 300),
     labels = label_interactive(c("low", "mid", "high"), data_id = c("a", "b", "c"))
   )
-  expect_warning(doc <- dsvg_plot(p), "Cannot set the guide interactive labels")
+  expect_warning(doc <- dsvg_plot(p), "interactive labels of the guide")
   expect_equal(
     xml_text(xml_find_all(doc, ".//text[text() = 'low' or text() = 'high']")),
     c("low", "high")

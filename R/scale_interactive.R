@@ -87,8 +87,8 @@ scale_interactive <- function(
       interactive_guide = interactive_guide
     )
   } else {
-    warning(
-      "Only `legend`, 'bins', `colourbar` and `coloursteps` guides are supported for interactivity"
+    cli::cli_warn(
+      "Only the {.val legend}, {.val bins}, {.val colourbar} and {.val coloursteps} guides can be interactive."
     )
     return(sc)
   }

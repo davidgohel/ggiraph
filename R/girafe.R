@@ -333,13 +333,10 @@ run_girafe_example <- function(name = "crimes") {
   example_dir <- system.file(package = "ggiraph", "examples", "shiny")
   apps <- girafe_app_paths()
   if (!name %in% basename(apps)) {
-    abort(
-      "could not find app named ",
-      shQuote(name),
-      " in the following list: ",
-      paste0(shQuote(basename(apps)), collapse = ", "),
-      call = NULL
-    )
+    cli::cli_abort(c(
+      "Can't find the app {.val {name}}.",
+      "i" = "Available apps: {.val {basename(apps)}}."
+    ))
   }
   if (requireNamespace("shiny")) {
     shiny::runApp(
@@ -347,7 +344,7 @@ run_girafe_example <- function(name = "crimes") {
       display.mode = "showcase"
     )
   } else {
-    warning("package shiny is required to be able to use the function")
+    cli::cli_warn("Package {.pkg shiny} is required to run the examples.")
   }
 }
 
