@@ -32,10 +32,11 @@ girafe_css(
 - line:
 
   Override style for line elements (svg:line, svg:polyline). When it is
-  not given, the lines are not filled (`fill:none;`): a `fill` of the
-  generic `css` would fill a polyline as a closed shape, which is never
-  what 'ggplot2' draws (its filled shapes are polygons, paths and
-  rects). The other properties of `css` (e.g. `stroke`) still apply.
+  not given and `css` sets a fill, the lines are not filled
+  (`fill:none;`): a `fill` of the generic `css` would fill a polyline as
+  a closed shape, which is never what 'ggplot2' draws (its filled shapes
+  are polygons, paths and rects). The other properties of `css` (e.g.
+  `stroke`) still apply.
 
 - area:
 

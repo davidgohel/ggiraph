@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.029</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,8 +65,9 @@
 
 <dt id="arg-line">line<a class="anchor" aria-label="anchor" href="#arg-line"></a></dt>
 <dd><p>Override style for line elements (svg:line, svg:polyline).
-When it is not given, the lines are not filled (<code>fill:none;</code>): a <code>fill</code>
-of the generic <code>css</code> would fill a polyline as a closed shape, which is
+When it is not given and <code>css</code> sets a fill, the lines are not filled
+(<code>fill:none;</code>): a <code>fill</code> of the generic <code>css</code> would fill a polyline as a
+closed shape, which is
 never what 'ggplot2' draws (its filled shapes are polygons, paths and
 rects). The other properties of <code>css</code> (e.g. <code>stroke</code>) still apply.</p></dd>
 
