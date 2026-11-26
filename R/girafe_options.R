@@ -70,19 +70,17 @@ opts_tooltip <- function(
     lines = FALSE
   )
   if (grepl(x = css, pattern = "position[ ]*:")) {
-    abort(
-      "do not specify position in css, this parameter is managed by girafe."
+    cli::cli_abort(
+      "Do not specify {.code position} in {.arg css}, it is managed by girafe."
     )
   }
   if (grepl(x = css, pattern = "pointer-events[ ]*:")) {
-    abort(
-      "do not specify pointer-events in css, this parameter is managed by girafe."
+    cli::cli_abort(
+      "Do not specify {.code pointer-events} in {.arg css}, it is managed by girafe."
     )
   }
 
-  if (!is_valid_number(zindex) || zindex < 1) {
-    abort("`zindex` must be a scalar positive number, >= 1", call = NULL)
-  }
+  check_number_decimal(zindex, min = 1)
   zindex <- round(zindex, digits = 0)
 
   css <- trimws(sub(
@@ -95,31 +93,15 @@ opts_tooltip <- function(
     css
   ))
 
-  if (!is_valid_number(offx)) {
-    abort("`offx` must be a scalar number", call = NULL)
-  }
-  if (!is_valid_number(offy)) {
-    abort("`offy` must be a scalar number", call = NULL)
-  }
-  if (!is_valid_logical(use_cursor_pos)) {
-    abort("`use_cursor_pos` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_number(opacity) || opacity <= 0 || opacity > 1) {
-    abort("`opacity` must be a scalar number, 0 < opacity <= 1", call = NULL)
-  }
-  if (!is_valid_logical(use_fill)) {
-    abort("`use_fill` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_logical(use_stroke)) {
-    abort("`use_stroke` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_number(delay_mouseover) || delay_mouseover < 0) {
-    abort("`delay_mouseover` must be a scalar positive number", call = NULL)
-  }
-  if (!is_valid_number(delay_mouseout) || delay_mouseout < 0) {
-    abort("`delay_mouseout` must be a scalar positive number", call = NULL)
-  }
-  placement = arg_match(placement, error_call = NULL)
+  check_number_decimal(offx)
+  check_number_decimal(offy)
+  check_bool(use_cursor_pos)
+  check_number_positive(opacity, max = 1)
+  check_bool(use_fill)
+  check_bool(use_stroke)
+  check_number_decimal(delay_mouseover, min = 0)
+  check_number_decimal(delay_mouseout, min = 0)
+  placement <- arg_match(placement)
   if (placement == "auto") {
     placement <- "doc"
     is_xaringan <- !is.null(getOption("xaringan.page_number.offset"))
@@ -202,21 +184,9 @@ opts_hover <- function(css = NULL, reactive = FALSE, nearest_distance = NULL, li
     cls_prefix = "hover_data_",
     name = "opts_hover"
   )
-  if (!is_valid_logical(reactive)) {
-    abort("`reactive` must be a scalar logical", call = NULL)
-  }
-  if (
-    !is.null(nearest_distance) &&
-      !(is_valid_number(nearest_distance) && nearest_distance >= 0)
-  ) {
-    abort(
-      "`nearest_distance` must be a scalar positive number or NULL",
-      call. = FALSE
-    )
-  }
-  if (!is_valid_logical(linked)) {
-    abort("`linked` must be a scalar logical", call = NULL)
-  }
+  check_bool(reactive)
+  check_number_decimal(nearest_distance, min = 0, allow_null = TRUE)
+  check_bool(linked)
 
   x <- list(css = css, reactive = reactive, nearest_distance = nearest_distance, linked = linked)
   class(x) <- "opts_hover"
@@ -248,9 +218,7 @@ opts_hover_key <- function(css = NULL, reactive = FALSE) {
     cls_prefix = "hover_key_",
     name = "opts_hover"
   )
-  if (!is_valid_logical(reactive)) {
-    abort("`reactive` must be a scalar logical", call = NULL)
-  }
+  check_bool(reactive)
 
   x <- list(css = css, reactive = reactive)
   class(x) <- "opts_hover_key"
@@ -267,9 +235,7 @@ opts_hover_theme <- function(css = NULL, reactive = FALSE) {
     cls_prefix = "hover_theme_",
     name = "opts_hover_theme"
   )
-  if (!is_valid_logical(reactive)) {
-    abort("`reactive` must be a scalar logical", call = NULL)
-  }
+  check_bool(reactive)
 
   x <- list(css = css, reactive = reactive)
   class(x) <- "opts_hover_theme"
@@ -339,13 +305,9 @@ opts_selection <- function(
     cls_prefix = "select_data_",
     name = "opts_selection"
   )
-  type = arg_match(type, error_call = NULL)
-  if (!is_valid_logical(only_shiny)) {
-    abort("`only_shiny` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_logical(linked)) {
-    abort("`linked` must be a scalar logical", call = NULL)
-  }
+  type <- arg_match(type)
+  check_bool(only_shiny)
+  check_bool(linked)
 
   x <- list(
     css = css,
@@ -388,10 +350,8 @@ opts_selection_key <- function(
     cls_prefix = "select_key_",
     name = "opts_selection_key"
   )
-  type <- arg_match(type, error_call = NULL)
-  if (!is_valid_logical(only_shiny)) {
-    abort("`only_shiny` must be a scalar logical", call = NULL)
-  }
+  type <- arg_match(type)
+  check_bool(only_shiny)
 
   x <- list(
     css = css,
@@ -418,10 +378,8 @@ opts_selection_theme <- function(
     cls_prefix = "select_theme_",
     name = "opts_selection_theme"
   )
-  type <- arg_match(type, error_call = NULL)
-  if (!is_valid_logical(only_shiny)) {
-    abort("`only_shiny` must be a scalar logical", call = NULL)
-  }
+  type <- arg_match(type)
+  check_bool(only_shiny)
 
   x <- list(
     css = css,
@@ -459,21 +417,13 @@ opts_selection_theme <- function(
 #' @export
 #' @family girafe animation options
 opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
-  if (!is_valid_number(min) || min <= 0.2) {
-    abort("`min` must be a scalar number, >= 0.2", call = NULL)
-  }
-  if (!is_valid_number(max) || min <= 0.2) {
-    abort("`max` must be a scalar number, >= 0.2", call = NULL)
-  }
+  check_number_decimal(min, min = 0.2)
+  check_number_decimal(max, min = 0.2)
   if (max < min) {
-    abort("`max` must be bigger than `min`", call = NULL)
+    cli::cli_abort("{.arg max} ({max}) must be larger than or equal to {.arg min} ({min}).")
   }
-  if (!is_valid_number(duration) || duration < 0) {
-    abort("`duration` must be a scalar positive number", call = NULL)
-  }
-  if (!is_valid_logical(default_on)) {
-    abort("`default_on` must be a scalar logical", call = NULL)
-  }
+  check_number_decimal(duration, min = 0)
+  check_bool(default_on)
 
   x <- list(
     min = min,
@@ -643,31 +593,24 @@ opts_toolbar <- function(
   icon_active_color = NULL,
   icon_hover_color = NULL
 ) {
-  position = arg_match(position, error_call = NULL)
-  if (!is_valid_logical(saveaspng)) {
-    abort("`saveaspng` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_string_non_empty(pngname)) {
-    abort("`pngname` must be a non-empty scalar character", call = NULL)
-  }
+  position <- arg_match(position)
+  check_bool(saveaspng)
+  check_string(pngname, allow_empty = FALSE)
+  check_not_blank(pngname)
   if (!is.null(tooltips) && !(is.list(tooltips) && is_named(tooltips))) {
-    abort("`tooltips` must be a named list or NULL", call = NULL)
+    cli::cli_abort("{.arg tooltips} must be a named list or {.code NULL}.")
   }
   if (is.null(hidden)) {
     hidden = character()
   }
   if (!is.character(hidden)) {
-    abort("`hidden` must be a character vector", call = NULL)
+    cli::cli_abort("{.arg hidden} must be a character vector.")
   }
   if (isFALSE(saveaspng) && !"saveaspng" %in% hidden) {
     hidden = c(hidden, "saveaspng")
   }
-  if (!is_valid_number(delay_mouseover) || delay_mouseover < 0) {
-    abort("`delay_mouseover` must be a scalar positive number", call = NULL)
-  }
-  if (!is_valid_number(delay_mouseout) || delay_mouseout < 0) {
-    abort("`delay_mouseout` must be a scalar positive number", call = NULL)
-  }
+  check_number_decimal(delay_mouseover, min = 0)
+  check_number_decimal(delay_mouseout, min = 0)
   colors <- list(
     bg_color = bg_color,
     icon_color = icon_color,
@@ -676,12 +619,8 @@ opts_toolbar <- function(
   )
   for (arg in names(colors)) {
     value <- colors[[arg]]
-    if (!is.null(value) && !is_valid_string_non_empty(value)) {
-      abort(
-        sprintf("`%s` must be NULL or a non-empty scalar character", arg),
-        call = NULL
-      )
-    }
+    check_string(value, allow_empty = FALSE, allow_null = TRUE, arg = arg)
+    check_not_blank(value, arg = arg)
   }
 
   x <- list(
@@ -733,12 +672,8 @@ opts_toolbar <- function(
 #' if( interactive() ) print(x)
 #' @export
 opts_sizing <- function(rescale = TRUE, width = 1) {
-  if (!is_valid_logical(rescale)) {
-    abort("`rescale` must be a scalar logical")
-  }
-  if (!is_valid_number(width) || width <= 0 || width > 1) {
-    abort("`width` must be a scalar number, (0 < width <= 1)", call = NULL)
-  }
+  check_bool(rescale)
+  check_number_positive(width, max = 1)
 
   x <- list(rescale = rescale, width = width)
   class(x) <- "opts_sizing"
@@ -781,7 +716,7 @@ opts_sizing <- function(rescale = TRUE, width = 1) {
 #' @family girafe animation options
 girafe_options <- function(x, ...) {
   if (!inherits(x, "girafe")) {
-    abort("`x` must be a girafe object", call = NULL)
+    cli::cli_abort("{.arg x} must be a {.cls girafe} object, not {.obj_type_friendly {x}}.")
   }
 
   args <- list2(...)

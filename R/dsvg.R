@@ -50,30 +50,17 @@ dsvg <- function(
   desc = NULL,
   fonts = list()
 ) {
-  if (!is_valid_string_non_empty(file)) {
-    abort("`file` must be a non-empty scalar character", call = NULL)
-  }
-  if (!is_valid_number(width) || width <= 0) {
-    abort("`width` must be a scalar positive number", call = NULL)
-  }
-  if (!is_valid_number(height) || height <= 0) {
-    abort("`height` must be a scalar positive number", call = NULL)
-  }
-  if (!is_valid_string_non_empty(bg)) {
-    abort("`bg` must be a non-empty scalar character", call = NULL)
-  }
-  if (!is_valid_number(pointsize) || pointsize <= 0) {
-    abort("`pointsize` must be a scalar positive number", call = NULL)
-  }
-  if (!is_valid_logical(standalone)) {
-    abort("`standalone` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_logical(setdims)) {
-    abort("`setdims` must be a scalar logical", call = NULL)
-  }
-  if (!is_valid_string_non_empty(canvas_id)) {
-    abort("`canvas_id` must be a non-empty scalar character", call = NULL)
-  }
+  check_string(file, allow_empty = FALSE)
+  check_not_blank(file)
+  check_number_positive(width)
+  check_number_positive(height)
+  check_string(bg, allow_empty = FALSE)
+  check_not_blank(bg)
+  check_number_positive(pointsize)
+  check_bool(standalone)
+  check_bool(setdims)
+  check_string(canvas_id, allow_empty = FALSE)
+  check_not_blank(canvas_id)
   if (!is_valid_string_non_empty(title)) {
     title <- ""
   }
@@ -81,7 +68,7 @@ dsvg <- function(
     desc <- ""
   }
   if (!is.list(fonts)) {
-    abort("`fonts` must be a list", call = NULL)
+    cli::cli_abort("{.arg fonts} must be a list, not {.obj_type_friendly {fonts}}.")
   }
 
   fonts_list <- validated_fonts(fonts)

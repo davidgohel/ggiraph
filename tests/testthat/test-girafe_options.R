@@ -166,6 +166,8 @@ test_that("opts_zoom", {
   expect_equal(opts$max, 1, info = "check max argument")
 
   expect_error(opts_zoom(min = 0.5, max = 0.4), info = "max > min")
+  # 0.2 is the lower bound, accepted (it was refused)
+  expect_equal(opts_zoom(min = 0.2, max = 0.2)$min, 0.2)
 
   expect_error(opts_zoom(duration = "200"), info = "check duration argument")
   expect_error(opts_zoom(duration = -50), info = "check duration argument")

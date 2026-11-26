@@ -23,6 +23,11 @@ group is dropped, as 'ggplot2' does (the box took its first value).
 filled as closed shapes (e.g. an arc of a polar segment). Lines are filled
 only when asked with the `line` argument of `girafe_css()`.
 
+- Error messages of the `opts_*()` functions and `dsvg()` name the
+function and describe the wrong value, e.g. "Error in `opts_hover()`:
+`reactive` must be `TRUE` or `FALSE`, not the number 1." (checks of
+'rlang', messages of 'cli').
+
 ## Issues
 
 Interactive geoms now draw as their 'ggplot2' 4.0 counterparts:
@@ -60,6 +65,8 @@ Other:
 containing it; they say when the session is missing.
 - `girafe(check_fonts_*)` failed when the graphic was given with `code`.
 - Interactive grobs: a single value was only set on the first element.
+- `opts_zoom()`: `min = 0.2` was refused, although it is the documented
+lower bound.
 - Labels given as expressions (`parse = TRUE`) lost their attributes.
 - `onclick` code and ids containing single quotes were altered (the quotes
 were replaced by ’), which broke the JavaScript of `onclick`.

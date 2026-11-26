@@ -1,5 +1,7 @@
 #' @importFrom MASS kde2d
 #' @importFrom rlang abort arg_match is_named %||%
+#' @importFrom rlang check_bool check_number_decimal check_string
+#' @importFrom rlang caller_arg caller_env
 # Include generic helpers from ggplot2
 #' @include utils_ggplot2.R
 #' @include utils_ggplot2_performance.R
@@ -113,6 +115,24 @@ is_valid_number <- function(x) {
 #' @importFrom rlang is_scalar_logical
 is_valid_logical <- function(x) {
   is_scalar_logical(x) && !is.na(x)
+}
+
+# a number strictly positive (check_number_decimal() has no exclusive bound)
+check_number_positive <- function(x, ..., arg = caller_arg(x), call = caller_env()) {
+  check_number_decimal(x, ..., min = 0, arg = arg, call = call)
+  if (x == 0) {
+    cli::cli_abort("{.arg {arg}} must be larger than 0, not 0.", call = call)
+  }
+  invisible(NULL)
+}
+
+# a string made only of spaces is refused, as an empty one (after
+# check_string(), which accepts it)
+check_not_blank <- function(x, arg = caller_arg(x), call = caller_env()) {
+  if (!is.null(x) && !nzchar(trimws(x))) {
+    cli::cli_abort("{.arg {arg}} must not be blank.", call = call)
+  }
+  invisible(NULL)
 }
 
 #' Rows drawn by `GeomSegment$draw_panel()`
