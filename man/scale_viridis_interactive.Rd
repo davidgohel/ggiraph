@@ -72,7 +72,10 @@ it will be converted to a \code{\link[=guide_legend_interactive]{guide_legend_in
 if it's not already.
 
 The length of each scale interactive parameter vector should match the length of the breaks.
-It can also be a named vector, where each name should correspond to the same break name.
+It can also be a named vector, where each name should correspond to the same break name
+(a date on a date scale, a value of the data on a transformed scale).
+The breaks without a name keep their own value, as \code{labels} does in 'ggplot2';
+a name that matches no break is ignored, with a warning.
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.
 

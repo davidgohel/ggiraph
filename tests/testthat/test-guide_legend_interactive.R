@@ -247,3 +247,33 @@ test_that("a function receives dates and untransformed breaks, as labels", {
     c("id_1", "id_10", "id_100")
   )
 })
+
+# named vectors ----
+test_that("the breaks without a name keep their value, unknown names warn", {
+  key_ids <- function(p) unique(xml_attr(xml_find_all(dsvg_plot(p), "//*[@key-id]"), "key-id"))
+  d <- data.frame(x = 1:3, y = 1, g = c("a", "b", "c"))
+  p <- ggplot(d, aes(x, y, colour = g)) + geom_point_interactive(aes(data_id = g))
+  # as the labels of ggplot2
+  expect_no_warning(
+    ids <- key_ids(p + scale_colour_discrete_interactive(data_id = c(a = "id_a", c = "id_c")))
+  )
+  expect_equal(ids, c("id_a", "b", "id_c"))
+  expect_warning(
+    ids <- key_ids(p + scale_colour_discrete_interactive(data_id = c(A = "id_a", c = "id_c"))),
+    "\"A\""
+  )
+  expect_equal(ids, c("a", "b", "id_c"))
+})
+
+test_that("names are matched with dates and untransformed breaks", {
+  key_ids <- function(p) unique(xml_attr(xml_find_all(dsvg_plot(p), "//*[@key-id]"), "key-id"))
+  dat <- data.frame(x = 1:91, y = 1, z = as.Date("2024-01-01") + 0:90, w = 10^seq(0, 3, length.out = 91))
+  p <- ggplot(dat, aes(x, y, colour = z)) + geom_point_interactive(aes(data_id = 1))
+  expect_no_warning(
+    ids <- key_ids(p + scale_colour_date_interactive(data_id = c("2024-01-15" = "mid"), guide = "legend"))
+  )
+  expect_equal(ids[1:3], c("2024-01-01", "mid", "2024-02-01"))
+  p <- ggplot(dat, aes(x, y, colour = w)) + geom_point_interactive(aes(data_id = 1))
+  ids <- key_ids(p + scale_colour_continuous_interactive(transform = "log10", data_id = c("100" = "hundred"), guide = "legend"))
+  expect_equal(ids, c("1", "10", "hundred", "1000"))
+})

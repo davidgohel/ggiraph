@@ -65,23 +65,31 @@ interactive_guide_train <- function(
       # process the interactive params one by one and check for names
       # this way it works for both discrete and continuous scales
       # with or without named vectors
-      # a function receives the breaks in data space (dates, not numbers;
-      # 100, not 2 on a log scale), as the `labels` of 'ggplot2'
-      fun_breaks <- breaks
+      # a function and the names of a vector see the breaks in data space
+      # (dates, not numbers; 100, not 2 on a log scale), as the `labels`
+      # of 'ggplot2'
+      data_breaks <- breaks
       if (!scale$is_discrete()) {
-        fun_breaks <- scale$get_transformation()$inverse(breaks)
+        data_breaks <- scale$get_transformation()$inverse(breaks)
       }
       for (a in ipar) {
         if (is.function(scale[[a]])) {
-          scale[[a]] <- do.call(scale[[a]], list(fun_breaks))
+          scale[[a]] <- do.call(scale[[a]], list(data_breaks))
         }
         if (length(scale[[a]])) {
           # check if it's named vector
           if (!is.null(names(scale[[a]]))) {
-            # If parameter have names, use them to match with breaks
-            values <- breaks
+            # the names are matched with the breaks; the breaks without a
+            # name keep their own value, as the `labels` of 'ggplot2'
+            values <- as.character(data_breaks)
             m <- match(names(scale[[a]]), values, nomatch = 0)
             values[m] <- scale[[a]][m != 0]
+            unmatched <- names(scale[[a]])[m == 0 & nzchar(names(scale[[a]]))]
+            if (length(unmatched)) {
+              cli::cli_warn(
+                "Some names of the interactive attribute {.field {a}} match no break of the scale: {.val {unmatched}}."
+              )
+            }
           } else {
             values <- as.character(scale[[a]])
           }
