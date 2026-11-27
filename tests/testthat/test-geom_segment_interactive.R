@@ -62,3 +62,24 @@ test_that("segments and their arrow heads keep their attributes in polar coordin
     rep(c("a", "b", "c"), each = 3)
   )
 })
+
+test_that("segments not drawn and arrow heads keep the attributes in place", {
+  ids_of <- function(p) {
+    expect_no_warning(doc <- dsvg_plot(p))
+    xml_attr(xml_find_all(doc, ".//*[@data-id]"), "data-id")
+  }
+  d <- data.frame(
+    x = 1:4, y = 1:4, id = c("a", "b", "c", "d"),
+    lt = c("blank", "blank", "solid", "solid")
+  )
+  base <- ggplot(d, aes(x, y, xend = x + 1, yend = y + 1, data_id = id, linetype = lt)) +
+    scale_linetype_identity()
+  # a blank segment draws neither its line nor its arrow head
+  expect_equal(ids_of(base + geom_segment_interactive(arrow = arrow())), c("c", "c", "d", "d"))
+  expect_equal(ids_of(base + geom_segment_interactive()), c("c", "d"))
+  # two heads with arrows at both ends
+  expect_equal(
+    ids_of(base + geom_segment_interactive(arrow = arrow(ends = "both"))),
+    rep(c("c", "d"), each = 3)
+  )
+})

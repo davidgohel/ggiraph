@@ -59,16 +59,19 @@ polyline_id <- function(x) {
 #' - an arrow head is drawn at the start of a line when its first piece
 #'   starts at the first point, at the end when its last piece ends at the
 #'   last point;
-#' - nothing is drawn with a blank linetype or a missing line width.
+#' - nothing is drawn with a blank linetype or a missing line width, unless
+#'   the shape is filled (`filled = TRUE`, polygons).
 #'
 #' The device clips itself (`deviceClip`), so lines are not cut at the
 #' device extent. Only missing and infinite values matter: the units are not
 #' converted when they are all of the same type.
 #' @param x a polyline grob
 #' @param id the line of each point, sorted
+#' @param filled the shapes are filled (polygons): drawn whatever the
+#' linetype and the line width
 #' @return the number of elements of each line, in the order of the lines
 #' @noRd
-polyline_element_counts <- function(x, id) {
+polyline_element_counts <- function(x, id, filled = FALSE) {
   n <- length(id)
   line <- match(id, unique(id))
   n_lines <- max(line)
@@ -85,7 +88,7 @@ polyline_element_counts <- function(x, id) {
   ok <- is.finite(x_values) & is.finite(y_values)
   lty <- rep_len(x$gp$lty %||% "solid", n_lines)
   lwd <- rep_len(x$gp$lwd %||% 1, n_lines)
-  not_drawn <- is.na(lty) | lty %in% c("blank", "0") | is.na(lwd)
+  not_drawn <- !filled & (is.na(lty) | lty %in% c("blank", "0") | is.na(lwd))
 
   # usual case: one element per line
   if (all(ok) && is.null(x$arrow) && !any(not_drawn)) {

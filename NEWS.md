@@ -42,6 +42,10 @@ with varying colour;
 'ggplot2' 4.0;
 - ribbons, areas and densities with `outline.type = "full"`, and violin
 quantile lines, get their attributes.
+- `geom_bar_interactive()` uses `lineend` and `linejoin`.
+- Polygons cut by a missing value, segments with a blank linetype and
+paths with arrows at both ends keep their attributes on the right
+elements.
 
 Legends and themes:
 

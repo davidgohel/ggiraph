@@ -124,3 +124,17 @@ test_that("steps are drawn as in ggplot2: orientation, arrows, line ends", {
     c("a", "a", "b", "b")
   )
 })
+
+test_that("a path with varying aesthetics and arrows at both ends keeps its attributes", {
+  d <- data.frame(
+    x = rep(1:4, 2), y = c(1, 3, 2, 4, 2, 2, 3, 1),
+    g = rep(c("b", "a"), each = 4), w = 1:8
+  )
+  p <- ggplot(d, aes(x, y, group = g, linewidth = w, data_id = g)) +
+    geom_path_interactive(arrow = arrow(ends = "both"))
+  expect_no_warning(doc <- dsvg_plot(p))
+  ids <- xml_attr(xml_find_all(doc, ".//*[@data-id]"), "data-id")
+  # per line: 3 segments, heads at both ends of the inner ones (of zero
+  # length, drawn by 'ggplot2'), so 2 + 3 + 2 elements
+  expect_equal(ids, rep(c("a", "b"), each = 7))
+})

@@ -20,3 +20,14 @@ test_that("geom_col_interactive draws as geom_col", {
     c("a", "b", "c")
   )
 })
+
+test_that("geom_col_interactive passes linejoin to the rectangles", {
+  dat <- data.frame(x = c("a", "b", "c"), y = c(3, 5, 2))
+  for (coord in list(coord_cartesian(), coord_polar())) {
+    p <- ggplot(dat, aes(x, y)) +
+      geom_col_interactive(aes(data_id = x), linejoin = "round", colour = "black", linewidth = 4) +
+      coord
+    nodes <- xml_find_all(dsvg_plot(p), ".//*[@data-id]")
+    expect_equal(unique(xml_attr(nodes, "stroke-linejoin")), "round")
+  }
+})

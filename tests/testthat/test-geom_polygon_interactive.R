@@ -58,3 +58,20 @@ test_that("polygons with holes keep the attributes of their group", {
     expect_equal(xml_attr(xml_find_all(doc, ".//path[@data-id]"), "data-id"), c("A", "B"))
   }
 })
+
+test_that("a polygon cut by a missing point keeps its attributes on each piece", {
+  d <- data.frame(
+    x = c(0, 1, 1, NA, 2, 3, 3, 4, 5, 5),
+    y = c(0, 0, 1, NA, 0, 0, 1, 0, 0, 1),
+    g = rep(c("a", "b"), c(7, 3))
+  )
+  for (lt in c("solid", "blank")) {
+    p <- ggplot(d, aes(x, y, group = g, fill = g, data_id = g)) +
+      geom_polygon_interactive(linetype = lt)
+    expect_no_warning(doc <- dsvg_plot(p))
+    nodes <- xml_find_all(doc, ".//polygon[@data-id]")
+    expect_equal(xml_attr(nodes, "data-id"), c("a", "a", "b"), info = lt)
+    # each id is on the polygons of its colour
+    expect_equal(length(unique(xml_attr(nodes, "fill")[1:2])), 1L, info = lt)
+  }
+})

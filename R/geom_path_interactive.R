@@ -186,12 +186,12 @@ path_group_data <- function(data) {
   data[first, , drop = FALSE][n >= 2, , drop = FALSE]
 }
 
-#' One data row per segment drawn by `GeomPath$draw_panel()`
+#' One data row per segment of the grob of `GeomPath$draw_panel()`
 #' @details
 #' When the aesthetics vary along the lines, 'ggplot2' draws a segment
 #' between two consecutive points of a line (after munching), with the
-#' parameters of its first point. 'grid' draws only the segments whose ends
-#' are finite.
+#' parameters of its first point. The segments with a missing end are in
+#' the grob but not drawn: segments_element_counts() leaves them out.
 #' @noRd
 path_segment_data <- function(data, coord, panel_params) {
   data <- data[order(data$group), , drop = FALSE]
@@ -203,9 +203,5 @@ path_segment_data <- function(data, coord, panel_params) {
     return(munched[0, , drop = FALSE])
   }
   end <- c(munched$group[-1] != munched$group[-n], TRUE)
-  start <- munched[!end, , drop = FALSE]
-  stop <- munched[c(FALSE, !end[-n]), , drop = FALSE]
-  drawn <- is.finite(start$x) & is.finite(start$y) &
-    is.finite(stop$x) & is.finite(stop$y)
-  start[drawn, , drop = FALSE]
+  munched[!end, , drop = FALSE]
 }

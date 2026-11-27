@@ -28,7 +28,13 @@ drawDetails.interactive_polygon_grob <- function(x, recording) {
         x$id <- rep(1L:n, x$id.lengths)
       }
     }
-    posid = which(!duplicated(x$id))
+    posid <- which(!duplicated(x$id))
+    # a polygon is cut at its missing points, each piece of at least two
+    # points is drawn (as polylines, see polyline_element_counts())
+    counts <- polyline_element_counts(x, x$id, filled = TRUE)
+    if (sum(counts) == length(ids)) {
+      posid <- rep(posid, counts)
+    }
     interactive_attr_toxml(x = x, ids = ids, rows = posid)
   }
   invisible()
