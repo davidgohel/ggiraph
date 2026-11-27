@@ -26,7 +26,7 @@ validated_fonts <- function(fonts = list()) {
     families <- tolower(sys_fonts()$family)
     fonts <- fonts[vapply(
       fonts,
-      function(x) tolower(x) %in% families,
+      function(x) any(tolower(x) %in% families),
       logical(1)
     )]
   }

@@ -159,6 +159,9 @@ girafe <- function(
   if (is.null(height_svg)) {
     height_svg <- default_height(default = 5)
   }
+  check_number_positive(width_svg)
+  check_number_positive(height_svg)
+  check_number_positive(pointsize)
 
   # prepare argument for dsvg -----
   args <- list(...)
@@ -206,7 +209,7 @@ girafe <- function(
 
   devlength <- length(dev.list())
   # graphic production -----
-  do.call(dsvg, args)
+  do.call("dsvg", args)
   tryCatch(
     {
       if (!is.null(ggobj)) {

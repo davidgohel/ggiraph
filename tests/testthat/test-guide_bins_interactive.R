@@ -206,11 +206,19 @@ test_that("bins guide accepts labels given as a vector, as ggplot2", {
   p <- base + scale_size_binned_interactive(
     breaks = c(100, 200, 300),
     labels = c("low", "mid", "high"),
-    data_id = function(breaks) paste0("k", seq_along(breaks))
+    data_id = function(breaks) paste0("k", breaks)
   )
   expect_equal(legend_texts(p), expected)
-  keys <- xml_find_all(dsvg_plot(p), ".//circle[@key-id]")
-  expect_equal(xml_attr(keys, "key-id"), paste0("k", 1:4))
+  # the functions receive the limits, not NA, as without labels
+  key_ids <- function(p) {
+    xml_attr(xml_find_all(dsvg_plot(p), ".//circle[@key-id]"), "key-id")
+  }
+  p_no_labels <- base + scale_size_binned_interactive(
+    breaks = c(100, 200, 300),
+    data_id = function(breaks) paste0("k", breaks)
+  )
+  expect_false(any(grepl("NA", key_ids(p))))
+  expect_equal(key_ids(p), key_ids(p_no_labels))
 })
 
 test_that("interactive labels given as a vector warn instead of failing", {

@@ -115,9 +115,9 @@ is_valid_string_non_empty <- function(x) {
 
 # a number strictly positive (check_number_decimal() has no exclusive bound)
 check_number_positive <- function(x, ..., arg = caller_arg(x), call = caller_env()) {
-  check_number_decimal(x, ..., min = 0, arg = arg, call = call)
-  if (x == 0) {
-    cli::cli_abort("{.arg {arg}} must be larger than 0, not 0.", call = call)
+  check_number_decimal(x, ..., arg = arg, call = call)
+  if (x <= 0) {
+    cli::cli_abort("{.arg {arg}} must be larger than 0, not {x}.", call = call)
   }
   invisible(NULL)
 }

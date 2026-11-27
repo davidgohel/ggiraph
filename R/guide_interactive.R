@@ -175,22 +175,25 @@ interactive_guide_parse_binned_breaks <- function(scale, params) {
   scale_breaks <- scale$get_breaks()
   parsed <- parse_binned_breaks(scale, scale_breaks)
   parsed$scale_breaks <- scale_breaks
-  if (is.character(scale$labels) || is.numeric(scale$labels)) {
-    limit_breaks <- c(NA, NA)
-  } else {
-    limit_breaks <- parsed$limits
-  }
+  # labels given as a vector have no label for the limits: the limits are
+  # kept in all_breaks (for the interactive attributes), not in label_breaks
+  label_limits <- !(is.character(scale$labels) || is.numeric(scale$labels))
   all_breaks <- parsed$breaks
+  label_breaks <- parsed$breaks
   if (!parsed$breaks[1] %in% parsed$limits) {
-    all_breaks <- c(limit_breaks[1], all_breaks)
+    all_breaks <- c(parsed$limits[1], all_breaks)
+    if (label_limits) label_breaks <- c(parsed$limits[1], label_breaks)
   }
   if (!parsed$breaks[length(parsed$breaks)] %in% parsed$limits) {
-    all_breaks <- c(all_breaks, limit_breaks[2])
+    all_breaks <- c(all_breaks, parsed$limits[2])
+    if (label_limits) label_breaks <- c(label_breaks, parsed$limits[2])
   }
   if (params$reverse) {
     all_breaks <- rev(all_breaks)
+    label_breaks <- rev(label_breaks)
   }
   parsed$all_breaks <- all_breaks
+  parsed$label_breaks <- label_breaks
   parsed
 }
 

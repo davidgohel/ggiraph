@@ -34,6 +34,15 @@ test_that("validated_fonts completes missing or unknown families", {
   expect_equal(fonts$mono, fs$mono)
 })
 
+# validated_fonts accepts empty entries and several names ----
+test_that("validated_fonts accepts empty entries and several names", {
+  fonts <- validated_fonts(list(sans = character(0), serif = NULL))
+  expect_equal(fonts$sans, fs$sans)
+  expect_equal(fonts$serif, fs$serif)
+  fonts <- validated_fonts(list(mono = c("foo-bar-not-a-font", fs$mono)))
+  expect_equal(fonts$mono, c("foo-bar-not-a-font", fs$mono))
+})
+
 # girafe with a font_set lists the fonts at most once ----
 test_that("girafe with a font_set lists the fonts at most once", {
   library(ggplot2)

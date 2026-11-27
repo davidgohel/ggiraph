@@ -72,3 +72,20 @@ test_that("girafe_app_paths", {
 test_that("run_girafe_example", {
   expect_error(run_girafe_example("inexistent example"))
 })
+
+# girafe errors name its own arguments ----
+test_that("girafe errors name its own arguments", {
+  gg <- ggplot()
+  expect_error(girafe(ggobj = gg, width_svg = -1), "`width_svg` must be larger than 0, not -1", class = "rlang_error")
+  expect_error(girafe(ggobj = gg, height_svg = 0), "`height_svg` must be larger than 0", class = "rlang_error")
+  err <- tryCatch(girafe(ggobj = gg, width_svg = -1), error = function(e) e)
+  expect_identical(as.character(conditionCall(err)[[1]]), "girafe")
+  err <- tryCatch(girafe(ggobj = gg, bg = ""), error = function(e) e)
+  expect_identical(as.character(conditionCall(err)[[1]]), "dsvg")
+})
+
+# a negative number is refused with the right bound ----
+test_that("a negative number is refused with the right bound", {
+  expect_error(opts_sizing(width = -1), "must be larger than 0, not -1")
+  expect_error(opts_tooltip(opacity = 0), "must be larger than 0, not 0")
+})
