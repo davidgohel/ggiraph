@@ -45,7 +45,7 @@ test_that("girafe", {
   }
 
   g <- girafe(ggobj = ggplot(), options = list(opts_zoom(1, 4), htmlwidgets::sizingPolicy(padding = 0)))
-  expect_equal(g$x$settings$zoom, opts_zoom(1, 4), ignore_attr = TRUE)
+  expect_equal(g$x$settings$zoom, list(min = 1, max = 4, duration = 300, default_on = FALSE))
   expect_identical(g$sizingPolicy, htmlwidgets::sizingPolicy(padding = 0))
 })
 

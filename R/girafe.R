@@ -225,7 +225,8 @@ girafe <- function(
     }
   )
 
-  settings <- merge_options(default_opts(), options)
+  opts <- merge_opts(girafe_defaults(), options)
+  settings <- opts_settings(opts)
   sizing_policy <- merge_sizing_policy(default_sizing_policy(), options)
   x <- list(
     html = read_file(path),
@@ -252,13 +253,17 @@ girafe <- function(
   }
 
   # create widget -----
-  createWidget(
+  widget <- createWidget(
     name = "girafe",
     x = x,
     package = "ggiraph",
     sizingPolicy = sizing_policy,
     dependencies = dependencies
   )
+  # the options asked for, outside of `x` (not sent to the browser), for
+  # girafe_options()
+  widget$girafe_opts <- opts
+  widget
 }
 
 #' @importFrom htmlwidgets shinyRenderWidget shinyWidgetOutput sizingPolicy createWidget

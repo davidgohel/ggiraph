@@ -105,10 +105,30 @@ test_that("each option of set_girafe_defaults() reaches girafe()", {
   )
   p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
   for (case in cases) {
+    # the same value as with the options argument of girafe()
+    expected <- case[[5]] %||% settings_with(case[[2]])[[case[[3]]]][[case[[4]]]]
     init_girafe_defaults()
     do.call(set_girafe_defaults, stats::setNames(list(case[[2]]), case[[1]]))
-    expected <- case[[5]] %||% case[[2]][[case[[4]]]]
     settings <- girafe(ggobj = p)$x$settings
     expect_equal(settings[[case[[3]]]][[case[[4]]]], expected, info = case[[1]])
   }
+})
+
+test_that("the previous defaults can be restored", {
+  withr::defer(init_girafe_defaults())
+  init_girafe_defaults()
+  p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+  old <- set_girafe_defaults(
+    opts_toolbar = opts_toolbar(pngname = "plot", saveaspng = FALSE),
+    opts_tooltip = opts_tooltip(zindex = 42)
+  )
+  settings <- girafe(ggobj = p)$x$settings
+  expect_equal(settings$toolbar$pngname, "plot")
+  expect_true("saveaspng" %in% settings$toolbar$hidden)
+  expect_match(settings$tooltip$css, "z-index:42;", fixed = TRUE)
+  do.call(set_girafe_defaults, old)
+  settings <- girafe(ggobj = p)$x$settings
+  expect_equal(settings$toolbar$pngname, "diagram")
+  expect_false("saveaspng" %in% settings$toolbar$hidden)
+  expect_match(settings$tooltip$css, "z-index:9999;", fixed = TRUE)
 })

@@ -53,7 +53,7 @@ to use cases. Usually it redirects to "doc", however in a \emph{xaringan} contex
 it redirects to "container".
 }}
 
-\item{zindex}{tooltip css z-index, default to 999.}
+\item{zindex}{tooltip css z-index, default to 9999.}
 }
 \description{
 Settings to be used with \code{\link[=girafe]{girafe()}}

@@ -51,7 +51,9 @@ in argument \code{options} of \code{girafe()} function.}
 \item{opts_toolbar}{default values for \code{\link[=opts_toolbar]{opts_toolbar()}} used in argument \code{options} of \code{girafe()} function.}
 }
 \value{
-the previous defaults, invisibly.
+the previous defaults, invisibly. They can be given back to
+\code{set_girafe_defaults()} to restore them, e.g.
+\code{old <- set_girafe_defaults(...)} then \code{do.call(set_girafe_defaults, old)}.
 }
 \description{
 girafe animation options (see \code{\link[=girafe_defaults]{girafe_defaults()}})

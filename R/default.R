@@ -7,7 +7,9 @@ css_default_selection <- girafe_css_bicolor(
   secondary = "black"
 )
 
-default_girafe_settings <- list(
+# complete objects: every argument, so that a default given back to
+# set_girafe_defaults() replaces all the current values
+default_girafe_settings <- lapply(list(
   opts_sizing = opts_sizing(width = 1),
   opts_tooltip = opts_tooltip(
     css = "padding:5px;background:black;color:white;border-radius:2px;text-align:left;",
@@ -24,7 +26,7 @@ default_girafe_settings <- list(
   opts_selection_theme = opts_selection_theme(css = css_default_selection),
   opts_zoom = opts_zoom(),
   opts_toolbar = opts_toolbar()
-)
+), complete_opts)
 
 girafe_global$defaults <- default_girafe_settings
 
@@ -42,7 +44,9 @@ girafe_global$defaults <- default_girafe_settings
 #' `set_girafe_defaults(opts_toolbar = opts_toolbar(pngname = "plot"))`,
 #' a call to `set_girafe_defaults(opts_toolbar = opts_toolbar(position = "top"))`
 #' keeps `pngname = "plot"`.
-#' @return the previous defaults, invisibly.
+#' @return the previous defaults, invisibly. They can be given back to
+#' `set_girafe_defaults()` to restore them, e.g.
+#' `old <- set_girafe_defaults(...)` then `do.call(set_girafe_defaults, old)`.
 #' @family girafe animation options
 #' @param fonts deprecated, it never had any effect: use the `font_set`
 #' argument of [girafe()] to choose the fonts.

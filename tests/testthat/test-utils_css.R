@@ -152,13 +152,13 @@ test_that("girafe_css does not fill lines, unless asked with `line`", {
     ggiraph::girafe_css("stroke:red;stroke-width:2.5px;"),
     "/*GIRAFE CSS*/._CLASSNAME_ { stroke:red;stroke-width:2.5px; }"
   )
-  expect_false(grepl("fill", opts_selection(css = "stroke:red;r:3.5px;")$css, fixed = TRUE))
+  expect_false(grepl("fill", settings_with(opts_selection(css = "stroke:red;r:3.5px;"))$select$css, fixed = TRUE))
   # fill-opacity is a fill
   expect_true(grepl(no_fill, ggiraph::girafe_css("fill-opacity:0.5;"), fixed = TRUE))
 })
 
 test_that("the tooltip css is a single rule (no rule for lines)", {
-  css <- opts_tooltip(css = "background:black;")$css
+  css <- settings_with(opts_tooltip(css = "background:black;"))$tooltip$css
   expect_false(grepl("polyline", css, fixed = TRUE))
   # the declarations managed by girafe end the tooltip rule
   expect_equal(

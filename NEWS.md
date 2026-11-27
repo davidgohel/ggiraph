@@ -3,6 +3,11 @@
 ## Features
 
 - New `scale_linewidth_*_interactive()` scales.
+- Options now combine argument by argument, whether they come from
+`set_girafe_defaults()`, `girafe(options = )` or `girafe_options()`:
+`opts_tooltip(offx = 0)` keeps the css of your defaults (#328). An
+`opts_*()` object only keeps the arguments you give it, and prints
+nicely.
 
 ## Changes
 

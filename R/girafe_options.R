@@ -27,7 +27,7 @@
 #'   to use cases. Usually it redirects to "doc", however in a *xaringan* context,
 #'   it redirects to "container".
 #' }
-#' @param zindex tooltip css z-index, default to 999.
+#' @param zindex tooltip css z-index, default to 9999.
 #' @examples
 #' library(ggplot2)
 #'
@@ -62,37 +62,19 @@ opts_tooltip <- function(
   placement = c("auto", "doc", "container"),
   zindex = 9999
 ) {
-  css <- check_css(
-    css = css,
-    default = "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left;",
-    cls_prefix = "tooltip_",
-    name = "opts_tooltip",
-    lines = FALSE
-  )
-  if (grepl(x = css, pattern = "position[ ]*:")) {
+  check_css(css, default = "", cls_prefix = "tooltip_", lines = FALSE)
+  if (!is.null(css) && grepl(x = css, pattern = "position[ ]*:")) {
     cli::cli_abort(
       "Do not specify {.code position} in {.arg css}, it is managed by girafe."
     )
   }
-  if (grepl(x = css, pattern = "pointer-events[ ]*:")) {
+  if (!is.null(css) && grepl(x = css, pattern = "pointer-events[ ]*:")) {
     cli::cli_abort(
       "Do not specify {.code pointer-events} in {.arg css}, it is managed by girafe."
     )
   }
 
   check_number_decimal(zindex, min = 1)
-  zindex <- round(zindex, digits = 0)
-
-  css <- trimws(sub(
-    "\\}[\n]*$",
-    paste0(
-      "; position:absolute;pointer-events:none;",
-      sprintf("z-index:%.0f;", zindex),
-      "}\n"
-    ),
-    css
-  ))
-
   check_number_decimal(offx)
   check_number_decimal(offy)
   check_bool(use_cursor_pos)
@@ -102,35 +84,7 @@ opts_tooltip <- function(
   check_number_decimal(delay_mouseover, min = 0)
   check_number_decimal(delay_mouseout, min = 0)
   placement <- arg_match(placement)
-  if (placement == "auto") {
-    placement <- "doc"
-    is_xaringan <- !is.null(getOption("xaringan.page_number.offset"))
-    if (is_xaringan) {
-      placement <- "container"
-    }
-  }
-
-  x <- list(
-    css = css,
-    placement = placement,
-    opacity = opacity,
-    offx = offx,
-    offy = offy,
-    use_cursor_pos = use_cursor_pos,
-    use_fill = use_fill,
-    use_stroke = use_stroke,
-    delay_over = delay_mouseover,
-    delay_out = delay_mouseout
-  )
-  class(x) <- "opts_tooltip"
-  # Track explicitly provided arguments for merging with defaults
-  call_args <- names(match.call())[-1]
-  # Map function arg names to list element names
-  arg_mapping <- c(delay_mouseover = "delay_over", delay_mouseout = "delay_out")
-  call_args <- ifelse(call_args %in% names(arg_mapping),
-                      arg_mapping[call_args], call_args)
-  attr(x, "explicit_args") <- call_args
-  x
+  new_opts("opts_tooltip", match.call(), environment())
 }
 
 #' @title Hover effect settings
@@ -178,69 +132,34 @@ opts_tooltip <- function(
 #' @family girafe animation options
 #' @seealso [girafe_css()], [girafe_css_bicolor()]
 opts_hover <- function(css = NULL, reactive = FALSE, nearest_distance = NULL, linked = FALSE) {
-  css <- check_css(
-    css,
-    default = "fill:orange;stroke:gray;",
-    cls_prefix = "hover_data_",
-    name = "opts_hover"
-  )
+  check_css(css, default = "", cls_prefix = "hover_data_")
   check_bool(reactive)
   check_number_decimal(nearest_distance, min = 0, allow_null = TRUE)
   check_bool(linked)
-
-  x <- list(css = css, reactive = reactive, nearest_distance = nearest_distance, linked = linked)
-  class(x) <- "opts_hover"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_hover", match.call(), environment())
 }
 
 #' @export
 #' @rdname opts_hover
 opts_hover_inv <- function(css = NULL) {
-  css <- check_css(
-    css,
-    default = "",
-    cls_prefix = "hover_inv_",
-    name = "opts_hover_inv"
-  )
-  x <- list(css = css)
-  class(x) <- "opts_hover_inv"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  check_css(css, default = "", cls_prefix = "hover_inv_")
+  new_opts("opts_hover_inv", match.call(), environment())
 }
 
 #' @export
 #' @rdname opts_hover
 opts_hover_key <- function(css = NULL, reactive = FALSE) {
-  css <- check_css(
-    css,
-    default = "stroke:red;",
-    cls_prefix = "hover_key_",
-    name = "opts_hover"
-  )
+  check_css(css, default = "", cls_prefix = "hover_key_")
   check_bool(reactive)
-
-  x <- list(css = css, reactive = reactive)
-  class(x) <- "opts_hover_key"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_hover_key", match.call(), environment())
 }
 
 #' @export
 #' @rdname opts_hover
 opts_hover_theme <- function(css = NULL, reactive = FALSE) {
-  css <- check_css(
-    css,
-    default = "fill:green;",
-    cls_prefix = "hover_theme_",
-    name = "opts_hover_theme"
-  )
+  check_css(css, default = "", cls_prefix = "hover_theme_")
   check_bool(reactive)
-
-  x <- list(css = css, reactive = reactive)
-  class(x) <- "opts_hover_theme"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_hover_theme", match.call(), environment())
 }
 
 #' @title Selection effect settings
@@ -299,41 +218,18 @@ opts_selection <- function(
   selected = character(0),
   linked = FALSE
 ) {
-  css <- check_css(
-    css,
-    default = "fill:red;stroke:gray;",
-    cls_prefix = "select_data_",
-    name = "opts_selection"
-  )
+  check_css(css, default = "", cls_prefix = "select_data_")
   type <- arg_match(type)
   check_bool(only_shiny)
   check_bool(linked)
-
-  x <- list(
-    css = css,
-    type = type,
-    only_shiny = only_shiny,
-    selected = as.character(selected),
-    linked = linked
-  )
-  class(x) <- "opts_selection"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_selection", match.call(), environment())
 }
 
 #' @export
 #' @rdname opts_selection
 opts_selection_inv <- function(css = NULL) {
-  css <- check_css(
-    css,
-    default = "",
-    cls_prefix = "select_inv_",
-    name = "opts_selection_inv"
-  )
-  x <- list(css = css)
-  class(x) <- "opts_selection_inv"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  check_css(css, default = "", cls_prefix = "select_inv_")
+  new_opts("opts_selection_inv", match.call(), environment())
 }
 
 #' @export
@@ -344,24 +240,10 @@ opts_selection_key <- function(
   only_shiny = TRUE,
   selected = character(0)
 ) {
-  css <- check_css(
-    css,
-    default = "stroke:gray;",
-    cls_prefix = "select_key_",
-    name = "opts_selection_key"
-  )
+  check_css(css, default = "", cls_prefix = "select_key_")
   type <- arg_match(type)
   check_bool(only_shiny)
-
-  x <- list(
-    css = css,
-    type = type,
-    only_shiny = only_shiny,
-    selected = as.character(selected)
-  )
-  class(x) <- "opts_selection_key"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_selection_key", match.call(), environment())
 }
 
 #' @export
@@ -372,24 +254,10 @@ opts_selection_theme <- function(
   only_shiny = TRUE,
   selected = character(0)
 ) {
-  css <- check_css(
-    css,
-    default = "stroke:gray;",
-    cls_prefix = "select_theme_",
-    name = "opts_selection_theme"
-  )
+  check_css(css, default = "", cls_prefix = "select_theme_")
   type <- arg_match(type)
   check_bool(only_shiny)
-
-  x <- list(
-    css = css,
-    type = type,
-    only_shiny = only_shiny,
-    selected = as.character(selected)
-  )
-  class(x) <- "opts_selection_theme"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_selection_theme", match.call(), environment())
 }
 
 #' @title Zoom settings
@@ -419,21 +287,23 @@ opts_selection_theme <- function(
 opts_zoom <- function(min = 1, max = 1, duration = 300, default_on = FALSE) {
   check_number_decimal(min, min = 0.2)
   check_number_decimal(max, min = 0.2)
-  if (max < min) {
-    cli::cli_abort("{.arg max} ({max}) must be larger than or equal to {.arg min} ({min}).")
+  # with only one of them, they are compared after the merge with the
+  # defaults, when girafe() builds its settings
+  if (!missing(min) && !missing(max)) {
+    check_zoom_range(min, max)
   }
   check_number_decimal(duration, min = 0)
   check_bool(default_on)
+  new_opts("opts_zoom", match.call(), environment())
+}
 
-  x <- list(
-    min = min,
-    max = max,
-    duration = duration,
-    default_on = default_on
-  )
-  class(x) <- "opts_zoom"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+check_zoom_range <- function(min, max, call = caller_env()) {
+  if (max < min) {
+    cli::cli_abort(
+      "{.arg max} ({max}) must be larger than or equal to {.arg min} ({min}) in {.fn opts_zoom}.",
+      call = call
+    )
+  }
 }
 
 #' @title Toolbar settings
@@ -600,14 +470,8 @@ opts_toolbar <- function(
   if (!is.null(tooltips) && !(is.list(tooltips) && is_named(tooltips))) {
     cli::cli_abort("{.arg tooltips} must be a named list or {.code NULL}.")
   }
-  if (is.null(hidden)) {
-    hidden = character()
-  }
-  if (!is.character(hidden)) {
+  if (!is.null(hidden) && !is.character(hidden)) {
     cli::cli_abort("{.arg hidden} must be a character vector.")
-  }
-  if (isFALSE(saveaspng) && !"saveaspng" %in% hidden) {
-    hidden = c(hidden, "saveaspng")
   }
   check_number_decimal(delay_mouseover, min = 0)
   check_number_decimal(delay_mouseout, min = 0)
@@ -622,29 +486,7 @@ opts_toolbar <- function(
     check_string(value, allow_empty = FALSE, allow_null = TRUE, arg = arg)
     check_not_blank(value, arg = arg)
   }
-
-  x <- list(
-    position = position,
-    pngname = pngname,
-    tooltips = tooltips,
-    fixed = fixed,
-    hidden = hidden,
-    delay_over = delay_mouseover,
-    delay_out = delay_mouseout,
-    bg_color = bg_color,
-    icon_color = icon_color,
-    icon_active_color = icon_active_color,
-    icon_hover_color = icon_hover_color
-  )
-  class(x) <- "opts_toolbar"
-  # Track explicitly provided arguments for merging with defaults
-  call_args <- names(match.call())[-1]
-  # Map function arg names to list element names
-  arg_mapping <- c(delay_mouseover = "delay_over", delay_mouseout = "delay_out")
-  call_args <- ifelse(call_args %in% names(arg_mapping),
-                      arg_mapping[call_args], call_args)
-  attr(x, "explicit_args") <- call_args
-  x
+  new_opts("opts_toolbar", match.call(), environment())
 }
 
 
@@ -674,11 +516,7 @@ opts_toolbar <- function(
 opts_sizing <- function(rescale = TRUE, width = 1) {
   check_bool(rescale)
   check_number_positive(width, max = 1)
-
-  x <- list(rescale = rescale, width = width)
-  class(x) <- "opts_sizing"
-  attr(x, "explicit_args") <- names(match.call())[-1]
-  x
+  new_opts("opts_sizing", match.call(), environment())
 }
 
 #' @title Set girafe options
@@ -720,82 +558,217 @@ girafe_options <- function(x, ...) {
   }
 
   args <- list2(...)
-  x$x$settings <- merge_options(x$x$settings, args)
+  # the options asked for, kept by girafe(), are merged and computed again
+  opts <- merge_opts(x$girafe_opts %||% girafe_defaults(), args)
+  x$x$settings <- opts_settings(opts)
+  x$girafe_opts <- opts
   x$sizingPolicy <- merge_sizing_policy(x$sizingPolicy, args)
   x
 }
 
-merge_single_opts <- function(default_opts, user_opts) {
-  explicit_args <- attr(user_opts, "explicit_args")
-  if (!is.null(explicit_args)) {
-    # Only merge explicitly provided arguments
-    user_opts_filtered <- as.list(user_opts)[explicit_args]
-  } else {
-    # Fallback: merge all (old behavior)
-    user_opts_filtered <- as.list(user_opts)
-  }
-  merged <- utils::modifyList(as.list(default_opts), user_opts_filtered)
-  class(merged) <- class(default_opts)
-  merged
+# Options ----
+#
+# An `opts_*()` object keeps only the arguments given by the user, under
+# their own names, validated but not computed. Options are merged with
+# modifyList(): the last given wins, argument by argument. The settings
+# sent to the JavaScript code are computed once, after the merge, by
+# opts_settings(). The defaults are complete objects (every argument), so
+# that the result of set_girafe_defaults() can be given back to it.
+
+new_opts <- function(class, call, env) {
+  args <- as.character(names(call)[-1])
+  x <- mget(args, envir = env)
+  structure(x, class = c(class, "girafe_opts"))
 }
 
-merge_options <- function(options, args) {
+# the names of the settings read by the JavaScript code
+opts_settings_names <- c(
+  opts_tooltip = "tooltip",
+  opts_hover = "hover",
+  opts_hover_inv = "hover_inv",
+  opts_hover_key = "hover_key",
+  opts_hover_theme = "hover_theme",
+  opts_selection = "select",
+  opts_selection_inv = "select_inv",
+  opts_selection_key = "select_key",
+  opts_selection_theme = "select_theme",
+  opts_zoom = "zoom",
+  opts_toolbar = "toolbar",
+  opts_sizing = "sizing"
+)
+
+# every argument of an opts_*() function, the missing ones with their
+# default value (the first one for a choice)
+complete_opts <- function(x) {
+  cls <- class(x)[1]
+  fun <- get(cls, mode = "function", envir = topenv())
+  defaults <- lapply(formals(fun), function(value) {
+    value <- eval(value, baseenv())
+    if (is.character(value) && length(value) > 1) value[1] else value
+  })
+  structure(
+    utils::modifyList(defaults, unclass(x), keep.null = TRUE),
+    class = c(cls, "girafe_opts")
+  )
+}
+
+merge_single_opts <- function(x, y) {
+  structure(
+    utils::modifyList(unclass(x), unclass(y), keep.null = TRUE),
+    class = class(x)
+  )
+}
+
+merge_opts <- function(opts, args) {
   for (arg in args) {
-    if (inherits(arg, "opts_zoom")) {
-      options$zoom <- merge_single_opts(options$zoom, arg)
-    } else if (inherits(arg, "opts_selection")) {
-      options$select <- merge_single_opts(options$select, arg)
-    } else if (inherits(arg, "opts_selection_inv")) {
-      options$select_inv <- merge_single_opts(options$select_inv, arg)
-    } else if (inherits(arg, "opts_selection_key")) {
-      options$select_key <- merge_single_opts(options$select_key, arg)
-    } else if (inherits(arg, "opts_selection_theme")) {
-      options$select_theme <- merge_single_opts(options$select_theme, arg)
-    } else if (inherits(arg, "opts_tooltip")) {
-      options$tooltip <- merge_single_opts(options$tooltip, arg)
-    } else if (inherits(arg, "opts_hover")) {
-      options$hover <- merge_single_opts(options$hover, arg)
-    } else if (inherits(arg, "opts_hover_key")) {
-      options$hover_key <- merge_single_opts(options$hover_key, arg)
-    } else if (inherits(arg, "opts_hover_theme")) {
-      options$hover_theme <- merge_single_opts(options$hover_theme, arg)
-    } else if (inherits(arg, "opts_hover_inv")) {
-      options$hover_inv <- merge_single_opts(options$hover_inv, arg)
-    } else if (inherits(arg, "opts_toolbar")) {
-      options$toolbar <- merge_single_opts(options$toolbar, arg)
-    } else if (inherits(arg, "opts_sizing")) {
-      options$sizing <- merge_single_opts(options$sizing, arg)
+    cls <- class(arg)[1]
+    if (cls %in% names(opts_settings_names)) {
+      opts[[cls]] <- merge_single_opts(opts[[cls]], arg)
     }
   }
-  options
+  opts
+}
+
+# the settings sent to the JavaScript code
+opts_settings <- function(opts, call = caller_env()) {
+  settings <- lapply(names(opts_settings_names), function(cls) {
+    x <- opts[[cls]] %||% structure(list(), class = c(cls, "girafe_opts"))
+    opts_setting(complete_opts(x), call = call)
+  })
+  names(settings) <- opts_settings_names
+  settings
+}
+
+opts_setting <- function(x, call = caller_env()) {
+  cls <- class(x)[1]
+  x <- unclass(x)
+  css <- function(default, prefix, lines = TRUE) {
+    check_css(x$css, default = default, cls_prefix = prefix, lines = lines, call = call)
+  }
+  switch(
+    cls,
+    opts_tooltip = {
+      tooltip_css <- trimws(sub(
+        "\\}[\n]*$",
+        paste0(
+          "; position:absolute;pointer-events:none;",
+          sprintf("z-index:%.0f;", round(x$zindex, digits = 0)),
+          "}\n"
+        ),
+        css(
+          "padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left;",
+          "tooltip_",
+          lines = FALSE
+        )
+      ))
+      placement <- x$placement
+      if (placement == "auto") {
+        is_xaringan <- !is.null(getOption("xaringan.page_number.offset"))
+        placement <- if (is_xaringan) "container" else "doc"
+      }
+      list(
+        css = tooltip_css,
+        placement = placement,
+        opacity = x$opacity,
+        offx = x$offx,
+        offy = x$offy,
+        use_cursor_pos = x$use_cursor_pos,
+        use_fill = x$use_fill,
+        use_stroke = x$use_stroke,
+        delay_over = x$delay_mouseover,
+        delay_out = x$delay_mouseout
+      )
+    },
+    opts_hover = list(
+      css = css("fill:orange;stroke:gray;", "hover_data_"),
+      reactive = x$reactive,
+      nearest_distance = x$nearest_distance,
+      linked = x$linked
+    ),
+    opts_hover_inv = list(css = css("", "hover_inv_")),
+    opts_hover_key = list(
+      css = css("stroke:red;", "hover_key_"),
+      reactive = x$reactive
+    ),
+    opts_hover_theme = list(
+      css = css("fill:green;", "hover_theme_"),
+      reactive = x$reactive
+    ),
+    opts_selection = list(
+      css = css("fill:red;stroke:gray;", "select_data_"),
+      type = x$type,
+      only_shiny = x$only_shiny,
+      selected = as.character(x$selected),
+      linked = x$linked
+    ),
+    opts_selection_inv = list(css = css("", "select_inv_")),
+    opts_selection_key = list(
+      css = css("stroke:gray;", "select_key_"),
+      type = x$type,
+      only_shiny = x$only_shiny,
+      selected = as.character(x$selected)
+    ),
+    opts_selection_theme = list(
+      css = css("stroke:gray;", "select_theme_"),
+      type = x$type,
+      only_shiny = x$only_shiny,
+      selected = as.character(x$selected)
+    ),
+    opts_zoom = {
+      check_zoom_range(x$min, x$max, call = call)
+      list(
+        min = x$min,
+        max = x$max,
+        duration = x$duration,
+        default_on = x$default_on
+      )
+    },
+    opts_toolbar = {
+      hidden <- x$hidden %||% character()
+      if (isFALSE(x$saveaspng) && !"saveaspng" %in% hidden) {
+        hidden <- c(hidden, "saveaspng")
+      }
+      list(
+        position = x$position,
+        pngname = x$pngname,
+        tooltips = x$tooltips,
+        fixed = x$fixed,
+        hidden = hidden,
+        delay_over = x$delay_mouseover,
+        delay_out = x$delay_mouseout,
+        bg_color = x$bg_color,
+        icon_color = x$icon_color,
+        icon_active_color = x$icon_active_color,
+        icon_hover_color = x$icon_hover_color
+      )
+    },
+    opts_sizing = list(rescale = x$rescale, width = x$width)
+  )
+}
+
+#' @export
+print.girafe_opts <- function(x, ...) {
+  cat("<", class(x)[1], ">\n", sep = "")
+  if (length(x) == 0) {
+    cat("No option set.\n")
+  } else {
+    utils::str(unclass(x), no.list = TRUE, give.attr = FALSE)
+  }
+  invisible(x)
 }
 
 merge_sizing_policy <- function(policy, args) {
   for (arg in args) {
+    # an opts_*() object without argument is an empty list, as a sizing
+    # policy without argument
     if (
-      is.list(arg) && all(names(arg) %in% names(htmlwidgets::sizingPolicy()))
+      is.list(arg) && !inherits(arg, "girafe_opts") &&
+        all(names(arg) %in% names(htmlwidgets::sizingPolicy()))
     ) {
       policy <- arg
     }
   }
   policy
-}
-
-default_opts <- function() {
-  list(
-    tooltip = girafe_defaults("opts_tooltip"),
-    hover = girafe_defaults("opts_hover"),
-    hover_inv = girafe_defaults("opts_hover_inv"),
-    hover_key = girafe_defaults("opts_hover_key"),
-    hover_theme = girafe_defaults("opts_hover_theme"),
-    select = girafe_defaults("opts_selection"),
-    select_inv = girafe_defaults("opts_selection_inv"),
-    select_key = girafe_defaults("opts_selection_key"),
-    select_theme = girafe_defaults("opts_selection_theme"),
-    zoom = girafe_defaults("opts_zoom"),
-    toolbar = girafe_defaults("opts_toolbar"),
-    sizing = girafe_defaults("opts_sizing")
-  )
 }
 
 default_sizing_policy <- function() {

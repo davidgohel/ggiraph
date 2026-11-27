@@ -348,3 +348,14 @@ expect_same_ribbons <- function(base, geom, geom_interactive, groups) {
     )
   }
 }
+
+# the settings computed by girafe() with the package defaults and the
+# given opts_*() objects (opts_*() objects keep only the arguments given)
+settings_with <- function(...) {
+  init_girafe_defaults()
+  girafe(
+    ggobj = ggplot2::ggplot(),
+    options = list(...),
+    check_fonts_registered = FALSE
+  )$x$settings
+}
