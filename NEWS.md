@@ -49,8 +49,12 @@ elements.
 
 Legends and themes:
 
-- `guide_colourbar_interactive()`, `guide_coloursteps_interactive()`: the
-bar takes a single value.
+- `guide_coloursteps_interactive()` draws one rectangle per class, like
+'ggplot2'.
+- Binned guides (bins and coloursteps): each class takes the value of
+its lower bound, also with `reverse = TRUE`. Give one value per class,
+or one per break.
+- `guide_colourbar_interactive()`: the bar takes a single value.
 - `guide_bins_interactive()` accepts labels given as a vector.
 - Interactive theme elements keep their attributes when another element
 is added over them.

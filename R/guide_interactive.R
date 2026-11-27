@@ -39,6 +39,10 @@ guide_interactive <- function(guide_func, ..., interactive_guide = NULL) {
 #' @param single_element `TRUE` when the guide keys are drawn as a single
 #' element (colour bar drawn as an image): a function still receives the
 #' breaks, but each interactive parameter must have a single value.
+#' @param n_classes for binned guides, the number of classes between the
+#' `breaks` (sorted, limits included): each parameter can have one value
+#' per class or one per break, and each class takes the value of its lower
+#' bound.
 #' @return the altered guide params
 #' @noRd
 interactive_guide_train <- function(
@@ -47,8 +51,11 @@ interactive_guide_train <- function(
   breaks,
   label_breaks = breaks,
   max_len = NULL,
-  single_element = FALSE
+  single_element = FALSE,
+  n_classes = NULL
 ) {
+  max_len <- n_classes %||% max_len
+  valid_len <- c(1L, length(breaks), n_classes)
   if (!is.null(params)) {
     key <- params$key
     if (is.data.frame(key) && nrow(key)) {
@@ -78,10 +85,16 @@ interactive_guide_train <- function(
               "Cannot set the guide interactive attribute {.arg {a}}: the colour bar is drawn as a single element and needs a single value, not {length(values)}.",
               i = "A function given to the scale receives the {length(breaks)} break{?s} and must return one value for the whole bar."
             ))
-          } else if (length(values) > 1 && length(values) != length(breaks)) {
-            cli::cli_warn(
-              "Can't set the interactive attribute {.field {a}} of the guide: its length differs from the number of breaks."
-            )
+          } else if (!length(values) %in% valid_len) {
+            if (is.null(n_classes)) {
+              cli::cli_warn(
+                "Can't set the interactive attribute {.field {a}} of the guide: its length differs from the number of breaks."
+              )
+            } else {
+              cli::cli_warn(
+                "Can't set the interactive attribute {.field {a}} of the guide: its length differs from the number of classes ({n_classes}) and from the number of breaks, limits included ({length(breaks)})."
+              )
+            }
           } else {
             # length of values must match provided max length or
             # the rows of decor data frame or the rows of key data frame

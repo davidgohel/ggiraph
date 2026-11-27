@@ -97,14 +97,16 @@ GuideInteractiveColoursteps <- ggproto(
           label_breaks <- parsed$all_breaks
         }
       }
-      # the steps are drawn as a single raster grob: a function receives
-      # the breaks but must return a single value
+      # one rectangle per class, from the lowest one (as the decor): the
+      # breaks are the limits and the breaks of the scale, sorted, and each
+      # class takes the value of its lower bound, as in the bins guide
+      breaks <- sort(unique(c(parsed$limits, parsed$breaks)))
       params <- interactive_guide_train(
         params,
         scale,
-        breaks = parsed$breaks,
+        breaks = breaks,
         label_breaks = label_breaks,
-        single_element = TRUE
+        n_classes = length(breaks) - 1L
       )
     }
     params
@@ -114,6 +116,17 @@ GuideInteractiveColoursteps <- ggproto(
     interactive_guide_override_elements(elements)
   },
   build_decor = function(decor, grobs, elements, params) {
-    GuideInteractiveColourbar$build_decor(decor, grobs, elements, params)
+    # drawn as 'ggplot2' does: one rectangle per class
+    result <- GuideColoursteps$build_decor(decor, grobs, elements, params)
+    idata <- get_interactive_data(params)
+    if (length(idata)) {
+      result$bar <- add_interactive_attrs(
+        result$bar,
+        idata,
+        data_attr = "key-id",
+        ipar = get_ipar(params)
+      )
+    }
+    result
   }
 )

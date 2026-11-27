@@ -139,12 +139,28 @@ GuideInteractiveBins <- ggproto(
     )
     if (!is.null(params) && is.data.frame(params$key) && nrow(params$key)) {
       parsed <- interactive_guide_parse_binned_breaks(scale, params)
+      # the values are given to the classes from the lowest one, each class
+      # takes the value of its lower bound, whatever the order of the keys
+      breaks <- sort(parsed$all_breaks)
+      n_classes <- length(breaks) - 1L
       params <- interactive_guide_train(
         params,
         scale,
-        parsed$all_breaks,
-        label_breaks = parsed$label_breaks
+        breaks,
+        label_breaks = parsed$label_breaks,
+        n_classes = n_classes
       )
+      # the keys are drawn in the order of the decor (reversed with
+      # `reverse = TRUE`), its last row is not drawn
+      params$.interactive <- lapply(params$.interactive, function(values) {
+        if (length(values) != n_classes) {
+          return(values)
+        }
+        if (params$reverse) {
+          values <- rev(values)
+        }
+        c(values, NA_character_)
+      })
     }
     params
   },

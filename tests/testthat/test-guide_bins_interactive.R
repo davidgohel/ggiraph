@@ -133,6 +133,44 @@ test_that("continuous scale - bins guide - reverse", {
   tooltips <- sapply(nodes, function(node) xml_attr(node, "title"))
   expect_equal(tooltips, rev(c("100", "150", "200", "250", "300")), info = "legend labels tooltips")
 })
+# one value per class, lower bounds, reverse ----
+bins_keys <- function(data_id, reverse = FALSE) {
+  dat <- data.frame(x = 1:60, y = 1, z = 1:60)
+  p <- ggplot(dat, aes(x, y, colour = z)) +
+    geom_point_interactive(aes(data_id = z)) +
+    scale_colour_binned_interactive(
+      breaks = c(10, 30, 50), data_id = data_id,
+      guide = guide_bins(reverse = reverse)
+    )
+  nodes <- xml_find_all(dsvg_plot(p), "//*[@key-id]")
+  stats::setNames(xml_attr(nodes, "key-id"), xml_attr(nodes, "stroke"))
+}
+
+test_that("bins guide gives each class the value of its lower bound, also reversed", {
+  keys <- bins_keys(function(x) paste0("k", x))
+  expect_equal(unname(keys), c("k1", "k10", "k30", "k50"))
+  reversed <- bins_keys(function(x) paste0("k", x), reverse = TRUE)
+  expect_equal(unname(reversed), c("k50", "k30", "k10", "k1"))
+  # each class keeps its colour
+  expect_equal(reversed[names(keys)], keys)
+})
+
+test_that("bins guide accepts one value per class or per break", {
+  per_class <- c("a", "b", "c", "d")
+  expect_no_warning(keys <- bins_keys(per_class))
+  expect_equal(unname(keys), per_class)
+  reversed <- bins_keys(per_class, reverse = TRUE)
+  expect_equal(unname(reversed), rev(per_class))
+  expect_equal(reversed[names(keys)], keys)
+  # one per break, limits included: the last one is not used
+  expect_equal(unname(bins_keys(c(per_class, "e"))), per_class)
+  expect_warning(
+    keys <- bins_keys(c("a", "b")),
+    "number of classes"
+  )
+  expect_length(keys, 0)
+})
+
 # continuous scale - bins guide - show.limits
 test_that("continuous scale - bins guide - show.limits", {
   p <- ggplot(mtcars) +
