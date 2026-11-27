@@ -23,7 +23,7 @@ See the documentation for those functions for more details."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.036</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.040</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,15 +107,19 @@ It can also be defined as function that takes the breaks as input and returns a 
 unnamed vector of values as output.</p>
 <p>The interactive parameters follow what 'ggplot2' draws: one value per
 key drawn in the legend.</p>
-<p>For the <code>bins</code> guide the breaks include the label breaks and the limits.
-The number of bins will be one less than the number of breaks and the interactive parameters can be
-constructed for each bin separately (look at the examples).</p>
+<p>For the <code>bins</code> and <code>coloursteps</code> guides the breaks include the label
+breaks and the limits, sorted in increasing order, also with
+<code>reverse = TRUE</code>. There is one class (one key, or one rectangle) less
+than breaks: a vector or a function can give one value per class or one
+per break, and each class takes the value of its lower bound (a single
+value is given to every class). The interactive parameters can be
+constructed for each class separately (look at the examples).</p>
 <p>The <code>colourbar</code> guide (with the default <code>display = "raster"</code> or with
-<code>display = "gradient"</code>) and the <code>coloursteps</code> guide draw the bar as a
-single element: each interactive parameter must be a single value, given
-for the whole bar (e.g. <code>data_id = "bar"</code>). A function still receives the
-breaks of the scale, the ones labelled in the legend, and must return a
-single value (e.g. <code>data_id = function(breaks) paste(breaks, collapse = "-")</code>);
+<code>display = "gradient"</code>) draws the bar as a single element: each
+interactive parameter must be a single value, given for the whole bar
+(e.g. <code>data_id = "bar"</code>). A function still receives the breaks of the
+scale, the ones labelled in the legend, and must return a single value
+(e.g. <code>data_id = function(breaks) paste(breaks, collapse = "-")</code>);
 several values give a warning and the parameter is not set.
 With <code>display = "rectangles"</code>, the <code>colourbar</code> guide draws one rectangle
 per colour and the breaks are the midpoints of each rectangle.</p>

@@ -11,7 +11,7 @@ These default values are returned by this function."><meta property="og:image" c
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.036</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.040</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,222 +81,92 @@ element selected with argument <code>name</code>.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">girafe_defaults</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_sizing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $rescale</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_sizing"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "width"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_sizing&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ rescale: logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ width  : num 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_tooltip</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:9999;}"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $placement</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "doc"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $opacity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $offx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $offy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $use_cursor_pos</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $use_fill</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $use_stroke</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $delay_over</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $delay_out</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_tooltip"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"  "offx" "offy"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_tooltip&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css            : chr "padding:5px;background:black;color:white;border-radius:2px;text-align:left;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ offx           : num 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ offy           : num 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ use_cursor_pos : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ opacity        : num 0.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ use_fill       : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ use_stroke     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ delay_mouseover: num 200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ delay_mouseout : num 500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ placement      : chr "auto"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ zindex         : num 9999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_hover</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".hover_data_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_data_SVGID_ { fill:orange;stroke:black; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:orange; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:orange;stroke:none; }\nimage.hover_data_SVGID_ { stroke:orange; }"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $reactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $nearest_distance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $linked</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_hover"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"      "reactive"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_hover&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css             : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:or"| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ reactive        : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ nearest_distance: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ linked          : logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_hover_key</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $reactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_hover_key"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"      "reactive"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_hover_key&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css     : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:or"| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ reactive: logi TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_hover_theme</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $reactive</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_hover_theme"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"      "reactive"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_hover_theme&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css     : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:or"| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ reactive: logi TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_hover_inv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_hover_inv"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_hover_inv&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css: chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_selection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "multiple"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $only_shiny</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $selected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $linked</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_selection"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_selection&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css       : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:red;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:red; "| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ type      : chr "multiple"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ only_shiny: logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ selected  : chr(0) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ linked    : logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_selection_inv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_selection_inv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_selection_inv&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_selection_key</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "single"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $only_shiny</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $selected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_selection_key"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_selection_key&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css       : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:red;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:red; "| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ type      : chr "single"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ only_shiny: logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ selected  : chr(0) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_selection_theme</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $css</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "single"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $only_shiny</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $selected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_selection_theme"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "css"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_selection_theme&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ css       : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:red;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:red; "| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ type      : chr "single"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ only_shiny: logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ selected  : chr(0) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_zoom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $max</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $duration</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $default_on</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_zoom"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_zoom&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ min       : num 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ max       : num 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ duration  : num 300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ default_on: logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $opts_toolbar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $position</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "topright"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pngname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "diagram"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $tooltips</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $fixed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $hidden</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $delay_over</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $delay_out</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bg_color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $icon_color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $icon_active_color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $icon_hover_color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "opts_toolbar"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"explicit_args")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> logical(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;opts_toolbar&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ position         : chr "topright"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ saveaspng        : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ pngname          : chr "diagram"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ tooltips         : NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ hidden           : NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fixed            : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ delay_mouseover  : num 200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ delay_mouseout   : num 500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bg_color         : NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ icon_color       : NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ icon_active_color: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ icon_hover_color : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

@@ -76,7 +76,7 @@ opts_tooltip(
 
 - zindex:
 
-  tooltip css z-index, default to 999.
+  tooltip css z-index, default to 9999.
 
 ## See also
 

@@ -142,7 +142,10 @@ set_girafe_defaults(
 
 ## Value
 
-the previous defaults, invisibly.
+the previous defaults, invisibly. They can be given back to
+`set_girafe_defaults()` to restore them, e.g.
+`old <- set_girafe_defaults(...)` then
+`do.call(set_girafe_defaults, old)`.
 
 ## See also
 

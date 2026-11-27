@@ -76,19 +76,21 @@ vector of values as output.
 The interactive parameters follow what 'ggplot2' draws: one value per
 key drawn in the legend.
 
-For the `bins` guide the breaks include the label breaks and the limits.
-The number of bins will be one less than the number of breaks and the
-interactive parameters can be constructed for each bin separately (look
-at the examples).
+For the `bins` and `coloursteps` guides the breaks include the label
+breaks and the limits, sorted in increasing order, also with
+`reverse = TRUE`. There is one class (one key, or one rectangle) less
+than breaks: a vector or a function can give one value per class or one
+per break, and each class takes the value of its lower bound (a single
+value is given to every class). The interactive parameters can be
+constructed for each class separately (look at the examples).
 
 The `colourbar` guide (with the default `display = "raster"` or with
-`display = "gradient"`) and the `coloursteps` guide draw the bar as a
-single element: each interactive parameter must be a single value, given
-for the whole bar (e.g. `data_id = "bar"`). A function still receives
-the breaks of the scale, the ones labelled in the legend, and must
-return a single value (e.g.
-`data_id = function(breaks) paste(breaks, collapse = "-")`); several
-values give a warning and the parameter is not set. With
+`display = "gradient"`) draws the bar as a single element: each
+interactive parameter must be a single value, given for the whole bar
+(e.g. `data_id = "bar"`). A function still receives the breaks of the
+scale, the ones labelled in the legend, and must return a single value
+(e.g. `data_id = function(breaks) paste(breaks, collapse = "-")`);
+several values give a warning and the parameter is not set. With
 `display = "rectangles"`, the `colourbar` guide draws one rectangle per
 colour and the breaks are the midpoints of each rectangle.
 

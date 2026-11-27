@@ -4,126 +4,103 @@
 
 ### Features
 
-- Interactive scales for line width: `scale_linewidth_*_interactive()`
-  (continuous, discrete, binned, date, datetime, ordinal and manual).
+- New `scale_linewidth_*_interactive()` scales.
+- Options now combine argument by argument, whether they come from
+  [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md),
+  `girafe(options = )` or
+  [`girafe_options()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_options.md):
+  `opts_tooltip(offx = 0)` keeps the css of your defaults
+  ([\#328](https://github.com/davidgohel/ggiraph/issues/328)). An
+  `opts_*()` object only keeps the arguments you give it, and prints
+  nicely.
 
 ### Changes
 
-- A missing interactive value (`NA`) no longer writes “NA” in the SVG:
-  the element gets no attribute. Elements with a missing `data_id` can
-  no longer be hovered or selected (they used to share the id “NA”).
-
+- `girafe(fonts = )` is deprecated, use `font_set`. So are
+  [`dsvg_view()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg_view.md)
+  and the `fonts` argument of
+  [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md).
 - [`geom_errorbarh_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_errorbarh_interactive.md)
   is deprecated, as in ‘ggplot2’ 4.0: use
   `geom_errorbar_interactive(orientation = "y")`.
-
-- `girafe(fonts = )` is deprecated in favour of `font_set`, which also
-  embeds the fonts in the HTML page; it was ignored since 0.9.7 (the
-  fonts of `font_set` replaced it) and is applied again over them.
-
-- [`dsvg_view()`](https://davidgohel.github.io/ggiraph/dev/reference/dsvg_view.md)
-  and the `fonts` argument of
-  [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
-  are deprecated.
-
-- [`set_girafe_defaults()`](https://davidgohel.github.io/ggiraph/dev/reference/set_girafe_defaults.md)
-  only changes the options it is given, as `girafe(options = )` does.
-
-- [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md):
-  an interactive parameter varying within a group is dropped, as
-  ‘ggplot2’ does (the box took its first value).
-
 - [`girafe()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe.md)
-  warns when a font of the graphic is not installed or not registered
-  with ‘systemfonts’ (`check_fonts_registered = TRUE` by default, it was
-  `FALSE` and an error): its texts would be measured with another font
-  and may not fit.
-
-- The hover and selection css no longer fill the lines: with a css such
-  as `opts_hover(css = "fill:orange;stroke:orange;")`, the polylines
-  were filled as closed shapes (e.g. an arc of a polar segment). Lines
-  are filled only when asked with the `line` argument of
+  checks by default that the fonts are installed, and warns instead of
+  failing.
+- A missing (`NA`) interactive value writes no attribute: such elements
+  can no longer be hovered or selected.
+- Hover and selection css no longer fill lines, unless asked with the
+  `line` argument of
   [`girafe_css()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_css.md).
-
-- Error and warning messages name the function and describe the wrong
-  value, e.g. “Error in
-  [`opts_hover()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_hover.md):
-  `reactive` must be `TRUE` or `FALSE`, not the number 1.” (checks of
-  ‘rlang’, messages of ‘cli’).
+- [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md):
+  a parameter varying within a box is dropped, as ‘ggplot2’ does.
+- Clearer error messages, naming the function and the wrong argument.
 
 ### Issues
 
-Interactive geoms now draw as their ‘ggplot2’ 4.0 counterparts:
+Interactive geoms now draw like their ‘ggplot2’ 4.0 counterparts:
 
-- [`geom_rect_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_rect_interactive.md),
-  [`geom_polygon_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_polygon_interactive.md),
-  [`geom_map_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_map_interactive.md):
-  gradient and pattern fills, shapes in polar coordinates (also
-  crossbar, boxplot and filled contours).
+- gradient and pattern fills, polar coordinates;
 - [`geom_boxplot_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_boxplot_interactive.md):
-  `quantile.type`, outliers of horizontal boxplots; factors and dates
-  were written as numbers.
-- `geom_errorbar_interactive(orientation = "y")`: x and y were swapped.
+  `quantile.type`, horizontal outliers, factors and dates;
 - [`geom_errorbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_crossbar_interactive.md),
   [`geom_crossbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_crossbar_interactive.md):
-  a missing linetype lost all the attributes or failed.
+  orientation and missing linetype;
 - [`geom_path_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_path_interactive.md),
-  [`geom_step_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_path_interactive.md):
-  arrow heads, line ends and `orientation` as in ‘ggplot2’; the segments
-  of lines with varying colour get the attributes of their line.
-- [`geom_segment_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_segment_interactive.md),
-  [`geom_hline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md),
+  [`geom_step_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_path_interactive.md),
+  [`geom_segment_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_segment_interactive.md):
+  arrows, line ends, `orientation`, lines with varying colour;
+- [`geom_hline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md),
   [`geom_vline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md),
   [`geom_abline_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_abline_interactive.md),
   [`geom_sf_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_sf_interactive.md):
-  arguments and behaviours of ‘ggplot2’ 4.0.
-- [`geom_ribbon_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_ribbon_interactive.md)
-  (and area, density) with `outline.type = "full"`, and the quantile
-  lines of
-  [`geom_violin_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_violin_interactive.md),
-  had no interactive attributes.
+  arguments of ‘ggplot2’ 4.0;
+- ribbons, areas and densities with `outline.type = "full"`, and violin
+  quantile lines, get their attributes.
+- [`geom_bar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/geom_bar_interactive.md)
+  uses `lineend` and `linejoin`.
+- Polygons cut by a missing value, segments with a blank linetype and
+  paths with arrows at both ends keep their attributes on the right
+  elements.
 
 Legends and themes:
 
-- [`guide_colourbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_colourbar_interactive.md),
-  [`guide_coloursteps_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_coloursteps_interactive.md):
-  the bar is a single element and takes a single value; a function
-  receives the breaks and must return one value.
+- [`guide_coloursteps_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_coloursteps_interactive.md)
+  draws one rectangle per class, like ‘ggplot2’.
+- Binned guides (bins and coloursteps): each class takes the value of
+  its lower bound, also with `reverse = TRUE`. Give one value per class,
+  or one per break.
+- [`guide_colourbar_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_colourbar_interactive.md):
+  the bar takes a single value.
 - [`guide_bins_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_bins_interactive.md)
-  failed with labels given as a vector.
-- Adding a theme element over an interactive one dropped its interactive
-  attributes.
+  accepts labels given as a vector.
+- Interactive theme elements keep their attributes when another element
+  is added over them.
+- Labels with `parse = TRUE` keep their attributes.
+
+Fonts:
+
+- Font checks read the fonts drawn in the SVG: they now see the fonts of
+  [`theme_set()`](https://ggplot2.tidyverse.org/reference/get_theme.html),
+  [`element_geom()`](https://ggplot2.tidyverse.org/reference/element.html),
+  the `family` aesthetic, and graphics given with `code`.
+- `check_fonts_dependencies` reads dependencies declared with
+  `package =`, stylesheets given as a list and font names without
+  quotes, and ignores case.
 
 Other:
 
 - [`girafe_class_add()`](https://davidgohel.github.io/ggiraph/dev/reference/girafe_class.md)
-  and friends: a single id also targeted the ids containing it; they say
-  when the session is missing.
-- `girafe(check_fonts_*)` failed when the graphic was given with `code`.
-- Interactive grobs: a single value was only set on the first element.
-- [`opts_zoom()`](https://davidgohel.github.io/ggiraph/dev/reference/opts_zoom.md):
-  `min = 0.2` was refused, although it is the documented lower bound.
-- `girafe(check_fonts_registered, check_fonts_dependencies)` missed the
-  fonts set outside of the plot
-  ([`theme_set()`](https://ggplot2.tidyverse.org/reference/get_theme.html),
-  [`element_geom()`](https://ggplot2.tidyverse.org/reference/element.html),
-  the `family` aesthetic) and could not check a graphic given with
-  `code`: the fonts are now read in the SVG, as drawn.
-- `girafe(check_fonts_dependencies = TRUE)` failed with a dependency
-  declared with `package =` or with a stylesheet given as a list, and
-  missed the font names written without quotes in `@font-face` (they
-  were reported as missing). Names are now compared without case, as in
-  CSS.
-- Labels given as expressions (`parse = TRUE`) lost their attributes.
-- `onclick` code and ids containing single quotes were altered (the
-  quotes were replaced by ’), which broke the JavaScript of `onclick`.
+  and friends: a single id no longer targets the ids containing it.
+- A single interactive value applies to all the elements of a grob.
+- `opts_zoom(min = 0.2)` is accepted.
+- Single quotes in `onclick` code and ids are kept.
 
 ### Internals
 
 - Tests use ‘testthat’; geom tests compare the SVG with the one of
   ‘ggplot2’.
 - Interactive geoms call the methods of ‘ggplot2’ instead of copies of
-  them, so they follow its next versions. ‘dplyr’ is only suggested.
+  them. ‘dplyr’ is only suggested.
 
 ## ggiraph 0.9.7
 

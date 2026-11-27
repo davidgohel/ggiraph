@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.036</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.040</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,63 +34,65 @@
 <h2 class="pkg-version" data-toc-text="0.9.8" id="ggiraph-098">ggiraph 0.9.8<a class="anchor" aria-label="anchor" href="#ggiraph-098"></a></h2>
 <div class="section level3">
 <h3 id="features-0-9-8">Features<a class="anchor" aria-label="anchor" href="#features-0-9-8"></a></h3>
-<ul><li>Interactive scales for line width: <code>scale_linewidth_*_interactive()</code> (continuous, discrete, binned, date, datetime, ordinal and manual).</li>
+<ul><li>New <code>scale_linewidth_*_interactive()</code> scales.</li>
+<li>Options now combine argument by argument, whether they come from <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code>, <code>girafe(options = )</code> or <code><a href="../reference/girafe_options.html">girafe_options()</a></code>: <code>opts_tooltip(offx = 0)</code> keeps the css of your defaults (<a href="https://github.com/davidgohel/ggiraph/issues/328" class="external-link">#328</a>). An <code>opts_*()</code> object only keeps the arguments you give it, and prints nicely.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="changes-0-9-8">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-8"></a></h3>
-<ul><li><p>A missing interactive value (<code>NA</code>) no longer writes “NA” in the SVG: the element gets no attribute. Elements with a missing <code>data_id</code> can no longer be hovered or selected (they used to share the id “NA”).</p></li>
-<li><p><code><a href="../reference/geom_errorbarh_interactive.html">geom_errorbarh_interactive()</a></code> is deprecated, as in ‘ggplot2’ 4.0: use <code>geom_errorbar_interactive(orientation = "y")</code>.</p></li>
-<li><p><code>girafe(fonts = )</code> is deprecated in favour of <code>font_set</code>, which also embeds the fonts in the HTML page; it was ignored since 0.9.7 (the fonts of <code>font_set</code> replaced it) and is applied again over them.</p></li>
-<li><p><code><a href="../reference/dsvg_view.html">dsvg_view()</a></code> and the <code>fonts</code> argument of <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> are deprecated.</p></li>
-<li><p><code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code> only changes the options it is given, as <code>girafe(options = )</code> does.</p></li>
-<li><p><code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: an interactive parameter varying within a group is dropped, as ‘ggplot2’ does (the box took its first value).</p></li>
-<li><p><code><a href="../reference/girafe.html">girafe()</a></code> warns when a font of the graphic is not installed or not registered with ‘systemfonts’ (<code>check_fonts_registered = TRUE</code> by default, it was <code>FALSE</code> and an error): its texts would be measured with another font and may not fit.</p></li>
-<li><p>The hover and selection css no longer fill the lines: with a css such as <code>opts_hover(css = "fill:orange;stroke:orange;")</code>, the polylines were filled as closed shapes (e.g. an arc of a polar segment). Lines are filled only when asked with the <code>line</code> argument of <code><a href="../reference/girafe_css.html">girafe_css()</a></code>.</p></li>
-<li><p>Error and warning messages name the function and describe the wrong value, e.g. “Error in <code><a href="../reference/opts_hover.html">opts_hover()</a></code>: <code>reactive</code> must be <code>TRUE</code> or <code>FALSE</code>, not the number 1.” (checks of ‘rlang’, messages of ‘cli’).</p></li>
+<ul><li>
+<code>girafe(fonts = )</code> is deprecated, use <code>font_set</code>. So are <code><a href="../reference/dsvg_view.html">dsvg_view()</a></code> and the <code>fonts</code> argument of <code><a href="../reference/set_girafe_defaults.html">set_girafe_defaults()</a></code>.</li>
+<li>
+<code><a href="../reference/geom_errorbarh_interactive.html">geom_errorbarh_interactive()</a></code> is deprecated, as in ‘ggplot2’ 4.0: use <code>geom_errorbar_interactive(orientation = "y")</code>.</li>
+<li>
+<code><a href="../reference/girafe.html">girafe()</a></code> checks by default that the fonts are installed, and warns instead of failing.</li>
+<li>A missing (<code>NA</code>) interactive value writes no attribute: such elements can no longer be hovered or selected.</li>
+<li>Hover and selection css no longer fill lines, unless asked with the <code>line</code> argument of <code><a href="../reference/girafe_css.html">girafe_css()</a></code>.</li>
+<li>
+<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: a parameter varying within a box is dropped, as ‘ggplot2’ does.</li>
+<li>Clearer error messages, naming the function and the wrong argument.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="issues-0-9-8">Issues<a class="anchor" aria-label="anchor" href="#issues-0-9-8"></a></h3>
-<p>Interactive geoms now draw as their ‘ggplot2’ 4.0 counterparts:</p>
-<ul><li>
-<code><a href="../reference/geom_rect_interactive.html">geom_rect_interactive()</a></code>, <code><a href="../reference/geom_polygon_interactive.html">geom_polygon_interactive()</a></code>, <code><a href="../reference/geom_map_interactive.html">geom_map_interactive()</a></code>: gradient and pattern fills, shapes in polar coordinates (also crossbar, boxplot and filled contours).</li>
+<p>Interactive geoms now draw like their ‘ggplot2’ 4.0 counterparts:</p>
+<ul><li>gradient and pattern fills, polar coordinates;</li>
 <li>
-<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: <code>quantile.type</code>, outliers of horizontal boxplots; factors and dates were written as numbers.</li>
+<code><a href="../reference/geom_boxplot_interactive.html">geom_boxplot_interactive()</a></code>: <code>quantile.type</code>, horizontal outliers, factors and dates;</li>
 <li>
-<code>geom_errorbar_interactive(orientation = "y")</code>: x and y were swapped.</li>
+<code><a href="../reference/geom_crossbar_interactive.html">geom_errorbar_interactive()</a></code>, <code><a href="../reference/geom_crossbar_interactive.html">geom_crossbar_interactive()</a></code>: orientation and missing linetype;</li>
 <li>
-<code><a href="../reference/geom_crossbar_interactive.html">geom_errorbar_interactive()</a></code>, <code><a href="../reference/geom_crossbar_interactive.html">geom_crossbar_interactive()</a></code>: a missing linetype lost all the attributes or failed.</li>
+<code><a href="../reference/geom_path_interactive.html">geom_path_interactive()</a></code>, <code><a href="../reference/geom_path_interactive.html">geom_step_interactive()</a></code>, <code><a href="../reference/geom_segment_interactive.html">geom_segment_interactive()</a></code>: arrows, line ends, <code>orientation</code>, lines with varying colour;</li>
 <li>
-<code><a href="../reference/geom_path_interactive.html">geom_path_interactive()</a></code>, <code><a href="../reference/geom_path_interactive.html">geom_step_interactive()</a></code>: arrow heads, line ends and <code>orientation</code> as in ‘ggplot2’; the segments of lines with varying colour get the attributes of their line.</li>
+<code><a href="../reference/geom_abline_interactive.html">geom_hline_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_vline_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_abline_interactive()</a></code>, <code><a href="../reference/geom_sf_interactive.html">geom_sf_interactive()</a></code>: arguments of ‘ggplot2’ 4.0;</li>
+<li>ribbons, areas and densities with <code>outline.type = "full"</code>, and violin quantile lines, get their attributes.</li>
 <li>
-<code><a href="../reference/geom_segment_interactive.html">geom_segment_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_hline_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_vline_interactive()</a></code>, <code><a href="../reference/geom_abline_interactive.html">geom_abline_interactive()</a></code>, <code><a href="../reference/geom_sf_interactive.html">geom_sf_interactive()</a></code>: arguments and behaviours of ‘ggplot2’ 4.0.</li>
-<li>
-<code><a href="../reference/geom_ribbon_interactive.html">geom_ribbon_interactive()</a></code> (and area, density) with <code>outline.type = "full"</code>, and the quantile lines of <code><a href="../reference/geom_violin_interactive.html">geom_violin_interactive()</a></code>, had no interactive attributes.</li>
+<code><a href="../reference/geom_bar_interactive.html">geom_bar_interactive()</a></code> uses <code>lineend</code> and <code>linejoin</code>.</li>
+<li>Polygons cut by a missing value, segments with a blank linetype and paths with arrows at both ends keep their attributes on the right elements.</li>
 </ul><p>Legends and themes:</p>
 <ul><li>
-<code><a href="../reference/guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code>, <code><a href="../reference/guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code>: the bar is a single element and takes a single value; a function receives the breaks and must return one value.</li>
+<code><a href="../reference/guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code> draws one rectangle per class, like ‘ggplot2’.</li>
+<li>Binned guides (bins and coloursteps): each class takes the value of its lower bound, also with <code>reverse = TRUE</code>. Give one value per class, or one per break.</li>
 <li>
-<code><a href="../reference/guide_bins_interactive.html">guide_bins_interactive()</a></code> failed with labels given as a vector.</li>
-<li>Adding a theme element over an interactive one dropped its interactive attributes.</li>
+<code><a href="../reference/guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code>: the bar takes a single value.</li>
+<li>
+<code><a href="../reference/guide_bins_interactive.html">guide_bins_interactive()</a></code> accepts labels given as a vector.</li>
+<li>Interactive theme elements keep their attributes when another element is added over them.</li>
+<li>Labels with <code>parse = TRUE</code> keep their attributes.</li>
+</ul><p>Fonts:</p>
+<ul><li>Font checks read the fonts drawn in the SVG: they now see the fonts of <code><a href="https://ggplot2.tidyverse.org/reference/get_theme.html" class="external-link">theme_set()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_geom()</a></code>, the <code>family</code> aesthetic, and graphics given with <code>code</code>.</li>
+<li>
+<code>check_fonts_dependencies</code> reads dependencies declared with <code>package =</code>, stylesheets given as a list and font names without quotes, and ignores case.</li>
 </ul><p>Other:</p>
 <ul><li>
-<code><a href="../reference/girafe_class.html">girafe_class_add()</a></code> and friends: a single id also targeted the ids containing it; they say when the session is missing.</li>
+<code><a href="../reference/girafe_class.html">girafe_class_add()</a></code> and friends: a single id no longer targets the ids containing it.</li>
+<li>A single interactive value applies to all the elements of a grob.</li>
 <li>
-<code>girafe(check_fonts_*)</code> failed when the graphic was given with <code>code</code>.</li>
-<li>Interactive grobs: a single value was only set on the first element.</li>
-<li>
-<code><a href="../reference/opts_zoom.html">opts_zoom()</a></code>: <code>min = 0.2</code> was refused, although it is the documented lower bound.</li>
-<li>
-<code>girafe(check_fonts_registered, check_fonts_dependencies)</code> missed the fonts set outside of the plot (<code><a href="https://ggplot2.tidyverse.org/reference/get_theme.html" class="external-link">theme_set()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_geom()</a></code>, the <code>family</code> aesthetic) and could not check a graphic given with <code>code</code>: the fonts are now read in the SVG, as drawn.</li>
-<li>
-<code>girafe(check_fonts_dependencies = TRUE)</code> failed with a dependency declared with <code>package =</code> or with a stylesheet given as a list, and missed the font names written without quotes in <code>@font-face</code> (they were reported as missing). Names are now compared without case, as in CSS.</li>
-<li>Labels given as expressions (<code>parse = TRUE</code>) lost their attributes.</li>
-<li>
-<code>onclick</code> code and ids containing single quotes were altered (the quotes were replaced by ’), which broke the JavaScript of <code>onclick</code>.</li>
+<code>opts_zoom(min = 0.2)</code> is accepted.</li>
+<li>Single quotes in <code>onclick</code> code and ids are kept.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="internals-0-9-8">Internals<a class="anchor" aria-label="anchor" href="#internals-0-9-8"></a></h3>
 <ul><li>Tests use ‘testthat’; geom tests compare the SVG with the one of ‘ggplot2’.</li>
-<li>Interactive geoms call the methods of ‘ggplot2’ instead of copies of them, so they follow its next versions. ‘dplyr’ is only suggested.</li>
+<li>Interactive geoms call the methods of ‘ggplot2’ instead of copies of them. ‘dplyr’ is only suggested.</li>
 </ul></div>
 </div>
     <div class="section level2">

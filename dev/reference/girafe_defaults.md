@@ -42,221 +42,91 @@ Other girafe animation options:
 ``` r
 girafe_defaults()
 #> $opts_sizing
-#> $rescale
-#> [1] TRUE
-#> 
-#> $width
-#> [1] 1
-#> 
-#> attr(,"class")
-#> [1] "opts_sizing"
-#> attr(,"explicit_args")
-#> [1] "width"
+#> <opts_sizing>
+#>  $ rescale: logi TRUE
+#>  $ width  : num 1
 #> 
 #> $opts_tooltip
-#> $css
-#> [1] ".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:9999;}"
-#> 
-#> $placement
-#> [1] "doc"
-#> 
-#> $opacity
-#> [1] 0.9
-#> 
-#> $offx
-#> [1] 10
-#> 
-#> $offy
-#> [1] 10
-#> 
-#> $use_cursor_pos
-#> [1] TRUE
-#> 
-#> $use_fill
-#> [1] FALSE
-#> 
-#> $use_stroke
-#> [1] FALSE
-#> 
-#> $delay_over
-#> [1] 200
-#> 
-#> $delay_out
-#> [1] 500
-#> 
-#> attr(,"class")
-#> [1] "opts_tooltip"
-#> attr(,"explicit_args")
-#> [1] "css"  "offx" "offy"
+#> <opts_tooltip>
+#>  $ css            : chr "padding:5px;background:black;color:white;border-radius:2px;text-align:left;"
+#>  $ offx           : num 10
+#>  $ offy           : num 10
+#>  $ use_cursor_pos : logi TRUE
+#>  $ opacity        : num 0.9
+#>  $ use_fill       : logi FALSE
+#>  $ use_stroke     : logi FALSE
+#>  $ delay_mouseover: num 200
+#>  $ delay_mouseout : num 500
+#>  $ placement      : chr "auto"
+#>  $ zindex         : num 9999
 #> 
 #> $opts_hover
-#> $css
-#> [1] ".hover_data_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_data_SVGID_ { fill:orange;stroke:black; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:orange; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:orange;stroke:none; }\nimage.hover_data_SVGID_ { stroke:orange; }"
-#> 
-#> $reactive
-#> [1] TRUE
-#> 
-#> $nearest_distance
-#> NULL
-#> 
-#> $linked
-#> [1] FALSE
-#> 
-#> attr(,"class")
-#> [1] "opts_hover"
-#> attr(,"explicit_args")
-#> [1] "css"      "reactive"
+#> <opts_hover>
+#>  $ css             : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:or"| __truncated__
+#>  $ reactive        : logi TRUE
+#>  $ nearest_distance: NULL
+#>  $ linked          : logi FALSE
 #> 
 #> $opts_hover_key
-#> $css
-#> [1] ".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }"
-#> 
-#> $reactive
-#> [1] TRUE
-#> 
-#> attr(,"class")
-#> [1] "opts_hover_key"
-#> attr(,"explicit_args")
-#> [1] "css"      "reactive"
+#> <opts_hover_key>
+#>  $ css     : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:or"| __truncated__
+#>  $ reactive: logi TRUE
 #> 
 #> $opts_hover_theme
-#> $css
-#> [1] ".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }"
-#> 
-#> $reactive
-#> [1] TRUE
-#> 
-#> attr(,"class")
-#> [1] "opts_hover_theme"
-#> attr(,"explicit_args")
-#> [1] "css"      "reactive"
+#> <opts_hover_theme>
+#>  $ css     : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:orange;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:or"| __truncated__
+#>  $ reactive: logi TRUE
 #> 
 #> $opts_hover_inv
-#> $css
-#> [1] ""
-#> 
-#> attr(,"class")
-#> [1] "opts_hover_inv"
-#> attr(,"explicit_args")
-#> [1] "css"
+#> <opts_hover_inv>
+#>  $ css: chr ""
 #> 
 #> $opts_selection
-#> $css
-#> [1] ".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }"
-#> 
-#> $type
-#> [1] "multiple"
-#> 
-#> $only_shiny
-#> [1] TRUE
-#> 
-#> $selected
-#> character(0)
-#> 
-#> $linked
-#> [1] FALSE
-#> 
-#> attr(,"class")
-#> [1] "opts_selection"
-#> attr(,"explicit_args")
-#> [1] "css"
+#> <opts_selection>
+#>  $ css       : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:red;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:red; "| __truncated__
+#>  $ type      : chr "multiple"
+#>  $ only_shiny: logi TRUE
+#>  $ selected  : chr(0) 
+#>  $ linked    : logi FALSE
 #> 
 #> $opts_selection_inv
-#> $css
-#> [1] ""
-#> 
-#> attr(,"class")
-#> [1] "opts_selection_inv"
+#> <opts_selection_inv>
+#>  $ css: NULL
 #> 
 #> $opts_selection_key
-#> $css
-#> [1] ".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }"
-#> 
-#> $type
-#> [1] "single"
-#> 
-#> $only_shiny
-#> [1] TRUE
-#> 
-#> $selected
-#> character(0)
-#> 
-#> attr(,"class")
-#> [1] "opts_selection_key"
-#> attr(,"explicit_args")
-#> [1] "css"
+#> <opts_selection_key>
+#>  $ css       : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:red;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:red; "| __truncated__
+#>  $ type      : chr "single"
+#>  $ only_shiny: logi TRUE
+#>  $ selected  : chr(0) 
 #> 
 #> $opts_selection_theme
-#> $css
-#> [1] ".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }"
-#> 
-#> $type
-#> [1] "single"
-#> 
-#> $only_shiny
-#> [1] TRUE
-#> 
-#> $selected
-#> character(0)
-#> 
-#> attr(,"class")
-#> [1] "opts_selection_theme"
-#> attr(,"explicit_args")
-#> [1] "css"
+#> <opts_selection_theme>
+#>  $ css       : chr "/*GIRAFE CSS*/._CLASSNAME_ { fill:red;stroke:black;cursor:pointer; }\ntext._CLASSNAME_ { stroke:none;fill:red; "| __truncated__
+#>  $ type      : chr "single"
+#>  $ only_shiny: logi TRUE
+#>  $ selected  : chr(0) 
 #> 
 #> $opts_zoom
-#> $min
-#> [1] 1
-#> 
-#> $max
-#> [1] 1
-#> 
-#> $duration
-#> [1] 300
-#> 
-#> $default_on
-#> [1] FALSE
-#> 
-#> attr(,"class")
-#> [1] "opts_zoom"
+#> <opts_zoom>
+#>  $ min       : num 1
+#>  $ max       : num 1
+#>  $ duration  : num 300
+#>  $ default_on: logi FALSE
 #> 
 #> $opts_toolbar
-#> $position
-#> [1] "topright"
-#> 
-#> $pngname
-#> [1] "diagram"
-#> 
-#> $tooltips
-#> NULL
-#> 
-#> $fixed
-#> [1] FALSE
-#> 
-#> $hidden
-#> character(0)
-#> 
-#> $delay_over
-#> [1] 200
-#> 
-#> $delay_out
-#> [1] 500
-#> 
-#> $bg_color
-#> NULL
-#> 
-#> $icon_color
-#> NULL
-#> 
-#> $icon_active_color
-#> NULL
-#> 
-#> $icon_hover_color
-#> NULL
-#> 
-#> attr(,"class")
-#> [1] "opts_toolbar"
-#> attr(,"explicit_args")
-#> logical(0)
+#> <opts_toolbar>
+#>  $ position         : chr "topright"
+#>  $ saveaspng        : logi TRUE
+#>  $ pngname          : chr "diagram"
+#>  $ tooltips         : NULL
+#>  $ hidden           : NULL
+#>  $ fixed            : logi FALSE
+#>  $ delay_mouseover  : num 200
+#>  $ delay_mouseout   : num 500
+#>  $ bg_color         : NULL
+#>  $ icon_color       : NULL
+#>  $ icon_active_color: NULL
+#>  $ icon_hover_color : NULL
 #> 
 ```
