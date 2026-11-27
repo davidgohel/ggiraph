@@ -76,6 +76,10 @@ Legends and themes:
   the bar takes a single value.
 - [`guide_bins_interactive()`](https://davidgohel.github.io/ggiraph/dev/reference/guide_bins_interactive.md)
   accepts labels given as a vector.
+- A function given to an interactive scale receives the breaks as
+  `labels` does: dates on a date scale, 100 rather than 2 on a log
+  scale. The names of a vector are matched with these values too, and a
+  name matching no break gives a warning.
 - Interactive theme elements keep their attributes when another element
   is added over them.
 - Labels with `parse = TRUE` keep their attributes.

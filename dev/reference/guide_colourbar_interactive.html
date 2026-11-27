@@ -9,7 +9,7 @@ See the documentation for that function for more details."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.041</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.043</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,10 @@ it will be converted to a <code><a href="guide_legend_interactive.html">guide_le
 <code>guide_colourbar_interactive()</code> or <code><a href="guide_coloursteps_interactive.html">guide_coloursteps_interactive()</a></code> respectively,
 if it's not already.</p>
 <p>The length of each scale interactive parameter vector should match the length of the breaks.
-It can also be a named vector, where each name should correspond to the same break name.
+It can also be a named vector, where each name should correspond to the same break name
+(a date on a date scale, a value of the data on a transformed scale).
+The breaks without a name keep their own value, as <code>labels</code> does in 'ggplot2';
+a name that matches no break is ignored, with a warning.
 It can also be defined as function that takes the breaks as input and returns a named or
 unnamed vector of values as output.</p>
 <p>The interactive parameters follow what 'ggplot2' draws: one value per

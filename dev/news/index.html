@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ggiraph package</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.041</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.8.043</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +77,7 @@
 <code><a href="../reference/guide_colourbar_interactive.html">guide_colourbar_interactive()</a></code>: the bar takes a single value.</li>
 <li>
 <code><a href="../reference/guide_bins_interactive.html">guide_bins_interactive()</a></code> accepts labels given as a vector.</li>
+<li>A function given to an interactive scale receives the breaks as <code>labels</code> does: dates on a date scale, 100 rather than 2 on a log scale. The names of a vector are matched with these values too, and a name matching no break gives a warning.</li>
 <li>Interactive theme elements keep their attributes when another element is added over them.</li>
 <li>Labels with <code>parse = TRUE</code> keep their attributes.</li>
 </ul><p>Fonts:</p>
