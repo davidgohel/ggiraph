@@ -46,6 +46,8 @@ quantile lines, get their attributes.
 - Polygons cut by a missing value, segments with a blank linetype and
 paths with arrows at both ends keep their attributes on the right
 elements.
+- `geom_sf_interactive()` no longer draws arrows on a layer mixing lines
+with other geometries, as 'ggplot2' does.
 
 Legends and themes:
 

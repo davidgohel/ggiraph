@@ -40,6 +40,14 @@ GeomInteractiveSf <- ggproto(
     na.rm = TRUE,
     .ipar = IPAR_NAMES
   ) {
+    # 'sf' draws the arrows only when all the geometries of the layer are
+    # lines: on a layer mixing other types, it draws each geometry alone
+    # and ignores them. The rows are drawn one by one below, so the
+    # arrows are dropped here, to draw what 'ggplot2' draws.
+    types <- as.character(sf::st_geometry_type(data$geometry))
+    if (!all(types %in% c("LINESTRING", "MULTILINESTRING"))) {
+      arrow <- NULL
+    }
     # call original draw_panel for each data row/geometry
     # this way multi geometries are handled too
     grobs <- lapply(seq_len(nrow(data)), function(i) {

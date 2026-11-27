@@ -63,6 +63,45 @@ test_that("lines can have arrows", {
   )
 })
 
+test_that("arrows are not drawn on a layer mixing geometries, as in ggplot2", {
+  # 'sf' ignores the arrows when the layer is not made of lines only
+  mixed <- sf::st_sf(
+    id = paste0("g", 1:7),
+    lt = c(rep("solid", 6), "blank"),
+    geometry = sf::st_sfc(
+      sf::st_point(c(0, 0)),
+      sf::st_linestring(rbind(c(0, 1), c(1, 2), c(2, 1))),
+      sf::st_multilinestring(list(rbind(c(3, 0), c(4, 1)), rbind(c(3, 2), c(4, 3)))),
+      sf::st_polygon(list(rbind(c(5, 0), c(6, 0), c(6, 1), c(5, 0)))),
+      sf::st_geometrycollection(list(
+        sf::st_point(c(7, 0)),
+        sf::st_linestring(rbind(c(7, 1), c(8, 2)))
+      )),
+      sf::st_multipoint(rbind(c(9, 0), c(9, 1))),
+      sf::st_linestring(rbind(c(10, 0), c(11, 1)))
+    )
+  )
+  both <- arrow(ends = "both")
+  expect_same_sf(
+    geom_sf(arrow = both),
+    geom_sf_interactive(aes(data_id = id), arrow = both),
+    mixed, rep(mixed$id, c(1, 1, 2, 1, 2, 2, 1))
+  )
+  # a blank linetype draws nothing
+  expect_same_sf(
+    list(geom_sf(aes(linetype = lt), arrow = both), scale_linetype_identity()),
+    list(geom_sf_interactive(aes(data_id = id, linetype = lt), arrow = both), scale_linetype_identity()),
+    mixed, rep(mixed$id, c(1, 1, 2, 1, 2, 2, 0))
+  )
+  # lines and multilines keep their arrows, each head with its row
+  lines <- mixed[c(2, 3, 7), ]
+  expect_same_sf(
+    geom_sf(arrow = both),
+    geom_sf_interactive(aes(data_id = id), arrow = both),
+    lines, rep(lines$id, c(3, 6, 3))
+  )
+})
+
 test_that("geometry collections are drawn with other geometries", {
   mixed <- sf::st_sf(
     id = c("g1", "g2"),
