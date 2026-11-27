@@ -219,3 +219,31 @@ test_that("legend warns when the values do not match the breaks", {
   expect_warning(doc <- dsvg_plot(p), "differs from the number of breaks")
   expect_length(xml_find_all(doc, "//*[@key-id]"), 0)
 })
+
+# a function receives the breaks in data space, as `labels` ----
+test_that("a function receives dates and untransformed breaks, as labels", {
+  dat <- data.frame(x = 1:91, y = 1, z = as.Date("2024-01-01") + 0:90, w = 10^seq(0, 3, length.out = 91))
+  ids <- function(b) paste0("id_", b)
+  key_ids <- function(p) unique(xml_attr(xml_find_all(dsvg_plot(p), "//*[@key-id]"), "key-id"))
+  label_texts <- function(p) unique(ggplot_build(p)$plot$guides$params[[1]]$key$.label)
+
+  p <- ggplot(dat, aes(x, y, colour = z)) + geom_point_interactive(aes(data_id = 1))
+  expect_equal(
+    key_ids(p + scale_colour_date_interactive(data_id = ids, guide = "legend")),
+    label_texts(p + scale_colour_date(labels = ids, guide = "legend"))
+  )
+  p <- ggplot(dat, aes(x, y, colour = w)) + geom_point_interactive(aes(data_id = 1))
+  expect_equal(
+    key_ids(p + scale_colour_continuous_interactive(transform = "log10", data_id = ids, guide = "legend")),
+    c("id_1", "id_10", "id_100", "id_1000")
+  )
+  # binned guides: the lower bound of each class
+  expect_equal(
+    key_ids(p + scale_colour_binned_interactive(transform = "log10", data_id = ids, guide = "bins")),
+    c("id_1", "id_10", "id_100")
+  )
+  expect_equal(
+    key_ids(p + scale_colour_binned_interactive(transform = "log10", data_id = ids)),
+    c("id_1", "id_10", "id_100")
+  )
+})

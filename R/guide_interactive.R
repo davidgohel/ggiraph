@@ -65,9 +65,15 @@ interactive_guide_train <- function(
       # process the interactive params one by one and check for names
       # this way it works for both discrete and continuous scales
       # with or without named vectors
+      # a function receives the breaks in data space (dates, not numbers;
+      # 100, not 2 on a log scale), as the `labels` of 'ggplot2'
+      fun_breaks <- breaks
+      if (!scale$is_discrete()) {
+        fun_breaks <- scale$get_transformation()$inverse(breaks)
+      }
       for (a in ipar) {
         if (is.function(scale[[a]])) {
-          scale[[a]] <- do.call(scale[[a]], list(breaks))
+          scale[[a]] <- do.call(scale[[a]], list(fun_breaks))
         }
         if (length(scale[[a]])) {
           # check if it's named vector

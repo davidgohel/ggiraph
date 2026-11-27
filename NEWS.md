@@ -58,6 +58,8 @@ its lower bound, also with `reverse = TRUE`. Give one value per class,
 or one per break.
 - `guide_colourbar_interactive()`: the bar takes a single value.
 - `guide_bins_interactive()` accepts labels given as a vector.
+- A function given to an interactive scale receives the breaks as
+`labels` does: dates on a date scale, 100 rather than 2 on a log scale.
 - Interactive theme elements keep their attributes when another element
 is added over them.
 - Labels with `parse = TRUE` keep their attributes.
